@@ -17,12 +17,12 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import cl.runtime as rt
-from cl.runtime.dummy.storage.dummy_class_record_key import DummyClassRecordKey
+from cl.runtime.stubs.storage.stub_class_record_key import StubClassRecordKey
 
 
 @dataclass
-class DummyClassRecord(DummyClassRecordKey):
-    """Dummy dataclass-based record sample used in tests."""
+class StubClassRecord(StubClassRecordKey):
+    """Stub dataclass-based record sample used in tests."""
 
     base_record_field_str: str = rt.class_field()
     """String attribute of base class."""
@@ -34,10 +34,10 @@ class DummyClassRecord(DummyClassRecordKey):
     """Optional long attribute of base class with custom label."""
 
     @staticmethod
-    def create(context: rt.Context) -> DummyClassRecord:
+    def create(context: rt.Context) -> StubClassRecord:
         """Return an instance of this class populated with sample data."""
 
-        obj = DummyClassRecord()
+        obj = StubClassRecord()
         obj.context = context
         obj.primary_key_field_str = 'abc'
         obj.primary_key_field_int = 123

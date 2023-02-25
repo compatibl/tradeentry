@@ -28,13 +28,13 @@ def test_smoke():
 
     # Create test record and populate with sample data
     context = rt.Context()
-    record = rt.dummy.DummyRecord.create(context)
+    record = rt.stubs.StubRecord.create(context)
     pk = record.to_pk()
     record_dict = record.to_dict()
 
     # Test saving and loading
     data_source.save_one(record, data_set)
-    loaded_record = rt.dummy.DummyRecord()
+    loaded_record = rt.stubs.StubRecord()
     data_source.load_one(pk, data_set, out=loaded_record)
     loaded_record_dict = loaded_record.to_dict()
     assert loaded_record_dict == record_dict

@@ -20,7 +20,7 @@ import cl.runtime as rt
 
 
 @dataclass
-class DummyClassData(rt.ClassData):
+class StubClassData(rt.ClassData):
     """Dataclass-based serializable data sample used in tests."""
 
     base_record_field_str: str = rt.class_field()
@@ -30,10 +30,10 @@ class DummyClassData(rt.ClassData):
     """Float attribute of base class."""
 
     @staticmethod
-    def create() -> DummyClassData:
+    def create() -> StubClassData:
         """Return an instance of this class populated with sample data."""
 
-        obj = DummyClassData()
+        obj = StubClassData()
         obj.base_record_field_str = 'def'
         obj.base_record_field_float = 4.56
         return obj

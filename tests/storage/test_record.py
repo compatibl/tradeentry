@@ -24,18 +24,18 @@ def test_smoke():
 
     # Create test record and populate with sample data
     context = rt.Context()
-    record = rt.dummy.DummyRecord.create(context)
+    record = rt.stubs.StubRecord.create(context)
 
     # Test that context has been set
     assert record.context == context
 
     # Test primary key
     pk = record.to_pk()
-    assert pk == 'rt.dummy.DummyRecord;abc;123'
+    assert pk == 'rt.stubs.StubRecord;abc;123'
 
     # Test roundtrip serialization
     data1 = record.to_dict()
-    record2 = rt.dummy.DummyRecord()
+    record2 = rt.stubs.StubRecord()
     record2.context = context
     record2.from_dict(data1)
     data2 = record2.to_dict()

@@ -24,7 +24,7 @@ def test_smoke():
 
     # Create test record and populate with sample data
     context = rt.Context()
-    obj = rt.dummy.DummyClassData.create()
+    obj = rt.stubs.StubClassData.create()
 
     # Test to_dict() method
     obj_dict = obj.to_dict()

@@ -19,8 +19,8 @@ from typing import Any, Dict, Optional
 import cl.runtime as rt
 
 
-class DummyData(rt.Data):
-    """Dummy serializable data used in tests."""
+class StubData(rt.Data):
+    """Stub serializable data used in tests."""
 
     base_record_field_str: Optional[str]
     """String attribute of base class."""
@@ -36,7 +36,7 @@ class DummyData(rt.Data):
 
     def to_pk(self) -> str:
         """Return primary key (PK) as string."""
-        return f'rt.dummy.DummyRecord;{self.primary_key_field_str};{self.primary_key_field_int}'
+        return f'rt.stubs.StubRecord;{self.primary_key_field_str};{self.primary_key_field_int}'
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize self as dictionary (may return shallow copy)."""
@@ -52,10 +52,10 @@ class DummyData(rt.Data):
         # TODO: detect extra fields in dict which are not in class and raise error
 
     @staticmethod
-    def create() -> DummyData:
+    def create() -> StubData:
         """Return an instance of this class populated with sample data."""
 
-        obj = DummyData()
+        obj = StubData()
         obj.base_record_field_str = 'def'
         obj.base_record_field_float = 4.56
         return obj

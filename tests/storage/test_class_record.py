@@ -24,14 +24,14 @@ def test_smoke():
 
     # Create test record and populate with sample data
     context = rt.Context()
-    record = rt.dummy.DummyClassRecord.create(context)
+    record = rt.stubs.StubClassRecord.create(context)
 
     # Test that context has been set
     assert record.context == context
 
     # Test primary key
     pk = record.to_pk()
-    assert pk == 'rt.dummy.DummyClassRecord;abc;123'
+    assert pk == 'rt.stubs.StubClassRecord;abc;123'
 
     # Test to_dict() method
     record_dict = record.to_dict()
