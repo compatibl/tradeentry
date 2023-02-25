@@ -17,8 +17,24 @@ setuptools.setup(
     packages=setuptools.find_namespace_packages(where='.', include=['cl.runtime*']),
     package_dir={'': '.'},
     classifiers=[
-        'Programming Language :: Python :: 3',
+        # Alpha - will attempt to avoid breaking changes but they remain possible
+        'Development Status :: 3 - Alpha',
+
+        # Audience and topic
+        'Intended Audience :: Developers',
+        'Topic :: Software Development',
+        'Topic :: Software Development :: Libraries',
+        'Topic :: Software Development :: Libraries :: Application Frameworks',
+
+        # License
         "License :: OSI Approved :: Apache Software License",
+
+        # Runs on Python 3.9 and later releases
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+
+        # Operating system
         'Operating System :: OS Independent',
     ],
 )
