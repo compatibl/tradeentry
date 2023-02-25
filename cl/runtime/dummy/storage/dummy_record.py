@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from __future__ import annotations
+
 from typing import Any, Dict, Optional
 
 import cl.runtime as rt
@@ -74,4 +75,3 @@ class DummyRecord(rt.Record):
         obj.base_record_field_float = 4.56
         obj.init()
         return obj
-

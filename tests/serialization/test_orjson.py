@@ -12,8 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import pytest
 import orjson
+import pytest
+
 import cl.runtime as rt
 
 # Tests for orjson package to ensure package upgrades to not break the code

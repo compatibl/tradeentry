@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import pytest
+
 import cl.runtime as rt
 
 SIMPLE_PK = 'rt.Type1;A;B'
