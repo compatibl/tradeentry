@@ -15,8 +15,8 @@
 from dataclasses import dataclass
 from typing import Any, Dict, Optional
 
-from cl.runtime.storage.class_data import class_field
-from cl.runtime.storage.record import Record
+from cl.runtime.core.storage.class_data import class_field
+from cl.runtime.core.storage.record import Record
 
 
 @dataclass
