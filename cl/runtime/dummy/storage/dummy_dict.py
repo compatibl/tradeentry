@@ -22,7 +22,7 @@ import numpy as np
 import pytz
 
 
-class MockDictUtil:
+class DummyDict:
     """Utilities for mock dictionaries."""
 
     @staticmethod

@@ -14,7 +14,6 @@
 
 import pytest
 import cl.runtime as rt
-import tests
 
 # Tests for Data
 
@@ -23,11 +22,11 @@ def test_smoke():
     """Smoke test."""
 
     # Create test record and populate with sample data
-    obj = tests.MockData.create()
+    obj = rt.dummy.DummyData.create()
 
     # Test roundtrip serialization
     data1 = obj.to_dict()
-    obj2 = tests.MockData()
+    obj2 = rt.dummy.DummyData()
     obj2.from_dict(data1)
     data2 = obj2.to_dict()
     assert len(data2.keys()) == 2

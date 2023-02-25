@@ -14,7 +14,7 @@
 
 import pytest
 import orjson
-import tests
+import cl.runtime as rt
 
 # Tests for orjson package to ensure package upgrades to not break the code
 
@@ -32,7 +32,7 @@ def test_smoke():
     print_options = options | orjson.OPT_INDENT_2 | orjson.OPT_APPEND_NEWLINE
 
     # Create test dictionary and serialize
-    dict_data = tests.MockDictUtil.create()
+    dict_data = rt.dummy.DummyDict.create()
     json_bytes = orjson.dumps(dict_data, option=options)
     deserialized_data = orjson.loads(json_bytes)
     # TODO: Implement taking into account that deserialized JSON includes some types as strings

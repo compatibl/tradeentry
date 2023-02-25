@@ -17,8 +17,8 @@ import cl.runtime as rt
 
 
 @dataclass
-class MockClassRecordKey(rt.ClassRecord):
-    """Key for a dataclass-based record sample used in tests."""
+class DummyClassRecordKey(rt.ClassRecord):
+    """Dummy dataclass-based record sample used in tests."""
 
     primary_key_field_str: str = rt.class_field()
     """First primary key attribute."""
@@ -28,4 +28,4 @@ class MockClassRecordKey(rt.ClassRecord):
 
     def to_pk(self) -> str:
         """Return primary key (PK) as string."""
-        return f'tests.MockClassRecord;{self.primary_key_field_str};{self.primary_key_field_int}'
+        return f'rt.dummy.DummyClassRecord;{self.primary_key_field_str};{self.primary_key_field_int}'

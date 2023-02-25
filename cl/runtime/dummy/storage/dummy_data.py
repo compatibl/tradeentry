@@ -18,8 +18,8 @@ from typing import Any, Dict, Optional
 import cl.runtime as rt
 
 
-class MockData(rt.Data):
-    """A simple serializable data example used in tests."""
+class DummyData(rt.Data):
+    """Dummy serializable data used in tests."""
 
     base_record_field_str: Optional[str]
     """String attribute of base class."""
@@ -35,7 +35,7 @@ class MockData(rt.Data):
 
     def to_pk(self) -> str:
         """Return primary key (PK) as string."""
-        return f'tests.MockRecord;{self.primary_key_field_str};{self.primary_key_field_int}'
+        return f'rt.dummy.DummyRecord;{self.primary_key_field_str};{self.primary_key_field_int}'
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize self as dictionary (may return shallow copy)."""
@@ -51,10 +51,10 @@ class MockData(rt.Data):
         # TODO: detect extra fields in dict which are not in class and raise error
 
     @staticmethod
-    def create() -> MockData:
+    def create() -> DummyData:
         """Return an instance of this class populated with sample data."""
 
-        obj = MockData()
+        obj = DummyData()
         obj.base_record_field_str = 'def'
         obj.base_record_field_float = 4.56
         return obj

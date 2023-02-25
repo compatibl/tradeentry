@@ -14,7 +14,6 @@
 
 import pytest
 import cl.runtime as rt
-import tests
 
 # Tests for Record
 
@@ -24,18 +23,18 @@ def test_smoke():
 
     # Create test record and populate with sample data
     context = rt.Context()
-    record = tests.MockRecord.create(context)
+    record = rt.dummy.DummyRecord.create(context)
 
     # Test that context has been set
     assert record.context == context
 
     # Test primary key
     pk = record.to_pk()
-    assert pk == 'tests.MockRecord;abc;123'
+    assert pk == 'rt.dummy.DummyRecord;abc;123'
 
     # Test roundtrip serialization
     data1 = record.to_dict()
-    record2 = tests.MockRecord()
+    record2 = rt.dummy.DummyRecord()
     record2.context = context
     record2.from_dict(data1)
     data2 = record2.to_dict()

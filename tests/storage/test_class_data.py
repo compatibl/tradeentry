@@ -14,7 +14,6 @@
 
 import pytest
 import cl.runtime as rt
-import tests
 
 # Tests for ClassData
 
@@ -24,7 +23,7 @@ def test_smoke():
 
     # Create test record and populate with sample data
     context = rt.Context()
-    obj = tests.MockClassData.create()
+    obj = rt.dummy.DummyClassData.create()
 
     # Test to_dict() method
     obj_dict = obj.to_dict()

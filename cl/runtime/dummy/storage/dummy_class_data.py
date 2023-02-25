@@ -19,7 +19,7 @@ import cl.runtime as rt
 
 
 @dataclass
-class MockClassData(rt.ClassData):
+class DummyClassData(rt.ClassData):
     """Dataclass-based serializable data sample used in tests."""
 
     base_record_field_str: str = rt.class_field()
@@ -29,10 +29,10 @@ class MockClassData(rt.ClassData):
     """Float attribute of base class."""
 
     @staticmethod
-    def create() -> MockClassData:
+    def create() -> DummyClassData:
         """Return an instance of this class populated with sample data."""
 
-        obj = MockClassData()
+        obj = DummyClassData()
         obj.base_record_field_str = 'def'
         obj.base_record_field_float = 4.56
         return obj
