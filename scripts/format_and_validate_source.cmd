@@ -7,6 +7,10 @@ echo Activate virtual environment
 call venv\Scripts\activate.bat
 
 echo.
+echo Install linter requirements
+pip install -r requirements.linter.txt
+
+echo.
 echo Format using isort
 isort cl --sp=.isort.cfg
 isort tests --sp=.isort.cfg

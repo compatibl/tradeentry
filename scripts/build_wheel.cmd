@@ -13,6 +13,10 @@ if exist build rmdir/q/s build
 if exist dist rmdir/q/s dist
 
 echo.
+echo Install build requirements
+pip install -r requirements.build.txt
+
+echo.
 echo Build wheel
 python setup.py bdist_wheel
 

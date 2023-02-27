@@ -17,13 +17,11 @@ echo Activate virtual environment
 call venv\Scripts\activate.bat
 
 echo.
-echo Upgrade pip, install the latest setuptools and wheel
+echo Upgrade pip
 python -m pip install --upgrade pip
-pip install setuptools
-pip install wheel
 
 echo.
-echo Install requirements
+echo Install requirements (excludes linter and build requirements)
 pip install -r requirements.txt
 
 echo.
