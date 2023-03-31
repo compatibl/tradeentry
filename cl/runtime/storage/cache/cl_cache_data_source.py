@@ -30,20 +30,10 @@ class ClCacheDataSource(ClDataSource):
     _cache: Dict[str, Dict] = field(default_factory=dict)
 
     def init(self) -> None:
-        """Initialize or update object state after setting attributes.
-
-        Do nothing by default. Derived classes can override.
-        """
+        """Initialize or update object state after setting attributes."""
 
         # Create new cache on init
         self._cache = {}
-
-    def flush(self) -> None:
-        """Flush data to permanent storage without waiting for the data
-        to be flushed automatically or on exit."""
-
-        # Do nothing
-        pass
 
     def load_many(
         self,
@@ -156,7 +146,8 @@ class ClCacheDataSource(ClDataSource):
         data_set: str,
         delete_options: ClDeleteOptions = ClDeleteOptions.None_,
     ) -> None:
-        """Delete many records in the specified dataset, bypassing
+        """
+        Delete many records in the specified dataset, bypassing
         the commit queue and using delete options if provided
         (see rt.DeleteOptions class for details).
 
@@ -177,7 +168,8 @@ class ClCacheDataSource(ClDataSource):
         data_set: str,
         delete_options: ClDeleteOptions = ClDeleteOptions.None_,
     ) -> None:
-        """Add to commit queue the command to delete record in the
+        """
+        Add to commit queue the command to delete record in the
         specified dataset, using delete options if provided (see
         rt.DeleteOptions class for details). No error is raised
         if the record does not exist.
