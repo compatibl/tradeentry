@@ -35,8 +35,8 @@ class ClCacheDataSource(ClDataSource):
         Do nothing by default. Derived classes can override.
         """
 
-        # Create new cache
-        _cache = {}
+        # Create new cache on init
+        self._cache = {}
 
     def flush(self) -> None:
         """Flush data to permanent storage without waiting for the data
