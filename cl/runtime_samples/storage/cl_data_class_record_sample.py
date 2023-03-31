@@ -15,6 +15,7 @@
 from dataclasses import dataclass
 from typing import Optional
 
+from cl.runtime.storage.cl_context import ClContext
 from cl.runtime_samples.storage.cl_data_class_record_sample_key import ClDataClassRecordSampleKey
 
 
@@ -27,3 +28,12 @@ class ClDataClassRecordSample(ClDataClassRecordSampleKey):
     
     base_record_field_float: Optional[float] = None
     """Float attribute of base class."""
+
+    def populate_with_sample_data(self, context: ClContext) -> None:
+        """Set context and populate self with sample data."""
+
+        self.context = context
+        self.primary_key_field_str = 'abc'
+        self.primary_key_field_int = 123
+        self.base_record_field_str = 'def'
+        self.base_record_field_float = 4.56

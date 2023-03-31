@@ -23,14 +23,10 @@ class TestRecord:
     def test_smoke(self):
         """Smoke test."""
 
+        # Create test record and populate with sample data
         context = rt.Context()
-
         record = samples.RecordSample()
-        record.context = context
-        record.primary_key_field_str = 'abc'
-        record.primary_key_field_int = 123
-        record.base_record_field_str = 'def'
-        record.base_record_field_float = 4.56
+        record.populate_with_sample_data(context)
 
         # Test that context has been set
         assert record.context == context

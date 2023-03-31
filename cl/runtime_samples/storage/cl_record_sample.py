@@ -14,6 +14,7 @@
 
 from typing import Optional, Dict, Any
 import cl.runtime as rt
+from cl.runtime.storage.cl_context import ClContext
 
 
 class ClRecordSample(rt.Record):
@@ -60,3 +61,12 @@ class ClRecordSample(rt.Record):
         self.primary_key_field_int = data['primary_key_field_int']
         self.base_record_field_str = data['base_record_field_str']
         self.base_record_field_float = data['base_record_field_float']
+
+    def populate_with_sample_data(self, context: ClContext) -> None:
+        """Set context and populate self with sample data."""
+
+        self.context = context
+        self.primary_key_field_str = 'abc'
+        self.primary_key_field_int = 123
+        self.base_record_field_str = 'def'
+        self.base_record_field_float = 4.56
