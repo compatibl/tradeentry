@@ -14,7 +14,7 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Iterable, Optional, Union
+from typing import Iterable, Optional, Union, List
 from cl.runtime.storage.cl_data_source_key import ClDataSourceKey
 from cl.runtime.storage.cl_delete_options import ClDeleteOptions
 from cl.runtime.storage.cl_load_options import ClLoadOptions
@@ -40,29 +40,21 @@ class ClDataSource(ClDataSourceKey, ABC):
     """
 
     read_only: Optional[bool] = None
-    """Use this flag to mark data source as readonly. All write operations will fail with error if set."""
+    """Use this flag to mark the data source as readonly. All write operations will fail with error if set."""
 
     @abstractmethod
-    def flush(self) -> None:
-        """Flush data to permanent storage without waiting for the data
-        to be flushed automatically or on exit."""
-        pass
-
-    @abstractmethod
-    def load_one(
-        self,
-        key: Union[str, ClRecord],
-        data_set: str,
-        load_options: ClLoadOptions = ClLoadOptions.None_,
-    ) -> Optional[ClRecord]:
-        """Load one record from the specified dataset by typed key, using load
-        options if provided (see rt.LoadOptions class for details).
-
-        Invoking load_one method in a loop for many keys will lead to performance
-        deterioration; load_many method should be used instead.
-
-        Depending on data source type, this method may perform
-        search in parent datasets and/or data sources.
+    def load_many(
+            self,
+            keys: Iterable[Union[str, ClRecord]],
+            data_set: str,
+            load_options: ClLoadOptions = ClLoadOptions.None_,
+            *,
+            out: Iterable[ClRecord]
+    ) -> None:
+        """
+        Populate the collection of objects specified via the 'out' parameter
+        with data loaded from the specified dataset and collection of keys,
+        using load options if provided (see rt.LoadOptions class for details).
         """
 
     @abstractmethod
@@ -105,7 +97,8 @@ class ClDataSource(ClDataSourceKey, ABC):
         data_set: str,
         delete_options: ClDeleteOptions = ClDeleteOptions.None_,
     ) -> None:
-        """Delete many records in the specified dataset, bypassing
+        """
+        Delete many records in the specified dataset, bypassing
         the commit queue and using delete options if provided
         (see rt.DeleteOptions class for details).
 
@@ -127,7 +120,8 @@ class ClDataSource(ClDataSourceKey, ABC):
         data_set: str,
         delete_options: ClDeleteOptions = ClDeleteOptions.None_,
     ) -> None:
-        """Add to commit queue the command to delete record in the
+        """
+        Add to commit queue the command to delete record in the
         specified dataset, using delete options if provided (see
         rt.DeleteOptions class for details). No error is raised
         if the record does not exist.
@@ -146,15 +140,14 @@ class ClDataSource(ClDataSourceKey, ABC):
         To avoid an additional roundtrip to the data store, the delete
         marker may be written even when the record does not exist.
         """
-        pass
 
     @abstractmethod
     def commit(self) -> None:
         """
         Execute all pending save and delete requests in the commit queue
-        and clear the queue.
+        and clear the queue. This will also flush all pending deletes and
+        writes in the database driver if applicable.
         """
-        pass
 
     @abstractmethod
     def rollback(self) -> None:
@@ -162,22 +155,43 @@ class ClDataSource(ClDataSourceKey, ABC):
         Clear the commit queue without executing the pending save and delete
         requests in the queue.
         """
-        pass
 
     @abstractmethod
     def delete_db(self) -> None:
         """
-        Permanently deletes (drops) the database with all records
+        Permanently delete (drop) the database with all records
         in it without the possibility to recover them later.
 
         This method should only be used to free storage. For
         all other purposes, methods that preserve history should
         be used.
 
-        ATTENTION - THIS METHOD WILL DELETE ALL DATA WITHOUT
-        THE POSSIBILITY OF RECOVERY. USE WITH CAUTION.
+        ATTENTION - WHEN AVAILABLE, THIS METHOD WILL DELETE ALL DATA
+        WITHOUT THE POSSIBILITY OF RECOVERY. USE WITH CAUTION. NOT
+        AVAILABLE FOR ALL DATA SOURCE TYPES.
+
+        MUST *NOT* BE IMPLEMENTED IN PRODUCTION DATA SOURCE CODE.
         """
-        pass
+
+    def load_one(
+            self,
+            key: Union[str, ClRecord],
+            data_set: str,
+            load_options: ClLoadOptions = ClLoadOptions.None_,
+            *,
+            out: ClRecord
+    ) -> None:
+        """
+        Populate the object specified via the 'out' parameter with data
+        loaded from the specified dataset and key, using load options if
+        provided (see rt.LoadOptions class for details).
+
+        Invoking load_one method in a loop for many keys will lead to performance
+        deterioration; load_many method should be used instead.
+        """
+
+        # Pass arguments to load_many(...)
+        self.load_many([key], data_set, load_options, out=[out])
 
     def save_one(
         self,
@@ -197,6 +211,8 @@ class ClDataSource(ClDataSourceKey, ABC):
         significantly slower than using either save_many method or a series
         of save_on_commit calls, followed by commit().
         """
+
+        # Pass arguments to save_many(...)
         self.save_many([record], data_set, save_options)
 
     def delete_one(
@@ -205,7 +221,8 @@ class ClDataSource(ClDataSourceKey, ABC):
         data_set: str,
         delete_options: ClDeleteOptions = ClDeleteOptions.None_,
     ) -> None:
-        """Delete record with argument key in the specified dataset
+        """
+        Delete record with argument key in the specified dataset
         bypassing the commit queue, using delete options if provided
         (see rt.DeleteOptions class for details). No error is raised
         if the record does not exist.
@@ -226,6 +243,8 @@ class ClDataSource(ClDataSourceKey, ABC):
         To avoid an additional roundtrip to the data store, the delete
         marker may be written even when the record does not exist.
         """
+
+        # Pass arguments to delete_many(...)
         self.delete_many([key], data_set, delete_options)
 
     def __enter__(self):
