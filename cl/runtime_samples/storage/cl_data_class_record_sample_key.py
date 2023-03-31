@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from typing import Optional
 import cl.runtime as rt
 
 
@@ -20,10 +21,10 @@ import cl.runtime as rt
 class ClDataClassRecordSampleKey(rt.DataClassRecord):
     """Key for a dataclass-based record sample used in tests."""
 
-    primary_key_field_str: str = field(default=None)
+    primary_key_field_str: Optional[str] = None
     """First primary key attribute."""
     
-    primary_key_field_int: int = field(default=None)
+    primary_key_field_int: Optional[int] = None
     """Second primary key attribute."""
 
     def to_pk(self) -> str:

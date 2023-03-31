@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from typing import Optional
 
 from cl.runtime_samples.storage.cl_data_class_record_sample_key import ClDataClassRecordSampleKey
 
@@ -21,8 +22,8 @@ from cl.runtime_samples.storage.cl_data_class_record_sample_key import ClDataCla
 class ClDataClassRecordSample(ClDataClassRecordSampleKey):
     """Dataclass-based record sample used in tests."""
 
-    base_record_field_str: str = field(default=None)
+    base_record_field_str: Optional[str] = None
     """String attribute of base class."""
     
-    base_record_field_float: float = field(default=None)
+    base_record_field_float: Optional[float] = None
     """Float attribute of base class."""
