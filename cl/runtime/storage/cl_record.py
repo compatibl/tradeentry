@@ -14,7 +14,6 @@
 
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
-
 from cl.runtime.storage.cl_context import ClContext
 
 
@@ -60,14 +59,16 @@ class ClRecord(ABC):
         The key consists of database table name in dot-delimited format,
         followed by primary key attributes in semicolon-delimited format:
 
-        pk = TableName;PrimaryKeyAttribute1;PrimaryKeyAttribute2
+        simple_key = rt.Type1;A;B
 
-        By convention, table name consists of namespace import alias followed
-        by dataclass name without Key suffix, for example:
+        For composite keys, the embedded keys are surrounded by curly braces.
+        Helper method ClRecordUtil.composite_pk(...) is provided for generating
+        such keys, and ClRecordUtil.split_composite_pk(...) for splitting them:
 
-        TableName = rt.SampleRecord
+        composite_key = rt.Type1;{rt.Type2;A;B};C
 
-        Table name can be customized as long as name collisions are avoided.
+        The first token of the key (i.e. rt.Type1,2) is database table name.
+        It can be customized as long as name collisions are avoided.
         """
 
     @abstractmethod
