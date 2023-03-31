@@ -18,40 +18,53 @@ from typing import Iterable, List
 class ClRecordUtil:
     """Helper methods for ClRecord."""
 
-    @staticmethod
-    def to_pk(table_name: str, pk_tokens: Iterable[str]) -> str:
+    def composite_pk(*tokens) -> str:
         """
-        Convert type and key tokens to primary key string,
-        surrounding embedded keys with curly brackets.
+        Convert tokens to primary key string, surrounding any strings that
+        contain semicolon with curly brackets.
 
         Examples:
 
-        rt.SimpleKeyType;ABC;DEF
-        rt.CompositeKeyType;{rt.SimpleKeyType;ABC;DEF};GHI
-        rt.MultiLevelKeyType;{rt.CompositeKeyType;{rt.SimpleKeyType;ABC;DEF};GHI};JKL
+        * (rt.Type1, A, B) -> 'rt.Type1;A;B'
+        * (rt.Type2, rt.Type1;A;B, C) -> 'rt.Type2;{rt.Type1;A;B};C'
+        * (rt.Type3, rt.Type2;{rt.Type1;A;B};C, D) -> 'rt.Type3;{rt.Type2;{rt.Type1;A;B};C};D'
         """
-
-        escaped_tokens = [f'{{{t}}}' if ';' in t else t for t in pk_tokens]
-        concatenated_tokens = ';'.join(escaped_tokens)
-        return f'{table_name};{concatenated_tokens}'
+        escaped_tokens = [f'{{{t}}}' if ';' in str(t) else str(t) for t in tokens]
+        return ';'.join(escaped_tokens)
 
     @staticmethod
-    def split_pk(pk: str) -> List[str]:
+    def split_simple_pk(pk: str) -> List[str]:
         """
-        Split primary key string into tokens, removing curly brackets around
+        Split simple primary key string into tokens. Check that the key
+        does not contain embedded keys surrounded by curly brackets.
+
+        Example:
+
+        * 'rt.Type1;A;B' -> [rt.Type1, A, B]
+        * 'rt.Type2;{rt.Type1;A;B};C' -> Error, contains an embedded key
+        """
+
+        # Split by semicolon first
+        tokens = pk.split(';')
+
+        if not any([t.startswith('{') for t in tokens]):
+            # If none of the tokens start from an opening curly brace, we are done.
+            return tokens
+        else:
+            raise RuntimeError(f'Key {pk} is composite (contains embedded keys).')
+
+    @staticmethod
+    def split_composite_pk(pk: str) -> List[str]:
+        """
+        Split composite primary key string into tokens, removing curly brackets around
         tokens that are embedded keys but without performing recursive splitting
         of such embedded keys.
 
-        The first returned token is table name followed by primary key fields.
-
         Examples:
 
-        rt.SimpleKeyType;ABC;DEF ->
-            [rt.SimpleKeyType, ABC, DEF]
-        rt.CompositeKeyType;{rt.SimpleKeyType;ABC;DEF};GHI ->
-            [rt.CompositeKeyType, rt.SimpleKeyType;ABC;DEF, GHI]
-        rt.MultiLevelKeyType;{rt.CompositeKeyType;{rt.SimpleKeyType;ABC;DEF};GHI};JKL ->
-            [rt.MultiLevelKeyType, rt.CompositeKeyType;{rt.SimpleKeyType;ABC;DEF};GHI, JKL]
+        * 'rt.Type1;A;B' -> [rt.Type1, A, B]
+        * 'rt.Type2;{rt.Type1;A;B};C' -> [rt.Type2, rt.Type1;A;B, C]
+        * 'rt.Type3;{rt.Type2;{rt.Type1;A;B};C};D' -> [rt.Type3, rt.Type2;{rt.Type1;A;B};C, D]
         """
 
         # Split by semicolon first
@@ -60,7 +73,6 @@ class ClRecordUtil:
         opening_brace = [t.startswith('{') for t in tokens]
         if not any(opening_brace):
             # If none of the tokens start from an opening curly brace, we are done.
-            # This will cover the majority of cases.
             return tokens
         else:
             # If at least one token starts from a curly bracket, we need to escape

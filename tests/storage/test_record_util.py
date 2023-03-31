@@ -16,30 +16,39 @@ import pytest
 import cl.runtime as rt
 import re
 
-SIMPLE_PK = 'rt.SimpleKeyType;ABC;DEF'
-SIMPLE_TOKENS = ['rt.SimpleKeyType', 'ABC', 'DEF']
-COMPOSITE_PK = 'rt.CompositeKeyType;{rt.SimpleKeyType;ABC;DEF};GHI'
-COMPOSITE_TOKENS = ['rt.CompositeKeyType', SIMPLE_PK, 'GHI']
-MULTI_LEVEL_PK = 'rt.MultiLevelKeyType;{rt.CompositeKeyType;{rt.SimpleKeyType;ABC;DEF};GHI};JKL'
-MULTI_LEVEL_TOKENS = ['rt.MultiLevelKeyType', COMPOSITE_PK, 'JKL']
+SIMPLE_PK = 'rt.Type1;A;B'
+SIMPLE_TOKENS = ['rt.Type1', 'A', 'B']
+COMPOSITE_PK = 'rt.Type2;{rt.Type1;A;B};C'
+COMPOSITE_TOKENS = ['rt.Type2', SIMPLE_PK, 'C']
+MULTI_LEVEL_PK = 'rt.Type3;{rt.Type2;{rt.Type1;A;B};C};D'
+MULTI_LEVEL_TOKENS = ['rt.Type3', COMPOSITE_PK, 'D']
 
 
 class TestRecordUtil:
     """Tests for RecordUtil class."""
 
-    def test_to_pk(self):
-        """Test to_pk(...) function."""
+    def test_composite_pk(self):
+        """Test test_composite_pk(...) function."""
 
-        assert rt.RecordUtil.to_pk(SIMPLE_TOKENS[0], SIMPLE_TOKENS[1:]) == SIMPLE_PK
-        assert rt.RecordUtil.to_pk(COMPOSITE_TOKENS[0], COMPOSITE_TOKENS[1:]) == COMPOSITE_PK
-        assert rt.RecordUtil.to_pk(MULTI_LEVEL_TOKENS[0], MULTI_LEVEL_TOKENS[1:]) == MULTI_LEVEL_PK
+        assert rt.RecordUtil.composite_pk(*SIMPLE_TOKENS) == SIMPLE_PK
+        assert rt.RecordUtil.composite_pk(*COMPOSITE_TOKENS) == COMPOSITE_PK
+        assert rt.RecordUtil.composite_pk(*MULTI_LEVEL_TOKENS) == MULTI_LEVEL_PK
 
-    def test_from_pk(self):
-        """Test to_pk(...) function."""
+    def test_split_simple_pk(self):
+        """Test split_simple_pk(...) function."""
 
-        assert rt.RecordUtil.split_pk(SIMPLE_PK) == SIMPLE_TOKENS
-        assert rt.RecordUtil.split_pk(COMPOSITE_PK) == COMPOSITE_TOKENS
-        assert rt.RecordUtil.split_pk(MULTI_LEVEL_PK) == MULTI_LEVEL_TOKENS
+        assert rt.RecordUtil.split_simple_pk(SIMPLE_PK) == SIMPLE_TOKENS
+
+        # This should not work
+        with pytest.raises(Exception):
+            rt.RecordUtil.split_simple_pk(COMPOSITE_PK)
+
+    def test_split_composite_pk(self):
+        """Test split_composite_pk(...) function."""
+
+        assert rt.RecordUtil.split_composite_pk(SIMPLE_PK) == SIMPLE_TOKENS
+        assert rt.RecordUtil.split_composite_pk(COMPOSITE_PK) == COMPOSITE_TOKENS
+        assert rt.RecordUtil.split_composite_pk(MULTI_LEVEL_PK) == MULTI_LEVEL_TOKENS
 
 
 if __name__ == '__main__':
