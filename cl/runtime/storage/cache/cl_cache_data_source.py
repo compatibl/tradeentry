@@ -116,7 +116,6 @@ class ClCacheDataSource(ClDataSource):
 
         # Iterate over records
         for record in records:
-
             # Call init to update and validate object state
             record.init()
 

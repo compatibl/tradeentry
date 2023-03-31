@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+
 from cl.runtime.view.cl_view_key import ClViewKey
 
 
@@ -27,4 +28,3 @@ class ClView(ClViewKey):
     and will display each View returned by the query on a separate
     tab or panel next to the record itself.
     """
-

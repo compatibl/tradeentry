@@ -13,7 +13,8 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from typing import  final, List, Optional
+from typing import List, Optional, final
+
 from cl.runtime.view.cl_view import ClView
 
 
