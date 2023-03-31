@@ -46,7 +46,7 @@ class ClRecordSample(rt.Record):
         return f'samples.RecordSample;{self.primary_key_field_str};{self.primary_key_field_int}'
 
     def to_dict(self) -> Dict[str, Any]:
-        """Serialize self as dictionary."""
+        """Serialize self as dictionary (may return shallow copy)."""
         return {
             'primary_key_field_str': self.primary_key_field_str,
             'primary_key_field_int': self.primary_key_field_int,
@@ -55,7 +55,7 @@ class ClRecordSample(rt.Record):
         }
 
     def from_dict(self, data: Dict[str, Any]) -> None:
-        """Populate self from dictionary."""
+        """Populate self from dictionary (must perform deep copy)."""
         self.primary_key_field_str = data['primary_key_field_str']
         self.primary_key_field_int = data['primary_key_field_int']
         self.base_record_field_str = data['base_record_field_str']

@@ -70,11 +70,20 @@ class ClRecord(ABC):
 
     @abstractmethod
     def to_dict(self) -> Dict[str, Any]:
-        """Serialize self as dictionary."""
+        """Serialize self as dictionary (may return shallow copy).
+
+        The result may be returned using shallow copy. The callers of this method
+        must serialize or perform deep copy of the result in case the record fields
+        change after this method is invoked.
+        """
 
     @abstractmethod
     def from_dict(self, data: Dict[str, Any]) -> None:
-        """Populate self from dictionary."""
+        """Populate self from dictionary (must perform deep copy).
+
+        The implementation of this method perform deep copy of the input
+        in case the argument dictionary changes after this method is invoked.
+        """
 
     def __str__(self) -> str:
         """Return primary key (derived classes can override)."""
