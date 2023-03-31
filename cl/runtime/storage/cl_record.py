@@ -47,7 +47,7 @@ class ClRecord(ABC):
 
     def init(self) -> None:
         """
-        Initialize or update object state after setting attributes.
+        Update and validate object state after loading from DB and before saving to DB.
 
         Do nothing by default. Derived classes can override.
         """

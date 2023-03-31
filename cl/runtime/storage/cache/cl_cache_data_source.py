@@ -30,7 +30,7 @@ class ClCacheDataSource(ClDataSource):
     _cache: Dict[str, Dict] = field(default_factory=dict)
 
     def init(self) -> None:
-        """Initialize or update object state after setting attributes."""
+        """Update and validate object state after loading from DB and before saving to DB."""
 
         # Create new cache on init
         self._cache = {}
