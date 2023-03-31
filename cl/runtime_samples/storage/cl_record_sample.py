@@ -19,9 +19,7 @@ from cl.runtime.storage.cl_context import ClContext
 
 
 class ClRecordSample(rt.Record):
-    """
-    A simple record example used in tests.
-    """
+    """A simple record example used in tests."""
 
     primary_key_field_str: Optional[str]
     """First primary key attribute."""

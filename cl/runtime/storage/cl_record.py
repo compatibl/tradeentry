@@ -46,14 +46,16 @@ class ClRecord(ABC):
         self.context = None
 
     def init(self) -> None:
-        """Initialize or update object state after setting attributes.
+        """
+        Initialize or update object state after setting attributes.
 
         Do nothing by default. Derived classes can override.
         """
 
     @abstractmethod
     def to_pk(self) -> str:
-        """Return primary key (PK) as string.
+        """
+        Return primary key (PK) as string.
 
         The key consists of database table name in dot-delimited format,
         followed by primary key attributes in semicolon-delimited format:
@@ -70,7 +72,8 @@ class ClRecord(ABC):
 
     @abstractmethod
     def to_dict(self) -> Dict[str, Any]:
-        """Serialize self as dictionary (may return shallow copy).
+        """
+        Serialize self as dictionary (may return shallow copy).
 
         The result may be returned using shallow copy. The callers of this method
         must serialize or perform deep copy of the result in case the record fields
@@ -79,7 +82,8 @@ class ClRecord(ABC):
 
     @abstractmethod
     def from_dict(self, data: Dict[str, Any]) -> None:
-        """Populate self from dictionary (must perform deep copy).
+        """
+        Populate self from dictionary (must perform deep copy).
 
         The implementation of this method perform deep copy of the input
         in case the argument dictionary changes after this method is invoked.

@@ -21,7 +21,8 @@ from cl.runtime.storage.cl_record import ClRecord
 
 @dataclass
 class ClDataClassRecord(ClRecord, ABC):
-    """Base class for polymorphic records where all serializable
+    """
+    Base class for polymorphic records where all serializable
     data is stored in dataclass fields.
 
     The recommended inheritance chain includes two classes:
@@ -45,7 +46,8 @@ class ClDataClassRecord(ClRecord, ABC):
     """
 
     def to_dict(self) -> Dict[str, Any]:
-        """Serialize self as dictionary.
+        """
+        Serialize self as dictionary.
 
         Default implementation uses runtime class introspection.
         Derived classes may override for greater performance.
@@ -54,7 +56,8 @@ class ClDataClassRecord(ClRecord, ABC):
         return {}
 
     def from_dict(self, data: Dict[str, Any]) -> None:
-        """Populate self from dictionary.
+        """
+        Populate self from dictionary.
 
         Default implementation uses runtime class introspection.
         Derived classes may override for greater performance.

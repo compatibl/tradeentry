@@ -25,7 +25,8 @@ from cl.runtime.storage.cl_save_options import ClSaveOptions
 
 @dataclass
 class ClDataSource(ClDataSourceKey, ABC):
-    """Data source is a logical concept similar to database
+    """
+    Data source is a logical concept similar to database
     that can be implemented for a document DB, relational DB,
     key-value store, or filesystem. On top of the core
     storage layer, it adds directory-like attribute called

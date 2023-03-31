@@ -20,7 +20,8 @@ from cl.runtime.storage.cl_data_class_record import ClDataClassRecord
 
 @dataclass
 class ClDataSourceKey(ClDataClassRecord):
-    """Key for the data source record.
+    """
+    Key for the data source record.
 
     Data source is a logical concept similar to database
     that can be implemented for a document DB, relational DB,
