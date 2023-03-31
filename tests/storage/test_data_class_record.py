@@ -35,6 +35,10 @@ class TestDataClassRecord:
         pk = record.to_pk()
         assert pk == 'samples.DataClassRecordSample;abc;123'
 
+        # Test to_dict() method
+        record_dict = record.to_dict()
+        assert len(record_dict) == 4
+
 
 if __name__ == '__main__':
     pytest.main([__file__])

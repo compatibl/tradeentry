@@ -13,9 +13,8 @@
 # limitations under the License.
 
 from abc import ABC
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from typing import Any, Dict
-
 from cl.runtime.storage.cl_record import ClRecord
 
 
@@ -52,8 +51,7 @@ class ClDataClassRecord(ClRecord, ABC):
         Default implementation uses runtime class introspection.
         Derived classes may override for greater performance.
         """
-        raise NotImplementedError()  # TODO: currently a stub
-        return {}
+        return asdict(self)
 
     def from_dict(self, data: Dict[str, Any]) -> None:
         """
