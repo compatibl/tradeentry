@@ -57,10 +57,10 @@ class ClRecordSample(rt.Record):
 
     def from_dict(self, data: Dict[str, Any]) -> None:
         """Populate self from dictionary (must perform deep copy)."""
-        self.primary_key_field_str = data['primary_key_field_str']
-        self.primary_key_field_int = data['primary_key_field_int']
-        self.base_record_field_str = data['base_record_field_str']
-        self.base_record_field_float = data['base_record_field_float']
+        self.primary_key_field_str = data.get('primary_key_field_str')
+        self.primary_key_field_int = data.get('primary_key_field_int')
+        self.base_record_field_str = data.get('base_record_field_str')
+        self.base_record_field_float = data.get('base_record_field_float')
 
     def populate_with_sample_data(self, context: ClContext) -> None:
         """Set context and populate self with sample data."""
