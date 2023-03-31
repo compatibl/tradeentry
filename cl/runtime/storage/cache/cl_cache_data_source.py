@@ -91,6 +91,9 @@ class ClCacheDataSource(ClDataSource):
             # Populate record from dictionary
             out.from_dict(record_dict)
 
+            # Call init to update and validate object state
+            out.init()
+
             # Verify that the record has the same key as was passed to the load method
             out_pk = out.to_pk()
             if out_pk != pk:
@@ -113,6 +116,10 @@ class ClCacheDataSource(ClDataSource):
 
         # Iterate over records
         for record in records:
+
+            # Call init to update and validate object state
+            record.init()
+
             # Get primary key and data from record.
             pk = record.to_pk()
             record_dict = record.to_dict()
