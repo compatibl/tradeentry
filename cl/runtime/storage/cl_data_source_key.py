@@ -26,7 +26,7 @@ class ClDataSourceKey(ClDataClassRecord):
     that can be implemented for a document DB, relational DB,
     key-value store, or filesystem. On top of the core
     storage layer, it adds directory-like attribute called
-    dataset. 
+    dataset.
 
     Data source API provides the ability to:
 

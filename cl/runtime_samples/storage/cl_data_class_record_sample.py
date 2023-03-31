@@ -25,7 +25,7 @@ class ClDataClassRecordSample(ClDataClassRecordSampleKey):
 
     base_record_field_str: Optional[str] = None
     """String attribute of base class."""
-    
+
     base_record_field_float: Optional[float] = None
     """Float attribute of base class."""
 

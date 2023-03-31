@@ -20,4 +20,3 @@ class ClQueryOptions(IntFlag):
 
     None_ = 0
     """Indicates default options."""
-

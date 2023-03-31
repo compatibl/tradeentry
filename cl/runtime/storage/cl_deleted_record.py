@@ -13,7 +13,8 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from typing import Optional, Dict, Any
+from typing import Any, Dict, Optional
+
 from cl.runtime.storage.cl_record import ClRecord
 
 
@@ -34,8 +35,8 @@ class ClDeletedRecord(ClRecord):
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize self as dictionary (may return shallow copy)."""
-        raise RuntimeError(f'Attempting to serialize a deleted record.')
+        raise RuntimeError('Attempting to serialize a deleted record.')
 
     def from_dict(self, data: Dict[str, Any]) -> None:
         """Populate self from dictionary (must perform deep copy)."""
-        raise RuntimeError(f'Attempting to deserialize a deleted record.')
+        raise RuntimeError('Attempting to deserialize a deleted record.')

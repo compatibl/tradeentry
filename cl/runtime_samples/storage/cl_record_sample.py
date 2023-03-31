@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Optional, Dict, Any
+from typing import Any, Dict, Optional
+
 import cl.runtime as rt
 from cl.runtime.storage.cl_context import ClContext
 
@@ -52,7 +53,7 @@ class ClRecordSample(rt.Record):
             'primary_key_field_str': self.primary_key_field_str,
             'primary_key_field_int': self.primary_key_field_int,
             'base_record_field_str': self.base_record_field_str,
-            'base_record_field_float': self.base_record_field_float
+            'base_record_field_float': self.base_record_field_float,
         }
 
     def from_dict(self, data: Dict[str, Any]) -> None:

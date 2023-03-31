@@ -14,7 +14,7 @@
 
 from copy import deepcopy
 from dataclasses import dataclass, field
-from typing import Iterable, Optional, Union, Dict, List
+from typing import Dict, Iterable, List, Optional, Union
 
 from cl.runtime.storage.cl_data_source import ClDataSource
 from cl.runtime.storage.cl_delete_options import ClDeleteOptions
@@ -46,12 +46,12 @@ class ClCacheDataSource(ClDataSource):
         pass
 
     def load_many(
-            self,
-            keys: Iterable[Union[str, ClRecord]],
-            data_set: str,
-            load_options: ClLoadOptions = ClLoadOptions.None_,
-            *,
-            out: Iterable[ClRecord]
+        self,
+        keys: Iterable[Union[str, ClRecord]],
+        data_set: str,
+        load_options: ClLoadOptions = ClLoadOptions.None_,
+        *,
+        out: Iterable[ClRecord],
     ) -> None:
         """
         Populate the collection of objects specified via the 'out' parameter
@@ -68,14 +68,14 @@ class ClCacheDataSource(ClDataSource):
         # Iterate over keys and out in parallel after checking they have equal length
         zipped = zip(key_list, out_list)
         for key, out in zipped:
-
             # Handle key=None and check key type
             if key is None:
                 if load_options & ClLoadOptions.IgnoreNullKey == ClLoadOptions.IgnoreNullKey:
                     return None
                 else:
-                    raise RuntimeError('Null key is passed to load_one(...) method '
-                                       'but load_options.IgnoreNullKey flag is not set.')
+                    raise RuntimeError(
+                        'Null key is passed to load_one(...) method ' 'but load_options.IgnoreNullKey flag is not set.'
+                    )
             elif isinstance(key, str):
                 pk = key
             elif isinstance(key, ClRecord):
@@ -94,8 +94,9 @@ class ClCacheDataSource(ClDataSource):
                 if load_options & ClLoadOptions.IgnoreNotFound == ClLoadOptions.IgnoreNotFound:
                     return None
                 else:
-                    raise RuntimeError(f'Record is not found for pk={pk} but '
-                                       'load_options.IgnoreNotFound flag is not set.')
+                    raise RuntimeError(
+                        f'Record is not found for pk={pk} but ' 'load_options.IgnoreNotFound flag is not set.'
+                    )
 
             # Populate record from dictionary
             out.from_dict(record_dict)
@@ -103,14 +104,13 @@ class ClCacheDataSource(ClDataSource):
             # Verify that the record has the same key as was passed to the load method
             out_pk = out.to_pk()
             if out_pk != pk:
-                raise RuntimeError(f'Record to_pk() method returns {out_pk} which does '
-                                   f'not match the argument {pk} passed to the load method')
+                raise RuntimeError(
+                    f'Record to_pk() method returns {out_pk} which does '
+                    f'not match the argument {pk} passed to the load method'
+                )
 
     def save_many(
-        self,
-        records: Iterable[ClRecord],
-        data_set: str,
-        save_options: ClSaveOptions = ClSaveOptions.None_
+        self, records: Iterable[ClRecord], data_set: str, save_options: ClSaveOptions = ClSaveOptions.None_
     ) -> None:
         """
         Save many records to the specified dataset, bypassing the commit
@@ -123,7 +123,6 @@ class ClCacheDataSource(ClDataSource):
 
         # Iterate over records
         for record in records:
-
             # Get primary key and data from record.
             pk = record.to_pk()
             record_dict = record.to_dict()
@@ -139,10 +138,7 @@ class ClCacheDataSource(ClDataSource):
             dataset_cache[pk] = record_dict
 
     def save_on_commit(
-        self,
-        record: ClRecord,
-        data_set: str,
-        save_options: ClSaveOptions = ClSaveOptions.None_
+        self, record: ClRecord, data_set: str, save_options: ClSaveOptions = ClSaveOptions.None_
     ) -> None:
         """
         Add the record to the commit queue using save options if provided

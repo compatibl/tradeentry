@@ -14,7 +14,8 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Iterable, Optional, Union, List
+from typing import Iterable, List, Optional, Union
+
 from cl.runtime.storage.cl_data_source_key import ClDataSourceKey
 from cl.runtime.storage.cl_delete_options import ClDeleteOptions
 from cl.runtime.storage.cl_load_options import ClLoadOptions
@@ -28,7 +29,7 @@ class ClDataSource(ClDataSourceKey, ABC):
     that can be implemented for a document DB, relational DB,
     key-value store, or filesystem. On top of the core
     storage layer, it adds directory-like attribute called
-    dataset. 
+    dataset.
 
     Data source API provides the ability to:
 
@@ -44,12 +45,12 @@ class ClDataSource(ClDataSourceKey, ABC):
 
     @abstractmethod
     def load_many(
-            self,
-            keys: Iterable[Union[str, ClRecord]],
-            data_set: str,
-            load_options: ClLoadOptions = ClLoadOptions.None_,
-            *,
-            out: Iterable[ClRecord]
+        self,
+        keys: Iterable[Union[str, ClRecord]],
+        data_set: str,
+        load_options: ClLoadOptions = ClLoadOptions.None_,
+        *,
+        out: Iterable[ClRecord],
     ) -> None:
         """
         Populate the collection of objects specified via the 'out' parameter
@@ -59,10 +60,7 @@ class ClDataSource(ClDataSourceKey, ABC):
 
     @abstractmethod
     def save_many(
-        self,
-        records: Iterable[ClRecord],
-        data_set: str,
-        save_options: ClSaveOptions = ClSaveOptions.None_
+        self, records: Iterable[ClRecord], data_set: str, save_options: ClSaveOptions = ClSaveOptions.None_
     ) -> None:
         """
         Save many records to the specified dataset, bypassing the commit
@@ -75,10 +73,7 @@ class ClDataSource(ClDataSourceKey, ABC):
 
     @abstractmethod
     def save_on_commit(
-        self,
-        record: ClRecord,
-        data_set: str,
-        save_options: ClSaveOptions = ClSaveOptions.None_
+        self, record: ClRecord, data_set: str, save_options: ClSaveOptions = ClSaveOptions.None_
     ) -> None:
         """
         Add the record to the commit queue using save options if provided
@@ -174,12 +169,12 @@ class ClDataSource(ClDataSourceKey, ABC):
         """
 
     def load_one(
-            self,
-            key: Union[str, ClRecord],
-            data_set: str,
-            load_options: ClLoadOptions = ClLoadOptions.None_,
-            *,
-            out: ClRecord
+        self,
+        key: Union[str, ClRecord],
+        data_set: str,
+        load_options: ClLoadOptions = ClLoadOptions.None_,
+        *,
+        out: ClRecord,
     ) -> None:
         """
         Populate the object specified via the 'out' parameter with data
@@ -193,12 +188,7 @@ class ClDataSource(ClDataSourceKey, ABC):
         # Pass arguments to load_many(...)
         self.load_many([key], data_set, load_options, out=[out])
 
-    def save_one(
-        self,
-        record: ClRecord,
-        data_set: str,
-        save_options: ClSaveOptions = ClSaveOptions.None_
-    ):
+    def save_one(self, record: ClRecord, data_set: str, save_options: ClSaveOptions = ClSaveOptions.None_):
         """
         Save one record to the specified dataset, bypassing the commit
         queue and using save options if provided (see rt.SaveOptions

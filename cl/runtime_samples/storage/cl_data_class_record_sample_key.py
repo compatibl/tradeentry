@@ -14,6 +14,7 @@
 
 from dataclasses import dataclass
 from typing import Optional
+
 import cl.runtime as rt
 
 
@@ -23,7 +24,7 @@ class ClDataClassRecordSampleKey(rt.DataClassRecord):
 
     primary_key_field_str: Optional[str] = None
     """First primary key attribute."""
-    
+
     primary_key_field_int: Optional[int] = None
     """Second primary key attribute."""
 
