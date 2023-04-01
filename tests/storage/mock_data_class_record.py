@@ -16,8 +16,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Optional
 
-from cl.runtime.storage.context import Context
-from tests.storage.mock_data_class_record_key import MockDataClassRecordKey
+import cl.runtime as rt
+from .mock_data_class_record_key import MockDataClassRecordKey
 
 
 @dataclass
@@ -31,7 +31,7 @@ class MockDataClassRecord(MockDataClassRecordKey):
     """Float attribute of base class."""
 
     @staticmethod
-    def create(context: Context) -> MockDataClassRecord:
+    def create(context: rt.Context) -> MockDataClassRecord:
         """Return an instance of this class populated with sample data."""
 
         obj = MockDataClassRecord()

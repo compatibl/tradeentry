@@ -16,7 +16,6 @@ from __future__ import annotations
 from typing import Any, Dict, Optional
 
 import cl.runtime as rt
-from cl.runtime.storage.context import Context
 
 
 class MockRecord(rt.Record):
@@ -64,7 +63,7 @@ class MockRecord(rt.Record):
         # TODO: detect extra fields in dict which are not in class and raise error
 
     @staticmethod
-    def create(context: Context) -> MockRecord:
+    def create(context: rt.Context) -> MockRecord:
         """Return an instance of this class populated with sample data."""
 
         obj = MockRecord()

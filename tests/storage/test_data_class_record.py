@@ -14,7 +14,7 @@
 
 import pytest
 import cl.runtime as rt
-from tests.storage.mock_data_class_record import MockDataClassRecord
+import tests
 
 # Tests for DataClassRecord
 
@@ -24,7 +24,7 @@ def test_smoke():
 
     # Create test record and populate with sample data
     context = rt.Context()
-    record = MockDataClassRecord.create(context)
+    record = tests.MockDataClassRecord.create(context)
 
     # Test that context has been set
     assert record.context == context

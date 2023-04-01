@@ -14,7 +14,7 @@
 
 import pytest
 import cl.runtime as rt
-from tests.storage.mock_record import MockRecord
+import tests
 
 # Tests for CacheDataSource
 
@@ -28,13 +28,13 @@ def test_smoke():
 
     # Create test record and populate with sample data
     context = rt.Context()
-    record = MockRecord.create(context)
+    record = tests.MockRecord.create(context)
     pk = record.to_pk()
     record_dict = record.to_dict()
 
     # Test saving and loading
     data_source.save_one(record, data_set)
-    loaded_record = MockRecord()
+    loaded_record = tests.MockRecord()
     data_source.load_one(pk, data_set, out=loaded_record)
     loaded_record_dict = loaded_record.to_dict()
     assert loaded_record_dict == record_dict
