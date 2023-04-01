@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import pandas as pd
 from dataclasses import dataclass
 from typing import final
+
+import pandas as pd
 
 from cl.runtime.storage.class_data import class_field
 from cl.runtime.view.view import View

@@ -25,4 +25,3 @@ class TypeDecl(TypeDeclKey):
 
     label: str = class_field(optional=True)
     """Readable type label in the front end."""
-
