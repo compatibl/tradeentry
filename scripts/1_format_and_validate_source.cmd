@@ -5,23 +5,23 @@ pushd ..
 set target=cl
 set level=""
 
+echo.
+echo Activate virtual environment
 call venv\Scripts\activate.bat
-echo.
-echo Formatting using isort
-echo ----------------------------------------
-isort %target% --sp=%level%.isort.cfg
-echo ----------------------------------------
-echo.
-echo Formatting using black
-echo ----------------------------------------
-black %target% --config=%level%pyproject.toml
-echo ----------------------------------------
-echo.
-echo Validating using flake8
-echo ----------------------------------------
-flake8 %target% --config=%level%.flake8
-echo ----------------------------------------
 
-call venv\Scripts\deactivate.bat
+echo.
+echo Format using isort
+isort %target% --sp=%level%.isort.cfg
+
+echo.
+echo Format using black
+black -q %target% --config=%level%pyproject.toml
+
+echo.
+echo Validate using flake8
+flake8 %target% --config=%level%.flake8
+
+echo.
+echo Exit without deactivating virtual environment
 
 popd
