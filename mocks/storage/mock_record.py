@@ -60,6 +60,7 @@ class MockRecord(rt.Record):
         self.primary_key_field_int = data.get('primary_key_field_int')
         self.base_record_field_str = data.get('base_record_field_str')
         self.base_record_field_float = data.get('base_record_field_float')
+        # TODO: detect extra fields in dict which are not in class and raise error
 
     def populate_with_sample_data(self, context: ClContext) -> None:
         """Set context and populate self with sample data."""
