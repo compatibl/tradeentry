@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import annotations
 from dataclasses import dataclass
 from typing import Optional
 
@@ -29,11 +30,15 @@ class MockDataClassRecord(MockDataClassRecordKey):
     base_record_field_float: Optional[float] = None
     """Float attribute of base class."""
 
-    def populate_with_sample_data(self, context: Context) -> None:
-        """Set context and populate self with sample data."""
+    @staticmethod
+    def create(context: Context) -> MockDataClassRecord:
+        """Return an instance of this class populated with sample data."""
 
-        self.context = context
-        self.primary_key_field_str = 'abc'
-        self.primary_key_field_int = 123
-        self.base_record_field_str = 'def'
-        self.base_record_field_float = 4.56
+        obj = MockDataClassRecord()
+        obj.context = context
+        obj.primary_key_field_str = 'abc'
+        obj.primary_key_field_int = 123
+        obj.base_record_field_str = 'def'
+        obj.base_record_field_float = 4.56
+        obj.init()
+        return obj

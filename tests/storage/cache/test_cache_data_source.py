@@ -29,8 +29,7 @@ class TestCacheDataSource:
 
         # Create test record and populate with sample data
         context = rt.Context()
-        record = MockRecord()
-        record.populate_with_sample_data(context)
+        record = MockRecord.create(context)
         pk = record.to_pk()
         record_dict = record.to_dict()
 

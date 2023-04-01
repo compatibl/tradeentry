@@ -25,8 +25,7 @@ class TestDataClassRecord:
 
         # Create test record and populate with sample data
         context = rt.Context()
-        record = MockDataClassRecord()
-        record.populate_with_sample_data(context)
+        record = MockDataClassRecord.create(context)
 
         # Test that context has been set
         assert record.context == context

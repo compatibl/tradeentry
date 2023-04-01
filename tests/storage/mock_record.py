@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import annotations
 from typing import Any, Dict, Optional
 
 import cl.runtime as rt
@@ -62,11 +63,16 @@ class MockRecord(rt.Record):
         self.base_record_field_float = data.get('base_record_field_float')
         # TODO: detect extra fields in dict which are not in class and raise error
 
-    def populate_with_sample_data(self, context: Context) -> None:
-        """Set context and populate self with sample data."""
+    @staticmethod
+    def create(context: Context) -> MockRecord:
+        """Return an instance of this class populated with sample data."""
 
-        self.context = context
-        self.primary_key_field_str = 'abc'
-        self.primary_key_field_int = 123
-        self.base_record_field_str = 'def'
-        self.base_record_field_float = 4.56
+        obj = MockRecord()
+        obj.context = context
+        obj.primary_key_field_str = 'abc'
+        obj.primary_key_field_int = 123
+        obj.base_record_field_str = 'def'
+        obj.base_record_field_float = 4.56
+        obj.init()
+        return obj
+
