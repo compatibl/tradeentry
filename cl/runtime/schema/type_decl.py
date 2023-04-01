@@ -14,7 +14,7 @@
 
 import cl.runtime as rt
 from dataclasses import dataclass
-from typing import Optional
+from typing import Union
 
 
 @dataclass
@@ -23,3 +23,4 @@ class TypeDecl(rt.TypeDeclKey):
 
     label: str = rt.class_field(optional=True)
     """Readable type label in the front end."""
+

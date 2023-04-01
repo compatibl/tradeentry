@@ -15,7 +15,7 @@
 import cl.runtime as rt
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Iterable, Optional, Union
+from typing import Iterable, Union
 
 
 @dataclass

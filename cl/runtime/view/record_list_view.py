@@ -14,7 +14,7 @@
 
 import cl.runtime as rt
 from dataclasses import dataclass
-from typing import List, Optional, final
+from typing import List, final
 
 
 @final

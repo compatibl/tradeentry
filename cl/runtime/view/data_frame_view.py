@@ -15,7 +15,7 @@
 import cl.runtime as rt
 import pandas as pd
 from dataclasses import dataclass
-from typing import Optional, final
+from typing import final
 
 
 @final
