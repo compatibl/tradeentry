@@ -15,7 +15,7 @@
 from enum import IntFlag
 
 
-class ClLoadOptions(IntFlag):
+class LoadOptions(IntFlag):
     """Optional flags for data source load methods."""
 
     None_ = 0

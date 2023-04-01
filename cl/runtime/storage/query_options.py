@@ -15,7 +15,7 @@
 from enum import IntFlag
 
 
-class ClQueryOptions(IntFlag):
+class QueryOptions(IntFlag):
     """Optional flags for data source query methods."""
 
     None_ = 0

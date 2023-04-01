@@ -16,15 +16,15 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Iterable, List, Optional, Union
 
-from cl.runtime.storage.data_source_key import ClDataSourceKey
-from cl.runtime.storage.delete_options import ClDeleteOptions
-from cl.runtime.storage.load_options import ClLoadOptions
-from cl.runtime.storage.record import ClRecord
-from cl.runtime.storage.save_options import ClSaveOptions
+from cl.runtime.storage.data_source_key import DataSourceKey
+from cl.runtime.storage.delete_options import DeleteOptions
+from cl.runtime.storage.load_options import LoadOptions
+from cl.runtime.storage.record import Record
+from cl.runtime.storage.save_options import SaveOptions
 
 
 @dataclass
-class ClDataSource(ClDataSourceKey, ABC):
+class DataSource(DataSourceKey, ABC):
     """
     Data source is a logical concept similar to database
     that can be implemented for a document DB, relational DB,
@@ -47,11 +47,11 @@ class ClDataSource(ClDataSourceKey, ABC):
     @abstractmethod
     def load_many(
         self,
-        keys: Iterable[Union[str, ClRecord]],
+        keys: Iterable[Union[str, Record]],
         data_set: str,
-        load_options: ClLoadOptions = ClLoadOptions.None_,
+        load_options: LoadOptions = LoadOptions.None_,
         *,
-        out: Iterable[ClRecord],
+        out: Iterable[Record],
     ) -> None:
         """
         Populate the collection of objects specified via the 'out' parameter
@@ -61,7 +61,7 @@ class ClDataSource(ClDataSourceKey, ABC):
 
     @abstractmethod
     def save_many(
-        self, records: Iterable[ClRecord], data_set: str, save_options: ClSaveOptions = ClSaveOptions.None_
+        self, records: Iterable[Record], data_set: str, save_options: SaveOptions = SaveOptions.None_
     ) -> None:
         """
         Save many records to the specified dataset, bypassing the commit
@@ -74,7 +74,7 @@ class ClDataSource(ClDataSourceKey, ABC):
 
     @abstractmethod
     def save_on_commit(
-        self, record: ClRecord, data_set: str, save_options: ClSaveOptions = ClSaveOptions.None_
+        self, record: Record, data_set: str, save_options: SaveOptions = SaveOptions.None_
     ) -> None:
         """
         Add the record to the commit queue using save options if provided
@@ -89,9 +89,9 @@ class ClDataSource(ClDataSourceKey, ABC):
     @abstractmethod
     def delete_many(
         self,
-        keys: Iterable[ClRecord],
+        keys: Iterable[Record],
         data_set: str,
-        delete_options: ClDeleteOptions = ClDeleteOptions.None_,
+        delete_options: DeleteOptions = DeleteOptions.None_,
     ) -> None:
         """
         Delete many records in the specified dataset, bypassing
@@ -112,9 +112,9 @@ class ClDataSource(ClDataSourceKey, ABC):
     @abstractmethod
     def delete_on_commit(
         self,
-        key: ClRecord,
+        key: Record,
         data_set: str,
-        delete_options: ClDeleteOptions = ClDeleteOptions.None_,
+        delete_options: DeleteOptions = DeleteOptions.None_,
     ) -> None:
         """
         Add to commit queue the command to delete record in the
@@ -171,11 +171,11 @@ class ClDataSource(ClDataSourceKey, ABC):
 
     def load_one(
         self,
-        key: Union[str, ClRecord],
+        key: Union[str, Record],
         data_set: str,
-        load_options: ClLoadOptions = ClLoadOptions.None_,
+        load_options: LoadOptions = LoadOptions.None_,
         *,
-        out: ClRecord,
+        out: Record,
     ) -> None:
         """
         Populate the object specified via the 'out' parameter with data
@@ -189,7 +189,7 @@ class ClDataSource(ClDataSourceKey, ABC):
         # Pass arguments to load_many(...)
         self.load_many([key], data_set, load_options, out=[out])
 
-    def save_one(self, record: ClRecord, data_set: str, save_options: ClSaveOptions = ClSaveOptions.None_):
+    def save_one(self, record: Record, data_set: str, save_options: SaveOptions = SaveOptions.None_):
         """
         Save one record to the specified dataset, bypassing the commit
         queue and using save options if provided (see rt.SaveOptions
@@ -208,9 +208,9 @@ class ClDataSource(ClDataSourceKey, ABC):
 
     def delete_one(
         self,
-        key: ClRecord,
+        key: Record,
         data_set: str,
-        delete_options: ClDeleteOptions = ClDeleteOptions.None_,
+        delete_options: DeleteOptions = DeleteOptions.None_,
     ) -> None:
         """
         Delete record with argument key in the specified dataset

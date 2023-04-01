@@ -15,7 +15,7 @@
 from enum import IntFlag
 
 
-class ClSaveOptions(IntFlag):
+class SaveOptions(IntFlag):
     """Optional flags for data source save methods."""
 
     None_ = 0

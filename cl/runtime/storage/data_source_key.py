@@ -15,11 +15,11 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from cl.runtime.storage.data_class_record import ClDataClassRecord
+from cl.runtime.storage.data_class_record import DataClassRecord
 
 
 @dataclass
-class ClDataSourceKey(ClDataClassRecord):
+class DataSourceKey(DataClassRecord):
     """
     Key for the data source record.
 

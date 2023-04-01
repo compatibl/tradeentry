@@ -15,7 +15,7 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from cl.runtime.storage.context import ClContext
+from cl.runtime.storage.context import Context
 from mocks.storage.mock_data_class_record_key import MockDataClassRecordKey
 
 
@@ -29,7 +29,7 @@ class MockDataClassRecord(MockDataClassRecordKey):
     base_record_field_float: Optional[float] = None
     """Float attribute of base class."""
 
-    def populate_with_sample_data(self, context: ClContext) -> None:
+    def populate_with_sample_data(self, context: Context) -> None:
         """Set context and populate self with sample data."""
 
         self.context = context

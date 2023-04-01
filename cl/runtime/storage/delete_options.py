@@ -15,7 +15,7 @@
 from enum import IntFlag
 
 
-class ClDeleteOptions(IntFlag):
+class DeleteOptions(IntFlag):
     """Optional flags for data source delete methods."""
 
     None_ = 0

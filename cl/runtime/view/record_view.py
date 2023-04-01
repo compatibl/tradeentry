@@ -15,12 +15,12 @@
 from dataclasses import dataclass
 from typing import Optional, final
 
-from cl.runtime.view.view import ClView
+from cl.runtime.view.view import View
 
 
 @final
 @dataclass
-class ClRecordView(ClView):
+class RecordView(View):
     """View that displays another record specified via its primary key."""
 
     view_of: Optional[str] = None

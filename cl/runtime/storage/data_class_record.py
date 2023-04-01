@@ -16,11 +16,11 @@ from abc import ABC
 from dataclasses import asdict, dataclass
 from typing import Any, Dict
 
-from cl.runtime.storage.record import ClRecord
+from cl.runtime.storage.record import Record
 
 
 @dataclass
-class ClDataClassRecord(ClRecord, ABC):
+class DataClassRecord(Record, ABC):
     """
     Base class for polymorphic records where all serializable
     data is stored in dataclass fields.

@@ -15,10 +15,10 @@
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
 
-from cl.runtime.storage.context import ClContext
+from cl.runtime.storage.context import Context
 
 
-class ClRecord(ABC):
+class Record(ABC):
     """
     Base class for database records that can be stored in a document DB,
     relational DB, key-value store, or filesystem.
@@ -30,7 +30,7 @@ class ClRecord(ABC):
     * from_dict(data_dict) - populate self from dictionary
     """
 
-    context: Optional[ClContext]
+    context: Optional[Context]
     """
     Context provides platform-independent APIs for:
 
@@ -63,8 +63,8 @@ class ClRecord(ABC):
         simple_key = rt.Type1;A;B
 
         For composite keys, the embedded keys are surrounded by curly braces.
-        Helper method ClRecordUtil.composite_pk(...) is provided for generating
-        such keys, and ClRecordUtil.split_composite_pk(...) for splitting them:
+        Helper method RecordUtil.composite_pk(...) is provided for generating
+        such keys, and RecordUtil.split_composite_pk(...) for splitting them:
 
         composite_key = rt.Type1;{rt.Type2;A;B};C
 

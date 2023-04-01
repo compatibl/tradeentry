@@ -17,12 +17,12 @@ from typing import Optional, final
 
 import pandas as pd
 
-from cl.runtime.view.view import ClView
+from cl.runtime.view.view import View
 
 
 @final
 @dataclass
-class ClDataFrameView(ClView):
+class DataFrameView(View):
     """View that displays contents of a dataframe."""
 
     view_of: Optional[pd.DataFrame] = None

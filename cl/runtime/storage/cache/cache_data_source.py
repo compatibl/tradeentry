@@ -16,15 +16,15 @@ from copy import deepcopy
 from dataclasses import dataclass, field
 from typing import Dict, Iterable, List, Optional, Union
 
-from cl.runtime.storage.data_source import ClDataSource
-from cl.runtime.storage.delete_options import ClDeleteOptions
-from cl.runtime.storage.load_options import ClLoadOptions
-from cl.runtime.storage.record import ClRecord
-from cl.runtime.storage.save_options import ClSaveOptions
+from cl.runtime.storage.data_source import DataSource
+from cl.runtime.storage.delete_options import DeleteOptions
+from cl.runtime.storage.load_options import LoadOptions
+from cl.runtime.storage.record import Record
+from cl.runtime.storage.save_options import SaveOptions
 
 
 @dataclass
-class ClCacheDataSource(ClDataSource):
+class CacheDataSource(DataSource):
     """Data source based on in-memory cache using Python dict."""
 
     _cache: Dict[str, Dict] = field(default_factory=dict)
@@ -37,11 +37,11 @@ class ClCacheDataSource(ClDataSource):
 
     def load_many(
         self,
-        keys: Iterable[Union[str, ClRecord]],
+        keys: Iterable[Union[str, Record]],
         data_set: str,
-        load_options: ClLoadOptions = ClLoadOptions.None_,
+        load_options: LoadOptions = LoadOptions.None_,
         *,
-        out: Iterable[ClRecord],
+        out: Iterable[Record],
     ) -> None:
         """
         Populate the collection of objects specified via the 'out' parameter
@@ -60,7 +60,7 @@ class ClCacheDataSource(ClDataSource):
         for key, out in zipped:
             # Handle key=None and check key type
             if key is None:
-                if load_options & ClLoadOptions.IgnoreNullKey == ClLoadOptions.IgnoreNullKey:
+                if load_options & LoadOptions.IgnoreNullKey == LoadOptions.IgnoreNullKey:
                     return None
                 else:
                     raise RuntimeError(
@@ -68,10 +68,10 @@ class ClCacheDataSource(ClDataSource):
                     )
             elif isinstance(key, str):
                 pk = key
-            elif isinstance(key, ClRecord):
+            elif isinstance(key, Record):
                 pk = key.to_pk()
             else:
-                raise RuntimeError('Key {key} is not a string, derived type of ClRecord, or None')
+                raise RuntimeError('Key {key} is not a string, derived type of Record, or None')
 
             # Try to retrieve dataset dictionary, insert if it does not yet exist
             dataset_cache = self._cache.setdefault(data_set, {})
@@ -81,7 +81,7 @@ class ClCacheDataSource(ClDataSource):
 
             # Check if result is None
             if record_dict is None:
-                if load_options & ClLoadOptions.IgnoreNotFound == ClLoadOptions.IgnoreNotFound:
+                if load_options & LoadOptions.IgnoreNotFound == LoadOptions.IgnoreNotFound:
                     return None
                 else:
                     raise RuntimeError(
@@ -103,7 +103,7 @@ class ClCacheDataSource(ClDataSource):
                 )
 
     def save_many(
-        self, records: Iterable[ClRecord], data_set: str, save_options: ClSaveOptions = ClSaveOptions.None_
+        self, records: Iterable[Record], data_set: str, save_options: SaveOptions = SaveOptions.None_
     ) -> None:
         """
         Save many records to the specified dataset, bypassing the commit
@@ -134,7 +134,7 @@ class ClCacheDataSource(ClDataSource):
             dataset_cache[pk] = record_dict
 
     def save_on_commit(
-        self, record: ClRecord, data_set: str, save_options: ClSaveOptions = ClSaveOptions.None_
+        self, record: Record, data_set: str, save_options: SaveOptions = SaveOptions.None_
     ) -> None:
         """
         Add the record to the commit queue using save options if provided
@@ -148,9 +148,9 @@ class ClCacheDataSource(ClDataSource):
 
     def delete_many(
         self,
-        keys: Iterable[ClRecord],
+        keys: Iterable[Record],
         data_set: str,
-        delete_options: ClDeleteOptions = ClDeleteOptions.None_,
+        delete_options: DeleteOptions = DeleteOptions.None_,
     ) -> None:
         """
         Delete many records in the specified dataset, bypassing
@@ -170,9 +170,9 @@ class ClCacheDataSource(ClDataSource):
 
     def delete_on_commit(
         self,
-        key: ClRecord,
+        key: Record,
         data_set: str,
-        delete_options: ClDeleteOptions = ClDeleteOptions.None_,
+        delete_options: DeleteOptions = DeleteOptions.None_,
     ) -> None:
         """
         Add to commit queue the command to delete record in the

@@ -15,8 +15,8 @@
 from typing import List
 
 
-class ClRecordUtil:
-    """Helper methods for ClRecord."""
+class RecordUtil:
+    """Helper methods for Record."""
 
     def composite_pk(*tokens) -> str:
         """

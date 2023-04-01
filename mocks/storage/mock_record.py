@@ -15,7 +15,7 @@
 from typing import Any, Dict, Optional
 
 import cl.runtime as rt
-from cl.runtime.storage.context import ClContext
+from cl.runtime.storage.context import Context
 
 
 class MockRecord(rt.Record):
@@ -62,7 +62,7 @@ class MockRecord(rt.Record):
         self.base_record_field_float = data.get('base_record_field_float')
         # TODO: detect extra fields in dict which are not in class and raise error
 
-    def populate_with_sample_data(self, context: ClContext) -> None:
+    def populate_with_sample_data(self, context: Context) -> None:
         """Set context and populate self with sample data."""
 
         self.context = context
