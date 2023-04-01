@@ -14,12 +14,15 @@
 
 import cl.runtime as rt
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List, Union
 
 
 @dataclass
 class DataDecl(rt.TypeDecl):
     """Declaration for serializable data with fields."""
+
+    parent: Union[str, rt.TypeDeclKey] = rt.class_field(optional=True)
+    """Parent type key or record must resolve to DataDecl or its descendants."""
 
     fields: List[rt.FieldDecl] = rt.class_field()
     """
