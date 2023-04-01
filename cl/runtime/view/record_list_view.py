@@ -12,15 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 from dataclasses import dataclass
 from typing import List, final
 
 
 @final
 @dataclass
-class RecordListView(rt.View):
+class RecordListView(View):
     """View that displays a list of record specified via their primary keys."""
 
-    view_of: List[str] = rt.class_field()
+    view_of: List[str] = class_field()
     """Primary keys of the displayed records."""

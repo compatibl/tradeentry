@@ -12,15 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 from dataclasses import dataclass
 from typing import Union
 
 
 @dataclass
-class TypeDecl(rt.TypeDeclKey):
+class TypeDecl(TypeDeclKey):
     """Base class of type declaration in schema."""
 
-    label: str = rt.class_field(optional=True)
+    label: str = class_field(optional=True)
     """Readable type label in the front end."""
 

@@ -12,14 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 from copy import deepcopy
 from dataclasses import dataclass, field
 from typing import Dict, Iterable, Union
 
 
 @dataclass
-class CacheDataSource(rt.DataSource):
+class CacheDataSource(DataSource):
     """Data source based on in-memory cache using Python dict."""
 
     _cache: Dict[str, Dict] = field(default_factory=dict)
@@ -32,16 +31,16 @@ class CacheDataSource(rt.DataSource):
 
     def load_many(
         self,
-        keys: Iterable[Union[str, rt.Record]],
+        keys: Iterable[Union[str, Record]],
         data_set: str,
-        load_options: rt.LoadOptions = rt.LoadOptions.None_,
+        load_options: LoadOptions = LoadOptions.None_,
         *,
-        out: Iterable[rt.Record],
+        out: Iterable[Record],
     ) -> None:
         """
         Populate the collection of objects specified via the 'out' parameter
         with data loaded from the specified dataset and collection of keys,
-        using load options if provided (see rt.LoadOptions class for details).
+        using load options if provided (see LoadOptions class for details).
         """
 
         # TODO: Implement using zip(keys, out, strict=True) in Python 3.10
@@ -55,7 +54,7 @@ class CacheDataSource(rt.DataSource):
         for key, out in zipped:
             # Handle key=None and check key type
             if key is None:
-                if load_options & rt.LoadOptions.IgnoreNullKey == rt.LoadOptions.IgnoreNullKey:
+                if load_options & LoadOptions.IgnoreNullKey == LoadOptions.IgnoreNullKey:
                     return None
                 else:
                     raise RuntimeError(
@@ -63,7 +62,7 @@ class CacheDataSource(rt.DataSource):
                     )
             elif isinstance(key, str):
                 pk = key
-            elif isinstance(key, rt.Record):
+            elif isinstance(key, Record):
                 pk = key.to_pk()
             else:
                 raise RuntimeError('Key {key} is not a string, derived type of Record, or None')
@@ -76,7 +75,7 @@ class CacheDataSource(rt.DataSource):
 
             # Check if result is None
             if record_dict is None:
-                if load_options & rt.LoadOptions.IgnoreNotFound == rt.LoadOptions.IgnoreNotFound:
+                if load_options & LoadOptions.IgnoreNotFound == LoadOptions.IgnoreNotFound:
                     return None
                 else:
                     raise RuntimeError(
@@ -98,11 +97,11 @@ class CacheDataSource(rt.DataSource):
                 )
 
     def save_many(
-        self, records: Iterable[rt.Record], data_set: str, save_options: rt.SaveOptions = rt.SaveOptions.None_
+        self, records: Iterable[Record], data_set: str, save_options: SaveOptions = SaveOptions.None_
     ) -> None:
         """
         Save many records to the specified dataset, bypassing the commit
-        queue and using save options if provided (see rt.SaveOptions
+        queue and using save options if provided (see SaveOptions
         class for details).
 
         This method does not implicitly call commit(). The commit queue
@@ -129,11 +128,11 @@ class CacheDataSource(rt.DataSource):
             dataset_cache[pk] = record_dict
 
     def save_on_commit(
-        self, record: rt.Record, data_set: str, save_options: rt.SaveOptions = rt.SaveOptions.None_
+        self, record: Record, data_set: str, save_options: SaveOptions = SaveOptions.None_
     ) -> None:
         """
         Add the record to the commit queue using save options if provided
-        (see rt.SaveOptions class for details).
+        (see SaveOptions class for details).
 
         The record will not be saved until a call to commit() which
         executes all pending requests in the commit queue. Alternatively,
@@ -143,20 +142,20 @@ class CacheDataSource(rt.DataSource):
 
     def delete_many(
         self,
-        keys: Iterable[rt.Record],
+        keys: Iterable[Record],
         data_set: str,
-        delete_options: rt.DeleteOptions = rt.DeleteOptions.None_,
+        delete_options: DeleteOptions = DeleteOptions.None_,
     ) -> None:
         """
         Delete many records in the specified dataset, bypassing
         the commit queue and using delete options if provided
-        (see rt.DeleteOptions class for details).
+        (see DeleteOptions class for details).
 
         This method does not implicitly call commit(). The commit queue
         will remain in its original state after the method exits.
 
         Depending on data source implementation, this method may
-        delete a record or write the delete marker (rt.DeletedRecord)
+        delete a record or write the delete marker (DeletedRecord)
         to shadow previous versions of the record or records with
         the same key in a parent dataset. This ensures that records
         with the same primary key in dataset and/or data source lookup
@@ -165,14 +164,14 @@ class CacheDataSource(rt.DataSource):
 
     def delete_on_commit(
         self,
-        key: rt.Record,
+        key: Record,
         data_set: str,
-        delete_options: rt.DeleteOptions = rt.DeleteOptions.None_,
+        delete_options: DeleteOptions = DeleteOptions.None_,
     ) -> None:
         """
         Add to commit queue the command to delete record in the
         specified dataset, using delete options if provided (see
-        rt.DeleteOptions class for details). No error is raised
+        DeleteOptions class for details). No error is raised
         if the record does not exist.
 
         The record will not be saved until a call to commit() which
@@ -181,7 +180,7 @@ class CacheDataSource(rt.DataSource):
         the pending requests.
 
         Depending on data source implementation, this method may
-        delete a record or write the delete marker (rt.DeletedRecord)
+        delete a record or write the delete marker (DeletedRecord)
         to shadow previous versions of the record or records with
         the same key in a parent dataset. This ensures that records
         with the same primary key in dataset and/or data source lookup

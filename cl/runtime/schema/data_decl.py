@@ -12,19 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 from dataclasses import dataclass
 from typing import List, Union
 
 
 @dataclass
-class DataDecl(rt.TypeDecl):
+class DataDecl(TypeDecl):
     """Declaration for serializable data with fields."""
 
-    parent: Union[str, rt.TypeDeclKey] = rt.class_field(optional=True)
+    parent: Union[str, TypeDeclKey] = class_field(optional=True)
     """Parent type key or record must resolve to DataDecl or its descendants."""
 
-    fields: List[rt.FieldDecl] = rt.class_field()
+    fields: List[FieldDecl] = class_field()
     """
     List of fields with detailed type information.
 

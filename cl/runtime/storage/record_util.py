@@ -25,9 +25,9 @@ class RecordUtil:
 
         Examples:
 
-        * (rt.Type1, A, B) -> 'rt.Type1;A;B'
-        * (rt.Type2, rt.Type1;A;B, C) -> 'rt.Type2;{rt.Type1;A;B};C'
-        * (rt.Type3, rt.Type2;{rt.Type1;A;B};C, D) -> 'rt.Type3;{rt.Type2;{rt.Type1;A;B};C};D'
+        * (Type1, A, B) -> 'rt.Type1;A;B'
+        * (Type2, Type1;A;B, C) -> 'rt.Type2;{Type1;A;B};C'
+        * (Type3, Type2;{Type1;A;B};C, D) -> 'rt.Type3;{Type2;{Type1;A;B};C};D'
         """
         escaped_tokens = [f'{{{t}}}' if ';' in str(t) else str(t) for t in tokens]
         return ';'.join(escaped_tokens)
@@ -40,8 +40,8 @@ class RecordUtil:
 
         Example:
 
-        * 'rt.Type1;A;B' -> [rt.Type1, A, B]
-        * 'rt.Type2;{rt.Type1;A;B};C' -> Error, contains an embedded key
+        * 'rt.Type1;A;B' -> [Type1, A, B]
+        * 'rt.Type2;{Type1;A;B};C' -> Error, contains an embedded key
         """
 
         # Split by semicolon first
@@ -62,9 +62,9 @@ class RecordUtil:
 
         Examples:
 
-        * 'rt.Type1;A;B' -> [rt.Type1, A, B]
-        * 'rt.Type2;{rt.Type1;A;B};C' -> [rt.Type2, rt.Type1;A;B, C]
-        * 'rt.Type3;{rt.Type2;{rt.Type1;A;B};C};D' -> [rt.Type3, rt.Type2;{rt.Type1;A;B};C, D]
+        * 'rt.Type1;A;B' -> [Type1, A, B]
+        * 'rt.Type2;{Type1;A;B};C' -> [Type2, Type1;A;B, C]
+        * 'rt.Type3;{Type2;{Type1;A;B};C};D' -> [Type3, Type2;{Type1;A;B};C, D]
         """
 
         # Split by semicolon first

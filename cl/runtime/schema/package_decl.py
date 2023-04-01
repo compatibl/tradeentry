@@ -12,13 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 from dataclasses import dataclass
 
 
 @dataclass
-class PackageDecl(rt.PackageDeclKey):
+class PackageDecl(PackageDeclKey):
     """Base class for the package declaration in schema."""
 
-    label: str = rt.class_field(optional=True)
+    label: str = class_field(optional=True)
     """Readable package label used by the front end."""

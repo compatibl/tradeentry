@@ -12,15 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 from dataclasses import dataclass
 from typing import final
 
 
 @final
 @dataclass
-class RecordView(rt.View):
+class RecordView(View):
     """View that displays another record specified via its primary key."""
 
-    view_of: str = rt.class_field()
+    view_of: str = class_field()
     """Primary key of the displayed record."""

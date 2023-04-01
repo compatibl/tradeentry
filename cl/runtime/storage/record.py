@@ -12,12 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
 
 
-class Record(rt.Data):
+class Record(Data):
     """
     Base class for database records that can be stored in a document DB,
     relational DB, key-value store, or filesystem.
@@ -29,7 +28,7 @@ class Record(rt.Data):
     * from_dict(data_dict) - populate self from dictionary
     """
 
-    context: Optional[rt.Context]
+    context: Optional[Context]
     """
     Context provides platform-independent APIs for:
 
@@ -59,15 +58,15 @@ class Record(rt.Data):
         The key consists of database table name in dot-delimited format,
         followed by primary key attributes in semicolon-delimited format:
 
-        simple_key = rt.Type1;A;B
+        simple_key = Type1;A;B
 
         For composite keys, the embedded keys are surrounded by curly braces.
         Helper method RecordUtil.composite_pk(...) is provided for generating
         such keys, and RecordUtil.split_composite_pk(...) for splitting them:
 
-        composite_key = rt.Type1;{rt.Type2;A;B};C
+        composite_key = Type1;{Type2;A;B};C
 
-        The first token of the key (i.e. rt.Type1,2) is database table name.
+        The first token of the key (i.e. Type1,2) is database table name.
         It can be customized as long as name collisions are avoided.
         """
 

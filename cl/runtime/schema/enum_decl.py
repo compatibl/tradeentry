@@ -12,10 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 from dataclasses import dataclass
 
 
 @dataclass
-class EnumDecl(rt.TypeDecl):
+class EnumDecl(TypeDecl):
     """Declaration for an enum type."""

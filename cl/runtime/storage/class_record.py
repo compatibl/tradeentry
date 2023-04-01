@@ -12,21 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 from abc import ABC
 from dataclasses import asdict, dataclass
 from typing import Any, Dict
 
 
 @dataclass
-class ClassRecord(rt.Record, ABC):
+class ClassRecord(Record, ABC):
     """
     Base class for polymorphic records where all serializable
     data is stored in dataclass fields.
 
     The recommended inheritance chain includes two classes:
 
-    rt.ClassRecord > SampleRecordKey > SampleRecord > DerivedRecord
+    ClassRecord > SampleRecordKey > SampleRecord > DerivedRecord
 
     * SampleRecordKey contains primary key attributes. It can be used
       as a foreign key attribute in other data classes, providing
@@ -37,7 +36,7 @@ class ClassRecord(rt.Record, ABC):
     If a separate key class is not required, a simpler inheritance
     chain can be used:
 
-    rt.ClassRecord > SampleRecord > DerivedRecord
+    ClassRecord > SampleRecord > DerivedRecord
 
     With this simpler inheritance chain, foreign key can be stored in
     other data types with runtime type safety as the string generated

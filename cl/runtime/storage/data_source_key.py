@@ -12,12 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 from dataclasses import dataclass
 
 
 @dataclass
-class DataSourceKey(rt.ClassRecord):
+class DataSourceKey(ClassRecord):
     """
     Key for the data source record.
 
@@ -36,7 +35,7 @@ class DataSourceKey(rt.ClassRecord):
     This record is always stored in root dataset.
     """
 
-    data_source_id: str = rt.class_field()
+    data_source_id: str = class_field()
     """Unique data source identifier."""
 
     def to_pk(self) -> str:

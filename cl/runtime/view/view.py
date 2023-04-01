@@ -12,12 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 from dataclasses import dataclass
 
 
 @dataclass
-class View(rt.ViewKey):
+class View(ViewKey):
     """
     The data shown alongside the record in the front end.
 

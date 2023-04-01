@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 import pandas as pd
 from dataclasses import dataclass
 from typing import final
@@ -20,8 +19,8 @@ from typing import final
 
 @final
 @dataclass
-class DataFrameView(rt.View):
+class DataFrameView(View):
     """View that displays contents of a dataframe."""
 
-    view_of: pd.DataFrame = rt.class_field()
+    view_of: pd.DataFrame = class_field()
     """Dataframe with view contents."""

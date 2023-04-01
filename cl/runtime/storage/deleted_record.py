@@ -12,20 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 from dataclasses import dataclass
 from typing import Any, Dict, Optional
 
 
 @dataclass
-class DeletedRecord(rt.Record):
+class DeletedRecord(Record):
     """
     Represents a deleted record in commit queue and in those
     cases when the database is write-once, or to shadow records
     in parent datasets or data sources from lookup.
     """
 
-    pk: str = rt.class_field()
+    pk: str = class_field()
     """Primary key (PK) string."""
 
     def to_pk(self) -> str:

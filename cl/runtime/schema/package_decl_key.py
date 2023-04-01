@@ -12,15 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 from dataclasses import dataclass
 
 
 @dataclass
-class PackageDeclKey(rt.ClassRecord):
+class PackageDeclKey(ClassRecord):
     """Key for the package declaration in schema."""
 
-    package_id: str = rt.class_field()
+    package_id: str = class_field()
     """Unique package identifier."""
 
     def to_pk(self) -> str:

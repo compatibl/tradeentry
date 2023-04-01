@@ -12,14 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Iterable, Union
 
 
 @dataclass
-class DataSource(rt.DataSourceKey, ABC):
+class DataSource(DataSourceKey, ABC):
     """
     Data source is a logical concept similar to database
     that can be implemented for a document DB, relational DB,
@@ -36,31 +35,31 @@ class DataSource(rt.DataSourceKey, ABC):
     This record is always stored in root dataset.
     """
 
-    read_only: bool = rt.class_field(optional=True)
+    read_only: bool = class_field(optional=True)
     """Use this flag to mark the data source as readonly. All write operations will fail with error if set."""
 
     @abstractmethod
     def load_many(
         self,
-        keys: Iterable[Union[str, rt.Record]],
+        keys: Iterable[Union[str, Record]],
         data_set: str,
-        load_options: rt.LoadOptions = rt.LoadOptions.None_,
+        load_options: LoadOptions = LoadOptions.None_,
         *,
-        out: Iterable[rt.Record],
+        out: Iterable[Record],
     ) -> None:
         """
         Populate the collection of objects specified via the 'out' parameter
         with data loaded from the specified dataset and collection of keys,
-        using load options if provided (see rt.LoadOptions class for details).
+        using load options if provided (see LoadOptions class for details).
         """
 
     @abstractmethod
     def save_many(
-        self, records: Iterable[rt.Record], data_set: str, save_options: rt.SaveOptions = rt.SaveOptions.None_
+        self, records: Iterable[Record], data_set: str, save_options: SaveOptions = SaveOptions.None_
     ) -> None:
         """
         Save many records to the specified dataset, bypassing the commit
-        queue and using save options if provided (see rt.SaveOptions
+        queue and using save options if provided (see SaveOptions
         class for details).
 
         This method does not implicitly call commit(). The commit queue
@@ -69,11 +68,11 @@ class DataSource(rt.DataSourceKey, ABC):
 
     @abstractmethod
     def save_on_commit(
-        self, record: rt.Record, data_set: str, save_options: rt.SaveOptions = rt.SaveOptions.None_
+        self, record: Record, data_set: str, save_options: SaveOptions = SaveOptions.None_
     ) -> None:
         """
         Add the record to the commit queue using save options if provided
-        (see rt.SaveOptions class for details).
+        (see SaveOptions class for details).
 
         The record will not be saved until a call to commit() which
         executes all pending requests in the commit queue. Alternatively,
@@ -84,20 +83,20 @@ class DataSource(rt.DataSourceKey, ABC):
     @abstractmethod
     def delete_many(
         self,
-        keys: Iterable[rt.Record],
+        keys: Iterable[Record],
         data_set: str,
-        delete_options: rt.DeleteOptions = rt.DeleteOptions.None_,
+        delete_options: DeleteOptions = DeleteOptions.None_,
     ) -> None:
         """
         Delete many records in the specified dataset, bypassing
         the commit queue and using delete options if provided
-        (see rt.DeleteOptions class for details).
+        (see DeleteOptions class for details).
 
         This method does not implicitly call commit(). The commit queue
         will remain in its original state after the method exits.
 
         Depending on data source implementation, this method may
-        delete a record or write the delete marker (rt.DeletedRecord)
+        delete a record or write the delete marker (DeletedRecord)
         to shadow previous versions of the record or records with
         the same key in a parent dataset. This ensures that records
         with the same primary key in dataset and/or data source lookup
@@ -107,14 +106,14 @@ class DataSource(rt.DataSourceKey, ABC):
     @abstractmethod
     def delete_on_commit(
         self,
-        key: rt.Record,
+        key: Record,
         data_set: str,
-        delete_options: rt.DeleteOptions = rt.DeleteOptions.None_,
+        delete_options: DeleteOptions = DeleteOptions.None_,
     ) -> None:
         """
         Add to commit queue the command to delete record in the
         specified dataset, using delete options if provided (see
-        rt.DeleteOptions class for details). No error is raised
+        DeleteOptions class for details). No error is raised
         if the record does not exist.
 
         The record will not be saved until a call to commit() which
@@ -123,7 +122,7 @@ class DataSource(rt.DataSourceKey, ABC):
         the pending requests.
 
         Depending on data source implementation, this method may
-        delete a record or write the delete marker (rt.DeletedRecord)
+        delete a record or write the delete marker (DeletedRecord)
         to shadow previous versions of the record or records with
         the same key in a parent dataset. This ensures that records
         with the same primary key in dataset and/or data source lookup
@@ -166,16 +165,16 @@ class DataSource(rt.DataSourceKey, ABC):
 
     def load_one(
         self,
-        key: Union[str, rt.Record],
+        key: Union[str, Record],
         data_set: str,
-        load_options: rt.LoadOptions = rt.LoadOptions.None_,
+        load_options: LoadOptions = LoadOptions.None_,
         *,
-        out: rt.Record,
+        out: Record,
     ) -> None:
         """
         Populate the object specified via the 'out' parameter with data
         loaded from the specified dataset and key, using load options if
-        provided (see rt.LoadOptions class for details).
+        provided (see LoadOptions class for details).
 
         Invoking load_one method in a loop for many keys will lead to performance
         deterioration; load_many method should be used instead.
@@ -184,10 +183,10 @@ class DataSource(rt.DataSourceKey, ABC):
         # Pass arguments to load_many(...)
         self.load_many([key], data_set, load_options, out=[out])
 
-    def save_one(self, record: rt.Record, data_set: str, save_options: rt.SaveOptions = rt.SaveOptions.None_):
+    def save_one(self, record: Record, data_set: str, save_options: SaveOptions = SaveOptions.None_):
         """
         Save one record to the specified dataset, bypassing the commit
-        queue and using save options if provided (see rt.SaveOptions
+        queue and using save options if provided (see SaveOptions
         class for details).
 
         This method does not implicitly call commit(). The commit queue
@@ -203,14 +202,14 @@ class DataSource(rt.DataSourceKey, ABC):
 
     def delete_one(
         self,
-        key: rt.Record,
+        key: Record,
         data_set: str,
-        delete_options: rt.DeleteOptions = rt.DeleteOptions.None_,
+        delete_options: DeleteOptions = DeleteOptions.None_,
     ) -> None:
         """
         Delete record with argument key in the specified dataset
         bypassing the commit queue, using delete options if provided
-        (see rt.DeleteOptions class for details). No error is raised
+        (see DeleteOptions class for details). No error is raised
         if the record does not exist.
 
         This method does not implicitly call commit(). The commit queue
@@ -221,7 +220,7 @@ class DataSource(rt.DataSourceKey, ABC):
         series of delete_on_commit(...) calls, followed by commit().
 
         Depending on data source implementation, this method may
-        delete a record or write the delete marker (rt.DeletedRecord)
+        delete a record or write the delete marker (DeletedRecord)
         to shadow previous versions of the record or records with
         the same key in a parent dataset. This ensures that records
         with the same primary key in dataset and/or data source lookup

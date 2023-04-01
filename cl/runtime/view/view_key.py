@@ -12,12 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 from dataclasses import dataclass
 
 
 @dataclass
-class ViewKey(rt.ClassRecord):
+class ViewKey(ClassRecord):
     """
     The data shown alongside the record in the front end.
 
@@ -28,14 +27,14 @@ class ViewKey(rt.ClassRecord):
     tab or panel next to the record itself.
     """
 
-    view_for: str = rt.class_field()
+    view_for: str = class_field()
     """Primary key of the record for which the view is specified."""
 
-    view_name: str = rt.class_field()
+    view_name: str = class_field()
     """Name of the view displayed in the front end."""
 
     def to_pk(self) -> str:
         """Return primary key (PK) as string."""
 
         # Use composite_pk(...) method because one of the tokens is an embedded key
-        return rt.RecordUtil.composite_pk('rt.View', self.view_for, self.view_name)
+        return RecordUtil.composite_pk('rt.View', self.view_for, self.view_name)

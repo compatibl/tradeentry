@@ -12,13 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 from dataclasses import dataclass
 
 
 @dataclass
-class PrimitiveDecl(rt.TypeDecl):
+class PrimitiveDecl(TypeDecl):
     """Declaration for a primitive type."""
 
-    base_type: str = rt.class_field()
+    base_type: str = class_field()
     """Builtin type in which the data is stored."""

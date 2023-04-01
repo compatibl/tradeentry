@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 from abc import ABC
 from dataclasses import asdict, dataclass, field
 from typing import Any, Dict, Optional
@@ -24,7 +23,7 @@ def class_field(*, typename: Optional[str] = None, label: Optional[str] = None, 
 
 
 @dataclass
-class ClassData(rt.Data, ABC):
+class ClassData(Data, ABC):
     """
     Base class for polymorphic types where all serializable
     data is stored in dataclass fields.

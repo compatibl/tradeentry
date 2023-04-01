@@ -12,29 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 from dataclasses import dataclass
 from typing import Union
 
 
 @dataclass
-class FieldDecl(rt.ClassData):
+class FieldDecl(ClassData):
     """Base class of type declaration in schema."""
 
-    name: str = rt.class_field()
+    name: str = class_field()
     """Field name in code and storage."""
 
-    label: str = rt.class_field(optional=True)
+    label: str = class_field(optional=True)
     """Readable field label in the front end."""
 
-    type: Union[str, rt.TypeDeclKey] = rt.class_field()
+    type: Union[str, TypeDeclKey] = class_field()
     """Field type."""
 
-    dim: int = rt.class_field(optional=True)
+    dim: int = class_field(optional=True)
     """List, array, or tensor dimension (defaults to scalar, i.e., the value of zero, if not specified)."""
 
-    optional: bool = rt.class_field(optional=True)
+    optional: bool = class_field(optional=True)
     """True if field is optional (defaults to required if not specified)."""
 
-    contains_optional: bool = rt.class_field(optional=True)
+    contains_optional: bool = class_field(optional=True)
     """True if list, array, or tensor elements are optional (defaults to required if not specified)."""

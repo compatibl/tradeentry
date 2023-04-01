@@ -12,19 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 from dataclasses import dataclass
 
 
 @dataclass
-class TypeDeclKey(rt.ClassRecord):
+class TypeDeclKey(ClassRecord):
     """Key for the base class of type declaration in schema."""
 
-    type_id: str = rt.class_field()
+    type_id: str = class_field()
     """
-    Unique dot-delimited type identifier. May optionally include package alias,
-    for example TypeDecl, rt.TypeDecl, or cl.runtime.TypeDecl.
-
+    Unique dot-delimited type identifier. May optionally include package alias.
     Used for table name in storage, and _type field in JSON.
     """
 
