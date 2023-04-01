@@ -73,9 +73,7 @@ class DataSource(DataSourceKey, ABC):
         """
 
     @abstractmethod
-    def save_on_commit(
-        self, record: Record, data_set: str, save_options: SaveOptions = SaveOptions.None_
-    ) -> None:
+    def save_on_commit(self, record: Record, data_set: str, save_options: SaveOptions = SaveOptions.None_) -> None:
         """
         Add the record to the commit queue using save options if provided
         (see rt.SaveOptions class for details).
