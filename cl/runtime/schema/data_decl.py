@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from typing import Optional, List
+from typing import List, Optional
 
 import cl.runtime as rt
 
@@ -29,4 +29,3 @@ class DataDecl(rt.TypeDecl):
     Serialization and front end uses the order of fields inside declaration,
     ordered between classes from base to derived.
     """
-

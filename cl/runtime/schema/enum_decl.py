@@ -21,4 +21,3 @@ import cl.runtime as rt
 @dataclass
 class EnumDecl(rt.TypeDecl):
     """Declaration for an enum type."""
-

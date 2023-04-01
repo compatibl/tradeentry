@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from abc import ABC
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from typing import Any, Dict, Optional
 
 import cl.runtime as rt

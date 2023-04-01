@@ -28,4 +28,3 @@ class PackageDeclKey(rt.ClassRecord):
     def to_pk(self) -> str:
         """Return primary key (PK) as string."""
         return f'rt.PackageDecl;{self.package_id}'
-

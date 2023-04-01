@@ -25,6 +25,3 @@ from cl.runtime.schema.field_decl import FieldDecl
 from cl.runtime.schema.primitive_decl import PrimitiveDecl
 from cl.runtime.schema.enum_decl import EnumDecl
 from cl.runtime.schema.data_decl import DataDecl
-
-
-

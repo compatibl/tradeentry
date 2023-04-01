@@ -129,7 +129,9 @@ class CacheDataSource(rt.DataSource):
             # Insert the record into dataset dictionary
             dataset_cache[pk] = record_dict
 
-    def save_on_commit(self, record: rt.Record, data_set: str, save_options: rt.SaveOptions = rt.SaveOptions.None_) -> None:
+    def save_on_commit(
+        self, record: rt.Record, data_set: str, save_options: rt.SaveOptions = rt.SaveOptions.None_
+    ) -> None:
         """
         Add the record to the commit queue using save options if provided
         (see rt.SaveOptions class for details).

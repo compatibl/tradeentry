@@ -24,4 +24,3 @@ class PrimitiveDecl(rt.TypeDecl):
 
     base_type: str = rt.class_field()
     """Builtin type in which the data is stored."""
-

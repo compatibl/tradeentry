@@ -48,4 +48,3 @@ class Data(ABC):
         The implementation of this method perform deep copy of the input
         in case the argument dictionary changes after this method is invoked.
         """
-
