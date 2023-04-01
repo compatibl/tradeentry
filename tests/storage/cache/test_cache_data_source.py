@@ -14,7 +14,7 @@
 
 import pytest
 import cl.runtime as rt
-import mocks
+from tests.storage.mock_record import MockRecord
 
 
 class TestCacheDataSource:
@@ -29,14 +29,14 @@ class TestCacheDataSource:
 
         # Create test record and populate with sample data
         context = rt.Context()
-        record = mocks.MockRecord()
+        record = MockRecord()
         record.populate_with_sample_data(context)
         pk = record.to_pk()
         record_dict = record.to_dict()
 
         # Test saving and loading
         data_source.save_one(record, data_set)
-        loaded_record = mocks.MockRecord()
+        loaded_record = MockRecord()
         data_source.load_one(pk, data_set, out=loaded_record)
         loaded_record_dict = loaded_record.to_dict()
         assert loaded_record_dict == record_dict

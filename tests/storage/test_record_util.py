@@ -14,7 +14,6 @@
 
 import pytest
 import cl.runtime as rt
-import re
 
 SIMPLE_PK = 'rt.Type1;A;B'
 SIMPLE_TOKENS = ['rt.Type1', 'A', 'B']
