@@ -8,7 +8,7 @@ with open('./requirements.txt') as requirements_file:
 
 setuptools.setup(
     name='cl-runtime',
-    version='2.0.1',
+    version='2.0.2',
     author='The Project Contributors',
     description='CompatibL Runtime Community Edition',
     long_description=readme,
