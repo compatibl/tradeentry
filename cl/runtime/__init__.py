@@ -17,6 +17,14 @@ from cl.runtime.view.view import View
 from cl.runtime.view.record_view import RecordView
 from cl.runtime.view.data_frame_view import DataFrameView
 from cl.runtime.view.record_list_view import RecordListView
+from cl.runtime.schema.package_decl_key import PackageDeclKey
+from cl.runtime.schema.package_decl import PackageDecl
+from cl.runtime.schema.type_decl_key import TypeDeclKey
+from cl.runtime.schema.type_decl import TypeDecl
+from cl.runtime.schema.field_decl import FieldDecl
+from cl.runtime.schema.primitive_decl import PrimitiveDecl
+from cl.runtime.schema.enum_decl import EnumDecl
+from cl.runtime.schema.data_decl import DataDecl
 
 
 
