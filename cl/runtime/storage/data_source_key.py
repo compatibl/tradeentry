@@ -19,7 +19,7 @@ import cl.runtime as rt
 
 
 @dataclass
-class DataSourceKey(rt.DataClassRecord):
+class DataSourceKey(rt.ClassRecord):
     """
     Key for the data source record.
 

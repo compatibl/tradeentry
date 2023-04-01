@@ -16,7 +16,7 @@ import pytest
 import cl.runtime as rt
 import tests
 
-# Tests for DataClassRecord
+# Tests for ClassRecord
 
 
 def test_smoke():
@@ -24,14 +24,14 @@ def test_smoke():
 
     # Create test record and populate with sample data
     context = rt.Context()
-    record = tests.MockDataClassRecord.create(context)
+    record = tests.MockClassRecord.create(context)
 
     # Test that context has been set
     assert record.context == context
 
     # Test primary key
     pk = record.to_pk()
-    assert pk == 'tests.MockDataClassRecord;abc;123'
+    assert pk == 'tests.MockClassRecord;abc;123'
 
     # Test to_dict() method
     record_dict = record.to_dict()

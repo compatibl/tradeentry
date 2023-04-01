@@ -19,7 +19,7 @@ import cl.runtime as rt
 
 
 @dataclass
-class PackageDeclKey(rt.DataClassRecord):
+class PackageDeclKey(rt.ClassRecord):
     """Key for the package declaration in schema."""
 
     package_id: Optional[str] = None

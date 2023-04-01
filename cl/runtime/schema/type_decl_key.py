@@ -19,7 +19,7 @@ import cl.runtime as rt
 
 
 @dataclass
-class TypeDeclKey(rt.DataClassRecord):
+class TypeDeclKey(rt.ClassRecord):
     """Key for the base class of type declaration in schema."""
 
     type_id: Optional[str] = None

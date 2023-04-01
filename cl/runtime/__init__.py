@@ -3,7 +3,7 @@ from cl.runtime.storage.data import Data
 from cl.runtime.storage.class_data import ClassData
 from cl.runtime.storage.record import Record
 from cl.runtime.storage.record_util import RecordUtil
-from cl.runtime.storage.data_class_record import DataClassRecord
+from cl.runtime.storage.class_record import ClassRecord
 from cl.runtime.storage.load_options import LoadOptions
 from cl.runtime.storage.save_options import SaveOptions
 from cl.runtime.storage.query_options import QueryOptions

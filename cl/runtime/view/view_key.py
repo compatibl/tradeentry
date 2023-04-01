@@ -19,7 +19,7 @@ import cl.runtime as rt
 
 
 @dataclass
-class ViewKey(rt.DataClassRecord):
+class ViewKey(rt.ClassRecord):
     """
     The data shown alongside the record in the front end.
 

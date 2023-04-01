@@ -21,7 +21,7 @@ import tests
 
 
 @dataclass
-class MockDataClassRecord(tests.MockDataClassRecordKey):
+class MockClassRecord(tests.MockClassRecordKey):
     """Dataclass-based record sample used in tests."""
 
     base_record_field_str: Optional[str] = None
@@ -31,10 +31,10 @@ class MockDataClassRecord(tests.MockDataClassRecordKey):
     """Float attribute of base class."""
 
     @staticmethod
-    def create(context: rt.Context) -> MockDataClassRecord:
+    def create(context: rt.Context) -> MockClassRecord:
         """Return an instance of this class populated with sample data."""
 
-        obj = MockDataClassRecord()
+        obj = MockClassRecord()
         obj.context = context
         obj.primary_key_field_str = 'abc'
         obj.primary_key_field_int = 123
