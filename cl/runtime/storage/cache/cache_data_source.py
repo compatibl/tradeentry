@@ -12,11 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import cl.runtime as rt
 from copy import deepcopy
 from dataclasses import dataclass, field
 from typing import Dict, Iterable, Union
-
-import cl.runtime as rt
 
 
 @dataclass

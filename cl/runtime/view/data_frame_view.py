@@ -12,12 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import cl.runtime as rt
+import pandas as pd
 from dataclasses import dataclass
 from typing import Optional, final
-
-import pandas as pd
-
-import cl.runtime as rt
 
 
 @final

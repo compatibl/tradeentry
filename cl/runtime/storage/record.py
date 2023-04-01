@@ -12,10 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import cl.runtime as rt
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
-
-import cl.runtime as rt
 
 
 class Record(rt.Data):

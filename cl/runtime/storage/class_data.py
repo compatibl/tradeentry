@@ -12,11 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import cl.runtime as rt
 from abc import ABC
 from dataclasses import asdict, dataclass, field
 from typing import Any, Dict, Optional
-
-import cl.runtime as rt
 
 
 def class_field(*, typename: Optional[str] = None, label: Optional[str] = None, optional: bool = False) -> Any:
