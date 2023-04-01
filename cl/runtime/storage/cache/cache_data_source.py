@@ -16,6 +16,12 @@ from copy import deepcopy
 from dataclasses import dataclass, field
 from typing import Dict, Iterable, Union
 
+from cl.runtime.storage.data_source import DataSource
+from cl.runtime.storage.delete_options import DeleteOptions
+from cl.runtime.storage.load_options import LoadOptions
+from cl.runtime.storage.record import Record
+from cl.runtime.storage.save_options import SaveOptions
+
 
 @dataclass
 class CacheDataSource(DataSource):

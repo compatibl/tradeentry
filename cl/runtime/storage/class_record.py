@@ -16,6 +16,8 @@ from abc import ABC
 from dataclasses import asdict, dataclass
 from typing import Any, Dict
 
+from cl.runtime.storage.record import Record
+
 
 @dataclass
 class ClassRecord(Record, ABC):

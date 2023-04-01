@@ -14,6 +14,8 @@
 
 from dataclasses import dataclass
 
+from cl.runtime.schema.type_decl import TypeDecl
+
 
 @dataclass
 class EnumDecl(TypeDecl):

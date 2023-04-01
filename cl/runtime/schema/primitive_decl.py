@@ -14,6 +14,9 @@
 
 from dataclasses import dataclass
 
+from cl.runtime.schema.type_decl import TypeDecl
+from cl.runtime.storage.class_data import class_field
+
 
 @dataclass
 class PrimitiveDecl(TypeDecl):

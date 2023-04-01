@@ -16,6 +16,8 @@ from abc import ABC
 from dataclasses import asdict, dataclass, field
 from typing import Any, Dict, Optional
 
+from cl.runtime.storage.data import Data
+
 
 def class_field(*, typename: Optional[str] = None, label: Optional[str] = None, optional: bool = False) -> Any:
     """Comment."""

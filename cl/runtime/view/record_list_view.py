@@ -15,6 +15,9 @@
 from dataclasses import dataclass
 from typing import List, final
 
+from cl.runtime.storage.class_data import class_field
+from cl.runtime.view.view import View
+
 
 @final
 @dataclass
