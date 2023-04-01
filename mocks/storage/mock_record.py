@@ -18,7 +18,7 @@ import cl.runtime as rt
 from cl.runtime.storage.cl_context import ClContext
 
 
-class ClRecordSample(rt.Record):
+class MockRecord(rt.Record):
     """A simple record example used in tests."""
 
     primary_key_field_str: Optional[str]

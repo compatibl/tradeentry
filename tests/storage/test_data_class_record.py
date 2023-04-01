@@ -14,7 +14,7 @@
 
 import pytest
 import cl.runtime as rt
-import cl.runtime_samples as samples
+import mocks
 
 
 class TestDataClassRecord:
@@ -25,7 +25,7 @@ class TestDataClassRecord:
 
         # Create test record and populate with sample data
         context = rt.Context()
-        record = samples.DataClassRecordSample()
+        record = mocks.MockDataClassRecord()
         record.populate_with_sample_data(context)
 
         # Test that context has been set

@@ -16,11 +16,11 @@ from dataclasses import dataclass
 from typing import Optional
 
 from cl.runtime.storage.cl_context import ClContext
-from cl.runtime_samples.storage.cl_data_class_record_sample_key import ClDataClassRecordSampleKey
+from mocks.storage.mock_data_class_record_key import MockDataClassRecordKey
 
 
 @dataclass
-class ClDataClassRecordSample(ClDataClassRecordSampleKey):
+class MockDataClassRecord(MockDataClassRecordKey):
     """Dataclass-based record sample used in tests."""
 
     base_record_field_str: Optional[str] = None

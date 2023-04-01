@@ -14,7 +14,7 @@
 
 import pytest
 import cl.runtime as rt
-import cl.runtime_samples as samples
+import mocks
 
 
 class TestRecord:
@@ -25,7 +25,7 @@ class TestRecord:
 
         # Create test record and populate with sample data
         context = rt.Context()
-        record = samples.RecordSample()
+        record = mocks.MockRecord()
         record.populate_with_sample_data(context)
 
         # Test that context has been set
@@ -37,7 +37,7 @@ class TestRecord:
 
         # Test roundtrip serialization
         data1 = record.to_dict()
-        record2 = samples.RecordSample()
+        record2 = mocks.MockRecord()
         record2.context = context
         record2.from_dict(data1)
         data2 = record2.to_dict()

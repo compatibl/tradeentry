@@ -19,7 +19,7 @@ import cl.runtime as rt
 
 
 @dataclass
-class ClDataClassRecordSampleKey(rt.DataClassRecord):
+class MockDataClassRecordKey(rt.DataClassRecord):
     """Key for a dataclass-based record sample used in tests."""
 
     primary_key_field_str: Optional[str] = None
