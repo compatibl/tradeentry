@@ -14,17 +14,13 @@
 
 from copy import deepcopy
 from dataclasses import dataclass, field
-from typing import Dict, Iterable, List, Optional, Union
+from typing import Dict, Iterable, Union
 
-from cl.runtime.storage.data_source import DataSource
-from cl.runtime.storage.delete_options import DeleteOptions
-from cl.runtime.storage.load_options import LoadOptions
-from cl.runtime.storage.record import Record
-from cl.runtime.storage.save_options import SaveOptions
+import cl.runtime as rt
 
 
 @dataclass
-class CacheDataSource(DataSource):
+class CacheDataSource(rt.DataSource):
     """Data source based on in-memory cache using Python dict."""
 
     _cache: Dict[str, Dict] = field(default_factory=dict)
@@ -37,11 +33,11 @@ class CacheDataSource(DataSource):
 
     def load_many(
         self,
-        keys: Iterable[Union[str, Record]],
+        keys: Iterable[Union[str, rt.Record]],
         data_set: str,
-        load_options: LoadOptions = LoadOptions.None_,
+        load_options: rt.LoadOptions = rt.LoadOptions.None_,
         *,
-        out: Iterable[Record],
+        out: Iterable[rt.Record],
     ) -> None:
         """
         Populate the collection of objects specified via the 'out' parameter
@@ -68,7 +64,7 @@ class CacheDataSource(DataSource):
                     )
             elif isinstance(key, str):
                 pk = key
-            elif isinstance(key, Record):
+            elif isinstance(key, rt.Record):
                 pk = key.to_pk()
             else:
                 raise RuntimeError('Key {key} is not a string, derived type of Record, or None')
@@ -81,7 +77,7 @@ class CacheDataSource(DataSource):
 
             # Check if result is None
             if record_dict is None:
-                if load_options & LoadOptions.IgnoreNotFound == LoadOptions.IgnoreNotFound:
+                if load_options & rt.LoadOptions.IgnoreNotFound == rt.LoadOptions.IgnoreNotFound:
                     return None
                 else:
                     raise RuntimeError(
@@ -103,7 +99,7 @@ class CacheDataSource(DataSource):
                 )
 
     def save_many(
-        self, records: Iterable[Record], data_set: str, save_options: SaveOptions = SaveOptions.None_
+        self, records: Iterable[rt.Record], data_set: str, save_options: rt.SaveOptions = rt.SaveOptions.None_
     ) -> None:
         """
         Save many records to the specified dataset, bypassing the commit
@@ -133,7 +129,7 @@ class CacheDataSource(DataSource):
             # Insert the record into dataset dictionary
             dataset_cache[pk] = record_dict
 
-    def save_on_commit(self, record: Record, data_set: str, save_options: SaveOptions = SaveOptions.None_) -> None:
+    def save_on_commit(self, record: rt.Record, data_set: str, save_options: rt.SaveOptions = rt.SaveOptions.None_) -> None:
         """
         Add the record to the commit queue using save options if provided
         (see rt.SaveOptions class for details).
@@ -146,9 +142,9 @@ class CacheDataSource(DataSource):
 
     def delete_many(
         self,
-        keys: Iterable[Record],
+        keys: Iterable[rt.Record],
         data_set: str,
-        delete_options: DeleteOptions = DeleteOptions.None_,
+        delete_options: rt.DeleteOptions = rt.DeleteOptions.None_,
     ) -> None:
         """
         Delete many records in the specified dataset, bypassing
@@ -168,9 +164,9 @@ class CacheDataSource(DataSource):
 
     def delete_on_commit(
         self,
-        key: Record,
+        key: rt.Record,
         data_set: str,
-        delete_options: DeleteOptions = DeleteOptions.None_,
+        delete_options: rt.DeleteOptions = rt.DeleteOptions.None_,
     ) -> None:
         """
         Add to commit queue the command to delete record in the

@@ -15,11 +15,10 @@
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
 
-from cl.runtime.storage.data import Data
-from cl.runtime.storage.context import Context
+import cl.runtime as rt
 
 
-class Record(Data):
+class Record(rt.Data):
     """
     Base class for database records that can be stored in a document DB,
     relational DB, key-value store, or filesystem.
@@ -31,7 +30,7 @@ class Record(Data):
     * from_dict(data_dict) - populate self from dictionary
     """
 
-    context: Optional[Context]
+    context: Optional[rt.Context]
     """
     Context provides platform-independent APIs for:
 

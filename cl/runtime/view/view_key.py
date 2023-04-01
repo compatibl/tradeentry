@@ -15,12 +15,11 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from cl.runtime.storage.data_class_record import DataClassRecord
-from cl.runtime.storage.record_util import RecordUtil
+import cl.runtime as rt
 
 
 @dataclass
-class ViewKey(DataClassRecord):
+class ViewKey(rt.DataClassRecord):
     """
     The data shown alongside the record in the front end.
 
@@ -41,4 +40,4 @@ class ViewKey(DataClassRecord):
         """Return primary key (PK) as string."""
 
         # Use composite_pk(...) method because one of the tokens is an embedded key
-        return RecordUtil.composite_pk('rt.View', self.view_for, self.view_name)
+        return rt.RecordUtil.composite_pk('rt.View', self.view_for, self.view_name)

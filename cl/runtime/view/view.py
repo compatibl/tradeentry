@@ -14,11 +14,11 @@
 
 from dataclasses import dataclass
 
-from cl.runtime.view.view_key import ViewKey
+import cl.runtime as rt
 
 
 @dataclass
-class View(ViewKey):
+class View(rt.ViewKey):
     """
     The data shown alongside the record in the front end.
 

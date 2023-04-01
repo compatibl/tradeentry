@@ -15,12 +15,12 @@
 from dataclasses import dataclass
 from typing import List, Optional, final
 
-from cl.runtime.view.view import View
+import cl.runtime as rt
 
 
 @final
 @dataclass
-class RecordListView(View):
+class RecordListView(rt.View):
     """View that displays a list of record specified via their primary keys."""
 
     view_of: Optional[List[str]] = None

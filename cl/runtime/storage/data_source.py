@@ -14,17 +14,13 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Iterable, List, Optional, Union
+from typing import Iterable, Optional, Union
 
-from cl.runtime.storage.data_source_key import DataSourceKey
-from cl.runtime.storage.delete_options import DeleteOptions
-from cl.runtime.storage.load_options import LoadOptions
-from cl.runtime.storage.record import Record
-from cl.runtime.storage.save_options import SaveOptions
+import cl.runtime as rt
 
 
 @dataclass
-class DataSource(DataSourceKey, ABC):
+class DataSource(rt.DataSourceKey, ABC):
     """
     Data source is a logical concept similar to database
     that can be implemented for a document DB, relational DB,
@@ -47,11 +43,11 @@ class DataSource(DataSourceKey, ABC):
     @abstractmethod
     def load_many(
         self,
-        keys: Iterable[Union[str, Record]],
+        keys: Iterable[Union[str, rt.Record]],
         data_set: str,
-        load_options: LoadOptions = LoadOptions.None_,
+        load_options: rt.LoadOptions = rt.LoadOptions.None_,
         *,
-        out: Iterable[Record],
+        out: Iterable[rt.Record],
     ) -> None:
         """
         Populate the collection of objects specified via the 'out' parameter
@@ -61,7 +57,7 @@ class DataSource(DataSourceKey, ABC):
 
     @abstractmethod
     def save_many(
-        self, records: Iterable[Record], data_set: str, save_options: SaveOptions = SaveOptions.None_
+        self, records: Iterable[rt.Record], data_set: str, save_options: rt.SaveOptions = rt.SaveOptions.None_
     ) -> None:
         """
         Save many records to the specified dataset, bypassing the commit
@@ -73,7 +69,7 @@ class DataSource(DataSourceKey, ABC):
         """
 
     @abstractmethod
-    def save_on_commit(self, record: Record, data_set: str, save_options: SaveOptions = SaveOptions.None_) -> None:
+    def save_on_commit(self, record: rt.Record, data_set: str, save_options: rt.SaveOptions = rt.SaveOptions.None_) -> None:
         """
         Add the record to the commit queue using save options if provided
         (see rt.SaveOptions class for details).
@@ -87,9 +83,9 @@ class DataSource(DataSourceKey, ABC):
     @abstractmethod
     def delete_many(
         self,
-        keys: Iterable[Record],
+        keys: Iterable[rt.Record],
         data_set: str,
-        delete_options: DeleteOptions = DeleteOptions.None_,
+        delete_options: rt.DeleteOptions = rt.DeleteOptions.None_,
     ) -> None:
         """
         Delete many records in the specified dataset, bypassing
@@ -110,9 +106,9 @@ class DataSource(DataSourceKey, ABC):
     @abstractmethod
     def delete_on_commit(
         self,
-        key: Record,
+        key: rt.Record,
         data_set: str,
-        delete_options: DeleteOptions = DeleteOptions.None_,
+        delete_options: rt.DeleteOptions = rt.DeleteOptions.None_,
     ) -> None:
         """
         Add to commit queue the command to delete record in the
@@ -169,11 +165,11 @@ class DataSource(DataSourceKey, ABC):
 
     def load_one(
         self,
-        key: Union[str, Record],
+        key: Union[str, rt.Record],
         data_set: str,
-        load_options: LoadOptions = LoadOptions.None_,
+        load_options: rt.LoadOptions = rt.LoadOptions.None_,
         *,
-        out: Record,
+        out: rt.Record,
     ) -> None:
         """
         Populate the object specified via the 'out' parameter with data
@@ -187,7 +183,7 @@ class DataSource(DataSourceKey, ABC):
         # Pass arguments to load_many(...)
         self.load_many([key], data_set, load_options, out=[out])
 
-    def save_one(self, record: Record, data_set: str, save_options: SaveOptions = SaveOptions.None_):
+    def save_one(self, record: rt.Record, data_set: str, save_options: rt.SaveOptions = rt.SaveOptions.None_):
         """
         Save one record to the specified dataset, bypassing the commit
         queue and using save options if provided (see rt.SaveOptions
@@ -206,9 +202,9 @@ class DataSource(DataSourceKey, ABC):
 
     def delete_one(
         self,
-        key: Record,
+        key: rt.Record,
         data_set: str,
-        delete_options: DeleteOptions = DeleteOptions.None_,
+        delete_options: rt.DeleteOptions = rt.DeleteOptions.None_,
     ) -> None:
         """
         Delete record with argument key in the specified dataset

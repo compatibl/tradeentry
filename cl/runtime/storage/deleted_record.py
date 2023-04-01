@@ -15,11 +15,11 @@
 from dataclasses import dataclass
 from typing import Any, Dict, Optional
 
-from cl.runtime.storage.record import Record
+import cl.runtime as rt
 
 
 @dataclass
-class DeletedRecord(Record):
+class DeletedRecord(rt.Record):
     """
     Represents a deleted record in commit queue and in those
     cases when the database is write-once, or to shadow records
