@@ -15,8 +15,8 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from cl.runtime.storage.cl_data_class_record import ClDataClassRecord
-from cl.runtime.storage.cl_record_util import ClRecordUtil
+from cl.runtime.storage.data_class_record import ClDataClassRecord
+from cl.runtime.storage.record_util import ClRecordUtil
 
 
 @dataclass

@@ -16,11 +16,11 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Iterable, List, Optional, Union
 
-from cl.runtime.storage.cl_data_source_key import ClDataSourceKey
-from cl.runtime.storage.cl_delete_options import ClDeleteOptions
-from cl.runtime.storage.cl_load_options import ClLoadOptions
-from cl.runtime.storage.cl_record import ClRecord
-from cl.runtime.storage.cl_save_options import ClSaveOptions
+from cl.runtime.storage.data_source_key import ClDataSourceKey
+from cl.runtime.storage.delete_options import ClDeleteOptions
+from cl.runtime.storage.load_options import ClLoadOptions
+from cl.runtime.storage.record import ClRecord
+from cl.runtime.storage.save_options import ClSaveOptions
 
 
 @dataclass

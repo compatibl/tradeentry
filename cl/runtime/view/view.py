@@ -14,7 +14,7 @@
 
 from dataclasses import dataclass
 
-from cl.runtime.view.cl_view_key import ClViewKey
+from cl.runtime.view.view_key import ClViewKey
 
 
 @dataclass

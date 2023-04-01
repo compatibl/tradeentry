@@ -15,7 +15,7 @@
 from dataclasses import dataclass
 from typing import List, Optional, final
 
-from cl.runtime.view.cl_view import ClView
+from cl.runtime.view.view import ClView
 
 
 @final

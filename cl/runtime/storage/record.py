@@ -15,7 +15,7 @@
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
 
-from cl.runtime.storage.cl_context import ClContext
+from cl.runtime.storage.context import ClContext
 
 
 class ClRecord(ABC):

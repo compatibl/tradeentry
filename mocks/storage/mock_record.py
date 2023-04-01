@@ -15,7 +15,7 @@
 from typing import Any, Dict, Optional
 
 import cl.runtime as rt
-from cl.runtime.storage.cl_context import ClContext
+from cl.runtime.storage.context import ClContext
 
 
 class MockRecord(rt.Record):

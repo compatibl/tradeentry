@@ -15,7 +15,7 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from cl.runtime.storage.cl_context import ClContext
+from cl.runtime.storage.context import ClContext
 from mocks.storage.mock_data_class_record_key import MockDataClassRecordKey
 
 

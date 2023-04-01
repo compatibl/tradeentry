@@ -17,7 +17,7 @@ from typing import Optional, final
 
 import pandas as pd
 
-from cl.runtime.view.cl_view import ClView
+from cl.runtime.view.view import ClView
 
 
 @final
