@@ -17,11 +17,11 @@ from dataclasses import dataclass
 from typing import Optional
 
 import cl.runtime as rt
-from .mock_data_class_record_key import MockDataClassRecordKey
+import tests
 
 
 @dataclass
-class MockDataClassRecord(MockDataClassRecordKey):
+class MockDataClassRecord(tests.MockDataClassRecordKey):
     """Dataclass-based record sample used in tests."""
 
     base_record_field_str: Optional[str] = None

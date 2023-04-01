@@ -31,7 +31,7 @@ def test_smoke():
 
     # Test primary key
     pk = record.to_pk()
-    assert pk == 'samples.DataClassRecordSample;abc;123'
+    assert pk == 'tests.MockDataClassRecord;abc;123'
 
     # Test to_dict() method
     record_dict = record.to_dict()

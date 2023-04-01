@@ -31,7 +31,7 @@ def test_smoke():
 
     # Test primary key
     pk = record.to_pk()
-    assert pk == 'samples.RecordSample;abc;123'
+    assert pk == 'tests.MockRecord;abc;123'
 
     # Test roundtrip serialization
     data1 = record.to_dict()

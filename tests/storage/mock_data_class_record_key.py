@@ -30,4 +30,4 @@ class MockDataClassRecordKey(rt.DataClassRecord):
 
     def to_pk(self) -> str:
         """Return primary key (PK) as string."""
-        return f'samples.DataClassRecordSample;{self.primary_key_field_str};{self.primary_key_field_int}'
+        return f'tests.MockDataClassRecord;{self.primary_key_field_str};{self.primary_key_field_int}'

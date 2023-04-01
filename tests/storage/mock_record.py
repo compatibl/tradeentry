@@ -43,7 +43,7 @@ class MockRecord(rt.Record):
 
     def to_pk(self) -> str:
         """Return primary key (PK) as string."""
-        return f'samples.RecordSample;{self.primary_key_field_str};{self.primary_key_field_int}'
+        return f'tests.MockRecord;{self.primary_key_field_str};{self.primary_key_field_int}'
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize self as dictionary (may return shallow copy)."""
