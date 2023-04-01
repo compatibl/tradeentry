@@ -22,32 +22,33 @@ COMPOSITE_TOKENS = ['rt.Type2', SIMPLE_PK, 'C']
 MULTI_LEVEL_PK = 'rt.Type3;{rt.Type2;{rt.Type1;A;B};C};D'
 MULTI_LEVEL_TOKENS = ['rt.Type3', COMPOSITE_PK, 'D']
 
+# Tests for TestRecordUtil
 
-class TestRecordUtil:
-    """Tests for RecordUtil class."""
 
-    def test_composite_pk(self):
-        """Test test_composite_pk(...) function."""
+def test_composite_pk():
+    """Test test_composite_pk(...) function."""
 
-        assert rt.RecordUtil.composite_pk(*SIMPLE_TOKENS) == SIMPLE_PK
-        assert rt.RecordUtil.composite_pk(*COMPOSITE_TOKENS) == COMPOSITE_PK
-        assert rt.RecordUtil.composite_pk(*MULTI_LEVEL_TOKENS) == MULTI_LEVEL_PK
+    assert rt.RecordUtil.composite_pk(*SIMPLE_TOKENS) == SIMPLE_PK
+    assert rt.RecordUtil.composite_pk(*COMPOSITE_TOKENS) == COMPOSITE_PK
+    assert rt.RecordUtil.composite_pk(*MULTI_LEVEL_TOKENS) == MULTI_LEVEL_PK
 
-    def test_split_simple_pk(self):
-        """Test split_simple_pk(...) function."""
 
-        assert rt.RecordUtil.split_simple_pk(SIMPLE_PK) == SIMPLE_TOKENS
+def test_split_simple_pk():
+    """Test split_simple_pk(...) function."""
 
-        # This should not work
-        with pytest.raises(Exception):
-            rt.RecordUtil.split_simple_pk(COMPOSITE_PK)
+    assert rt.RecordUtil.split_simple_pk(SIMPLE_PK) == SIMPLE_TOKENS
 
-    def test_split_composite_pk(self):
-        """Test split_composite_pk(...) function."""
+    # This should not work
+    with pytest.raises(Exception):
+        rt.RecordUtil.split_simple_pk(COMPOSITE_PK)
 
-        assert rt.RecordUtil.split_composite_pk(SIMPLE_PK) == SIMPLE_TOKENS
-        assert rt.RecordUtil.split_composite_pk(COMPOSITE_PK) == COMPOSITE_TOKENS
-        assert rt.RecordUtil.split_composite_pk(MULTI_LEVEL_PK) == MULTI_LEVEL_TOKENS
+
+def test_split_composite_pk():
+    """Test split_composite_pk(...) function."""
+
+    assert rt.RecordUtil.split_composite_pk(SIMPLE_PK) == SIMPLE_TOKENS
+    assert rt.RecordUtil.split_composite_pk(COMPOSITE_PK) == COMPOSITE_TOKENS
+    assert rt.RecordUtil.split_composite_pk(MULTI_LEVEL_PK) == MULTI_LEVEL_TOKENS
 
 
 if __name__ == '__main__':

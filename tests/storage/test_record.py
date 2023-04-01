@@ -16,32 +16,31 @@ import pytest
 import cl.runtime as rt
 from tests.storage.mock_record import MockRecord
 
+# Tests for Record
 
-class TestRecord:
-    """Tests for Record class."""
 
-    def test_smoke(self):
-        """Smoke test."""
+def test_smoke():
+    """Smoke test."""
 
-        # Create test record and populate with sample data
-        context = rt.Context()
-        record = MockRecord.create(context)
+    # Create test record and populate with sample data
+    context = rt.Context()
+    record = MockRecord.create(context)
 
-        # Test that context has been set
-        assert record.context == context
+    # Test that context has been set
+    assert record.context == context
 
-        # Test primary key
-        pk = record.to_pk()
-        assert pk == 'samples.RecordSample;abc;123'
+    # Test primary key
+    pk = record.to_pk()
+    assert pk == 'samples.RecordSample;abc;123'
 
-        # Test roundtrip serialization
-        data1 = record.to_dict()
-        record2 = MockRecord()
-        record2.context = context
-        record2.from_dict(data1)
-        data2 = record2.to_dict()
-        assert len(data2.keys()) == 4
-        assert data1 == data2
+    # Test roundtrip serialization
+    data1 = record.to_dict()
+    record2 = MockRecord()
+    record2.context = context
+    record2.from_dict(data1)
+    data2 = record2.to_dict()
+    assert len(data2.keys()) == 4
+    assert data1 == data2
 
 
 if __name__ == '__main__':

@@ -16,27 +16,26 @@ import pytest
 import cl.runtime as rt
 from tests.storage.mock_data_class_record import MockDataClassRecord
 
+# Tests for DataClassRecord
 
-class TestDataClassRecord:
-    """Tests for DataClassRecord class."""
 
-    def test_smoke(self):
-        """Smoke test."""
+def test_smoke():
+    """Smoke test."""
 
-        # Create test record and populate with sample data
-        context = rt.Context()
-        record = MockDataClassRecord.create(context)
+    # Create test record and populate with sample data
+    context = rt.Context()
+    record = MockDataClassRecord.create(context)
 
-        # Test that context has been set
-        assert record.context == context
+    # Test that context has been set
+    assert record.context == context
 
-        # Test primary key
-        pk = record.to_pk()
-        assert pk == 'samples.DataClassRecordSample;abc;123'
+    # Test primary key
+    pk = record.to_pk()
+    assert pk == 'samples.DataClassRecordSample;abc;123'
 
-        # Test to_dict() method
-        record_dict = record.to_dict()
-        assert len(record_dict) == 4
+    # Test to_dict() method
+    record_dict = record.to_dict()
+    assert len(record_dict) == 4
 
 
 if __name__ == '__main__':

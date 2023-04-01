@@ -16,29 +16,28 @@ import pytest
 import cl.runtime as rt
 from tests.storage.mock_record import MockRecord
 
+# Tests for CacheDataSource
 
-class TestCacheDataSource:
-    """Tests for CacheDataSource class."""
 
-    def test_smoke(self):
-        """Smoke test."""
+def test_smoke():
+    """Smoke test."""
 
-        # Create data source and dataset
-        data_source = rt.CacheDataSource()
-        data_set = "sample"
+    # Create data source and dataset
+    data_source = rt.CacheDataSource()
+    data_set = "sample"
 
-        # Create test record and populate with sample data
-        context = rt.Context()
-        record = MockRecord.create(context)
-        pk = record.to_pk()
-        record_dict = record.to_dict()
+    # Create test record and populate with sample data
+    context = rt.Context()
+    record = MockRecord.create(context)
+    pk = record.to_pk()
+    record_dict = record.to_dict()
 
-        # Test saving and loading
-        data_source.save_one(record, data_set)
-        loaded_record = MockRecord()
-        data_source.load_one(pk, data_set, out=loaded_record)
-        loaded_record_dict = loaded_record.to_dict()
-        assert loaded_record_dict == record_dict
+    # Test saving and loading
+    data_source.save_one(record, data_set)
+    loaded_record = MockRecord()
+    data_source.load_one(pk, data_set, out=loaded_record)
+    loaded_record_dict = loaded_record.to_dict()
+    assert loaded_record_dict == record_dict
 
 
 if __name__ == '__main__':
