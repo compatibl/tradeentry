@@ -23,5 +23,5 @@ import cl.runtime as rt
 class RecordView(rt.View):
     """View that displays another record specified via its primary key."""
 
-    view_of: Optional[str] = None
+    view_of: str = rt.class_field()
     """Primary key of the displayed record."""

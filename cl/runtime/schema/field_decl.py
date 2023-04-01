@@ -22,20 +22,20 @@ import cl.runtime as rt
 class FieldDecl(rt.ClassData):
     """Base class of type declaration in schema."""
 
-    name: Optional[str] = None
+    name: str = rt.class_field()
     """Field name in code and storage."""
 
-    label: Optional[str] = None
+    label: str = rt.class_field(optional=True)
     """Readable field label in the front end."""
 
-    type: Optional[Union[str, rt.TypeDeclKey]] = None
+    type: Union[str, rt.TypeDeclKey] = rt.class_field()
     """Field type."""
 
-    dim: Optional[int] = None
+    dim: int = rt.class_field(optional=True)
     """List, array, or tensor dimension (defaults to scalar, i.e., the value of zero, if not specified)."""
 
-    optional: Optional[bool] = None
+    optional: bool = rt.class_field(optional=True)
     """True if field is optional (defaults to required if not specified)."""
 
-    contains_optional: Optional[bool] = None
+    contains_optional: bool = rt.class_field(optional=True)
     """True if list, array, or tensor elements are optional (defaults to required if not specified)."""

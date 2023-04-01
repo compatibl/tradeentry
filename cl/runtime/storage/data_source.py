@@ -37,7 +37,7 @@ class DataSource(rt.DataSourceKey, ABC):
     This record is always stored in root dataset.
     """
 
-    read_only: Optional[bool] = None
+    read_only: bool = rt.class_field(optional=True)
     """Use this flag to mark the data source as readonly. All write operations will fail with error if set."""
 
     @abstractmethod

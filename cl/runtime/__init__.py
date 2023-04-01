@@ -1,6 +1,6 @@
 from cl.runtime.storage.context import Context
 from cl.runtime.storage.data import Data
-from cl.runtime.storage.class_data import ClassData
+from cl.runtime.storage.class_data import ClassData, class_field
 from cl.runtime.storage.record import Record
 from cl.runtime.storage.record_util import RecordUtil
 from cl.runtime.storage.class_record import ClassRecord

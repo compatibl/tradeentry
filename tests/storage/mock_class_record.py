@@ -14,7 +14,6 @@
 
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Optional
 
 import cl.runtime as rt
 import tests
@@ -24,11 +23,14 @@ import tests
 class MockClassRecord(tests.MockClassRecordKey):
     """Dataclass-based record sample used in tests."""
 
-    base_record_field_str: Optional[str] = None
+    base_record_field_str: str = rt.class_field()
     """String attribute of base class."""
 
-    base_record_field_float: Optional[float] = None
+    base_record_field_float: float = rt.class_field()
     """Float attribute of base class."""
+
+    base_record_field_long: int = rt.class_field(typename='long', label="Custom Label", optional=True)
+    """Optional long attribute of base class with custom label."""
 
     @staticmethod
     def create(context: rt.Context) -> MockClassRecord:

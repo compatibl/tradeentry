@@ -35,7 +35,7 @@ def test_smoke():
 
     # Test to_dict() method
     record_dict = record.to_dict()
-    assert len(record_dict) == 4
+    assert len(record_dict) == 5
 
 
 if __name__ == '__main__':

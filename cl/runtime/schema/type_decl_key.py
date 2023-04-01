@@ -22,7 +22,7 @@ import cl.runtime as rt
 class TypeDeclKey(rt.ClassRecord):
     """Key for the base class of type declaration in schema."""
 
-    type_id: Optional[str] = None
+    type_id: str = rt.class_field()
     """
     Unique dot-delimited type identifier. May optionally include package alias,
     for example TypeDecl, rt.TypeDecl, or cl.runtime.TypeDecl. 

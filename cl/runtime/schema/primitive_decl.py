@@ -22,6 +22,6 @@ import cl.runtime as rt
 class PrimitiveDecl(rt.TypeDecl):
     """Declaration for a primitive type."""
 
-    base_type: Optional[str] = None
-    """Base type in which the data is stored."""
+    base_type: str = rt.class_field()
+    """Builtin type in which the data is stored."""
 

@@ -22,7 +22,7 @@ import cl.runtime as rt
 class DataDecl(rt.TypeDecl):
     """Declaration for serializable data with fields."""
 
-    fields: Optional[List[rt.FieldDecl]] = None
+    fields: List[rt.FieldDecl] = rt.class_field()
     """
     List of fields with detailed type information.
     

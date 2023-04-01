@@ -22,5 +22,5 @@ import cl.runtime as rt
 class TypeDecl(rt.TypeDeclKey):
     """Base class of type declaration in schema."""
 
-    label: Optional[str] = None
+    label: str = rt.class_field(optional=True)
     """Readable type label in the front end."""

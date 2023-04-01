@@ -25,5 +25,5 @@ import cl.runtime as rt
 class DataFrameView(rt.View):
     """View that displays contents of a dataframe."""
 
-    view_of: Optional[pd.DataFrame] = None
+    view_of: pd.DataFrame = rt.class_field()
     """Dataframe with view contents."""

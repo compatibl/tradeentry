@@ -13,10 +13,15 @@
 # limitations under the License.
 
 from abc import ABC
-from dataclasses import asdict, dataclass
-from typing import Any, Dict
+from dataclasses import dataclass, field, asdict
+from typing import Any, Dict, Optional
 
 import cl.runtime as rt
+
+
+def class_field(*, typename: Optional[str] = None, label: Optional[str] = None, optional: bool = False) -> Any:
+    """Comment."""
+    return field(default=None, metadata={'typename': typename, 'label': label, 'optional': optional})
 
 
 @dataclass

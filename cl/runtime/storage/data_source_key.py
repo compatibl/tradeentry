@@ -38,7 +38,7 @@ class DataSourceKey(rt.ClassRecord):
     This record is always stored in root dataset.
     """
 
-    data_source_id: Optional[str] = None
+    data_source_id: str = rt.class_field()
     """Unique data source identifier."""
 
     def to_pk(self) -> str:

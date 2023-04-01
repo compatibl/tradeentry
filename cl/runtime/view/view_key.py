@@ -30,10 +30,10 @@ class ViewKey(rt.ClassRecord):
     tab or panel next to the record itself.
     """
 
-    view_for: Optional[str] = None
+    view_for: str = rt.class_field()
     """Primary key of the record for which the view is specified."""
 
-    view_name: Optional[str] = None
+    view_name: str = rt.class_field()
     """Name of the view displayed in the front end."""
 
     def to_pk(self) -> str:

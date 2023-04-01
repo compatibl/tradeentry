@@ -22,5 +22,5 @@ import cl.runtime as rt
 class PackageDecl(rt.PackageDeclKey):
     """Base class for the package declaration in schema."""
 
-    label: Optional[str] = None
+    label: str = rt.class_field(optional=True)
     """Readable package label used by the front end."""

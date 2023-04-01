@@ -22,7 +22,7 @@ import cl.runtime as rt
 class PackageDeclKey(rt.ClassRecord):
     """Key for the package declaration in schema."""
 
-    package_id: Optional[str] = None
+    package_id: str = rt.class_field()
     """Unique package identifier."""
 
     def to_pk(self) -> str:

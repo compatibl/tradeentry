@@ -26,7 +26,7 @@ class DeletedRecord(rt.Record):
     in parent datasets or data sources from lookup.
     """
 
-    pk: Optional[str] = None
+    pk: str = rt.class_field()
     """Primary key (PK) string."""
 
     def to_pk(self) -> str:

@@ -14,7 +14,6 @@
 
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Optional
 
 import cl.runtime as rt
 
@@ -23,10 +22,10 @@ import cl.runtime as rt
 class MockClassData(rt.ClassData):
     """Dataclass-based serializable data sample used in tests."""
 
-    base_record_field_str: Optional[str] = None
+    base_record_field_str: str = rt.class_field()
     """String attribute of base class."""
 
-    base_record_field_float: Optional[float] = None
+    base_record_field_float: float = rt.class_field()
     """Float attribute of base class."""
 
     @staticmethod
