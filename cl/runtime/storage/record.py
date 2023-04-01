@@ -15,10 +15,11 @@
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
 
+from cl.runtime.storage.data import Data
 from cl.runtime.storage.context import Context
 
 
-class Record(ABC):
+class Record(Data):
     """
     Base class for database records that can be stored in a document DB,
     relational DB, key-value store, or filesystem.
@@ -70,25 +71,6 @@ class Record(ABC):
 
         The first token of the key (i.e. rt.Type1,2) is database table name.
         It can be customized as long as name collisions are avoided.
-        """
-
-    @abstractmethod
-    def to_dict(self) -> Dict[str, Any]:
-        """
-        Serialize self as dictionary (may return shallow copy).
-
-        The result may be returned using shallow copy. The callers of this method
-        must serialize or perform deep copy of the result in case the record fields
-        change after this method is invoked.
-        """
-
-    @abstractmethod
-    def from_dict(self, data: Dict[str, Any]) -> None:
-        """
-        Populate self from dictionary (must perform deep copy).
-
-        The implementation of this method perform deep copy of the input
-        in case the argument dictionary changes after this method is invoked.
         """
 
     def __str__(self) -> str:
