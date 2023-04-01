@@ -24,7 +24,7 @@ class DataDecl(rt.TypeDecl):
     fields: List[rt.FieldDecl] = rt.class_field()
     """
     List of fields with detailed type information.
-    
+
     Serialization and front end uses the order of fields inside declaration,
     ordered between classes from base to derived.
     """

@@ -55,7 +55,7 @@ class CacheDataSource(rt.DataSource):
         for key, out in zipped:
             # Handle key=None and check key type
             if key is None:
-                if load_options & LoadOptions.IgnoreNullKey == LoadOptions.IgnoreNullKey:
+                if load_options & rt.LoadOptions.IgnoreNullKey == rt.LoadOptions.IgnoreNullKey:
                     return None
                 else:
                     raise RuntimeError(

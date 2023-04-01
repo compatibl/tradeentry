@@ -24,8 +24,8 @@ class TypeDeclKey(rt.ClassRecord):
     type_id: str = rt.class_field()
     """
     Unique dot-delimited type identifier. May optionally include package alias,
-    for example TypeDecl, rt.TypeDecl, or cl.runtime.TypeDecl. 
-    
+    for example TypeDecl, rt.TypeDecl, or cl.runtime.TypeDecl.
+
     Used for table name in storage, and _type field in JSON.
     """
 
