@@ -4,10 +4,6 @@ from cl.runtime.core.storage.class_data import ClassData, class_field
 from cl.runtime.core.storage.record import Record
 from cl.runtime.core.storage.record_util import RecordUtil
 from cl.runtime.core.storage.class_record import ClassRecord
-from cl.runtime.core.storage.load_options import LoadOptions
-from cl.runtime.core.storage.save_options import SaveOptions
-from cl.runtime.core.storage.query_options import QueryOptions
-from cl.runtime.core.storage.delete_options import DeleteOptions
 from cl.runtime.core.storage.data_source_key import DataSourceKey
 from cl.runtime.core.storage.data_source import DataSource
 from cl.runtime.core.storage.cache.cache_data_source import CacheDataSource

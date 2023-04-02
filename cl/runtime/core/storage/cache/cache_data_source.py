@@ -17,10 +17,7 @@ from dataclasses import dataclass, field
 from typing import Dict, Iterable, Union
 
 from cl.runtime.core.storage.data_source import DataSource
-from cl.runtime.core.storage.delete_options import DeleteOptions
-from cl.runtime.core.storage.load_options import LoadOptions
 from cl.runtime.core.storage.record import Record
-from cl.runtime.core.storage.save_options import SaveOptions
 
 
 @dataclass
@@ -39,14 +36,16 @@ class CacheDataSource(DataSource):
         self,
         keys: Iterable[Union[str, Record]],
         data_set: str,
-        load_options: LoadOptions = LoadOptions.None_,
         *,
-        out: Iterable[Record],
+        ignore_not_found: bool = False,
+        ignore_null_key: bool = False,
+        out: Iterable[Record]
     ) -> None:
         """
-        Populate the collection of objects specified via the 'out' parameter
-        with data loaded from the specified dataset and collection of keys,
-        using load options if provided (see LoadOptions class for details).
+        Populate the collection of objects specified via the 'out' argument
+        with data loaded from the specified dataset and collection of keys.
+        If an element of the 'keys' argument is a full record, only its key
+        will be used.
         """
 
         # TODO: Implement using zip(keys, out, strict=True) in Python 3.10
@@ -60,11 +59,11 @@ class CacheDataSource(DataSource):
         for key, out in zipped:
             # Handle key=None and check key type
             if key is None:
-                if load_options & LoadOptions.IgnoreNullKey == LoadOptions.IgnoreNullKey:
+                if ignore_null_key:
                     return None
                 else:
                     raise RuntimeError(
-                        'Null key is passed to load_one(...) method ' 'but load_options.IgnoreNullKey flag is not set.'
+                        "Null key is passed to load_one(...) method but 'ignore_null_key' flag is not set."
                     )
             elif isinstance(key, str):
                 pk = key
@@ -81,11 +80,11 @@ class CacheDataSource(DataSource):
 
             # Check if result is None
             if record_dict is None:
-                if load_options & LoadOptions.IgnoreNotFound == LoadOptions.IgnoreNotFound:
+                if ignore_not_found:
                     return None
                 else:
                     raise RuntimeError(
-                        f'Record is not found for pk={pk} but ' 'load_options.IgnoreNotFound flag is not set.'
+                        f"Record is not found for pk={pk} but 'ignore_not_found' flag is not set."
                     )
 
             # Populate record from dictionary
@@ -103,7 +102,7 @@ class CacheDataSource(DataSource):
                 )
 
     def save_many(
-        self, records: Iterable[Record], data_set: str, save_options: SaveOptions = SaveOptions.None_
+        self, records: Iterable[Record], data_set: str
     ) -> None:
         """
         Save many records to the specified dataset, bypassing the commit
@@ -133,27 +132,22 @@ class CacheDataSource(DataSource):
             # Insert the record into dataset dictionary
             dataset_cache[pk] = record_dict
 
-    def save_on_commit(self, record: Record, data_set: str, save_options: SaveOptions = SaveOptions.None_) -> None:
+    def save_on_commit(self, record: Record, data_set: str) -> None:
         """
-        Add the record to the commit queue using save options if provided
-        (see SaveOptions class for details).
+        Add the record to the commit queue.
 
         The record will not be saved until a call to commit() which
         executes all pending requests in the commit queue. Alternatively,
         rollback() may be used to clear the commit queue without executing
         the pending requests.
         """
+        raise NotImplementedError()
 
-    def delete_many(
-        self,
-        keys: Iterable[Record],
-        data_set: str,
-        delete_options: DeleteOptions = DeleteOptions.None_,
-    ) -> None:
+    def delete_many(self, keys: Iterable[Record], data_set: str) -> None:
         """
         Delete many records in the specified dataset, bypassing
-        the commit queue and using delete options if provided
-        (see DeleteOptions class for details).
+        the commit queue. If an element of the 'keys' argument is
+        a full record, only its key will be used.
 
         This method does not implicitly call commit(). The commit queue
         will remain in its original state after the method exits.
@@ -165,18 +159,14 @@ class CacheDataSource(DataSource):
         with the same primary key in dataset and/or data source lookup
         chain do not become visible after this record is deleted.
         """
+        raise NotImplementedError()
 
-    def delete_on_commit(
-        self,
-        key: Record,
-        data_set: str,
-        delete_options: DeleteOptions = DeleteOptions.None_,
-    ) -> None:
+    def delete_on_commit(self, key: Record, data_set: str) -> None:
         """
         Add to commit queue the command to delete record in the
-        specified dataset, using delete options if provided (see
-        DeleteOptions class for details). No error is raised
-        if the record does not exist.
+        specified dataset. No error is raised if the record does not
+        exist. If the 'key' argument is a full record, only its
+        key will be used.
 
         The record will not be saved until a call to commit() which
         executes all pending requests in the commit queue. Alternatively,
@@ -192,21 +182,21 @@ class CacheDataSource(DataSource):
         To avoid an additional roundtrip to the data store, the delete
         marker may be written even when the record does not exist.
         """
-        pass
+        raise NotImplementedError()
 
     def commit(self) -> None:
         """
         Execute all pending save and delete requests in the commit queue
         and clear the queue.
         """
-        pass
+        raise NotImplementedError()
 
     def rollback(self) -> None:
         """
         Clear the commit queue without executing the pending save and delete
         requests in the queue.
         """
-        pass
+        raise NotImplementedError()
 
     def delete_db(self) -> None:
         """
@@ -220,4 +210,4 @@ class CacheDataSource(DataSource):
         ATTENTION - THIS METHOD WILL DELETE ALL DATA WITHOUT
         THE POSSIBILITY OF RECOVERY. USE WITH CAUTION.
         """
-        pass
+        raise NotImplementedError()

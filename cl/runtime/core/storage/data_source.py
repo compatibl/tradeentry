@@ -18,10 +18,7 @@ from typing import Iterable, Union
 
 from cl.runtime.core.storage.class_data import class_field
 from cl.runtime.core.storage.data_source_key import DataSourceKey
-from cl.runtime.core.storage.delete_options import DeleteOptions
-from cl.runtime.core.storage.load_options import LoadOptions
 from cl.runtime.core.storage.record import Record
-from cl.runtime.core.storage.save_options import SaveOptions
 
 
 @dataclass
@@ -50,34 +47,42 @@ class DataSource(DataSourceKey, ABC):
         self,
         keys: Iterable[Union[str, Record]],
         data_set: str,
-        load_options: LoadOptions = LoadOptions.None_,
         *,
-        out: Iterable[Record],
+        ignore_not_found: bool = False,
+        ignore_null_key: bool = False,
+        out: Iterable[Record]
     ) -> None:
         """
-        Populate the collection of objects specified via the 'out' parameter
-        with data loaded from the specified dataset and collection of keys,
-        using load options if provided (see LoadOptions class for details).
+        Populate the collection of objects specified via the 'out' argument
+        with data loaded from the specified dataset and collection of keys.
+        If an element of the 'keys' argument is a full record, only its key
+        will be used.
+
+        If a complete record is passed for the argument key, only its primary
+        key fields will be used.
+
+        Optional parameters:
+
+        ignore_not_found: Return None instead of an error message if the record
+            is not found.
+        ignore_null_key: Return None instead of error message if key=None is passed
+            as argument. This option can be used to simplify the code for loading a record
+            from a key stored as an optional attribute.
         """
 
     @abstractmethod
-    def save_many(
-        self, records: Iterable[Record], data_set: str, save_options: SaveOptions = SaveOptions.None_
-    ) -> None:
+    def save_many(self, records: Iterable[Record], data_set: str) -> None:
         """
-        Save many records to the specified dataset, bypassing the commit
-        queue and using save options if provided (see SaveOptions
-        class for details).
+        Save many records to the specified dataset, bypassing the commit queue.
 
-        This method does not implicitly call commit(). The commit queue
-        will remain in its original state after the method exits.
+        This method does not implicitly call commit(). The commit queue will 
+        remain in its original state after the method exits.
         """
 
     @abstractmethod
-    def save_on_commit(self, record: Record, data_set: str, save_options: SaveOptions = SaveOptions.None_) -> None:
+    def save_on_commit(self, record: Record, data_set: str) -> None:
         """
-        Add the record to the commit queue using save options if provided
-        (see SaveOptions class for details).
+        Add the record to the commit queue.
 
         The record will not be saved until a call to commit() which
         executes all pending requests in the commit queue. Alternatively,
@@ -86,16 +91,11 @@ class DataSource(DataSourceKey, ABC):
         """
 
     @abstractmethod
-    def delete_many(
-        self,
-        keys: Iterable[Record],
-        data_set: str,
-        delete_options: DeleteOptions = DeleteOptions.None_,
-    ) -> None:
+    def delete_many(self, keys: Iterable[Record], data_set: str) -> None:
         """
         Delete many records in the specified dataset, bypassing
-        the commit queue and using delete options if provided
-        (see DeleteOptions class for details).
+        the commit queue. If an element of the 'keys' argument is
+        a full record, only its key will be used.
 
         This method does not implicitly call commit(). The commit queue
         will remain in its original state after the method exits.
@@ -109,17 +109,12 @@ class DataSource(DataSourceKey, ABC):
         """
 
     @abstractmethod
-    def delete_on_commit(
-        self,
-        key: Record,
-        data_set: str,
-        delete_options: DeleteOptions = DeleteOptions.None_,
-    ) -> None:
+    def delete_on_commit(self, key: Record, data_set: str) -> None:
         """
         Add to commit queue the command to delete record in the
-        specified dataset, using delete options if provided (see
-        DeleteOptions class for details). No error is raised
-        if the record does not exist.
+        specified dataset. No error is raised if the record does not
+        exist. If the 'key' argument is a full record, only its 
+        key will be used.
 
         The record will not be saved until a call to commit() which
         executes all pending requests in the commit queue. Alternatively,
@@ -172,27 +167,26 @@ class DataSource(DataSourceKey, ABC):
         self,
         key: Union[str, Record],
         data_set: str,
-        load_options: LoadOptions = LoadOptions.None_,
         *,
-        out: Record,
+        ignore_not_found: bool = False,
+        ignore_null_key: bool = False,
+        out: Record
     ) -> None:
         """
-        Populate the object specified via the 'out' parameter with data
-        loaded from the specified dataset and key, using load options if
-        provided (see LoadOptions class for details).
+        Populate the object specified via the 'out' argument with data
+        loaded from the specified dataset and key. If the 'key' argument is
+        a full record, only its  key will be used.
 
         Invoking load_one method in a loop for many keys will lead to performance
         deterioration; load_many method should be used instead.
         """
 
         # Pass arguments to load_many(...)
-        self.load_many([key], data_set, load_options, out=[out])
+        self.load_many([key], data_set, ignore_not_found=ignore_not_found, ignore_null_key=ignore_null_key, out=[out])
 
-    def save_one(self, record: Record, data_set: str, save_options: SaveOptions = SaveOptions.None_):
+    def save_one(self, record: Record, data_set: str):
         """
-        Save one record to the specified dataset, bypassing the commit
-        queue and using save options if provided (see SaveOptions
-        class for details).
+        Save one record to the specified dataset, bypassing the commit queue.
 
         This method does not implicitly call commit(). The commit queue
         will remain in its original state after the method exits.
@@ -203,19 +197,14 @@ class DataSource(DataSourceKey, ABC):
         """
 
         # Pass arguments to save_many(...)
-        self.save_many([record], data_set, save_options)
+        self.save_many([record], data_set)
 
-    def delete_one(
-        self,
-        key: Record,
-        data_set: str,
-        delete_options: DeleteOptions = DeleteOptions.None_,
-    ) -> None:
+    def delete_one(self, key: Record, data_set: str) -> None:
         """
         Delete record with argument key in the specified dataset
-        bypassing the commit queue, using delete options if provided
-        (see DeleteOptions class for details). No error is raised
-        if the record does not exist.
+        bypassing the commit queue. No error is raised if the record
+        does not exist. If the 'key' argument is a full record, only its 
+        key will be used.
 
         This method does not implicitly call commit(). The commit queue
         will remain in its original state after the method exits.
@@ -235,7 +224,7 @@ class DataSource(DataSourceKey, ABC):
         """
 
         # Pass arguments to delete_many(...)
-        self.delete_many([key], data_set, delete_options)
+        self.delete_many([key], data_set)
 
     def __enter__(self):
         """Support resource disposal."""
