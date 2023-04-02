@@ -24,3 +24,7 @@ class PackageKey(ClassRecord):
 
     package_name: str = class_field()
     """Unique package identifier."""
+
+    def to_pk(self) -> str:
+        """Return primary key (PK) as string."""
+        return f'ClPackage;{self.package_name}'
