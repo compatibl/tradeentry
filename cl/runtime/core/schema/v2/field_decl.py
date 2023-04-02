@@ -15,7 +15,7 @@
 from dataclasses import dataclass
 from typing import Union
 
-from cl.runtime.core.schema.type_decl_key import TypeDeclKey
+from cl.runtime.core.schema.v2.type_decl_key import TypeDeclKey
 from cl.runtime.core.storage.class_data import ClassData, class_field
 
 
