@@ -19,7 +19,9 @@ from typing import Any, Dict, Optional
 from cl.runtime.core.storage.data import Data
 
 
-def class_field(*, typename: Optional[str] = None, name: Optional[str] = None, label: Optional[str] = None, optional: bool = False) -> Any:
+def class_field(
+    *, typename: Optional[str] = None, name: Optional[str] = None, label: Optional[str] = None, optional: bool = False
+) -> Any:
     """Comment."""
     return field(default=None, metadata={'typename': typename, 'name': name, 'label': label, 'optional': optional})
 

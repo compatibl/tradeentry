@@ -12,9 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Optional
-
 from dataclasses import dataclass
+from typing import List, Optional
 
 from cl.runtime.core.schema.v1.package_dependency import PackageDependency
 from cl.runtime.core.schema.v1.package_key import PackageKey

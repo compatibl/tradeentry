@@ -12,9 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Optional, final
-
 from dataclasses import dataclass
+from typing import Optional, final
 
 from cl.runtime.core.schema.v1.language_key import LanguageKey
 from cl.runtime.core.storage.class_data import class_field
@@ -23,6 +22,5 @@ from cl.runtime.core.storage.class_data import class_field
 @final
 @dataclass
 class Language(LanguageKey):
-
     language_label: Optional[str] = class_field()
     """Language label displayed in user interface (may not be unique)."""

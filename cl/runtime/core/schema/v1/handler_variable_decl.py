@@ -12,14 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 from typing import Optional
 
-from dataclasses import dataclass
-
-from cl.runtime.core.storage.class_data import class_field
-from cl.runtime.core.storage.class_label import class_label
 from cl.runtime.core.schema.v1.type_decl_key import TypeDeclKey
 from cl.runtime.core.schema.v1.type_member_decl import TypeMemberDecl
+from cl.runtime.core.storage.class_data import class_field
+from cl.runtime.core.storage.class_label import class_label
 
 
 @class_label('Handler Variable Declaration')

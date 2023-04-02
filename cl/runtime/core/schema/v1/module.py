@@ -13,9 +13,8 @@
 # limitations under the License.
 
 from abc import ABC
-from typing import List, Optional
-
 from dataclasses import dataclass
+from typing import List, Optional
 
 from cl.runtime.core.schema.v1.module_key import ModuleKey
 from cl.runtime.core.schema.v1.package_key import PackageKey

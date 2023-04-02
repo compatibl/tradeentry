@@ -12,14 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 from typing import List, Optional
 
-from dataclasses import dataclass
-
-from cl.runtime.core.storage.class_label import class_label
 from cl.runtime.core.schema.v1.enum_decl_key import EnumDeclKey
 from cl.runtime.core.schema.v1.enum_item_decl import EnumItemDecl
 from cl.runtime.core.storage.class_data import class_field
+from cl.runtime.core.storage.class_label import class_label
 
 
 @class_label('Enum Declaration')

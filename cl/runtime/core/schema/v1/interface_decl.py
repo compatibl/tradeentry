@@ -12,15 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 from typing import List, Optional
 
-from dataclasses import dataclass
-
-from cl.runtime.core.storage.class_label import class_label
 from cl.runtime.core.schema.v1.handler_declare_decl import HandlerDeclareDecl
 from cl.runtime.core.schema.v1.interface_decl_key import InterfaceDeclKey
 from cl.runtime.core.schema.v1.type_element_decl import TypeElementDecl
 from cl.runtime.core.storage.class_data import class_field
+from cl.runtime.core.storage.class_label import class_label
 
 
 @class_label('Interface Declaration')

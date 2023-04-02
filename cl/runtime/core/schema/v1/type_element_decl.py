@@ -12,14 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 from typing import List, Optional
 
-from dataclasses import dataclass
-
-from cl.runtime.core.storage.class_label import class_label
 from cl.runtime.core.schema.v1.element_modification_type import ElementModificationType
 from cl.runtime.core.schema.v1.type_member_decl import TypeMemberDecl
 from cl.runtime.core.storage.class_data import class_field
+from cl.runtime.core.storage.class_label import class_label
 
 
 @class_label('Type Element Declaration')

@@ -12,12 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 from typing import Optional
 
-from dataclasses import dataclass
-
-from cl.runtime.core.storage.class_record import ClassRecord
 from cl.runtime.core.storage.class_data import class_field
+from cl.runtime.core.storage.class_record import ClassRecord
 
 
 @dataclass

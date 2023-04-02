@@ -12,11 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 from typing import List, Optional
 
-from dataclasses import dataclass
-
-from cl.runtime.core.storage.class_label import class_label
 from cl.runtime.core.schema.v1.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.core.schema.v1.handler_implement_block_decl import HandlerImplementBlockDecl
 from cl.runtime.core.schema.v1.interface_decl_key import InterfaceDeclKey
@@ -27,6 +25,7 @@ from cl.runtime.core.schema.v1.type_index_decl import TypeIndexDecl
 from cl.runtime.core.schema.v1.type_kind import TypeKind
 from cl.runtime.core.schema.v1.type_param_decl import TypeParamDecl
 from cl.runtime.core.storage.class_data import class_field
+from cl.runtime.core.storage.class_label import class_label
 
 
 @class_label('Type Declaration')

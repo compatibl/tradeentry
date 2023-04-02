@@ -14,9 +14,9 @@
 
 from dataclasses import dataclass
 
-from cl.runtime.core.storage.class_label import class_label
 from cl.runtime.core.schema.v1.atomic_type import AtomicType
 from cl.runtime.core.storage.class_data import ClassData, class_field
+from cl.runtime.core.storage.class_label import class_label
 
 
 @class_label('Value Declaration')

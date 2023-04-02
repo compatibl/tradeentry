@@ -15,8 +15,8 @@
 from dataclasses import dataclass
 
 from cl.runtime.core.schema.v1.module_key import ModuleKey
-from cl.runtime.core.storage.class_record import ClassRecord
 from cl.runtime.core.storage.class_data import class_field
+from cl.runtime.core.storage.class_record import ClassRecord
 
 
 @dataclass

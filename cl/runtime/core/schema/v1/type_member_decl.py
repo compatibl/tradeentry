@@ -12,16 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 from typing import TYPE_CHECKING, List, Optional
 
-from dataclasses import dataclass
-
-from cl.runtime.core.storage.class_label import class_label
 from cl.runtime.core.schema.v1.enum_decl_key import EnumDeclKey
 from cl.runtime.core.schema.v1.interface_decl_key import InterfaceDeclKey
 from cl.runtime.core.schema.v1.type_decl_key import TypeDeclKey
 from cl.runtime.core.schema.v1.value_decl import ValueDecl
 from cl.runtime.core.storage.class_data import ClassData, class_field
+from cl.runtime.core.storage.class_label import class_label
 
 if TYPE_CHECKING:
     from cl.runtime.core.schema.v1.type_argument_decl import TypeArgumentDecl
