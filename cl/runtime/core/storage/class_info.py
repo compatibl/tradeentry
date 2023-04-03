@@ -18,25 +18,11 @@ import inspect
 import pkgutil
 from typing import Dict, List, Set, Type, TypeVar, get_type_hints
 
+from kombu.utils.functional import memoize
+
 from cl.runtime.core.primitive.string_util import to_pascal_case
 
 T = TypeVar('T')
-
-
-# noinspection PyPep8Naming
-class memoize(dict):  # TODO: move to its own module, check for packages with the same functionality
-    """Simple dict-based cache decorator"""
-
-    def __init__(self, func):
-        super().__init__()
-        self.func = func
-
-    def __call__(self, *args):
-        return self[args]
-
-    def __missing__(self, key):
-        result = self[key] = self.func(*key)
-        return result
 
 
 class ClassInfo:
