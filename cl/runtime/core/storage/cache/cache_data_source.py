@@ -16,7 +16,7 @@ from copy import deepcopy
 from dataclasses import dataclass, field
 from typing import Dict, Iterable, Union, Type, Optional
 
-from cl.runtime.core.storage.class_info import ClassInfo
+from cl.runtime.core.schema.v2.class_info import ClassInfo
 from cl.runtime.core.storage.data_source import DataSource
 from cl.runtime.core.storage.record import Record
 

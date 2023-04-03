@@ -15,7 +15,7 @@
 import pytest
 
 from cl.runtime.core.storage.deleted_record import DeletedRecord
-from cl.runtime.core.schema.v1.class_info import ClassInfo
+from cl.runtime.core.schema.v2.class_info import ClassInfo
 from cl.runtime.stubs.storage.stub_class_data import StubClassData
 from cl.runtime.stubs.storage.stub_class_record_key import StubClassRecordKey
 from cl.runtime.stubs.storage.stub_class_record import StubClassRecord
