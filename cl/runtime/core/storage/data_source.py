@@ -14,7 +14,7 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Iterable, Union
+from typing import Iterable, Union, Type, Optional
 
 from cl.runtime.core.storage.class_data import class_field
 from cl.runtime.core.storage.data_source_key import DataSourceKey
@@ -24,19 +24,18 @@ from cl.runtime.core.storage.record import Record
 @dataclass
 class DataSource(DataSourceKey, ABC):
     """
-    Data source is a logical concept similar to database
-    that can be implemented for a document DB, relational DB,
-    key-value store, or filesystem. On top of the core
-    storage layer, it adds directory-like attribute called
-    dataset.
+    Data source is a storage API for polymorphic, hierarchical data that
+    can be implemented for a NoSQL DB, relational DB, key-value store,
+    cloud storage, in-memory cache, distributed cache, or a filesystem.
 
-    Data source API provides the ability to:
+    On top of the storage layer, the API adds a directory-like attribute
+    called the dataset.
 
-    (a) store and query datasets;
-    (b) store records in a specific dataset; and
-    (c) query record across a group of datasets.
+    The data source API provides the ability to:
 
-    This record is always stored in root dataset.
+    * Query the list of datasets;
+    * Store and query records in a specific dataset; and
+    * Query records across multiple datasets using dataset priority order.
     """
 
     read_only: bool = class_field(optional=True)
@@ -45,29 +44,26 @@ class DataSource(DataSourceKey, ABC):
     @abstractmethod
     def load_many(
         self,
+        query_type: Type[Record],
         keys: Iterable[Union[str, Record]],
         data_set: str,
         *,
-        ignore_not_found: bool = False,
-        ignore_null_key: bool = False,
-        out: Iterable[Record]
-    ) -> None:
+        optional_record: bool = False,
+        optional_key: bool = False,
+    ) -> Iterable[Record]:
         """
-        Populate the collection of objects specified via the 'out' argument
-        with data loaded from the specified dataset and collection of keys.
-        If an element of the 'keys' argument is a full record, only its key
-        will be used.
+        Return objects of query_type and query_type descendants using a
+        sequence of keys. The order of results is the same as the order
+        of argument keys.
 
-        If a complete record is passed for the argument key, only its primary
-        key fields will be used.
+        To avoid querying records that have already been loaded, any argument
+        key that is itself derived from query_type will be returned bypassing
+        the data source query. Use to_pk() to avoid this behavior.
 
         Optional parameters:
 
-        ignore_not_found: Return None instead of an error message if the record
-            is not found.
-        ignore_null_key: Return None instead of error message if key=None is passed
-            as argument. This option can be used to simplify the code for loading a record
-            from a key stored as an optional attribute.
+        * optional_record: If True, return None if the record is not found.
+        * optional_key: If True, accept key=None and return None result.
         """
 
     @abstractmethod
@@ -168,8 +164,8 @@ class DataSource(DataSourceKey, ABC):
         key: Union[str, Record],
         data_set: str,
         *,
-        ignore_not_found: bool = False,
-        ignore_null_key: bool = False,
+        optional_record: bool = False,
+        optional_key: bool = False,
         out: Record
     ) -> None:
         """
@@ -182,7 +178,7 @@ class DataSource(DataSourceKey, ABC):
         """
 
         # Pass arguments to load_many(...)
-        self.load_many([key], data_set, ignore_not_found=ignore_not_found, ignore_null_key=ignore_null_key, out=[out])
+        self.load_many([key], data_set, optional_record=optional_record, optional_key=optional_key, out=[out])
 
     def save_one(self, record: Record, data_set: str):
         """

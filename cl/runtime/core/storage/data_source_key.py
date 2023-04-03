@@ -21,21 +21,18 @@ from cl.runtime.core.storage.class_record import ClassRecord
 @dataclass
 class DataSourceKey(ClassRecord):
     """
-    Key for the data source record.
+    Data source is a storage API for polymorphic, hierarchical data that
+    can be implemented for a NoSQL DB, relational DB, key-value store,
+    cloud storage, in-memory cache, distributed cache, or a filesystem.
 
-    Data source is a logical concept similar to database
-    that can be implemented for a document DB, relational DB,
-    key-value store, or filesystem. On top of the core
-    storage layer, it adds directory-like attribute called
-    dataset.
+    On top of the storage layer, the API adds a directory-like attribute
+    called the dataset.
 
-    Data source API provides the ability to:
+    The data source API provides the ability to:
 
-    (a) store and query datasets;
-    (b) store records in a specific dataset; and
-    (c) query record across a group of datasets.
-
-    This record is always stored in root dataset.
+    * Query the list of datasets;
+    * Store and query records in a specific dataset; and
+    * Query records across multiple datasets using dataset priority order.
     """
 
     data_source_id: str = class_field()

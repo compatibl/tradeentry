@@ -26,7 +26,23 @@ from cl.runtime.stubs.storage.stub_derived_class_record import StubDerivedClassR
 class TestClassInfo:
     """Tests for ClassInfo."""
 
-    def test_smoke(self):
+    def test_get_type(self):
+        """Test getting type from _t discriminators."""
+
+        # from cl.runtime.stubs.storage.stub_class_record import StubClassRecord
+        # from cl.runtime.stubs.storage.stub_derived_class_record import StubDerivedClassRecord
+
+        with pytest.raises(Exception):
+            ClassInfo.get_type('ClassInfo')
+        with pytest.raises(Exception):
+            ClassInfo.get_type('Record')
+
+        assert ClassInfo.get_type('StubClassRecord') == StubClassRecord
+        assert ClassInfo.get_type('StubDerivedClassRecord') == StubDerivedClassRecord
+        assert ClassInfo.get_type('StubClassData') == StubClassData
+        assert ClassInfo.get_type('StubDerivedClassData') == StubDerivedClassData
+
+    def test_get_ultimate_base(self):
         """Smoke test."""
 
         with pytest.raises(Exception):

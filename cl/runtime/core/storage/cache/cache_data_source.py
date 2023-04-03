@@ -14,8 +14,9 @@
 
 from copy import deepcopy
 from dataclasses import dataclass, field
-from typing import Dict, Iterable, Union
+from typing import Dict, Iterable, Union, Type, Optional
 
+from cl.runtime.core.storage.class_info import ClassInfo
 from cl.runtime.core.storage.data_source import DataSource
 from cl.runtime.core.storage.record import Record
 
@@ -33,44 +34,48 @@ class CacheDataSource(DataSource):
         self._cache = {}
 
     def load_many(
-        self,
-        keys: Iterable[Union[str, Record]],
-        data_set: str,
-        *,
-        ignore_not_found: bool = False,
-        ignore_null_key: bool = False,
-        out: Iterable[Record]
-    ) -> None:
+            self,
+            query_type: Type[Record],
+            keys: Iterable[Union[str, Record]],
+            data_set: str,
+            *,
+            optional_record: bool = False,
+            optional_key: bool = False,
+    ) -> Iterable[Record]:
         """
-        Populate the collection of objects specified via the 'out' argument
-        with data loaded from the specified dataset and collection of keys.
-        If an element of the 'keys' argument is a full record, only its key
-        will be used.
+        Return objects of query_type and query_type descendants using a
+        sequence of keys. The order of results is the same as the order
+        of argument keys.
+
+        To avoid querying records that have already been loaded, any argument
+        key that is itself derived from query_type will be returned bypassing
+        the data source query. Use to_pk() to avoid this behavior.
+
+        Optional parameters:
+
+        * optional_record: If True, return None if the record is not found.
+        * optional_key: If True, accept key=None and return None result.
         """
 
-        # TODO: Implement using zip(keys, out, strict=True) in Python 3.10
-        key_list = list(keys)
-        out_list = list(out)
-        if len(key_list) != len(out_list):
-            raise RuntimeError(f'In load_many(...), keys has length {len(key_list)} and out has length {len(out_list)}')
-
-        # Iterate over keys and out in parallel after checking they have equal length
-        zipped = zip(key_list, out_list)
-        for key, out in zipped:
-            # Handle key=None and check key type
+        result = []
+        for key in keys:
             if key is None:
-                if ignore_null_key:
-                    return None
+                # Handle key=None
+                if optional_key:
+                    result.append(None)
+                    continue
                 else:
-                    raise RuntimeError(
-                        "Null key is passed to load_one(...) method but 'ignore_null_key' flag is not set."
-                    )
+                    raise RuntimeError("Key=None but 'optional_key' argument is False or None.")
+            elif isinstance(key, query_type):
+                # Handle full record passed instead of the key
+                result.append(key)
+                continue
             elif isinstance(key, str):
                 pk = key
             elif isinstance(key, Record):
                 pk = key.to_pk()
             else:
-                raise RuntimeError('Key {key} is not a string, derived type of Record, or None')
+                raise RuntimeError(f'Key {key} is not a string, Record, or None')
 
             # Try to retrieve dataset dictionary, insert if it does not yet exist
             dataset_cache = self._cache.setdefault(data_set, {})
@@ -80,26 +85,33 @@ class CacheDataSource(DataSource):
 
             # Check if result is None
             if record_dict is None:
-                if ignore_not_found:
-                    return None
+                if optional_record:
+                    result.append(None)
+                    continue
                 else:
                     raise RuntimeError(
-                        f"Record is not found for pk={pk} but 'ignore_not_found' flag is not set."
+                        f"Record is not found for pk={pk} but 'optional_record' argument is False or None."
                     )
 
-            # Populate record from dictionary
-            out.from_dict(record_dict)
+            # Create record instance and populate it from dictionary
+            # Final type name is the last element of type discriminators list
+            type_discriminators = record_dict['_t']
+            final_type = ClassInfo.get_type(type_discriminators[-1])
+            record = final_type()
+            record.from_dict(record_dict)
 
             # Call init to update and validate object state
-            out.init()
+            record.init()
 
             # Verify that the record has the same key as was passed to the load method
-            out_pk = out.to_pk()
-            if out_pk != pk:
+            record_pk = record.to_pk()
+            if record_pk != pk:
                 raise RuntimeError(
-                    f'Record to_pk() method returns {out_pk} which does '
-                    f'not match the argument {pk} passed to the load method'
+                    f'Record to_pk() method returns {record_pk} which does '
+                    f'not match the argument {pk} passed to the load method.'
                 )
+
+        return result
 
     def save_many(
         self, records: Iterable[Record], data_set: str
@@ -125,6 +137,9 @@ class CacheDataSource(DataSource):
             # Make deep copy of dictionary in case the original record is changed
             # while the dictionary is persisted in cache
             record_dict = deepcopy(record_dict)
+
+            # Add the list of types from base to derived
+            record_dict["_t"] = ClassInfo.get_hierarchical_discriminator(type(record))
 
             # Try to retrieve dataset dictionary, insert if it does not yet exist
             dataset_cache = self._cache.setdefault(data_set, {})
