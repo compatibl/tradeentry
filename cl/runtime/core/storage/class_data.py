@@ -20,10 +20,27 @@ from cl.runtime.core.storage.data import Data
 
 
 def class_field(
-    *, typename: Optional[str] = None, name: Optional[str] = None, label: Optional[str] = None, optional: bool = False
+        *,
+        default=None,
+        default_factory=None,
+        optional: bool = False,
+        typename: Optional[str] = None,
+        name: Optional[str] = None,
+        label: Optional[str] = None
 ) -> Any:
-    """Comment."""
-    return field(default=None, metadata={'typename': typename, 'name': name, 'label': label, 'optional': optional})
+    """Field in dataclass with additional parameters to define runtime-specific metadata."""
+    if default_factory is not None:
+        if default is not None:
+            raise RuntimeError("Both default and default_factory parameters are specified for class_field.")
+        return field(
+            default_factory=default_factory,
+            metadata={'optional': optional, 'typename': typename, 'name': name, 'label': label}
+        )
+    else:
+        return field(
+            default=default,
+            metadata={'optional': optional, 'typename': typename, 'name': name, 'label': label}
+        )
 
 
 @dataclass
