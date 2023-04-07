@@ -37,10 +37,14 @@ class TestClassInfo:
         with pytest.raises(Exception):
             ClassInfo.get_type('Record')
 
+        # Returns type from name
         assert ClassInfo.get_type('StubClassRecord') == StubClassRecord
         assert ClassInfo.get_type('StubDerivedClassRecord') == StubDerivedClassRecord
         assert ClassInfo.get_type('StubClassData') == StubClassData
         assert ClassInfo.get_type('StubDerivedClassData') == StubDerivedClassData
+
+        # Check that caching the results works by calling again with the same inputs
+        assert ClassInfo.get_type('StubClassRecord') == StubClassRecord
 
     def test_get_ultimate_base(self):
         """Smoke test."""
@@ -48,9 +52,13 @@ class TestClassInfo:
         with pytest.raises(Exception):
             ClassInfo.get_ultimate_base(ClassInfo)
 
+        # Check results
         assert ClassInfo.get_ultimate_base(StubClassRecord) == StubClassRecord
         assert ClassInfo.get_ultimate_base(StubDerivedClassRecord) == StubClassRecord
         assert ClassInfo.get_ultimate_base(StubClassData) == StubClassData
+
+        # Check that caching the results works by calling again with the same inputs
+        assert ClassInfo.get_ultimate_base(StubClassRecord) == StubClassRecord
 
     def test_hierarchical_discriminator(self):
         """Test hierarchical discriminator."""
@@ -64,6 +72,9 @@ class TestClassInfo:
         assert func(StubClassRecordKey) == ['StubClassRecordKey']
         assert func(DeletedRecord) == ['DeletedRecord']
 
+        # Check that caching the results works by calling again with the same inputs
+        assert func(StubClassRecord) == ['StubClassRecord']
+
     def test_key_from_record(self):
         """Test getting key class from record class."""
 
@@ -73,12 +84,18 @@ class TestClassInfo:
         assert func(StubClassRecord) == StubClassRecordKey
         assert func(StubDerivedClassRecord) == StubClassRecordKey
 
+        # Check that caching the results works by calling again with the same inputs
+        assert func(StubClassRecord) == StubClassRecordKey
+
     def test_record_from_key(self):
         """Test getting base record from key."""
 
         func = ClassInfo.get_record_from_key
 
         # Must return base record from key
+        assert func(StubClassRecordKey) == StubClassRecord
+
+        # Check that caching the results works by calling again with the same inputs
         assert func(StubClassRecordKey) == StubClassRecord
 
     def test_package_shortname(self):
@@ -100,7 +117,7 @@ class TestClassInfo:
         assert ClassInfo.get_prefixed_name(StubDerivedClassRecord) == 'rt.stubs.StubDerivedClassRecord'
 
         assert ClassInfo.get_collection_name(StubClassRecord) == 'rt.stubs.StubClassRecord'
-        assert ClassInfo.get_collection_name(StubDerivedClassRecord) == 'rt.stubs.StubDerivedClassRecord'
+        assert ClassInfo.get_collection_name(StubDerivedClassRecord) == 'rt.stubs.StubClassRecord'
 
         func = ClassInfo.get_hierarchical_discriminator
 

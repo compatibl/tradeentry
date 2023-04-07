@@ -16,11 +16,13 @@ import gc
 import importlib
 import inspect
 import pkgutil
+from functools import lru_cache
 from typing import Dict, List, Set, Type, TypeVar, get_type_hints
 
 from kombu.utils.functional import memoize
 
 from cl.runtime.core.primitive.string_util import to_pascal_case
+from cl.runtime.core.storage.class_record import ClassRecord
 
 T = TypeVar('T')
 
@@ -155,7 +157,7 @@ class ClassInfo:
         return get_type_hints(type_, localns=ClassInfo.__data_types_map)
 
     @staticmethod
-    @memoize
+    @lru_cache
     def get_ultimate_base(type_: type) -> type:
         """
         Returns the ultimate base class of the inheritance chain which
@@ -225,7 +227,7 @@ class ClassInfo:
         raise RuntimeError('Type is not derived from ClassData')
 
     @staticmethod
-    @memoize
+    @lru_cache
     def get_key_from_record(type_: type) -> type:
         """Extracts associated key from ClassRecord derived types."""
 
@@ -239,7 +241,7 @@ class ClassInfo:
             raise RuntimeError(f'Cannot deduce key from {type_.__name__} type not derived from ClassRecord.')
 
     @staticmethod
-    @memoize
+    @lru_cache
     def get_record_from_key(type_: type) -> type:
         """Extracts associated record from ClassRecord derived types."""
 
@@ -266,6 +268,7 @@ class ClassInfo:
         # Resolves issue with classes duplicates in __subclasses__()
         gc.collect()
         children = ClassInfo.__get_runtime_imported_data(ClassData, [Context, ClassData])
+        children.extend(ClassInfo.__get_runtime_imported_data(ClassRecord, [ClassRecord]))
         for child in children:
             an_name = ClassInfo.to_analyst_name(child)
             prefixed_name = ClassInfo.get_prefixed_name(child)
