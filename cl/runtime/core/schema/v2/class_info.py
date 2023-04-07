@@ -16,10 +16,9 @@ import gc
 import importlib
 import inspect
 import pkgutil
-from functools import lru_cache
+from functools import cache
 from typing import Dict, List, Set, Type, TypeVar, get_type_hints
 
-from kombu.utils.functional import memoize
 
 from cl.runtime.core.primitive.string_util import to_pascal_case
 from cl.runtime.core.storage.class_record import ClassRecord
@@ -43,7 +42,7 @@ class ClassInfo:
         ClassInfo.__package_shortname_map.pop(module_name)
 
     @staticmethod
-    @memoize
+    @cache
     def get_derived_types(module_name: str, base_type: Type[T]) -> Set[Type[T]]:
         """Extract all derived classes from specified module."""
         try:
@@ -100,7 +99,7 @@ class ClassInfo:
         return ClassInfo.__data_types_map.get(name, None)
 
     @staticmethod
-    @memoize
+    @cache
     def from_analyst_to_short_name(name: str) -> str:
         cls_name = name.split('.')[-1]
         if cls_name != 'ClassData' and cls_name.endswith('Data'):
@@ -108,7 +107,7 @@ class ClassInfo:
         return cls_name
 
     @staticmethod
-    @memoize
+    @cache
     def to_analyst_name(type_: Type) -> str:
         type_name = type_.__name__
         module_name = type_.__module__
@@ -157,7 +156,7 @@ class ClassInfo:
         return get_type_hints(type_, localns=ClassInfo.__data_types_map)
 
     @staticmethod
-    @lru_cache
+    @cache
     def get_ultimate_base(type_: type) -> type:
         """
         Returns the ultimate base class of the inheritance chain which
@@ -227,7 +226,7 @@ class ClassInfo:
         raise RuntimeError('Type is not derived from ClassData')
 
     @staticmethod
-    @lru_cache
+    @cache
     def get_key_from_record(type_: type) -> type:
         """Extracts associated key from ClassRecord derived types."""
 
@@ -241,7 +240,7 @@ class ClassInfo:
             raise RuntimeError(f'Cannot deduce key from {type_.__name__} type not derived from ClassRecord.')
 
     @staticmethod
-    @lru_cache
+    @cache
     def get_record_from_key(type_: type) -> type:
         """Extracts associated record from ClassRecord derived types."""
 
