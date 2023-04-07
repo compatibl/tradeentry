@@ -15,8 +15,8 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from cl.runtime.core.schema.v1.type_decl_key import TypeDeclKey
-from cl.runtime.core.schema.v1.type_member_decl import TypeMemberDecl
+from cl.runtime.core.schema.decl.type_decl_key import TypeDeclKey
+from cl.runtime.core.schema.decl.type_member_decl import TypeMemberDecl
 from cl.runtime.core.storage.class_data import class_field
 from cl.runtime.core.storage.class_label import class_label
 

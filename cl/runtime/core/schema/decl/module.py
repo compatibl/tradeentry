@@ -16,8 +16,8 @@ from abc import ABC
 from dataclasses import dataclass
 from typing import List, Optional
 
-from cl.runtime.core.schema.v1.module_key import ModuleKey
-from cl.runtime.core.schema.v1.package_key import PackageKey
+from cl.runtime.core.schema.decl.module_key import ModuleKey
+from cl.runtime.core.schema.decl.package_key import PackageKey
 from cl.runtime.core.storage.class_data import class_field
 
 

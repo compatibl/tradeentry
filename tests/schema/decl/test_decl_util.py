@@ -15,7 +15,7 @@
 import pytest
 
 from cl.runtime.core.storage.deleted_record import DeletedRecord
-from cl.runtime.core.schema.v1.class_info import ClassInfo
+from cl.runtime.core.schema.decl.decl_util import DeclUtil
 from cl.runtime.stubs.storage.stub_class_data import StubClassData
 from cl.runtime.stubs.storage.stub_class_record_key import StubClassRecordKey
 from cl.runtime.stubs.storage.stub_class_record import StubClassRecord
@@ -23,8 +23,8 @@ from cl.runtime.stubs.storage.stub_derived_class_data import StubDerivedClassDat
 from cl.runtime.stubs.storage.stub_derived_class_record import StubDerivedClassRecord
 
 
-class TestClassInfo:
-    """Tests for ClassInfo."""
+class TestDeclUtil:
+    """Tests for DeclUtil."""
 
     def test_get_type(self):
         """Test getting type from _t discriminators."""
@@ -33,36 +33,36 @@ class TestClassInfo:
         # from cl.runtime.stubs.storage.stub_derived_class_record import StubDerivedClassRecord
 
         with pytest.raises(Exception):
-            ClassInfo.get_type('ClassInfo')
+            DeclUtil.get_type('DeclUtil')
         with pytest.raises(Exception):
-            ClassInfo.get_type('Record')
+            DeclUtil.get_type('Record')
 
         # Returns type from name
-        assert ClassInfo.get_type('StubClassRecord') == StubClassRecord
-        assert ClassInfo.get_type('StubDerivedClassRecord') == StubDerivedClassRecord
-        assert ClassInfo.get_type('StubClassData') == StubClassData
-        assert ClassInfo.get_type('StubDerivedClassData') == StubDerivedClassData
+        assert DeclUtil.get_type('StubClassRecord') == StubClassRecord
+        assert DeclUtil.get_type('StubDerivedClassRecord') == StubDerivedClassRecord
+        assert DeclUtil.get_type('StubClassData') == StubClassData
+        assert DeclUtil.get_type('StubDerivedClassData') == StubDerivedClassData
 
         # Check that caching the results works by calling again with the same inputs
-        assert ClassInfo.get_type('StubClassRecord') == StubClassRecord
+        assert DeclUtil.get_type('StubClassRecord') == StubClassRecord
 
     def test_get_ultimate_base(self):
         """Smoke test."""
 
         with pytest.raises(Exception):
-            ClassInfo.get_ultimate_base(ClassInfo)
+            DeclUtil.get_ultimate_base(DeclUtil)
 
         # Check results
-        assert ClassInfo.get_ultimate_base(StubClassRecord) == StubClassRecord
-        assert ClassInfo.get_ultimate_base(StubDerivedClassRecord) == StubClassRecord
-        assert ClassInfo.get_ultimate_base(StubClassData) == StubClassData
+        assert DeclUtil.get_ultimate_base(StubClassRecord) == StubClassRecord
+        assert DeclUtil.get_ultimate_base(StubDerivedClassRecord) == StubClassRecord
+        assert DeclUtil.get_ultimate_base(StubClassData) == StubClassData
 
         # Check that caching the results works by calling again with the same inputs
-        assert ClassInfo.get_ultimate_base(StubClassRecord) == StubClassRecord
+        assert DeclUtil.get_ultimate_base(StubClassRecord) == StubClassRecord
 
     def test_hierarchical_discriminator(self):
         """Test hierarchical discriminator."""
-        func = ClassInfo.get_hierarchical_discriminator
+        func = DeclUtil.get_hierarchical_discriminator
 
         # Must return the list of classes from current to the first user-defined base
         assert func(StubClassRecord) == ['StubClassRecord']
@@ -78,7 +78,7 @@ class TestClassInfo:
     def test_key_from_record(self):
         """Test getting key class from record class."""
 
-        func = ClassInfo.get_key_from_record
+        func = DeclUtil.get_key_from_record
 
         # Must return base key from base or derived record
         assert func(StubClassRecord) == StubClassRecordKey
@@ -90,7 +90,7 @@ class TestClassInfo:
     def test_record_from_key(self):
         """Test getting base record from key."""
 
-        func = ClassInfo.get_record_from_key
+        func = DeclUtil.get_record_from_key
 
         # Must return base record from key
         assert func(StubClassRecordKey) == StubClassRecord
@@ -101,25 +101,25 @@ class TestClassInfo:
     def test_package_shortname(self):
         """Test short package namespace alias."""
 
-        assert ClassInfo.try_get_type('rt.stubs.StubClassRecord') is None
-        assert ClassInfo.try_get_type('rt.stubs.StubDerivedClassRecord') is None
+        assert DeclUtil.try_get_type('rt.stubs.StubClassRecord') is None
+        assert DeclUtil.try_get_type('rt.stubs.StubDerivedClassRecord') is None
 
-        assert ClassInfo.get_prefixed_name(StubClassRecord) == 'StubClassRecord'
-        assert ClassInfo.get_prefixed_name(StubDerivedClassRecord) == 'StubDerivedClassRecord'
+        assert DeclUtil.get_prefixed_name(StubClassRecord) == 'StubClassRecord'
+        assert DeclUtil.get_prefixed_name(StubDerivedClassRecord) == 'StubDerivedClassRecord'
 
         # Add package shortname
-        ClassInfo.register_shortname('cl.runtime.stubs', 'rt.stubs')
+        DeclUtil.register_shortname('cl.runtime.stubs', 'rt.stubs')
 
-        assert ClassInfo.get_type('rt.stubs.StubClassRecord') is StubClassRecord
-        assert ClassInfo.get_type('rt.stubs.StubDerivedClassRecord') is StubDerivedClassRecord
+        assert DeclUtil.get_type('rt.stubs.StubClassRecord') is StubClassRecord
+        assert DeclUtil.get_type('rt.stubs.StubDerivedClassRecord') is StubDerivedClassRecord
 
-        assert ClassInfo.get_prefixed_name(StubClassRecord) == 'rt.stubs.StubClassRecord'
-        assert ClassInfo.get_prefixed_name(StubDerivedClassRecord) == 'rt.stubs.StubDerivedClassRecord'
+        assert DeclUtil.get_prefixed_name(StubClassRecord) == 'rt.stubs.StubClassRecord'
+        assert DeclUtil.get_prefixed_name(StubDerivedClassRecord) == 'rt.stubs.StubDerivedClassRecord'
 
-        assert ClassInfo.get_collection_name(StubClassRecord) == 'rt.stubs.StubClassRecord'
-        assert ClassInfo.get_collection_name(StubDerivedClassRecord) == 'rt.stubs.StubClassRecord'
+        assert DeclUtil.get_collection_name(StubClassRecord) == 'rt.stubs.StubClassRecord'
+        assert DeclUtil.get_collection_name(StubDerivedClassRecord) == 'rt.stubs.StubClassRecord'
 
-        func = ClassInfo.get_hierarchical_discriminator
+        func = DeclUtil.get_hierarchical_discriminator
 
         assert func(StubClassRecord) == ['rt.stubs.StubClassRecord']
         assert func(StubDerivedClassRecord) == ['rt.stubs.StubClassRecord', 'rt.stubs.StubDerivedClassRecord']
@@ -131,7 +131,7 @@ class TestClassInfo:
         assert func(StubClassRecordKey) == ['rt.stubs.StubClassRecordKey']
         assert func(DeletedRecord) == ['DeletedRecord']
 
-        ClassInfo.unregister_shortname('cl.runtime.stubs')  # TODO: rename to deregister?
+        DeclUtil.unregister_shortname('cl.runtime.stubs')  # TODO: rename to deregister?
 
 
 if __name__ == '__main__':

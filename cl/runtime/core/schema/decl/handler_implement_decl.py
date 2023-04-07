@@ -15,7 +15,7 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from cl.runtime.core.schema.v1.language_key import LanguageKey
+from cl.runtime.core.schema.decl.language_key import LanguageKey
 from cl.runtime.core.storage.class_data import ClassData, class_field
 from cl.runtime.core.storage.class_label import class_label
 

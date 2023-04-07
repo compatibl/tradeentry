@@ -26,7 +26,7 @@ from cl.runtime.core.storage.class_record import ClassRecord
 T = TypeVar('T')
 
 
-class ClassInfo:
+class DeclUtil:
     """Contains reflection based helper static methods."""
 
     __is_initialized: bool = False
@@ -35,11 +35,11 @@ class ClassInfo:
 
     @staticmethod
     def register_shortname(module_name: str, shortname: str):
-        ClassInfo.__package_shortname_map[module_name] = shortname
+        DeclUtil.__package_shortname_map[module_name] = shortname
 
     @staticmethod
     def unregister_shortname(module_name: str):
-        ClassInfo.__package_shortname_map.pop(module_name)
+        DeclUtil.__package_shortname_map.pop(module_name)
 
     @staticmethod
     @cache
@@ -77,26 +77,26 @@ class ClassInfo:
     def get_type(name: str) -> type:
         """Returns data derived type given its name."""
 
-        if not ClassInfo.__is_initialized or name not in ClassInfo.__data_types_map:
+        if not DeclUtil.__is_initialized or name not in DeclUtil.__data_types_map:
             # Try to update map one more time. This scenario is possible depending on
             # first call to get_type and which classes where imported at that moment.
-            ClassInfo.__init_types()
+            DeclUtil.__init_types()
 
-            if name not in ClassInfo.__data_types_map:
+            if name not in DeclUtil.__data_types_map:
                 raise RuntimeError(
-                    f'Class {name} is not found in ClassInfo data types map. ' f'Import this class before loading.'
+                    f'Class {name} is not found in DeclUtil data types map. ' f'Import this class before loading.'
                 )
 
-        return ClassInfo.__data_types_map[name]
+        return DeclUtil.__data_types_map[name]
 
     @staticmethod
     def try_get_type(name: str) -> type:
         """Returns data derived type given its name. Returns None if not found"""
 
-        if not ClassInfo.__is_initialized:
-            ClassInfo.__init_types()
+        if not DeclUtil.__is_initialized:
+            DeclUtil.__init_types()
 
-        return ClassInfo.__data_types_map.get(name, None)
+        return DeclUtil.__data_types_map.get(name, None)
 
     @staticmethod
     @cache
@@ -137,7 +137,7 @@ class ClassInfo:
         type_module = type_.__module__
         type_name = type_.__name__
 
-        for package, shortname in ClassInfo.__package_shortname_map.items():
+        for package, shortname in DeclUtil.__package_shortname_map.items():
             if type_module.startswith(package):
                 return f'{shortname}.{type_name}'
 
@@ -150,10 +150,10 @@ class ClassInfo:
         Uses standard typing.get_type_hints with locals param override.
         """
 
-        if not ClassInfo.__is_initialized:
-            ClassInfo.__init_types()
+        if not DeclUtil.__is_initialized:
+            DeclUtil.__init_types()
 
-        return get_type_hints(type_, localns=ClassInfo.__data_types_map)
+        return get_type_hints(type_, localns=DeclUtil.__data_types_map)
 
     @staticmethod
     @cache
@@ -184,8 +184,8 @@ class ClassInfo:
 
     @staticmethod
     def get_collection_name(type_: type) -> str:
-        root_type = ClassInfo.get_ultimate_base(type_)
-        return ClassInfo.get_prefixed_name(root_type)
+        root_type = DeclUtil.get_ultimate_base(type_)
+        return DeclUtil.get_prefixed_name(root_type)
 
     @staticmethod
     def get_hierarchical_discriminator(type_: type) -> List[str]:
@@ -209,20 +209,20 @@ class ClassInfo:
             if idx == 0:
                 raise RuntimeError("ClassRecord is an abstract base that should not be used directly.")
             if ClassRecord in type_.__bases__:
-                chain = [ClassInfo.get_prefixed_name(x) for x in type_mro[idx - 1::-1]]
+                chain = [DeclUtil.get_prefixed_name(x) for x in type_mro[idx - 1::-1]]
             else:
-                chain = [ClassInfo.get_prefixed_name(x) for x in type_mro[idx - 2::-1]]
+                chain = [DeclUtil.get_prefixed_name(x) for x in type_mro[idx - 2::-1]]
             return chain
         elif ClassData in type_mro:
             idx = type_mro.index(ClassData)
             if idx == 0:
                 raise RuntimeError("ClassData is an abstract base that should not be used directly.")
-            return [ClassInfo.get_prefixed_name(x) for x in type_mro[idx - 1::-1]]
+            return [DeclUtil.get_prefixed_name(x) for x in type_mro[idx - 1::-1]]
         elif DeletedRecord in type_mro:
             idx = type_mro.index(DeletedRecord)
             if idx != 0:
                 raise RuntimeError("DeletedRecord is a final class that should not be derived from.")
-            return [ClassInfo.get_prefixed_name(type_mro[0])]
+            return [DeclUtil.get_prefixed_name(type_mro[0])]
         raise RuntimeError('Type is not derived from ClassData')
 
     @staticmethod
@@ -246,7 +246,7 @@ class ClassInfo:
 
         from cl.runtime.core.storage.class_record import ClassRecord
 
-        key_type_name = ClassInfo.get_prefixed_name(type_)
+        key_type_name = DeclUtil.get_prefixed_name(type_)
 
         if ClassRecord in type_.mro():
             if not key_type_name.endswith('Key'):
@@ -254,7 +254,7 @@ class ClassInfo:
             record_type_name = key_type_name[:-3]
 
             # Load by record name
-            record_type = ClassInfo.get_type(record_type_name)
+            record_type = DeclUtil.get_type(record_type_name)
             return record_type
         else:
             raise RuntimeError(f'Cannot deduce record from {type_.__name__} type not derived from ClassRecord.')
@@ -266,28 +266,28 @@ class ClassInfo:
 
         # Resolves issue with classes duplicates in __subclasses__()
         gc.collect()
-        children = ClassInfo.__get_runtime_imported_data(ClassData, [Context, ClassData])
-        children.extend(ClassInfo.__get_runtime_imported_data(ClassRecord, [ClassRecord]))
+        children = DeclUtil.__get_runtime_imported_data(ClassData, [Context, ClassData])
+        children.extend(DeclUtil.__get_runtime_imported_data(ClassRecord, [ClassRecord]))
         for child in children:
-            an_name = ClassInfo.to_analyst_name(child)
-            prefixed_name = ClassInfo.get_prefixed_name(child)
-            existed_child = ClassInfo.__data_types_map.get(prefixed_name, None)
+            an_name = DeclUtil.to_analyst_name(child)
+            prefixed_name = DeclUtil.get_prefixed_name(child)
+            existed_child = DeclUtil.__data_types_map.get(prefixed_name, None)
 
             # TODO: investigate type collisions
             # Add only new child types except runtime duplicate classes
             # if existed_child is None or existed_child.__module__.startswith('cl.runtime.core.schema.declaration'):
             if existed_child is None:
-                ClassInfo.__data_types_map[child.__name__] = child
-                ClassInfo.__data_types_map[prefixed_name] = child
-                ClassInfo.__data_types_map[an_name] = child
+                DeclUtil.__data_types_map[child.__name__] = child
+                DeclUtil.__data_types_map[prefixed_name] = child
+                DeclUtil.__data_types_map[an_name] = child
 
-        ClassInfo.__is_initialized = True
+        DeclUtil.__is_initialized = True
 
     @staticmethod
     def __get_runtime_imported_data(type_: type, children: List[type]) -> List[type]:
         """For the given type recursively adds its children."""
         current_children = type_.__subclasses__()
         for t in current_children:
-            ClassInfo.__get_runtime_imported_data(t, children)
+            DeclUtil.__get_runtime_imported_data(t, children)
         children.extend(current_children)
         return children

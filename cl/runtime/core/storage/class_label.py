@@ -14,7 +14,11 @@
 
 
 def class_label(label: str):
-    """No-op decorator for v1 declaration labels, currently unused."""
+    """
+    No-op decorator for type labels, currently unused.
+    
+    TODO: Use of remove.
+    """
 
     def wrap(obj):
         return obj

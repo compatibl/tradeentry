@@ -14,7 +14,7 @@
 
 from dataclasses import dataclass
 
-from cl.runtime.core.schema.v2.type_decl import TypeDecl
+from cl.runtime.core.schema.type.type_decl import TypeDecl
 
 
 @dataclass

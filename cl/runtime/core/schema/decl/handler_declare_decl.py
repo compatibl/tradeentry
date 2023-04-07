@@ -15,9 +15,9 @@
 from dataclasses import dataclass
 from typing import List, Optional
 
-from cl.runtime.core.schema.v1.handler_param_decl import HandlerParamDecl
-from cl.runtime.core.schema.v1.handler_type import HandlerType
-from cl.runtime.core.schema.v1.handler_variable_decl import HandlerVariableDecl
+from cl.runtime.core.schema.decl.handler_param_decl import HandlerParamDecl
+from cl.runtime.core.schema.decl.handler_type import HandlerType
+from cl.runtime.core.schema.decl.handler_variable_decl import HandlerVariableDecl
 from cl.runtime.core.storage.class_data import ClassData, class_field
 from cl.runtime.core.storage.class_label import class_label
 

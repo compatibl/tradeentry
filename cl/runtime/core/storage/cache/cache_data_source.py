@@ -16,7 +16,7 @@ from copy import deepcopy
 from dataclasses import dataclass, field
 from typing import Dict, Iterable, Union, Type, Optional
 
-from cl.runtime.core.schema.v2.class_info import ClassInfo
+from cl.runtime.core.schema.type.type_util import TypeUtil
 from cl.runtime.core.storage.data_source import DataSource
 from cl.runtime.core.storage.record import Record
 
@@ -96,7 +96,7 @@ class CacheDataSource(DataSource):
             # Create record instance and populate it from dictionary
             # Final type name is the last element of type discriminators list
             type_discriminators = record_dict['_t']
-            final_type = ClassInfo.get_type(type_discriminators[-1])
+            final_type = TypeUtil.get_type(type_discriminators[-1])
             record = final_type()
             record.from_dict(record_dict)
 
@@ -139,7 +139,7 @@ class CacheDataSource(DataSource):
             record_dict = deepcopy(record_dict)
 
             # Add the list of types from base to derived
-            record_dict["_t"] = ClassInfo.get_hierarchical_discriminator(type(record))
+            record_dict["_t"] = TypeUtil.get_hierarchical_discriminator(type(record))
 
             # Try to retrieve dataset dictionary, insert if it does not yet exist
             dataset_cache = self._cache.setdefault(data_set, {})
