@@ -35,7 +35,9 @@ def test_smoke():
     # Test saving and loading
     data_source.save_one(record, data_set)
     loaded_record = rt.stubs.StubRecord()
-    data_source.load_one(pk, data_set, out=loaded_record)
+    records = data_source.load_many(rt.stubs.StubRecord, [pk, record], data_set)
+    record1 = data_source.load_one(rt.stubs.StubRecord, pk, data_set)
+    record2 = data_source.load_one(rt.stubs.StubRecord, record, data_set)
     loaded_record_dict = loaded_record.to_dict()
     assert loaded_record_dict == record_dict
 

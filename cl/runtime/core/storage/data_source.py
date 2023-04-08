@@ -14,11 +14,14 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Iterable, Union, Type, Optional
+from typing import Iterable, Union, Type, Optional, TypeVar
 
 from cl.runtime.core.storage.class_data import class_field
 from cl.runtime.core.storage.data_source_key import DataSourceKey
 from cl.runtime.core.storage.record import Record
+
+TRecord = TypeVar('TRecord', bound=Record, covariant=True)
+TKey = TypeVar('TKey', bound=Record)
 
 
 @dataclass
@@ -44,26 +47,31 @@ class DataSource(DataSourceKey, ABC):
     @abstractmethod
     def load_many(
         self,
-        query_type: Type[Record],
-        keys: Iterable[Union[str, Record]],
+        base_type: Type[TRecord],
+        keys: Iterable[Union[str, TKey]],
         data_set: str,
         *,
-        optional_record: bool = False,
-        optional_key: bool = False,
-    ) -> Iterable[Record]:
+        is_optional: bool = None,
+        is_optional_key: bool = None,
+        is_unordered: bool = None
+    ) -> Iterable[TRecord]:
         """
-        Return objects of query_type and query_type descendants using a
-        sequence of keys. The order of results is the same as the order
-        of argument keys.
+        Load instances of classes derived from base_type from storage using a sequence of keys.
 
-        To avoid querying records that have already been loaded, any argument
-        key that is itself derived from query_type will be returned bypassing
-        the data source query. Use to_pk() to avoid this behavior.
+        - Parameter `base_type` determines the database table where the search is performed.
+        - Error message if a loaded record is not derived from `base_type`.
+        - The order of results is the same as the order of argument keys unless `is_unordered` is set.
+        - To avoid saving and then loading the records that are created in memory, any argument key that
+          is itself derived from base_type will be returned bypassing the data source query.
+          Call `to_pk()` on keys before passing them as argument to avoid this behavior.
 
-        Optional parameters:
-
-        * optional_record: If True, return None if the record is not found.
-        * optional_key: If True, accept key=None and return None result.
+        Args:
+            base_type: Loaded records must be derived from `base_type`
+            keys: Sequence of string keys or key classes for which records will be loaded.
+            data_set: Directory-like attribute used to organize the data.
+            is_optional: Return None if the record is not found. Default is to raise an error.
+            is_optional_key: Return None if a key is None. Default is to raise an error.
+            is_unordered: Do not order result in the order of keys. Default is to order the result.
         """
 
     @abstractmethod
@@ -161,24 +169,43 @@ class DataSource(DataSourceKey, ABC):
 
     def load_one(
         self,
-        key: Union[str, Record],
+        base_type: Type[TRecord],
+        key: Union[str, TKey],
         data_set: str,
         *,
-        optional_record: bool = False,
-        optional_key: bool = False,
-        out: Record
-    ) -> None:
+        is_optional: bool = None,
+        is_optional_key: bool = None
+    ) -> Iterable[TRecord]:
         """
-        Populate the object specified via the 'out' argument with data
-        loaded from the specified dataset and key. If the 'key' argument is
-        a full record, only its  key will be used.
+        Load an instance of class derived from base_type from storage using the specified key.
 
-        Invoking load_one method in a loop for many keys will lead to performance
-        deterioration; load_many method should be used instead.
+        - Parameter `base_type` determines the database table where the search is performed.
+        - Error message if a loaded record is not derived from `base_type`.
+        - To avoid saving and then loading the records that are created in memory, any argument key that
+          is itself derived from base_type will be returned bypassing the data source query.
+          Call `to_pk()` on keys before passing them as argument to avoid this behavior.
+
+        Args:
+            base_type: Loaded records must be derived from `base_type`
+            key: String keys or key class for which the record will be loaded.
+            data_set: Directory-like attribute used to organize the data.
+            is_optional: Return None if the record is not found. Default is to raise an error.
+            is_optional_key: Return None if a key is None. Default is to raise an error.
         """
 
-        # Pass arguments to load_many(...)
-        self.load_many([key], data_set, optional_record=optional_record, optional_key=optional_key, out=[out])
+        # Pass arguments to load_many(...).
+        # Add `is_unordered=True` because there is no need to order the result of length one.
+        records = self.load_many(
+            base_type,
+            [key],
+            data_set,
+            is_optional=is_optional,
+            is_optional_key=is_optional_key,
+            is_unordered=True)
+
+        for record in records:
+            # We know there is exactly one element
+            return record
 
     def save_one(self, record: Record, data_set: str):
         """

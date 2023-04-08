@@ -17,7 +17,7 @@ from dataclasses import dataclass, field
 from typing import Dict, Iterable, Union, Type, Optional
 
 from cl.runtime.core.schema.type.type_util import TypeUtil
-from cl.runtime.core.storage.data_source import DataSource
+from cl.runtime.core.storage.data_source import DataSource, TRecord, TKey
 from cl.runtime.core.storage.record import Record
 
 
@@ -34,39 +34,44 @@ class CacheDataSource(DataSource):
         self._cache = {}
 
     def load_many(
-            self,
-            query_type: Type[Record],
-            keys: Iterable[Union[str, Record]],
-            data_set: str,
-            *,
-            optional_record: bool = False,
-            optional_key: bool = False,
-    ) -> Iterable[Record]:
+        self,
+        base_type: Type[TRecord],
+        keys: Iterable[Union[str, TKey]],
+        data_set: str,
+        *,
+        is_optional: bool = None,
+        is_optional_key: bool = None,
+        is_unordered: bool = None
+    ) -> Iterable[TRecord]:
         """
-        Return objects of query_type and query_type descendants using a
-        sequence of keys. The order of results is the same as the order
-        of argument keys.
+        Load instances of classes derived from base_type from storage using a sequence of keys.
 
-        To avoid querying records that have already been loaded, any argument
-        key that is itself derived from query_type will be returned bypassing
-        the data source query. Use to_pk() to avoid this behavior.
+        - Parameter `base_type` determines the database table where the search is performed.
+        - Error message if a loaded record is not derived from `base_type`.
+        - The order of results is the same as the order of argument keys unless `is_unordered` is set.
+        - To avoid saving and then loading the records that are created in memory, any argument key that
+          is itself derived from base_type will be returned bypassing the data source query.
+          Call `to_pk()` on keys before passing them as argument to avoid this behavior.
 
-        Optional parameters:
-
-        * optional_record: If True, return None if the record is not found.
-        * optional_key: If True, accept key=None and return None result.
+        Args:
+            base_type: Loaded records must be derived from `base_type`
+            keys: Sequence of string keys or key classes for which records will be loaded.
+            data_set: Directory-like attribute used to organize the data.
+            is_optional: Return None if the record is not found. Default is to raise an error.
+            is_optional_key: Return None if a key is None. Default is to raise an error.
+            is_unordered: Do not order result in the order of keys. Default is to order the result.
         """
 
         result = []
         for key in keys:
             if key is None:
                 # Handle key=None
-                if optional_key:
+                if is_optional_key:
                     result.append(None)
                     continue
                 else:
-                    raise RuntimeError("Key=None but 'optional_key' argument is False or None.")
-            elif isinstance(key, query_type):
+                    raise RuntimeError("Key=None but 'is_optional_key' argument is False or None.")
+            elif isinstance(key, base_type):
                 # Handle full record passed instead of the key
                 result.append(key)
                 continue
@@ -85,12 +90,12 @@ class CacheDataSource(DataSource):
 
             # Check if result is None
             if record_dict is None:
-                if optional_record:
+                if is_optional:
                     result.append(None)
                     continue
                 else:
                     raise RuntimeError(
-                        f"Record is not found for pk={pk} but 'optional_record' argument is False or None."
+                        f"Record is not found for pk={pk} but 'is_optional' argument is False or None."
                     )
 
             # Create record instance and populate it from dictionary
