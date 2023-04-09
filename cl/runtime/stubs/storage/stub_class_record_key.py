@@ -19,7 +19,7 @@ import cl.runtime as rt
 
 
 @dataclass
-class StubClassRecordKey(rt.Key):
+class StubClassRecordKey(rt.ClassRecord):
     """Stub dataclass-based record sample used in tests."""
 
     primary_key_field_str: str = rt.class_field()
@@ -27,10 +27,6 @@ class StubClassRecordKey(rt.Key):
 
     primary_key_field_int: int = rt.class_field()
     """Second primary key attribute."""
-
-    def get_table_name(self) -> str:
-        """Return unique table name as plain or dot-delimited string according to the user-specified convention."""
-        return 'rt.stubs.StubClassRecord'
 
     def get_pk(self) -> str:
         """Return logical primary key (PK) as string in semicolon-delimited format."""

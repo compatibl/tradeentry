@@ -15,6 +15,7 @@
 import pytest
 
 import cl.runtime as rt
+from cl.runtime.core.storage.record_util import RecordUtil
 
 
 def test_get_class():
@@ -52,6 +53,30 @@ def test_get_class():
     # Dot-delimited class name error
     with pytest.raises(RuntimeError):
         rt.RecordUtil.get_class(do_no_import_module_name, "a.b")
+
+
+def test_get_class_path():
+    """Test getting class path from class."""
+
+    class_path = f"{rt.RecordUtil.__module__}.{rt.RecordUtil.__name__}"
+    assert rt.RecordUtil.get_class_path(rt.RecordUtil) == class_path
+
+
+def test_get_inheritance_chain_paths():
+    """Test getting class path from class."""
+
+    root_path = RecordUtil.get_class_path(rt.stubs.StubClassRecord)
+    derived_path = RecordUtil.get_class_path(rt.stubs.StubDerivedClassRecord)
+
+    # Root class, returns self
+    assert rt.RecordUtil.get_inheritance_chain_paths(rt.stubs.StubClassRecord) == [root_path]
+    
+    # Derived class, returns the root of hierarchy 
+    assert rt.RecordUtil.get_inheritance_chain_paths(rt.stubs.StubDerivedClassRecord) == [derived_path, root_path]
+    
+    # Error, invoke for a type that does not implement get_root_class
+    with pytest.raises(RuntimeError):
+        rt.RecordUtil.get_inheritance_chain_paths(rt.stubs.StubClassRecordKey)
 
 
 if __name__ == '__main__':

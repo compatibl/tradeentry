@@ -35,9 +35,10 @@ class StubClassRecord(StubClassRecordKey, ClassRecord):
     base_record_field_long: int = rt.class_field(typename='long', label="Custom Label", optional=True)
     """Optional long attribute of base class with custom label."""
 
-    def get_type_name(self) -> str:
-        """Return unique type name as plain or dot-delimited string according to the user-specified convention."""
-        return 'rt.StubClassRecord'
+    @staticmethod
+    def get_root_class():
+        """Return root class of record hierarchy."""
+        return StubClassRecord
 
     @staticmethod
     def create_sample_record(context: rt.Context) -> StubClassRecord:

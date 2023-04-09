@@ -18,8 +18,8 @@ from typing import Dict, Iterable, Union, Type, Optional
 
 from cl.runtime.core.schema.type.type_util import TypeUtil
 from cl.runtime.core.storage.data_source import DataSource, TRecord, TKey
-from cl.runtime.core.storage.key import Key
 from cl.runtime.core.storage.record import Record
+from cl.runtime.core.storage.record_util import RecordUtil
 
 
 @dataclass
@@ -67,9 +67,6 @@ class CacheDataSource(DataSource):
             is_unordered: Do not order result in the order of keys. Default is to order the result.
         """
 
-        obj = base_type
-        table_name = base_type.get_table_name()
-
         result = []
         for key in keys:
             if key is None:
@@ -109,12 +106,15 @@ class CacheDataSource(DataSource):
             # Create record instance and populate it from dictionary
             # Final type name is the last element of type discriminators list
             type_discriminators = record_dict['_t']
-            final_type = TypeUtil.get_type(type_discriminators[-1])
-            record = final_type()
+            class_path = type_discriminators[0]
+            module_path, class_name = RecordUtil.split_class_path(class_path)
+
+            class_ = RecordUtil.get_class(module_path, class_name)
+            record = class_()
             record.from_dict(record_dict)
 
-            # Call init to update and validate object state
-            record.init()
+            # Call update and validate object state
+            record.update()
 
             # Verify that the record has the same key as was passed to the load method
             record_pk = record.to_pk()
@@ -152,12 +152,15 @@ class CacheDataSource(DataSource):
             record_dict = deepcopy(record_dict)
 
             # Add the list of types from base to derived
-            record_dict["_t"] = TypeUtil.get_hierarchical_discriminator(type(record))
+            record_dict["_t"] = RecordUtil.get_inheritance_chain_paths(type(record))
 
             # Try to retrieve dataset dictionary, insert if it does not yet exist
             dataset_cache = self._cache.setdefault(data_set, {})
 
+            # TODO: Support tables
             # Insert the record into dataset dictionary
+            root_class = record.get_root_class()  # noqa
+            table_name = RecordUtil.get_class_path(root_class)
             dataset_cache[pk] = record_dict
 
     def save_on_commit(self, record: Record, data_set: str) -> None:

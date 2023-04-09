@@ -73,5 +73,5 @@ class StubRecord(rt.Record):
         obj.primary_key_field_int = 123
         obj.base_record_field_str = 'def'
         obj.base_record_field_float = 4.56
-        obj.init()
+        obj.update()
         return obj

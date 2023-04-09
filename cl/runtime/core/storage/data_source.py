@@ -19,15 +19,13 @@ from typing import Iterable, Union, Type, Optional, TypeVar
 from cl.runtime.core.storage.class_data import class_field
 from cl.runtime.core.storage.class_record import ClassRecord
 from cl.runtime.core.storage.data_source_key import DataSourceKey
-from cl.runtime.core.storage.key import Key
 from cl.runtime.core.storage.record import Record
 
 TRecord = TypeVar('TRecord', bound=Record, covariant=True)
-TKey = TypeVar('TKey', bound=Key)
+TKey = TypeVar('TKey', bound=Record, contravariant=True)
 
 
-@dataclass
-class DataSource(DataSourceKey, ClassRecord, ABC):
+class DataSource(DataSourceKey, ABC):
     """
     Data source is a storage API for polymorphic, hierarchical data that
     can be implemented for a NoSQL DB, relational DB, key-value store,
