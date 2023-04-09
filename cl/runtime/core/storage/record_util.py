@@ -87,18 +87,18 @@ class RecordUtil:
           from class instance, e.g. type(stub_class_instance).
         """
 
-        # Include only those classes in MRO that implement get_root_class
-        # These are the classes that can be queried from the database
+        # Include only those classes in MRO that implement get_common_base
+        # These are the classes that can be queried from this table
         result = [
-            f"{c.__module__}.{c.__name__}" for c in class_.mro() if getattr(c, "get_root_class", None) is not None
+            f"{c.__module__}.{c.__name__}" for c in class_.mro() if getattr(c, "get_common_base", None) is not None
         ]
 
         if len(result) == 0:
             class_path = RecordUtil.get_class_path(class_)
             raise RuntimeError(f"To be stored in a data source, class {class_path} or its base must implement the "
-                               f"static method get_root_class(). Its return value determines the database table "
+                               f"static method get_common_base(). Its return value determines the database table "
                                f"where instances of this class and its bases are stored. For example, if B is "
-                               f"inherited from A, then B.get_root_class() and A.get_root_class() both return A.")
+                               f"inherited from A, then B.get_common_base() and A.get_common_base() both return A.")
 
         return result
 

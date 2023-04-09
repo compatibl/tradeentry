@@ -36,8 +36,8 @@ class StubClassRecord(StubClassRecordKey, ClassRecord):
     """Optional long attribute of base class with custom label."""
 
     @staticmethod
-    def get_root_class():
-        """Return type of the common base class to all classes stored in this table."""
+    def get_common_base():
+        """Return the type of the common base class for all classes stored in this table."""
         return StubClassRecord
 
     @staticmethod

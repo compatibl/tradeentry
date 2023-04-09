@@ -74,7 +74,7 @@ def test_get_inheritance_chain_paths():
     # Derived class, returns the root of hierarchy 
     assert rt.RecordUtil.get_inheritance_chain_paths(rt.stubs.StubDerivedClassRecord) == [derived_path, root_path]
     
-    # Error, invoke for a type that does not implement get_root_class
+    # Error, invoke for a type that does not implement get_common_base
     with pytest.raises(RuntimeError):
         rt.RecordUtil.get_inheritance_chain_paths(rt.stubs.StubClassRecordKey)
 

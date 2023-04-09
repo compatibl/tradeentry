@@ -25,11 +25,22 @@ TRecord = TypeVar('TRecord', bound=Record, covariant=True)
 
 
 class DataSource(DataSourceKey, ABC):
-    """Data source is the abstract base class for polymorphic, hierarchical data storage API that can be implemented
-    for a NoSQL DB, relational DB, key-value store, cloud bucket store, in-memory cache, distributed cache, or a
-    filesystem.
+    """Abstract base class for polymorphic data storage API with a directory attribute.
 
-    A slash-delimited string parameter `dir` may be used to set up hierarchical data directory structures.
+    A data source can be implemented on top a NoSQL DB, relational DB, key-value store, cloud bucket store,
+    in-memory cache, distributed cache, filesystem, and types of storage solutions.
+
+    Final record classes stored in a data source must implement the following methods. Some of these methods may be
+    implemented by mixins or intermediate base classes, including those using dataclass and similar frameworks.
+
+    * get_pk(self) - instance method returning primary key without type as semicolon-delimited string,
+      for example `A;B` for a class with two primary key fields that have values `A` and `B`
+    * to_dict(self) - instance method serializing self as dictionary
+    * from_dict(self, data_dict) - instance method populating self from dictionary
+    * get_common_base() - static method returning the type of the common base class for all classes
+      stored in the same database table as this class.
+
+    A slash-delimited string parameter `dir` may be used to set up hierarchical data lookup within the data source.
 
     - Root directory is designed by `/`
     - Permitted character in directory name follow Linux, with `/` in the beginning but not at the end.

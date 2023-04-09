@@ -20,17 +20,17 @@ from cl.runtime.core.storage.data import Data
 
 
 class Record(Data, ABC):
-    """Base class for database records that can be stored in a document DB,
-    relational DB, key-value store, or filesystem.
+    """Abstract base class of database records that can be stored in a data source and their keys.
 
-    Derived classes must implement the following methods:
+    Final record classes stored in a data source must implement the following methods. Some of these methods may be
+    implemented by mixins or intermediate base classes, including those using dataclass and similar frameworks.
 
-    * get_pk(self) - instance method returning primary key as semicolon-delimited string
+    * get_pk(self) - instance method returning primary key without type as semicolon-delimited string,
+      for example `A;B` for a class with two primary key fields that have values `A` and `B`
     * to_dict(self) - instance method serializing self as dictionary
     * from_dict(self, data_dict) - instance method populating self from dictionary
-    * get_root_class() - static method whose return value determines the database table
-      where instances of this class and its bases are stored. For example, if B is inherited
-      from A, then B.get_root_class() and A.get_root_class() both return A.
+    * get_common_base() - static method returning the type of the common base class for all classes
+      stored in the same database table as this class.
     """
 
     context: Optional[Context]

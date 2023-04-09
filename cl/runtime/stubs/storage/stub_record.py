@@ -43,8 +43,8 @@ class StubRecord(rt.Record):
         self.base_record_field_float = None
 
     @staticmethod
-    def get_root_class():
-        """Return type of the common base class to all classes stored in this table."""
+    def get_common_base():
+        """Return the type of the common base class for all classes stored in this table."""
         return StubRecord
 
     def get_pk(self) -> str:
