@@ -103,7 +103,7 @@ class CacheDataSource(DataSource):
             class_path = type_discriminators[0]
             module_path, class_name = RecordUtil.split_class_path(class_path)
 
-            class_ = RecordUtil.get_class(module_path, class_name)
+            class_ = RecordUtil.get_class_type(module_path, class_name)
             record = class_()
             record.from_dict(record_dict)
 

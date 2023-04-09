@@ -13,17 +13,39 @@
 # limitations under the License.
 
 import sys
-from functools import cache
 from importlib import import_module
-from typing import TypeVar, List, Tuple, Type
+from typing import List, Tuple, Type
+from memoization import cached
 
 
 class RecordUtil:
     """Helper methods for Record."""
 
     @staticmethod
-    @cache
-    def get_class(module_path: str, class_name: str) -> Type:
+    def get_class_path(class_type: Type) -> str:
+        """Returns the concatenation of module path and class name using dot delimiter.
+
+        - The argument class_type is either a literal class type, for example StubClass,
+          or a type variable obtained from a class instance, for example type(stub_class_instance).
+        - This method is also used to calculate key for LRU caching of functions taking class
+          as their argument. This method is itself not cached because caching would involve
+          calling the same method, resulting in no performance gain.
+        """
+        return f"{class_type.__module__}.{class_type.__name__}"
+
+    @staticmethod
+    def split_class_path(class_path: str) -> Tuple[str, str]:
+        """Split dot-delimited class path into module path and class name.
+
+        Returns:
+            Tuple of module_path, class_name
+        """
+        result = class_path.rsplit(".", 1)
+        return result[0], result[1]
+
+    @staticmethod
+    @cached
+    def get_class_type(module_path: str, class_name: str) -> Type:
         """Get class from module name and class name.
 
         Args:
@@ -58,32 +80,15 @@ class RecordUtil:
         except AttributeError:
             raise RuntimeError(f"Module {module_path} does not contain top-level class {class_name}.")
 
-    # TODO: Implement custom LRU caching
     @staticmethod
-    def get_class_path(class_type: Type) -> str:
-        """Returns the concatenation of module path and class name using dot delimiter.
-
-        - The argument class_type is either a literal class type, for example StubClass,
-          or a type variable obtained from a class instance, for example type(stub_class_instance).
-        """
-        return f"{class_type.__module__}.{class_type.__name__}"
-
-    @staticmethod
-    @cache
-    def split_class_path(class_path: str) -> Tuple[str]:
-        """Split dot-delimited class path into module path and class name."""
-        result_list = class_path.rsplit(".", 1)
-        return tuple(result_list)
-
-    # TODO: Implement custom LRU caching
-    @staticmethod
+    @cached(custom_key_maker=lambda c: f"{c.__module__}.{c.__name__}")
     def get_inheritance_chain(class_type: Type) -> List[str]:
         """Returns inheritance chain as the list of class path strings.
 
-        - The result is in MRO order and includes only those classes that implement static method get_common_base().
-        - Return value of get_common_base() must be the same for all classes in the inheritance chain
         - The argument class_type is either a literal class type, for example StubClass,
           or a type variable obtained from a class instance, for example type(stub_class_instance).
+        - The result is in MRO order and includes only those classes that implement static method get_common_base().
+        - Return value of get_common_base() must be the same for all classes in the inheritance chain
         """
 
         # Include only those classes in MRO that implement get_common_base
