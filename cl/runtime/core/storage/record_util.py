@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import sys
+from functools import cache
+from importlib import import_module
 from typing import List
 
 
@@ -19,101 +22,31 @@ from typing import List
 class RecordUtil:
     """Helper methods for Record."""
 
-    def composite_pk(*tokens) -> str:
-        """
-        Convert tokens to primary key string, surrounding any strings that
-        contain semicolon with curly brackets.
-
-        Examples:
-
-        * (Type1, A, B) -> 'rt.Type1;A;B'
-        * (Type2, Type1;A;B, C) -> 'rt.Type2;{Type1;A;B};C'
-        * (Type3, Type2;{Type1;A;B};C, D) -> 'rt.Type3;{Type2;{Type1;A;B};C};D'
-        """
-        escaped_tokens = [f'{{{t}}}' if ';' in str(t) else str(t) for t in tokens]
-        return ';'.join(escaped_tokens)
-
     @staticmethod
-    def split_simple_pk(pk: str) -> List[str]:
-        """
-        Split simple primary key string into tokens. Check that the key
-        does not contain embedded keys surrounded by curly brackets.
+    @cache
+    def get_class(module_name: str, class_name: str):
+        """Get class from module name and class name."""
 
-        Example:
+        if '.' in class_name:
+            raise RuntimeError(f"Class name {class_name} is dot-delimited. "
+                               f"Only top-level class names without delimiter can be stored.")
 
-        * 'rt.Type1;A;B' -> [Type1, A, B]
-        * 'rt.Type2;{Type1;A;B};C' -> Error, contains an embedded key
-        """
+        # Check that the module exists and is fully initialized
+        module = sys.modules.get(module_name)
+        module_spec = getattr(module, "__spec__", None) if module is not None else None
+        module_initializing = getattr(module_spec, "_initializing", False) if module_spec is not None else None
+        module_imported = module_initializing is False  # To ensure it is not another value evaluating to False
 
-        # Split by semicolon first
-        tokens = pk.split(';')
+        # Import dynamically if not already imported, report error if not found
+        if not module_imported:
+            try:
+                module = import_module(module_name)
+            except ModuleNotFoundError:
+                raise RuntimeError(f"Module {module_name} is not found when loading class {class_name}.")
 
-        if not any([t.startswith('{') for t in tokens]):
-            # If none of the tokens start from an opening curly brace, we are done.
-            return tokens
-        else:
-            raise RuntimeError(f'Key {pk} is composite (contains embedded keys).')
-
-    @staticmethod
-    def split_composite_pk(pk: str) -> List[str]:
-        """
-        Split composite primary key string into tokens, removing curly brackets around
-        tokens that are embedded keys but without performing recursive splitting
-        of such embedded keys.
-
-        Examples:
-
-        * 'rt.Type1;A;B' -> [Type1, A, B]
-        * 'rt.Type2;{Type1;A;B};C' -> [Type2, Type1;A;B, C]
-        * 'rt.Type3;{Type2;{Type1;A;B};C};D' -> [Type3, Type2;{Type1;A;B};C, D]
-        """
-
-        # Split by semicolon first
-        tokens = pk.split(';')
-
-        opening_brace = [t.startswith('{') for t in tokens]
-        if not any(opening_brace):
-            # If none of the tokens start from an opening curly brace, we are done.
-            return tokens
-        else:
-            # If at least one token starts from a curly bracket, we need to escape
-            # semicolons inside the curly brackets taking into account that there
-            # can be several.
-            closing_brace = [t.endswith('}') for t in tokens]
-            zipped = zip(tokens, opening_brace, closing_brace)
-            result = []
-            composite = []
-            brace_level = 0
-            for token, has_opening, has_closing in zipped:
-                if has_opening:
-                    if brace_level == 0:
-                        # Remove brace from token only if initially at zero level
-                        token = token[1:]
-                    # Always increase level
-                    brace_level = brace_level + 1
-                    composite.append(token)
-                elif has_closing:
-                    # Always decrease level
-                    brace_level = brace_level - 1
-                    if brace_level == 0:
-                        # Remove brace from token and finalize composite key if at zero level
-                        token = token[:-1]
-                        composite.append(token)
-                        result.append(';'.join(composite))
-                        composite = []
-                    else:
-                        composite.append(token)
-                elif brace_level > 0:
-                    composite.append(token)
-                elif brace_level == 0:
-                    result.append(token)
-                else:
-                    raise RuntimeError(f'More closing than opening curly braces in primary key {pk}')
-
-            # Check for unbalanced braces
-            if brace_level < 0:
-                raise RuntimeError(f'More closing than opening curly braces in primary key {pk}')
-            if brace_level > 0 or len(composite) > 0:
-                raise RuntimeError(f'More opening than closing curly braces in primary key {pk}')
-
+        # Get class from module, report error if not found
+        try:
+            result = getattr(module, class_name)
             return result
+        except AttributeError:
+            raise RuntimeError(f"Module {module_name} does not contain top-level class {class_name}.")

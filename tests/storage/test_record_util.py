@@ -16,40 +16,42 @@ import pytest
 
 import cl.runtime as rt
 
-SIMPLE_PK = 'rt.Type1;A;B'
-SIMPLE_TOKENS = ['rt.Type1', 'A', 'B']
-COMPOSITE_PK = 'rt.Type2;{rt.Type1;A;B};C'
-COMPOSITE_TOKENS = ['rt.Type2', SIMPLE_PK, 'C']
-MULTI_LEVEL_PK = 'rt.Type3;{rt.Type2;{rt.Type1;A;B};C};D'
-MULTI_LEVEL_TOKENS = ['rt.Type3', COMPOSITE_PK, 'D']
 
-# Tests for TestRecordUtil
+def test_get_class():
+    """Test getting class from module and class strings."""
 
+    # Class that is already imported
+    assert rt.RecordUtil.get_class(rt.RecordUtil.__module__, rt.RecordUtil.__name__) == rt.RecordUtil
 
-def test_composite_pk():
-    """Test test_composite_pk(...) function."""
+    # Call again to test caching
+    assert rt.RecordUtil.get_class(rt.RecordUtil.__module__, rt.RecordUtil.__name__) == rt.RecordUtil
 
-    assert rt.RecordUtil.composite_pk(*SIMPLE_TOKENS) == SIMPLE_PK
-    assert rt.RecordUtil.composite_pk(*COMPOSITE_TOKENS) == COMPOSITE_PK
-    assert rt.RecordUtil.composite_pk(*MULTI_LEVEL_TOKENS) == MULTI_LEVEL_PK
+    # Class that is dynamically imported on demand
+    do_no_import_module_name = "cl.runtime.stubs.storage.stub_do_not_import"
+    do_no_import_class_name = "StubDoNotImport"
+    do_no_import_class = rt.RecordUtil.get_class(do_no_import_module_name, do_no_import_class_name)
+    assert do_no_import_class.__module__ == do_no_import_module_name
+    assert do_no_import_class.__name__ == do_no_import_class_name
 
+    # Call again to test caching
+    do_no_import_class = rt.RecordUtil.get_class(do_no_import_module_name, do_no_import_class_name)
+    assert do_no_import_class.__module__ == do_no_import_module_name
+    assert do_no_import_class.__name__ == do_no_import_class_name
 
-def test_split_simple_pk():
-    """Test split_simple_pk(...) function."""
+    # Module does not exist error
+    unknown_name = "aBcDeF"
+    with pytest.raises(RuntimeError) as e:
+        rt.RecordUtil.get_class(unknown_name, do_no_import_class_name)
+    assert e.value.args[0] == f"Module {unknown_name} is not found when loading class {do_no_import_class_name}."
 
-    assert rt.RecordUtil.split_simple_pk(SIMPLE_PK) == SIMPLE_TOKENS
+    # Class does not exist error
+    with pytest.raises(RuntimeError) as e:
+        rt.RecordUtil.get_class(do_no_import_module_name, unknown_name)
+    assert e.value.args[0] == f"Module {do_no_import_module_name} does not contain top-level class {unknown_name}."
 
-    # This should not work
-    with pytest.raises(Exception):
-        rt.RecordUtil.split_simple_pk(COMPOSITE_PK)
-
-
-def test_split_composite_pk():
-    """Test split_composite_pk(...) function."""
-
-    assert rt.RecordUtil.split_composite_pk(SIMPLE_PK) == SIMPLE_TOKENS
-    assert rt.RecordUtil.split_composite_pk(COMPOSITE_PK) == COMPOSITE_TOKENS
-    assert rt.RecordUtil.split_composite_pk(MULTI_LEVEL_PK) == MULTI_LEVEL_TOKENS
+    # Dot-delimited class name error
+    with pytest.raises(RuntimeError):
+        rt.RecordUtil.get_class(do_no_import_module_name, "a.b")
 
 
 if __name__ == '__main__':
