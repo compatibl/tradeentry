@@ -62,13 +62,13 @@ class RecordUtil:
 
     # TODO: Implement custom LRU caching
     @staticmethod
-    def get_class_path(class_: T) -> str:
+    def get_class_path(class_type: T) -> str:
         """Returns the concatenation of module path and class name using dot delimiter.
 
-        - The argument is either a class, e.g. StubClass, or a type variable obtained
-          from class instance, e.g. type(stub_class_instance).
+        - The argument class_type is either a literal class type, for example StubClass,
+          or a type variable obtained from a class instance, for example type(stub_class_instance).
         """
-        return f"{class_.__module__}.{class_.__name__}"
+        return f"{class_type.__module__}.{class_type.__name__}"
 
     @staticmethod
     @cache
@@ -79,22 +79,27 @@ class RecordUtil:
 
     # TODO: Implement custom LRU caching
     @staticmethod
-    def get_inheritance_chain(class_: T) -> List[str]:
+    def get_inheritance_chain(class_type: T) -> List[str]:
         """Returns inheritance chain as the list of class path strings.
 
-        - The result is in MRO order and stops at the class returned by class_.get_common_base().
-        - The argument is either a literal class type, for example StubClass, or a type variable obtained from
-          a class instance, for example type(stub_class_instance).
+        - The result is in MRO order and includes only those classes that implement static method get_common_base().
+        - Return value of get_common_base() must be the same for all classes in the inheritance chain
+        - The argument class_type is either a literal class type, for example StubClass,
+          or a type variable obtained from a class instance, for example type(stub_class_instance).
         """
 
         # Include only those classes in MRO that implement get_common_base
         # These are the classes that can be queried from this table
         result = [
-            f"{c.__module__}.{c.__name__}" for c in class_.mro() if getattr(c, "get_common_base", None) is not None
+            # TODO: Instead stop at a specific base?
+            f"{c.__module__}.{c.__name__}" for c in class_type.mro() if getattr(c, "get_common_base", None) is not None
         ]
 
+        # TODO: Implement memoize
+        # TODO: Implement check that get_common_base() returns the same value for all classes in the result
+
         if len(result) == 0:
-            class_path = RecordUtil.get_class_path(class_)
+            class_path = RecordUtil.get_class_path(class_type)
             raise RuntimeError(f"To be stored in a data source, class {class_path} or its base must implement the "
                                f"static method get_common_base(). Its return value is the type of the common base "
                                f"class for all classes stored in the same data source table as this class. "
@@ -102,4 +107,3 @@ class RecordUtil:
                                f"A for both B and C.")
 
         return result
-
