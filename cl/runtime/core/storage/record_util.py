@@ -15,9 +15,7 @@
 import sys
 from functools import cache
 from importlib import import_module
-from typing import TypeVar, List, Tuple
-
-T = TypeVar("T")
+from typing import TypeVar, List, Tuple, Type
 
 
 class RecordUtil:
@@ -25,7 +23,7 @@ class RecordUtil:
 
     @staticmethod
     @cache
-    def get_class(module_path: str, class_name: str) -> T:
+    def get_class(module_path: str, class_name: str) -> Type:
         """Get class from module name and class name.
 
         Args:
@@ -62,7 +60,7 @@ class RecordUtil:
 
     # TODO: Implement custom LRU caching
     @staticmethod
-    def get_class_path(class_type: T) -> str:
+    def get_class_path(class_type: Type) -> str:
         """Returns the concatenation of module path and class name using dot delimiter.
 
         - The argument class_type is either a literal class type, for example StubClass,
@@ -79,7 +77,7 @@ class RecordUtil:
 
     # TODO: Implement custom LRU caching
     @staticmethod
-    def get_inheritance_chain(class_type: T) -> List[str]:
+    def get_inheritance_chain(class_type: Type) -> List[str]:
         """Returns inheritance chain as the list of class path strings.
 
         - The result is in MRO order and includes only those classes that implement static method get_common_base().

@@ -18,10 +18,10 @@ from typing import Iterable, Union, Type, Optional, TypeVar
 
 from cl.runtime.core.storage.class_data import class_field
 from cl.runtime.core.storage.data_source_key import DataSourceKey
-from cl.runtime.core.storage.record import Record
+from cl.runtime.core.storage.record import Record  # TODO - remove after eliminating the req to derive from Record
 
-TKey = TypeVar('TKey', bound=Record, contravariant=True)
-TRecord = TypeVar('TRecord', bound=Record, covariant=True)
+TKey = TypeVar('TKey', contravariant=True)
+TRecord = TypeVar('TRecord', covariant=True)
 
 
 class DataSource(DataSourceKey, ABC):
@@ -30,9 +30,10 @@ class DataSource(DataSourceKey, ABC):
     A data source can be implemented on top a NoSQL DB, relational DB, key-value store, cloud bucket store,
     in-memory cache, distributed cache, filesystem, and types of storage solutions.
 
-    Final record classes stored in a data source must implement the following methods. Some of these methods may be
-    implemented by mixins or intermediate base classes, including those using dataclass and similar frameworks.
+    Final record classes stored in a data source must implement the following methods and properties. Some of them
+    may be implemented by mixins or intermediate base classes, including those using dataclass and similar frameworks.
 
+    * context - field or property with type Context that has both getter and setter
     * get_pk(self) - instance method returning primary key without type as semicolon-delimited string.
       For example, pk=`A;B` for a class with two primary key fields that have values `A` and `B`
     * to_dict(self) - instance method serializing self as dictionary
