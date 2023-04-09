@@ -149,7 +149,7 @@ class CacheDataSource(DataSource):
             record_dict = deepcopy(record_dict)
 
             # Add the list of types from base to derived
-            record_dict["_t"] = RecordUtil.get_inheritance_chain_paths(type(record))
+            record_dict["_t"] = RecordUtil.get_inheritance_chain(type(record))
 
             # Try to retrieve dataset dictionary, insert if it does not yet exist
             dataset_cache = self._cache.setdefault(data_set, {})

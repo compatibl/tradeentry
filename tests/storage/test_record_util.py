@@ -62,21 +62,21 @@ def test_get_class_path():
     assert rt.RecordUtil.get_class_path(rt.RecordUtil) == class_path
 
 
-def test_get_inheritance_chain_paths():
+def test_get_inheritance_chain():
     """Test getting class path from class."""
 
     root_path = RecordUtil.get_class_path(rt.stubs.StubClassRecord)
     derived_path = RecordUtil.get_class_path(rt.stubs.StubDerivedClassRecord)
 
     # Root class, returns self
-    assert rt.RecordUtil.get_inheritance_chain_paths(rt.stubs.StubClassRecord) == [root_path]
+    assert rt.RecordUtil.get_inheritance_chain(rt.stubs.StubClassRecord) == [root_path]
     
     # Derived class, returns the root of hierarchy 
-    assert rt.RecordUtil.get_inheritance_chain_paths(rt.stubs.StubDerivedClassRecord) == [derived_path, root_path]
+    assert rt.RecordUtil.get_inheritance_chain(rt.stubs.StubDerivedClassRecord) == [derived_path, root_path]
     
     # Error, invoke for a type that does not implement get_common_base
     with pytest.raises(RuntimeError):
-        rt.RecordUtil.get_inheritance_chain_paths(rt.stubs.StubClassRecordKey)
+        rt.RecordUtil.get_inheritance_chain(rt.stubs.StubClassRecordKey)
 
 
 if __name__ == '__main__':

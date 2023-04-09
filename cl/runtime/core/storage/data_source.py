@@ -33,8 +33,8 @@ class DataSource(DataSourceKey, ABC):
     Final record classes stored in a data source must implement the following methods. Some of these methods may be
     implemented by mixins or intermediate base classes, including those using dataclass and similar frameworks.
 
-    * get_pk(self) - instance method returning primary key without type as semicolon-delimited string,
-      for example `A;B` for a class with two primary key fields that have values `A` and `B`
+    * get_pk(self) - instance method returning primary key without type as semicolon-delimited string.
+      For example, pk=`A;B` for a class with two primary key fields that have values `A` and `B`
     * to_dict(self) - instance method serializing self as dictionary
     * from_dict(self, data_dict) - instance method populating self from dictionary
     * get_common_base() - static method returning the type of the common base class for all classes

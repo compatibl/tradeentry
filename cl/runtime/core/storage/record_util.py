@@ -79,12 +79,12 @@ class RecordUtil:
 
     # TODO: Implement custom LRU caching
     @staticmethod
-    def get_inheritance_chain_paths(class_: T) -> List[str]:
+    def get_inheritance_chain(class_: T) -> List[str]:
         """Returns inheritance chain as the list of class path strings.
 
-        - The result is in MRO order and excludes abstract base classes.
-        - The argument is either a class, e.g. StubClass, or a type variable obtained
-          from class instance, e.g. type(stub_class_instance).
+        - The result is in MRO order and stops at the class returned by class_.get_common_base().
+        - The argument is either a literal class type, for example StubClass, or a type variable obtained from
+          a class instance, for example type(stub_class_instance).
         """
 
         # Include only those classes in MRO that implement get_common_base
@@ -96,9 +96,10 @@ class RecordUtil:
         if len(result) == 0:
             class_path = RecordUtil.get_class_path(class_)
             raise RuntimeError(f"To be stored in a data source, class {class_path} or its base must implement the "
-                               f"static method get_common_base(). Its return value determines the database table "
-                               f"where instances of this class and its bases are stored. For example, if B is "
-                               f"inherited from A, then B.get_common_base() and A.get_common_base() both return A.")
+                               f"static method get_common_base(). Its return value is the type of the common base "
+                               f"class for all classes stored in the same data source table as this class. "
+                               f"For example, if B and C both inherit from A, then get_common_base() returns"
+                               f"A for both B and C.")
 
         return result
 
