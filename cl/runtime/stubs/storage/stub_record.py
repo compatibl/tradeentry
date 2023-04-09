@@ -42,9 +42,14 @@ class StubRecord(rt.Record):
         self.base_record_field_str = None
         self.base_record_field_float = None
 
-    def to_pk(self) -> str:
+    @staticmethod
+    def get_root_class():
+        """Return type of the common base class to all classes stored in this table."""
+        return StubRecord
+
+    def get_pk(self) -> str:
         """Return primary key (PK) as string."""
-        return f'rt.stubs.StubRecord;{self.primary_key_field_str};{self.primary_key_field_int}'
+        return f"{self.primary_key_field_str};{self.primary_key_field_int}"
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize self as dictionary (may return shallow copy)."""
@@ -64,7 +69,7 @@ class StubRecord(rt.Record):
         # TODO: detect extra fields in dict which are not in class and raise error
 
     @staticmethod
-    def create(context: rt.Context) -> StubRecord:
+    def create_sample_record(context: rt.Context) -> StubRecord:
         """Return an instance of this class populated with sample data."""
 
         obj = StubRecord()

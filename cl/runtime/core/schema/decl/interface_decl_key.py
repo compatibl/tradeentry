@@ -29,6 +29,6 @@ class InterfaceDeclKey(ClassRecord):
     name: str = class_field()
     """Type name is unique when combined with module."""
 
-    def to_pk(self) -> str:
+    def get_pk(self) -> str:
         """Return primary key (PK) as string."""
         return f'ClInterfaceDecl;{self.module};{self.name}'

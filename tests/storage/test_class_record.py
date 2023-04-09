@@ -24,7 +24,6 @@ def test_smoke():
 
     # Create and test standalone key
     key = rt.stubs.StubClassRecordKey.create_sample_key()
-    key_table = key.get_table_name()
     key_pk = key.get_pk()
 
     # Create test record and populate with sample data

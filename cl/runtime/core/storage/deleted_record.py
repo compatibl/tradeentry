@@ -30,7 +30,7 @@ class DeletedRecord(Record):
     pk: str = class_field()
     """Primary key (PK) string."""
 
-    def to_pk(self) -> str:
+    def get_pk(self) -> str:
         """Return primary key (PK) as string."""
         return self.pk
 

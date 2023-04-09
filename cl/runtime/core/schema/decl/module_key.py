@@ -29,6 +29,6 @@ class ModuleKey(ClassRecord):
     module_name: Optional[str] = class_field()
     """Unique module identifier in dot delimited format."""
 
-    def to_pk(self) -> str:
+    def get_pk(self) -> str:
         """Return primary key (PK) as string."""
         return f'ClModule;{self.module_name}'

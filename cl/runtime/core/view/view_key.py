@@ -37,7 +37,7 @@ class ViewKey(ClassRecord):
     view_name: str = class_field()
     """Name of the view displayed in the front end."""
 
-    def to_pk(self) -> str:
+    def get_pk(self) -> str:
         """Return primary key (PK) as string."""
 
         # Use composite_pk(...) method because one of the tokens is an embedded key

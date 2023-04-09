@@ -34,7 +34,7 @@ class StubData(rt.Data):
         self.base_record_field_str = None
         self.base_record_field_float = None
 
-    def to_pk(self) -> str:
+    def get_pk(self) -> str:
         """Return primary key (PK) as string."""
         return f'rt.stubs.StubRecord;{self.primary_key_field_str};{self.primary_key_field_int}'
 

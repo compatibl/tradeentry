@@ -22,25 +22,27 @@ import cl.runtime as rt
 def test_smoke():
     """Smoke test."""
 
-    # Create test record and populate with sample data
+    # Create test base_record and populate with sample data
     context = rt.Context()
-    record = rt.stubs.StubRecord.create(context)
+    base_record = rt.stubs.StubRecord.create_sample_record(context)
 
     # Test that context has been set
-    assert record.context == context
+    assert base_record.context == context
 
-    # Test primary key
-    pk = record.to_pk()
-    assert pk == 'rt.stubs.StubRecord;abc;123'
+    # Test type and key
+    common_base = base_record.get_root_class()
+    assert common_base == type(base_record)
+    pk = base_record.get_pk()
+    assert pk == 'abc;123'
 
     # Test roundtrip serialization
-    data1 = record.to_dict()
-    record2 = rt.stubs.StubRecord()
-    record2.context = context
-    record2.from_dict(data1)
-    data2 = record2.to_dict()
-    assert len(data2.keys()) == 4
-    assert data1 == data2
+    base_record_data = base_record.to_dict()
+    base_record_clone = rt.stubs.StubRecord()
+    base_record_clone.context = context
+    base_record_clone.from_dict(base_record_data)
+    base_record_clone_data = base_record_clone.to_dict()
+    assert len(base_record_clone_data.keys()) == 4
+    assert base_record_data == base_record_clone_data
 
 
 if __name__ == '__main__':

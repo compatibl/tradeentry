@@ -37,7 +37,7 @@ class StubClassRecord(StubClassRecordKey, ClassRecord):
 
     @staticmethod
     def get_root_class():
-        """Return root class of record hierarchy."""
+        """Return type of the common base class to all classes stored in this table."""
         return StubClassRecord
 
     @staticmethod

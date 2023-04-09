@@ -28,17 +28,21 @@ def test_smoke():
 
     # Create test record and populate with sample data
     context = rt.Context()
-    record = rt.stubs.StubClassRecord.create_sample_record(context)
+    record = rt.stubs.StubRecord.create_sample_record(context)
     pk = record.get_pk()
     record_dict = record.to_dict()
 
     # Test saving and loading
     data_source.save_one(record, data_set)
-    records = data_source.load_many(rt.stubs.StubClassRecord, [pk, record], data_set)
-    record1 = data_source.load_one(rt.stubs.StubClassRecord, pk, data_set)
-    record2 = data_source.load_one(rt.stubs.StubClassRecord, record, data_set)
-    # loaded_record_dict = record1.to_dict()
-    # assert loaded_record_dict == record_dict
+    records = data_source.load_many(rt.stubs.StubRecord, [pk, record], data_set)
+    record_from_str_key = data_source.load_one(rt.stubs.StubRecord, pk, data_set)
+    record_from_record_as_key = data_source.load_one(rt.stubs.StubRecord, record, data_set)
+
+    # Check loaded record
+    loaded_record_dict = record_from_str_key.to_dict()
+    assert loaded_record_dict == record_dict
+
+    # TODO - check that when loading by record key it is the same instance
 
 
 if __name__ == '__main__':

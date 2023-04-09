@@ -17,36 +17,29 @@ from dataclasses import dataclass
 from typing import Iterable, Union, Type, Optional, TypeVar
 
 from cl.runtime.core.storage.class_data import class_field
-from cl.runtime.core.storage.class_record import ClassRecord
 from cl.runtime.core.storage.data_source_key import DataSourceKey
 from cl.runtime.core.storage.record import Record
 
-TRecord = TypeVar('TRecord', bound=Record, covariant=True)
 TKey = TypeVar('TKey', bound=Record, contravariant=True)
+TRecord = TypeVar('TRecord', bound=Record, covariant=True)
 
 
 class DataSource(DataSourceKey, ABC):
-    """
-    Data source is a storage API for polymorphic, hierarchical data that
-    can be implemented for a NoSQL DB, relational DB, key-value store,
-    cloud storage, in-memory cache, distributed cache, or a filesystem.
+    """Data source is the abstract base class for polymorphic, hierarchical data storage API that can be implemented
+    for a NoSQL DB, relational DB, key-value store, cloud bucket store, in-memory cache, distributed cache, or a
+    filesystem.
 
-    On top of the storage layer, the API adds a directory-like attribute
-    called the dataset.
+    A slash-delimited string parameter `dir` may be used to set up hierarchical data directory structures.
 
-    The data source API provides the ability to:
-
-    * Query the list of datasets;
-    * Store and query records in a specific dataset; and
-    * Query records across multiple datasets using dataset priority order.
+    - Root directory is designed by `/`
+    - Permitted character in directory name follow Linux, with `/` in the beginning but not at the end.
+    - Each record is stored in a specific directory.
+    - During lookup, records in each directory will shadow records with the same key in its base directories.
+    - For example, search order when directory '/A/B' is specified is [`/A/B`, `/A`, `/`]
     """
 
     read_only: bool = class_field(optional=True)
     """Use this flag to mark the data source as readonly. All write operations will fail with error if set."""
-
-    def get_type_name(self) -> str:
-        """Return unique type name as plain or dot-delimited string according to the user-specified convention."""
-        return 'rt.DataSource'
 
     @abstractmethod
     def load_many(
@@ -63,11 +56,11 @@ class DataSource(DataSourceKey, ABC):
         Load instances of classes derived from base_type from storage using a sequence of keys.
 
         - Parameter `base_type` determines the database table where the search is performed.
-        - Error message if a loaded record is not derived from `base_type`.
+        - Error message if any loaded record is not derived from `base_type`.
         - The order of results is the same as the order of argument keys unless `is_unordered` is set.
         - To avoid saving and then loading the records that are created in memory, any argument key that
           is itself derived from base_type will be returned bypassing the data source query.
-          Call `to_pk()` on keys before passing them as argument to avoid this behavior.
+          Call `get_pk()` on records before passing them as argument to reload instead.
 
         Args:
             base_type: Loaded records must be derived from `base_type`
@@ -179,7 +172,7 @@ class DataSource(DataSourceKey, ABC):
         *,
         is_optional: bool = None,
         is_optional_key: bool = None
-    ) -> Iterable[TRecord]:
+    ) -> TRecord:
         """
         Load an instance of class derived from base_type from storage using the specified key.
 
@@ -187,7 +180,7 @@ class DataSource(DataSourceKey, ABC):
         - Error message if a loaded record is not derived from `base_type`.
         - To avoid saving and then loading the records that are created in memory, any argument key that
           is itself derived from base_type will be returned bypassing the data source query.
-          Call `to_pk()` on keys before passing them as argument to avoid this behavior.
+          Call `get_pk()` on keys before passing them as argument to avoid this behavior.
 
         Args:
             base_type: Loaded records must be derived from `base_type`

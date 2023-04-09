@@ -23,6 +23,6 @@ class LanguageKey(ClassRecord):
     language_id: str = class_field(name='LanguageID')
     """Language."""
 
-    def to_pk(self) -> str:
+    def get_pk(self) -> str:
         """Return primary key (PK) as string."""
         return f'ClLanguage;{self.language_id}'

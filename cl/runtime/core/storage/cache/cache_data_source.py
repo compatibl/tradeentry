@@ -28,10 +28,6 @@ class CacheDataSource(DataSource):
 
     _cache: Dict[str, Dict] = field(default_factory=dict)
 
-    def get_type_name(self) -> str:
-        """Return unique type name as plain or dot-delimited string according to the user-specified convention."""
-        return 'rt.CacheDataSource'
-
     def update(self) -> None:
         """Update and validate object state after loading from DB and before saving to DB."""
 
@@ -56,7 +52,7 @@ class CacheDataSource(DataSource):
         - The order of results is the same as the order of argument keys unless `is_unordered` is set.
         - To avoid saving and then loading the records that are created in memory, any argument key that
           is itself derived from base_type will be returned bypassing the data source query.
-          Call `to_pk()` on keys before passing them as argument to avoid this behavior.
+          Call `get_pk()` on keys before passing them as argument to avoid this behavior.
 
         Args:
             base_type: Loaded records must be derived from `base_type`
@@ -82,8 +78,6 @@ class CacheDataSource(DataSource):
                 continue
             elif isinstance(key, str):
                 pk = key
-            elif isinstance(key, Key):
-                pk = key.get_pk()
             else:
                 raise RuntimeError(f'Key {key} is not a string, Key, or Record')
 
@@ -117,12 +111,15 @@ class CacheDataSource(DataSource):
             record.update()
 
             # Verify that the record has the same key as was passed to the load method
-            record_pk = record.to_pk()
+            record_pk = record.get_pk()
             if record_pk != pk:
                 raise RuntimeError(
-                    f'Record to_pk() method returns {record_pk} which does '
+                    f'Record get_pk() method returns {record_pk} which does '
                     f'not match the argument {pk} passed to the load method.'
                 )
+
+            # TODO - refactor to improve speed
+            result.append(record)
 
         return result
 
