@@ -17,9 +17,10 @@ from typing import Any, Dict, Optional
 
 from cl.runtime import Context
 from cl.runtime.core.storage.data import Data
+from cl.runtime.core.storage.key import Key
 
 
-class Record(Data):
+class Record(Data, ABC):
     """
     Base class for database records that can be stored in a document DB,
     relational DB, key-value store, or filesystem.
@@ -46,33 +47,29 @@ class Record(Data):
         """Initialize instance attributes."""
         self.context = None
 
-    def init(self) -> None:
+    def update(self) -> None:
         """
-        Update and validate object state after loading from DB and before saving to DB.
+        Validate properties and set private variables. Invoked by data source before saving and after loading.
 
-        Do nothing by default. Derived classes can override.
+        Implementation in base does nothing by default. Derived classes can override.
         """
 
     @abstractmethod
-    def to_pk(self) -> str:
+    def get_type_name(self) -> str:
+        """Return unique type name as plain or dot-delimited string according to the user-specified convention.
+
+        The recommended convention is `unique_namespace_alias.ClassName`, or simply `ClassName` if class
+        names across all imported modules are unique.
+
+        Examples:
+
+            - `rt.DataSource` and `rt.stubs.StubRecord`
+            - `cl.runtime.DataSource` and `cl.runtime.stubs.StubRecord`
+            - `DataSource` and `StubRecord` (if class names are unique across all imported modules)
+
+        Notes:
+
+            Type name in physical storage or cache may not match this logical type name format.
+            The conversion is performed by the data source implementation.
         """
-        Return primary key (PK) as string.
 
-        The key consists of database table name in dot-delimited format,
-        followed by primary key attributes in semicolon-delimited format:
-
-        simple_key = Type1;A;B
-
-        For composite keys, the embedded keys are surrounded by curly braces.
-        Helper method RecordUtil.composite_pk(...) is provided for generating
-        such keys, and RecordUtil.split_composite_pk(...) for splitting them:
-
-        composite_key = Type1;{Type2;A;B};C
-
-        The first token of the key (i.e. Type1,2) is database table name.
-        It can be customized as long as name collisions are avoided.
-        """
-
-    def __str__(self) -> str:
-        """Return primary key (derived classes can override)."""
-        return self.to_pk()

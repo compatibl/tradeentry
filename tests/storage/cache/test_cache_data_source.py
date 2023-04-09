@@ -28,8 +28,8 @@ def test_smoke():
 
     # Create test record and populate with sample data
     context = rt.Context()
-    record = rt.stubs.StubRecord.create(context)
-    pk = record.to_pk()
+    record = rt.stubs.StubClassRecord.create_sample_record(context)
+    pk = record.get_pk()
     record_dict = record.to_dict()
 
     # Test saving and loading

@@ -15,6 +15,7 @@
 from typing import List
 
 
+# TODO - deprecated, remove after switching to non-delimited keys
 class RecordUtil:
     """Helper methods for Record."""
 

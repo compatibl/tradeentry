@@ -17,11 +17,13 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import cl.runtime as rt
+from cl.runtime.core.storage.class_record import ClassRecord
+from cl.runtime.core.storage.record import Record
 from cl.runtime.stubs.storage.stub_class_record_key import StubClassRecordKey
 
 
 @dataclass
-class StubClassRecord(StubClassRecordKey):
+class StubClassRecord(StubClassRecordKey, ClassRecord):
     """Stub dataclass-based record sample used in tests."""
 
     base_record_field_str: str = rt.class_field()
@@ -33,8 +35,12 @@ class StubClassRecord(StubClassRecordKey):
     base_record_field_long: int = rt.class_field(typename='long', label="Custom Label", optional=True)
     """Optional long attribute of base class with custom label."""
 
+    def get_type_name(self) -> str:
+        """Return unique type name as plain or dot-delimited string according to the user-specified convention."""
+        return 'rt.StubClassRecord'
+
     @staticmethod
-    def create(context: rt.Context) -> StubClassRecord:
+    def create_sample_record(context: rt.Context) -> StubClassRecord:
         """Return an instance of this class populated with sample data."""
 
         obj = StubClassRecord()
@@ -43,5 +49,5 @@ class StubClassRecord(StubClassRecordKey):
         obj.primary_key_field_int = 123
         obj.base_record_field_str = 'def'
         obj.base_record_field_float = 4.56
-        obj.init()
+        obj.update()
         return obj

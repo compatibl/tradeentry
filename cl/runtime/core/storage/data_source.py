@@ -17,15 +17,17 @@ from dataclasses import dataclass
 from typing import Iterable, Union, Type, Optional, TypeVar
 
 from cl.runtime.core.storage.class_data import class_field
+from cl.runtime.core.storage.class_record import ClassRecord
 from cl.runtime.core.storage.data_source_key import DataSourceKey
+from cl.runtime.core.storage.key import Key
 from cl.runtime.core.storage.record import Record
 
 TRecord = TypeVar('TRecord', bound=Record, covariant=True)
-TKey = TypeVar('TKey', bound=Record)
+TKey = TypeVar('TKey', bound=Key)
 
 
 @dataclass
-class DataSource(DataSourceKey, ABC):
+class DataSource(DataSourceKey, ClassRecord, ABC):
     """
     Data source is a storage API for polymorphic, hierarchical data that
     can be implemented for a NoSQL DB, relational DB, key-value store,
@@ -43,6 +45,10 @@ class DataSource(DataSourceKey, ABC):
 
     read_only: bool = class_field(optional=True)
     """Use this flag to mark the data source as readonly. All write operations will fail with error if set."""
+
+    def get_type_name(self) -> str:
+        """Return unique type name as plain or dot-delimited string according to the user-specified convention."""
+        return 'rt.DataSource'
 
     @abstractmethod
     def load_many(

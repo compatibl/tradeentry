@@ -13,13 +13,12 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-
 from cl.runtime.core.storage.class_data import class_field
-from cl.runtime.core.storage.class_record import ClassRecord
+from cl.runtime.core.storage.key import Key
 
 
 @dataclass
-class DataSourceKey(ClassRecord):
+class DataSourceKey(Key):
     """
     Data source is a storage API for polymorphic, hierarchical data that
     can be implemented for a NoSQL DB, relational DB, key-value store,
@@ -38,6 +37,10 @@ class DataSourceKey(ClassRecord):
     data_source_id: str = class_field()
     """Unique data source identifier."""
 
-    def to_pk(self) -> str:
-        """Return primary key (PK) as string."""
-        return f'rt.DataSource;{self.data_source_id}'
+    def get_table_name(self) -> str:
+        """Return unique table name as plain or dot-delimited string according to the user-specified convention."""
+        return 'rt.DataSource'
+
+    def get_pk(self) -> str:
+        """Return logical primary key (PK) as string in semicolon-delimited format."""
+        return str(self.data_source_id)

@@ -12,13 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import annotations
 from dataclasses import dataclass
 
 import cl.runtime as rt
 
 
 @dataclass
-class StubClassRecordKey(rt.ClassRecord):
+class StubClassRecordKey(rt.Key):
     """Stub dataclass-based record sample used in tests."""
 
     primary_key_field_str: str = rt.class_field()
@@ -27,6 +28,19 @@ class StubClassRecordKey(rt.ClassRecord):
     primary_key_field_int: int = rt.class_field()
     """Second primary key attribute."""
 
-    def to_pk(self) -> str:
-        """Return primary key (PK) as string."""
-        return f'rt.stubs.StubClassRecord;{self.primary_key_field_str};{self.primary_key_field_int}'
+    def get_table_name(self) -> str:
+        """Return unique table name as plain or dot-delimited string according to the user-specified convention."""
+        return 'rt.stubs.StubClassRecord'
+
+    def get_pk(self) -> str:
+        """Return logical primary key (PK) as string in semicolon-delimited format."""
+        return f'{self.primary_key_field_str};{self.primary_key_field_int}'
+
+    @staticmethod
+    def create_sample_key() -> StubClassRecordKey:
+        """Return an instance of this class populated with sample data."""
+
+        obj = StubClassRecordKey()
+        obj.primary_key_field_str = 'abc'
+        obj.primary_key_field_int = 123
+        return obj

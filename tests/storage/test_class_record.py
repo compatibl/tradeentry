@@ -22,16 +22,21 @@ import cl.runtime as rt
 def test_smoke():
     """Smoke test."""
 
+    # Create and test standalone key
+    key = rt.stubs.StubClassRecordKey.create_sample_key()
+    key_table = key.get_table_name()
+    key_pk = key.get_pk()
+
     # Create test record and populate with sample data
     context = rt.Context()
-    record = rt.stubs.StubClassRecord.create(context)
+    record = rt.stubs.StubClassRecord.create_sample_record(context)
 
     # Test that context has been set
     assert record.context == context
 
     # Test primary key
-    pk = record.to_pk()
-    assert pk == 'rt.stubs.StubClassRecord;abc;123'
+    pk = record.get_pk()
+    assert pk == 'abc;123'
 
     # Test to_dict() method
     record_dict = record.to_dict()

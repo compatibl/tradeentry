@@ -18,6 +18,7 @@ from typing import Dict, Iterable, Union, Type, Optional
 
 from cl.runtime.core.schema.type.type_util import TypeUtil
 from cl.runtime.core.storage.data_source import DataSource, TRecord, TKey
+from cl.runtime.core.storage.key import Key
 from cl.runtime.core.storage.record import Record
 
 
@@ -27,7 +28,11 @@ class CacheDataSource(DataSource):
 
     _cache: Dict[str, Dict] = field(default_factory=dict)
 
-    def init(self) -> None:
+    def get_type_name(self) -> str:
+        """Return unique type name as plain or dot-delimited string according to the user-specified convention."""
+        return 'rt.CacheDataSource'
+
+    def update(self) -> None:
         """Update and validate object state after loading from DB and before saving to DB."""
 
         # Create new cache on init
@@ -62,6 +67,9 @@ class CacheDataSource(DataSource):
             is_unordered: Do not order result in the order of keys. Default is to order the result.
         """
 
+        obj = base_type
+        table_name = base_type.get_table_name()
+
         result = []
         for key in keys:
             if key is None:
@@ -70,17 +78,17 @@ class CacheDataSource(DataSource):
                     result.append(None)
                     continue
                 else:
-                    raise RuntimeError("Key=None but 'is_optional_key' argument is False or None.")
-            elif isinstance(key, base_type):
+                    raise RuntimeError("Key=None but 'is_optional_key' not set.")
+            elif isinstance(key, Record):
                 # Handle full record passed instead of the key
                 result.append(key)
                 continue
             elif isinstance(key, str):
                 pk = key
-            elif isinstance(key, Record):
-                pk = key.to_pk()
+            elif isinstance(key, Key):
+                pk = key.get_pk()
             else:
-                raise RuntimeError(f'Key {key} is not a string, Record, or None')
+                raise RuntimeError(f'Key {key} is not a string, Key, or Record')
 
             # Try to retrieve dataset dictionary, insert if it does not yet exist
             dataset_cache = self._cache.setdefault(data_set, {})
@@ -133,10 +141,10 @@ class CacheDataSource(DataSource):
         # Iterate over records
         for record in records:
             # Call init to update and validate object state
-            record.init()
+            record.update()
 
             # Get primary key and data from record.
-            pk = record.to_pk()
+            pk = record.get_pk()
             record_dict = record.to_dict()
 
             # Make deep copy of dictionary in case the original record is changed
