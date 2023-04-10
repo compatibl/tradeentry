@@ -23,8 +23,8 @@ def test_smoke():
     """Smoke test."""
 
     # Create and test standalone key
-    sample_pk = rt.stubs.StubClassRecord.create_sample_pk()
-    assert sample_pk == 'abc;123'
+    sample_key = rt.stubs.StubClassRecord.create_sample_key()
+    assert sample_key == 'abc;123'
 
     # Create test record and populate with sample data
     context = rt.Context()
@@ -34,8 +34,8 @@ def test_smoke():
     assert record.context == context
 
     # Test primary key
-    pk = record.get_pk()
-    assert pk == 'abc;123'
+    key = record.get_key()
+    assert key == 'abc;123'
 
     # Test to_dict() method
     record_dict = record.to_dict()

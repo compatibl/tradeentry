@@ -51,7 +51,7 @@ class CacheDataSource(DataSource):
         - The order of results is the same as the order of argument keys unless `is_unordered` is set.
         - To avoid saving and then loading the records that are created in memory, any argument key that
           is itself derived from base_type will be returned bypassing the data source query.
-          Call `get_pk()` on keys before passing them as argument to avoid this behavior.
+          Call `get_key()` on keys before passing them as argument to avoid this behavior.
 
         Args:
             base_type: Loaded records must be derived from `base_type`
@@ -76,7 +76,7 @@ class CacheDataSource(DataSource):
                 result.append(key)
                 continue
             elif isinstance(key, str):
-                pk = key
+                key = key
             else:
                 raise RuntimeError(f'Key {key} is not a string, Key, or Record')
 
@@ -84,7 +84,7 @@ class CacheDataSource(DataSource):
             dataset_cache = self._cache.setdefault(data_set, {})
 
             # Retrieve the record using get method that returns None if the key is not found
-            record_dict = dataset_cache.get(pk)
+            record_dict = dataset_cache.get(key)
 
             # Check if result is None
             if record_dict is None:
@@ -93,7 +93,7 @@ class CacheDataSource(DataSource):
                     continue
                 else:
                     raise RuntimeError(
-                        f"Record is not found for pk={pk} but 'is_optional' argument is False or None."
+                        f"Record is not found for key={key} but 'is_optional' argument is False or None."
                     )
 
             # Create record instance and populate it from dictionary
@@ -110,11 +110,11 @@ class CacheDataSource(DataSource):
             record.update()
 
             # Verify that the record has the same key as was passed to the load method
-            record_pk = record.get_pk()
-            if record_pk != pk:
+            record_key = record.get_key()
+            if record_key != key:
                 raise RuntimeError(
-                    f'Record get_pk() method returns {record_pk} which does '
-                    f'not match the argument {pk} passed to the load method.'
+                    f'Record get_key() method returns {record_key} which does '
+                    f'not match the argument {key} passed to the load method.'
                 )
 
             # TODO - refactor to improve speed
@@ -140,7 +140,7 @@ class CacheDataSource(DataSource):
             record.update()
 
             # Get primary key and data from record.
-            pk = record.get_pk()
+            key = record.get_key()
             record_dict = record.to_dict()
 
             # Make deep copy of dictionary in case the original record is changed
@@ -157,7 +157,7 @@ class CacheDataSource(DataSource):
             # Insert the record into dataset dictionary
             common_base = record.get_common_base()  # noqa
             table_name = RecordUtil.get_class_path(common_base)
-            dataset_cache[pk] = record_dict
+            dataset_cache[key] = record_dict
 
     def save_on_commit(self, record: Record, data_set: str) -> None:
         """

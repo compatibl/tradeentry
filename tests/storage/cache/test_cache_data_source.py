@@ -29,13 +29,13 @@ def test_smoke():
     # Create test record and populate with sample data
     context = rt.Context()
     record = rt.stubs.StubRecord.create_sample_record(context)
-    pk = record.get_pk()
+    key = record.get_key()
     record_dict = record.to_dict()
 
     # Test saving and loading
     data_source.save_one(record, data_set)
-    records = data_source.load_many(rt.stubs.StubRecord, [pk, record], data_set)
-    record_from_str_key = data_source.load_one(rt.stubs.StubRecord, pk, data_set)
+    records = data_source.load_many(rt.stubs.StubRecord, [key, record], data_set)
+    record_from_str_key = data_source.load_one(rt.stubs.StubRecord, key, data_set)
     record_from_record_as_key = data_source.load_one(rt.stubs.StubRecord, record, data_set)
 
     # Check loaded record

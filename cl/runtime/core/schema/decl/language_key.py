@@ -23,6 +23,6 @@ class LanguageKey(ClassRecord):
     language_id: str = class_field(name='LanguageID')
     """Language."""
 
-    def get_pk(self) -> str:
+    def get_key(self) -> str:
         """Return primary key of this instance in semicolon-delimited string format."""
         return self.language_id

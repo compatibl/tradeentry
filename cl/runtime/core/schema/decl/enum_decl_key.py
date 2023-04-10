@@ -29,6 +29,6 @@ class EnumDeclKey(ClassRecord):
     name: str = class_field()
     """Enum name is unique when combined with module."""
 
-    def get_pk(self) -> str:
+    def get_key(self) -> str:
         """Return primary key of this instance in semicolon-delimited string format."""
         return f'{self.module};{self.name}'

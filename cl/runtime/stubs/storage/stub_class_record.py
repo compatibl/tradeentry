@@ -45,18 +45,18 @@ class StubClassRecord(ClassRecord):
         return StubClassRecord
 
     @staticmethod
-    def create_pk(primary_key_field_str: str, primary_key_field_int: int) -> str:
+    def create_key(primary_key_field_str: str, primary_key_field_int: int) -> str:
         """Create primary key from arguments in semicolon-delimited string format."""
         return f'{primary_key_field_str};{primary_key_field_int}'
 
-    def get_pk(self) -> str:
+    def get_key(self) -> str:
         """Return primary key of this instance in semicolon-delimited string format."""
         return f'{self.primary_key_field_str};{self.primary_key_field_int}'
 
     @staticmethod
-    def create_sample_pk() -> str:
+    def create_sample_key() -> str:
         """Return PK populated with sample data."""
-        return StubClassRecord.create_pk('abc', 123)
+        return StubClassRecord.create_key('abc', 123)
 
     @staticmethod
     def create_sample_record(context: rt.Context) -> StubClassRecord:

@@ -32,8 +32,8 @@ def test_smoke():
     # Test type and key
     common_base = base_record.get_common_base()
     assert common_base == type(base_record)
-    pk = base_record.get_pk()
-    assert pk == 'abc;123'
+    key = base_record.get_key()
+    assert key == 'abc;123'
 
     # Test roundtrip serialization
     base_record_data = base_record.to_dict()

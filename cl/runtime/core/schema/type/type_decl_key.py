@@ -28,6 +28,6 @@ class TypeDeclKey(ClassRecord):
     Used for table name in storage, and _type field in JSON.
     """
 
-    def get_pk(self) -> str:
+    def get_key(self) -> str:
         """Return primary key of this instance in semicolon-delimited string format."""
         return self.type_id

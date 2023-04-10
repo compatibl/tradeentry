@@ -27,12 +27,12 @@ class DeletedRecord(Record):
     in parent datasets or data sources from lookup.
     """
 
-    pk: str = class_field()
+    key: str = class_field()
     """Primary key (PK) string."""
 
-    def get_pk(self) -> str:
+    def get_key(self) -> str:
         """Return primary key of this instance in semicolon-delimited string format."""
-        return self.pk
+        return self.key
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize self as dictionary (may return shallow copy)."""

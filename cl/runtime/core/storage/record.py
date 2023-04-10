@@ -31,7 +31,7 @@ class Record(Data, ABC):
     - context: Field or property with type Context that has both getter and setter.
     - get_common_base: Static method returning the type of the common base for all classes
       stored in the same table as this class.
-    - get_pk: Return primary key of this instance in semicolon-delimited string format.
+    - get_key: Return primary key of this instance in semicolon-delimited string format.
       For example, key=`A;B` for a class with two primary key fields that have values `A` and `B`.
     - to_dict(self) - instance method serializing self as dictionary.
     - from_dict(self, data_dict) - instance method populating self from dictionary.
@@ -58,7 +58,7 @@ class Record(Data, ABC):
         """Type of the common base for all classes stored in the same table as this class."""
 
     @abstractmethod
-    def get_pk(self) -> str:
+    def get_key(self) -> str:
         """Return primary key of this instance in semicolon-delimited string format.
 
         For composite keys, the embedded keys are concatenated in the
@@ -66,9 +66,9 @@ class Record(Data, ABC):
 
         Examples:
 
-            - One primary key field A: `pk=A`
-            - Two primary key fields A and B: `pk=A;B`
-            - Two primary key fields, first field is composite key`A1;A2` and second is B: `pk=A1;A2;B`
+            - One primary key field A: `key=A`
+            - Two primary key fields A and B: `key=A;B`
+            - Two primary key fields, first field is composite key`A1;A2` and second is B: `key=A1;A2;B`
 
         Notes:
 
@@ -89,6 +89,6 @@ class Record(Data, ABC):
         Notes:
 
             Conversion to string is provided for debugging purposes only and may be modified in derived
-            classes. Data source implementation must use `get_pk` method instead.
+            classes. Data source implementation must use `get_key` method instead.
         """
-        return self.get_pk()
+        return self.get_key()

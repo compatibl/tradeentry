@@ -34,8 +34,8 @@ class DataSource(ClassRecord, ABC):
     may be implemented by mixins or intermediate base classes, including those using dataclass and similar frameworks.
 
     * context - field or property with type Context that has both getter and setter
-    * get_pk(self) - instance method returning primary key without type as semicolon-delimited string.
-      For example, pk=`A;B` for a class with two primary key fields that have values `A` and `B`
+    * get_key(self) - instance method returning primary key without type as semicolon-delimited string.
+      For example, key=`A;B` for a class with two primary key fields that have values `A` and `B`
     * to_dict(self) - instance method serializing self as dictionary
     * from_dict(self, data_dict) - instance method populating self from dictionary
     * get_common_base() - static method returning the type of the common base class for all classes
@@ -62,11 +62,11 @@ class DataSource(ClassRecord, ABC):
         return DataSource
 
     @staticmethod
-    def create_pk(data_source_id: str) -> str:
+    def create_key(data_source_id: str) -> str:
         """Create primary key from arguments in semicolon-delimited string format."""
         return data_source_id
 
-    def get_pk(self) -> str:
+    def get_key(self) -> str:
         """Return primary key of this instance in semicolon-delimited string format."""
         return str(self.data_source_id)
 
@@ -89,7 +89,7 @@ class DataSource(ClassRecord, ABC):
         - The order of results is the same as the order of argument keys unless `is_unordered` is set.
         - To avoid saving and then loading the records that are created in memory, any argument key that
           is itself derived from base_type will be returned bypassing the data source query.
-          Call `get_pk()` on records before passing them as argument to reload instead.
+          Call `get_key()` on records before passing them as argument to reload instead.
 
         Args:
             base_type: Loaded records must be derived from `base_type`
@@ -209,7 +209,7 @@ class DataSource(ClassRecord, ABC):
         - Error message if a loaded record is not derived from `base_type`.
         - To avoid saving and then loading the records that are created in memory, any argument key that
           is itself derived from base_type will be returned bypassing the data source query.
-          Call `get_pk()` on keys before passing them as argument to avoid this behavior.
+          Call `get_key()` on keys before passing them as argument to avoid this behavior.
 
         Args:
             base_type: Loaded records must be derived from `base_type`

@@ -47,7 +47,7 @@ class StubRecord(rt.Record):
         """Type of the common base for all classes stored in the same table as this class."""
         return StubRecord
 
-    def get_pk(self) -> str:
+    def get_key(self) -> str:
         """Return primary key of this instance in semicolon-delimited string format."""
         return f"{self.primary_key_field_str};{self.primary_key_field_int}"
 

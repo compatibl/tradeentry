@@ -42,7 +42,7 @@ class ClassRecord(Record, ABC):
 
     With this simpler inheritance chain, foreign key can be stored in
     other data types with runtime type safety as the string generated
-    by get_pk() method.
+    by get_key() method.
     """
 
     def to_dict(self) -> Dict[str, Any]:

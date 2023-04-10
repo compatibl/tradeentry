@@ -25,6 +25,6 @@ class PackageKey(ClassRecord):
     package_name: str = class_field()
     """Unique package identifier."""
 
-    def get_pk(self) -> str:
+    def get_key(self) -> str:
         """Return primary key of this instance in semicolon-delimited string format."""
         return self.package_name
