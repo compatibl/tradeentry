@@ -24,5 +24,5 @@ class LanguageKey(ClassRecord):
     """Language."""
 
     def get_pk(self) -> str:
-        """Return primary key (PK) as string."""
-        return f'ClLanguage;{self.language_id}'
+        """Return primary key of this instance in semicolon-delimited string format."""
+        return self.language_id

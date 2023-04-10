@@ -34,10 +34,6 @@ class StubData(rt.Data):
         self.base_record_field_str = None
         self.base_record_field_float = None
 
-    def get_pk(self) -> str:
-        """Return primary key (PK) as string."""
-        return f'rt.stubs.StubRecord;{self.primary_key_field_str};{self.primary_key_field_int}'
-
     def to_dict(self) -> Dict[str, Any]:
         """Serialize self as dictionary (may return shallow copy)."""
         return {

@@ -29,5 +29,5 @@ class TypeDeclKey(ClassRecord):
     """
 
     def get_pk(self) -> str:
-        """Return primary key (PK) as string."""
-        return f'rt.TypeDecl;{self.type_id}'
+        """Return primary key of this instance in semicolon-delimited string format."""
+        return self.type_id

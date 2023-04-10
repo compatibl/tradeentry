@@ -31,7 +31,7 @@ class DeletedRecord(Record):
     """Primary key (PK) string."""
 
     def get_pk(self) -> str:
-        """Return primary key (PK) as string."""
+        """Return primary key of this instance in semicolon-delimited string format."""
         return self.pk
 
     def to_dict(self) -> Dict[str, Any]:

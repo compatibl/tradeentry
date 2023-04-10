@@ -48,7 +48,7 @@ class StubRecord(rt.Record):
         return StubRecord
 
     def get_pk(self) -> str:
-        """Return primary key (PK) as string."""
+        """Return primary key of this instance in semicolon-delimited string format."""
         return f"{self.primary_key_field_str};{self.primary_key_field_int}"
 
     def to_dict(self) -> Dict[str, Any]:

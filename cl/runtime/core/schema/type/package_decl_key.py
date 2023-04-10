@@ -26,5 +26,5 @@ class PackageDeclKey(ClassRecord):
     """Unique package identifier."""
 
     def get_pk(self) -> str:
-        """Return primary key (PK) as string."""
-        return f'rt.PackageDecl;{self.package_id}'
+        """Return primary key of this instance in semicolon-delimited string format."""
+        return self.package_id

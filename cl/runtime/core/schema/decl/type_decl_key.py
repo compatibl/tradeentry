@@ -33,5 +33,5 @@ class TypeDeclKey(ClassRecord):
     """Type name is unique when combined with module."""
 
     def get_pk(self) -> str:
-        """Return primary key (PK) as string."""
-        return f'ClTypeDecl;{self.module};{self.name}'
+        """Return primary key of this instance in semicolon-delimited string format."""
+        return f'{self.module};{self.name}'
