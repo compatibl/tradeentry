@@ -28,24 +28,24 @@ class Record(Data, ABC):
     Final record classes stored in a data source must implement the following methods and properties.
     They may be provided by mixins and intermediate base classes using dataclass and similar frameworks.
 
-    * context - field or property with type Context that has both getter and setter
-    * get_pk(self) - instance method returning primary key without type as semicolon-delimited string.
-      For example, pk=`A;B` for a class with two primary key fields that have values `A` and `B`
-    * to_dict(self) - instance method serializing self as dictionary
-    * from_dict(self, data_dict) - instance method populating self from dictionary
-    * get_common_base() - static method returning the type of the common base class for all classes
-      stored in the same database table as this class.
+    - context: Field or property with type Context that has both getter and setter.
+    - get_common_base: Static method returning the type of the common base for all classes
+      stored in the same table as this class.
+    - get_pk: Return primary key of this instance in semicolon-delimited string format.
+      For example, key=`A;B` for a class with two primary key fields that have values `A` and `B`.
+    - to_dict(self) - instance method serializing self as dictionary.
+    - from_dict(self, data_dict) - instance method populating self from dictionary.
     """
 
     context: Optional[Context]
     """
     Context provides platform-independent APIs for:
 
-    * Databases and distributed cache
-    * Logging and error reporting
-    * Local or remote handler execution
-    * Progress reporting
-    * Virtualized filesystem
+    - Databases and distributed cache
+    - Logging and error reporting
+    - Local or remote handler execution
+    - Progress reporting
+    - Virtualized filesystem
     """
 
     def __init__(self):
@@ -55,11 +55,11 @@ class Record(Data, ABC):
     @staticmethod
     @abstractmethod
     def get_common_base():
-        """Return the type of the common base class for all classes stored in this table."""
+        """Type of the common base for all classes stored in the same table as this class."""
 
     @abstractmethod
     def get_pk(self) -> str:
-        """Return logical primary key (PK) as string in semicolon-delimited format.
+        """Return primary key of this instance in semicolon-delimited string format.
 
         For composite keys, the embedded keys are concatenated in the
         order of their declaration without brackets.

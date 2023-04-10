@@ -44,7 +44,7 @@ class StubRecord(rt.Record):
 
     @staticmethod
     def get_common_base():
-        """Return the type of the common base class for all classes stored in this table."""
+        """Type of the common base for all classes stored in the same table as this class."""
         return StubRecord
 
     def get_pk(self) -> str:

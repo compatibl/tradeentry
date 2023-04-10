@@ -38,15 +38,15 @@ class View(ClassRecord, ABC):
 
     @staticmethod
     def get_common_base():
-        """Return the type of the common base class for all classes stored in this table."""
+        """Type of the common base for all classes stored in the same table as this class."""
         return View
 
     @staticmethod
     def create_pk(view_for: str, view_name: str) -> str:
-        """Create primary key (PK) string in semicolon-delimited format from arguments."""
+        """Create primary key from arguments in semicolon-delimited string format."""
         return f'{view_for};{view_name}'
 
     def get_pk(self) -> str:
-        """Return logical primary key (PK) as string in semicolon-delimited format."""
+        """Return primary key of this instance in semicolon-delimited string format."""
         return f'{self.view_for};{self.view_name}'
 

@@ -58,16 +58,16 @@ class DataSource(ClassRecord, ABC):
 
     @staticmethod
     def get_common_base():
-        """Return the type of the common base class for all classes stored in this table."""
+        """Type of the common base for all classes stored in the same table as this class."""
         return DataSource
 
     @staticmethod
     def create_pk(data_source_id: str) -> str:
-        """Create primary key (PK) string in semicolon-delimited format from arguments."""
+        """Create primary key from arguments in semicolon-delimited string format."""
         return data_source_id
 
     def get_pk(self) -> str:
-        """Return logical primary key (PK) as string in semicolon-delimited format."""
+        """Return primary key of this instance in semicolon-delimited string format."""
         return str(self.data_source_id)
 
     @abstractmethod

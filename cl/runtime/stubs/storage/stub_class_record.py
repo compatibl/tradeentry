@@ -41,16 +41,16 @@ class StubClassRecord(ClassRecord):
 
     @staticmethod
     def get_common_base():
-        """Return the type of the common base class for all classes stored in this table."""
+        """Type of the common base for all classes stored in the same table as this class."""
         return StubClassRecord
 
     @staticmethod
     def create_pk(primary_key_field_str: str, primary_key_field_int: int) -> str:
-        """Create primary key (PK) string in semicolon-delimited format from arguments."""
+        """Create primary key from arguments in semicolon-delimited string format."""
         return f'{primary_key_field_str};{primary_key_field_int}'
 
     def get_pk(self) -> str:
-        """Return logical primary key (PK) as string in semicolon-delimited format."""
+        """Return primary key of this instance in semicolon-delimited string format."""
         return f'{self.primary_key_field_str};{self.primary_key_field_int}'
 
     @staticmethod
