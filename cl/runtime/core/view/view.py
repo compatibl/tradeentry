@@ -11,14 +11,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+from abc import ABC
 from dataclasses import dataclass
 
-from cl.runtime.core.view.view_key import ViewKey
+from cl.runtime.core.storage.class_field import class_field
+from cl.runtime.core.storage.class_record import ClassRecord
 
 
 @dataclass
-class View(ViewKey):
+class View(ClassRecord, ABC):
     """
     The data shown alongside the record in the front end.
 
@@ -28,3 +29,24 @@ class View(ViewKey):
     and will display each View returned by the query on a separate
     tab or panel next to the record itself.
     """
+
+    view_for: str = class_field()
+    """Primary key of the record for which the view is specified."""
+
+    view_name: str = class_field()
+    """Name of the view displayed in the front end."""
+
+    @staticmethod
+    def get_common_base():
+        """Return the type of the common base class for all classes stored in this table."""
+        return View
+
+    @staticmethod
+    def create_pk(view_for: str, view_name: str) -> str:
+        """Create primary key (PK) string in semicolon-delimited format from arguments."""
+        return f'{view_for};{view_name}'
+
+    def get_pk(self) -> str:
+        """Return logical primary key (PK) as string in semicolon-delimited format."""
+        return f'{self.view_for};{self.view_name}'
+

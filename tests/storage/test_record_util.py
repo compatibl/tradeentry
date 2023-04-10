@@ -93,7 +93,6 @@ def test_get_inheritance_chain():
     # Test helper method
     assert not RecordUtil._is_get_common_base_implemented(rt.Data)  # Not present
     assert not RecordUtil._is_get_common_base_implemented(rt.Record)  # Abstract
-    x = RecordUtil._is_get_common_base_implemented(rt.stubs.StubClassRecordKey)
     assert RecordUtil._is_get_common_base_implemented(rt.stubs.StubClassRecord)  # Implemented
     assert RecordUtil._is_get_common_base_implemented(rt.stubs.StubClassRecord)  # Implemented
 
@@ -112,33 +111,15 @@ def test_get_inheritance_chain():
     # Error, invoked for a type that does not implement get_common_base
     # Call twice to test that caching does not fail on error
     with pytest.raises(RuntimeError):
-        rt.RecordUtil.get_inheritance_chain(rt.stubs.StubClassRecordKey)
+        rt.RecordUtil.get_inheritance_chain(rt.stubs.StubClassData)
     with pytest.raises(RuntimeError):
-        rt.RecordUtil.get_inheritance_chain(rt.stubs.StubClassRecordKey)
+        rt.RecordUtil.get_inheritance_chain(rt.stubs.StubClassData)
 
     # Test caching of method results
     cache_info = rt.RecordUtil.get_inheritance_chain.cache_info()
     assert cache_info.hits == 2
     assert cache_info.misses == 4
     assert cache_info.current_size == 2
-
-
-def test_get_common_base_from_key():
-    """Test getting record type from key type."""
-
-    # Call twice to test for caching
-    assert rt.RecordUtil.get_common_base_from_key(rt.stubs.StubClassRecordKey) == rt.stubs.StubClassRecord
-    assert rt.RecordUtil.get_common_base_from_key(rt.stubs.StubClassRecordKey) == rt.stubs.StubClassRecord
-
-    # Error, invoked for a class whose name does not end with Key
-    with pytest.raises(RuntimeError):
-        rt.RecordUtil.get_common_base_from_key(rt.stubs.StubClassRecord)
-
-    # Test caching of method results
-    cache_info = rt.RecordUtil.get_common_base_from_key.cache_info()
-    assert cache_info.hits == 1
-    assert cache_info.misses == 2
-    assert cache_info.current_size == 1
 
 
 if __name__ == '__main__':

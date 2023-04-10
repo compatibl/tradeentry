@@ -17,7 +17,6 @@ import pytest
 from cl.runtime.core.storage.deleted_record import DeletedRecord
 from cl.runtime.core.schema.decl.decl_util import DeclUtil
 from cl.runtime.stubs.storage.stub_class_data import StubClassData
-from cl.runtime.stubs.storage.stub_class_record_key import StubClassRecordKey
 from cl.runtime.stubs.storage.stub_class_record import StubClassRecord
 from cl.runtime.stubs.storage.stub_derived_class_data import StubDerivedClassData
 from cl.runtime.stubs.storage.stub_derived_class_record import StubDerivedClassRecord
@@ -69,34 +68,10 @@ class TestDeclUtil:
         assert func(StubDerivedClassRecord) == ['StubClassRecord', 'StubDerivedClassRecord']
         assert func(StubClassData) == ['StubClassData']
         assert func(StubDerivedClassData) == ['StubClassData', 'StubDerivedClassData']
-        assert func(StubClassRecordKey) == ['StubClassRecordKey']
         assert func(DeletedRecord) == ['DeletedRecord']
 
         # Check that caching the results works by calling again with the same inputs
         assert func(StubClassRecord) == ['StubClassRecord']
-
-    def test_key_from_record(self):
-        """Test getting key class from record class."""
-
-        func = DeclUtil.get_key_from_record
-
-        # Must return base key from base or derived record
-        assert func(StubClassRecord) == StubClassRecordKey
-        assert func(StubDerivedClassRecord) == StubClassRecordKey
-
-        # Check that caching the results works by calling again with the same inputs
-        assert func(StubClassRecord) == StubClassRecordKey
-
-    def test_record_from_key(self):
-        """Test getting base record from key."""
-
-        func = DeclUtil.get_record_from_key
-
-        # Must return base record from key
-        assert func(StubClassRecordKey) == StubClassRecord
-
-        # Check that caching the results works by calling again with the same inputs
-        assert func(StubClassRecordKey) == StubClassRecord
 
     def test_package_shortname(self):
         """Test short package namespace alias."""
@@ -128,7 +103,6 @@ class TestDeclUtil:
             'rt.stubs.StubClassData',
             'rt.stubs.StubDerivedClassData',
         ]
-        assert func(StubClassRecordKey) == ['rt.stubs.StubClassRecordKey']
         assert func(DeletedRecord) == ['DeletedRecord']
 
         DeclUtil.unregister_shortname('cl.runtime.stubs')  # TODO: rename to deregister?

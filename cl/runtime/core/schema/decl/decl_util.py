@@ -226,40 +226,6 @@ class DeclUtil:
         raise RuntimeError('Type is not derived from ClassData')
 
     @staticmethod
-    @cache
-    def get_key_from_record(type_: type) -> type:
-        """Extracts associated key from ClassRecord derived types."""
-
-        from cl.runtime.core.storage.class_record import ClassRecord
-
-        type_mro = type_.mro()
-        if ClassRecord in type_mro:
-            data_index = type_mro.index(ClassRecord)
-            return type_mro[data_index - 1]
-        else:
-            raise RuntimeError(f'Cannot deduce key from {type_.__name__} type not derived from ClassRecord.')
-
-    @staticmethod
-    @cache
-    def get_record_from_key(type_: type) -> type:
-        """Extracts associated record from ClassRecord derived types."""
-
-        from cl.runtime.core.storage.class_record import ClassRecord
-
-        key_type_name = DeclUtil.get_prefixed_name(type_)
-
-        if ClassRecord in type_.mro():
-            if not key_type_name.endswith('Key'):
-                raise RuntimeError(f'Unexpected type name: {key_type_name}. Key type name should end with "Key"')
-            record_type_name = key_type_name[:-3]
-
-            # Load by record name
-            record_type = DeclUtil.get_type(record_type_name)
-            return record_type
-        else:
-            raise RuntimeError(f'Cannot deduce record from {type_.__name__} type not derived from ClassRecord.')
-
-    @staticmethod
     def __init_types():
         from cl.runtime.core.storage.context import Context
         from cl.runtime.core.storage.class_data import ClassData

@@ -112,42 +112,6 @@ class RecordUtil:
 
     @staticmethod
     @cached(custom_key_maker=lambda arg: f"{arg.__module__}.{arg.__name__}")
-    def get_common_base_from_key(key_type: Type) -> Type:
-        """Get common base type from key type by removing Key suffix of class name and _key suffix of module name.
-
-        This method can be used for classes following the standard naming convention. For other naming conventions,
-        a custom method can be used instead. The code must not make any implicit assumptions about the relationship
-        between the modules and names of the common base class and the key class.
-
-        Args:
-            key_type: Class type whose name has Key suffix and module has _key suffix.
-
-        Returns:
-            Class whose module has _key suffix removed and class name has Key suffix removed.
-
-        Notes:
-            This method caches its return value and is only called once for each combination of arguments.
-        """
-
-        key_module_path = key_type.__module__
-        key_class_name = key_type.__name__
-
-        # Validate that key type follows the standard moduel and class naming convention
-        if not key_module_path.endswith("_key"):
-            raise RuntimeError(f"Key module path {key_module_path} does not end with suffix _key. Use custom "
-                               f"mapping from key class to common base class instead of this method.")
-        if not key_class_name.endswith("Key"):
-            raise RuntimeError(f"Key class name {key_class_name} does not end with suffix Key. Use custom "
-                               f"mapping from key class to common base class instead of this method.")
-
-        # Apply transformation and get class
-        common_base_module_path = key_module_path[:-4]
-        common_base_class_name = key_class_name[:-3]
-        common_base_class_type = RecordUtil.get_class_type(common_base_module_path, common_base_class_name)
-        return common_base_class_type
-
-    @staticmethod
-    @cached(custom_key_maker=lambda arg: f"{arg.__module__}.{arg.__name__}")
     def _is_get_common_base_implemented(class_type: Type):
         """Return true if `is_common_base` method is present and not abstract."""
 

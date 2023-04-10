@@ -18,13 +18,17 @@ from dataclasses import dataclass
 
 import cl.runtime as rt
 from cl.runtime.core.storage.class_record import ClassRecord
-from cl.runtime.core.storage.record import Record
-from cl.runtime.stubs.storage.stub_class_record_key import StubClassRecordKey
 
 
 @dataclass
-class StubClassRecord(StubClassRecordKey, ClassRecord):
+class StubClassRecord(ClassRecord):
     """Stub dataclass-based record sample used in tests."""
+
+    primary_key_field_str: str = rt.class_field()
+    """First primary key attribute."""
+
+    primary_key_field_int: int = rt.class_field()
+    """Second primary key attribute."""
 
     base_record_field_str: str = rt.class_field()
     """String attribute of base class."""
@@ -39,6 +43,20 @@ class StubClassRecord(StubClassRecordKey, ClassRecord):
     def get_common_base():
         """Return the type of the common base class for all classes stored in this table."""
         return StubClassRecord
+
+    @staticmethod
+    def create_pk(primary_key_field_str: str, primary_key_field_int: int) -> str:
+        """Create primary key (PK) string in semicolon-delimited format from arguments."""
+        return f'{primary_key_field_str};{primary_key_field_int}'
+
+    def get_pk(self) -> str:
+        """Return logical primary key (PK) as string in semicolon-delimited format."""
+        return f'{self.primary_key_field_str};{self.primary_key_field_int}'
+
+    @staticmethod
+    def create_sample_pk() -> str:
+        """Return PK populated with sample data."""
+        return StubClassRecord.create_pk('abc', 123)
 
     @staticmethod
     def create_sample_record(context: rt.Context) -> StubClassRecord:

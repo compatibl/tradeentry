@@ -17,14 +17,14 @@ from dataclasses import dataclass
 from typing import Iterable, Union, Type, Optional, TypeVar
 
 from cl.runtime.core.storage.class_field import class_field
-from cl.runtime.core.storage.data_source_key import DataSourceKey
+from cl.runtime.core.storage.class_record import ClassRecord
 from cl.runtime.core.storage.record import Record  # TODO - remove after eliminating the req to derive from Record
 
 TKey = TypeVar('TKey', contravariant=True)
 TRecord = TypeVar('TRecord', covariant=True)
 
 
-class DataSource(DataSourceKey, ABC):
+class DataSource(ClassRecord, ABC):
     """Abstract base class for polymorphic data storage API with a directory attribute.
 
     A data source can be implemented on top a NoSQL DB, relational DB, key-value store, cloud bucket store,
@@ -50,8 +50,25 @@ class DataSource(DataSourceKey, ABC):
     - For example, search order when directory '/A/B' is specified is [`/A/B`, `/A`, `/`]
     """
 
+    data_source_id: str = class_field()
+    """Unique data source identifier."""
+
     read_only: bool = class_field(optional=True)
     """Use this flag to mark the data source as readonly. All write operations will fail with error if set."""
+
+    @staticmethod
+    def get_common_base():
+        """Return the type of the common base class for all classes stored in this table."""
+        return DataSource
+
+    @staticmethod
+    def create_pk(data_source_id: str) -> str:
+        """Create primary key (PK) string in semicolon-delimited format from arguments."""
+        return data_source_id
+
+    def get_pk(self) -> str:
+        """Return logical primary key (PK) as string in semicolon-delimited format."""
+        return str(self.data_source_id)
 
     @abstractmethod
     def load_many(
