@@ -13,42 +13,10 @@
 # limitations under the License.
 
 from abc import ABC
-from dataclasses import asdict, dataclass, field
-from typing import Any, Dict, Optional
+from dataclasses import asdict, dataclass
+from typing import Any, Dict
 
 from cl.runtime.core.storage.data import Data
-
-
-def class_field(
-        *,
-        default=None,  # TODO: Remove param, class fields should have default value of None
-        default_factory=None,  # TODO: Remove param, class fields should have default value of None
-        optional: bool = False,
-        typename: Optional[str] = None,  # TODO: Rename typename to subtype
-        name: Optional[str] = None,
-        label: Optional[str] = None
-) -> Any:
-    """Field in dataclass with additional parameters to define runtime-specific metadata.
-
-    Args:
-        optional: If not specified, the field must be set before saving the record.
-        typename: Subtype of the main type. Permitted values are `long` for int fields,
-        `date` and `datetime` for string fields. TODO - Provide a complete list
-        name: TODO - Clarify the purpose in comment
-        label: Readable name when not obtained by the standard conversion rules.
-    """
-    if default_factory is not None:
-        if default is not None:
-            raise RuntimeError("Both default and default_factory parameters are specified for class_field.")
-        return field(
-            default_factory=default_factory,
-            metadata={'class_field': True, 'optional': optional, 'typename': typename, 'name': name, 'label': label}
-        )
-    else:
-        return field(
-            default=default,
-            metadata={'class_field': True, 'optional': optional, 'typename': typename, 'name': name, 'label': label}
-        )
 
 
 @dataclass
