@@ -81,7 +81,7 @@ class RecordUtil:
             raise RuntimeError(f"Module {module_path} does not contain top-level class {class_name}.")
 
     @staticmethod
-    @cached(custom_key_maker=lambda arg: f"{arg.__module__}.{arg.__name__}")
+    @cached(custom_key_maker=lambda class_type: f"{class_type.__module__}.{class_type.__name__}")
     def get_inheritance_chain(class_type: Type) -> List[str]:
         """Returns inheritance chain as the list of class path strings.
 
@@ -111,7 +111,7 @@ class RecordUtil:
         return result
 
     @staticmethod
-    @cached(custom_key_maker=lambda arg: f"{arg.__module__}.{arg.__name__}")
+    @cached(custom_key_maker=lambda class_type: f"{class_type.__module__}.{class_type.__name__}")
     def _is_get_common_base_implemented(class_type: Type):
         """Return true if `is_common_base` method is present and not abstract."""
 
