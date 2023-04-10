@@ -17,7 +17,7 @@ from typing import final
 
 import pandas as pd
 
-from cl.runtime.core.storage.class_data import class_field
+from cl.runtime.core.storage.class_field import class_field
 from cl.runtime.core.view.view import View
 
 

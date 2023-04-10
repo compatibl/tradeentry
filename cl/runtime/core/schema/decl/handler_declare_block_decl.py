@@ -16,7 +16,8 @@ from dataclasses import dataclass
 from typing import List
 
 from cl.runtime.core.schema.decl.handler_declare_decl import HandlerDeclareDecl
-from cl.runtime.core.storage.class_data import ClassData, class_field
+from cl.runtime.core.storage.class_field import class_field
+from cl.runtime.core.storage.class_data import ClassData
 from cl.runtime.core.storage.class_label import class_label
 
 

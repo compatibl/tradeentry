@@ -24,7 +24,7 @@ from cl.runtime.core.schema.decl.type_element_decl import TypeElementDecl
 from cl.runtime.core.schema.decl.type_index_decl import TypeIndexDecl
 from cl.runtime.core.schema.decl.type_kind import TypeKind
 from cl.runtime.core.schema.decl.type_param_decl import TypeParamDecl
-from cl.runtime.core.storage.class_data import class_field
+from cl.runtime.core.storage.class_field import class_field
 from cl.runtime.core.storage.class_label import class_label
 
 

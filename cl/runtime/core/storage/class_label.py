@@ -17,7 +17,7 @@ def class_label(label: str):
     """
     No-op decorator for type labels, currently unused.
     
-    TODO: Use of remove.
+    TODO: Refactor in light of the possibility that it may cause IDE to ignore dataclass decorator.
     """
 
     def wrap(obj):

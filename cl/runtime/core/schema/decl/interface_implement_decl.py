@@ -16,7 +16,8 @@ from dataclasses import dataclass
 
 from cl.runtime.core.schema.decl.interface_decl_key import InterfaceDeclKey
 from cl.runtime.core.schema.decl.language_key import LanguageKey
-from cl.runtime.core.storage.class_data import ClassData, class_field
+from cl.runtime.core.storage.class_field import class_field
+from cl.runtime.core.storage.class_data import ClassData
 from cl.runtime.core.storage.class_label import class_label
 
 

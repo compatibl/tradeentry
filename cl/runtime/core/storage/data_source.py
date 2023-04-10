@@ -16,7 +16,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Iterable, Union, Type, Optional, TypeVar
 
-from cl.runtime.core.storage.class_data import class_field
+from cl.runtime.core.storage.class_field import class_field
 from cl.runtime.core.storage.data_source_key import DataSourceKey
 from cl.runtime.core.storage.record import Record  # TODO - remove after eliminating the req to derive from Record
 

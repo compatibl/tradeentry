@@ -18,7 +18,7 @@ from typing import List, Union
 from cl.runtime.core.schema.type.field_decl import FieldDecl
 from cl.runtime.core.schema.type.type_decl import TypeDecl
 from cl.runtime.core.schema.type.type_decl_key import TypeDeclKey
-from cl.runtime.core.storage.class_data import class_field
+from cl.runtime.core.storage.class_field import class_field
 
 
 @dataclass

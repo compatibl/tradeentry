@@ -15,7 +15,7 @@
 from dataclasses import dataclass
 
 from cl.runtime.core.schema.decl.handler_variable_decl import HandlerVariableDecl
-from cl.runtime.core.storage.class_data import class_field
+from cl.runtime.core.storage.class_field import class_field
 from cl.runtime.core.storage.class_label import class_label
 
 
