@@ -17,34 +17,23 @@ from typing import Any, Dict
 
 
 class Data(ABC):
-    """
-    Base class for serializable data.
+    """Abstract base class for serializable data.
 
-    Instances of direct descendants of the Data class can be stored in a
-    database as fields of a Record class, but not on their own. Derive
-    from Record to enable storing instances directly.
+    The use of this class is optional. The code must not rely on inheritance from this class, but only on the
+    presence of its methods. These methods may be implemented without using any specific base or mixin class.
 
-    Derived classes must implement the following methods:
+    Final data classes must implement the following methods and properties. Some of them may be implemented
+    by mixins or intermediate base classes, including those using dataclass and similar frameworks. Implementing
+    these methods makes it possible to use the class for fields of records stored in a data source.
 
-    * to_dict() - serialize self as dictionary
-    * from_dict(data_dict) - populate self from dictionary
+    * to_dict(self) - instance method serializing self as dictionary
+    * from_dict(self, data_dict) - instance method populating self from dictionary
     """
 
     @abstractmethod
     def to_dict(self) -> Dict[str, Any]:
-        """
-        Serialize self as dictionary (may return shallow copy).
-
-        The result may be returned using shallow copy. The callers of this method
-        must serialize or perform deep copy of the result in case the record fields
-        change after this method is invoked.
-        """
+        """Serialize self as dictionary (must return deep copy of data in self)."""
 
     @abstractmethod
     def from_dict(self, data: Dict[str, Any]) -> None:
-        """
-        Populate self from dictionary (must perform deep copy).
-
-        The implementation of this method perform deep copy of the input
-        in case the argument dictionary changes after this method is invoked.
-        """
+        """Populate self from dictionary (must clear the existing data in self and perform deep copy of argument)."""

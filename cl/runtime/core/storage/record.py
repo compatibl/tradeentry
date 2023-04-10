@@ -20,12 +20,13 @@ from cl.runtime.core.storage.data import Data
 
 
 class Record(Data, ABC):
-    """Abstract base class for records stored in a data source. The use of this class is optional. The data source
-    does not rely on inheritance from this class, but only on the specific methods. These methods can be implemented
-    without inheriting from Record.
+    """Abstract base class for records stored in a data source.
 
-    Final record classes stored in a data source must implement the following methods and properties. Some of them
-    may be implemented by mixins or intermediate base classes, including those using dataclass and similar frameworks.
+    The use of this class is optional. The code must not rely on inheritance from this class, but only on the
+    presence of its methods. These methods may be implemented without using any specific base or mixin class.
+
+    Final record classes stored in a data source must implement the following methods and properties.
+    They may be provided by mixins and intermediate base classes using dataclass and similar frameworks.
 
     * context - field or property with type Context that has both getter and setter
     * get_pk(self) - instance method returning primary key without type as semicolon-delimited string.
@@ -50,6 +51,11 @@ class Record(Data, ABC):
     def __init__(self):
         """Initialize instance attributes."""
         self.context = None
+
+    @staticmethod
+    @abstractmethod
+    def get_common_base():
+        """Return the type of the common base class for all classes stored in this table."""
 
     @abstractmethod
     def get_pk(self) -> str:
