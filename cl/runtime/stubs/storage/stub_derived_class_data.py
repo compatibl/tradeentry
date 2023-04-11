@@ -35,8 +35,8 @@ class StubDerivedClassData(StubClassData):
         """Return an instance of this class populated with sample data."""
 
         obj = StubDerivedClassData()
-        obj.base_record_field_str = 'def'
-        obj.base_record_field_float = 4.56
+        obj.base_field_str = 'def'
+        obj.base_field_float = 4.56
         obj.derived_field_str = 'def'
         obj.derived_field_float = 4.56
         return obj

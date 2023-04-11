@@ -23,10 +23,10 @@ import cl.runtime as rt
 class StubClassData(rt.ClassData):
     """Dataclass-based serializable data sample used in tests."""
 
-    base_record_field_str: str = rt.class_field()
+    base_field_str: str = rt.class_field()
     """String attribute of base class."""
 
-    base_record_field_float: float = rt.class_field()
+    base_field_float: float = rt.class_field()
     """Float attribute of base class."""
 
     @staticmethod
@@ -34,6 +34,6 @@ class StubClassData(rt.ClassData):
         """Return an instance of this class populated with sample data."""
 
         obj = StubClassData()
-        obj.base_record_field_str = 'def'
-        obj.base_record_field_float = 4.56
+        obj.base_field_str = 'def'
+        obj.base_field_float = 4.56
         return obj

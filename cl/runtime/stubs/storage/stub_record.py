@@ -22,25 +22,25 @@ import cl.runtime as rt
 class StubRecord(rt.Record):
     """Stub record used in tests."""
 
-    primary_key_field_str: Optional[str]
+    key_field_str: Optional[str]
     """First primary key attribute."""
 
-    primary_key_field_int: Optional[int]
+    key_field_int: Optional[int]
     """Second primary key attribute."""
 
-    base_record_field_str: Optional[str]
+    base_field_str: Optional[str]
     """String attribute of base class."""
 
-    base_record_field_float: Optional[float]
+    base_field_float: Optional[float]
     """Float attribute of base class."""
 
     def __init__(self):
         """Initialize instance attributes."""
         super().__init__()
-        self.primary_key_field_str = None
-        self.primary_key_field_int = None
-        self.base_record_field_str = None
-        self.base_record_field_float = None
+        self.key_field_str = None
+        self.key_field_int = None
+        self.base_field_str = None
+        self.base_field_float = None
 
     @staticmethod
     def get_common_base():
@@ -49,23 +49,23 @@ class StubRecord(rt.Record):
 
     def get_key(self) -> str:
         """Return primary key of this instance in semicolon-delimited string format."""
-        return f"{self.primary_key_field_str};{self.primary_key_field_int}"
+        return f"{self.key_field_str};{self.key_field_int}"
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize self as dictionary (may return shallow copy)."""
         return {
-            'primary_key_field_str': self.primary_key_field_str,
-            'primary_key_field_int': self.primary_key_field_int,
-            'base_record_field_str': self.base_record_field_str,
-            'base_record_field_float': self.base_record_field_float,
+            'key_field_str': self.key_field_str,
+            'key_field_int': self.key_field_int,
+            'base_field_str': self.base_field_str,
+            'base_field_float': self.base_field_float,
         }
 
     def from_dict(self, data: Dict[str, Any]) -> None:
         """Populate self from dictionary (must perform deep copy)."""
-        self.primary_key_field_str = data.get('primary_key_field_str')
-        self.primary_key_field_int = data.get('primary_key_field_int')
-        self.base_record_field_str = data.get('base_record_field_str')
-        self.base_record_field_float = data.get('base_record_field_float')
+        self.key_field_str = data.get('key_field_str')
+        self.key_field_int = data.get('key_field_int')
+        self.base_field_str = data.get('base_field_str')
+        self.base_field_float = data.get('base_field_float')
         # TODO: detect extra fields in dict which are not in class and raise error
 
     @staticmethod
@@ -74,9 +74,9 @@ class StubRecord(rt.Record):
 
         obj = StubRecord()
         obj.context = context
-        obj.primary_key_field_str = 'abc'
-        obj.primary_key_field_int = 123
-        obj.base_record_field_str = 'def'
-        obj.base_record_field_float = 4.56
+        obj.key_field_str = 'abc'
+        obj.key_field_int = 123
+        obj.base_field_str = 'def'
+        obj.base_field_float = 4.56
         obj.update()
         return obj

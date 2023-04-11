@@ -36,10 +36,10 @@ class StubDerivedClassRecord(StubClassRecord):
 
         obj = StubDerivedClassRecord()
         obj.context = context
-        obj.primary_key_field_str = 'abc'
-        obj.primary_key_field_int = 123
-        obj.base_record_field_str = 'def'
-        obj.base_record_field_float = 4.56
+        obj.key_field_str = 'abc'
+        obj.key_field_int = 123
+        obj.base_field_str = 'def'
+        obj.base_field_float = 4.56
         obj.derived_field_str = 'def'
         obj.derived_field_float = 4.56
         obj.update()

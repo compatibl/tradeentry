@@ -24,19 +24,19 @@ from cl.runtime.core.storage.class_record import ClassRecord
 class StubClassRecord(ClassRecord):
     """Stub dataclass-based record sample used in tests."""
 
-    primary_key_field_str: str = rt.class_field()
+    key_field_str: str = rt.class_field()
     """First primary key attribute."""
 
-    primary_key_field_int: int = rt.class_field()
+    key_field_int: int = rt.class_field()
     """Second primary key attribute."""
 
-    base_record_field_str: str = rt.class_field()
+    base_field_str: str = rt.class_field()
     """String attribute of base class."""
 
-    base_record_field_float: float = rt.class_field()
+    base_field_float: float = rt.class_field()
     """Float attribute of base class."""
 
-    base_record_field_long: int = rt.class_field(typename='long', label="Custom Label", optional=True)
+    base_field_long: int = rt.class_field(typename='long', label="Custom Label", optional=True)
     """Optional long attribute of base class with custom label."""
 
     @staticmethod
@@ -45,13 +45,13 @@ class StubClassRecord(ClassRecord):
         return StubClassRecord
 
     @staticmethod
-    def create_key(primary_key_field_str: str, primary_key_field_int: int) -> str:
+    def create_key(key_field_str: str, key_field_int: int) -> str:
         """Create primary key from arguments in semicolon-delimited string format."""
-        return f'{primary_key_field_str};{primary_key_field_int}'
+        return f'{key_field_str};{key_field_int}'
 
     def get_key(self) -> str:
         """Return primary key of this instance in semicolon-delimited string format."""
-        return f'{self.primary_key_field_str};{self.primary_key_field_int}'
+        return f'{self.key_field_str};{self.key_field_int}'
 
     @staticmethod
     def create_sample_key() -> str:
@@ -64,9 +64,9 @@ class StubClassRecord(ClassRecord):
 
         obj = StubClassRecord()
         obj.context = context
-        obj.primary_key_field_str = 'abc'
-        obj.primary_key_field_int = 123
-        obj.base_record_field_str = 'def'
-        obj.base_record_field_float = 4.56
+        obj.key_field_str = 'abc'
+        obj.key_field_int = 123
+        obj.base_field_str = 'def'
+        obj.base_field_float = 4.56
         obj.update()
         return obj
