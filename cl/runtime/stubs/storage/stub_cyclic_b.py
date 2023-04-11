@@ -15,10 +15,13 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Union
+from typing import TYPE_CHECKING, Union
 
 import cl.runtime as rt
 from cl.runtime.core.storage.class_record import ClassRecord
+
+if TYPE_CHECKING:
+    from cl.runtime.stubs.storage.stub_cyclic_a import StubCyclicA
 
 
 @dataclass
@@ -28,8 +31,8 @@ class StubCyclicB(ClassRecord):
     b_id: str = rt.class_field()
     """Unique identifier."""
 
-    a: Union[str, StubCyclicA] = rt.class_field()  # noqa
-    """Key for class B."""
+    a: Union[str, StubCyclicA] = rt.class_field()
+    """Key for class A."""
 
     @staticmethod
     def get_common_base():

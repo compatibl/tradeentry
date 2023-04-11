@@ -18,17 +18,15 @@ import cl.runtime as rt
 
 
 def test_cyclic_record():
-    """Test for a cyclic record definition where """
-
-    # TODO: Determine if using string type hint or noqa is recommended for cyclic reference type hints
+    """Test for a cyclic import where classes StubCyclicA and StubCyclicB reference each other."""
 
     # Create test base_record and populate with sample data
     context = rt.Context()
-    
+
     # Create inside the class with import inside function
     a_1 = rt.stubs.StubCyclicA.create_sample_record(context)
     b_1 = rt.stubs.StubCyclicB.create_sample_record(context)
-    
+
     # Create A outside the class
     a_2 = rt.stubs.StubCyclicA()
     a_2.context = context

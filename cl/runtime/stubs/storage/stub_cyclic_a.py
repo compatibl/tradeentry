@@ -15,10 +15,13 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Union
+from typing import TYPE_CHECKING, Union
 
 import cl.runtime as rt
 from cl.runtime.core.storage.class_record import ClassRecord
+
+if TYPE_CHECKING:
+    from cl.runtime.stubs.storage.stub_cyclic_b import StubCyclicB
 
 
 @dataclass
@@ -28,7 +31,7 @@ class StubCyclicA(ClassRecord):
     a_id: str = rt.class_field()
     """Unique identifier."""
 
-    b: Union[str, StubCyclicB] = rt.class_field()  # noqa
+    b: Union[str, StubCyclicB] = rt.class_field()
     """Key for class B."""
 
     @staticmethod
@@ -49,7 +52,7 @@ class StubCyclicA(ClassRecord):
     def create_sample_key() -> str:
         """Return PK populated with sample data."""
         return StubCyclicA.create_key('abc')
-    
+
     @staticmethod
     def create_sample_record(context: rt.Context) -> StubCyclicA:
         """Return an instance of this class populated with sample data."""
