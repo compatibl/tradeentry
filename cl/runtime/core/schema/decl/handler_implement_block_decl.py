@@ -17,8 +17,8 @@ from typing import List, Optional
 
 from cl.runtime.core.schema.decl.handler_implement_decl import HandlerImplementDecl
 from cl.runtime.core.schema.decl.interface_implement_decl import InterfaceImplementDecl
-from cl.runtime.core.storage.class_field import class_field
 from cl.runtime.core.storage.class_data import ClassData
+from cl.runtime.core.storage.class_field import class_field
 from cl.runtime.core.storage.class_label import class_label
 
 

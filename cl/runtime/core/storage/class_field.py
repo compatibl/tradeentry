@@ -17,13 +17,13 @@ from typing import Any, Optional
 
 
 def class_field(
-        *,
-        default=None,  # TODO: Remove param, class fields should have default value of None
-        default_factory=None,  # TODO: Remove param, class fields should have default value of None
-        optional: bool = False,
-        typename: Optional[str] = None,  # TODO: Rename typename to subtype
-        name: Optional[str] = None,
-        label: Optional[str] = None
+    *,
+    default=None,  # TODO: Remove param, class fields should have default value of None
+    default_factory=None,  # TODO: Remove param, class fields should have default value of None
+    optional: bool = False,
+    typename: Optional[str] = None,  # TODO: Rename typename to subtype
+    name: Optional[str] = None,
+    label: Optional[str] = None,
 ) -> Any:
     """Field in dataclass with additional parameters to define runtime-specific metadata.
 
@@ -39,10 +39,10 @@ def class_field(
             raise RuntimeError("Both default and default_factory parameters are specified for class_field.")
         return field(
             default_factory=default_factory,
-            metadata={'class_field': True, 'optional': optional, 'typename': typename, 'name': name, 'label': label}
+            metadata={'class_field': True, 'optional': optional, 'typename': typename, 'name': name, 'label': label},
         )
     else:
         return field(
             default=default,
-            metadata={'class_field': True, 'optional': optional, 'typename': typename, 'name': name, 'label': label}
+            metadata={'class_field': True, 'optional': optional, 'typename': typename, 'name': name, 'label': label},
         )

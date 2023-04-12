@@ -15,6 +15,7 @@
 import sys
 from importlib import import_module
 from typing import List, Tuple, Type
+
 from memoization import cached
 
 
@@ -57,8 +58,10 @@ class RecordUtil:
         """
 
         if '.' in class_name:
-            raise RuntimeError(f"Class name {class_name} is dot-delimited. "
-                               f"Only top-level class names without delimiter can be stored.")
+            raise RuntimeError(
+                f"Class name {class_name} is dot-delimited. "
+                f"Only top-level class names without delimiter can be stored."
+            )
 
         # Check that the module exists and is fully initialized
         module = sys.modules.get(module_path)
@@ -102,11 +105,13 @@ class RecordUtil:
 
         if len(result) == 0:
             class_path = RecordUtil.get_class_path(class_type)
-            raise RuntimeError(f"To be stored in a data source, class {class_path} or its base must implement the "
-                               f"static method get_common_base(). Its return value is the type of the common base "
-                               f"class for all classes stored in the same data source table as this class. "
-                               f"For example, if B and C both inherit from A, then get_common_base() returns"
-                               f"A for both B and C.")
+            raise RuntimeError(
+                f"To be stored in a data source, class {class_path} or its base must implement the "
+                f"static method get_common_base(). Its return value is the type of the common base "
+                f"class for all classes stored in the same data source table as this class. "
+                f"For example, if B and C both inherit from A, then get_common_base() returns"
+                f"A for both B and C."
+            )
 
         return result
 
@@ -121,4 +126,3 @@ class RecordUtil:
         else:
             # Method is present but abstract
             return not getattr(method, "__isabstractmethod__", False)
-

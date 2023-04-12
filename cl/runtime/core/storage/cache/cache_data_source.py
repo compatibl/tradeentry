@@ -14,9 +14,9 @@
 
 from copy import deepcopy
 from dataclasses import dataclass, field
-from typing import Dict, Iterable, Union, Type, Optional
+from typing import Dict, Iterable, Optional, Type, Union
 
-from cl.runtime.core.storage.data_source import DataSource, TRecord, TKey
+from cl.runtime.core.storage.data_source import DataSource, TKey, TRecord
 from cl.runtime.core.storage.record import Record
 from cl.runtime.core.storage.record_util import RecordUtil
 
@@ -41,7 +41,7 @@ class CacheDataSource(DataSource):
         *,
         is_optional: bool = None,
         is_optional_key: bool = None,
-        is_unordered: bool = None
+        is_unordered: bool = None,
     ) -> Iterable[TRecord]:
         """
         Load instances of classes derived from base_type from storage using a sequence of keys.
@@ -122,9 +122,7 @@ class CacheDataSource(DataSource):
 
         return result
 
-    def save_many(
-        self, records: Iterable[Record], data_set: str
-    ) -> None:
+    def save_many(self, records: Iterable[Record], data_set: str) -> None:
         """
         Save many records to the specified dataset, bypassing the commit
         queue and using save options if provided (see SaveOptions

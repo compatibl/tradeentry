@@ -96,18 +96,16 @@ def test_get_inheritance_chain():
     assert RecordUtil._is_get_common_base_implemented(rt.stubs.StubClassRecord)  # Implemented
     assert RecordUtil._is_get_common_base_implemented(rt.stubs.StubClassRecord)  # Implemented
 
-
-
     # Common base class, returns self (call twice to test caching)
     base_path = RecordUtil.get_class_path(rt.stubs.StubClassRecord)
     assert rt.RecordUtil.get_inheritance_chain(rt.stubs.StubClassRecord) == [base_path]
     assert rt.RecordUtil.get_inheritance_chain(rt.stubs.StubClassRecord) == [base_path]
-    
+
     # Derived class, returns the root of hierarchy (call twice to test caching)
     derived_path = RecordUtil.get_class_path(rt.stubs.StubDerivedClassRecord)
     assert rt.RecordUtil.get_inheritance_chain(rt.stubs.StubDerivedClassRecord) == [derived_path, base_path]
     assert rt.RecordUtil.get_inheritance_chain(rt.stubs.StubDerivedClassRecord) == [derived_path, base_path]
-    
+
     # Error, invoked for a type that does not implement get_common_base
     # Call twice to test that caching does not fail on error
     with pytest.raises(RuntimeError):

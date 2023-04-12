@@ -14,7 +14,7 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Iterable, Union, Type, Optional, TypeVar
+from typing import Iterable, Optional, Type, TypeVar, Union
 
 from cl.runtime.core.storage.class_field import class_field
 from cl.runtime.core.storage.class_record import ClassRecord
@@ -79,7 +79,7 @@ class DataSource(ClassRecord, ABC):
         *,
         is_optional: bool = None,
         is_optional_key: bool = None,
-        is_unordered: bool = None
+        is_unordered: bool = None,
     ) -> Iterable[TRecord]:
         """
         Load instances of classes derived from base_type from storage using a sequence of keys.
@@ -105,7 +105,7 @@ class DataSource(ClassRecord, ABC):
         """
         Save many records to the specified dataset, bypassing the commit queue.
 
-        This method does not implicitly call commit(). The commit queue will 
+        This method does not implicitly call commit(). The commit queue will
         remain in its original state after the method exits.
         """
 
@@ -143,7 +143,7 @@ class DataSource(ClassRecord, ABC):
         """
         Add to commit queue the command to delete record in the
         specified dataset. No error is raised if the record does not
-        exist. If the 'key' argument is a full record, only its 
+        exist. If the 'key' argument is a full record, only its
         key will be used.
 
         The record will not be saved until a call to commit() which
@@ -200,7 +200,7 @@ class DataSource(ClassRecord, ABC):
         data_set: str,
         *,
         is_optional: bool = None,
-        is_optional_key: bool = None
+        is_optional_key: bool = None,
     ) -> TRecord:
         """
         Load an instance of class derived from base_type from storage using the specified key.
@@ -222,12 +222,8 @@ class DataSource(ClassRecord, ABC):
         # Pass arguments to load_many(...).
         # Add `is_unordered=True` because there is no need to order the result of length one.
         records = self.load_many(
-            base_type,
-            [key],
-            data_set,
-            is_optional=is_optional,
-            is_optional_key=is_optional_key,
-            is_unordered=True)
+            base_type, [key], data_set, is_optional=is_optional, is_optional_key=is_optional_key, is_unordered=True
+        )
 
         for record in records:
             # We know there is exactly one element
@@ -252,7 +248,7 @@ class DataSource(ClassRecord, ABC):
         """
         Delete record with argument key in the specified dataset
         bypassing the commit queue. No error is raised if the record
-        does not exist. If the 'key' argument is a full record, only its 
+        does not exist. If the 'key' argument is a full record, only its
         key will be used.
 
         This method does not implicitly call commit(). The commit queue

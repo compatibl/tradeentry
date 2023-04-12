@@ -65,4 +65,3 @@ def replace_prefix(value: str, old_prefix: str, new_prefix: str) -> str:
     if value.startswith(old_prefix):
         return new_prefix + value[len(old_prefix) :]
     return value
-

@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import pytest
+
 from cl.runtime.core.primitive.string_util import to_pascal_case, to_snake_case
 
 

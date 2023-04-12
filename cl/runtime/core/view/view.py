@@ -49,4 +49,3 @@ class View(ClassRecord, ABC):
     def get_key(self) -> str:
         """Return primary key of this instance in semicolon-delimited string format."""
         return f'{self.view_for};{self.view_name}'
-

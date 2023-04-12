@@ -15,8 +15,8 @@
 from dataclasses import dataclass
 
 from cl.runtime.core.schema.decl.atomic_type import AtomicType
-from cl.runtime.core.storage.class_field import class_field
 from cl.runtime.core.storage.class_data import ClassData
+from cl.runtime.core.storage.class_field import class_field
 from cl.runtime.core.storage.class_label import class_label
 
 
