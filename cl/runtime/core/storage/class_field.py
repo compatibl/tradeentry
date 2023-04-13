@@ -18,8 +18,6 @@ from typing import Any, Optional
 
 def class_field(
     *,
-    default=None,  # TODO: Remove param, class fields should have default value of None
-    default_factory=None,  # TODO: Remove param, class fields should have default value of None
     optional: bool = False,
     typename: Optional[str] = None,  # TODO: Rename typename to subtype
     name: Optional[str] = None,
@@ -34,15 +32,12 @@ def class_field(
         name: TODO - Clarify the purpose in comment
         label: Readable name when not obtained by the standard conversion rules.
     """
-    if default_factory is not None:
-        if default is not None:
-            raise RuntimeError("Both default and default_factory parameters are specified for class_field.")
-        return field(
-            default_factory=default_factory,
-            metadata={'class_field': True, 'optional': optional, 'typename': typename, 'name': name, 'label': label},
-        )
-    else:
-        return field(
-            default=default,
-            metadata={'class_field': True, 'optional': optional, 'typename': typename, 'name': name, 'label': label},
+    return field(
+        default=None,
+        metadata={
+            'class_field': True,
+            'optional': optional,
+            'typename': typename,
+            'name': name,
+            'label': label},
         )

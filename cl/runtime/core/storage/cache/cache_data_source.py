@@ -25,7 +25,7 @@ from cl.runtime.core.storage.record_util import RecordUtil
 class CacheDataSource(DataSource):
     """Data source based on in-memory cache using Python dict."""
 
-    _cache: Dict[str, Dict] = field(default_factory=dict)
+    _cache: Dict[str, Dict] = field(default_factory=dict)  # TODO: switch to class_field and remove the default factory
 
     def update(self) -> None:
         """Update and validate object state after loading from DB and before saving to DB."""
