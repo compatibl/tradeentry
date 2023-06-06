@@ -32,14 +32,14 @@ def test_cyclic_record():
     a_2.context = context
     a_2.a_id = 'abc'
     a_2.b = rt.stubs.StubCyclicB.create_key('abc')
-    a_2.update()
+    a_2.init()
 
     # Create B outside the class
     b_2 = rt.stubs.StubCyclicB()
     b_2.context = context
     b_2.b_id = 'abc'
     b_2.a = rt.stubs.StubCyclicA.create_key('abc')
-    b_2.update()
+    b_2.init()
 
     # Test for annotation retrospection
     assert rt.stubs.StubCyclicA.__annotations__ == {'a_id': 'str', 'b': 'Union[str, StubCyclicB]'}

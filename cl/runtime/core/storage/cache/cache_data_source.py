@@ -27,8 +27,8 @@ class CacheDataSource(DataSource):
 
     _cache: Dict[str, Dict] = field(default_factory=dict)  # TODO: switch to class_field and remove the default factory
 
-    def update(self) -> None:
-        """Update and validate object state after loading from DB and before saving to DB."""
+    def init(self) -> None:
+        """Validate dataclass attributes and use them to initialize object state."""
 
         # Create new cache on init
         self._cache = {}
@@ -106,8 +106,8 @@ class CacheDataSource(DataSource):
             record = class_()
             record.from_dict(record_dict)
 
-            # Call update and validate object state
-            record.update()
+            # Validate attributes and initialize object state
+            record.init()
 
             # Verify that the record has the same key as was passed to the load method
             record_key = record.get_key()
@@ -134,8 +134,9 @@ class CacheDataSource(DataSource):
 
         # Iterate over records
         for record in records:
-            # Call init to update and validate object state
-            record.update()
+
+            # Validate attributes and update object state before saving
+            record.init()
 
             # Get primary key and data from record.
             key = record.get_key()

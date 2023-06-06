@@ -64,5 +64,5 @@ class StubCyclicB(ClassRecord):
         obj.context = context
         obj.b_id = "abc"
         obj.a = StubCyclicA.create_key("abc")
-        obj.update()
+        obj.init()
         return obj

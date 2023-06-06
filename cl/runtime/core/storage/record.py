@@ -61,14 +61,16 @@ class Record(Data, ABC):
     def get_key(self) -> str:
         """Return primary key of this instance in semicolon-delimited string format.
 
+        Notes:
+
         For composite keys, the embedded keys are concatenated in the
         order of their declaration without brackets.
 
         Examples:
 
-            - One primary key field A: `key=A`
-            - Two primary key fields A and B: `key=A;B`
-            - Two primary key fields, first field is composite key`A1;A2` and second is B: `key=A1;A2;B`
+            - One primary key field A: `A`
+            - Two primary key fields A and B: `A;B`
+            - Two primary key fields `A1;A2` and `B`: `A1;A2;B`
 
         Notes:
 
@@ -76,11 +78,15 @@ class Record(Data, ABC):
             The conversion is performed by the data source implementation.
         """
 
-    def update(self) -> None:
-        """
-        Validate properties and set private variables. Invoked by data source before saving and after loading.
+    def init(self) -> None:
+        """Validate dataclass attributes and use them to initialize object state.
 
-        Implementation in base does nothing by default. Derived classes can override.
+        Notes:
+
+            This function will be called by the data source after loading and before saving the object,
+            and should also be called every time the object's attributes are updated.
+
+            This implementation in base does nothing. Derived classes can override.
         """
 
     def __str__(self) -> str:

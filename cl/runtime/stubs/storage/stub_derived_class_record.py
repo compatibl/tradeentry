@@ -42,5 +42,5 @@ class StubDerivedClassRecord(StubClassRecord):
         obj.base_field_float = 4.56
         obj.derived_field_str = 'def'
         obj.derived_field_float = 4.56
-        obj.update()
+        obj.init()
         return obj
