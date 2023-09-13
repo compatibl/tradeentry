@@ -1,0 +1,4 @@
+# Automatic detection of text vs binary
+* text=auto
+
+# Exclusions from automatic detection

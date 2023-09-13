@@ -1,0 +1,17 @@
+# Using glob syntax
+syntax: glob
+
+**/.mypy_cache
+**/__pycache__
+**/venv
+*.db
+*.egg
+*.egg-info/
+*.idea
+*.py[cod]
+*.so
+build/
+dist/
+
+# Using regexp syntax
+syntax: regexp
