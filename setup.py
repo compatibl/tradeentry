@@ -3,17 +3,18 @@ import setuptools
 with open('./README.md', 'r') as readme_file:
     readme = readme_file.read()
 
-with open('./requirements.txt') as requirements_file:
-    requirements = [line.strip() for line in requirements_file.readlines()]
+with open('./install_requirements.txt') as install_requirements:
+    install_requires = [line.strip() for line in install_requirements.readlines()]
 
 setuptools.setup(
     name='cl-runtime',
     version='2.0.2',
     author='The Project Contributors',
     description='CompatibL Runtime Community Edition',
+    license='Apache Software License',
     long_description=readme,
-    long_description_content_type="text/markdown",
-    install_requires=requirements,
+    long_description_content_type='text/markdown',
+    install_requires=install_requires,
     url='https://github.com/compatibl/cl-runtime',
     project_urls={
         'Source Code': 'https://github.com/compatibl/cl-runtime',
@@ -30,12 +31,12 @@ setuptools.setup(
         'Topic :: Scientific/Engineering',
 
         # License
-        "License :: OSI Approved :: Apache Software License",
+        'License :: OSI Approved :: Apache Software License',
 
-        # Runs on Python 3.9 and later releases
-        'Programming Language :: Python :: 3.9',
+        # Runs on Python 3.10 and later releases
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
 
         # Operating system
         'Operating System :: OS Independent',
