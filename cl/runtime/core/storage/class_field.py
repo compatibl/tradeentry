@@ -34,10 +34,5 @@ def class_field(
     """
     return field(
         default=None,
-        metadata={
-            'class_field': True,
-            'optional': optional,
-            'typename': typename,
-            'name': name,
-            'label': label},
-        )
+        metadata={'class_field': True, 'optional': optional, 'typename': typename, 'name': name, 'label': label},
+    )

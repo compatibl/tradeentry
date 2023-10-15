@@ -134,7 +134,6 @@ class CacheDataSource(DataSource):
 
         # Iterate over records
         for record in records:
-
             # Validate attributes and update object state before saving
             record.init()
 
