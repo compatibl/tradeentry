@@ -3,10 +3,6 @@
 pushd ..
 
 echo.
-echo Activate virtual environment
-call venv\Scripts\activate.bat
-
-echo.
 echo Delete build, egg-info, and dist directories before building
 if exist cl_runtime.egg-info rmdir/q/s cl_runtime.egg-info
 if exist build rmdir/q/s build
@@ -20,8 +16,5 @@ echo.
 echo Delete build and egg-info directories after building, wheel is located in dist
 if exist cl_runtime.egg-info rmdir/q/s cl_runtime.egg-info
 if exist build rmdir/q/s build
-
-echo.
-echo Exit without deactivating virtual environment
 
 popd

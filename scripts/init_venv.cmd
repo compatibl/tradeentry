@@ -4,11 +4,11 @@ pushd ..
 
 :PROMPT
 set AREYOUSURE=N
-set /p AREYOUSURE=This will delete current venv and recreate it. Whould you like to procced (Y\[N])?
+set /p AREYOUSURE=This will delete the existing venv and recreate it. Whould you like to procced (Y\[N])?
 IF /I "%AREYOUSURE%" NEQ "Y" GOTO END
 
 echo.
-echo Create empty venv
+echo Create an empty venv
 IF EXIST "venv" rd /s /q venv
 python -m venv venv
 
