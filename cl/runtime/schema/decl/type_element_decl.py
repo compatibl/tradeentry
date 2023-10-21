@@ -15,10 +15,10 @@
 from dataclasses import dataclass
 from typing import List, Optional
 
-from cl.runtime.core.schema.decl.element_modification_type import ElementModificationType
-from cl.runtime.core.schema.decl.type_member_decl import TypeMemberDecl
-from cl.runtime.core.storage.class_field import class_field
-from cl.runtime.core.storage.class_label import class_label
+from cl.runtime.schema.decl.element_modification_type import ElementModificationType
+from cl.runtime.schema.decl.type_member_decl import TypeMemberDecl
+from cl.runtime.storage.class_field import class_field
+from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Type Element Declaration')

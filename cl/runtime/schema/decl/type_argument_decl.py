@@ -14,8 +14,8 @@
 
 from dataclasses import dataclass
 
-from cl.runtime.core.schema.decl.type_member_decl import TypeMemberDecl
-from cl.runtime.core.storage.class_label import class_label
+from cl.runtime.schema.decl.type_member_decl import TypeMemberDecl
+from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Type Argument Declaration')

@@ -16,7 +16,7 @@ from abc import ABC
 from dataclasses import asdict, dataclass
 from typing import Any, Dict
 
-from cl.runtime.core.storage.data import Data
+from cl.runtime.storage.data import Data
 
 
 @dataclass

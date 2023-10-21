@@ -16,9 +16,9 @@ from copy import deepcopy
 from dataclasses import dataclass, field
 from typing import Dict, Iterable, Optional, Type, Union
 
-from cl.runtime.core.storage.data_source import DataSource, TKey, TRecord
-from cl.runtime.core.storage.record import Record
-from cl.runtime.core.storage.record_util import RecordUtil
+from cl.runtime.storage.data_source import DataSource, TKey, TRecord
+from cl.runtime.storage.record import Record
+from cl.runtime.storage.record_util import RecordUtil
 
 
 @dataclass

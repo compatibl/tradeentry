@@ -15,16 +15,16 @@
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, List, Optional
 
-from cl.runtime.core.schema.decl.enum_decl_key import EnumDeclKey
-from cl.runtime.core.schema.decl.interface_decl_key import InterfaceDeclKey
-from cl.runtime.core.schema.decl.type_decl_key import TypeDeclKey
-from cl.runtime.core.schema.decl.value_decl import ValueDecl
-from cl.runtime.core.storage.class_data import ClassData
-from cl.runtime.core.storage.class_field import class_field
-from cl.runtime.core.storage.class_label import class_label
+from cl.runtime.schema.decl.enum_decl_key import EnumDeclKey
+from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
+from cl.runtime.schema.decl.type_decl_key import TypeDeclKey
+from cl.runtime.schema.decl.value_decl import ValueDecl
+from cl.runtime.storage.class_data import ClassData
+from cl.runtime.storage.class_field import class_field
+from cl.runtime.storage.class_label import class_label
 
 if TYPE_CHECKING:
-    from cl.runtime.core.schema.decl.type_argument_decl import TypeArgumentDecl
+    from cl.runtime.schema.decl.type_argument_decl import TypeArgumentDecl
 
 
 @class_label('Type Member Declaration')

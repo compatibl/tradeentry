@@ -15,9 +15,9 @@
 from dataclasses import dataclass
 from typing import List, Optional
 
-from cl.runtime.core.schema.decl.package_dependency import PackageDependency
-from cl.runtime.core.schema.decl.package_key import PackageKey
-from cl.runtime.core.storage.class_field import class_field
+from cl.runtime.schema.decl.package_dependency import PackageDependency
+from cl.runtime.schema.decl.package_key import PackageKey
+from cl.runtime.storage.class_field import class_field
 
 
 @dataclass

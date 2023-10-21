@@ -14,9 +14,9 @@
 
 from dataclasses import dataclass
 
-from cl.runtime.core.schema.decl.handler_variable_decl import HandlerVariableDecl
-from cl.runtime.core.storage.class_field import class_field
-from cl.runtime.core.storage.class_label import class_label
+from cl.runtime.schema.decl.handler_variable_decl import HandlerVariableDecl
+from cl.runtime.storage.class_field import class_field
+from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Handler Parameter Declaration')

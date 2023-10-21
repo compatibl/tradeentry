@@ -15,6 +15,8 @@
 import pytest
 
 import cl.runtime as rt
+from stubs.runtime.storage.stub_cyclic_a import StubCyclicA
+from stubs.runtime.storage.stub_cyclic_b import StubCyclicB
 
 
 def test_cyclic_record():
@@ -24,26 +26,26 @@ def test_cyclic_record():
     context = rt.Context()
 
     # Create inside the class with import inside function
-    a_1 = rt.stubs.StubCyclicA.create_sample_record(context)
-    b_1 = rt.stubs.StubCyclicB.create_sample_record(context)
+    a_1 = StubCyclicA.create_sample_record(context)
+    b_1 = StubCyclicB.create_sample_record(context)
 
     # Create A outside the class
-    a_2 = rt.stubs.StubCyclicA()
+    a_2 = StubCyclicA()
     a_2.context = context
     a_2.a_id = 'abc'
-    a_2.b = rt.stubs.StubCyclicB.create_key('abc')
+    a_2.b = StubCyclicB.create_key('abc')
     a_2.init()
 
     # Create B outside the class
-    b_2 = rt.stubs.StubCyclicB()
+    b_2 = StubCyclicB()
     b_2.context = context
     b_2.b_id = 'abc'
-    b_2.a = rt.stubs.StubCyclicA.create_key('abc')
+    b_2.a = StubCyclicA.create_key('abc')
     b_2.init()
 
     # Test for annotation retrospection
-    assert rt.stubs.StubCyclicA.__annotations__ == {'a_id': 'str', 'b': 'Union[str, StubCyclicB]'}
-    assert rt.stubs.StubCyclicB.__annotations__ == {'b_id': 'str', 'a': 'Union[str, StubCyclicA]'}
+    assert StubCyclicA.__annotations__ == {'a_id': 'str', 'b': 'Union[str, StubCyclicB]'}
+    assert StubCyclicB.__annotations__ == {'b_id': 'str', 'a': 'Union[str, StubCyclicA]'}
 
 
 if __name__ == '__main__':

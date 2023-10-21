@@ -15,6 +15,8 @@
 import pytest
 
 import cl.runtime as rt
+from stubs.runtime.storage.stub_data import StubData
+
 
 # Tests for Data
 
@@ -23,11 +25,11 @@ def test_smoke():
     """Smoke test."""
 
     # Create test record and populate with sample data
-    obj = rt.stubs.StubData.create()
+    obj = StubData.create()
 
     # Test roundtrip serialization
     data1 = obj.to_dict()
-    obj2 = rt.stubs.StubData()
+    obj2 = StubData()
     obj2.from_dict(data1)
     data2 = obj2.to_dict()
     assert len(data2.keys()) == 2

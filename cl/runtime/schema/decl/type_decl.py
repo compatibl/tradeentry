@@ -15,17 +15,17 @@
 from dataclasses import dataclass
 from typing import List, Optional
 
-from cl.runtime.core.schema.decl.handler_declare_block_decl import HandlerDeclareBlockDecl
-from cl.runtime.core.schema.decl.handler_implement_block_decl import HandlerImplementBlockDecl
-from cl.runtime.core.schema.decl.interface_decl_key import InterfaceDeclKey
-from cl.runtime.core.schema.decl.type_argument_decl import TypeArgumentDecl
-from cl.runtime.core.schema.decl.type_decl_key import TypeDeclKey
-from cl.runtime.core.schema.decl.type_element_decl import TypeElementDecl
-from cl.runtime.core.schema.decl.type_index_decl import TypeIndexDecl
-from cl.runtime.core.schema.decl.type_kind import TypeKind
-from cl.runtime.core.schema.decl.type_param_decl import TypeParamDecl
-from cl.runtime.core.storage.class_field import class_field
-from cl.runtime.core.storage.class_label import class_label
+from cl.runtime.schema.decl.handler_declare_block_decl import HandlerDeclareBlockDecl
+from cl.runtime.schema.decl.handler_implement_block_decl import HandlerImplementBlockDecl
+from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
+from cl.runtime.schema.decl.type_argument_decl import TypeArgumentDecl
+from cl.runtime.schema.decl.type_decl_key import TypeDeclKey
+from cl.runtime.schema.decl.type_element_decl import TypeElementDecl
+from cl.runtime.schema.decl.type_index_decl import TypeIndexDecl
+from cl.runtime.schema.decl.type_kind import TypeKind
+from cl.runtime.schema.decl.type_param_decl import TypeParamDecl
+from cl.runtime.storage.class_field import class_field
+from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Type Declaration')

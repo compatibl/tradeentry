@@ -15,6 +15,8 @@
 import pytest
 
 import cl.runtime as rt
+from stubs.runtime.storage.stub_class_data import StubClassData
+
 
 # Tests for ClassData
 
@@ -24,7 +26,7 @@ def test_smoke():
 
     # Create test record and populate with sample data
     context = rt.Context()
-    obj = rt.stubs.StubClassData.create()
+    obj = StubClassData.create()
 
     # Test to_dict() method
     obj_dict = obj.to_dict()

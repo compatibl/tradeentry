@@ -16,9 +16,9 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Iterable, Optional, Type, TypeVar, Union
 
-from cl.runtime.core.storage.class_field import class_field
-from cl.runtime.core.storage.class_record import ClassRecord
-from cl.runtime.core.storage.record import Record  # TODO - remove after eliminating the req to derive from Record
+from cl.runtime.storage.class_field import class_field
+from cl.runtime.storage.class_record import ClassRecord
+from cl.runtime.storage.record import Record  # TODO - remove after eliminating the req to derive from Record
 
 TKey = TypeVar('TKey', contravariant=True)
 TRecord = TypeVar('TRecord', covariant=True)

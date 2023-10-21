@@ -14,8 +14,8 @@
 
 from dataclasses import dataclass
 
-from cl.runtime.core.storage.class_field import class_field
-from cl.runtime.core.storage.class_record import ClassRecord
+from cl.runtime.storage.class_field import class_field
+from cl.runtime.storage.class_record import ClassRecord
 
 
 @dataclass

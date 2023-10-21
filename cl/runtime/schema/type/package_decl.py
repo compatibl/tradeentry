@@ -14,8 +14,8 @@
 
 from dataclasses import dataclass
 
-from cl.runtime.core.schema.type.package_decl_key import PackageDeclKey
-from cl.runtime.core.storage.class_field import class_field
+from cl.runtime.schema.type.package_decl_key import PackageDeclKey
+from cl.runtime.storage.class_field import class_field
 
 
 @dataclass

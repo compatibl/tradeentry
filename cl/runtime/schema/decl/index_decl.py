@@ -15,10 +15,10 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from cl.runtime.core.schema.decl.index_sort_order_enum import IndexSortOrderEnum
-from cl.runtime.core.storage.class_data import ClassData
-from cl.runtime.core.storage.class_field import class_field
-from cl.runtime.core.storage.class_label import class_label
+from cl.runtime.schema.decl.index_sort_order_enum import IndexSortOrderEnum
+from cl.runtime.storage.class_data import ClassData
+from cl.runtime.storage.class_field import class_field
+from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Index Declaration')

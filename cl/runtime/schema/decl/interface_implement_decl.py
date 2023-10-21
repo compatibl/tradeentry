@@ -14,11 +14,11 @@
 
 from dataclasses import dataclass
 
-from cl.runtime.core.schema.decl.interface_decl_key import InterfaceDeclKey
-from cl.runtime.core.schema.decl.language_key import LanguageKey
-from cl.runtime.core.storage.class_data import ClassData
-from cl.runtime.core.storage.class_field import class_field
-from cl.runtime.core.storage.class_label import class_label
+from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
+from cl.runtime.schema.decl.language_key import LanguageKey
+from cl.runtime.storage.class_data import ClassData
+from cl.runtime.storage.class_field import class_field
+from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Interface Implement Declaration')

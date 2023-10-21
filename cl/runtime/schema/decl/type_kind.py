@@ -14,7 +14,7 @@
 
 from enum import IntEnum
 
-from cl.runtime.core.storage.class_label import class_label
+from cl.runtime.storage.class_label import class_label
 
 
 @class_label('(Analyst) Type Kind')

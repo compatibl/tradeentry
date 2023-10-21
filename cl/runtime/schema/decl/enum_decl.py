@@ -15,10 +15,10 @@
 from dataclasses import dataclass
 from typing import List, Optional
 
-from cl.runtime.core.schema.decl.enum_decl_key import EnumDeclKey
-from cl.runtime.core.schema.decl.enum_item_decl import EnumItemDecl
-from cl.runtime.core.storage.class_field import class_field
-from cl.runtime.core.storage.class_label import class_label
+from cl.runtime.schema.decl.enum_decl_key import EnumDeclKey
+from cl.runtime.schema.decl.enum_item_decl import EnumItemDecl
+from cl.runtime.storage.class_field import class_field
+from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Enum Declaration')

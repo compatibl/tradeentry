@@ -15,10 +15,10 @@
 from dataclasses import dataclass
 from typing import List, Optional
 
-from cl.runtime.core.schema.decl.index_decl import IndexDecl
-from cl.runtime.core.storage.class_data import ClassData
-from cl.runtime.core.storage.class_field import class_field
-from cl.runtime.core.storage.class_label import class_label
+from cl.runtime.schema.decl.index_decl import IndexDecl
+from cl.runtime.storage.class_data import ClassData
+from cl.runtime.storage.class_field import class_field
+from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Type Index Declaration')
