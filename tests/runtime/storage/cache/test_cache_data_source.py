@@ -17,7 +17,6 @@ import pytest
 import cl.runtime as rt
 from stubs.runtime.storage.stub_record import StubRecord
 
-
 # Tests for CacheDataSource
 
 

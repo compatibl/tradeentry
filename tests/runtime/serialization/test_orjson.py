@@ -18,7 +18,6 @@ import pytest
 import cl.runtime as rt
 from stubs.runtime.storage.stub_dict import StubDict
 
-
 # Tests for orjson package to ensure package upgrades to not break the code
 
 
