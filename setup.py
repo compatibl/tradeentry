@@ -8,7 +8,7 @@ with open('./install_requirements.txt') as install_requirements:
 
 setuptools.setup(
     name='cl-runtime',
-    version='2.0.2',
+    version='2.0.3',
     author='The Project Contributors',
     description='CompatibL Runtime Community Edition',
     license='Apache Software License',
