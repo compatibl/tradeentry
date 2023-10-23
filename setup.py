@@ -19,7 +19,9 @@ setuptools.setup(
     project_urls={
         'Source Code': 'https://github.com/compatibl/cl-runtime',
     },
-    packages=setuptools.find_namespace_packages(where='.', include=['cl.runtime*'], exclude=['tests', 'tests.*']),
+    packages=setuptools.find_namespace_packages(
+        where='.', include=['cl.runtime', 'cl.runtime.*'], exclude=['tests', 'tests.*']
+    ),
     package_dir={'': '.'},
     classifiers=[
         # Alpha - will attempt to avoid breaking changes but they remain possible
