@@ -15,9 +15,9 @@ setuptools.setup(
     long_description=readme,
     long_description_content_type='text/markdown',
     install_requires=install_requires,
-    url='https://github.com/compatibl/cl-runtime',
+    url='https://github.com/compatibl/runtime',
     project_urls={
-        'Source Code': 'https://github.com/compatibl/cl-runtime',
+        'Source Code': 'https://github.com/compatibl/runtime',
     },
     packages=setuptools.find_namespace_packages(
         where='.', include=['cl.runtime', 'cl.runtime.*'], exclude=['tests', 'tests.*']
