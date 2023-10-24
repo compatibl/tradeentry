@@ -15,7 +15,7 @@
 import pytest
 
 import cl.runtime as rt
-from stubs.runtime.storage.stub_record import StubRecord
+from cl.runtime.storage.stubs.stub_record import StubRecord
 
 # Tests for Record
 

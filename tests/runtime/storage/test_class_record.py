@@ -15,7 +15,7 @@
 import pytest
 
 import cl.runtime as rt
-from stubs.runtime.storage.stub_class_record import StubClassRecord
+from cl.runtime.storage.stubs.stub_class_record import StubClassRecord
 
 # Tests for ClassRecord
 

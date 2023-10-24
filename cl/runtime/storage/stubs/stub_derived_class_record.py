@@ -17,7 +17,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import cl.runtime as rt
-from stubs.runtime.storage.stub_class_record import StubClassRecord
+from cl.runtime.storage.stubs.stub_class_record import StubClassRecord
 
 
 @dataclass

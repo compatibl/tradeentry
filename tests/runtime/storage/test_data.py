@@ -15,7 +15,7 @@
 import pytest
 
 import cl.runtime as rt
-from stubs.runtime.storage.stub_data import StubData
+from cl.runtime.storage.stubs.stub_data import StubData
 
 # Tests for Data
 

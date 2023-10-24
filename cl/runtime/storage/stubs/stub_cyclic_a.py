@@ -21,7 +21,7 @@ import cl.runtime as rt
 from cl.runtime.storage.class_record import ClassRecord
 
 if TYPE_CHECKING:
-    from stubs.runtime.storage.stub_cyclic_b import StubCyclicB
+    from cl.runtime.storage.stubs.stub_cyclic_b import StubCyclicB
 
 
 @dataclass
@@ -58,7 +58,7 @@ class StubCyclicA(ClassRecord):
         """Return an instance of this class populated with sample data."""
 
         # Import inside function to avoid cyclic reference error
-        from stubs.runtime.storage.stub_cyclic_b import StubCyclicB
+        from cl.runtime.storage.stubs.stub_cyclic_b import StubCyclicB
 
         obj = StubCyclicA()
         obj.context = context

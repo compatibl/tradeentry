@@ -15,9 +15,9 @@
 import pytest
 
 import cl.runtime as rt
-from stubs.runtime.storage.stub_class_data import StubClassData
-from stubs.runtime.storage.stub_class_record import StubClassRecord
-from stubs.runtime.storage.stub_derived_class_record import StubDerivedClassRecord
+from cl.runtime.storage.stubs.stub_class_data import StubClassData
+from cl.runtime.storage.stubs.stub_class_record import StubClassRecord
+from cl.runtime.storage.stubs.stub_derived_class_record import StubDerivedClassRecord
 
 
 def test_get_class_path():
@@ -56,7 +56,7 @@ def test_get_class_type():
     assert rt.RecordUtil.get_class_type(rt.RecordUtil.__module__, rt.RecordUtil.__name__) == rt.RecordUtil
 
     # Class that is dynamically imported on demand
-    do_no_import_module_name = "stubs.runtime.storage.stub_do_not_import"
+    do_no_import_module_name = "cl.runtime.storage.stubs.stub_do_not_import"
     do_no_import_class_name = "StubDoNotImport"
     do_no_import_class = rt.RecordUtil.get_class_type(do_no_import_module_name, do_no_import_class_name)
     assert do_no_import_class.__module__ == do_no_import_module_name
