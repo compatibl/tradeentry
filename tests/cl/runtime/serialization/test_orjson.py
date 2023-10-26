@@ -14,15 +14,11 @@
 
 import orjson
 import pytest
-
-import cl.runtime as rt
-from cl.runtime.storage.stubs.stub_dict import StubDict
-
-# Tests for orjson package to ensure package upgrades to not break the code
+from cl.runtime.storage.stubs.stub_dict_util import StubDictUtil
 
 
 def test_smoke():
-    """Smoke test."""
+    """Smoke test for correct installation of orjson package."""
 
     # OPT_NAIVE_UTC: Interpret datetime without tzinfo as UTC
     # OPT_UTC_Z: Append Z to datetime
@@ -34,7 +30,7 @@ def test_smoke():
     print_options = options | orjson.OPT_INDENT_2 | orjson.OPT_APPEND_NEWLINE
 
     # Create test dictionary and serialize
-    dict_data = StubDict.create()
+    dict_data = StubDictUtil.create_primitive()
     json_bytes = orjson.dumps(dict_data, option=options)
     deserialized_data = orjson.loads(json_bytes)
     # TODO: Implement taking into account that deserialized JSON includes some types as strings

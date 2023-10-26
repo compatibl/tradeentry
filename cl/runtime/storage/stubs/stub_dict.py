@@ -12,31 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
 import datetime as dt
 import uuid
 from typing import Any, Dict
 
-import numpy as np
 import pytz
 
 
-class StubDict:
+class StubDictUtil:
     """Utilities for mock dictionaries."""
 
     @staticmethod
-    def create() -> Dict[str, Any]:
-        """Create a mock dictionary with supported primitive data types and containers."""
+    def create_primitive() -> Dict[str, Any]:
+        """Create a mock dictionary whose fields include all supported primitive types."""
 
         result = {
             'str_field': 'abc',
             'bool_field': True,
             'int_field': 123,
-            'long_field': 9007199254740991,  # Maximum safe signed int for JS: 2^53 _ 1
+            'long_field': 9007199254740991,  # Maximum safe signed int for JSON: 2^53 - 1
             'long_field_str': str(9007199254740991),
             'float_field': 123.456,
-            # 'float_numpy_field': np.array([123.456, 789.123]),
             'date_field': dt.date(2003, 4, 21),
             'time_field': dt.time(11, 10, 0),
             'time_field_ms': dt.time(11, 10, 0, 123000),
