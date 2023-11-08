@@ -32,8 +32,10 @@ class Data(ABC):
 
     @abstractmethod
     def to_dict(self) -> Dict[str, Any]:
-        """Serialize self as dictionary (must return deep copy of data in self)."""
+        """Shallow copy to dictionary. Complex field values may be shared with the argument."""
 
     @abstractmethod
     def from_dict(self, data: Dict[str, Any]) -> None:
-        """Populate self from dictionary (must clear the existing data in self and perform deep copy of argument)."""
+        """Shallow copy from dictionary. Complex field values may be shared with the argument.
+        Does not clear values for which the argument does not have a key.
+        """
