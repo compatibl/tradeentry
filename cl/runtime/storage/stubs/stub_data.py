@@ -13,13 +13,11 @@
 # limitations under the License.
 
 from __future__ import annotations
-
 from typing import Any, Dict, Optional
+from cl.runtime import Data
 
-import cl.runtime as rt
 
-
-class StubData(rt.Data):
+class StubData(Data):
     """Stub serializable data used in tests."""
 
     base_field_str: Optional[str]

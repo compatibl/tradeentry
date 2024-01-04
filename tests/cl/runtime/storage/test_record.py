@@ -13,11 +13,8 @@
 # limitations under the License.
 
 import pytest
-
 import cl.runtime as rt
 from cl.runtime.storage.stubs.stub_record import StubRecord
-
-# Tests for Record
 
 
 def test_smoke():

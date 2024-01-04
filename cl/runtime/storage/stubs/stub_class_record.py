@@ -13,10 +13,8 @@
 # limitations under the License.
 
 from __future__ import annotations
-
 from dataclasses import dataclass
-
-import cl.runtime as rt
+from cl.runtime import class_field
 from cl.runtime.storage.class_record import ClassRecord
 
 
@@ -24,19 +22,19 @@ from cl.runtime.storage.class_record import ClassRecord
 class StubClassRecord(ClassRecord):
     """Stub dataclass-based record sample used in tests."""
 
-    key_field_str: str = rt.class_field()
+    key_field_str: str = class_field()
     """First primary key attribute."""
 
-    key_field_int: int = rt.class_field()
+    key_field_int: int = class_field()
     """Second primary key attribute."""
 
-    base_field_str: str = rt.class_field()
+    base_field_str: str = class_field()
     """String attribute of base class."""
 
-    base_field_float: float = rt.class_field()
+    base_field_float: float = class_field()
     """Float attribute of base class."""
 
-    base_field_long: int = rt.class_field(typename='long', label="Custom Label", optional=True)
+    base_field_long: int = class_field(typename='long', label="Custom Label", optional=True)
     """Optional long attribute of base class with custom label."""
 
     @staticmethod
@@ -59,7 +57,7 @@ class StubClassRecord(ClassRecord):
         return StubClassRecord.create_key('abc', 123)
 
     @staticmethod
-    def create_sample_record(context: rt.Context) -> StubClassRecord:
+    def create_sample_record(context: Context) -> StubClassRecord:
         """Return an instance of this class populated with sample data."""
 
         obj = StubClassRecord()

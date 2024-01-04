@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import pytest
-
 import cl.runtime as rt
 from cl.runtime.storage.stubs.stub_class_data import StubClassData
 from cl.runtime.storage.stubs.stub_class_record import StubClassRecord

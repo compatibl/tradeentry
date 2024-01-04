@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-
 from cl.runtime.schema.type.type_decl import TypeDecl
 from cl.runtime.storage.class_field import class_field
 

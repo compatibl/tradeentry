@@ -13,10 +13,8 @@
 # limitations under the License.
 
 from __future__ import annotations
-
 from dataclasses import dataclass
-
-import cl.runtime as rt
+from cl.runtime import class_field, Context
 from cl.runtime.storage.stubs.stub_class_record import StubClassRecord
 
 
@@ -24,14 +22,14 @@ from cl.runtime.storage.stubs.stub_class_record import StubClassRecord
 class StubDerivedClassRecord(StubClassRecord):
     """Stub derived dataclass-based record sample used in tests."""
 
-    derived_field_str: str = rt.class_field()
+    derived_field_str: str = class_field()
     """String attribute of base class."""
 
-    derived_field_float: float = rt.class_field()
+    derived_field_float: float = class_field()
     """Float attribute of base class."""
 
     @staticmethod
-    def create(context: rt.Context) -> StubDerivedClassRecord:
+    def create(context: Context) -> StubDerivedClassRecord:
         """Return an instance of this class populated with sample data."""
 
         obj = StubDerivedClassRecord()

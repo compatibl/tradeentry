@@ -12,10 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IMPORTANT: Do not import this module. Its purpose is testing dynamic import.
 
-
+# Do not import this module. Its purpose is testing dynamic import.
 class StubDoNotImport:
     """For checking dynamic import. Must not be included in import statements or __init__.py."""
-
     pass

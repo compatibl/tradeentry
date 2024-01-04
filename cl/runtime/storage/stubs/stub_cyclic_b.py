@@ -13,13 +13,10 @@
 # limitations under the License.
 
 from __future__ import annotations
-
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Union
-
-import cl.runtime as rt
+from cl.runtime import class_field
 from cl.runtime.storage.class_record import ClassRecord
-
 if TYPE_CHECKING:
     from cl.runtime.storage.stubs.stub_cyclic_a import StubCyclicA
 
@@ -28,10 +25,10 @@ if TYPE_CHECKING:
 class StubCyclicB(ClassRecord):
     """Stub class A with a field whose type is key for class B."""
 
-    b_id: str = rt.class_field()
+    b_id: str = class_field()
     """Unique identifier."""
 
-    a: Union[str, StubCyclicA] = rt.class_field()
+    a: Union[str, StubCyclicA] = class_field()
     """Key for class A."""
 
     @staticmethod
@@ -54,7 +51,7 @@ class StubCyclicB(ClassRecord):
         return StubCyclicB.create_key('abc')
 
     @staticmethod
-    def create_sample_record(context: rt.Context) -> StubCyclicB:
+    def create_sample_record(context: Context) -> StubCyclicB:
         """Return an instance of this class populated with sample data."""
 
         # Import inside function to avoid cyclic reference error

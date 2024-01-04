@@ -13,20 +13,18 @@
 # limitations under the License.
 
 from __future__ import annotations
-
 from dataclasses import dataclass
-
-import cl.runtime as rt
+from cl.runtime import ClassData, class_field
 
 
 @dataclass
-class StubClassData(rt.ClassData):
+class StubClassData(ClassData):
     """Dataclass-based serializable data sample used in tests."""
 
-    base_field_str: str = rt.class_field()
+    base_field_str: str = class_field()
     """String attribute of base class."""
 
-    base_field_float: float = rt.class_field()
+    base_field_float: float = class_field()
     """Float attribute of base class."""
 
     @staticmethod

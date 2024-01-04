@@ -13,13 +13,11 @@
 # limitations under the License.
 
 from __future__ import annotations
-
 from typing import Any, Dict, Optional
+from cl.runtime import Record
 
-import cl.runtime as rt
 
-
-class StubRecord(rt.Record):
+class StubRecord(Record):
     """Stub record used in tests."""
 
     key_field_str: Optional[str]
@@ -69,7 +67,7 @@ class StubRecord(rt.Record):
         # TODO: detect extra fields in dict which are not in class and raise error
 
     @staticmethod
-    def create_sample_record(context: rt.Context) -> StubRecord:
+    def create_sample_record(context: Context) -> StubRecord:
         """Return an instance of this class populated with sample data."""
 
         obj = StubRecord()

@@ -15,7 +15,6 @@
 import datetime as dt
 import uuid
 from typing import Any, Dict
-
 import pytz
 
 
