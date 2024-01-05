@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC, abstractmethod
+from abc import ABC
+from cl.runtime.decorators.decorator_implemented_method import decorator_implemented_method
 from cl.runtime.storage.data import Data
 
 
@@ -28,6 +29,7 @@ class Key(Data, ABC):
         They are not made abstract to avoid errors from static type checkers in the latter case.
     """
 
+    @decorator_implemented_method
     def get_table(self) -> str:
         """
         Name of the database table where data for this key is stored.
@@ -36,8 +38,10 @@ class Key(Data, ABC):
             By convention, table name consists of a namespace (full package path or short alias) followed by
             the class name of the common base to all classes stored in the table with dot delimiter.
         """
-        raise RuntimeError(f"Class method {type(self)}.get_table() must be implemented in code or by a decorator.")
+        raise RuntimeError(f"Method get_table() for class {type(self).__name__} in module {type(self).__module__} "
+                           f"is neither implemented in code nor by a decorator.")
 
+    @decorator_implemented_method
     def get_key(self) -> str:
         """
         Key as string in semicolon-delimited string format without table name.
@@ -50,11 +54,14 @@ class Key(Data, ABC):
             - Two primary key fields A and B: 'A;B'
             - Two primary key fields 'A1;A2' and 'B': 'A1;A2;B'
         """
-        raise RuntimeError(f"Method {type(self)}.get_key() must be implemented in code or by a decorator.")
+        raise RuntimeError(f"Method get_key() for class {type(self).__name__} in module {type(self).__module__} "
+                           f"is neither implemented in code nor by a decorator.")
 
+    @decorator_implemented_method
     def init(self) -> None:
         """Validate dataclass attributes and use them to initialize object state."""
-        raise RuntimeError(f"Method {type(self)}.init() must be implemented in code or by a decorator.")
+        raise RuntimeError(f"Method init() for class {type(self).__name__} in module {type(self).__module__} "
+                           f"is neither implemented in code nor by a decorator.")
 
     def get_generic_key(self) -> str:
         """
@@ -81,3 +88,4 @@ class Key(Data, ABC):
             Data source implementation must use 'get_key' method instead.
         """
         return self.get_key()
+

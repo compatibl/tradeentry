@@ -128,7 +128,7 @@ class RecordUtil:
                 return False
 
             # Return false if a known base type
-            # TODO: Replace by a check for dynamic_abstract_method decorator
+            # TODO: Replace by a check for decorator_implemented_method decorator
             if cls in [Data, Key, Record]:
                 return False
 

@@ -15,6 +15,8 @@
 from abc import ABC, abstractmethod
 from typing import Any, Dict
 
+from cl.runtime.decorators.decorator_implemented_method import decorator_implemented_method
+
 
 class Data(ABC):
     """
@@ -28,13 +30,17 @@ class Data(ABC):
         They are not made abstract to avoid errors from static type checkers in the latter case.
     """
 
+    @decorator_implemented_method
     def to_dict(self) -> Dict[str, Any]:
         """Convert to a dictionary containing other dictionaries, lists and primitive types."""
-        raise RuntimeError(f"Method {type(self)}.to_dict() must be implemented in code or by a decorator.")
+        raise RuntimeError(f"Method to_dict() for class {type(self).__name__} in module {type(self).__module__} "
+                           f"is neither implemented in code nor by a decorator.")
 
+    @decorator_implemented_method
     def from_dict(self, data: Dict[str, Any]) -> None:
         """
         Populate from a dictionary containing other dictionaries, lists and primitive types.
         Clears values for which the argument does not have a key.
         """
-        raise RuntimeError(f"Method {type(self)}.from_dict() must be implemented in code or by a decorator.")
+        raise RuntimeError(f"Method from_dict() for class {type(self).__name__} in module {type(self).__module__} "
+                           f"is neither implemented in code nor by a decorator.")
