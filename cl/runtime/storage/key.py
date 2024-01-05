@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from abc import ABC
-from cl.runtime.decorators.decorator_implemented_method import decorator_implemented_method
 from cl.runtime.storage.data import Data
 
 
@@ -29,7 +28,6 @@ class Key(Data, ABC):
         They are not made abstract to avoid errors from static type checkers in the latter case.
     """
 
-    @decorator_implemented_method
     def get_table(self) -> str:
         """
         Name of the database table where data for this key is stored.
@@ -41,7 +39,6 @@ class Key(Data, ABC):
         raise RuntimeError(f"Method get_table() for class {type(self).__name__} in module {type(self).__module__} "
                            f"is neither implemented in code nor by a decorator.")
 
-    @decorator_implemented_method
     def get_key(self) -> str:
         """
         Key as string in semicolon-delimited string format without table name.
@@ -57,7 +54,6 @@ class Key(Data, ABC):
         raise RuntimeError(f"Method get_key() for class {type(self).__name__} in module {type(self).__module__} "
                            f"is neither implemented in code nor by a decorator.")
 
-    @decorator_implemented_method
     def init(self) -> None:
         """Validate dataclass attributes and use them to initialize object state."""
         raise RuntimeError(f"Method init() for class {type(self).__name__} in module {type(self).__module__} "
