@@ -12,15 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_record import ClassRecord
 
 
-@dataclass
+@data_class
 class LanguageKey(ClassRecord):
-    language_id: str = class_field(name='LanguageID')
+    language_id: str = data_field(name='LanguageID')
     """Language."""
 
     def get_key(self) -> str:

@@ -14,7 +14,8 @@
 
 from __future__ import annotations
 from cl.runtime.decorators.data_class_decorator import data_class
-from cl.runtime import class_field, Context
+from cl.runtime.decorators.data_field_decorator import data_field
+from cl.runtime import Context
 from cl.runtime.storage.stubs.stub_class_record import StubClassRecord
 
 
@@ -22,10 +23,10 @@ from cl.runtime.storage.stubs.stub_class_record import StubClassRecord
 class StubDerivedClassRecord(StubClassRecord):
     """Stub derived dataclass-based record sample used in tests."""
 
-    derived_field_str: str = class_field()
+    derived_field_str: str = data_field()
     """String attribute of base class."""
 
-    derived_field_float: float = class_field()
+    derived_field_float: float = data_field()
     """Float attribute of base class."""
 
     @staticmethod

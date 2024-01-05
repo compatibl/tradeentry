@@ -14,8 +14,8 @@
 
 from __future__ import annotations
 from cl.runtime.decorators.data_class_decorator import data_class
+from cl.runtime.decorators.data_field_decorator import data_field
 from typing import TYPE_CHECKING, Union
-from cl.runtime import class_field
 from cl.runtime.storage.class_record import ClassRecord
 if TYPE_CHECKING:
     from cl.runtime.storage.stubs.stub_cyclic_a import StubCyclicA
@@ -25,10 +25,10 @@ if TYPE_CHECKING:
 class StubCyclicB(ClassRecord):
     """Stub class A with a field whose type is key for class B."""
 
-    b_id: str = class_field()
+    b_id: str = data_field()
     """Unique identifier."""
 
-    a: Union[str, StubCyclicA] = class_field()
+    a: Union[str, StubCyclicA] = data_field()
     """Key for class A."""
 
     @staticmethod

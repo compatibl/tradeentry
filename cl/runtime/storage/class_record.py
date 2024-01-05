@@ -13,13 +13,13 @@
 # limitations under the License.
 
 from abc import ABC
-from dataclasses import asdict, dataclass
+import attrs
 from typing import Any, Dict
-
+from cl.runtime.decorators.data_class_decorator import data_class
 from cl.runtime.storage.record import Record
 
 
-@dataclass
+@data_class
 class ClassRecord(Record, ABC):
     """
     Base class for polymorphic records where all serializable
@@ -52,7 +52,7 @@ class ClassRecord(Record, ABC):
         Default implementation uses runtime class introspection.
         Derived classes may override for greater performance.
         """
-        return asdict(self)
+        return attrs.asdict(self)  # noqa This class is an attrs instance based on @data_class implementation
 
     def from_dict(self, data: Dict[str, Any]) -> None:
         """

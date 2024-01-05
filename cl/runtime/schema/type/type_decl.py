@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 from cl.runtime.schema.type.type_decl_key import TypeDeclKey
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 
 
-@dataclass
+@data_class
 class TypeDecl(TypeDeclKey):
     """Base class of type declaration in schema."""
 
-    label: str = class_field(optional=True)
+    label: str = data_field(optional=True)
     """Readable type label in the front end."""

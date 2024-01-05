@@ -14,17 +14,18 @@
 
 from __future__ import annotations
 from cl.runtime.decorators.data_class_decorator import data_class
-from cl.runtime import ClassData, class_field
+from cl.runtime.decorators.data_field_decorator import data_field
+from cl.runtime import ClassData
 
 
 @data_class
 class StubClassData(ClassData):
     """Dataclass-based serializable data sample used in tests."""
 
-    base_field_str: str = class_field()
+    base_field_str: str = data_field()
     """String attribute of base class."""
 
-    base_field_float: float = class_field()
+    base_field_float: float = data_field()
     """Float attribute of base class."""
 
     @staticmethod

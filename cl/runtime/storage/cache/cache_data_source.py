@@ -13,19 +13,20 @@
 # limitations under the License.
 
 from copy import deepcopy
-from dataclasses import dataclass, field
 from typing import Dict, Iterable, Optional, Type, Union
 
+from cl.runtime.decorators.data_class_decorator import data_class
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.data_source import DataSource, TKey, TRecord
 from cl.runtime.storage.record import Record
 from cl.runtime.storage.record_util import RecordUtil
 
 
-@dataclass
+@data_class
 class CacheDataSource(DataSource):
     """Data source based on in-memory cache using Python dict."""
 
-    _cache: Dict[str, Dict] = field(default_factory=dict)  # TODO: switch to class_field and remove the default factory
+    _cache: Dict[str, Dict] = data_field(factory=dict)
 
     def init(self) -> None:
         """Validate dataclass attributes and use them to initialize object state."""

@@ -12,18 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 
 from cl.runtime.schema.decl.atomic_type import AtomicType
 from cl.runtime.storage.class_data import ClassData
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Value Declaration')
-@dataclass
+@data_class
 class ValueDecl(ClassData):
     """Value or atomic element declaration."""
 
-    type_: AtomicType = class_field(name='Type')
+    type_: AtomicType = data_field(name='Type')
     """Value or atomic element type enumeration."""

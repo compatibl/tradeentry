@@ -12,19 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 from typing import List
 
 from cl.runtime.schema.decl.handler_declare_decl import HandlerDeclareDecl
 from cl.runtime.storage.class_data import ClassData
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Handler Declare Block Declaration')
-@dataclass
+@data_class
 class HandlerDeclareBlockDecl(ClassData):
     """Handler declaration block in type declaration."""
 
-    handlers: List[HandlerDeclareDecl] = class_field()
+    handlers: List[HandlerDeclareDecl] = data_field()
     """Handler declaration data."""

@@ -13,17 +13,18 @@
 # limitations under the License.
 
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from typing import Iterable, Optional, Type, TypeVar, Union
+from typing import Iterable, Type, TypeVar, Union
 
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_class_decorator import data_class
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_record import ClassRecord
-from cl.runtime.storage.record import Record  # TODO - remove after eliminating the req to derive from Record
+from cl.runtime.storage.record import Record
 
 TKey = TypeVar('TKey', contravariant=True)
 TRecord = TypeVar('TRecord', covariant=True)
 
 
+@data_class
 class DataSource(ClassRecord, ABC):
     """Abstract base class for polymorphic data storage API with a directory attribute.
 
@@ -50,10 +51,10 @@ class DataSource(ClassRecord, ABC):
     - For example, search order when directory '/A/B' is specified is [`/A/B`, `/A`, `/`]
     """
 
-    data_source_id: str = class_field()
+    data_source_id: str = data_field()
     """Unique data source identifier."""
 
-    read_only: bool = class_field(optional=True)
+    read_only: bool = data_field(optional=True)
     """Use this flag to mark the data source as readonly. All write operations will fail with error if set."""
 
     @staticmethod

@@ -12,22 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 from typing import Optional
 
 from cl.runtime.schema.decl.index_sort_order_enum import IndexSortOrderEnum
 from cl.runtime.storage.class_data import ClassData
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Index Declaration')
-@dataclass
+@data_class
 class IndexDecl(ClassData):
     """Index declaration."""
 
-    name: str = class_field()
+    name: str = data_field()
     """Target index element name."""
 
-    direction: Optional[IndexSortOrderEnum] = class_field()
+    direction: Optional[IndexSortOrderEnum] = data_field()
     """Index sort order direction. If not specified ascending sorting will be used."""

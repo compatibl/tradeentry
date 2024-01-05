@@ -12,21 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 
 from cl.runtime.schema.decl.module_key import ModuleKey
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_record import ClassRecord
 
 
-@dataclass
+@data_class
 class EnumDeclKey(ClassRecord):
     """Enum declaration."""
 
-    module: ModuleKey = class_field()
+    module: ModuleKey = data_field()
     """Module reference."""
 
-    name: str = class_field()
+    name: str = data_field()
     """Enum name is unique when combined with module."""
 
     def get_key(self) -> str:

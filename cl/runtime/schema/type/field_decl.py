@@ -12,32 +12,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 from typing import Union
 
 from cl.runtime.schema.type.type_decl_key import TypeDeclKey
 from cl.runtime.storage.class_data import ClassData
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 
 
-@dataclass
+@data_class
 class FieldDecl(ClassData):
     """Base class of type declaration in schema."""
 
-    name: str = class_field()
+    name: str = data_field()
     """Field name in code and storage."""
 
-    label: str = class_field(optional=True)
+    label: str = data_field(optional=True)
     """Readable field label in the front end."""
 
-    type: Union[str, TypeDeclKey] = class_field()
+    type: Union[str, TypeDeclKey] = data_field()
     """Field type."""
 
-    dim: int = class_field(optional=True)
+    dim: int = data_field(optional=True)
     """List, array, or tensor dimension (defaults to scalar, i.e., the value of zero, if not specified)."""
 
-    optional: bool = class_field(optional=True)
+    optional: bool = data_field(optional=True)
     """True if field is optional (defaults to required if not specified)."""
 
-    contains_optional: bool = class_field(optional=True)
+    contains_optional: bool = data_field(optional=True)
     """True if list, array, or tensor elements are optional (defaults to required if not specified)."""

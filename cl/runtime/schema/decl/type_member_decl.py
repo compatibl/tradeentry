@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 from typing import TYPE_CHECKING, List, Optional
 
 from cl.runtime.schema.decl.enum_decl_key import EnumDeclKey
@@ -20,7 +20,7 @@ from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.decl.type_decl_key import TypeDeclKey
 from cl.runtime.schema.decl.value_decl import ValueDecl
 from cl.runtime.storage.class_data import ClassData
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_label import class_label
 
 if TYPE_CHECKING:
@@ -28,36 +28,36 @@ if TYPE_CHECKING:
 
 
 @class_label('Type Member Declaration')
-@dataclass
+@data_class
 class TypeMemberDecl(ClassData):
     """Type member declaration."""
 
-    type_param: Optional[str] = class_field()
+    type_param: Optional[str] = data_field()
     """Type Param"""
 
-    value: Optional[ValueDecl] = class_field()
+    value: Optional[ValueDecl] = data_field()
     """Value or atomic element declaration."""
 
-    enum: Optional[EnumDeclKey] = class_field()
+    enum: Optional[EnumDeclKey] = data_field()
     """Enumeration element declaration."""
 
-    data: Optional[TypeDeclKey] = class_field()
+    data: Optional[TypeDeclKey] = data_field()
     """Data element declaration."""
 
-    key_: Optional[TypeDeclKey] = class_field(name='Key')
+    key_: Optional[TypeDeclKey] = data_field(name='Key')
     """Key element declaration."""
 
-    query: Optional[TypeDeclKey] = class_field()
+    query: Optional[TypeDeclKey] = data_field()
     """Query element declaration."""
 
-    condition: Optional[TypeDeclKey] = class_field()
+    condition: Optional[TypeDeclKey] = data_field()
     """Condition element declaration."""
 
-    type_arguments: Optional[List['TypeArgumentDecl']] = class_field()
+    type_arguments: Optional[List['TypeArgumentDecl']] = data_field()
     """Type Argument."""
 
-    interface: Optional[InterfaceDeclKey] = class_field()
+    interface: Optional[InterfaceDeclKey] = data_field()
     """Interface element declaration."""
 
-    handler_args: Optional[TypeDeclKey] = class_field()
+    handler_args: Optional[TypeDeclKey] = data_field()
     """HandlerArgs element declaration."""

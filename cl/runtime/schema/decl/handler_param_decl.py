@@ -12,17 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 
 from cl.runtime.schema.decl.handler_variable_decl import HandlerVariableDecl
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Handler Parameter Declaration')
-@dataclass
+@data_class
 class HandlerParamDecl(HandlerVariableDecl):
     """Handler parameter declaration."""
 
-    name: str = class_field()
+    name: str = data_field()
     """Parameter name."""

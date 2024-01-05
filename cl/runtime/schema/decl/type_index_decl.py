@@ -12,22 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 from typing import List, Optional
 
 from cl.runtime.schema.decl.index_decl import IndexDecl
 from cl.runtime.storage.class_data import ClassData
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Type Index Declaration')
-@dataclass
+@data_class
 class TypeIndexDecl(ClassData):
     """Type index declaration."""
 
-    name: Optional[str] = class_field()
+    name: Optional[str] = data_field()
     """Index name."""
 
-    elements: List[IndexDecl] = class_field()
+    elements: List[IndexDecl] = data_field()
     """Index elements."""

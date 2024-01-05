@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 
 from cl.runtime.schema.decl.type_member_decl import TypeMemberDecl
 from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Type Argument Declaration')
-@dataclass
+@data_class
 class TypeArgumentDecl(TypeMemberDecl):
     """Type argument declaration."""
 

@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 from cl.runtime.schema.type.type_decl import TypeDecl
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 
 
-@dataclass
+@data_class
 class PrimitiveDecl(TypeDecl):
     """Declaration for a primitive type."""
 
-    base_type: str = class_field()
+    base_type: str = data_field()
     """Builtin type in which the data is stored."""

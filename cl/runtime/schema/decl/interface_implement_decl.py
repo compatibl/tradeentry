@@ -12,22 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.decl.language_key import LanguageKey
 from cl.runtime.storage.class_data import ClassData
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Interface Implement Declaration')
-@dataclass
+@data_class
 class InterfaceImplementDecl(ClassData):
     """Interface implementation data."""
 
-    interface: InterfaceDeclKey = class_field()
+    interface: InterfaceDeclKey = data_field()
     """Interface"""
 
-    language: LanguageKey = class_field()
+    language: LanguageKey = data_field()
     """Programming language in which handler is implemented."""

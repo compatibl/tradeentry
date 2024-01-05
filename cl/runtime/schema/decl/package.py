@@ -12,44 +12,44 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 from typing import List, Optional
 
 from cl.runtime.schema.decl.package_dependency import PackageDependency
 from cl.runtime.schema.decl.package_key import PackageKey
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 
 
-@dataclass
+@data_class
 class Package(PackageKey):
     """Package is a list of modules and binaries which are deployed together."""
 
-    package_shortcut: Optional[str] = class_field()
+    package_shortcut: Optional[str] = data_field()
     """
     Unique package shortcut used as a prefix for the type name to resolve possible conflicts in multi-package
     environments.
     """
 
-    comment: Optional[str] = class_field()
+    comment: Optional[str] = data_field()
     """Comment."""
 
-    label: str = class_field()
+    label: str = data_field()
     """Label (displayed in user interface, may not be unique)."""
 
-    package_path: Optional[str] = class_field()
+    package_path: Optional[str] = data_field()
     """Relative package path."""
 
-    dependency_search_paths: Optional[List[str]] = class_field()
+    dependency_search_paths: Optional[List[str]] = data_field()
     """Locations to search dependent packages."""
 
-    dependencies: Optional[List[PackageDependency]] = class_field()
+    dependencies: Optional[List[PackageDependency]] = data_field()
     """Dependent packages list"""
 
-    shared: Optional[bool] = class_field()
+    shared: Optional[bool] = data_field()
     """Package version"""
 
-    version: Optional[str] = class_field()
+    version: Optional[str] = data_field()
     """Package version"""
 
-    is_main: Optional[bool] = class_field()
+    is_main: Optional[bool] = data_field()
     """Is main package"""

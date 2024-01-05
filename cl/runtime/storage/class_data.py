@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import attrs
 from abc import ABC
-from dataclasses import asdict, dataclass
 from typing import Any, Dict
-
+from cl.runtime.decorators.data_class_decorator import data_class
 from cl.runtime.storage.data import Data
 
 
-@dataclass
+@data_class
 class ClassData(Data, ABC):
     """
     Base class for polymorphic types where all serializable
@@ -33,7 +33,7 @@ class ClassData(Data, ABC):
         Default implementation uses runtime class introspection.
         Derived classes may override for greater performance.
         """
-        return asdict(self)
+        return attrs.asdict(self)  # noqa This class is an attrs instance based on @data_class implementation
 
     def from_dict(self, data: Dict[str, Any]) -> None:
         """

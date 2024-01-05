@@ -12,21 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 from typing import Optional
 
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_record import ClassRecord
 
 
-@dataclass
+@data_class
 class ModuleKey(ClassRecord):
     """
     Defines Analyst module.
     Module can be represented both as the source code and precomiled dll (defined by flag "Compiled").
     """
 
-    module_name: Optional[str] = class_field()
+    module_name: Optional[str] = data_field()
     """Unique module identifier in dot delimited format."""
 
     def get_key(self) -> str:

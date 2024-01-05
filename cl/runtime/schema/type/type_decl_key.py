@@ -12,17 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_record import ClassRecord
 
 
-@dataclass
+@data_class
 class TypeDeclKey(ClassRecord):
     """Key for the base class of type declaration in schema."""
 
-    type_id: str = class_field()
+    type_id: str = data_field()
     """
     Unique dot-delimited type identifier. May optionally include package alias.
     Used for table name in storage, and _type field in JSON.

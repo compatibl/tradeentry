@@ -14,7 +14,7 @@
 
 from abc import ABC
 from cl.runtime.decorators.data_class_decorator import data_class
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_record import ClassRecord
 
 
@@ -30,10 +30,10 @@ class View(ClassRecord, ABC):
     tab or panel next to the record itself.
     """
 
-    view_for: str = class_field()
+    view_for: str = data_field()
     """Primary key of the record for which the view is specified."""
 
-    view_name: str = class_field()
+    view_name: str = data_field()
     """Name of the view displayed in the front end."""
 
     @staticmethod

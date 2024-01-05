@@ -12,25 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 from typing import Optional
 
 from cl.runtime.schema.decl.language_key import LanguageKey
 from cl.runtime.storage.class_data import ClassData
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Handler Implement Declaration')
-@dataclass
+@data_class
 class HandlerImplementDecl(ClassData):
     """Handler implementation data."""
 
-    name: str = class_field()
+    name: str = data_field()
     """Handler name."""
 
-    language: LanguageKey = class_field()
+    language: LanguageKey = data_field()
     """Programming language in which handler is implemented."""
 
-    override: Optional[bool] = class_field()
+    override: Optional[bool] = data_field()
     """Override flag."""

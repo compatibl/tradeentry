@@ -15,7 +15,7 @@
 from typing import final
 import pandas as pd
 from cl.runtime.decorators.data_class_decorator import data_class
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.view.view import View
 
 
@@ -24,5 +24,5 @@ from cl.runtime.view.view import View
 class DataFrameView(View):
     """View that displays contents of a dataframe."""
 
-    view_of: pd.DataFrame = class_field()
+    view_of: pd.DataFrame = data_field()
     """Dataframe with view contents."""

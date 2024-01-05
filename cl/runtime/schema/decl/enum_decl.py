@@ -12,25 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 from typing import List, Optional
 
 from cl.runtime.schema.decl.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.decl.enum_item_decl import EnumItemDecl
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Enum Declaration')
-@dataclass
+@data_class
 class EnumDecl(EnumDeclKey):
     """Enum declaration."""
 
-    label: str = class_field()
+    label: str = data_field()
     """Enum label."""
 
-    comment: Optional[str] = class_field()
+    comment: Optional[str] = data_field()
     """Enum comment."""
 
-    items: List[EnumItemDecl] = class_field()
+    items: List[EnumItemDecl] = data_field()
     """Array of enum items."""

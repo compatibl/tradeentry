@@ -13,8 +13,9 @@
 # limitations under the License.
 
 from cl.runtime.decorators.data_class_decorator import data_class
+from cl.runtime.decorators.data_field_decorator import data_field
 from typing import final
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.view.view import View
 
 
@@ -23,5 +24,5 @@ from cl.runtime.view.view import View
 class RecordView(View):
     """View that displays another record specified via its primary key."""
 
-    view_of: str = class_field()
+    view_of: str = data_field()
     """Primary key of the displayed record."""

@@ -14,8 +14,7 @@
 
 from __future__ import annotations
 from cl.runtime.decorators.data_class_decorator import data_class
-from cl.runtime import class_field
-from cl.runtime.decorators.data_class_decorator import data_class
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_record import ClassRecord
 
 
@@ -23,19 +22,19 @@ from cl.runtime.storage.class_record import ClassRecord
 class StubClassRecord(ClassRecord):
     """Stub dataclass-based record sample used in tests."""
 
-    key_field_str: str = class_field()
+    key_field_str: str = data_field()
     """First primary key attribute."""
 
-    key_field_int: int = class_field()
+    key_field_int: int = data_field()
     """Second primary key attribute."""
 
-    base_field_str: str = class_field()
+    base_field_str: str = data_field()
     """String attribute of base class."""
 
-    base_field_float: float = class_field()
+    base_field_float: float = data_field()
     """Float attribute of base class."""
 
-    base_field_long: int = class_field(typename='long', label="Custom Label", optional=True)
+    base_field_long: int = data_field(subtype='long', label="Custom Label", optional=True)
     """Optional long attribute of base class with custom label."""
 
     @staticmethod

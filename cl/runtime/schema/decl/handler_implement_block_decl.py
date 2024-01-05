@@ -12,23 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 from typing import List, Optional
 
 from cl.runtime.schema.decl.handler_implement_decl import HandlerImplementDecl
 from cl.runtime.schema.decl.interface_implement_decl import InterfaceImplementDecl
 from cl.runtime.storage.class_data import ClassData
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Handler Implement Block Declaration')
-@dataclass
+@data_class
 class HandlerImplementBlockDecl(ClassData):
     """Handler implementation block in type declaration."""
 
-    handlers: Optional[List[HandlerImplementDecl]] = class_field()
+    handlers: Optional[List[HandlerImplementDecl]] = data_field()
     """Handler implementation data."""
 
-    interfaces: Optional[List[InterfaceImplementDecl]] = class_field()
+    interfaces: Optional[List[InterfaceImplementDecl]] = data_field()
     """Interface implementation data."""

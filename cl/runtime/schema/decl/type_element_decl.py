@@ -12,70 +12,70 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 from typing import List, Optional
 
 from cl.runtime.schema.decl.element_modification_type import ElementModificationType
 from cl.runtime.schema.decl.type_member_decl import TypeMemberDecl
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Type Element Declaration')
-@dataclass
+@data_class
 class TypeElementDecl(TypeMemberDecl):
     """Type element declaration."""
 
-    name: str = class_field()
+    name: str = data_field()
     """Element name."""
 
-    label: Optional[str] = class_field()
+    label: Optional[str] = data_field()
     """Element label. If not specified, name is used instead."""
 
-    comment: Optional[str] = class_field()
+    comment: Optional[str] = data_field()
     """Element comment. Contains addition information."""
 
-    vector: Optional[bool] = class_field()
+    vector: Optional[bool] = data_field()
     """Flag indicating variable size array (vector) container."""
 
-    aliases: Optional[List[str]] = class_field()
+    aliases: Optional[List[str]] = data_field()
     """Element aliases."""
 
-    optional: Optional[bool] = class_field()
+    optional: Optional[bool] = data_field()
     """Flag indicating optional element."""
 
-    optional_vector_element: Optional[bool] = class_field()
+    optional_vector_element: Optional[bool] = data_field()
     """Flag indicating optional vector item element."""
 
-    secure: Optional[bool] = class_field()
+    secure: Optional[bool] = data_field()
     """Secure flag."""
 
-    filterable: Optional[bool] = class_field()
+    filterable: Optional[bool] = data_field()
     """Flag indicating filterable element."""
 
-    read_only: Optional[bool] = class_field()
+    read_only: Optional[bool] = data_field()
     """Flag indicating readonly element."""
 
-    hidden: Optional[bool] = class_field()
+    hidden: Optional[bool] = data_field()
     """Flag indicating a hidden element. Hidden elements are visible in API but not in the UI."""
 
-    additive: Optional[bool] = class_field()
+    additive: Optional[bool] = data_field()
     """Optional flag indicating if the element is additive and that the total column can be shown in the UI."""
 
-    category: Optional[str] = class_field()
+    category: Optional[str] = data_field()
     """Category."""
 
-    format_: Optional[str] = class_field(name='Format')
+    format_: Optional[str] = data_field(name='Format')
     """Specifies UI Format for the element."""
 
-    output: Optional[bool] = class_field()
+    output: Optional[bool] = data_field()
     """Flag indicating output element. These elements will be readonly in UI and can be fulfilled by handlers."""
 
-    alternate_of: Optional[str] = class_field()
+    alternate_of: Optional[str] = data_field()
     """Link current element to AlternateOf element. In the editor these elements will be treated as a choice."""
 
-    viewer: Optional[str] = class_field()
+    viewer: Optional[str] = data_field()
     """The element will be viewed under specified tab."""
 
-    modification_type: Optional[ElementModificationType] = class_field()
+    modification_type: Optional[ElementModificationType] = data_field()
     """Element Modification Type."""

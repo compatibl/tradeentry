@@ -12,15 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
-
+from cl.runtime.decorators.data_class_decorator import data_class
 from cl.runtime.schema.type.package_decl_key import PackageDeclKey
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 
 
-@dataclass
+@data_class
 class PackageDecl(PackageDeclKey):
     """Base class for the package declaration in schema."""
 
-    label: str = class_field(optional=True)
+    label: str = data_field(optional=True)
     """Readable package label used by the front end."""

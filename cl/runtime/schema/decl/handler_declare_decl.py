@@ -12,51 +12,51 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 from typing import List, Optional
 
 from cl.runtime.schema.decl.handler_param_decl import HandlerParamDecl
 from cl.runtime.schema.decl.handler_type import HandlerType
 from cl.runtime.schema.decl.handler_variable_decl import HandlerVariableDecl
 from cl.runtime.storage.class_data import ClassData
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Handler Declare Declaration')
-@dataclass
+@data_class
 class HandlerDeclareDecl(ClassData):
     """Handler declaration data."""
 
-    name: str = class_field()
+    name: str = data_field()
     """Handler name."""
 
-    label: Optional[str] = class_field()
+    label: Optional[str] = data_field()
     """Handler label."""
 
-    comment: Optional[str] = class_field()
+    comment: Optional[str] = data_field()
     """Handler comment."""
 
-    type_: HandlerType = class_field(name='Type')
+    type_: HandlerType = data_field(name='Type')
     """Handler type."""
 
-    params: Optional[List[HandlerParamDecl]] = class_field()
+    params: Optional[List[HandlerParamDecl]] = data_field()
     """Handler parameters."""
 
-    return_: Optional[HandlerVariableDecl] = class_field(name='Return')
+    return_: Optional[HandlerVariableDecl] = data_field(name='Return')
     """Handler return value."""
 
-    static: Optional[bool] = class_field()
+    static: Optional[bool] = data_field()
     """If set as true, handler will be static, otherwise non-static."""
 
-    hidden: Optional[bool] = class_field()
+    hidden: Optional[bool] = data_field()
     """If flag is set, handler will be hidden in UI in user mode."""
 
-    interactive_input: Optional[bool] = class_field()
+    interactive_input: Optional[bool] = data_field()
     """Interactive Input"""
 
-    category: Optional[str] = class_field()
+    category: Optional[str] = data_field()
     """Category."""
 
-    is_async: Optional[bool] = class_field()
+    is_async: Optional[bool] = data_field()
     """Use the flag to specify that a handler is asynchronous."""

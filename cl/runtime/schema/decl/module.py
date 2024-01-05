@@ -13,32 +13,32 @@
 # limitations under the License.
 
 from abc import ABC
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 from typing import List, Optional
 
 from cl.runtime.schema.decl.module_key import ModuleKey
 from cl.runtime.schema.decl.package_key import PackageKey
-from cl.runtime.storage.class_field import class_field
+from cl.runtime.decorators.data_field_decorator import data_field
 
 
-@dataclass
+@data_class
 class Module(ModuleKey, ABC):
     """
     Defines Analyst module. Module can be represented both as the source code and precomiled dll (defined by flag
     'Compiled').
     """
 
-    label: Optional[str] = class_field()
+    label: Optional[str] = data_field()
     """Module label."""
 
-    comment: Optional[str] = class_field()
+    comment: Optional[str] = data_field()
     """Module additional information."""
 
-    dependences: Optional[List[ModuleKey]] = class_field()
+    dependences: Optional[List[ModuleKey]] = data_field()
     """Module dependences."""
 
-    package: PackageKey = class_field()
+    package: PackageKey = data_field()
     """Package refence."""
 
-    copyright_: Optional[str] = class_field(name='Copyright')
+    copyright_: Optional[str] = data_field(name='Copyright')
     """Company name used in Copyright src header."""
