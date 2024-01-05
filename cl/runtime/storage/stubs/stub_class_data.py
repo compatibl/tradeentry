@@ -13,11 +13,11 @@
 # limitations under the License.
 
 from __future__ import annotations
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 from cl.runtime import ClassData, class_field
 
 
-@dataclass
+@data_class
 class StubClassData(ClassData):
     """Dataclass-based serializable data sample used in tests."""
 

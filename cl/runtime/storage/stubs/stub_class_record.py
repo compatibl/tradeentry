@@ -13,12 +13,13 @@
 # limitations under the License.
 
 from __future__ import annotations
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 from cl.runtime import class_field
+from cl.runtime.decorators.data_class_decorator import data_class
 from cl.runtime.storage.class_record import ClassRecord
 
 
-@dataclass
+@data_class
 class StubClassRecord(ClassRecord):
     """Stub dataclass-based record sample used in tests."""
 

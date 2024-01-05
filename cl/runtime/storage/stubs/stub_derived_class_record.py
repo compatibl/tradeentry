@@ -13,12 +13,12 @@
 # limitations under the License.
 
 from __future__ import annotations
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 from cl.runtime import class_field, Context
 from cl.runtime.storage.stubs.stub_class_record import StubClassRecord
 
 
-@dataclass
+@data_class
 class StubDerivedClassRecord(StubClassRecord):
     """Stub derived dataclass-based record sample used in tests."""
 

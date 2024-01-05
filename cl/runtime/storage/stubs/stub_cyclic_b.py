@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from __future__ import annotations
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 from typing import TYPE_CHECKING, Union
 from cl.runtime import class_field
 from cl.runtime.storage.class_record import ClassRecord
@@ -21,7 +21,7 @@ if TYPE_CHECKING:
     from cl.runtime.storage.stubs.stub_cyclic_a import StubCyclicA
 
 
-@dataclass
+@data_class
 class StubCyclicB(ClassRecord):
     """Stub class A with a field whose type is key for class B."""
 

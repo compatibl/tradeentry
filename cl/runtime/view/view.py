@@ -11,14 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from abc import ABC
-from dataclasses import dataclass
 
+from abc import ABC
+from cl.runtime.decorators.data_class_decorator import data_class
 from cl.runtime.storage.class_field import class_field
 from cl.runtime.storage.class_record import ClassRecord
 
 
-@dataclass
+@data_class
 class View(ClassRecord, ABC):
     """
     The data shown alongside the record in the front end.

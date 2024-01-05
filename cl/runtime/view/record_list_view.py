@@ -12,15 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
+from cl.runtime.decorators.data_class_decorator import data_class
 from typing import List, final
-
 from cl.runtime.storage.class_field import class_field
 from cl.runtime.view.view import View
 
 
 @final
-@dataclass
+@data_class
 class RecordListView(View):
     """View that displays a list of record specified via their primary keys."""
 
