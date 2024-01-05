@@ -12,23 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import attrs
 from typing_extensions import dataclass_transform
+from cl.runtime.decorators.attrs_data_decorator import attrs_data_impl
 
 
 @dataclass_transform()
 def attrs_key_impl(cls, *, label=None):
     """Performs the actual wrapping irrespective of call syntax with or without parentheses."""
 
-    cls = attrs.define(cls)
-    fields = {f.name: f for f in attrs.fields(cls) if not f.inherited}
-
-    def to_dict(self):
-        return attrs.asdict(self)
-    cls.to_dict = to_dict
-
-    def from_dict(self, data):
-        raise NotImplementedError()  # TODO: currently a stub
+    cls = attrs_data_impl(cls)
 
     get_table_method = getattr(cls, "get_table", None)
     if get_table_method is not None and getattr(get_table_method, "_implemented", False):

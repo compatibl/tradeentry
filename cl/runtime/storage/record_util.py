@@ -101,7 +101,7 @@ class RecordUtil:
         # It includes only those classes in MRO of this record that implement get_table()
         # method, and its return value must be the same for all of them.
         result = [
-            f"{c.__module__}.{c.__name__}" for c in class_type.mro() if RecordUtil.is_get_table_implemented(c)
+            f"{c.__module__}.{c.__name__}" for c in class_type.mro() if RecordUtil.is_to_key_implemented(c)
         ]
 
         # TODO: Implement memoize
@@ -116,10 +116,10 @@ class RecordUtil:
 
     @staticmethod
     @cached(custom_key_maker=lambda class_type: f"{class_type.__module__}.{class_type.__name__}")
-    def is_get_table_implemented(cls: Type):
+    def is_to_key_implemented(cls: Type):
         """Return true if `get_table` method is present and marked by _implemented."""
 
-        method = getattr(cls, "get_table", None)
+        method = getattr(cls, "to_key", None)
         return method is not None and getattr(method, "_implemented", False)
 
 

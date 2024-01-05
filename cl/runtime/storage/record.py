@@ -65,3 +65,5 @@ class Record(Key, ABC):
             Primary key in physical storage or cache may not match this logical primary key format.
             The conversion is performed by the data source implementation.
         """
+        raise RuntimeError(f"Method to_key() for class {type(self).__name__} in module {type(self).__module__} "
+                           f"is neither implemented in code nor by a decorator.")

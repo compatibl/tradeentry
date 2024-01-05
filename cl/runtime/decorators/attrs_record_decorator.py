@@ -15,50 +15,44 @@
 import attrs
 from typing import Dict
 from typing_extensions import dataclass_transform
-from cl.runtime.storage.data import Data
-from cl.runtime.storage.key import Key
+from cl.runtime.decorators.attrs_key_decorator import attrs_key_impl
 
 
 @dataclass_transform()
 def attrs_record_impl(cls, *, label=None):
     """Performs the actual wrapping irrespective of call syntax with or without parentheses."""
 
-    cls = attrs.define(cls)
-
-    # Remove base fields
-    fields = {f.name: f for f in attrs.fields(cls) if not f.inherited}
-
-    # Add __str__ and to_key realizations for key type
-    _add_key_methods(cls, fields)
+    cls = attrs_key_impl(cls)
 
     # Add label if specified
     if label is not None:
         cls._label = label
 
+    # TODO - implement calling of parent class methods
     def init(self):
         pass
     cls.init = init
 
-    def to_dict(self):
-        return attrs.asdict(self)
-    cls.to_dict = to_dict
-
-    def from_dict(self, data):
-        raise NotImplementedError()  # TODO: currently a stub
-
-    get_table_method = getattr(cls, "get_table", None)
-    if get_table_method is not None and getattr(get_table_method, "_implemented", False):
+    to_key_method = getattr(cls, "to_key", None)
+    if to_key_method is not None and getattr(to_key_method, "_implemented", False):
         # Use the method from parent if marked by _implemented, which will not be present
         # if the method is declared in parent class without implementation. Reassignment
         # here accelerates the code by preventing lookup at each level of inheritance chain.
-        cls.get_table = get_table_method
+        cls.to_key = to_key_method
     else:
         # Implement using module and class name here and mark by _implemented
         # TODO: Use package alias if specified in settings
-        def get_table(self):
-            return cls.__name__
-        cls.get_table = get_table
-        cls.get_table._implemented = True
+        fields = {f.name: f for f in attrs.fields(cls) if f.inherited}
+
+        def to_key(self):
+            key = cls()
+            for field in fields.values():
+                field_name = field.name
+                value = getattr(self, field_name, None)
+                setattr(key, field_name, value)
+            return key
+        cls.to_key = to_key
+        cls.to_key._implemented = True
 
     return cls
 
@@ -73,18 +67,3 @@ def attrs_record(cls=None, *, label=None):
         return attrs_record_impl
     else:
         return attrs_record_impl(cls, label=label)
-
-
-def _add_key_methods(cls, fields: Dict[str, attrs.Attribute]):
-    """Add __str__ and to_key realizations for key type."""
-
-    fields = [x for x in fields.values()]
-    def to_key(self):
-        key = cls()
-        for field in fields.values():
-            field_name = field.name
-            value = getattr(self, field_name, None)
-            setattr(key, field_name, value)
-        return key
-
-    cls.to_key = to_key
