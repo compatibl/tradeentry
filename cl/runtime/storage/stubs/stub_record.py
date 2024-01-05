@@ -14,7 +14,7 @@
 
 from __future__ import annotations
 from typing import Any, Dict, Optional
-from cl.runtime import Record
+from cl.runtime.storage.record import Record
 from cl.runtime.decorators.data_class_decorator import data_class
 
 

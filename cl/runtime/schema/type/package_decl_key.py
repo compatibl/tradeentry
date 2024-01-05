@@ -14,11 +14,11 @@
 
 from cl.runtime.decorators.data_class_decorator import data_class
 from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.class_record import ClassRecord
+from cl.runtime.storage.record import Record
 
 
 @data_class
-class PackageDeclKey(ClassRecord):
+class PackageDeclKey(Record):
     """Key for the package declaration in schema."""
 
     package_id: str = data_field()

@@ -16,13 +16,13 @@ from __future__ import annotations
 from cl.runtime.decorators.data_class_decorator import data_class
 from cl.runtime.decorators.data_field_decorator import data_field
 from typing import TYPE_CHECKING, Union
-from cl.runtime.storage.class_record import ClassRecord
+from cl.runtime.storage.record import Record
 if TYPE_CHECKING:
     from cl.runtime.storage.stubs.stub_cyclic_b import StubCyclicB
 
 
 @data_class
-class StubCyclicA(ClassRecord):
+class StubCyclicA(Record):
     """Stub class A with a field whose type is key for class B."""
 
     a_id: str = data_field()

@@ -15,11 +15,11 @@
 from __future__ import annotations
 from cl.runtime.decorators.data_class_decorator import data_class
 from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.class_record import ClassRecord
+from cl.runtime.storage.record import Record
 
 
 @data_class
-class StubClassRecord(ClassRecord):
+class StubClassRecord(Record):
     """Stub dataclass-based record sample used in tests."""
 
     key_field_str: str = data_field()

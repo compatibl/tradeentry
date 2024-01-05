@@ -16,11 +16,11 @@ from cl.runtime.decorators.data_class_decorator import data_class
 from typing import Optional
 
 from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.class_record import ClassRecord
+from cl.runtime.storage.record import Record
 
 
 @data_class
-class ModuleKey(ClassRecord):
+class ModuleKey(Record):
     """
     Defines Analyst module.
     Module can be represented both as the source code and precomiled dll (defined by flag "Compiled").

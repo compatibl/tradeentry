@@ -15,11 +15,11 @@
 from abc import ABC
 from cl.runtime.decorators.data_class_decorator import data_class
 from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.class_record import ClassRecord
+from cl.runtime.storage.record import Record
 
 
 @data_class
-class View(ClassRecord, ABC):
+class View(Record, ABC):
     """
     The data shown alongside the record in the front end.
 

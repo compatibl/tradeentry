@@ -17,7 +17,6 @@ from typing import Iterable, Type, TypeVar, Union
 
 from cl.runtime.decorators.data_class_decorator import data_class
 from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.class_record import ClassRecord
 from cl.runtime.storage.record import Record
 
 TKey = TypeVar('TKey', contravariant=True)
@@ -25,7 +24,7 @@ TRecord = TypeVar('TRecord', covariant=True)
 
 
 @data_class
-class DataSource(ClassRecord, ABC):
+class DataSource(Record, ABC):
     """Abstract base class for polymorphic data storage API with a directory attribute.
 
     A data source can be implemented on top a NoSQL DB, relational DB, key-value store, cloud bucket store,

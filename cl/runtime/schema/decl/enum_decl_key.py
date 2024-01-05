@@ -16,11 +16,11 @@ from cl.runtime.decorators.data_class_decorator import data_class
 
 from cl.runtime.schema.decl.module_key import ModuleKey
 from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.class_record import ClassRecord
+from cl.runtime.storage.record import Record
 
 
 @data_class
-class EnumDeclKey(ClassRecord):
+class EnumDeclKey(Record):
     """Enum declaration."""
 
     module: ModuleKey = data_field()
