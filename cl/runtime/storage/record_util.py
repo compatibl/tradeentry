@@ -117,21 +117,10 @@ class RecordUtil:
     @staticmethod
     @cached(custom_key_maker=lambda class_type: f"{class_type.__module__}.{class_type.__name__}")
     def is_get_table_implemented(cls: Type):
-        """Return true if `is_common_base` method is present and not abstract."""
+        """Return true if `get_table` method is present and marked by _implemented."""
 
-        if not (method := getattr(cls, "get_table", None)):
-            # Method not present
-            return False
-        else:
-            # Return false if not a method
-            if not inspect.isfunction(method):
-                return False
+        method = getattr(cls, "get_table", None)
+        return method is not None and getattr(method, "_implemented", False)
 
-            # Return false if a known base type
-            # TODO: Replace by a check for decorator_implemented_method decorator
-            if cls in [Data, Key, Record]:
-                return False
 
-            # Otherwise return True
-            return True
 

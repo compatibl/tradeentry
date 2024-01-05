@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import inspect
 
 import attrs
 from typing import Dict
@@ -54,11 +55,19 @@ def data_class_impl(cls, *, label=None):
     def from_dict(self, data):
         raise NotImplementedError()  # TODO: currently a stub
 
-    # Redefine only if already exists as abstract or with implementation that raises an error
-    if RecordUtil.is_get_table_implemented(cls):
+    get_table_method = getattr(cls, "get_table", None)
+    if get_table_method is not None and getattr(get_table_method, "_implemented", False):
+        # Use the method from parent if marked by _implemented, which will not be present
+        # if the method is declared in parent class without implementation. Reassignment
+        # here accelerates the code by preventing lookup at each level of inheritance chain.
+        cls.get_table = get_table_method
+    else:
+        # Implement using module and class name here and mark by _implemented
+        # TODO: Use package alias if specified in settings
         def get_table(self):
-            return "table_name"  # TODO: Implement
+            return cls.__name__
         cls.get_table = get_table
+        cls.get_table._implemented = True
 
     def from_dict(self, data):
         raise NotImplementedError()  # TODO: currently a stub
