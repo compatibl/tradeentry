@@ -15,6 +15,7 @@
 import attrs
 from typing import Dict
 from typing_extensions import dataclass_transform
+from cl.runtime.storage.record_util import RecordUtil
 from cl.runtime.storage.data import Data
 from cl.runtime.storage.key import Key
 
@@ -53,9 +54,11 @@ def data_class_impl(cls, *, label=None):
     def from_dict(self, data):
         raise NotImplementedError()  # TODO: currently a stub
 
-    def get_table(self):
-        return "table_name"  # TODO: Implement
-    cls.get_table = get_table
+    # Redefine only if already exists as abstract or with implementation that raises an error
+    if RecordUtil.is_get_table_implemented(cls):
+        def get_table(self):
+            return "table_name"  # TODO: Implement
+        cls.get_table = get_table
 
     def from_dict(self, data):
         raise NotImplementedError()  # TODO: currently a stub

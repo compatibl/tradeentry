@@ -13,10 +13,13 @@
 # limitations under the License.
 
 import sys
+import inspect
 from importlib import import_module
 from typing import List, Tuple, Type
-
 from memoization import cached
+from cl.runtime.storage.data import Data
+from cl.runtime.storage.record import Record
+from cl.runtime.storage.key import Key
 
 
 class RecordUtil:
@@ -98,7 +101,7 @@ class RecordUtil:
         # It includes only those classes in MRO of this record that implement get_table()
         # method, and its return value must be the same for all of them.
         result = [
-            f"{c.__module__}.{c.__name__}" for c in class_type.mro() if RecordUtil._is_get_table_implemented(c)
+            f"{c.__module__}.{c.__name__}" for c in class_type.mro() if RecordUtil.is_get_table_implemented(c)
         ]
 
         # TODO: Implement memoize
@@ -113,12 +116,22 @@ class RecordUtil:
 
     @staticmethod
     @cached(custom_key_maker=lambda class_type: f"{class_type.__module__}.{class_type.__name__}")
-    def _is_get_table_implemented(class_type: Type):
+    def is_get_table_implemented(cls: Type):
         """Return true if `is_common_base` method is present and not abstract."""
 
-        if not (method := getattr(class_type, "get_table", False)):
+        if not (method := getattr(cls, "get_table", None)):
             # Method not present
             return False
         else:
-            # Method is present but abstract
-            return not getattr(method, "__isabstractmethod__", False)
+            # Return false if not a method
+            if not inspect.isfunction(method):
+                return False
+
+            # Return false if a known base type
+            # TODO: Replace by a check for dynamic_abstract_method decorator
+            if cls in [Data, Key, Record]:
+                return False
+
+            # Otherwise return True
+            return True
+

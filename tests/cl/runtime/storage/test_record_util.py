@@ -92,10 +92,10 @@ def test_get_inheritance_chain():
     """Test getting class path from class."""
 
     # Test helper method
-    assert not rt.RecordUtil._is_get_table_implemented(rt.Data)  # Not present
-    assert not rt.RecordUtil._is_get_table_implemented(rt.Record)  # Abstract
-    assert rt.RecordUtil._is_get_table_implemented(StubClassRecord)  # Implemented
-    assert rt.RecordUtil._is_get_table_implemented(StubClassRecord)  # Implemented
+    assert not rt.RecordUtil.is_get_table_implemented(rt.Data)  # Not present
+    assert not rt.RecordUtil.is_get_table_implemented(rt.Record)  # Abstract
+    assert rt.RecordUtil.is_get_table_implemented(StubClassRecord)  # Implemented
+    assert rt.RecordUtil.is_get_table_implemented(StubClassRecord)  # Implemented
 
     # Common base class, returns self (call twice to test caching)
     base_path = rt.RecordUtil.get_class_path(StubClassRecord)
