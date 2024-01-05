@@ -12,29 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC, abstractmethod
-from typing import Any, Dict, Optional
-
+from abc import ABC
+from typing import Optional
 from cl.runtime import Context
-from cl.runtime.storage.data import Data
+from cl.runtime.storage.key import Key
 
 
-class Record(Data, ABC):
-    """Abstract base class for records stored in a data source.
+class Record(Key, ABC):
+    """
+    Abstract base class for database records.
 
-    The use of this class is optional. The code must not rely on inheritance from this class, but only on the
-    presence of its methods. These methods may be implemented without using any specific base or mixin class.
+    Notes:
+        - Record classes may implement handlers and viewers
+        - Handlers are functions that can be invoked from the UI
+        - Viewers are functions whose return value is displayed in the UI
+        - Handlers and viewers may be either instance or class methods, and may have parameters
 
-    Final record classes stored in a data source must implement the following methods and properties.
-    They may be provided by mixins and intermediate base classes using dataclass and similar frameworks.
+        The use of this class is optional. The code must not rely on inheritance from this class, but only on the
+        presence of its methods. These methods may be implemented without using any specific base or mixin class.
 
-    - context: Field or property with type Context that has both getter and setter.
-    - get_common_base: Static method returning the type of the common base for all classes
-      stored in the same table as this class.
-    - get_key: Return primary key of this instance in semicolon-delimited string format.
-      For example, key=`A;B` for a class with two primary key fields that have values `A` and `B`.
-    - to_dict(self) - instance method serializing self as dictionary.
-    - from_dict(self, data_dict) - instance method populating self from dictionary.
+        The methods that lack implementation must be overridden by a derived class in code or using a decorator.
+        They are not made abstract to avoid errors from static type checkers in the latter case.
     """
 
     context: Optional[Context]
@@ -48,17 +46,7 @@ class Record(Data, ABC):
     - Virtualized filesystem
     """
 
-    def __init__(self):
-        """Initialize instance attributes."""
-        self.context = None
-
-    @staticmethod
-    @abstractmethod
-    def get_common_base():
-        """Type of the common base for all classes stored in the same table as this class."""
-
-    @abstractmethod
-    def get_key(self) -> str:
+    def to_key(self) -> Key:
         """Return primary key of this instance in semicolon-delimited string format.
 
         Notes:
@@ -77,24 +65,3 @@ class Record(Data, ABC):
             Primary key in physical storage or cache may not match this logical primary key format.
             The conversion is performed by the data source implementation.
         """
-
-    def init(self) -> None:
-        """Validate dataclass attributes and use them to initialize object state.
-
-        Notes:
-
-            This function will be called by the data source after loading and before saving the object,
-            and should also be called every time the object's attributes are updated.
-
-            This implementation in base does nothing. Derived classes can override.
-        """
-
-    def __str__(self) -> str:
-        """Return primary key by default. Derived classes may override to provide more information.
-
-        Notes:
-
-            Conversion to string is provided for debugging purposes only and may be modified in derived
-            classes. Data source implementation must use `get_key` method instead.
-        """
-        return self.get_key()

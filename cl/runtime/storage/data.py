@@ -17,25 +17,24 @@ from typing import Any, Dict
 
 
 class Data(ABC):
-    """Abstract base class for serializable data.
+    """
+    Abstract base class for serializable data.
 
-    The use of this class is optional. The code must not rely on inheritance from this class, but only on the
-    presence of its methods. These methods may be implemented without using any specific base or mixin class.
+    Notes:
+        The use of this class is optional. The code must not rely on inheritance from this class, but only on the
+        presence of its methods. These methods may be implemented without using any specific base or mixin class.
 
-    Final data classes must implement the following methods and properties. Some of them may be implemented
-    by mixins or intermediate base classes, including those using dataclass and similar frameworks. Implementing
-    these methods makes it possible to use the class for fields of records stored in a data source.
-
-    * to_dict(self) - instance method serializing self as dictionary
-    * from_dict(self, data_dict) - instance method populating self from dictionary
+        The methods that lack implementation must be overridden by a derived class in code or using a decorator.
+        They are not made abstract to avoid errors from static type checkers in the latter case.
     """
 
-    @abstractmethod
     def to_dict(self) -> Dict[str, Any]:
-        """Shallow copy to dictionary. Complex field values may be shared with the argument."""
+        """Convert to a dictionary containing other dictionaries, lists and primitive types."""
+        raise RuntimeError(f"Method {type(self)}.to_dict() must be implemented in code or by a decorator.")
 
-    @abstractmethod
     def from_dict(self, data: Dict[str, Any]) -> None:
-        """Shallow copy from dictionary. Complex field values may be shared with the argument.
-        Does not clear values for which the argument does not have a key.
         """
+        Populate from a dictionary containing other dictionaries, lists and primitive types.
+        Clears values for which the argument does not have a key.
+        """
+        raise RuntimeError(f"Method {type(self)}.from_dict() must be implemented in code or by a decorator.")

@@ -20,57 +20,68 @@ from cl.runtime.storage.data import Data
 
 
 class Key(Data, ABC):
-    """Abstract base class for keys."""
+    """
+    Abstract base class for database keys.
 
-    @staticmethod
-    @abstractmethod
-    def get_table() -> str:
-        """Name of the database table where data for this key is stored.
+    Notes:
+        The use of this class is optional. The code must not rely on inheritance from this class, but only on the
+        presence of its methods. These methods may be implemented without using any specific base or mixin class.
 
-        By convention, table names mapped to Python classes use package_shortcut.ClassName format.
+        The methods that lack implementation must be overridden by a derived class in code or using a decorator.
+        They are not made abstract to avoid errors from static type checkers in the latter case.
+    """
+
+    @classmethod
+    def get_table(cls) -> str:
+        """
+        Name of the database table where data for this key is stored.
 
         Notes:
-
-            Table name in physical storage or cache may not match this logical table name format.
-            The conversion is performed by the data source implementation.
+            By convention, table name consists of a namespace (full package path or short alias) followed by
+            the class name of the common base to all classes stored in the table with dot delimiter.
         """
+        raise RuntimeError(f"Class method {cls}.get_table() must be implemented in code or by a decorator.")
 
-    @abstractmethod
     def get_key(self) -> str:
-        """Value of the key in semicolon-delimited string format.
-
-        For composite keys, the embedded keys are concatenated in the
-        order of their declaration without brackets.
-
-        Examples:
-
-            - One primary key field A: `A`
-            - Two primary key fields A and B: `A;B`
-            - Two primary key fields `A1;A2` and `B`: `A1;A2;B`
+        """
+        Key as string in semicolon-delimited string format without table name.
 
         Notes:
+            For composite keys, the embedded keys are concatenated in the order of their declaration without brackets:
 
-            Primary key in physical storage or cache may not match this logical primary key format.
-            The conversion is performed by the data source implementation.
+            - No primary key fields: '' (i.e. empty string)
+            - One primary key field A: 'A'
+            - Two primary key fields A and B: 'A;B'
+            - Two primary key fields 'A1;A2' and 'B': 'A1;A2;B'
         """
+        raise RuntimeError(f"Method {type(self)}.get_key() must be implemented in code or by a decorator.")
 
     def init(self) -> None:
-        """Validate dataclass attributes and use them to initialize object state.
+        """Validate dataclass attributes and use them to initialize object state."""
+        raise RuntimeError(f"Method {type(self)}.init() must be implemented in code or by a decorator.")
+
+    def get_generic_key(self) -> str:
+        """
+        Generic key string defines both the table and the record within the table. It consists of the
+        table name followed by the primary key in semicolon-delimited string format.
 
         Notes:
+            By convention, table name consists of a namespace (full package path or short alias) followed by
+            the class name of the common base to all classes stored in the table with dot delimiter:
 
-            This function will be called by the data source after loading and before saving the object,
-            and should also be called every time the object's attributes are updated.
-
-            This implementation in base does nothing. Derived classes can override.
+            - No primary key fields: 'package.MyClass'
+            - One primary key field A: 'package.MyClass;A'
+            - Two primary key fields A and B: 'package.MyClass;A;B'
+            - Two primary key fields 'A1;A2' and 'B': 'package.MyClass;A1;A2;B'
         """
+        return f"{self.get_table()};{self.get_key()}"
 
     def __str__(self) -> str:
-        """Return primary key by default. Derived classes may override to provide more information.
+        """
+        Return key string without table by default. Derived classes may override to provide more information.
 
         Notes:
-
-            Conversion to string is provided for debugging purposes only and may be modified in derived
-            classes. Data source implementation must use `get_key` method instead.
+            This method is for debugging purposes only and may be modified to return different data.
+            Data source implementation must use 'get_key' method instead.
         """
         return self.get_key()
