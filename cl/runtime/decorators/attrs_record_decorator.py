@@ -11,34 +11,25 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import inspect
 
 import attrs
 from typing import Dict
 from typing_extensions import dataclass_transform
-from cl.runtime.storage.record_util import RecordUtil
 from cl.runtime.storage.data import Data
 from cl.runtime.storage.key import Key
 
 
 @dataclass_transform()
-def data_class_impl(cls, *, label=None):
+def attrs_record_impl(cls, *, label=None):
     """Performs the actual wrapping irrespective of call syntax with or without parentheses."""
 
     cls = attrs.define(cls)
-
-    if not issubclass(cls, Data):
-        raise TypeError('Expected Data derived type.')
-
-    if not attrs.has(cls):
-        raise TypeError('Expected attrs type.')
 
     # Remove base fields
     fields = {f.name: f for f in attrs.fields(cls) if not f.inherited}
 
     # Add __str__ and to_key realizations for key type
-    if Key in cls.__bases__:
-        _add_key_methods(cls, fields)
+    _add_key_methods(cls, fields)
 
     # Add label if specified
     if label is not None:
@@ -69,30 +60,25 @@ def data_class_impl(cls, *, label=None):
         cls.get_table = get_table
         cls.get_table._implemented = True
 
-    def from_dict(self, data):
-        raise NotImplementedError()  # TODO: currently a stub
-
     return cls
 
 
 @dataclass_transform()
-def data_class(cls=None, *, label=None):
+def attrs_record(cls=None, *, label=None):
     """Runtime decorator for key, record, and data classes."""
 
     # The value of cls type depends on whether parentheses follow the decorator.
-    # It is the class when used as @data_class but None for @data_class().
+    # It is the class when used as @attrs_record but None for @attrs_record().
     if cls is None:
-        return data_class_impl
+        return attrs_record_impl
     else:
-        return data_class_impl(cls, label=label)
+        return attrs_record_impl(cls, label=label)
 
 
 def _add_key_methods(cls, fields: Dict[str, attrs.Attribute]):
     """Add __str__ and to_key realizations for key type."""
 
-    data_fields = attrs.fields(Data)
-    key_attributes = [x for x in fields.values() if x not in data_fields]
-
+    fields = [x for x in fields.values()]
     def to_key(self):
         key = cls()
         for field in fields.values():

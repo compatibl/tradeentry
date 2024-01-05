@@ -13,19 +13,19 @@
 # limitations under the License.
 
 from abc import ABC
-from cl.runtime.decorators.data_class_decorator import data_class
+from cl.runtime.decorators.attrs_record_decorator import attrs_record
 from typing import List, Optional
 
+from cl.runtime import Record
 from cl.runtime.schema.decl.module_key import ModuleKey
 from cl.runtime.schema.decl.package_key import PackageKey
 from cl.runtime.decorators.data_field_decorator import data_field
 
 
-@data_class
-class Module(ModuleKey, ABC):
+@attrs_record
+class Module(ModuleKey, Record):
     """
-    Defines Analyst module. Module can be represented both as the source code and precomiled dll (defined by flag
-    'Compiled').
+    Represents a group of related types under a common namespace or directory.
     """
 
     label: Optional[str] = data_field()

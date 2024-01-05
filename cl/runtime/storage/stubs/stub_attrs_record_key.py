@@ -13,16 +13,13 @@
 # limitations under the License.
 
 from __future__ import annotations
-
-from cl.runtime import Context
-from cl.runtime.decorators.attrs_record_decorator import attrs_record
+from cl.runtime.decorators.attrs_key_decorator import attrs_key
 from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.record import Record
-from cl.runtime.storage.stubs.stub_attrs_record_key import StubAttrsRecordKey
+from cl.runtime.storage.key import Key
 
 
-@attrs_record
-class StubAttrsRecord(StubAttrsRecordKey, Record):
+@attrs_key
+class StubAttrsRecordKey(Key):
     """Stub dataclass-based record sample used in tests."""
 
     key_field_str: str = data_field()
@@ -40,6 +37,7 @@ class StubAttrsRecord(StubAttrsRecordKey, Record):
     base_field_long: int = data_field(subtype='long', label="Custom Label", optional=True)
     """Optional long attribute of base class with custom label."""
 
+    # TODO: Review
     @staticmethod
     def create_key(key_field_str: str, key_field_int: int) -> str:
         """Create primary key from arguments in semicolon-delimited string format."""
@@ -52,17 +50,4 @@ class StubAttrsRecord(StubAttrsRecordKey, Record):
     @staticmethod
     def create_sample_key() -> str:
         """Return PK populated with sample data."""
-        return StubAttrsRecord.create_key('abc', 123)
-
-    @staticmethod
-    def create_sample_record(context: Context) -> StubAttrsRecord:
-        """Return an instance of this class populated with sample data."""
-
-        obj = StubAttrsRecord()
-        obj.context = context
-        obj.key_field_str = 'abc'
-        obj.key_field_int = 123
-        obj.base_field_str = 'def'
-        obj.base_field_float = 4.56
-        obj.init()
-        return obj
+        return StubAttrsRecordKey.create_key('abc', 123)

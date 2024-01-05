@@ -14,19 +14,19 @@
 
 import pytest
 import cl.runtime as rt
-from cl.runtime.storage.stubs.stub_class_record import StubClassRecord
+from cl.runtime.storage.stubs.stub_class_record import StubAttrsRecord
 
 
 def test_smoke():
     """Smoke test."""
 
     # Create and test standalone key
-    sample_key = StubClassRecord.create_sample_key()
+    sample_key = StubAttrsRecord.create_sample_key()
     assert sample_key == 'abc;123'
 
     # Create test record and populate with sample data
     context = rt.Context()
-    record = StubClassRecord.create_sample_record(context)
+    record = StubAttrsRecord.create_sample_record(context)
 
     # Test that context has been set
     assert record.context == context

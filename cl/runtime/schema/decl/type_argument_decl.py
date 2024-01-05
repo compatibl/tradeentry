@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.data_class_decorator import data_class
+from cl.runtime.decorators.attrs_data_decorator import attrs_data
 from cl.runtime.schema.decl.type_member_decl import TypeMemberDecl
 
 
-@data_class
+@attrs_data
 class TypeArgumentDecl(TypeMemberDecl):
     """Type argument declaration."""
 

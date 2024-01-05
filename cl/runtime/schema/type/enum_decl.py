@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.data_class_decorator import data_class
+from cl.runtime.decorators.attrs_record_decorator import attrs_record
 
 from cl.runtime.schema.type.type_decl import TypeDecl
 
 
-@data_class
+@attrs_record
 class EnumDecl(TypeDecl):
     """Declaration for an enum type."""

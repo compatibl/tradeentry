@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.data_class_decorator import data_class
+from cl.runtime.decorators.attrs_data_decorator import attrs_data
 from typing import Optional
 
 from cl.runtime.schema.decl.type_decl_key import TypeDeclKey
@@ -20,7 +20,7 @@ from cl.runtime.schema.decl.type_member_decl import TypeMemberDecl
 from cl.runtime.decorators.data_field_decorator import data_field
 
 
-@data_class
+@attrs_data
 class HandlerVariableDecl(TypeMemberDecl):
     """Handler parameter or return variable declaration."""
 

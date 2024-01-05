@@ -15,10 +15,10 @@
 from __future__ import annotations
 from typing import Any, Dict, Optional
 from cl.runtime.storage.record import Record
-from cl.runtime.decorators.data_class_decorator import data_class
+from cl.runtime.decorators.attrs_record_decorator import attrs_record
 
 
-@data_class
+@attrs_record
 class StubRecord(Record):
     """Stub record used in tests."""
 

@@ -21,8 +21,7 @@ def viewer(*, label: str = None):
     Decorator for identifying class or static methods that are viewers.
     Viewers are invoked to display information about the record.
 
-    A viewer return type and its parameters must be valid field types
-    for a @data_class.
+    A viewer return type and its parameters must be valid field types.
     """
 
     def wrap(method):

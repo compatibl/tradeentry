@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.data_class_decorator import data_class
+from cl.runtime.decorators.attrs_record_decorator import attrs_record
 from cl.runtime.schema.type.type_decl_key import TypeDeclKey
 from cl.runtime.decorators.data_field_decorator import data_field
 
 
-@data_class
+@attrs_record
 class TypeDecl(TypeDeclKey):
     """Base class of type declaration in schema."""
 

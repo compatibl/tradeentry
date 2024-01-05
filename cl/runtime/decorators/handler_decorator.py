@@ -24,8 +24,7 @@ def handler(label: str = None):
     Decorator for identifying class or static methods that are handlers.
     Handlers are methods that can be invoked through the user interface or CLI.
 
-    A handler must return void and its parameters must be valid field types
-    for a @data_class.
+    A handler must return void and its parameters must be valid field types.
     """
 
     def wrap(method: Callable):

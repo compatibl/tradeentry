@@ -14,34 +14,34 @@
 
 import pytest
 import cl.runtime as rt
-from cl.runtime.storage.stubs.stub_class_data import StubClassData
-from cl.runtime.storage.stubs.stub_class_record import StubClassRecord
-from cl.runtime.storage.stubs.stub_derived_class_record import StubDerivedClassRecord
+from cl.runtime.storage.stubs.stub_class_data import StubAttrsData
+from cl.runtime.storage.stubs.stub_class_record import StubAttrsRecord
+from cl.runtime.storage.stubs.stub_derived_class_record import StubDerivedAttrsRecord
 
 
 def test_get_class_path():
     """Test getting class path from class."""
 
     # Base class
-    base_path = f"{StubClassRecord.__module__}.{StubClassRecord.__name__}"
-    assert rt.RecordUtil.get_class_path(StubClassRecord) == base_path
+    base_path = f"{StubAttrsRecord.__module__}.{StubAttrsRecord.__name__}"
+    assert rt.RecordUtil.get_class_path(StubAttrsRecord) == base_path
 
     # Derived class
-    derived_path = f"{StubDerivedClassRecord.__module__}.{StubDerivedClassRecord.__name__}"
-    assert rt.RecordUtil.get_class_path(StubDerivedClassRecord) == derived_path
+    derived_path = f"{StubDerivedAttrsRecord.__module__}.{StubDerivedAttrsRecord.__name__}"
+    assert rt.RecordUtil.get_class_path(StubDerivedAttrsRecord) == derived_path
 
 
 def test_split_class_path():
     """Test splitting class path into module and class name."""
 
     # Base class
-    base_path = f"{StubClassRecord.__module__}.{StubClassRecord.__name__}"
-    base_result = StubClassRecord.__module__, StubClassRecord.__name__
+    base_path = f"{StubAttrsRecord.__module__}.{StubAttrsRecord.__name__}"
+    base_result = StubAttrsRecord.__module__, StubAttrsRecord.__name__
     assert rt.RecordUtil.split_class_path(base_path) == base_result
 
     # Derived class
-    derived_path = f"{StubDerivedClassRecord.__module__}.{StubDerivedClassRecord.__name__}"
-    derived_result = StubDerivedClassRecord.__module__, StubDerivedClassRecord.__name__
+    derived_path = f"{StubDerivedAttrsRecord.__module__}.{StubDerivedAttrsRecord.__name__}"
+    derived_result = StubDerivedAttrsRecord.__module__, StubDerivedAttrsRecord.__name__
     assert rt.RecordUtil.split_class_path(derived_path) == derived_result
 
 
@@ -94,25 +94,25 @@ def test_get_inheritance_chain():
     # Test helper method
     assert not rt.RecordUtil.is_get_table_implemented(rt.Data)  # Not present
     assert not rt.RecordUtil.is_get_table_implemented(rt.Record)  # Abstract
-    assert rt.RecordUtil.is_get_table_implemented(StubClassRecord)  # Implemented
-    assert rt.RecordUtil.is_get_table_implemented(StubClassRecord)  # Implemented
+    assert rt.RecordUtil.is_get_table_implemented(StubAttrsRecord)  # Implemented
+    assert rt.RecordUtil.is_get_table_implemented(StubAttrsRecord)  # Implemented
 
     # Common base class, returns self (call twice to test caching)
-    base_path = rt.RecordUtil.get_class_path(StubClassRecord)
-    assert rt.RecordUtil.get_inheritance_chain(StubClassRecord) == [base_path]
-    assert rt.RecordUtil.get_inheritance_chain(StubClassRecord) == [base_path]
+    base_path = rt.RecordUtil.get_class_path(StubAttrsRecord)
+    assert rt.RecordUtil.get_inheritance_chain(StubAttrsRecord) == [base_path]
+    assert rt.RecordUtil.get_inheritance_chain(StubAttrsRecord) == [base_path]
 
     # Derived class, returns the root of hierarchy (call twice to test caching)
-    derived_path = rt.RecordUtil.get_class_path(StubDerivedClassRecord)
-    assert rt.RecordUtil.get_inheritance_chain(StubDerivedClassRecord) == [derived_path, base_path]
-    assert rt.RecordUtil.get_inheritance_chain(StubDerivedClassRecord) == [derived_path, base_path]
+    derived_path = rt.RecordUtil.get_class_path(StubDerivedAttrsRecord)
+    assert rt.RecordUtil.get_inheritance_chain(StubDerivedAttrsRecord) == [derived_path, base_path]
+    assert rt.RecordUtil.get_inheritance_chain(StubDerivedAttrsRecord) == [derived_path, base_path]
 
     # Invoke for a type that does not implement get_table()
     # twice to test that caching does not fail on exception
     with pytest.raises(RuntimeError):
-        rt.RecordUtil.get_inheritance_chain(StubClassData)
+        rt.RecordUtil.get_inheritance_chain(StubAttrsData)
     with pytest.raises(RuntimeError):
-        rt.RecordUtil.get_inheritance_chain(StubClassData)
+        rt.RecordUtil.get_inheritance_chain(StubAttrsData)
 
     # Test caching of method results
     cache_info = rt.RecordUtil.get_inheritance_chain.cache_info()

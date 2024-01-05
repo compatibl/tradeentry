@@ -15,8 +15,10 @@
 from __future__ import annotations
 from typing import Any, Dict, Optional
 from cl.runtime import Data
+from cl.runtime.decorators.attrs_data_decorator import attrs_data
 
 
+@attrs_data
 class StubData(Data):
     """Stub serializable data used in tests."""
 

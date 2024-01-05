@@ -13,13 +13,14 @@
 # limitations under the License.
 
 from abc import ABC
-from cl.runtime.decorators.data_class_decorator import data_class
+from cl.runtime.decorators.attrs_record_decorator import attrs_record
 from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.record import Record
+from cl.runtime.view.view_key import ViewKey
 
 
-@data_class
-class View(Record, ABC):
+@attrs_record
+class View(ViewKey, Record, ABC):
     """
     The data shown alongside the record in the front end.
 

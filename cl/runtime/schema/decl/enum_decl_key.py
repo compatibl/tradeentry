@@ -12,15 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.data_class_decorator import data_class
+from cl.runtime.decorators.attrs_key_decorator import attrs_key
 
 from cl.runtime.schema.decl.module_key import ModuleKey
 from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.record import Record
+from cl.runtime.storage.key import Key
 
 
-@data_class
-class EnumDeclKey(Record):
+@attrs_key
+class EnumDeclKey(Key):
     """Enum declaration."""
 
     module: ModuleKey = data_field()

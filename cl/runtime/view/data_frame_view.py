@@ -14,13 +14,13 @@
 
 from typing import final
 import pandas as pd
-from cl.runtime.decorators.data_class_decorator import data_class
+from cl.runtime.decorators.attrs_record_decorator import attrs_record
 from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.view.view import View
 
 
 @final
-@data_class
+@attrs_record
 class DataFrameView(View):
     """View that displays contents of a dataframe."""
 

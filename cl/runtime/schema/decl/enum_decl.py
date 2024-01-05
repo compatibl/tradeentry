@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.data_class_decorator import data_class
+from cl.runtime.decorators.attrs_record_decorator import attrs_record
 from typing import List, Optional
 
 from cl.runtime.schema.decl.enum_decl_key import EnumDeclKey
@@ -20,7 +20,7 @@ from cl.runtime.schema.decl.enum_item_decl import EnumItemDecl
 from cl.runtime.decorators.data_field_decorator import data_field
 
 
-@data_class
+@attrs_record
 class EnumDecl(EnumDeclKey):
     """Enum declaration."""
 

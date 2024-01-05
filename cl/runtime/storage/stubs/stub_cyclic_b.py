@@ -13,16 +13,16 @@
 # limitations under the License.
 
 from __future__ import annotations
-from cl.runtime.decorators.data_class_decorator import data_class
+from cl.runtime.decorators.attrs_data_decorator import attrs_data
 from cl.runtime.decorators.data_field_decorator import data_field
 from typing import TYPE_CHECKING, Union
-from cl.runtime.storage.record import Record
+from cl.runtime.storage.data import Data
 if TYPE_CHECKING:
     from cl.runtime.storage.stubs.stub_cyclic_a import StubCyclicA
 
 
-@data_class
-class StubCyclicB(Record):
+@attrs_data
+class StubCyclicB(Data):
     """Stub class A with a field whose type is key for class B."""
 
     b_id: str = data_field()
@@ -32,29 +32,14 @@ class StubCyclicB(Record):
     """Key for class A."""
 
     @staticmethod
-    def create_key(b_id: str) -> str:
-        """Create primary key from arguments in semicolon-delimited string format."""
-        return b_id
-
-    def get_key(self) -> str:
-        """Return primary key of this instance in semicolon-delimited string format."""
-        return self.b_id
-
-    @staticmethod
-    def create_sample_key() -> str:
-        """Return PK populated with sample data."""
-        return StubCyclicB.create_key('abc')
-
-    @staticmethod
-    def create_sample_record(context: Context) -> StubCyclicB:
+    def create() -> StubCyclicB:
         """Return an instance of this class populated with sample data."""
 
         # Import inside function to avoid cyclic reference error
         from cl.runtime.storage.stubs.stub_cyclic_a import StubCyclicA
 
         obj = StubCyclicB()
-        obj.context = context
         obj.b_id = "abc"
-        obj.a = StubCyclicA.create_key("abc")
-        obj.init()
+        obj.a = StubCyclicA()
+        obj.a.a_id = "xyz"
         return obj

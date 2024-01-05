@@ -15,14 +15,14 @@
 from copy import deepcopy
 from typing import Dict, Iterable, Optional, Type, Union
 
-from cl.runtime.decorators.data_class_decorator import data_class
+from cl.runtime.decorators.attrs_data_decorator import attrs_data
 from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.data_source import DataSource, TKey, TRecord
 from cl.runtime.storage.record import Record
 from cl.runtime.storage.record_util import RecordUtil
 
 
-@data_class
+@attrs_data
 class CacheDataSource(DataSource):
     """Data source based on in-memory cache using Python dict."""
 

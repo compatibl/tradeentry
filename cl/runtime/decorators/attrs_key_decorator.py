@@ -11,14 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import inspect
 
 import attrs
-from typing import Dict
 from typing_extensions import dataclass_transform
-from cl.runtime.storage.record_util import RecordUtil
-from cl.runtime.storage.data import Data
-from cl.runtime.storage.key import Key
 
 
 @dataclass_transform()
@@ -26,27 +21,7 @@ def attrs_key_impl(cls, *, label=None):
     """Performs the actual wrapping irrespective of call syntax with or without parentheses."""
 
     cls = attrs.define(cls)
-
-    if not issubclass(cls, Data):
-        raise TypeError('Expected Data derived type.')
-
-    if not attrs.has(cls):
-        raise TypeError('Expected attrs type.')
-
-    # Remove base fields
     fields = {f.name: f for f in attrs.fields(cls) if not f.inherited}
-
-    # Add __str__ and to_key realizations for key type
-    if Key in cls.__bases__:
-        _add_key_methods(cls, fields)
-
-    # Add label if specified
-    if label is not None:
-        cls._label = label
-
-    def init(self):
-        pass
-    cls.init = init
 
     def to_dict(self):
         return attrs.asdict(self)
@@ -69,9 +44,6 @@ def attrs_key_impl(cls, *, label=None):
         cls.get_table = get_table
         cls.get_table._implemented = True
 
-    def from_dict(self, data):
-        raise NotImplementedError()  # TODO: currently a stub
-
     return cls
 
 
@@ -85,20 +57,3 @@ def attrs_key(cls=None, *, label=None):
         return attrs_key_impl
     else:
         return attrs_key_impl(cls, label=label)
-
-
-def _add_key_methods(cls, fields: Dict[str, attrs.Attribute]):
-    """Add __str__ and to_key realizations for key type."""
-
-    data_fields = attrs.fields(Data)
-    key_attributes = [x for x in fields.values() if x not in data_fields]
-
-    def to_key(self):
-        key = cls()
-        for field in fields.values():
-            field_name = field.name
-            value = getattr(self, field_name, None)
-            setattr(key, field_name, value)
-        return key
-
-    cls.to_key = to_key

@@ -12,9 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.data_class_decorator import data_class
 from typing import List, Optional
-
+from cl.runtime.decorators.attrs_record_decorator import attrs_record
 from cl.runtime.schema.decl.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.decl.handler_implement_block_decl import HandlerImplementBlockDecl
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
@@ -27,7 +26,7 @@ from cl.runtime.schema.decl.type_param_decl import TypeParamDecl
 from cl.runtime.decorators.data_field_decorator import data_field
 
 
-@data_class
+@attrs_record
 class TypeDecl(TypeDeclKey):
     """
     Defines type declaration. A tag of entity type XML representation corresponds to each element of the type. The

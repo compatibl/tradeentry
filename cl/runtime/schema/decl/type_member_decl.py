@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.data_class_decorator import data_class
+from cl.runtime.decorators.attrs_data_decorator import attrs_data
 from typing import TYPE_CHECKING, List, Optional
 
 from cl.runtime.schema.decl.enum_decl_key import EnumDeclKey
@@ -26,7 +26,7 @@ if TYPE_CHECKING:
     from cl.runtime.schema.decl.type_argument_decl import TypeArgumentDecl
 
 
-@data_class
+@attrs_data
 class TypeMemberDecl(Data):
     """Type member declaration."""
 

@@ -12,15 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.data_class_decorator import data_class
 from typing import Optional, final
 
+from cl.runtime import Record
+from cl.runtime.decorators.attrs_record_decorator import attrs_record
 from cl.runtime.schema.decl.language_key import LanguageKey
 from cl.runtime.decorators.data_field_decorator import data_field
 
 
 @final
-@data_class
-class Language(LanguageKey):
+@attrs_record
+class Language(LanguageKey, Record):
     language_label: Optional[str] = data_field()
     """Language label displayed in user interface (may not be unique)."""
