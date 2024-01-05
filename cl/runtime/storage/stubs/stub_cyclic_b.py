@@ -32,11 +32,6 @@ class StubCyclicB(Record):
     """Key for class A."""
 
     @staticmethod
-    def get_common_base():
-        """Type of the common base for all classes stored in the same table as this class."""
-        return StubCyclicB
-
-    @staticmethod
     def create_key(b_id: str) -> str:
         """Create primary key from arguments in semicolon-delimited string format."""
         return b_id

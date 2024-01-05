@@ -31,8 +31,7 @@ class Key(Data, ABC):
         They are not made abstract to avoid errors from static type checkers in the latter case.
     """
 
-    @classmethod
-    def get_table(cls) -> str:
+    def get_table(self) -> str:
         """
         Name of the database table where data for this key is stored.
 
@@ -40,7 +39,7 @@ class Key(Data, ABC):
             By convention, table name consists of a namespace (full package path or short alias) followed by
             the class name of the common base to all classes stored in the table with dot delimiter.
         """
-        raise RuntimeError(f"Class method {cls}.get_table() must be implemented in code or by a decorator.")
+        raise RuntimeError(f"Class method {type(self)}.get_table() must be implemented in code or by a decorator.")
 
     def get_key(self) -> str:
         """

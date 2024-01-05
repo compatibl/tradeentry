@@ -92,10 +92,10 @@ def test_get_inheritance_chain():
     """Test getting class path from class."""
 
     # Test helper method
-    assert not rt.RecordUtil._is_get_common_base_implemented(rt.Data)  # Not present
-    assert not rt.RecordUtil._is_get_common_base_implemented(rt.Record)  # Abstract
-    assert rt.RecordUtil._is_get_common_base_implemented(StubClassRecord)  # Implemented
-    assert rt.RecordUtil._is_get_common_base_implemented(StubClassRecord)  # Implemented
+    assert not rt.RecordUtil._is_get_table_implemented(rt.Data)  # Not present
+    assert not rt.RecordUtil._is_get_table_implemented(rt.Record)  # Abstract
+    assert rt.RecordUtil._is_get_table_implemented(StubClassRecord)  # Implemented
+    assert rt.RecordUtil._is_get_table_implemented(StubClassRecord)  # Implemented
 
     # Common base class, returns self (call twice to test caching)
     base_path = rt.RecordUtil.get_class_path(StubClassRecord)
@@ -107,8 +107,8 @@ def test_get_inheritance_chain():
     assert rt.RecordUtil.get_inheritance_chain(StubDerivedClassRecord) == [derived_path, base_path]
     assert rt.RecordUtil.get_inheritance_chain(StubDerivedClassRecord) == [derived_path, base_path]
 
-    # Error, invoked for a type that does not implement get_common_base
-    # Call twice to test that caching does not fail on error
+    # Invoke for a type that does not implement get_table()
+    # twice to test that caching does not fail on exception
     with pytest.raises(RuntimeError):
         rt.RecordUtil.get_inheritance_chain(StubClassData)
     with pytest.raises(RuntimeError):

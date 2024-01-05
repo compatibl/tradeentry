@@ -42,11 +42,6 @@ class StubRecord(Record):
         self.base_field_str = None
         self.base_field_float = None
 
-    @staticmethod
-    def get_common_base():
-        """Type of the common base for all classes stored in the same table as this class."""
-        return StubRecord
-
     def get_key(self) -> str:
         """Return primary key of this instance in semicolon-delimited string format."""
         return f"{self.key_field_str};{self.key_field_int}"

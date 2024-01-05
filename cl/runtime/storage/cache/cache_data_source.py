@@ -154,8 +154,7 @@ class CacheDataSource(DataSource):
 
             # TODO: Support tables
             # Insert the record into dataset dictionary
-            common_base = record.get_common_base()  # noqa
-            table_name = RecordUtil.get_class_path(common_base)
+            table_name = record.get_table()
             dataset_cache[key] = record_dict
 
     def save_on_commit(self, record: Record, data_set: str) -> None:

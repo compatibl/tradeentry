@@ -29,25 +29,6 @@ class DataSource(Record, ABC):
 
     A data source can be implemented on top a NoSQL DB, relational DB, key-value store, cloud bucket store,
     in-memory cache, distributed cache, filesystem, and types of storage solutions.
-
-    Final record classes stored in a data source must implement the following methods and properties. Some of them
-    may be implemented by mixins or intermediate base classes, including those using dataclass and similar frameworks.
-
-    * context - field or property with type Context that has both getter and setter
-    * get_key(self) - instance method returning primary key without type as semicolon-delimited string.
-      For example, key=`A;B` for a class with two primary key fields that have values `A` and `B`
-    * to_dict(self) - instance method serializing self as dictionary
-    * from_dict(self, data_dict) - instance method populating self from dictionary
-    * get_common_base() - static method returning the type of the common base class for all classes
-      stored in the same database table as this class.
-
-    A slash-delimited string parameter `dir` may be used to set up hierarchical data lookup within the data source.
-
-    - Root directory is designed by `/`
-    - Permitted character in directory name follow Linux, with `/` in the beginning but not at the end.
-    - Each record is stored in a specific directory.
-    - During lookup, records in each directory will shadow records with the same key in its base directories.
-    - For example, search order when directory '/A/B' is specified is [`/A/B`, `/A`, `/`]
     """
 
     data_source_id: str = data_field()
@@ -55,11 +36,6 @@ class DataSource(Record, ABC):
 
     read_only: bool = data_field(optional=True)
     """Use this flag to mark the data source as readonly. All write operations will fail with error if set."""
-
-    @staticmethod
-    def get_common_base():
-        """Type of the common base for all classes stored in the same table as this class."""
-        return DataSource
 
     @staticmethod
     def create_key(data_source_id: str) -> str:

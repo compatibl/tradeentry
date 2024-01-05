@@ -38,11 +38,6 @@ class StubClassRecord(Record):
     """Optional long attribute of base class with custom label."""
 
     @staticmethod
-    def get_common_base():
-        """Type of the common base for all classes stored in the same table as this class."""
-        return StubClassRecord
-
-    @staticmethod
     def create_key(key_field_str: str, key_field_int: int) -> str:
         """Create primary key from arguments in semicolon-delimited string format."""
         return f'{key_field_str};{key_field_int}'

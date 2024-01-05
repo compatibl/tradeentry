@@ -28,8 +28,8 @@ def test_smoke():
     assert base_record.context == context
 
     # Test type and key
-    common_base = base_record.get_common_base()
-    assert common_base == type(base_record)
+    table_name = base_record.get_table()
+    assert table_name == type(base_record).__name__
     key = base_record.get_key()
     assert key == 'abc;123'
 

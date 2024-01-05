@@ -89,38 +89,34 @@ class RecordUtil:
         """Returns inheritance chain as the list of class path strings.
 
         - The argument class_type is either a literal class type, for example StubClass,
-          or a type variable obtained from a class instance, for example type(stub_class_instance).
-        - The result is in MRO order and includes only those classes that implement static method get_common_base().
-        - Return value of get_common_base() must be the same for all classes in the inheritance chain
+          or a type variable obtained from a class instance, for example type(stub_class_instance)
+        - The result is in MRO order and includes only those classes that implement get_table()
+        - Return value of get_table() must be the same for all classes in the inheritance chain.
         """
 
-        # Include only those classes in MRO that implement get_common_base
-        # These are the classes that can be queried from this table
+        # The list of base classes for which a polymorphic query can return this record.
+        # It includes only those classes in MRO of this record that implement get_table()
+        # method, and its return value must be the same for all of them.
         result = [
-            f"{c.__module__}.{c.__name__}" for c in class_type.mro() if RecordUtil._is_get_common_base_implemented(c)
+            f"{c.__module__}.{c.__name__}" for c in class_type.mro() if RecordUtil._is_get_table_implemented(c)
         ]
 
         # TODO: Implement memoize
-        # TODO: Implement check that get_common_base() returns the same value for all classes in the result
-
         if len(result) == 0:
             class_path = RecordUtil.get_class_path(class_type)
             raise RuntimeError(
-                f"To be stored in a data source, class {class_path} or its base must implement the "
-                f"static method get_common_base(). Its return value is the type of the common base "
-                f"class for all classes stored in the same data source table as this class. "
-                f"For example, if B and C both inherit from A, then get_common_base() returns"
-                f"A for both B and C."
+                f"To be stored in a data source, class {class_path} or its base must implement the method "
+                f"get_table() returning the name of the table where records of this type are stored."
             )
 
         return result
 
     @staticmethod
     @cached(custom_key_maker=lambda class_type: f"{class_type.__module__}.{class_type.__name__}")
-    def _is_get_common_base_implemented(class_type: Type):
+    def _is_get_table_implemented(class_type: Type):
         """Return true if `is_common_base` method is present and not abstract."""
 
-        if not (method := getattr(class_type, "get_common_base", False)):
+        if not (method := getattr(class_type, "get_table", False)):
             # Method not present
             return False
         else:

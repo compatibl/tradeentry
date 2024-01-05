@@ -53,6 +53,13 @@ def data_class_impl(cls, *, label=None):
     def from_dict(self, data):
         raise NotImplementedError()  # TODO: currently a stub
 
+    def get_table(self):
+        return "table_name"  # TODO: Implement
+    cls.get_table = get_table
+
+    def from_dict(self, data):
+        raise NotImplementedError()  # TODO: currently a stub
+
     return cls
 
 
