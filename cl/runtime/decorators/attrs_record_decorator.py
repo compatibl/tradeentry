@@ -28,10 +28,21 @@ def attrs_record_impl(cls, *, label=None):
     if label is not None:
         cls._label = label
 
-    # TODO - implement calling of parent class methods
-    def init(self):
-        pass
-    cls.init = init
+    init_method = getattr(cls, "init", None)
+    if init_method is not None and getattr(init_method, "_implemented", False):
+        # Use the method from parent if marked by _implemented, which will not be present
+        # if the method is declared in parent class without implementation. Reassignment
+        # here accelerates the code by preventing lookup at each level of inheritance chain.
+        cls.init = init_method
+    else:
+        # Implement using module and class name here and mark by _implemented
+        # TODO: Use package alias if specified in settings
+        fields = {f.name: f for f in attrs.fields(cls) if f.inherited}
+
+        def init(self):
+            pass  # TODO: Implement hierarchical calls to parents but only when init has body
+        cls.init = init
+        cls.init._implemented = True
 
     to_key_method = getattr(cls, "to_key", None)
     if to_key_method is not None and getattr(to_key_method, "_implemented", False):
