@@ -16,12 +16,12 @@ from cl.runtime.decorators.data_class_decorator import data_class
 from typing import Union
 
 from cl.runtime.schema.type.type_decl_key import TypeDeclKey
-from cl.runtime.storage.class_data import ClassData
+from cl.runtime.storage.data import Data
 from cl.runtime.decorators.data_field_decorator import data_field
 
 
 @data_class
-class FieldDecl(ClassData):
+class FieldDecl(Data):
     """Base class of type declaration in schema."""
 
     name: str = data_field()

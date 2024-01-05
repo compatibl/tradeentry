@@ -18,14 +18,14 @@ from typing import List, Optional
 from cl.runtime.schema.decl.handler_param_decl import HandlerParamDecl
 from cl.runtime.schema.decl.handler_type import HandlerType
 from cl.runtime.schema.decl.handler_variable_decl import HandlerVariableDecl
-from cl.runtime.storage.class_data import ClassData
+from cl.runtime.storage.data import Data
 from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Handler Declare Declaration')
 @data_class
-class HandlerDeclareDecl(ClassData):
+class HandlerDeclareDecl(Data):
     """Handler declaration data."""
 
     name: str = data_field()

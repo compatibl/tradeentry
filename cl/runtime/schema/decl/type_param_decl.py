@@ -16,14 +16,14 @@ from cl.runtime.decorators.data_class_decorator import data_class
 from typing import Optional
 
 from cl.runtime.schema.decl.type_param_constraint_type import TypeParamConstraintType
-from cl.runtime.storage.class_data import ClassData
+from cl.runtime.storage.data import Data
 from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Type Parameter Declaration')
 @data_class
-class TypeParamDecl(ClassData):
+class TypeParamDecl(Data):
     """Type parameter declaration."""
 
     name: str = data_field()

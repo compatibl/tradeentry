@@ -15,14 +15,14 @@
 from cl.runtime.decorators.data_class_decorator import data_class
 from typing import Optional
 
-from cl.runtime.storage.class_data import ClassData
+from cl.runtime.storage.data import Data
 from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_label import class_label
 
 
 @class_label('PackageDependency')
 @data_class
-class PackageDependency(ClassData):
+class PackageDependency(Data):
     """PackageDependency."""
 
     name: str = data_field()

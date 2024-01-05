@@ -15,11 +15,11 @@
 from __future__ import annotations
 from cl.runtime.decorators.data_class_decorator import data_class
 from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime import ClassData
+from cl.runtime.storage.data import Data
 
 
 @data_class
-class StubClassData(ClassData):
+class StubClassData(Data):
     """Dataclass-based serializable data sample used in tests."""
 
     base_field_str: str = data_field()

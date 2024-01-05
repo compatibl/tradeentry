@@ -19,7 +19,7 @@ from cl.runtime.schema.decl.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.decl.type_decl_key import TypeDeclKey
 from cl.runtime.schema.decl.value_decl import ValueDecl
-from cl.runtime.storage.class_data import ClassData
+from cl.runtime.storage.data import Data
 from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_label import class_label
 
@@ -29,7 +29,7 @@ if TYPE_CHECKING:
 
 @class_label('Type Member Declaration')
 @data_class
-class TypeMemberDecl(ClassData):
+class TypeMemberDecl(Data):
     """Type member declaration."""
 
     type_param: Optional[str] = data_field()

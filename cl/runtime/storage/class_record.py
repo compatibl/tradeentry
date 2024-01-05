@@ -44,22 +44,3 @@ class ClassRecord(Record, ABC):
     other data types with runtime type safety as the string generated
     by get_key() method.
     """
-
-    def to_dict(self) -> Dict[str, Any]:
-        """
-        Serialize self as dictionary.
-
-        Default implementation uses runtime class introspection.
-        Derived classes may override for greater performance.
-        """
-        return attrs.asdict(self)  # noqa This class is an attrs instance based on @data_class implementation
-
-    def from_dict(self, data: Dict[str, Any]) -> None:
-        """
-        Populate self from dictionary.
-
-        Default implementation uses runtime class introspection.
-        Derived classes may override for greater performance.
-        """
-        raise NotImplementedError()  # TODO: currently a stub
-        pass

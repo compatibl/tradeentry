@@ -16,14 +16,14 @@ from cl.runtime.decorators.data_class_decorator import data_class
 from typing import Optional
 
 from cl.runtime.schema.decl.index_sort_order_enum import IndexSortOrderEnum
-from cl.runtime.storage.class_data import ClassData
+from cl.runtime.storage.data import Data
 from cl.runtime.decorators.data_field_decorator import data_field
 from cl.runtime.storage.class_label import class_label
 
 
 @class_label('Index Declaration')
 @data_class
-class IndexDecl(ClassData):
+class IndexDecl(Data):
     """Index declaration."""
 
     name: str = data_field()

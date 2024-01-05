@@ -44,8 +44,14 @@ def data_class_impl(cls, *, label=None):
 
     def init(self):
         pass
-
     cls.init = init
+
+    def to_dict(self):
+        return attrs.asdict(self)
+    cls.to_dict = to_dict
+
+    def from_dict(self, data):
+        raise NotImplementedError()  # TODO: currently a stub
 
     return cls
 
