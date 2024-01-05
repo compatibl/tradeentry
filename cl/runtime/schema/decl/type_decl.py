@@ -25,10 +25,8 @@ from cl.runtime.schema.decl.type_index_decl import TypeIndexDecl
 from cl.runtime.schema.decl.type_kind import TypeKind
 from cl.runtime.schema.decl.type_param_decl import TypeParamDecl
 from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.class_label import class_label
 
 
-@class_label('Type Declaration')
 @data_class
 class TypeDecl(TypeDeclKey):
     """

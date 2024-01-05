@@ -13,12 +13,9 @@
 # limitations under the License.
 
 from cl.runtime.decorators.data_class_decorator import data_class
-
 from cl.runtime.schema.decl.type_member_decl import TypeMemberDecl
-from cl.runtime.storage.class_label import class_label
 
 
-@class_label('Type Argument Declaration')
 @data_class
 class TypeArgumentDecl(TypeMemberDecl):
     """Type argument declaration."""

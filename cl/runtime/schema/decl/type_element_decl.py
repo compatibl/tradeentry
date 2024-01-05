@@ -18,10 +18,8 @@ from typing import List, Optional
 from cl.runtime.schema.decl.element_modification_type import ElementModificationType
 from cl.runtime.schema.decl.type_member_decl import TypeMemberDecl
 from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.class_label import class_label
 
 
-@class_label('Type Element Declaration')
 @data_class
 class TypeElementDecl(TypeMemberDecl):
     """Type element declaration."""

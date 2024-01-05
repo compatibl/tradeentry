@@ -18,10 +18,8 @@ from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.decl.language_key import LanguageKey
 from cl.runtime.storage.data import Data
 from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.class_label import class_label
 
 
-@class_label('Interface Implement Declaration')
 @data_class
 class InterfaceImplementDecl(Data):
     """Interface implementation data."""

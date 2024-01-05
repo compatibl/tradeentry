@@ -18,10 +18,8 @@ from typing import Optional
 from cl.runtime.schema.decl.type_decl_key import TypeDeclKey
 from cl.runtime.schema.decl.type_member_decl import TypeMemberDecl
 from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.class_label import class_label
 
 
-@class_label('Handler Variable Declaration')
 @data_class
 class HandlerVariableDecl(TypeMemberDecl):
     """Handler parameter or return variable declaration."""

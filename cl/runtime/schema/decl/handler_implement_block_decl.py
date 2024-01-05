@@ -19,10 +19,8 @@ from cl.runtime.schema.decl.handler_implement_decl import HandlerImplementDecl
 from cl.runtime.schema.decl.interface_implement_decl import InterfaceImplementDecl
 from cl.runtime.storage.data import Data
 from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.class_label import class_label
 
 
-@class_label('Handler Implement Block Declaration')
 @data_class
 class HandlerImplementBlockDecl(Data):
     """Handler implementation block in type declaration."""

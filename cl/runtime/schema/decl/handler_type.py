@@ -14,10 +14,7 @@
 
 from enum import IntEnum
 
-from cl.runtime.storage.class_label import class_label
 
-
-@class_label('(Analyst) Handler Type')
 class HandlerType(IntEnum):
     """Handler type enumeration."""
 

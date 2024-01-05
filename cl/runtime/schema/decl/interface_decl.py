@@ -19,10 +19,8 @@ from cl.runtime.schema.decl.handler_declare_decl import HandlerDeclareDecl
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.decl.type_element_decl import TypeElementDecl
 from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.class_label import class_label
 
 
-@class_label('Interface Declaration')
 @data_class
 class InterfaceDecl(InterfaceDeclKey):
     """Defines Interface declaration."""

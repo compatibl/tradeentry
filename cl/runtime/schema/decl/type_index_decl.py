@@ -18,10 +18,8 @@ from typing import List, Optional
 from cl.runtime.schema.decl.index_decl import IndexDecl
 from cl.runtime.storage.data import Data
 from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.class_label import class_label
 
 
-@class_label('Type Index Declaration')
 @data_class
 class TypeIndexDecl(Data):
     """Type index declaration."""

@@ -14,10 +14,8 @@
 
 from enum import IntEnum
 
-from cl.runtime.storage.class_label import class_label
 
 
-@class_label('(Analyst) Index Sort Order')
 class IndexSortOrderEnum(IntEnum):
     """Index sorting order."""
 
