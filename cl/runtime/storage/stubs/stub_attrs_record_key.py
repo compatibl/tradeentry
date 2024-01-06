@@ -28,26 +28,7 @@ class StubAttrsRecordKey(Key):
     key_field_int: int = data_field()
     """Second primary key attribute."""
 
-    base_field_str: str = data_field()
-    """String attribute of base class."""
-
-    base_field_float: float = data_field()
-    """Float attribute of base class."""
-
-    base_field_long: int = data_field(subtype='long', label="Custom Label", optional=True)
-    """Optional long attribute of base class with custom label."""
-
-    # TODO: Review
     @staticmethod
-    def create_key(key_field_str: str, key_field_int: int) -> str:
-        """Create primary key from arguments in semicolon-delimited string format."""
-        return f'{key_field_str};{key_field_int}'
-
-    def get_key(self) -> str:
-        """Return primary key of this instance in semicolon-delimited string format."""
-        return f'{self.key_field_str};{self.key_field_int}'
-
-    @staticmethod
-    def create_sample_key() -> str:
-        """Return PK populated with sample data."""
-        return StubAttrsRecordKey.create_key('abc', 123)
+    def create_key(key_field_str: str = "abc", key_field_int: int = 0) -> StubAttrsRecordKey:
+        """Create from fields with default values."""
+        return StubAttrsRecordKey(key_field_str=key_field_str, key_field_int=key_field_int)
