@@ -33,7 +33,7 @@ def attrs_key_impl(cls, *, label=None):
         # Implement using module and class name here and mark by _implemented
         # TODO: Use package alias if specified in settings
         def get_table(self):
-            return f"{cls.__module__}.{cls.__name__}"
+            return f"{cls.__module__}.{cls.__name__}"  # TODO: Remove trailing 'Key' if present
 
         cls.get_table = get_table
         cls.get_table._implemented = True

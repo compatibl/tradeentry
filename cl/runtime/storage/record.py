@@ -18,21 +18,20 @@ from cl.runtime import Context
 from cl.runtime.storage.key import Key
 
 
-class Record(Key, ABC):
+class Record(ABC):
     """
-    Abstract base class for database records.
+    Optional mixin class for database records.
 
-    Notes:
-        - Record classes may implement handlers and viewers
-        - Handlers are functions that can be invoked from the UI
-        - Viewers are functions whose return value is displayed in the UI
-        - Handlers and viewers may be either instance or class methods, and may have parameters
+    - Record classes may implement handlers and viewers
+    - Handlers are functions that can be invoked from the UI
+    - Viewers are functions whose return value is displayed in the UI
+    - Handlers and viewers may be either instance or class methods, and may have parameters
 
-        The use of this class is optional. The code must not rely on inheritance from this class, but only on the
-        presence of its methods. These methods may be implemented without using any specific base or mixin class.
+    The use of this class is optional. The code must not rely on inheritance from this class, but only on the
+    presence of its methods. These methods may be implemented without using any specific base or mixin class.
 
-        The methods that lack implementation must be overridden by a derived class in code or using a decorator.
-        They are not made abstract to avoid errors from static type checkers in the latter case.
+    The methods that lack implementation must be overridden by a derived class in code or using a decorator.
+    They are not made abstract to avoid errors from static type checkers in the latter case.
     """
 
     context: Optional[Context]
@@ -48,5 +47,6 @@ class Record(Key, ABC):
 
     def init(self) -> None:
         """Validate dataclass attributes and use them to initialize object state."""
-        raise RuntimeError(f"Method init() for class {type(self).__name__} in module {type(self).__module__} "
-                           f"is neither implemented in code nor by a decorator.")
+
+        # NoOp by default, derived classes will override when required
+        pass

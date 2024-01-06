@@ -14,15 +14,13 @@
 
 from __future__ import annotations
 from abc import ABC
-from typing import TypeVar
+from typing_extensions import Self
 from cl.runtime.storage.data import Data
-
-T = TypeVar('T', bound='Key')
 
 
 class Key(Data, ABC):
     """
-    Abstract base class for database keys.
+    Optional mixin class for database record keys.
 
     The use of this class is optional. The code must not rely on inheritance from this class, but only on the
     presence of its methods. These methods may be implemented without using any specific base or mixin class.
@@ -33,7 +31,7 @@ class Key(Data, ABC):
 
     def get_table(self) -> str:
         """
-        Name of the database table where data for this key is stored.
+        Name of the database table where the record for this key is stored.
 
         By convention, table name consists of a namespace (full package path or short alias)
         followed by the dot delimiter and then the class name of the common base to all records
@@ -56,11 +54,8 @@ class Key(Data, ABC):
         raise RuntimeError(f"Method get_key() for class {type(self).__name__} in module {type(self).__module__} "
                            f"is neither implemented in code nor by a decorator.")
 
-    def to_key(self: T) -> T:
-        """
-        Return an instance of the key class even when invoked for a derived record class that has
-        additional non-key fields. When invoked for a key class, return deep copy of self.
-        """
+    def to_key(self) -> Self:
+        """Return deep copy of the key base class when invoked for a derived record class."""
         raise RuntimeError(f"Method to_key() for class {type(self).__name__} in module {type(self).__module__} "
                            f"is neither implemented in code nor by a decorator.")
 
@@ -81,7 +76,7 @@ class Key(Data, ABC):
 
     def __str__(self) -> str:
         """
-        Return key string without table by default. Derived classes may override to provide more information.
+        Key as string in semicolon-delimited string format without table name.
 
         This method is for debugging purposes only and may be overridden to return additional data.
         Data source implementation must use get_key() method instead.

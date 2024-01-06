@@ -104,8 +104,7 @@ class CacheDataSource(DataSource):
             module_path, class_name = RecordUtil.split_class_path(class_path)
 
             class_ = RecordUtil.get_class_type(module_path, class_name)
-            record = class_()
-            record.from_dict(record_dict)
+            record = class_.from_dict(record_dict)
 
             # Validate attributes and initialize object state
             record.init()
