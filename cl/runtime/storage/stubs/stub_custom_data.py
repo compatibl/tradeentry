@@ -39,14 +39,6 @@ class StubCustomData(Data):
             'base_field_int': self.base_field_int,
         }
 
-    @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> Self:
-        """Create from dictionary containing other dictionaries, lists and primitive types."""
-        result = cls()
-        for key, value in data.items():
-            setattr(result, key, value)
-        return result
-
     @staticmethod
     def create(
             *,

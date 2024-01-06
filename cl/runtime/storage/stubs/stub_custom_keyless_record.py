@@ -51,14 +51,6 @@ class StubCustomKeylessRecord(Key, Record):
             'base_field_float': self.base_field_float,
         }
 
-    @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> Self:
-        """Create from dictionary containing other dictionaries, lists and primitive types."""
-        result = cls()
-        for key, value in data.items():
-            setattr(result, key, value)
-        return result
-
     def get_table(self) -> str:
         """Name of the database table where the record for this key is stored."""
         return f"{type(self).__module__}.{type(self).__name__}"

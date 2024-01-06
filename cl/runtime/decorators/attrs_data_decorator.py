@@ -30,11 +30,6 @@ def attrs_data_impl(cls, *, label=None):
 
     cls.to_dict = to_dict
 
-    def from_dict(class_type, data):
-        return class_type(**data)
-
-    cls.from_dict = classmethod(from_dict)
-
     return cls
 
 

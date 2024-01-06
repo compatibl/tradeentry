@@ -36,5 +36,8 @@ class Data(ABC):
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> Self:
         """Create from dictionary containing other dictionaries, lists and primitive types."""
-        raise RuntimeError(f"Method from_dict() for class {cls.__name__} in module {cls.__module__} "
-                           f"is neither implemented in code nor by a decorator.")
+        result = cls()
+        for key, value in data.items():
+            if key != "_t":
+                setattr(result, key, value)
+        return result
