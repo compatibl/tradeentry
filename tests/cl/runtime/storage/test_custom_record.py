@@ -22,7 +22,7 @@ def test_smoke():
 
     # Create test base_record and populate with sample data
     context = rt.Context()
-    base_record = StubCustomRecord.create_sample_record(context)
+    base_record = StubCustomRecord.create(context)
 
     # Test that context has been set
     assert base_record.context == context
@@ -34,13 +34,11 @@ def test_smoke():
     assert key == 'abc;123'
 
     # Test roundtrip serialization
-    base_record_data = base_record.to_dict()
-    base_record_clone = StubCustomRecord()
-    base_record_clone.context = context
-    base_record_clone.from_dict(base_record_data)
-    base_record_clone_data = base_record_clone.to_dict()
-    assert len(base_record_clone_data.keys()) == 4
-    assert base_record_data == base_record_clone_data
+    base_record_dict = base_record.to_dict()
+    base_record_clone = StubCustomRecord.from_dict(base_record_dict)
+    base_record_clone_dict = base_record_clone.to_dict()
+    assert len(base_record_dict) == 4
+    assert base_record_dict == base_record_clone_dict
 
 
 if __name__ == '__main__':

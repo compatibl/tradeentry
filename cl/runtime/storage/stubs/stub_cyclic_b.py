@@ -33,7 +33,7 @@ class StubCyclicB(Data):
 
     @staticmethod
     def create() -> StubCyclicB:
-        """Return an instance of this class populated with sample data."""
+        """Create an instance of this class populated with sample data."""
 
         # Import inside function to avoid cyclic reference error
         from cl.runtime.storage.stubs.stub_cyclic_a import StubCyclicA

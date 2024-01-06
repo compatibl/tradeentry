@@ -33,14 +33,14 @@ class StubAttrsRecord(StubAttrsRecordKey, Record):
 
     @staticmethod
     def create(
-            context: Context = None,
+            context: Context,
             *,
             key_field_str: str = "abc",
             key_field_int: int = 123,
             base_field_str: str = "xyz",
             base_field_float: float = 1.23
     ) -> StubAttrsRecord:
-        """Create from fields with default values."""
+        """Create an instance of this class populated with sample data."""
 
         obj = StubAttrsRecord()
         obj.context = context

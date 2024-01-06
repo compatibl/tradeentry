@@ -13,23 +13,22 @@
 # limitations under the License.
 
 import pytest
-
 import cl.runtime as rt
 from cl.runtime.storage.stubs.stub_attrs_data import StubAttrsData
-
-# Tests for ClassData
 
 
 def test_smoke():
     """Smoke test."""
 
     # Create test record and populate with sample data
-    context = rt.Context()
     obj = StubAttrsData.create()
 
-    # Test to_dict() method
+    # Test roundtrip serialization
     obj_dict = obj.to_dict()
+    obj_clone = StubAttrsData.from_dict(obj_dict)
+    obj_clone_dict = obj_clone.to_dict()
     assert len(obj_dict) == 2
+    assert obj_dict == obj_clone_dict
 
 
 if __name__ == '__main__':

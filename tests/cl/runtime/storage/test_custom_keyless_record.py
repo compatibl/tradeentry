@@ -14,33 +14,31 @@
 
 import pytest
 import cl.runtime as rt
-from cl.runtime.storage.stubs.stub_attrs_record import StubAttrsRecord
+from cl.runtime.storage.stubs.stub_custom_keyless_record import StubCustomKeylessRecord
 
 
 def test_smoke():
     """Smoke test."""
 
-    # Create and test standalone key
-    sample_key = StubAttrsRecord.create_key()
-    assert sample_key.get_key() == 'abc;123'
-
-    # Create test record and populate with sample data
+    # Create test base_record and populate with sample data
     context = rt.Context()
-    record = StubAttrsRecord.create(context)
+    base_record = StubCustomKeylessRecord.create(context)
 
     # Test that context has been set
-    assert record.context == context
+    assert base_record.context == context
 
-    # Test primary key
-    key = record.get_key()
+    # Test type and key
+    table_name = base_record.get_table()
+    assert table_name == f"{type(base_record).__module__}.{type(base_record).__name__}"
+    key = base_record.get_key()
     assert key == 'abc;123'
 
     # Test roundtrip serialization
-    record_dict = record.to_dict()
-    record_clone = StubAttrsRecord.from_dict(record_dict)
-    record_clone_dict = record_clone.to_dict()
-    assert len(record_dict) == 4
-    assert record_dict == record_clone_dict
+    base_record_dict = base_record.to_dict()
+    base_record_clone = StubCustomKeylessRecord.from_dict(base_record_dict)
+    base_record_clone_dict = base_record_clone.to_dict()
+    assert len(base_record_dict) == 4
+    assert base_record_dict == base_record_clone_dict
 
 
 if __name__ == '__main__':

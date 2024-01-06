@@ -15,14 +15,18 @@
 from __future__ import annotations
 from typing import Any, Dict, Optional
 from cl.runtime.storage.context import Context
+from cl.runtime.storage.key import Key
 from cl.runtime.storage.record import Record
-from cl.runtime.decorators.attrs_record_decorator import attrs_record
-from cl.runtime.storage.stubs.stub_custom_record_key import StubCustomRecordKey
 
 
-@attrs_record
-class StubCustomRecord(StubCustomRecordKey, Record):
+class StubCustomKeylessRecord(Key, Record):
     """Stub record used in tests."""
+
+    key_field_str: Optional[str]
+    """First primary key attribute."""
+
+    key_field_int: Optional[int]
+    """Second primary key attribute."""
 
     base_field_str: Optional[str]
     """String attribute of base class."""
@@ -30,27 +34,48 @@ class StubCustomRecord(StubCustomRecordKey, Record):
     base_field_float: Optional[float]
     """Float attribute of base class."""
 
-    def __init__(self, *, base_field_str: str = None, base_field_float: float = None):
+    def __init__(self):
         """Initialize instance attributes."""
         super().__init__()
-        self.base_field_str = base_field_str
-        self.base_field_float = base_field_float
+        self.key_field_str = None
+        self.key_field_int = None
+        self.base_field_str = None
+        self.base_field_float = None
 
     def to_dict(self) -> Dict[str, Any]:
-        """Serialize to dictionary containing other dictionaries, lists and primitive types."""
-        return super().to_dict() | {
+        """Serialize self as dictionary (may return shallow copy)."""
+        return {
+            'key_field_str': self.key_field_str,
+            'key_field_int': self.key_field_int,
             'base_field_str': self.base_field_str,
             'base_field_float': self.base_field_float,
         }
 
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> Self:
+        """Create from dictionary containing other dictionaries, lists and primitive types."""
+        result = cls()
+        for key, value in data.items():
+            setattr(result, key, value)
+        return result
+
+    def get_table(self) -> str:
+        """Name of the database table where the record for this key is stored."""
+        return f"{type(self).__module__}.{type(self).__name__}"
+
+    def get_key(self) -> str:
+        """Key as string in semicolon-delimited string format without table name."""
+        return f"{self.key_field_str};{self.key_field_int}"
+
     @staticmethod
-    def create(context: Context) -> StubCustomRecord:
+    def create(context: Context) -> StubCustomKeylessRecord:
         """Create an instance of this class populated with sample data."""
 
-        obj = StubCustomRecord()
+        obj = StubCustomKeylessRecord()
         obj.context = context
         obj.key_field_str = 'abc'
         obj.key_field_int = 123
         obj.base_field_str = 'def'
         obj.base_field_float = 4.56
+        obj.init()
         return obj

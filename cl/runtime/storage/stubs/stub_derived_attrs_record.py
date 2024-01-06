@@ -30,16 +30,14 @@ class StubDerivedAttrsRecord(StubAttrsRecord):
     """Float attribute of base class."""
 
     @staticmethod
-    def create(context: Context) -> StubDerivedAttrsRecord:
-        """Return an instance of this class populated with sample data."""
+    def create() -> StubDerivedAttrsRecord:
+        """Create an instance of this class populated with sample data."""
 
         obj = StubDerivedAttrsRecord()
-        obj.context = context
         obj.key_field_str = 'abc'
         obj.key_field_int = 123
         obj.base_field_str = 'def'
         obj.base_field_float = 4.56
         obj.derived_field_str = 'def'
         obj.derived_field_float = 4.56
-        obj.init()
         return obj

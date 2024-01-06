@@ -13,45 +13,49 @@
 # limitations under the License.
 
 from __future__ import annotations
+from typing_extensions import Self
 from typing import Any, Dict, Optional
 from cl.runtime import Data
-from cl.runtime.decorators.attrs_data_decorator import attrs_data
 
 
-@attrs_data
 class StubCustomData(Data):
     """Stub serializable data used in tests."""
 
     base_field_str: Optional[str]
     """String attribute of base class."""
 
-    base_field_float: Optional[float]
+    base_field_int: Optional[int]
     """Float attribute of base class."""
 
     def __init__(self):
         """Initialize instance attributes."""
-        super().__init__()
         self.base_field_str = None
-        self.base_field_float = None
+        self.base_field_int = None
 
     def to_dict(self) -> Dict[str, Any]:
-        """Serialize self as dictionary (may return shallow copy)."""
+        """Serialize to dictionary containing other dictionaries, lists and primitive types."""
         return {
             'base_field_str': self.base_field_str,
-            'base_field_float': self.base_field_float,
+            'base_field_int': self.base_field_int,
         }
 
-    def from_dict(self, data: Dict[str, Any]) -> None:
-        """Populate self from dictionary (must perform deep copy)."""
-        self.base_field_str = data.get('base_field_str')
-        self.base_field_float = data.get('base_field_float')
-        # TODO: detect extra fields in dict which are not in class and raise error
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> Self:
+        """Create from dictionary containing other dictionaries, lists and primitive types."""
+        result = cls()
+        for key, value in data.items():
+            setattr(result, key, value)
+        return result
 
     @staticmethod
-    def create() -> StubCustomData:
-        """Return an instance of this class populated with sample data."""
-
+    def create(
+            *,
+            base_field_str: str = 'abc',
+            base_field_int: int = 123
+    ) -> StubCustomData:
+        """Create an instance of this class populated with sample data."""
         obj = StubCustomData()
-        obj.base_field_str = 'def'
-        obj.base_field_float = 4.56
+        obj.base_field_str = base_field_str
+        obj.base_field_int = base_field_int
         return obj
+

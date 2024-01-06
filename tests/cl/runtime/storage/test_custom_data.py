@@ -25,12 +25,11 @@ def test_smoke():
     obj = StubCustomData.create()
 
     # Test roundtrip serialization
-    data1 = obj.to_dict()
-    obj2 = StubCustomData()
-    obj2.from_dict(data1)
-    data2 = obj2.to_dict()
-    assert len(data2.keys()) == 2
-    assert data1 == data2
+    obj_dict = obj.to_dict()
+    obj_clone = StubCustomData.from_dict(obj_dict)
+    obj_clone_dict = obj_clone.to_dict()
+    assert len(obj_dict) == 2
+    assert obj_dict == obj_clone_dict
 
 
 if __name__ == '__main__':

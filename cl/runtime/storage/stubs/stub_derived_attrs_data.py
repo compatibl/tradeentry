@@ -30,7 +30,7 @@ class StubDerivedAttrsData(StubAttrsData):
 
     @staticmethod
     def create() -> StubDerivedAttrsData:
-        """Return an instance of this class populated with sample data."""
+        """Create an instance of this class populated with sample data."""
 
         obj = StubDerivedAttrsData()
         obj.base_field_str = 'def'

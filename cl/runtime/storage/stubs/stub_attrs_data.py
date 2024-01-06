@@ -25,14 +25,17 @@ class StubAttrsData(Data):
     base_field_str: str = data_field()
     """String attribute of base class."""
 
-    base_field_float: float = data_field()
+    base_field_int: int = data_field()
     """Float attribute of base class."""
 
     @staticmethod
-    def create() -> StubAttrsData:
-        """Return an instance of this class populated with sample data."""
-
+    def create(
+            *,
+            base_field_str: str = 'abc',
+            base_field_int: int = 123
+    ) -> StubAttrsData:
+        """Create an instance of this class populated with sample data."""
         obj = StubAttrsData()
-        obj.base_field_str = 'def'
-        obj.base_field_float = 4.56
+        obj.base_field_str = base_field_str
+        obj.base_field_int = base_field_int
         return obj

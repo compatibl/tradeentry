@@ -29,8 +29,7 @@ def test_smoke():
 
     # Test roundtrip serialization
     key_dict = key.to_dict()
-    key_clone = StubAttrsRecordKey()
-    key_clone.from_dict(key_dict)
+    key_clone = StubAttrsRecordKey.from_dict(key_dict)
     key_clone_dict = key_clone.to_dict()
     assert len(key_dict) == 2
     assert key_dict == key_clone_dict
