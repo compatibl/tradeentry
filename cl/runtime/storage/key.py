@@ -12,39 +12,41 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import annotations
 from abc import ABC
+from typing import TypeVar
 from cl.runtime.storage.data import Data
+
+T = TypeVar('T', bound='Key')
 
 
 class Key(Data, ABC):
     """
     Abstract base class for database keys.
 
-    Notes:
-        The use of this class is optional. The code must not rely on inheritance from this class, but only on the
-        presence of its methods. These methods may be implemented without using any specific base or mixin class.
+    The use of this class is optional. The code must not rely on inheritance from this class, but only on the
+    presence of its methods. These methods may be implemented without using any specific base or mixin class.
 
-        The methods that lack implementation must be overridden by a derived class in code or using a decorator.
-        They are not made abstract to avoid errors from static type checkers in the latter case.
+    The methods that lack implementation must be overridden by a derived class in code or using a decorator.
+    They are not made abstract to avoid errors from static type checkers in the latter case.
     """
 
     def get_table(self) -> str:
         """
         Name of the database table where data for this key is stored.
 
-        Notes:
-            By convention, table name consists of a namespace (full package path or short alias) followed by
-            the class name of the common base to all classes stored in the table with dot delimiter.
+        By convention, table name consists of a namespace (full package path or short alias)
+        followed by the dot delimiter and then the class name of the common base to all records
+        stored in the table: 'namespace.RecordType'
         """
         raise RuntimeError(f"Method get_table() for class {type(self).__name__} in module {type(self).__module__} "
                            f"is neither implemented in code nor by a decorator.")
 
     def get_key(self) -> str:
         """
-        Key as string in semicolon-delimited string format without table name.
-
-        Notes:
-            For composite keys, the embedded keys are concatenated in the order of their declaration without brackets:
+        Key as string in semicolon-delimited string format without table name. 
+        
+        For composite keys, the embedded keys are concatenated in the order of their declaration without brackets:
 
             - No primary key fields: '' (i.e. empty string)
             - One primary key field A: 'A'
@@ -54,9 +56,12 @@ class Key(Data, ABC):
         raise RuntimeError(f"Method get_key() for class {type(self).__name__} in module {type(self).__module__} "
                            f"is neither implemented in code nor by a decorator.")
 
-    def init(self) -> None:
-        """Validate dataclass attributes and use them to initialize object state."""
-        raise RuntimeError(f"Method init() for class {type(self).__name__} in module {type(self).__module__} "
+    def to_key(self: T) -> T:
+        """
+        Return an instance of the key class even when invoked for a derived record class that has
+        additional non-key fields. When invoked for a key class, return deep copy of self.
+        """
+        raise RuntimeError(f"Method to_key() for class {type(self).__name__} in module {type(self).__module__} "
                            f"is neither implemented in code nor by a decorator.")
 
     def get_generic_key(self) -> str:
@@ -64,14 +69,13 @@ class Key(Data, ABC):
         Generic key string defines both the table and the record within the table. It consists of the
         table name followed by the primary key in semicolon-delimited string format.
 
-        Notes:
-            By convention, table name consists of a namespace (full package path or short alias) followed by
-            the class name of the common base to all classes stored in the table with dot delimiter:
+        By convention, table name consists of a namespace (full package path or short alias) followed by
+        the class name of the common base to all classes stored in the table with dot delimiter:
 
-            - No primary key fields: 'package.MyClass'
-            - One primary key field A: 'package.MyClass;A'
-            - Two primary key fields A and B: 'package.MyClass;A;B'
-            - Two primary key fields 'A1;A2' and 'B': 'package.MyClass;A1;A2;B'
+        - No primary key fields: 'namespace.RecordType'
+        - One primary key field A: 'namespace.RecordType;A'
+        - Two primary key fields A and B: 'namespace.RecordType;A;B'
+        - Two primary key fields 'A1;A2' and 'B': 'namespace.RecordType;A1;A2;B'
         """
         return f"{self.get_table()};{self.get_key()}"
 
@@ -79,9 +83,8 @@ class Key(Data, ABC):
         """
         Return key string without table by default. Derived classes may override to provide more information.
 
-        Notes:
-            This method is for debugging purposes only and may be modified to return different data.
-            Data source implementation must use 'get_key' method instead.
+        This method is for debugging purposes only and may be overridden to return additional data.
+        Data source implementation must use get_key() method instead.
         """
         return self.get_key()
 

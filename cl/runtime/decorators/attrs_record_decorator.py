@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import attrs
-from typing import Dict
 from typing_extensions import dataclass_transform
 from cl.runtime.decorators.attrs_key_decorator import attrs_key_impl
 
@@ -35,35 +34,11 @@ def attrs_record_impl(cls, *, label=None):
         # here accelerates the code by preventing lookup at each level of inheritance chain.
         cls.init = init_method
     else:
-        # Implement using module and class name here and mark by _implemented
-        # TODO: Use package alias if specified in settings
-        fields = {f.name: f for f in attrs.fields(cls) if f.inherited}
-
+        # Implement here and mark by _implemented
         def init(self):
             pass  # TODO: Implement hierarchical calls to parents but only when init has body
         cls.init = init
         cls.init._implemented = True
-
-    to_key_method = getattr(cls, "to_key", None)
-    if to_key_method is not None and getattr(to_key_method, "_implemented", False):
-        # Use the method from parent if marked by _implemented, which will not be present
-        # if the method is declared in parent class without implementation. Reassignment
-        # here accelerates the code by preventing lookup at each level of inheritance chain.
-        cls.to_key = to_key_method
-    else:
-        # Implement using module and class name here and mark by _implemented
-        # TODO: Use package alias if specified in settings
-        fields = {f.name: f for f in attrs.fields(cls) if f.inherited}
-
-        def to_key(self):
-            key = cls()
-            for field in fields.values():
-                field_name = field.name
-                value = getattr(self, field_name, None)
-                setattr(key, field_name, value)
-            return key
-        cls.to_key = to_key
-        cls.to_key._implemented = True
 
     return cls
 

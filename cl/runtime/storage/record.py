@@ -46,24 +46,7 @@ class Record(Key, ABC):
     - Virtualized filesystem
     """
 
-    def to_key(self) -> Key:
-        """Return primary key of this instance in semicolon-delimited string format.
-
-        Notes:
-
-        For composite keys, the embedded keys are concatenated in the
-        order of their declaration without brackets.
-
-        Examples:
-
-            - One primary key field A: `A`
-            - Two primary key fields A and B: `A;B`
-            - Two primary key fields `A1;A2` and `B`: `A1;A2;B`
-
-        Notes:
-
-            Primary key in physical storage or cache may not match this logical primary key format.
-            The conversion is performed by the data source implementation.
-        """
-        raise RuntimeError(f"Method to_key() for class {type(self).__name__} in module {type(self).__module__} "
+    def init(self) -> None:
+        """Validate dataclass attributes and use them to initialize object state."""
+        raise RuntimeError(f"Method init() for class {type(self).__name__} in module {type(self).__module__} "
                            f"is neither implemented in code nor by a decorator.")

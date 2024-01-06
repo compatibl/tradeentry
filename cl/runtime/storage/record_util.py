@@ -22,16 +22,16 @@ class RecordUtil:
     """Helper methods for Record."""
 
     @staticmethod
-    def get_class_path(class_type: Type) -> str:
+    def get_class_path(cls: Type) -> str:
         """Returns the concatenation of module path and class name using dot delimiter.
 
-        - The argument class_type is either a literal class type, for example StubClass,
+        - The argument cls is either a literal class type, for example StubClass,
           or a type variable obtained from a class instance, for example type(stub_class_instance).
         - This method is also used to calculate key for LRU caching of functions taking class
           as their argument. This method is itself not cached because caching would involve
           calling the same method, resulting in no performance gain.
         """
-        return f"{class_type.__module__}.{class_type.__name__}"
+        return f"{cls.__module__}.{cls.__name__}"
 
     @staticmethod
     def split_class_path(class_path: str) -> Tuple[str, str]:
@@ -83,11 +83,11 @@ class RecordUtil:
             raise RuntimeError(f"Module {module_path} does not contain top-level class {class_name}.")
 
     @staticmethod
-    @cached(custom_key_maker=lambda class_type: f"{class_type.__module__}.{class_type.__name__}")
-    def get_inheritance_chain(class_type: Type) -> List[str]:
+    @cached(custom_key_maker=lambda cls: f"{cls.__module__}.{cls.__name__}")
+    def get_inheritance_chain(cls: Type) -> List[str]:
         """Returns inheritance chain as the list of class path strings.
 
-        - The argument class_type is either a literal class type, for example StubClass,
+        - The argument cls is either a literal class type, for example StubClass,
           or a type variable obtained from a class instance, for example type(stub_class_instance)
         - The result is in MRO order and includes only those classes that implement get_table()
         - Return value of get_table() must be the same for all classes in the inheritance chain.
@@ -97,12 +97,12 @@ class RecordUtil:
         # It includes only those classes in MRO of this record that implement get_table()
         # method, and its return value must be the same for all of them.
         result = [
-            f"{c.__module__}.{c.__name__}" for c in class_type.mro() if RecordUtil.is_init_implemented(c)
+            f"{c.__module__}.{c.__name__}" for c in cls.mro() if RecordUtil.is_init_implemented(c)
         ]
 
         # TODO: Implement memoize
         if len(result) == 0:
-            class_path = RecordUtil.get_class_path(class_type)
+            class_path = RecordUtil.get_class_path(cls)
             raise RuntimeError(
                 f"To be stored in a data source, class {class_path} or its base must implement the method "
                 f"get_table() returning the name of the table where records of this type are stored."
@@ -111,7 +111,7 @@ class RecordUtil:
         return result
 
     @staticmethod
-    @cached(custom_key_maker=lambda class_type: f"{class_type.__module__}.{class_type.__name__}")
+    @cached(custom_key_maker=lambda cls: f"{cls.__module__}.{cls.__name__}")
     def is_init_implemented(cls: Type):
         """Return true if `init(self)` method is present and marked by _implemented."""
 
