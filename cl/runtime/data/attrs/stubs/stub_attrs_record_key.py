@@ -13,19 +13,19 @@
 # limitations under the License.
 
 from __future__ import annotations
-from cl.runtime.decorators.attrs_key_decorator import attrs_key
-from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.key import Key
+from cl.runtime.data.attrs.attrs_key_util import attrs_key
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
+from cl.runtime.data.key import Key
 
 
 @attrs_key
 class StubAttrsRecordKey(Key):
     """Stub dataclass-based record sample used in tests."""
 
-    key_field_str: str = data_field()
+    key_field_str: str = attrs_field()
     """First primary key attribute."""
 
-    key_field_int: int = data_field()
+    key_field_int: int = attrs_field()
     """Second primary key attribute."""
 
     @staticmethod

@@ -12,20 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.attrs_data_decorator import attrs_data
+from cl.runtime.data.attrs.attrs_data_util import attrs_data
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
 
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.decl.language_key import LanguageKey
-from cl.runtime.storage.data import Data
-from cl.runtime.decorators.data_field_decorator import data_field
+from cl.runtime.data.data import Data
 
 
 @attrs_data
 class InterfaceImplementDecl(Data):
     """Interface implementation data."""
 
-    interface: InterfaceDeclKey = data_field()
+    interface: InterfaceDeclKey = attrs_field()
     """Interface"""
 
-    language: LanguageKey = data_field()
+    language: LanguageKey = attrs_field()
     """Programming language in which handler is implemented."""

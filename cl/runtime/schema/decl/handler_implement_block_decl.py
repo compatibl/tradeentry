@@ -12,21 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.attrs_data_decorator import attrs_data
+from cl.runtime.data.attrs.attrs_data_util import attrs_data
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from typing import List, Optional
 
 from cl.runtime.schema.decl.handler_implement_decl import HandlerImplementDecl
 from cl.runtime.schema.decl.interface_implement_decl import InterfaceImplementDecl
-from cl.runtime.storage.data import Data
-from cl.runtime.decorators.data_field_decorator import data_field
+from cl.runtime.data.data import Data
 
 
 @attrs_data
 class HandlerImplementBlockDecl(Data):
     """Handler implementation block in type declaration."""
 
-    handlers: Optional[List[HandlerImplementDecl]] = data_field()
+    handlers: Optional[List[HandlerImplementDecl]] = attrs_field()
     """Handler implementation data."""
 
-    interfaces: Optional[List[InterfaceImplementDecl]] = data_field()
+    interfaces: Optional[List[InterfaceImplementDecl]] = attrs_field()
     """Interface implementation data."""

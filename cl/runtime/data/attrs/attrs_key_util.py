@@ -14,14 +14,15 @@
 
 import attrs
 from typing_extensions import dataclass_transform
-from cl.runtime.decorators.attrs_data_decorator import attrs_data_impl
+from cl.runtime.data.attrs.attrs_data_util import attrs_data
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
 
 
 @dataclass_transform()
 def attrs_key_impl(cls, *, label=None):
     """Performs the actual wrapping irrespective of call syntax with or without parentheses."""
 
-    cls = attrs_data_impl(cls)
+    cls = attrs_data(cls)
 
     get_table_method = getattr(cls, "get_table", None)
     if get_table_method is not None and getattr(get_table_method, "_implemented", False):

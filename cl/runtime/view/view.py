@@ -13,9 +13,9 @@
 # limitations under the License.
 
 from abc import ABC
-from cl.runtime.decorators.attrs_record_decorator import attrs_record
-from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.record import Record
+from cl.runtime.data.attrs.attrs_record_util import attrs_record
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
+from cl.runtime.data.record import Record
 from cl.runtime.view.view_key import ViewKey
 
 
@@ -31,10 +31,10 @@ class View(ViewKey, Record, ABC):
     tab or panel next to the record itself.
     """
 
-    view_for: str = data_field()
+    view_for: str = attrs_field()
     """Primary key of the record for which the view is specified."""
 
-    view_name: str = data_field()
+    view_name: str = attrs_field()
     """Name of the view displayed in the front end."""
 
     @staticmethod

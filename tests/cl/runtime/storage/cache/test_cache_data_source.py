@@ -15,8 +15,8 @@
 import pytest
 
 import cl.runtime as rt
-from cl.runtime.storage.stubs.stub_attrs_record import StubAttrsRecord
-from cl.runtime.storage.stubs.stub_custom_record import StubCustomRecord
+from cl.runtime.data.attrs.stubs.stub_attrs_record import StubAttrsRecord
+from cl.runtime.data.custom.stubs.stub_custom_record import StubCustomRecord
 
 # Tests for CacheDataSource
 

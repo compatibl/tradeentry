@@ -14,21 +14,21 @@
 
 from __future__ import annotations
 from typing import Optional
-from cl.runtime.storage.context import Context
-from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.record import Record
-from cl.runtime.decorators.attrs_record_decorator import attrs_record
-from cl.runtime.storage.stubs.stub_attrs_record_key import StubAttrsRecordKey
+from cl.runtime.data.context import Context
+from cl.runtime.data.record import Record
+from cl.runtime.data.attrs.attrs_record_util import attrs_record
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
+from cl.runtime.data.attrs.stubs.stub_attrs_record_key import StubAttrsRecordKey
 
 
 @attrs_record
 class StubAttrsRecord(StubAttrsRecordKey, Record):
     """Stub record used in tests."""
 
-    base_field_str: Optional[str] = data_field()
+    base_field_str: Optional[str] = attrs_field()
     """String attribute of base class."""
 
-    base_field_float: Optional[float] = data_field()
+    base_field_float: Optional[float] = attrs_field()
     """Float attribute of base class."""
 
     @staticmethod

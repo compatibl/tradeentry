@@ -13,8 +13,8 @@
 # limitations under the License.
 
 from typing import List, final
-from cl.runtime.decorators.attrs_record_decorator import attrs_record
-from cl.runtime.decorators.data_field_decorator import data_field
+from cl.runtime.data.attrs.attrs_record_util import attrs_record
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from cl.runtime.view.view import View
 
 
@@ -23,5 +23,5 @@ from cl.runtime.view.view import View
 class RecordListView(View):
     """View that displays a list of record specified via their primary keys."""
 
-    view_of: List[str] = data_field()
+    view_of: List[str] = attrs_field()
     """Primary keys of the displayed records."""

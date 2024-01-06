@@ -12,49 +12,49 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.attrs_data_decorator import attrs_data
+from cl.runtime.data.attrs.attrs_data_util import attrs_data
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from typing import List, Optional
 
 from cl.runtime.schema.decl.handler_param_decl import HandlerParamDecl
 from cl.runtime.schema.decl.handler_type import HandlerType
 from cl.runtime.schema.decl.handler_variable_decl import HandlerVariableDecl
-from cl.runtime.storage.data import Data
-from cl.runtime.decorators.data_field_decorator import data_field
+from cl.runtime.data.data import Data
 
 
 @attrs_data
 class HandlerDeclareDecl(Data):
     """Handler declaration data."""
 
-    name: str = data_field()
+    name: str = attrs_field()
     """Handler name."""
 
-    label: Optional[str] = data_field()
+    label: Optional[str] = attrs_field()
     """Handler label."""
 
-    comment: Optional[str] = data_field()
+    comment: Optional[str] = attrs_field()
     """Handler comment."""
 
-    type_: HandlerType = data_field(name='Type')
+    type_: HandlerType = attrs_field(name='Type')
     """Handler type."""
 
-    params: Optional[List[HandlerParamDecl]] = data_field()
+    params: Optional[List[HandlerParamDecl]] = attrs_field()
     """Handler parameters."""
 
-    return_: Optional[HandlerVariableDecl] = data_field(name='Return')
+    return_: Optional[HandlerVariableDecl] = attrs_field(name='Return')
     """Handler return value."""
 
-    static: Optional[bool] = data_field()
+    static: Optional[bool] = attrs_field()
     """If set as true, handler will be static, otherwise non-static."""
 
-    hidden: Optional[bool] = data_field()
+    hidden: Optional[bool] = attrs_field()
     """If flag is set, handler will be hidden in UI in user mode."""
 
-    interactive_input: Optional[bool] = data_field()
+    interactive_input: Optional[bool] = attrs_field()
     """Interactive Input"""
 
-    category: Optional[str] = data_field()
+    category: Optional[str] = attrs_field()
     """Category."""
 
-    is_async: Optional[bool] = data_field()
+    is_async: Optional[bool] = attrs_field()
     """Use the flag to specify that a handler is asynchronous."""

@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.attrs_record_decorator import attrs_record
+from cl.runtime.data.attrs.attrs_record_util import attrs_record
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from cl.runtime.schema.type.type_decl import TypeDecl
-from cl.runtime.decorators.data_field_decorator import data_field
 
 
 @attrs_record
 class PrimitiveDecl(TypeDecl):
     """Declaration for a primitive type."""
 
-    base_type: str = data_field()
+    base_type: str = attrs_field()
     """Builtin type in which the data is stored."""

@@ -12,21 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.attrs_key_decorator import attrs_key
+from cl.runtime.data.attrs.attrs_key_util import attrs_key
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
 
 from cl.runtime.schema.decl.module_key import ModuleKey
-from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.key import Key
+from cl.runtime.data.key import Key
 
 
 @attrs_key
 class EnumDeclKey(Key):
     """Enum declaration."""
 
-    module: ModuleKey = data_field()
+    module: ModuleKey = attrs_field()
     """Module reference."""
 
-    name: str = data_field()
+    name: str = attrs_field()
     """Enum name is unique when combined with module."""
 
     def get_key(self) -> str:

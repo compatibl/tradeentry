@@ -12,23 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.attrs_record_decorator import attrs_record
+from cl.runtime.data.attrs.attrs_record_util import attrs_record
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from typing import List, Union
 
 from cl.runtime.schema.type.field_decl import FieldDecl
 from cl.runtime.schema.type.type_decl import TypeDecl
 from cl.runtime.schema.type.type_decl_key import TypeDeclKey
-from cl.runtime.decorators.data_field_decorator import data_field
 
 
 @attrs_record
 class DataDecl(TypeDecl):
     """Declaration for serializable data with fields."""
 
-    parent: Union[str, TypeDeclKey] = data_field(optional=True)
+    parent: Union[str, TypeDeclKey] = attrs_field(optional=True)
     """Parent type key or record must resolve to DataDecl or its descendants."""
 
-    fields: List[FieldDecl] = data_field()
+    fields: List[FieldDecl] = attrs_field()
     """
     List of fields with detailed type information.
 

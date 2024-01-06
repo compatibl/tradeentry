@@ -13,22 +13,22 @@
 # limitations under the License.
 
 from __future__ import annotations
-from cl.runtime.decorators.attrs_data_decorator import attrs_data
-from cl.runtime.decorators.data_field_decorator import data_field
+from cl.runtime.data.attrs.attrs_data_util import attrs_data
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from typing import TYPE_CHECKING, Union
-from cl.runtime.storage.data import Data
+from cl.runtime.data.data import Data
 if TYPE_CHECKING:
-    from cl.runtime.storage.stubs.stub_cyclic_a import StubCyclicA
+    from cl.runtime.data.stubs.stub_cyclic_a import StubCyclicA
 
 
 @attrs_data
 class StubCyclicB(Data):
     """Stub class A with a field whose type is key for class B."""
 
-    b_id: str = data_field()
+    b_id: str = attrs_field()
     """Unique identifier."""
 
-    a: Union[str, StubCyclicA] = data_field()
+    a: Union[str, StubCyclicA] = attrs_field()
     """Key for class A."""
 
     @staticmethod
@@ -36,7 +36,7 @@ class StubCyclicB(Data):
         """Create an instance of this class populated with sample data."""
 
         # Import inside function to avoid cyclic reference error
-        from cl.runtime.storage.stubs.stub_cyclic_a import StubCyclicA
+        from cl.runtime.data.stubs.stub_cyclic_a import StubCyclicA
 
         obj = StubCyclicB()
         obj.b_id = "abc"

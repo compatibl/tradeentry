@@ -12,16 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.attrs_key_decorator import attrs_key
-from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.key import Key
+from cl.runtime.data.attrs.attrs_key_util import attrs_key
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
+from cl.runtime.data.key import Key
 
 
 @attrs_key
 class PackageDeclKey(Key):
     """Key for the package declaration in schema."""
 
-    package_id: str = data_field()
+    package_id: str = attrs_field()
     """Unique package identifier."""
 
     def get_key(self) -> str:

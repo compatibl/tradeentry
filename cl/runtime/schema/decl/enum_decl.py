@@ -12,23 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.attrs_record_decorator import attrs_record
+from cl.runtime.data.attrs.attrs_record_util import attrs_record
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from typing import List, Optional
 
 from cl.runtime.schema.decl.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.decl.enum_item_decl import EnumItemDecl
-from cl.runtime.decorators.data_field_decorator import data_field
 
 
 @attrs_record
 class EnumDecl(EnumDeclKey):
     """Enum declaration."""
 
-    label: str = data_field()
+    label: str = attrs_field()
     """Enum label."""
 
-    comment: Optional[str] = data_field()
+    comment: Optional[str] = attrs_field()
     """Enum comment."""
 
-    items: List[EnumItemDecl] = data_field()
+    items: List[EnumItemDecl] = attrs_field()
     """Array of enum items."""

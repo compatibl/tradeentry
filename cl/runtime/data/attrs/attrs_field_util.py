@@ -16,7 +16,7 @@ import attrs
 from typing import Any, Optional
 
 
-def data_field(
+def attrs_field(
     *,
     default: Optional[Any] = None,
     factory: Optional[Any] = None,

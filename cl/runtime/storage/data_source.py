@@ -16,9 +16,9 @@ from abc import ABC, abstractmethod
 from typing import Iterable, Type, TypeVar, Union
 
 from cl.runtime import Data
-from cl.runtime.decorators.attrs_data_decorator import attrs_data
-from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.record import Record
+from cl.runtime.data.attrs.attrs_data_util import attrs_data
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
+from cl.runtime.data.record import Record
 
 TKey = TypeVar('TKey', contravariant=True)
 TRecord = TypeVar('TRecord', covariant=True)
@@ -32,10 +32,10 @@ class DataSource(Data, ABC):
     in-memory cache, distributed cache, filesystem, and types of storage solutions.
     """
 
-    data_source_id: str = data_field()
+    data_source_id: str = attrs_field()
     """Unique data source identifier."""
 
-    read_only: bool = data_field(optional=True)
+    read_only: bool = attrs_field(optional=True)
     """Use this flag to mark the data source as readonly. All write operations will fail with error if set."""
 
     @staticmethod

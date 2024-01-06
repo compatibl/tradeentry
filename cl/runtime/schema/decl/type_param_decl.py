@@ -12,20 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.attrs_data_decorator import attrs_data
+from cl.runtime.data.attrs.attrs_data_util import attrs_data
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from typing import Optional
 
 from cl.runtime.schema.decl.type_param_constraint_type import TypeParamConstraintType
-from cl.runtime.storage.data import Data
-from cl.runtime.decorators.data_field_decorator import data_field
+from cl.runtime.data.data import Data
 
 
 @attrs_data
 class TypeParamDecl(Data):
     """Type parameter declaration."""
 
-    name: str = data_field()
+    name: str = attrs_field()
     """Type parameter name."""
 
-    constraint: Optional[TypeParamConstraintType] = data_field()
+    constraint: Optional[TypeParamConstraintType] = attrs_field()
     """Constraint."""

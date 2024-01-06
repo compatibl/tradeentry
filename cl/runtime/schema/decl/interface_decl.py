@@ -12,36 +12,36 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.attrs_record_decorator import attrs_record
+from cl.runtime.data.attrs.attrs_record_util import attrs_record
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from typing import List, Optional
 
 from cl.runtime.schema.decl.handler_declare_decl import HandlerDeclareDecl
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.decl.type_element_decl import TypeElementDecl
-from cl.runtime.decorators.data_field_decorator import data_field
 
 
 @attrs_record
 class InterfaceDecl(InterfaceDeclKey):
     """Defines Interface declaration."""
 
-    label: str = data_field()
+    label: str = attrs_field()
     """Type label."""
 
-    comment: Optional[str] = data_field()
+    comment: Optional[str] = attrs_field()
     """Type comment. Contains additional information."""
 
-    aliases: Optional[List[str]] = data_field()
+    aliases: Optional[List[str]] = attrs_field()
     """Interface aliases."""
 
-    interfaces: Optional[List[InterfaceDeclKey]] = data_field()
+    interfaces: Optional[List[InterfaceDeclKey]] = attrs_field()
     """Parent interfaces"""
 
-    handlers: Optional[List[HandlerDeclareDecl]] = data_field()
+    handlers: Optional[List[HandlerDeclareDecl]] = attrs_field()
     """Handler declaration data."""
 
-    elements: Optional[List[TypeElementDecl]] = data_field()
+    elements: Optional[List[TypeElementDecl]] = attrs_field()
     """Element declaration block."""
 
-    attributes: Optional[List[TypeElementDecl]] = data_field()
+    attributes: Optional[List[TypeElementDecl]] = attrs_field()
     """Attribute declaration block."""

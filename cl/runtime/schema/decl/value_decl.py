@@ -12,16 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.attrs_data_decorator import attrs_data
+from cl.runtime.data.attrs.attrs_data_util import attrs_data
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
 
 from cl.runtime.schema.decl.atomic_type import AtomicType
-from cl.runtime.storage.data import Data
-from cl.runtime.decorators.data_field_decorator import data_field
+from cl.runtime.data.data import Data
 
 
 @attrs_data
 class ValueDecl(Data):
     """Value or atomic element declaration."""
 
-    type_: AtomicType = data_field(name='Type')
+    type_: AtomicType = attrs_field(name='Type')
     """Value or atomic element type enumeration."""

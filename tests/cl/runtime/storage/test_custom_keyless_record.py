@@ -14,7 +14,7 @@
 
 import pytest
 import cl.runtime as rt
-from cl.runtime.storage.stubs.stub_custom_keyless_record import StubCustomKeylessRecord
+from cl.runtime.data.custom.stubs.stub_custom_keyless_record import StubCustomKeylessRecord
 
 
 def test_smoke():

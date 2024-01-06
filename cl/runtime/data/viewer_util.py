@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import inspect
-from cl.runtime.decorators.handler_decorator import handler
 
 
 def viewer(*, label: str = None):

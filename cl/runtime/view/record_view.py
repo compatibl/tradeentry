@@ -13,8 +13,8 @@
 # limitations under the License.
 
 from typing import final
-from cl.runtime.decorators.attrs_record_decorator import attrs_record
-from cl.runtime.decorators.data_field_decorator import data_field
+from cl.runtime.data.attrs.attrs_record_util import attrs_record
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from cl.runtime.view.view import View
 
 
@@ -23,5 +23,5 @@ from cl.runtime.view.view import View
 class RecordView(View):
     """View that displays another record specified via its primary key."""
 
-    view_of: str = data_field()
+    view_of: str = attrs_field()
     """Primary key of the displayed record."""

@@ -15,9 +15,10 @@
 from __future__ import annotations
 from typing_extensions import Self
 from typing import Any, Dict, Optional
-from cl.runtime.storage.context import Context
-from cl.runtime.decorators.attrs_record_decorator import attrs_record
-from cl.runtime.storage.key import Key
+from cl.runtime.data.context import Context
+from cl.runtime.data.attrs.attrs_record_util import attrs_record
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
+from cl.runtime.data.key import Key
 
 
 class StubCustomRecordKey(Key):

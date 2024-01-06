@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.attrs_record_decorator import attrs_record
+from cl.runtime.data.attrs.attrs_record_util import attrs_record
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from cl.runtime.schema.type.package_decl_key import PackageDeclKey
-from cl.runtime.decorators.data_field_decorator import data_field
 
 
 @attrs_record
 class PackageDecl(PackageDeclKey):
     """Base class for the package declaration in schema."""
 
-    label: str = data_field(optional=True)
+    label: str = attrs_field(optional=True)
     """Readable package label used by the front end."""

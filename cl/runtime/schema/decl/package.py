@@ -12,44 +12,44 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.attrs_record_decorator import attrs_record
+from cl.runtime.data.attrs.attrs_record_util import attrs_record
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from typing import List, Optional
 
 from cl.runtime.schema.decl.package_dependency import PackageDependency
 from cl.runtime.schema.decl.package_key import PackageKey
-from cl.runtime.decorators.data_field_decorator import data_field
 
 
 @attrs_record
 class Package(PackageKey):
     """Package is a list of modules and binaries which are deployed together."""
 
-    package_shortcut: Optional[str] = data_field()
+    package_shortcut: Optional[str] = attrs_field()
     """
     Unique package shortcut used as a prefix for the type name to resolve possible conflicts in multi-package
     environments.
     """
 
-    comment: Optional[str] = data_field()
+    comment: Optional[str] = attrs_field()
     """Comment."""
 
-    label: str = data_field()
+    label: str = attrs_field()
     """Label (displayed in user interface, may not be unique)."""
 
-    package_path: Optional[str] = data_field()
+    package_path: Optional[str] = attrs_field()
     """Relative package path."""
 
-    dependency_search_paths: Optional[List[str]] = data_field()
+    dependency_search_paths: Optional[List[str]] = attrs_field()
     """Locations to search dependent packages."""
 
-    dependencies: Optional[List[PackageDependency]] = data_field()
+    dependencies: Optional[List[PackageDependency]] = attrs_field()
     """Dependent packages list"""
 
-    shared: Optional[bool] = data_field()
+    shared: Optional[bool] = attrs_field()
     """Package version"""
 
-    version: Optional[str] = data_field()
+    version: Optional[str] = attrs_field()
     """Package version"""
 
-    is_main: Optional[bool] = data_field()
+    is_main: Optional[bool] = attrs_field()
     """Is main package"""

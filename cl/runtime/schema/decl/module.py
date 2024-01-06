@@ -13,13 +13,13 @@
 # limitations under the License.
 
 from abc import ABC
-from cl.runtime.decorators.attrs_record_decorator import attrs_record
+from cl.runtime.data.attrs.attrs_record_util import attrs_record
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from typing import List, Optional
 
 from cl.runtime import Record
 from cl.runtime.schema.decl.module_key import ModuleKey
 from cl.runtime.schema.decl.package_key import PackageKey
-from cl.runtime.decorators.data_field_decorator import data_field
 
 
 @attrs_record
@@ -28,17 +28,17 @@ class Module(ModuleKey, Record):
     Represents a group of related types under a common namespace or directory.
     """
 
-    label: Optional[str] = data_field()
+    label: Optional[str] = attrs_field()
     """Module label."""
 
-    comment: Optional[str] = data_field()
+    comment: Optional[str] = attrs_field()
     """Module additional information."""
 
-    dependences: Optional[List[ModuleKey]] = data_field()
+    dependences: Optional[List[ModuleKey]] = attrs_field()
     """Module dependences."""
 
-    package: PackageKey = data_field()
+    package: PackageKey = attrs_field()
     """Package refence."""
 
-    copyright_: Optional[str] = data_field(name='Copyright')
+    copyright_: Optional[str] = attrs_field(name='Copyright')
     """Company name used in Copyright src header."""

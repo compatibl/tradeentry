@@ -16,7 +16,7 @@ from functools import wraps
 from inspect import Parameter, isfunction, ismethod, signature
 from itertools import islice
 from typing import Any, Callable, Dict, Iterable, Optional, Tuple
-from cl.runtime.storage.key import Key
+from cl.runtime.data.key import Key
 
 
 def handler(label: str = None):

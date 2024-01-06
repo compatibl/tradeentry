@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.attrs_key_decorator import attrs_key
-from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.key import Key
+from cl.runtime.data.attrs.attrs_key_util import attrs_key
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
+from cl.runtime.data.key import Key
 
 
 @attrs_key
@@ -29,10 +29,10 @@ class ViewKey(Key):
     tab or panel next to the record itself.
     """
 
-    view_for: str = data_field()
+    view_for: str = attrs_field()
     """Primary key of the record for which the view is specified."""
 
-    view_name: str = data_field()
+    view_name: str = attrs_field()
     """Name of the view displayed in the front end."""
 
     @staticmethod

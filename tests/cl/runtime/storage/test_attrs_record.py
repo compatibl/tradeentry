@@ -14,7 +14,7 @@
 
 import pytest
 import cl.runtime as rt
-from cl.runtime.storage.stubs.stub_attrs_record import StubAttrsRecord
+from cl.runtime.data.attrs.stubs.stub_attrs_record import StubAttrsRecord
 
 
 def test_smoke():

@@ -13,20 +13,20 @@
 # limitations under the License.
 
 from __future__ import annotations
-from cl.runtime.decorators.attrs_record_decorator import attrs_record
-from cl.runtime.decorators.data_field_decorator import data_field
+from cl.runtime.data.attrs.attrs_record_util import attrs_record
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from cl.runtime import Context
-from cl.runtime.storage.stubs.stub_attrs_record import StubAttrsRecord
+from cl.runtime.data.attrs.stubs.stub_attrs_record import StubAttrsRecord
 
 
 @attrs_record
 class StubDerivedAttrsRecord(StubAttrsRecord):
     """Stub derived dataclass-based record sample used in tests."""
 
-    derived_field_str: str = data_field()
+    derived_field_str: str = attrs_field()
     """String attribute of base class."""
 
-    derived_field_float: float = data_field()
+    derived_field_float: float = attrs_field()
     """Float attribute of base class."""
 
     @staticmethod

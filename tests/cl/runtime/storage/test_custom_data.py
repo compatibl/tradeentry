@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.storage.stubs.stub_custom_data import StubCustomData
+from cl.runtime.data.custom.stubs.stub_custom_data import StubCustomData
 
 # Tests for Data
 

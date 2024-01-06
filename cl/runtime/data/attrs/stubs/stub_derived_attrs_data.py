@@ -13,19 +13,19 @@
 # limitations under the License.
 
 from __future__ import annotations
-from cl.runtime.decorators.attrs_data_decorator import attrs_data
-from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.stubs.stub_attrs_data import StubAttrsData
+from cl.runtime.data.attrs.attrs_data_util import attrs_data
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
+from cl.runtime.data.attrs.stubs.stub_attrs_data import StubAttrsData
 
 
 @attrs_data
 class StubDerivedAttrsData(StubAttrsData):
     """Dataclass-based serializable data sample used in tests."""
 
-    derived_field_str: str = data_field()
+    derived_field_str: str = attrs_field()
     """String attribute of base class."""
 
-    derived_field_float: float = data_field()
+    derived_field_float: float = attrs_field()
     """Float attribute of base class."""
 
     @staticmethod

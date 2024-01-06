@@ -15,13 +15,13 @@
 from typing import Optional, final
 
 from cl.runtime import Record
-from cl.runtime.decorators.attrs_record_decorator import attrs_record
+from cl.runtime.data.attrs.attrs_record_util import attrs_record
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from cl.runtime.schema.decl.language_key import LanguageKey
-from cl.runtime.decorators.data_field_decorator import data_field
 
 
 @final
 @attrs_record
 class Language(LanguageKey, Record):
-    language_label: Optional[str] = data_field()
+    language_label: Optional[str] = attrs_field()
     """Language label displayed in user interface (may not be unique)."""
