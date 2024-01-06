@@ -29,7 +29,7 @@ def test_smoke():
 
     # Test type and key
     table_name = base_record.get_table()
-    assert table_name == type(base_record).__name__
+    assert table_name == f"{type(base_record).__module__}.{type(base_record).__name__}"
     key = base_record.get_key()
     assert key == 'abc;123'
 

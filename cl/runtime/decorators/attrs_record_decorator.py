@@ -21,7 +21,7 @@ from cl.runtime.decorators.attrs_key_decorator import attrs_key_impl
 def attrs_record_impl(cls, *, label=None):
     """Performs the actual wrapping irrespective of call syntax with or without parentheses."""
 
-    cls = attrs_key_impl(cls)
+    cls = attrs.define(cls)
 
     # Add label if specified
     if label is not None:

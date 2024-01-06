@@ -34,8 +34,29 @@ def attrs_key_impl(cls, *, label=None):
         # TODO: Use package alias if specified in settings
         def get_table(self):
             return f"{cls.__module__}.{cls.__name__}"
+
         cls.get_table = get_table
         cls.get_table._implemented = True
+
+    get_key_method = getattr(cls, "get_key", None)
+    if get_key_method is not None and getattr(get_key_method, "_implemented", False):
+        # Use the method from parent if marked by _implemented, which will not be present
+        # if the method is declared in parent class without implementation. Reassignment
+        # here accelerates the code by preventing lookup at each level of inheritance chain.
+        cls.get_key = get_key_method
+    else:
+        # Implement using module and class name here and mark by _implemented
+        # TODO: Use package alias if specified in settings
+        field_names = {f.name: f for f in attrs.fields(cls)}
+
+        def get_key(self):
+            # TODO: Use type-aware method for conversion to string
+            # TODO: Review performance impact
+            field_values = [str(getattr(self, field_name, None)) for field_name in field_names]
+            return ';'.join(field_values)
+
+        cls.get_key = get_key
+        cls.get_key._implemented = True
 
     to_key_method = getattr(cls, "to_key", None)
     if to_key_method is not None and getattr(to_key_method, "_implemented", False):
@@ -46,15 +67,15 @@ def attrs_key_impl(cls, *, label=None):
     else:
         # Implement using module and class name here and mark by _implemented
         # TODO: Use package alias if specified in settings
-        fields = {f.name: f for f in attrs.fields(cls)}
+        field_names = {f.name: f for f in attrs.fields(cls)}
 
         def to_key(self):
             key = cls()
-            for field in fields.values():
-                field_name = field.name
+            for field_name in field_names.values():  # TODO: Review performance impact
                 value = getattr(self, field_name, None)
                 setattr(key, field_name, value)
             return key
+
         cls.to_key = to_key
         cls.to_key._implemented = True
 

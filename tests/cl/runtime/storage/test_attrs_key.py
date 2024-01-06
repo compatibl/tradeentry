@@ -20,7 +20,7 @@ def test_smoke():
     """Smoke test."""
 
     # Create test base_record and populate with sample data
-    key = StubAttrsRecordKey.create_key()
+    key = StubAttrsRecordKey.create_key(key_field_str="abc", key_field_int=123)
 
     # Test type and key
     table_name = key.get_table()
