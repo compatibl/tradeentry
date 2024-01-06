@@ -15,7 +15,7 @@
 from __future__ import annotations
 from cl.runtime.decorators.attrs_data_decorator import attrs_data
 from cl.runtime.decorators.data_field_decorator import data_field
-from cl.runtime.storage.stubs.stub_class_data import StubAttrsData
+from cl.runtime.storage.stubs.stub_attrs_data import StubAttrsData
 
 
 @attrs_data
