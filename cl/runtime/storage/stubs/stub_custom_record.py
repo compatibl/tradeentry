@@ -19,7 +19,7 @@ from cl.runtime.decorators.attrs_record_decorator import attrs_record
 
 
 @attrs_record
-class StubRecord(Record):
+class StubCustomRecord(Record):
     """Stub record used in tests."""
 
     key_field_str: Optional[str]
@@ -64,10 +64,10 @@ class StubRecord(Record):
         # TODO: detect extra fields in dict which are not in class and raise error
 
     @staticmethod
-    def create_sample_record(context: Context) -> StubRecord:
+    def create_sample_record(context: Context) -> StubCustomRecord:
         """Return an instance of this class populated with sample data."""
 
-        obj = StubRecord()
+        obj = StubCustomRecord()
         obj.context = context
         obj.key_field_str = 'abc'
         obj.key_field_int = 123

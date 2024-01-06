@@ -14,9 +14,9 @@
 
 import pytest
 import cl.runtime as rt
-from cl.runtime.storage.stubs.stub_class_data import StubAttrsData
-from cl.runtime.storage.stubs.stub_class_record import StubAttrsRecord
-from cl.runtime.storage.stubs.stub_derived_class_record import StubDerivedAttrsRecord
+from cl.runtime.storage.stubs.stub_attrs_data import StubAttrsData
+from cl.runtime.storage.stubs.stub_attrs_record import StubAttrsRecord
+from cl.runtime.storage.stubs.stub_derived_attrs_record import StubDerivedAttrsRecord
 
 
 def test_get_class_path():

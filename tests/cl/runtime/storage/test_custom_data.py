@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.storage.stubs.stub_data import StubData
+from cl.runtime.storage.stubs.stub_custom_data import StubCustomData
 
 # Tests for Data
 
@@ -22,11 +22,11 @@ def test_smoke():
     """Smoke test."""
 
     # Create test record and populate with sample data
-    obj = StubData.create()
+    obj = StubCustomData.create()
 
     # Test roundtrip serialization
     data1 = obj.to_dict()
-    obj2 = StubData()
+    obj2 = StubCustomData()
     obj2.from_dict(data1)
     data2 = obj2.to_dict()
     assert len(data2.keys()) == 2

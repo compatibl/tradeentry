@@ -19,7 +19,7 @@ from cl.runtime.decorators.attrs_data_decorator import attrs_data
 
 
 @attrs_data
-class StubData(Data):
+class StubCustomData(Data):
     """Stub serializable data used in tests."""
 
     base_field_str: Optional[str]
@@ -48,10 +48,10 @@ class StubData(Data):
         # TODO: detect extra fields in dict which are not in class and raise error
 
     @staticmethod
-    def create() -> StubData:
+    def create() -> StubCustomData:
         """Return an instance of this class populated with sample data."""
 
-        obj = StubData()
+        obj = StubCustomData()
         obj.base_field_str = 'def'
         obj.base_field_float = 4.56
         return obj

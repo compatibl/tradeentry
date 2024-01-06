@@ -15,7 +15,7 @@
 import pytest
 
 import cl.runtime as rt
-from cl.runtime.storage.stubs.stub_class_data import StubAttrsData
+from cl.runtime.storage.stubs.stub_attrs_data import StubAttrsData
 
 # Tests for ClassData
 

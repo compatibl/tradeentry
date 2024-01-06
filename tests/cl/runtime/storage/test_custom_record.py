@@ -14,7 +14,7 @@
 
 import pytest
 import cl.runtime as rt
-from cl.runtime.storage.stubs.stub_record import StubRecord
+from cl.runtime.storage.stubs.stub_custom_record import StubCustomRecord
 
 
 def test_smoke():
@@ -22,7 +22,7 @@ def test_smoke():
 
     # Create test base_record and populate with sample data
     context = rt.Context()
-    base_record = StubRecord.create_sample_record(context)
+    base_record = StubCustomRecord.create_sample_record(context)
 
     # Test that context has been set
     assert base_record.context == context
@@ -35,7 +35,7 @@ def test_smoke():
 
     # Test roundtrip serialization
     base_record_data = base_record.to_dict()
-    base_record_clone = StubRecord()
+    base_record_clone = StubCustomRecord()
     base_record_clone.context = context
     base_record_clone.from_dict(base_record_data)
     base_record_clone_data = base_record_clone.to_dict()

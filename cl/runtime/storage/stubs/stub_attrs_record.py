@@ -36,9 +36,9 @@ class StubAttrsRecord(StubAttrsRecordKey, Record):
             context: Context = None,
             *,
             key_field_str: str = "abc",
-            key_field_int: int = 0,
+            key_field_int: int = 123,
             base_field_str: str = "xyz",
-            base_field_float: float = 1.0
+            base_field_float: float = 1.23
     ) -> StubAttrsRecord:
         """Create from fields with default values."""
 

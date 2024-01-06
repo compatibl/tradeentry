@@ -29,6 +29,6 @@ class StubAttrsRecordKey(Key):
     """Second primary key attribute."""
 
     @staticmethod
-    def create_key(key_field_str: str = "abc", key_field_int: int = 0) -> StubAttrsRecordKey:
+    def create_key(key_field_str: str = "abc", key_field_int: int = 123) -> StubAttrsRecordKey:
         """Create from fields with default values."""
         return StubAttrsRecordKey(key_field_str=key_field_str, key_field_int=key_field_int)
