@@ -23,7 +23,7 @@ from cl.runtime.data.record_util import RecordUtil
 
 
 @attrs_data
-class CacheDataSource(DataSource):
+class InProcessDataSource(DataSource):
     """Data source based on in-memory cache using Python dict."""
 
     _cache: Dict[str, Dict] = attrs_field(factory=dict)

@@ -18,14 +18,14 @@ import cl.runtime as rt
 from cl.runtime.data.attrs.stubs.stub_attrs_record import StubAttrsRecord
 from cl.runtime.data.custom.stubs.stub_custom_record import StubCustomRecord
 
-# Tests for CacheDataSource
+# Tests for InProcessDataSource
 
 
 def test_smoke():
     """Smoke test."""
 
     # Create data source and dataset
-    data_source = rt.CacheDataSource()
+    data_source = rt.InProcessDataSource()
     data_set = "sample"
 
     # Create test record and populate with sample data
