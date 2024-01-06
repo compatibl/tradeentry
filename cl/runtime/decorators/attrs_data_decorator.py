@@ -27,10 +27,13 @@ def attrs_data_impl(cls, *, label=None):
 
     def to_dict(self):
         return attrs.asdict(self)
+
     cls.to_dict = to_dict
 
     def from_dict(self, data):
-        raise NotImplementedError()  # TODO: currently a stub
+        attrs.evolve(self, **data)
+
+    cls.from_dict = from_dict
 
     return cls
 
