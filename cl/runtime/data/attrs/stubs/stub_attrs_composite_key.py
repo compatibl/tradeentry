@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.data.attrs.attrs_record_util import attrs_record
-from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from cl.runtime.data.key import Key
+from cl.runtime.data.attrs.attrs_key_util import attrs_key
+from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from cl.runtime.data.attrs.stubs.stub_attrs_base_record_key import StubAttrsBaseRecordKey
 
 
-@attrs_record
+@attrs_key
 class StubAttrsCompositeKey(Key):
     """Record where the key is composite and includes other keys."""
 

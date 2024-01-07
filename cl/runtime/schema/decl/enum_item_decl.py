@@ -15,7 +15,6 @@
 from cl.runtime.data.attrs.attrs_data_util import attrs_data
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from typing import List, Optional
-
 from cl.runtime.data.data import Data
 
 

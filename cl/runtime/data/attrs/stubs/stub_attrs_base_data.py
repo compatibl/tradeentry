@@ -14,11 +14,11 @@
 
 from typing import Optional
 from cl.runtime.data.data import Data
-from cl.runtime.data.attrs.attrs_record_util import attrs_record
+from cl.runtime.data.attrs.attrs_data_util import attrs_data
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
 
 
-@attrs_record
+@attrs_data
 class StubAttrsBaseData(Data):
     """Stub base data type."""
 
