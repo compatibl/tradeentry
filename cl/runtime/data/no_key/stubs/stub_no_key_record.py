@@ -19,7 +19,7 @@ from cl.runtime.data.key import Key
 from cl.runtime.data.record import Record
 
 
-class StubCustomKeylessRecord(Key, Record):
+class StubNoKeyRecord(Key, Record):
     """Stub record used in tests."""
 
     key_field_str: Optional[str]
@@ -60,10 +60,10 @@ class StubCustomKeylessRecord(Key, Record):
         return f"{self.key_field_str};{self.key_field_int}"
 
     @staticmethod
-    def create(context: Context) -> StubCustomKeylessRecord:
+    def create(context: Context) -> StubNoKeyRecord:
         """Create an instance of this class populated with sample data."""
 
-        obj = StubCustomKeylessRecord()
+        obj = StubNoKeyRecord()
         obj.context = context
         obj.key_field_str = 'abc'
         obj.key_field_int = 123

@@ -18,28 +18,28 @@ from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from typing import TYPE_CHECKING, Union
 from cl.runtime.data.data import Data
 if TYPE_CHECKING:
-    from cl.runtime.data.stubs.stub_cyclic_a import StubCyclicA
+    from cl.runtime.data.attrs.stubs.stub_attrs_cyclic_a import StubAttrsCyclicA
 
 
 @attrs_data
-class StubCyclicB(Data):
+class StubAttrsCyclicB(Data):
     """Stub class A with a field whose type is key for class B."""
 
     b_id: str = attrs_field()
     """Unique identifier."""
 
-    a: Union[str, StubCyclicA] = attrs_field()
+    a: Union[str, StubAttrsCyclicA] = attrs_field()
     """Key for class A."""
 
     @staticmethod
-    def create() -> StubCyclicB:
+    def create() -> StubAttrsCyclicB:
         """Create an instance of this class populated with sample data."""
 
         # Import inside function to avoid cyclic reference error
-        from cl.runtime.data.stubs.stub_cyclic_a import StubCyclicA
+        from cl.runtime.data.attrs.stubs.stub_attrs_cyclic_a import StubAttrsCyclicA
 
-        obj = StubCyclicB()
+        obj = StubAttrsCyclicB()
         obj.b_id = "abc"
-        obj.a = StubCyclicA()
+        obj.a = StubAttrsCyclicA()
         obj.a.a_id = "xyz"
         return obj

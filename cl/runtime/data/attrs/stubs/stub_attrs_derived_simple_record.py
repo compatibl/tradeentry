@@ -16,11 +16,11 @@ from __future__ import annotations
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from cl.runtime import Context
-from cl.runtime.data.attrs.stubs.stub_attrs_record import StubAttrsRecord
+from cl.runtime.data.attrs.stubs.stub_attrs_simple_record import StubAttrsSimpleRecord
 
 
 @attrs_record
-class StubDerivedAttrsRecord(StubAttrsRecord):
+class StubAttrsDerivedSimpleRecord(StubAttrsSimpleRecord):
     """Stub derived dataclass-based record sample used in tests."""
 
     derived_field_str: str = attrs_field()
@@ -30,10 +30,10 @@ class StubDerivedAttrsRecord(StubAttrsRecord):
     """Float attribute of base class."""
 
     @staticmethod
-    def create() -> StubDerivedAttrsRecord:
+    def create() -> StubAttrsDerivedSimpleRecord:
         """Create an instance of this class populated with sample data."""
 
-        obj = StubDerivedAttrsRecord()
+        obj = StubAttrsDerivedSimpleRecord()
         obj.key_field_str = 'abc'
         obj.key_field_int = 123
         obj.base_field_str = 'def'

@@ -14,30 +14,30 @@
 
 import pytest
 import cl.runtime as rt
-from cl.runtime.data.stubs.stub_cyclic_a import StubCyclicA
-from cl.runtime.data.stubs.stub_cyclic_b import StubCyclicB
+from cl.runtime.data.attrs.stubs.stub_attrs_cyclic_a import StubAttrsCyclicA
+from cl.runtime.data.attrs.stubs.stub_attrs_cyclic_b import StubAttrsCyclicB
 
 
 def test_cyclic_record():
-    """Test for a cyclic import where classes StubCyclicA and StubCyclicB reference each other."""
+    """Test for a cyclic import where classes StubAttrsCyclicA and StubAttrsCyclicB reference each other."""
 
     # Create inside the class with import inside function
-    a_1 = StubCyclicA.create()
-    b_1 = StubCyclicB.create()
+    a_1 = StubAttrsCyclicA.create()
+    b_1 = StubAttrsCyclicB.create()
 
     # Create A outside the class
-    a_2 = StubCyclicA()
+    a_2 = StubAttrsCyclicA()
     a_2.a_id = 'abc'
-    a_2.b = StubCyclicB.create()
+    a_2.b = StubAttrsCyclicB.create()
 
     # Create B outside the class
-    b_2 = StubCyclicB()
+    b_2 = StubAttrsCyclicB()
     b_2.b_id = 'abc'
-    b_2.a = StubCyclicA.create()
+    b_2.a = StubAttrsCyclicA.create()
 
     # Test for annotation retrospection
-    assert StubCyclicA.__annotations__ == {'a_id': 'str', 'b': 'Union[str, StubCyclicB]'}
-    assert StubCyclicB.__annotations__ == {'b_id': 'str', 'a': 'Union[str, StubCyclicA]'}
+    assert StubAttrsCyclicA.__annotations__ == {'a_id': 'str', 'b': 'Union[str, StubAttrsCyclicB]'}
+    assert StubAttrsCyclicB.__annotations__ == {'b_id': 'str', 'a': 'Union[str, StubAttrsCyclicA]'}
 
 
 if __name__ == '__main__':

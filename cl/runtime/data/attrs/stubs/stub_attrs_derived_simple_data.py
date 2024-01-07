@@ -15,11 +15,11 @@
 from __future__ import annotations
 from cl.runtime.data.attrs.attrs_data_util import attrs_data
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
-from cl.runtime.data.attrs.stubs.stub_attrs_data import StubAttrsData
+from cl.runtime.data.attrs.stubs.stub_attrs_simple_data import StubAttrsSimpleData
 
 
 @attrs_data
-class StubDerivedAttrsData(StubAttrsData):
+class StubAttrsDerivedSimpleData(StubAttrsSimpleData):
     """Dataclass-based serializable data sample used in tests."""
 
     derived_field_str: str = attrs_field()
@@ -29,10 +29,10 @@ class StubDerivedAttrsData(StubAttrsData):
     """Float attribute of base class."""
 
     @staticmethod
-    def create() -> StubDerivedAttrsData:
+    def create() -> StubAttrsDerivedSimpleData:
         """Create an instance of this class populated with sample data."""
 
-        obj = StubDerivedAttrsData()
+        obj = StubAttrsDerivedSimpleData()
         obj.base_field_str = 'def'
         obj.base_field_float = 4.56
         obj.derived_field_str = 'def'

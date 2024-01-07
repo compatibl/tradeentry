@@ -14,18 +14,18 @@
 
 import pytest
 import cl.runtime as rt
-from cl.runtime.data.attrs.stubs.stub_attrs_data import StubAttrsData
+from cl.runtime.data.attrs.stubs.stub_attrs_simple_data import StubAttrsSimpleData
 
 
 def test_smoke():
     """Smoke test."""
 
     # Create test record and populate with sample data
-    obj = StubAttrsData.create()
+    obj = StubAttrsSimpleData.create()
 
     # Test roundtrip serialization
     obj_dict = obj.to_dict()
-    obj_clone = StubAttrsData.from_dict(obj_dict)
+    obj_clone = StubAttrsSimpleData.from_dict(obj_dict)
     obj_clone_dict = obj_clone.to_dict()
     assert len(obj_dict) == 2
     assert obj_dict == obj_clone_dict

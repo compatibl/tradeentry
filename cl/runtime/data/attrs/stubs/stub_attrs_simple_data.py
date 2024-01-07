@@ -19,7 +19,7 @@ from cl.runtime.data.data import Data
 
 
 @attrs_data
-class StubAttrsData(Data):
+class StubAttrsSimpleData(Data):
     """Dataclass-based serializable data sample used in tests."""
 
     base_field_str: str = attrs_field()
@@ -33,9 +33,9 @@ class StubAttrsData(Data):
             *,
             base_field_str: str = 'abc',
             base_field_int: int = 123
-    ) -> StubAttrsData:
+    ) -> StubAttrsSimpleData:
         """Create an instance of this class populated with sample data."""
-        obj = StubAttrsData()
+        obj = StubAttrsSimpleData()
         obj.base_field_str = base_field_str
         obj.base_field_int = base_field_int
         return obj

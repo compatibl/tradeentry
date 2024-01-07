@@ -13,14 +13,14 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.data.attrs.stubs.stub_attrs_record_key import StubAttrsRecordKey
+from cl.runtime.data.attrs.stubs.stub_attrs_simple_record_key import StubAttrsSimpleRecordKey
 
 
 def test_smoke():
     """Smoke test."""
 
     # Create test base_record and populate with sample data
-    key = StubAttrsRecordKey.create_key(key_field_str="abc", key_field_int=123)
+    key = StubAttrsSimpleRecordKey.create_key(key_field_str="abc", key_field_int=123)
 
     # Test type and key
     table_name = key.get_table()
@@ -29,7 +29,7 @@ def test_smoke():
 
     # Test roundtrip serialization
     key_dict = key.to_dict()
-    key_clone = StubAttrsRecordKey.from_dict(key_dict)
+    key_clone = StubAttrsSimpleRecordKey.from_dict(key_dict)
     key_clone_dict = key_clone.to_dict()
     assert len(key_dict) == 2
     assert key_dict == key_clone_dict

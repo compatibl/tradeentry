@@ -14,7 +14,7 @@
 
 import pytest
 import cl.runtime as rt
-from cl.runtime.data.custom.stubs.stub_custom_keyless_record import StubCustomKeylessRecord
+from cl.runtime.data.no_key.stubs.stub_no_key_record import StubNoKeyRecord
 
 
 def test_smoke():
@@ -22,7 +22,7 @@ def test_smoke():
 
     # Create test base_record and populate with sample data
     context = rt.Context()
-    base_record = StubCustomKeylessRecord.create(context)
+    base_record = StubNoKeyRecord.create(context)
 
     # Test that context has been set
     assert base_record.context == context
@@ -35,7 +35,7 @@ def test_smoke():
 
     # Test roundtrip serialization
     base_record_dict = base_record.to_dict()
-    base_record_clone = StubCustomKeylessRecord.from_dict(base_record_dict)
+    base_record_clone = StubNoKeyRecord.from_dict(base_record_dict)
     base_record_clone_dict = base_record_clone.to_dict()
     assert len(base_record_dict) == 4
     assert base_record_dict == base_record_clone_dict
