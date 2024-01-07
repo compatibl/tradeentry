@@ -13,7 +13,9 @@
 # limitations under the License.
 
 import importlib
+import inspect
 import pkgutil
+import attrs
 from typing import List
 import pytest
 
@@ -31,10 +33,6 @@ def _check_package(package_root: str) -> List[str]:  # TODO: Move this method to
     for m in modules:
         try:
             package_import = importlib.import_module(m.name)
-
-            # TODO: Validate type hints
-            # data_classes = inspect.getmembers(package_import, attrs.has)
-            # [ClassInfo.get_type_hints(x[1]) for x in data_classes]
         except SyntaxError as error:
             errors.append(f'Cannot import module: {m.name}. Error: {error.msg}. Line: {error.lineno}, {error.offset}')
             continue
