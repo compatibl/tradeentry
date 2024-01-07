@@ -12,17 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import List, Optional
+from cl.runtime.data.record import Record
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
-from typing import List, Optional
-
 from cl.runtime.schema.decl.handler_declare_decl import HandlerDeclareDecl
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.decl.type_element_decl import TypeElementDecl
 
 
 @attrs_record
-class InterfaceDecl(InterfaceDeclKey):
+class InterfaceDecl(InterfaceDeclKey, Record):
     """Defines Interface declaration."""
 
     label: str = attrs_field()

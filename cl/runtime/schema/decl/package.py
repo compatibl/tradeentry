@@ -12,16 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import List, Optional
+from cl.runtime.data.record import Record
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
-from typing import List, Optional
-
 from cl.runtime.schema.decl.package_dependency import PackageDependency
 from cl.runtime.schema.decl.package_key import PackageKey
 
 
 @attrs_record
-class Package(PackageKey):
+class Package(PackageKey, Record):
     """Package is a list of modules and binaries which are deployed together."""
 
     package_shortcut: Optional[str] = attrs_field()

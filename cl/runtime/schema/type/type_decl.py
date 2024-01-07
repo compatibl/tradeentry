@@ -12,13 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from cl.runtime.data.record import Record
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from cl.runtime.schema.type.type_decl_key import TypeDeclKey
 
 
 @attrs_record
-class TypeDecl(TypeDeclKey):
+class TypeDecl(TypeDeclKey, Record):
     """Base class of type declaration in schema."""
 
     label: str = attrs_field(optional=True)

@@ -12,13 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from cl.runtime.data.record import Record
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from cl.runtime.schema.type.package_decl_key import PackageDeclKey
 
 
 @attrs_record
-class PackageDecl(PackageDeclKey):
+class PackageDecl(PackageDeclKey, Record):
     """Base class for the package declaration in schema."""
 
     label: str = attrs_field(optional=True)

@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from typing import Optional, final
-
 from cl.runtime import Record
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
