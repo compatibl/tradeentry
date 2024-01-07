@@ -15,8 +15,8 @@
 import pytest
 
 import cl.runtime as rt
-from cl.runtime.data.attrs.stubs.stub_attrs_simple_record import StubAttrsSimpleRecord
-from cl.runtime.data.custom.stubs.stub_custom_record import StubCustomRecord
+from stubs.cl.runtime.data.attrs.stub_attrs_simple_record import StubAttrsSimpleRecord
+from stubs.cl.runtime.data.custom.stub_custom_record import StubCustomRecord
 
 # Tests for InProcessDataSource
 

@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.data.attrs.stubs.stub_attrs_simple_record_key import StubAttrsSimpleRecordKey
+from stubs.cl.runtime.data.attrs.stub_attrs_simple_record_key import StubAttrsSimpleRecordKey
 
 
 def test_smoke():

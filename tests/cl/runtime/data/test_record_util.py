@@ -14,9 +14,9 @@
 
 import pytest
 import cl.runtime as rt
-from cl.runtime.data.attrs.stubs.stub_attrs_simple_data import StubAttrsSimpleData
-from cl.runtime.data.attrs.stubs.stub_attrs_simple_record import StubAttrsSimpleRecord
-from cl.runtime.data.attrs.stubs.stub_attrs_derived_simple_record import StubAttrsDerivedSimpleRecord
+from stubs.cl.runtime.data.attrs.stub_attrs_simple_data import StubAttrsSimpleData
+from stubs.cl.runtime.data.attrs.stub_attrs_simple_record import StubAttrsSimpleRecord
+from stubs.cl.runtime.data.attrs.stub_attrs_derived_simple_record import StubAttrsDerivedSimpleRecord
 
 
 def test_get_class_path():
@@ -55,7 +55,7 @@ def test_get_class_type():
     assert rt.RecordUtil.get_class_type(rt.RecordUtil.__module__, rt.RecordUtil.__name__) == rt.RecordUtil
 
     # Class that is dynamically imported on demand
-    do_no_import_module_name = "cl.runtime.data.attrs.stubs.stub_attrs_do_not_import"
+    do_no_import_module_name = "stubs.cl.runtime.data.attrs.stub_attrs_do_not_import"
     do_no_import_class_name = "StubAttrsDoNotImport"
     do_no_import_class = rt.RecordUtil.get_class_type(do_no_import_module_name, do_no_import_class_name)
     assert do_no_import_class.__module__ == do_no_import_module_name

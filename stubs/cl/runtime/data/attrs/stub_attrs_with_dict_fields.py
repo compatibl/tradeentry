@@ -16,9 +16,9 @@ import datetime as dt
 from typing import Any, Dict, List, Optional
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
-from cl.runtime.data.attrs.stubs.stub_attrs_base_record import StubAttrsBaseRecord
-from cl.runtime.data.attrs.stubs.stub_attrs_derived_record import StubAttrsDerivedRecord
-from cl.runtime.data.attrs.stubs.stub_attrs_with_dict_fields_key import StubAttrsWithDictFieldsKey
+from stubs.cl.runtime.data.attrs.stub_attrs_base_record import StubAttrsBaseRecord
+from stubs.cl.runtime.data.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
+from stubs.cl.runtime.data.attrs.stub_attrs_with_dict_fields_key import StubAttrsWithDictFieldsKey
 
 
 @attrs_record

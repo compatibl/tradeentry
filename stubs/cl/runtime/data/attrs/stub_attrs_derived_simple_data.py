@@ -15,7 +15,7 @@
 from __future__ import annotations
 from cl.runtime.data.attrs.attrs_data_util import attrs_data
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
-from cl.runtime.data.attrs.stubs.stub_attrs_simple_data import StubAttrsSimpleData
+from stubs.cl.runtime.data.attrs.stub_attrs_simple_data import StubAttrsSimpleData
 
 
 @attrs_data

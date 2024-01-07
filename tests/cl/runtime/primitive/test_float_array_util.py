@@ -16,7 +16,7 @@ import numpy as np
 import pytest
 
 from cl.runtime.primitive.float_array_util import FloatArrayUtil
-from cl.runtime.primitive.stubs.stub_float_array import StubFloatArray
+from stubs.cl.runtime.primitive.stub_float_array import StubFloatArray
 
 
 def test_is_strictly_ascending():

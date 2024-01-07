@@ -14,7 +14,7 @@
 
 import pytest
 import cl.runtime as rt
-from cl.runtime.data.no_key.stubs.stub_no_key_record import StubNoKeyRecord
+from stubs.cl.runtime.data.no_key.stub_no_key_record import StubNoKeyRecord
 
 
 def test_smoke():

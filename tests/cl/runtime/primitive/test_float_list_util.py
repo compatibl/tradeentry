@@ -14,7 +14,7 @@
 
 import pytest
 from cl.runtime.primitive.float_list_util import FloatListUtil
-from cl.runtime.primitive.stubs.stub_float_list import StubFloatList
+from stubs.cl.runtime.primitive.stub_float_list import StubFloatList
 
 
 def test_is_strictly_ascending():

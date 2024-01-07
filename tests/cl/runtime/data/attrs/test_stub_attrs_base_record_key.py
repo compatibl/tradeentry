@@ -14,8 +14,8 @@
 
 import pytest
 import copy
-from cl.runtime.data.attrs.stubs.stub_attrs_composite_key import StubAttrsCompositeKey
-from cl.runtime.data.attrs.stubs.stub_attrs_base_record_key import StubAttrsBaseRecordKey
+from stubs.cl.runtime.data.attrs.stub_attrs_composite_key import StubAttrsCompositeKey
+from stubs.cl.runtime.data.attrs.stub_attrs_base_record_key import StubAttrsBaseRecordKey
 
 
 def test_smoke():

@@ -19,11 +19,11 @@ from cl.runtime.primitive.date_time_util import DateTimeUtil
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
-from cl.runtime.data.attrs.stubs.stub_attrs_base_record import StubAttrsBaseRecord
-from cl.runtime.data.attrs.stubs.stub_attrs_base_record_key import StubAttrsBaseRecordKey
-from cl.runtime.data.attrs.stubs.stub_attrs_derived_data import StubAttrsDerivedData
-from cl.runtime.data.attrs.stubs.stub_attrs_derived_from_derived_data import StubAttrsDerivedFromDerivedData
-from cl.runtime.data.attrs.stubs.stub_attrs_base_data import StubAttrsBaseData
+from stubs.cl.runtime.data.attrs.stub_attrs_base_record import StubAttrsBaseRecord
+from stubs.cl.runtime.data.attrs.stub_attrs_base_record_key import StubAttrsBaseRecordKey
+from stubs.cl.runtime.data.attrs.stub_attrs_derived_data import StubAttrsDerivedData
+from stubs.cl.runtime.data.attrs.stub_attrs_derived_from_derived_data import StubAttrsDerivedFromDerivedData
+from stubs.cl.runtime.data.attrs.stub_attrs_base_data import StubAttrsBaseData
 
 
 @index_fields('float_field_2, -float_field')

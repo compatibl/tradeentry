@@ -15,7 +15,7 @@
 from cl.runtime.data.key import Key
 from cl.runtime.data.attrs.attrs_key_util import attrs_key
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
-from cl.runtime.data.attrs.stubs.stub_attrs_base_record_key import StubAttrsBaseRecordKey
+from stubs.cl.runtime.data.attrs.stub_attrs_base_record_key import StubAttrsBaseRecordKey
 
 
 @attrs_key

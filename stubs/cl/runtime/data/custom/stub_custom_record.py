@@ -18,7 +18,7 @@ from cl.runtime.data.context import Context
 from cl.runtime.data.record import Record
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
-from cl.runtime.data.custom.stubs.stub_custom_record_key import StubCustomRecordKey
+from stubs.cl.runtime.data.custom.stub_custom_record_key import StubCustomRecordKey
 
 
 @attrs_record

@@ -26,9 +26,9 @@ from cl.runtime.data.context import Context
 from cl.runtime.data.data import Data
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
-from cl.runtime.data.attrs.stubs.stub_attrs_base_data import StubAttrsBaseData
-from cl.runtime.data.attrs.stubs.stub_attrs_base_record_key import StubAttrsBaseRecordKey
-from cl.runtime.data.attrs.stubs.stub_attrs_enum import StubAttrsEnum
+from stubs.cl.runtime.data.attrs.stub_attrs_base_data import StubAttrsBaseData
+from stubs.cl.runtime.data.attrs.stub_attrs_base_record_key import StubAttrsBaseRecordKey
+from stubs.cl.runtime.data.attrs.stub_attrs_enum import StubAttrsEnum
 
 _logger = Logger(__name__)
 

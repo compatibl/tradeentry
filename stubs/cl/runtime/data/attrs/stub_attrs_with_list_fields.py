@@ -18,9 +18,9 @@ from typing import List, Optional
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
-from cl.runtime.data.attrs.stubs.stub_attrs_base_record import StubAttrsBaseRecord
-from cl.runtime.data.attrs.stubs.stub_attrs_derived_record import StubAttrsDerivedRecord
-from cl.runtime.data.attrs.stubs.stub_attrs_with_list_fields_key import StubAttrsWithListFieldsKey
+from stubs.cl.runtime.data.attrs.stub_attrs_base_record import StubAttrsBaseRecord
+from stubs.cl.runtime.data.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
+from stubs.cl.runtime.data.attrs.stub_attrs_with_list_fields_key import StubAttrsWithListFieldsKey
 
 
 @attrs_record

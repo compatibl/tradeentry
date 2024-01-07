@@ -17,8 +17,8 @@ from cl.runtime.primitive.ordered_uid import OrderedUid
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from cl.runtime.data.key import Key
-from cl.runtime.data.attrs.stubs.stub_attrs_enum import StubAttrsEnum
-from cl.runtime.data.attrs.stubs.stub_attrs_with_primitive_fields_key import StubAttrsWithPrimitiveFieldsKey
+from stubs.cl.runtime.data.attrs.stub_attrs_enum import StubAttrsEnum
+from stubs.cl.runtime.data.attrs.stub_attrs_with_primitive_fields_key import StubAttrsWithPrimitiveFieldsKey
 
 
 @attrs_record

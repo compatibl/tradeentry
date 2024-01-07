@@ -16,4 +16,3 @@ from cl.runtime.schema.type.field_decl import FieldDecl
 from cl.runtime.schema.type.primitive_decl import PrimitiveDecl
 from cl.runtime.schema.type.enum_decl import EnumDecl
 from cl.runtime.schema.type.data_decl import DataDecl
-import cl.runtime.stubs as stubs

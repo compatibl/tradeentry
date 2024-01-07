@@ -18,7 +18,7 @@ from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from typing import TYPE_CHECKING, Union
 from cl.runtime.data.data import Data
 if TYPE_CHECKING:
-    from cl.runtime.data.attrs.stubs.stub_attrs_cyclic_a import StubAttrsCyclicA
+    from stubs.cl.runtime.data.attrs.stub_attrs_cyclic_a import StubAttrsCyclicA
 
 
 @attrs_data
@@ -36,7 +36,7 @@ class StubAttrsCyclicB(Data):
         """Create an instance of this class populated with sample data."""
 
         # Import inside function to avoid cyclic reference error
-        from cl.runtime.data.attrs.stubs.stub_attrs_cyclic_a import StubAttrsCyclicA
+        from stubs.cl.runtime.data.attrs.stub_attrs_cyclic_a import StubAttrsCyclicA
 
         obj = StubAttrsCyclicB()
         obj.b_id = "abc"
