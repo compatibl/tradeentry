@@ -14,6 +14,7 @@
 
 import datetime as dt
 from cl.runtime.primitive.ordered_uid import OrderedUid
+from cl.runtime.data.record import Record
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from cl.runtime.data.key import Key
@@ -22,7 +23,7 @@ from stubs.cl.runtime.data.attrs.stub_attrs_with_primitive_fields_key import Stu
 
 
 @attrs_record
-class StubAttrsWithPrimitiveFields(StubAttrsWithPrimitiveFieldsKey):
+class StubAttrsWithPrimitiveFields(StubAttrsWithPrimitiveFieldsKey, Record):
     """Stub record whose elements are primitive types."""
 
     float_field: float = attrs_field()

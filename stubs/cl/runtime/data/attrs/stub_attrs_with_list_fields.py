@@ -16,6 +16,7 @@ from __future__ import annotations
 import datetime as dt
 from typing import List, Optional
 from cl.runtime.primitive.date_util import DateUtil
+from cl.runtime.data.record import Record
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from stubs.cl.runtime.data.attrs.stub_attrs_base_record import StubAttrsBaseRecord
@@ -24,7 +25,7 @@ from stubs.cl.runtime.data.attrs.stub_attrs_with_list_fields_key import StubAttr
 
 
 @attrs_record
-class StubAttrsWithListFields(StubAttrsWithListFieldsKey):
+class StubAttrsWithListFields(StubAttrsWithListFieldsKey, Record):
 
     list_of_float: Optional[List[float]] = attrs_field()
     """Stub field."""

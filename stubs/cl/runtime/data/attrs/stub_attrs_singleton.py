@@ -13,13 +13,14 @@
 # limitations under the License.
 
 from typing import Optional
+from cl.runtime.data.record import Record
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from stubs.cl.runtime.data.attrs.stub_attrs_singleton_key import StubAttrsSingletonKey
 
 
 @attrs_record
-class StubAttrsSingleton(StubAttrsSingletonKey):
+class StubAttrsSingleton(StubAttrsSingletonKey, Record):
     """Key for a singleton record has no fields."""
 
     string_field: Optional[str] = attrs_field()

@@ -14,14 +14,15 @@
 
 from __future__ import annotations
 from typing import Optional
+from cl.runtime.data.record import Record
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from stubs.cl.runtime.data.attrs.stub_attrs_circular_reference_key import StubAttrsCircularReferenceKey
 
 
 @attrs_record
-class StubAttrsCircularReference(StubAttrsCircularReferenceKey):
+class StubAttrsCircularReference(StubAttrsCircularReferenceKey, Record):
     """This stub record includes self as its element."""
 
-    circular_field: Optional[StubCircularReference] = attrs_field()
+    circular_field: Optional[StubAttrsCircularReferenceKey] = attrs_field()
     """Field of the same type as the record."""

@@ -13,10 +13,10 @@
 # limitations under the License.
 
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
-from cl.runtime.data.attrs.attrs_field_util import attrs_field
+from cl.runtime.data.record import Record
 from stubs.cl.runtime.data.attrs.stub_attrs_composite_key import StubAttrsCompositeKey
 
 
 @attrs_record
-class StubAttrsComposite(StubAttrsCompositeKey):
+class StubAttrsComposite(StubAttrsCompositeKey, Record):
     """Record where the key is composite and includes other keys."""

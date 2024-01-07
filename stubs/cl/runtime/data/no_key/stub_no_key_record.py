@@ -19,7 +19,7 @@ from cl.runtime.data.key import Key
 from cl.runtime.data.record import Record
 
 
-class StubNoKeyRecord(Key, Record):
+class StubNoKeyRecord(Key):
     """Stub record used in tests."""
 
     key_field_str: Optional[str]
@@ -58,6 +58,10 @@ class StubNoKeyRecord(Key, Record):
     def get_key(self) -> str:
         """Key as string in semicolon-delimited string format without table name."""
         return f"{self.key_field_str};{self.key_field_int}"
+
+    def init(self) -> None:
+        """Validate dataclass attributes and use them to initialize object state."""
+        pass
 
     @staticmethod
     def create(context: Context) -> StubNoKeyRecord:

@@ -24,6 +24,7 @@ from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.primitive.time_util import TimeUtil
 from cl.runtime.data.context import Context
 from cl.runtime.data.data import Data
+from cl.runtime.data.record import Record
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from stubs.cl.runtime.data.attrs.stub_attrs_base_data import StubAttrsBaseData
@@ -40,7 +41,7 @@ _logger = Logger(__name__)
 @index_fields('nested_data_list.data.float_field_3')
 @index_fields('nested_attrs_field.data.float_field_3')
 @attrs_record
-class StubAttrsBaseRecord(StubAttrsBaseRecordKey):
+class StubAttrsBaseRecord(StubAttrsBaseRecordKey, Record):
     """Stub record base class."""
 
     float_field: Optional[float] = attrs_field()
