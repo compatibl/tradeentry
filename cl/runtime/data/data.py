@@ -28,6 +28,9 @@ class Data(ABC):
     They are not made abstract to avoid errors from static type checkers in the latter case.
     """
 
+    __slots__ = []
+    """Adding empty __slots__ prevents creation of __dict__ for every instance."""
+
     def to_dict(self) -> Dict[str, Any]:
         """Serialize to dictionary containing other dictionaries, lists and primitive types."""
         raise RuntimeError(f"Method to_dict() for class {type(self).__name__} in module {type(self).__module__} "

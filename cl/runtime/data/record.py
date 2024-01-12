@@ -34,6 +34,9 @@ class Record(ABC):
     They are not made abstract to avoid errors from static type checkers in the latter case.
     """
 
+    __slots__ = []
+    """Adding empty __slots__ prevents creation of __dict__ for every instance."""
+
     context: Optional[Context]
     """
     Context provides platform-independent APIs for:
