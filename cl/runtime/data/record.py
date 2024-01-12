@@ -20,18 +20,18 @@ from cl.runtime.data.key import Key
 
 class Record(ABC):
     """
-    Optional mixin class for database records.
+    Optional mixin class for database records providing static type checkers with method signatures.
 
-    - Record classes may implement handlers and viewers
-    - Handlers are functions that can be invoked from the UI
-    - Viewers are functions whose return value is displayed in the UI
-    - Handlers and viewers may be either instance or class methods, and may have parameters
+    Those methods that raise an exception must be overridden in derived types or by a decorator.
+    They are not made abstract to avoid errors from static type checkers.
 
-    The use of this class is optional. The code must not rely on inheritance from this class, but only on the
-    presence of its methods. These methods may be implemented without using any specific base or mixin class.
+    The use of this class is optional. The code must not rely on inheritance from this class.
 
-    The methods that lack implementation must be overridden by a derived class in code or using a decorator.
-    They are not made abstract to avoid errors from static type checkers in the latter case.
+    Records may implement handlers and/or viewers:
+
+    - Handlers are methods that can be invoked from the UI
+    - Viewers are methods whose return value is displayed in the UI
+    - Both may be instance, class or static methods, and may have parameters
     """
 
     __slots__ = []

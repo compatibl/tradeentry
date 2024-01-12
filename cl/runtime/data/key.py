@@ -20,13 +20,12 @@ from cl.runtime.data.data import Data
 
 class Key(Data, ABC):
     """
-    Optional mixin class for database record keys.
+    Optional mixin class for database keys providing static type checkers with method signatures.
 
-    The use of this class is optional. The code must not rely on inheritance from this class, but only on the
-    presence of its methods. These methods may be implemented without using any specific base or mixin class.
+    Those methods that raise an exception must be overridden in derived types or by a decorator.
+    They are not made abstract to avoid errors from static type checkers.
 
-    The methods that lack implementation must be overridden by a derived class in code or using a decorator.
-    They are not made abstract to avoid errors from static type checkers in the latter case.
+    The use of this class is optional. The code must not rely on inheritance from this class.
     """
 
     __slots__ = []
@@ -85,4 +84,3 @@ class Key(Data, ABC):
         Data source implementation must use get_key() method instead.
         """
         return self.get_key()
-
