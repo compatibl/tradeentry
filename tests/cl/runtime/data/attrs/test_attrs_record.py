@@ -28,9 +28,6 @@ def test_smoke():
     context = rt.Context()
     record = StubAttrsSimpleRecord.create(context)
 
-    # Test that context has been set
-    assert record.context == context
-
     # Test primary key
     key = record.get_key()
     assert key == 'abc;123'

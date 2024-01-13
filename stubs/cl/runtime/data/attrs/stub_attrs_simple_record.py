@@ -43,7 +43,6 @@ class StubAttrsSimpleRecord(StubAttrsSimpleRecordKey, Record):
         """Create an instance of this class populated with sample data."""
 
         obj = StubAttrsSimpleRecord()
-        obj.context = context
         obj.key_field_str = key_field_str
         obj.key_field_int = key_field_int
         obj.base_field_str = base_field_str

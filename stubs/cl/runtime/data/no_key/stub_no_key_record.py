@@ -68,7 +68,6 @@ class StubNoKeyRecord(Key):
         """Create an instance of this class populated with sample data."""
 
         obj = StubNoKeyRecord()
-        obj.context = context
         obj.key_field_str = 'abc'
         obj.key_field_int = 123
         obj.base_field_str = 'def'

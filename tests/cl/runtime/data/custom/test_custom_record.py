@@ -24,9 +24,6 @@ def test_smoke():
     context = rt.Context()
     base_record = StubCustomRecord.create(context)
 
-    # Test that context has been set
-    assert base_record.context == context
-
     # Test type and key
     table_name = base_record.get_table()
     assert table_name == f"{type(base_record).__module__}.{type(base_record).__name__}"
