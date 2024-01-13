@@ -64,7 +64,7 @@ class StubNoKeyRecord(Key):
         pass
 
     @staticmethod
-    def create(context: Context) -> StubNoKeyRecord:
+    def create() -> StubNoKeyRecord:
         """Create an instance of this class populated with sample data."""
 
         obj = StubNoKeyRecord()

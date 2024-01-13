@@ -42,7 +42,7 @@ class StubCustomRecord(StubCustomRecordKey, Record):
         }
 
     @staticmethod
-    def create(context: Context) -> StubCustomRecord:
+    def create() -> StubCustomRecord:
         """Create an instance of this class populated with sample data."""
 
         obj = StubCustomRecord()

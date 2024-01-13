@@ -33,8 +33,6 @@ class StubAttrsSimpleRecord(StubAttrsSimpleRecordKey, Record):
 
     @staticmethod
     def create(
-            context: Context,
-            *,
             key_field_str: str = "abc",
             key_field_int: int = 123,
             base_field_str: str = "xyz",

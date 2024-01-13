@@ -26,7 +26,7 @@ def test_smoke():
 
     # Create test record and populate with sample data
     context = rt.Context()
-    record = StubAttrsSimpleRecord.create(context)
+    record = StubAttrsSimpleRecord.create()
 
     # Test primary key
     key = record.get_key()

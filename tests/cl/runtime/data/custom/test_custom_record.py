@@ -22,7 +22,7 @@ def test_smoke():
 
     # Create test base_record and populate with sample data
     context = rt.Context()
-    base_record = StubCustomRecord.create(context)
+    base_record = StubCustomRecord.create()
 
     # Test type and key
     table_name = base_record.get_table()
