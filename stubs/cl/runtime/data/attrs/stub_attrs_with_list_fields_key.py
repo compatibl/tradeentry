@@ -20,8 +20,8 @@ from cl.runtime.data.key import Key
 @attrs_key
 class StubAttrsWithListFieldsKey(Key):
 
-    record_id: str = attrs_field()
+    record_id: str = attrs_field(default='A')
     """Stub field."""
 
-    record_index: int = attrs_field()
+    record_index: int = attrs_field(default=0)
     """Stub field."""

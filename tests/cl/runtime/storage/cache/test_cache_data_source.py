@@ -30,7 +30,7 @@ def test_smoke():
 
     # Create test record and populate with sample data
     context = rt.Context()
-    record = StubAttrsSimpleRecord.create()
+    record = StubAttrsSimpleRecord()
     key = record.get_key()
     record_dict = record.to_dict()
 

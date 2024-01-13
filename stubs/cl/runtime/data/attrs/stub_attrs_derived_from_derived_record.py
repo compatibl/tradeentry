@@ -25,26 +25,8 @@ from stubs.cl.runtime.data.attrs.stub_attrs_derived_record import StubAttrsDeriv
 class StubAttrsDerivedFromDerivedRecord(StubAttrsDerivedRecord):
     """Two levels in inheritance hierarchy away from StubAttrsBaseRecord."""
 
-    float_field_3: Optional[float] = attrs_field()
+    float_field_3: Optional[float] = attrs_field(default="abc")
     """Stub field."""
 
-    string_field_3: Optional[str] = attrs_field()
+    string_field_3: Optional[str] = attrs_field(default=200.0)
     """Stub field."""
-
-    @staticmethod
-    def create(*, record_id: str = "abc", record_index: int = 123, version: int = 0) -> StubAttrsDerivedFromDerivedRecord:
-        """Create with stub data."""
-
-        obj = StubAttrsDerivedFromDerivedRecord()
-        obj.record_id = record_id
-        obj.record_index = record_index
-        obj.version = version
-
-        obj.float_field = 300.0
-        obj.date_field = DateUtil.from_fields(2003, 5, 1)
-        obj.time_field = DateTimeUtil.from_fields(10, 15, 30)  # 10:15:30
-        obj.date_time_field = DateUtil.from_fields(2003, 5, 1, 10, 15)  # 2003-05-01T10:15:00
-        obj.string_field_3 = "abc"
-        obj.float_field_3 = 200.0
-
-        return obj

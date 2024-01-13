@@ -36,11 +36,10 @@ class StubNoKeyRecord(Key):
 
     def __init__(self):
         """Initialize instance attributes."""
-        super().__init__()
-        self.key_field_str = None
-        self.key_field_int = None
-        self.base_field_str = None
-        self.base_field_float = None
+        self.key_field_str = 'abc'
+        self.key_field_int = 123
+        self.base_field_str = 'def'
+        self.base_field_float = 4.56
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize self as dictionary (may return shallow copy)."""
@@ -63,14 +62,3 @@ class StubNoKeyRecord(Key):
         """Validate dataclass attributes and use them to initialize object state."""
         pass
 
-    @staticmethod
-    def create() -> StubNoKeyRecord:
-        """Create an instance of this class populated with sample data."""
-
-        obj = StubNoKeyRecord()
-        obj.key_field_str = 'abc'
-        obj.key_field_int = 123
-        obj.base_field_str = 'def'
-        obj.base_field_float = 4.56
-        obj.init()
-        return obj

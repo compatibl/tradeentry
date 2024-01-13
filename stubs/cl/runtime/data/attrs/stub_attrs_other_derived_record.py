@@ -27,26 +27,10 @@ from stubs.cl.runtime.data.attrs.stub_attrs_base_record import StubAttrsBaseReco
 class StubAttrsOtherDerivedRecord(StubAttrsBaseRecord):
     """Another type derived from StubAttrsBaseRecord."""
 
-    other_float_field_2: Optional[float] = attrs_field()
+    other_string_field_2: Optional[str] = attrs_field(default='abc')
     """Stub field."""
 
-    other_string_field_2: Optional[str] = attrs_field()
+    other_float_field_2: Optional[float] = attrs_field(default=200.0)
     """Stub field."""
 
-    @staticmethod
-    def create(*, record_id: str = "abc", record_index: int = 123, version: int = 0) -> StubAttrsOtherDerivedRecord:
-        """Create with stub data."""
 
-        obj = StubAttrsOtherDerivedRecord()
-        obj.record_id = record_id
-        obj.record_index = record_index
-        obj.version = version
-
-        obj.float_field = 300.0
-        obj.date_field = DateUtil.from_fields(2003, 5, 1)
-        obj.time_field = DateTimeUtil.from_fields(10, 15, 30)  # 10:15:30
-        obj.date_time_field = DateUtil.from_fields(2003, 5, 1, 10, 15)  # 2003-05-01T10:15:00
-        obj.other_string_field_2 = 'abc'
-        obj.other_float_field_2 = 200.0
-
-        return obj

@@ -25,25 +25,8 @@ from stubs.cl.runtime.data.attrs.stub_attrs_simple_record_key import StubAttrsSi
 class StubAttrsSimpleRecord(StubAttrsSimpleRecordKey, Record):
     """Stub record used in tests."""
 
-    base_field_str: Optional[str] = attrs_field()
+    base_field_str: Optional[str] = attrs_field(default='xyz')
     """String attribute of base class."""
 
-    base_field_float: Optional[float] = attrs_field()
+    base_field_float: Optional[float] = attrs_field(default=1.23)
     """Float attribute of base class."""
-
-    @staticmethod
-    def create(
-            key_field_str: str = "abc",
-            key_field_int: int = 123,
-            base_field_str: str = "xyz",
-            base_field_float: float = 1.23
-    ) -> StubAttrsSimpleRecord:
-        """Create an instance of this class populated with sample data."""
-
-        obj = StubAttrsSimpleRecord()
-        obj.key_field_str = key_field_str
-        obj.key_field_int = key_field_int
-        obj.base_field_str = base_field_str
-        obj.base_field_float = base_field_float
-        obj.init()
-        return obj

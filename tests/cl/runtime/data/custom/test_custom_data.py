@@ -22,7 +22,7 @@ def test_smoke():
     """Smoke test."""
 
     # Create test record and populate with sample data
-    obj = StubCustomData.create()
+    obj = StubCustomData()
 
     # Test roundtrip serialization
     obj_dict = obj.to_dict()

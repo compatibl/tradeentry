@@ -22,20 +22,8 @@ from cl.runtime.data.data import Data
 class StubAttrsSimpleData(Data):
     """Dataclass-based serializable data sample used in tests."""
 
-    base_field_str: str = attrs_field()
+    base_field_str: str = attrs_field(default='abc')
     """String attribute of base class."""
 
-    base_field_int: int = attrs_field()
+    base_field_int: int = attrs_field(default=123)
     """Float attribute of base class."""
-
-    @staticmethod
-    def create(
-            *,
-            base_field_str: str = 'abc',
-            base_field_int: int = 123
-    ) -> StubAttrsSimpleData:
-        """Create an instance of this class populated with sample data."""
-        obj = StubAttrsSimpleData()
-        obj.base_field_str = base_field_str
-        obj.base_field_int = base_field_int
-        return obj

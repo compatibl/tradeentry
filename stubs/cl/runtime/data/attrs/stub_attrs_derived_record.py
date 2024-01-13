@@ -19,6 +19,7 @@ from cl.runtime.primitive.date_time_util import DateTimeUtil
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
+from cl.runtime.primitive.time_util import TimeUtil
 from stubs.cl.runtime.data.attrs.stub_attrs_base_record import StubAttrsBaseRecord
 from stubs.cl.runtime.data.attrs.stub_attrs_base_record_key import StubAttrsBaseRecordKey
 from stubs.cl.runtime.data.attrs.stub_attrs_derived_data import StubAttrsDerivedData
@@ -27,7 +28,7 @@ from stubs.cl.runtime.data.attrs.stub_attrs_base_data import StubAttrsBaseData
 
 
 @index_fields('float_field_2, -float_field')
-@attrs_record
+@attrs_record(init=False)
 class StubAttrsDerivedRecord(StubAttrsBaseRecord):
     """Stub derived class."""
 
@@ -109,77 +110,79 @@ class StubAttrsDerivedRecord(StubAttrsBaseRecord):
     def mutual_handler(self) -> str:
         return 'child_method'
 
-    @staticmethod
-    def create(*, record_index: int = 0, record_id: str = 'A', version: int = 0) -> StubAttrsDerivedRecord:
+    def __init__(self, *,
+                 record_id: str = 'abc',
+                 record_index: int = 0,
+                 version: int = 0
+                 ):
         """Create StubAttrsDerivedRecord object filled with general data of different types."""
 
-        obj = StubAttrsDerivedRecord()
-        obj.record_id = record_id
-        obj.record_index = record_index
-        obj.version = version
+        self.record_id = record_id
+        self.record_index = record_index
+        self.version = version
 
-        obj.float_field = 300.0
-        obj.date_field = DateUtil.from_fields(2003, 5, 1)
-        obj.time_field = DateTimeUtil.from_fields(10, 15, 30)  # 10:15:30
-        obj.date_time_field = DateUtil.from_fields(2003, 5, 1, 10, 15)  # 2003-05-01T10:15:00
-        obj.string_field_2 = ''
-        obj.float_field_2 = 200.0
+        self.float_field = 300.0
+        self.date_field = DateUtil.from_fields(2003, 5, 1)
+        self.time_field = TimeUtil.from_fields(10, 15, 30)  # 10:15:30
+        self.date_time_field = DateTimeUtil.from_fields(2003, 5, 1, 10, 15)  # 2003-05-01T10:15:00
+        self.string_field_2 = ''
+        self.float_field_2 = 200.0
 
         # lists
-        obj.list_of_string = ['A', 'B', 'C']
-        obj.list_of_float = [1.0, 2.0, 3.0]
-        obj.list_of_nullable_float = [10.0, None, 30.0]
+        self.list_of_string = ['A', 'B', 'C']
+        self.list_of_float = [1.0, 2.0, 3.0]
+        self.list_of_nullable_float = [10.0, None, 30.0]
 
         # dicts
-        obj.dict_of_string = {
+        self.dict_of_string = {
             "A": "a",
             "B": "b",
             "C": "c",
         }
-        obj.dict_of_float = {
+        self.dict_of_float = {
             "1.0": 1.0,
             "2.0": 2.0,
             "3.0": 3.0,
         }
-        obj.dict_of_nullable_float = {
+        self.dict_of_nullable_float = {
             "10.0": 1.0,
             "20.0": None,
             "30.0": 30.0,
         }
 
         # Data element
-        obj.base_attrs_field = StubAttrsBaseData(float_field_3=1.0, string_field_3='AA')
+        self.base_attrs_field = StubAttrsBaseData(float_field_3=1.0, string_field_3='AA')
 
         # Derived data elements
-        obj.derived_attrs_field = StubAttrsDerivedData()
-        obj.derived_attrs_field.float_field_3 = 1.0
-        obj.derived_attrs_field.string_field_3 = 'A'
-        obj.derived_attrs_field.float_field_4 = 2.0
-        obj.derived_attrs_field.string_field_4 = 'B'
-        obj.derived_from_derived_attrs_field = StubAttrsDerivedFromDerivedData()
-        obj.derived_from_derived_attrs_field.float_field_3 = 1.0
-        obj.derived_from_derived_attrs_field.string_field_3 = 'A'
-        obj.derived_from_derived_attrs_field.float_field_4 = 2.0
-        obj.derived_from_derived_attrs_field.string_field_4 = 'B'
-        obj.derived_from_derived_attrs_field.float_field_5 = 2.0
-        obj.derived_from_derived_attrs_field.string_field_5 = 'B'
+        self.derived_attrs_field = StubAttrsDerivedData()
+        self.derived_attrs_field.float_field_3 = 1.0
+        self.derived_attrs_field.string_field_3 = 'A'
+        self.derived_attrs_field.float_field_4 = 2.0
+        self.derived_attrs_field.string_field_4 = 'B'
+        self.derived_from_derived_attrs_field = StubAttrsDerivedFromDerivedData()
+        self.derived_from_derived_attrs_field.float_field_3 = 1.0
+        self.derived_from_derived_attrs_field.string_field_3 = 'A'
+        self.derived_from_derived_attrs_field.float_field_4 = 2.0
+        self.derived_from_derived_attrs_field.string_field_4 = 'B'
+        self.derived_from_derived_attrs_field.float_field_5 = 2.0
+        self.derived_from_derived_attrs_field.string_field_5 = 'B'
 
         # Polymorphic data elements
-        obj.polymorphic_attrs_field_1 = StubAttrsDerivedData()
-        obj.polymorphic_attrs_field_1.float_field_3 = 1.0
-        obj.polymorphic_attrs_field_1.string_field_3 = 'A'
-        obj.polymorphic_attrs_field_1.float_field_4 = 2.0
-        obj.polymorphic_attrs_field_1.string_field_4 = 'B'
-        obj.polymorphic_attrs_field_2 = StubAttrsDerivedFromDerivedData()
-        obj.polymorphic_attrs_field_2.float_field_3 = 1.0
-        obj.polymorphic_attrs_field_2.string_field_3 = 'A'
-        obj.polymorphic_attrs_field_2.float_field_4 = 2.0
-        obj.polymorphic_attrs_field_2.string_field_4 = 'B'
-        obj.polymorphic_attrs_field_2.float_field_5 = 2.0
-        obj.polymorphic_attrs_field_2.string_field_5 = 'B'
+        self.polymorphic_attrs_field_1 = StubAttrsDerivedData()
+        self.polymorphic_attrs_field_1.float_field_3 = 1.0
+        self.polymorphic_attrs_field_1.string_field_3 = 'A'
+        self.polymorphic_attrs_field_1.float_field_4 = 2.0
+        self.polymorphic_attrs_field_1.string_field_4 = 'B'
+        self.polymorphic_attrs_field_2 = StubAttrsDerivedFromDerivedData()
+        self.polymorphic_attrs_field_2.float_field_3 = 1.0
+        self.polymorphic_attrs_field_2.string_field_3 = 'A'
+        self.polymorphic_attrs_field_2.float_field_4 = 2.0
+        self.polymorphic_attrs_field_2.string_field_4 = 'B'
+        self.polymorphic_attrs_field_2.float_field_5 = 2.0
+        self.polymorphic_attrs_field_2.string_field_5 = 'B'
 
         # Data element list
-        obj.data_list_field = [
+        self.data_list_field = [
             StubAttrsBaseData(float_field_3=1.0, string_field_3='A0'),
             StubAttrsDerivedData(
                 float_field_3=2.0,
@@ -190,7 +193,7 @@ class StubAttrsDerivedRecord(StubAttrsBaseRecord):
         ]
 
         # Data element dict
-        obj.data_dict_field = {
+        self.data_dict_field = {
             "E1": StubAttrsBaseData(float_field_3=1.0, string_field_3='A0'),
             "E2": StubAttrsDerivedData(
                 float_field_3=2.0,
@@ -201,20 +204,19 @@ class StubAttrsDerivedRecord(StubAttrsBaseRecord):
         }
 
         # Key element
-        obj.key_field = StubAttrsBaseRecordKey(record_id='BB', record_index=2)
+        self.key_field = StubAttrsBaseRecordKey(record_id='BB', record_index=2)
 
         # Key element list
-        obj.key_list_field = [
+        self.key_list_field = [
             StubAttrsBaseRecordKey(record_id='B0', record_index=3),
             StubAttrsBaseRecordKey(record_id='B1', record_index=4),
         ]
 
         # Key element dict
-        obj.key_dict_field = {
+        self.key_dict_field = {
             "KE1": StubAttrsBaseRecordKey(record_id='B0', record_index=3),
             "KE2": StubAttrsBaseRecordKey(record_id='B1', record_index=4),
         }
-        base_sample = StubAttrsBaseRecord.create(record_index=0, record_id='A0')
-        obj.dict_of_base_sample_list = {"A0": [base_sample]}
+        base_sample = StubAttrsBaseRecord(record_index=0, record_id='A0')
+        self.dict_of_base_sample_list = {"A0": [base_sample]}
 
-        return obj

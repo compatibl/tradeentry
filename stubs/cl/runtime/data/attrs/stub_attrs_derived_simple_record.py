@@ -23,21 +23,8 @@ from stubs.cl.runtime.data.attrs.stub_attrs_simple_record import StubAttrsSimple
 class StubAttrsDerivedSimpleRecord(StubAttrsSimpleRecord):
     """Stub derived dataclass-based record sample used in tests."""
 
-    derived_field_str: str = attrs_field()
+    derived_field_str: str = attrs_field(default='def')
     """String attribute of base class."""
 
-    derived_field_float: float = attrs_field()
+    derived_field_float: float = attrs_field(default=4.56)
     """Float attribute of base class."""
-
-    @staticmethod
-    def create() -> StubAttrsDerivedSimpleRecord:
-        """Create an instance of this class populated with sample data."""
-
-        obj = StubAttrsDerivedSimpleRecord()
-        obj.key_field_str = 'abc'
-        obj.key_field_int = 123
-        obj.base_field_str = 'def'
-        obj.base_field_float = 4.56
-        obj.derived_field_str = 'def'
-        obj.derived_field_float = 4.56
-        return obj

@@ -30,7 +30,10 @@ class StubCustomRecordKey(Key):
     key_field_int: Optional[int]
     """Second primary key attribute."""
 
-    def __init__(self, key_field_str: str = None, key_field_int: int = None):
+    def __init__(self, *,
+                 key_field_str: str = 'abc',
+                 key_field_int: int = 123
+                 ):
         """Initialize instance attributes."""
         self.key_field_str = key_field_str
         self.key_field_int = key_field_int
@@ -54,7 +57,3 @@ class StubCustomRecordKey(Key):
         """Return deep copy of the key base class when invoked for a derived record class."""
         return StubCustomRecordKey(self.key_field_str, self.key_field_int)
 
-    @staticmethod
-    def create_key(key_field_str: str, key_field_int: int) -> StubCustomRecordKey:
-        """Create an instance of this class populated with sample data."""
-        return StubCustomRecordKey(key_field_str, key_field_int)

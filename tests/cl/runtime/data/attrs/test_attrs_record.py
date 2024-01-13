@@ -15,18 +15,19 @@
 import pytest
 import cl.runtime as rt
 from stubs.cl.runtime.data.attrs.stub_attrs_simple_record import StubAttrsSimpleRecord
+from stubs.cl.runtime.data.attrs.stub_attrs_simple_record_key import StubAttrsSimpleRecordKey
 
 
 def test_smoke():
     """Smoke test."""
 
     # Create and test standalone key
-    sample_key = StubAttrsSimpleRecord.create_key()
+    sample_key = StubAttrsSimpleRecordKey()
     assert sample_key.get_key() == 'abc;123'
 
     # Create test record and populate with sample data
     context = rt.Context()
-    record = StubAttrsSimpleRecord.create()
+    record = StubAttrsSimpleRecord()
 
     # Test primary key
     key = record.get_key()

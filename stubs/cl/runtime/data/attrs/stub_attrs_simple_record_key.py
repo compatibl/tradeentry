@@ -22,13 +22,8 @@ from cl.runtime.data.key import Key
 class StubAttrsSimpleRecordKey(Key):
     """Stub dataclass-based record sample used in tests."""
 
-    key_field_str: str = attrs_field()
+    key_field_str: str = attrs_field(default='abc')
     """First primary key attribute."""
 
-    key_field_int: int = attrs_field()
+    key_field_int: int = attrs_field(default=123)
     """Second primary key attribute."""
-
-    @staticmethod
-    def create_key(key_field_str: str = "abc", key_field_int: int = 123) -> StubAttrsSimpleRecordKey:
-        """Create from fields with default values."""
-        return StubAttrsSimpleRecordKey(key_field_str=key_field_str, key_field_int=key_field_int)

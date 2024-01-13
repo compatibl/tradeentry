@@ -19,10 +19,10 @@ from cl.runtime.data.attrs.attrs_field_util import attrs_field
 
 
 @dataclass_transform()
-def attrs_key_impl(cls, *, label=None):
+def attrs_key_impl(cls, *, init=True, label=None):
     """Performs the actual wrapping irrespective of call syntax with or without parentheses."""
 
-    cls = attrs_data(cls)
+    cls = attrs_data(cls, init=init)
 
     get_table_method = getattr(cls, "get_table", None)
     if get_table_method is not None and getattr(get_table_method, "_implemented", False):
@@ -84,7 +84,7 @@ def attrs_key_impl(cls, *, label=None):
 
 
 @dataclass_transform()
-def attrs_key(cls=None, *, label=None):
+def attrs_key(cls=None, *, init=True, label=None):
     """Runtime decorator for key, record, and data classes."""
 
     # The value of cls type depends on whether parentheses follow the decorator.
@@ -92,4 +92,4 @@ def attrs_key(cls=None, *, label=None):
     if cls is None:
         return attrs_key_impl
     else:
-        return attrs_key_impl(cls, label=label)
+        return attrs_key_impl(cls, init=init, label=label)

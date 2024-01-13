@@ -22,8 +22,8 @@ from cl.runtime.data.key import Key
 class StubAttrsBaseRecordKey(Key):
     """Stub record base class."""
 
-    record_id: Optional[str] = attrs_field()
+    record_id: Optional[str] = attrs_field(default='abc')
     """Stub key field."""
 
-    record_index: Optional[int] = attrs_field()
+    record_index: Optional[int] = attrs_field(default=123)
     """Stub key field."""

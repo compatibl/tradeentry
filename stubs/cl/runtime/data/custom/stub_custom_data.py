@@ -27,10 +27,13 @@ class StubCustomData(Data):
     base_field_int: Optional[int]
     """Float attribute of base class."""
 
-    def __init__(self):
+    def __init__(self, *,
+                 base_field_str: str = 'abc',
+                 base_field_int: int = 123
+                 ):
         """Initialize instance attributes."""
-        self.base_field_str = None
-        self.base_field_int = None
+        self.base_field_str = base_field_str
+        self.base_field_int = base_field_int
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize to dictionary containing other dictionaries, lists and primitive types."""
@@ -38,16 +41,4 @@ class StubCustomData(Data):
             'base_field_str': self.base_field_str,
             'base_field_int': self.base_field_int,
         }
-
-    @staticmethod
-    def create(
-            *,
-            base_field_str: str = 'abc',
-            base_field_int: int = 123
-    ) -> StubCustomData:
-        """Create an instance of this class populated with sample data."""
-        obj = StubCustomData()
-        obj.base_field_str = base_field_str
-        obj.base_field_int = base_field_int
-        return obj
 

@@ -33,6 +33,12 @@ from stubs.cl.runtime.data.attrs.stub_attrs_enum import StubAttrsEnum
 
 _logger = Logger(__name__)
 
+def nested_data_list_factory():
+    """Create an instance of List[StubAttrsBaseData] with stub data."""
+    return [
+        StubAttrsBaseData(string_field="abc", float_field=1.0),
+        StubAttrsBaseData(string_field="xyz", float_field=2.0)
+        ]
 
 @index_fields('float_field, date_field, enum_value')
 @index_fields('date_field')
@@ -43,35 +49,35 @@ _logger = Logger(__name__)
 @attrs_record
 class StubAttrsBaseRecord(StubAttrsBaseRecordKey, Record):
     """Stub record base class."""
-
-    float_field: Optional[float] = attrs_field()
+    
+    version: Optional[int] = attrs_field(default=0)
     """Stub field."""
 
-    date_field: Optional[dt.date] = attrs_field()
+    float_field: Optional[float] = attrs_field(default=123.456)
     """Stub field."""
 
-    enum_value: Optional[StubAttrsEnum] = attrs_field()
+    date_field: Optional[dt.date] = attrs_field(default=DateUtil.from_str("2023-05-01"))
     """Stub field."""
 
-    version: Optional[int] = attrs_field()
+    enum_value: Optional[StubAttrsEnum] = attrs_field(default=StubAttrsEnum.ENUM_VALUE_2)
     """Stub field."""
 
-    time_field: Optional[dt.time] = attrs_field()
+    time_field: Optional[dt.time] = attrs_field(default=TimeUtil.from_str("10:15:00"))
     """Stub field."""
 
-    date_time_field: Optional[dt.datetime] = attrs_field()
+    date_time_field: Optional[dt.datetime] = attrs_field(default=DateTimeUtil.from_str("2023-05-01T10:15:00"))
     """Stub field."""
 
-    long_field: Optional[int] = attrs_field(subtype='long')
+    long_field: Optional[int] = attrs_field(default=100 * 2147483647, subtype='long')
     """Stub field."""
 
-    bytes_field: Optional[bytes] = attrs_field()
+    bytes_field: Optional[bytes] = attrs_field(default=bytes([100, 110, 120]))
     """Stub field."""
 
-    nested_attrs_field: Optional[StubAttrsBaseData] = attrs_field()
+    nested_attrs_field: Optional[StubAttrsBaseData] = attrs_field(factory=StubAttrsBaseData)
     """Stub field."""
 
-    nested_data_list: Optional[List[StubAttrsBaseData]] = attrs_field()
+    nested_data_list: Optional[List[StubAttrsBaseData]] = attrs_field(factory=nested_data_list_factory)
     """Stub field."""
 
     @handler()
@@ -130,28 +136,3 @@ class StubAttrsBaseRecord(StubAttrsBaseRecordKey, Record):
 
     def handler_with_error(self):
         raise Exception("Error in handler")
-
-    @staticmethod
-    def create(*, record_id: str = "abc", record_index: int = 123, version: int = 0) -> StubAttrsBaseRecord:
-        """Create with stub data."""
-
-        obj = StubAttrsBaseRecord()
-        obj.record_id = record_id
-        obj.record_index = record_index
-        obj.version = version
-
-        obj.float_field = 123.456
-        obj.enum_value = StubAttrsEnum.ENUM_VALUE_2
-        obj.version = 1
-        obj.date_field = DateUtil.from_str("2023-05-01")
-        obj.time_field = TimeUtil.from_str("10:15:00")
-        obj.date_time_field = DateTimeUtil.from_str("2023-05-01T10:15:00")
-        obj.long_field = 100 * 2147483647
-        obj.bytes_field = bytes([100, 110, 120])
-        obj.nested_attrs_field = StubAttrsBaseData(string_field="abc", float_field=1.0)
-        obj.nested_data_list = [
-            StubAttrsBaseData(string_field="abc", float_field=1.0),
-            StubAttrsBaseData(string_field="xyz", float_field=2.0)
-        ]
-
-        return obj

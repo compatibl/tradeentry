@@ -28,9 +28,18 @@ class StubCustomRecord(StubCustomRecordKey, Record):
     base_field_float: Optional[float]
     """Float attribute of base class."""
 
-    def __init__(self, *, base_field_str: str = None, base_field_float: float = None):
+    def __init__(self, *,
+                 key_field_str: str = 'abc',
+                 key_field_int: int = 123,
+                 base_field_str: str = 'def',
+                 base_field_float: float = 4.56):
         """Initialize instance attributes."""
-        super().__init__()
+
+        super().__init__(
+            key_field_str = key_field_str,
+            key_field_int = key_field_int
+        )
+
         self.base_field_str = base_field_str
         self.base_field_float = base_field_float
 
@@ -41,13 +50,3 @@ class StubCustomRecord(StubCustomRecordKey, Record):
             'base_field_float': self.base_field_float,
         }
 
-    @staticmethod
-    def create() -> StubCustomRecord:
-        """Create an instance of this class populated with sample data."""
-
-        obj = StubCustomRecord()
-        obj.key_field_str = 'abc'
-        obj.key_field_int = 123
-        obj.base_field_str = 'def'
-        obj.base_field_float = 4.56
-        return obj

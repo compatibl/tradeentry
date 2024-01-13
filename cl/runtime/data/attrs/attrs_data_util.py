@@ -17,10 +17,10 @@ from typing_extensions import dataclass_transform
 
 
 @dataclass_transform()
-def attrs_data_impl(cls, *, label=None):
+def attrs_data_impl(cls, *, init=True, label=None):
     """Performs the actual wrapping irrespective of call syntax with or without parentheses."""
 
-    cls = attrs.define(cls)
+    cls = attrs.define(cls, init=init)
 
     # Remove base fields
     fields = {f.name: f for f in attrs.fields(cls) if not f.inherited}
@@ -34,7 +34,7 @@ def attrs_data_impl(cls, *, label=None):
 
 
 @dataclass_transform()
-def attrs_data(cls=None, *, label=None):
+def attrs_data(cls=None, *, init=True, label=None):
     """Runtime decorator for key, record, and data classes."""
 
     # The value of cls type depends on whether parentheses follow the decorator.
@@ -42,4 +42,4 @@ def attrs_data(cls=None, *, label=None):
     if cls is None:
         return attrs_data_impl
     else:
-        return attrs_data_impl(cls, label=label)
+        return attrs_data_impl(cls, init=init, label=label)
