@@ -37,17 +37,6 @@ class Record(ABC):
     __slots__ = []
     """Adding empty __slots__ prevents creation of __dict__ for every instance."""
 
-    context: Optional[Context]
-    """
-    Context provides platform-independent APIs for:
-
-    - Databases and distributed cache
-    - Logging and error reporting
-    - Local or remote handler execution
-    - Progress reporting
-    - Virtualized filesystem
-    """
-
     def init(self) -> None:
         """Validate dataclass attributes and use them to initialize object state."""
 
