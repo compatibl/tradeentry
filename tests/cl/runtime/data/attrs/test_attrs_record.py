@@ -16,6 +16,7 @@ import pytest
 import cl.runtime as rt
 from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.data.attrs.stub_attrs_record_key import StubAttrsRecordKey
+from stubs.cl.runtime.data.attrs.stub_attrs_with_list_fields import StubAttrsWithListFields
 from stubs.cl.runtime.data.attrs.stub_attrs_with_primitive_fields import StubAttrsWithPrimitiveFields
 
 
@@ -46,6 +47,14 @@ def test_with_primitive_fields():
     """Test for a record with primitive fields."""
 
     record = StubAttrsWithPrimitiveFields()
+    record = StubAttrsWithListFields()
+    pass
+
+
+def test_with_list_fields():
+    """Test for a record with primitive fields."""
+
+    record = StubAttrsWithListFields()
     pass
 
 

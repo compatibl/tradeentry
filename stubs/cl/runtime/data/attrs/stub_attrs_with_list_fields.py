@@ -24,52 +24,56 @@ from stubs.cl.runtime.data.attrs.stub_attrs_derived_record import StubAttrsDeriv
 from stubs.cl.runtime.data.attrs.stub_attrs_with_list_fields_key import StubAttrsWithListFieldsKey
 
 
-@attrs_record(init=False)
+def create_list_of_floats() -> List[float]:
+    """Create stub values."""
+    return [0.001, 1.0, 2.1, 3.005, 4.23, 555.555]
+
+
+def create_list_of_dates() -> List[dt.date]:
+    """Create stub values."""
+    return [
+        DateUtil.from_fields(2001, 1, 1),
+        DateUtil.from_fields(2001, 1, 10),
+        DateUtil.from_fields(2022, 5, 5),
+        DateUtil.from_fields(2008, 12, 12),
+    ]
+
+
+def create_list_of_base_records() -> List[StubAttrsRecord]:
+    """Create stub values."""
+    return [
+        StubAttrsRecord(record_index=0, record_id='A'),
+        StubAttrsRecord(record_index=1, record_id='A'),
+        StubAttrsRecord(record_index=2, record_id='B'),
+        StubAttrsRecord(record_index=3, record_id='B'),
+        StubAttrsRecord(record_index=4, record_id='C'),
+        StubAttrsRecord(record_index=5, record_id='C'),
+    ]
+
+
+def create_list_of_derived_records() -> List[StubAttrsDerivedRecord]:
+    """Create stub values."""
+    return [
+        StubAttrsDerivedRecord(record_index=0, record_id='A'),
+        StubAttrsDerivedRecord(record_index=1, record_id='A'),
+        StubAttrsDerivedRecord(record_index=2, record_id='B'),
+        StubAttrsDerivedRecord(record_index=3, record_id='B'),
+        StubAttrsDerivedRecord(record_index=4, record_id='C'),
+        StubAttrsDerivedRecord(record_index=5, record_id='C'),
+    ]
+
+
+@attrs_record
 class StubAttrsWithListFields(StubAttrsWithListFieldsKey, Record):
 
-    list_of_float: Optional[List[float]] = attrs_field()
+    list_of_floats: Optional[List[float]] = attrs_field(factory=create_list_of_floats)
     """Stub field."""
 
-    list_of_derived_samples: Optional[List[StubAttrsDerivedRecord]] = attrs_field()
+    list_of_base_records: Optional[List[StubAttrsRecord]] = attrs_field(factory=create_list_of_base_records)
     """Stub field."""
 
-    list_of_base_samples: Optional[List[StubAttrsRecord]] = attrs_field()
+    list_of_derived_records: Optional[List[StubAttrsDerivedRecord]] = attrs_field(factory=create_list_of_derived_records)
     """Stub field."""
 
-    list_of_dates: Optional[List[dt.date]] = attrs_field()
+    list_of_dates: Optional[List[dt.date]] = attrs_field(factory=create_list_of_dates)
     """Stub field."""
-
-    def __init__(self, *,
-                 record_id: str = 'A',
-                 record_index: int = 0
-                 ):
-        """Create StubWithListFields object filled with stub data."""
-
-        self.record_id = record_id
-        self.record_index = record_index
-
-        self.list_of_float = [0.001, 1.0, 2.1, 3.005, 4.23, 555.555]
-        self.list_of_derived_samples = [
-            StubAttrsDerivedRecord(record_index=0, record_id='A'),
-            StubAttrsDerivedRecord(record_index=1, record_id='A'),
-            StubAttrsDerivedRecord(record_index=2, record_id='B'),
-            StubAttrsDerivedRecord(record_index=3, record_id='B'),
-            StubAttrsDerivedRecord(record_index=4, record_id='C'),
-            StubAttrsDerivedRecord(record_index=5, record_id='C'),
-        ]
-
-        self.list_of_base_samples = [
-            StubAttrsRecord(record_index=0, record_id='A'),
-            StubAttrsRecord(record_index=1, record_id='A'),
-            StubAttrsRecord(record_index=2, record_id='B'),
-            StubAttrsRecord(record_index=3, record_id='B'),
-            StubAttrsRecord(record_index=4, record_id='C'),
-            StubAttrsRecord(record_index=5, record_id='C'),
-        ]
-
-        self.list_of_dates = [
-            DateUtil.from_fields(2001, 1, 1),
-            DateUtil.from_fields(2001, 1, 10),
-            DateUtil.from_fields(2022, 5, 5),
-            DateUtil.from_fields(2008, 12, 12),
-        ]

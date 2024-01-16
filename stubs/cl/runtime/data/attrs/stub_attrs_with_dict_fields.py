@@ -21,6 +21,7 @@ from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.data.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
 from stubs.cl.runtime.data.attrs.stub_attrs_with_dict_fields_key import StubAttrsWithDictFieldsKey
 
+# TODO: Check if all types are supported
 
 @attrs_record
 class StubAttrsWithDictFields(StubAttrsWithDictFieldsKey, Record):
