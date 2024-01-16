@@ -19,7 +19,7 @@ from cl.runtime.data.key import Key
 from cl.runtime.data.record import Record
 
 
-class StubNoKeyRecord(Key):
+class StubCustomKeylessRecord(Key):
     """Stub record used in tests."""
 
     key_field_str: Optional[str]
