@@ -16,6 +16,8 @@ from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.record import Record
 from stubs.cl.runtime.data.attrs.stub_attrs_composite_key import StubAttrsCompositeKey
 
+# TODO: Rename to StubAttrsNestedFields
+
 
 @attrs_record
 class StubAttrsComposite(StubAttrsCompositeKey, Record):

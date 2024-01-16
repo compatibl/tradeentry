@@ -36,34 +36,24 @@ def stub_float_dict_field() -> Dict[str, float]:
 def stub_date_dict_field() -> Dict[str, dt.date]:
     """Create stub values."""
     return {
-        "Key0": DateUtil.from_fields(2001, 1, 1),
-        "Key1": DateUtil.from_fields(2001, 1, 10),
-        "Key2": DateUtil.from_fields(2022, 5, 5),
-        "Key3": DateUtil.from_fields(2008, 12, 12),
+        "A": DateUtil.from_fields(2003, 4, 21),
+        "B": DateUtil.from_fields(2003, 5, 1),
     }
 
 
 def stub_record_dict_field() -> Dict[str, StubAttrsRecord]:
     """Create stub values."""
     return {
-        "Key1": StubAttrsRecord(record_index=0, record_id='A'),
-        "Key2": StubAttrsRecord(record_index=1, record_id='A'),
-        "Key3": StubAttrsRecord(record_index=2, record_id='B'),
-        "Key4": StubAttrsRecord(record_index=3, record_id='B'),
-        "Key5": StubAttrsRecord(record_index=4, record_id='C'),
-        "Key6": StubAttrsRecord(record_index=5, record_id='C'),
+        "A": StubAttrsRecord(record_id='A', record_index=1),
+        "B": StubAttrsRecord(record_id='B', record_index=2),
     }
 
 
 def stub_derived_record_dict_field() -> Dict[str, StubAttrsDerivedRecord]:
     """Create stub values."""
     return {
-        "Key0": StubAttrsDerivedRecord(record_index=0, record_id='A'),
-        "Key1": StubAttrsDerivedRecord(record_index=1, record_id='A'),
-        "Key2": StubAttrsDerivedRecord(record_index=2, record_id='B'),
-        "Key3": StubAttrsDerivedRecord(record_index=3, record_id='B'),
-        "Key4": StubAttrsDerivedRecord(record_index=4, record_id='C'),
-        "Key5": StubAttrsDerivedRecord(record_index=5, record_id='C'),
+        "A": StubAttrsDerivedRecord(record_id='A', record_index=1),
+        "B": StubAttrsDerivedRecord(record_id='B', record_index=2),
     }
 
 # TODO: Provide stub values for the dicts of lists

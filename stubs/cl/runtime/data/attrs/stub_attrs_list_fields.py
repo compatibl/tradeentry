@@ -25,46 +25,40 @@ from stubs.cl.runtime.data.attrs.stub_attrs_derived_record import StubAttrsDeriv
 def stub_float_list_field() -> List[float]:
     """Create stub values."""
     return [
-        0.001,
-        1.0,
-        2.1,
-        3.005,
-        4.23,
-        555.555
+        0.0000123456789,
+        0.000123456789,
+        0.00123456789,
+        0.0123456789,
+        0.123456789,
+        1.23456789,
+        12.3456789,
+        123.456789,
+        1234.56789,
+        12345.6789
     ]
 
 
 def stub_date_list_field() -> List[dt.date]:
     """Create stub values."""
     return [
-        DateUtil.from_fields(2001, 1, 1),
-        DateUtil.from_fields(2001, 1, 10),
-        DateUtil.from_fields(2022, 5, 5),
-        DateUtil.from_fields(2008, 12, 12),
+        DateUtil.from_fields(2003, 4, 21),
+        DateUtil.from_fields(2003, 5, 1),
     ]
 
 
 def stub_record_list_field() -> List[StubAttrsRecord]:
     """Create stub values."""
     return [
-        StubAttrsRecord(record_index=0, record_id='A'),
-        StubAttrsRecord(record_index=1, record_id='A'),
-        StubAttrsRecord(record_index=2, record_id='B'),
-        StubAttrsRecord(record_index=3, record_id='B'),
-        StubAttrsRecord(record_index=4, record_id='C'),
-        StubAttrsRecord(record_index=5, record_id='C'),
+        StubAttrsRecord(record_id='A', record_index=0),
+        StubAttrsRecord(record_id='B', record_index=1),
     ]
 
 
 def stub_derived_record_list_field() -> List[StubAttrsDerivedRecord]:
     """Create stub values."""
     return [
-        StubAttrsDerivedRecord(record_index=0, record_id='A'),
-        StubAttrsDerivedRecord(record_index=1, record_id='A'),
-        StubAttrsDerivedRecord(record_index=2, record_id='B'),
-        StubAttrsDerivedRecord(record_index=3, record_id='B'),
-        StubAttrsDerivedRecord(record_index=4, record_id='C'),
-        StubAttrsDerivedRecord(record_index=5, record_id='C'),
+        StubAttrsDerivedRecord(record_id='A', record_index=0),
+        StubAttrsDerivedRecord(record_id='B', record_index=1),
     ]
 
 
