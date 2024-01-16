@@ -15,7 +15,7 @@
 import pytest
 
 import cl.runtime as rt
-from stubs.cl.runtime.data.attrs.stub_attrs_simple_record import StubAttrsSimpleRecord
+from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.data.custom.stub_custom_record import StubCustomRecord
 
 # Tests for InProcessDataSource
@@ -30,7 +30,7 @@ def test_smoke():
 
     # Create test record and populate with sample data
     context = rt.Context()
-    record = StubAttrsSimpleRecord()
+    record = StubAttrsRecord()
     key = record.get_key()
     record_dict = record.to_dict()
 

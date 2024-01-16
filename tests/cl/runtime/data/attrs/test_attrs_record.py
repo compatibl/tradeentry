@@ -14,20 +14,20 @@
 
 import pytest
 import cl.runtime as rt
-from stubs.cl.runtime.data.attrs.stub_attrs_simple_record import StubAttrsSimpleRecord
-from stubs.cl.runtime.data.attrs.stub_attrs_simple_record_key import StubAttrsSimpleRecordKey
+from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
+from stubs.cl.runtime.data.attrs.stub_attrs_record_key import StubAttrsRecordKey
 
 
 def test_smoke():
     """Smoke test."""
 
     # Create and test standalone key
-    sample_key = StubAttrsSimpleRecordKey()
+    sample_key = StubAttrsRecordKey()
     assert sample_key.get_key() == 'abc;123'
 
     # Create test record and populate with sample data
     context = rt.Context()
-    record = StubAttrsSimpleRecord()
+    record = StubAttrsRecord()
 
     # Test primary key
     key = record.get_key()
@@ -35,9 +35,9 @@ def test_smoke():
 
     # Test roundtrip serialization
     record_dict = record.to_dict()
-    record_clone = StubAttrsSimpleRecord.from_dict(record_dict)
+    record_clone = StubAttrsRecord.from_dict(record_dict)
     record_clone_dict = record_clone.to_dict()
-    assert len(record_dict) == 4
+    assert len(record_dict) == 12
     assert record_dict == record_clone_dict
 
 
