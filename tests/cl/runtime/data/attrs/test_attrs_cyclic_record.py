@@ -27,17 +27,15 @@ def test_cyclic_record():
 
     # Create A outside the class
     a_2 = StubAttrsCyclicA()
-    a_2.a_id = 'abc'
     a_2.b = StubAttrsCyclicB.create()
 
     # Create B outside the class
     b_2 = StubAttrsCyclicB()
-    b_2.b_id = 'abc'
     b_2.a = StubAttrsCyclicA.create()
 
     # Test for annotation retrospection
-    assert StubAttrsCyclicA.__annotations__ == {'a_id': 'str', 'b': 'Union[str, StubAttrsCyclicB]'}
-    assert StubAttrsCyclicB.__annotations__ == {'b_id': 'str', 'a': 'Union[str, StubAttrsCyclicA]'}
+    assert StubAttrsCyclicA.__annotations__ == {'b': 'StubAttrsCyclicB'}
+    assert StubAttrsCyclicB.__annotations__ == {'a': 'StubAttrsCyclicA'}
 
 
 if __name__ == '__main__':

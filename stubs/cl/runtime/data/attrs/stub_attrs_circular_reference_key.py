@@ -21,5 +21,5 @@ from cl.runtime.data.key import Key
 class StubAttrsCircularReferenceKey(Key):
     """This stub record includes self as its element."""
 
-    record_id: str = attrs_field()
+    str_field: str = attrs_field()
     """Unique identifier."""

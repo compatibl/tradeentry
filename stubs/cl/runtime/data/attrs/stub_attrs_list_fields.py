@@ -22,7 +22,7 @@ from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.data.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
 
 
-def stub_float_list_field() -> List[float]:
+def stub_float_list() -> List[float]:
     """Create stub values."""
     return [
         0.0000123456789,
@@ -38,7 +38,7 @@ def stub_float_list_field() -> List[float]:
     ]
 
 
-def stub_date_list_field() -> List[dt.date]:
+def stub_date_list() -> List[dt.date]:
     """Create stub values."""
     return [
         DateUtil.from_fields(2003, 4, 21),
@@ -46,34 +46,34 @@ def stub_date_list_field() -> List[dt.date]:
     ]
 
 
-def stub_record_list_field() -> List[StubAttrsRecord]:
+def stub_record_list() -> List[StubAttrsRecord]:
     """Create stub values."""
     return [
-        StubAttrsRecord(record_id='A', record_index=0),
-        StubAttrsRecord(record_id='B', record_index=1),
+        StubAttrsRecord(str_field='A', int_field=0),
+        StubAttrsRecord(str_field='B', int_field=1),
     ]
 
 
-def stub_derived_record_list_field() -> List[StubAttrsDerivedRecord]:
+def stub_derived_record_list() -> List[StubAttrsDerivedRecord]:
     """Create stub values."""
     return [
-        StubAttrsDerivedRecord(record_id='A', record_index=0),
-        StubAttrsDerivedRecord(record_id='B', record_index=1),
+        StubAttrsDerivedRecord(str_field='A', int_field=0),
+        StubAttrsDerivedRecord(str_field='B', int_field=1),
     ]
 
 
 @attrs_record
 class StubAttrsListFields(StubAttrsRecord):
 
-    float_list_field: Optional[List[float]] = attrs_field(factory=stub_float_list_field)
+    float_list: List[float] = attrs_field(factory=stub_float_list)
     """Stub field."""
 
-    date_list_field: Optional[List[dt.date]] = attrs_field(factory=stub_date_list_field)
+    date_list: List[dt.date] = attrs_field(factory=stub_date_list)
     """Stub field."""
 
-    record_list_field: Optional[List[StubAttrsRecord]] = attrs_field(factory=stub_record_list_field)
+    record_list: List[StubAttrsRecord] = attrs_field(factory=stub_record_list)
     """Stub field."""
 
-    derived_record_list_field: Optional[List[StubAttrsDerivedRecord]] = attrs_field(factory=stub_derived_record_list_field)
+    derived_record_list: List[StubAttrsDerivedRecord] = attrs_field(factory=stub_derived_record_list)
     """Stub field."""
 

@@ -13,22 +13,19 @@
 # limitations under the License.
 
 from __future__ import annotations
+from typing import TYPE_CHECKING, Union
 from cl.runtime.data.attrs.attrs_data_util import attrs_data
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
-from typing import TYPE_CHECKING, Union
-from cl.runtime.data.record import Record
+from cl.runtime.data.data import Data
 if TYPE_CHECKING:
     from stubs.cl.runtime.data.attrs.stub_attrs_cyclic_b import StubAttrsCyclicB
 
 
 @attrs_data
-class StubAttrsCyclicA(Record):
+class StubAttrsCyclicA(Data):
     """Stub class A with a field whose type is key for class B."""
 
-    a_id: str = attrs_field()
-    """Unique identifier."""
-
-    b: Union[str, StubAttrsCyclicB] = attrs_field()
+    b: StubAttrsCyclicB = attrs_field()
     """Key for class B."""
 
     @staticmethod
@@ -39,7 +36,5 @@ class StubAttrsCyclicA(Record):
         from stubs.cl.runtime.data.attrs.stub_attrs_cyclic_b import StubAttrsCyclicB
 
         obj = StubAttrsCyclicA()
-        obj.a_id = "abc"
         obj.b = StubAttrsCyclicB()
-        obj.b.b_id = "xyz"
         return obj

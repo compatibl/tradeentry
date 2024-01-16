@@ -24,5 +24,5 @@ from stubs.cl.runtime.data.attrs.stub_attrs_circular_reference_key import StubAt
 class StubAttrsCircularReference(StubAttrsCircularReferenceKey, Record):
     """This stub record includes self as its element."""
 
-    circular_field: Optional[StubAttrsCircularReferenceKey] = attrs_field()
+    circular_field: StubAttrsCircularReferenceKey = attrs_field()
     """Field of the same type as the record."""

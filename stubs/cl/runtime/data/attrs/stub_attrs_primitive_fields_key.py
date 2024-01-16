@@ -39,7 +39,7 @@ class StubAttrsPrimitiveFieldsKey(Key):
     key_bool_field: bool = attrs_field(default=True)
     """Stub field."""
 
-    key_string_field: str = attrs_field(default="abc")
+    key_str_field: str = attrs_field(default="abc")
     """Stub field."""
 
     key_enum_field: StubIntEnum = attrs_field(default=StubIntEnum.ENUM_VALUE_2)

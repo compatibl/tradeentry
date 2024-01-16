@@ -46,7 +46,7 @@ class StubAttrsPrimitiveFields(StubAttrsPrimitiveFieldsKey, Record):
     bool_field: bool = attrs_field(default=True)
     """Stub field."""
 
-    string_field: str = attrs_field(default="abc")
+    str_field: str = attrs_field(default="abc")
     """Stub field."""
 
     enum_field: StubIntEnum = attrs_field(default=StubIntEnum.ENUM_VALUE_1)

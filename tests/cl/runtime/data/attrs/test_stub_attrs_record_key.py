@@ -21,8 +21,8 @@ from stubs.cl.runtime.data.attrs.stub_attrs_record_key import StubAttrsRecordKey
 def test_smoke():
     """Smoke test."""
 
-    key_a0 = StubAttrsRecordKey(record_id='A', record_index=0)
-    key_b0 = StubAttrsRecordKey(record_id='B', record_index=0)
+    key_a0 = StubAttrsRecordKey(str_field='A', int_field=0)
+    key_b0 = StubAttrsRecordKey(str_field='B', int_field=0)
 
     assert 'A;0' == str(key_a0)
     assert 'B;0' == str(key_b0)
@@ -31,9 +31,9 @@ def test_smoke():
 def test_composite_key():
     """Test composite key where key some elements are also keys."""
 
-    base_key_1 = StubAttrsRecordKey(record_id='A', record_index=0)
-    base_key_same_as_1 = StubAttrsRecordKey(record_id='A', record_index=0)
-    base_key_2 = StubAttrsRecordKey(record_id='B', record_index=1)
+    base_key_1 = StubAttrsRecordKey(str_field='A', int_field=0)
+    base_key_same_as_1 = StubAttrsRecordKey(str_field='A', int_field=0)
+    base_key_2 = StubAttrsRecordKey(str_field='B', int_field=1)
 
     composite_key_1 = StubAttrsCompositeKey(str_key_0='A', embedded_key_1=base_key_1, embedded_key_2=base_key_2)
     composite_key_same_as_1 = StubAttrsCompositeKey(
@@ -51,8 +51,8 @@ def test_composite_key():
 def test_comparison():
     """Test comparison"""
 
-    base_key_1 = StubAttrsRecordKey(record_id='A', record_index=0)
-    base_key_2 = StubAttrsRecordKey(record_id='B', record_index=1)
+    base_key_1 = StubAttrsRecordKey(str_field='A', int_field=0)
+    base_key_2 = StubAttrsRecordKey(str_field='B', int_field=1)
     base_key_1_copy = copy.deepcopy(base_key_1)
 
     assert base_key_1 == base_key_1_copy

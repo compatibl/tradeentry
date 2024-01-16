@@ -40,7 +40,7 @@ def test_smoke():
     record_dict = record.to_dict()
     record_clone = StubAttrsRecord.from_dict(record_dict)
     record_clone_dict = record_clone.to_dict()
-    assert len(record_dict) == 12
+    assert len(record_dict) == 3
     assert record_dict == record_clone_dict
 
 
@@ -52,14 +52,14 @@ def test_with_primitive_fields():
     pass
 
 
-def test_with_list_fields():
+def test_with_lists():
     """Test for a record with primitive fields."""
 
     record = StubAttrsListFields()
     pass
 
 
-def test_with_dict_fields():
+def test_with_dicts():
     """Test for a record with primitive fields."""
 
     record = StubAttrsDictFields()

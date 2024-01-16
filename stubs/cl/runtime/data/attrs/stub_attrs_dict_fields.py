@@ -21,7 +21,7 @@ from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.data.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
 
 
-def stub_float_dict_field() -> Dict[str, float]:
+def stub_float_dict() -> Dict[str, float]:
     """Create stub values."""
     return {
         "Key0": 0.001,
@@ -33,7 +33,7 @@ def stub_float_dict_field() -> Dict[str, float]:
     }
 
 
-def stub_date_dict_field() -> Dict[str, dt.date]:
+def stub_date_dict() -> Dict[str, dt.date]:
     """Create stub values."""
     return {
         "A": DateUtil.from_fields(2003, 4, 21),
@@ -41,19 +41,19 @@ def stub_date_dict_field() -> Dict[str, dt.date]:
     }
 
 
-def stub_record_dict_field() -> Dict[str, StubAttrsRecord]:
+def stub_record_dict() -> Dict[str, StubAttrsRecord]:
     """Create stub values."""
     return {
-        "A": StubAttrsRecord(record_id='A', record_index=1),
-        "B": StubAttrsRecord(record_id='B', record_index=2),
+        "A": StubAttrsRecord(str_field='A', int_field=1),
+        "B": StubAttrsRecord(str_field='B', int_field=2),
     }
 
 
-def stub_derived_record_dict_field() -> Dict[str, StubAttrsDerivedRecord]:
+def stub_derived_record_dict() -> Dict[str, StubAttrsDerivedRecord]:
     """Create stub values."""
     return {
-        "A": StubAttrsDerivedRecord(record_id='A', record_index=1),
-        "B": StubAttrsDerivedRecord(record_id='B', record_index=2),
+        "A": StubAttrsDerivedRecord(str_field='A', int_field=1),
+        "B": StubAttrsDerivedRecord(str_field='B', int_field=2),
     }
 
 # TODO: Provide stub values for the dicts of lists
@@ -63,26 +63,26 @@ def stub_derived_record_dict_field() -> Dict[str, StubAttrsDerivedRecord]:
 class StubAttrsDictFields(StubAttrsRecord):
     """Stub record whose elements are dictionaries."""
 
-    float_dict_field: Optional[Dict[str, float]] = attrs_field(factory=stub_float_dict_field)
+    float_dict: Dict[str, float] = attrs_field(factory=stub_float_dict)
     """Stub field."""
     
-    date_dict_field: Optional[Dict[str, dt.date]] = attrs_field(factory=stub_date_dict_field)
+    date_dict: Dict[str, dt.date] = attrs_field(factory=stub_date_dict)
     """Stub field."""
 
-    record_dict_field: Optional[Dict[str, StubAttrsRecord]] = attrs_field(factory=stub_record_dict_field)
+    record_dict: Dict[str, StubAttrsRecord] = attrs_field(factory=stub_record_dict)
     """Stub field."""
 
-    derived_record_dict_field: Optional[Dict[str, StubAttrsDerivedRecord]] = attrs_field(factory=stub_derived_record_dict_field)
+    derived_record_dict: Dict[str, StubAttrsDerivedRecord] = attrs_field(factory=stub_derived_record_dict)
     """Stub field."""
 
-    float_list_dict_field: Optional[Dict[str, List[float]]] = attrs_field()
+    float_list_dict: Dict[str, List[float]] = attrs_field()
     """Stub field."""
     
-    date_list_dict_field: Optional[Dict[str, List[dt.date]]] = attrs_field()
+    date_list_dict: Dict[str, List[dt.date]] = attrs_field()
     """Stub field."""
 
-    record_list_dict_field: Optional[Dict[str, List[StubAttrsRecord]]] = attrs_field()
+    record_list_dict: Dict[str, List[StubAttrsRecord]] = attrs_field()
     """Stub field."""
 
-    derived_record_list_dict_field: Optional[Dict[str, List[StubAttrsDerivedRecord]]] = attrs_field()
+    derived_record_list_dict: Dict[str, List[StubAttrsDerivedRecord]] = attrs_field()
     """Stub field."""

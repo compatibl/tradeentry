@@ -22,8 +22,8 @@ from cl.runtime.data.attrs.attrs_field_util import attrs_field
 class StubAttrsData(Data):
     """Stub base data type."""
 
-    string_field: Optional[str] = attrs_field()
+    str_field: str = attrs_field(default="abc")
     """Stub field."""
 
-    float_field: Optional[float] = attrs_field()
+    int_field: int = attrs_field(default=123)
     """Stub field."""
