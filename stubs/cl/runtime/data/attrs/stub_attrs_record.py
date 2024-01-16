@@ -68,8 +68,8 @@ class StubAttrsRecord(StubAttrsRecordKey, Record):
     date_time_field: Optional[dt.datetime] = attrs_field(default=DateTimeUtil.from_str("2023-05-01T10:15:00"))
     """Stub field."""
 
-    long_field: Optional[int] = attrs_field(default=100 * 2147483647, subtype='long')
-    """Stub field."""
+    long_field: Optional[int] = attrs_field(default=9007199254740991, subtype='long')
+    """The default is maximum safe signed int for JSON: 2^53 - 1."""
 
     bytes_field: Optional[bytes] = attrs_field(default=bytes([100, 110, 120]))
     """Stub field."""

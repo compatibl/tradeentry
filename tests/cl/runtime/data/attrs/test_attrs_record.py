@@ -16,6 +16,7 @@ import pytest
 import cl.runtime as rt
 from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.data.attrs.stub_attrs_record_key import StubAttrsRecordKey
+from stubs.cl.runtime.data.attrs.stub_attrs_with_primitive_fields import StubAttrsWithPrimitiveFields
 
 
 def test_smoke():
@@ -39,6 +40,13 @@ def test_smoke():
     record_clone_dict = record_clone.to_dict()
     assert len(record_dict) == 12
     assert record_dict == record_clone_dict
+
+
+def test_with_primitive_fields():
+    """Test for a record with primitive fields."""
+
+    record = StubAttrsWithPrimitiveFields()
+    pass
 
 
 if __name__ == '__main__':
