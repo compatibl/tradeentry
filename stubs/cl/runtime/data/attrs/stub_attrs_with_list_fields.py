@@ -16,20 +16,25 @@ from __future__ import annotations
 import datetime as dt
 from typing import List, Optional
 from cl.runtime.primitive.date_util import DateUtil
-from cl.runtime.data.record import Record
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.data.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
-from stubs.cl.runtime.data.attrs.stub_attrs_with_list_fields_key import StubAttrsWithListFieldsKey
 
 
-def create_list_of_floats() -> List[float]:
+def stub_list_of_floats() -> List[float]:
     """Create stub values."""
-    return [0.001, 1.0, 2.1, 3.005, 4.23, 555.555]
+    return [
+        0.001,
+        1.0,
+        2.1,
+        3.005,
+        4.23,
+        555.555
+    ]
 
 
-def create_list_of_dates() -> List[dt.date]:
+def stub_list_of_dates() -> List[dt.date]:
     """Create stub values."""
     return [
         DateUtil.from_fields(2001, 1, 1),
@@ -39,7 +44,7 @@ def create_list_of_dates() -> List[dt.date]:
     ]
 
 
-def create_list_of_base_records() -> List[StubAttrsRecord]:
+def stub_list_of_base_records() -> List[StubAttrsRecord]:
     """Create stub values."""
     return [
         StubAttrsRecord(record_index=0, record_id='A'),
@@ -51,7 +56,7 @@ def create_list_of_base_records() -> List[StubAttrsRecord]:
     ]
 
 
-def create_list_of_derived_records() -> List[StubAttrsDerivedRecord]:
+def stub_list_of_derived_records() -> List[StubAttrsDerivedRecord]:
     """Create stub values."""
     return [
         StubAttrsDerivedRecord(record_index=0, record_id='A'),
@@ -64,16 +69,16 @@ def create_list_of_derived_records() -> List[StubAttrsDerivedRecord]:
 
 
 @attrs_record
-class StubAttrsWithListFields(StubAttrsWithListFieldsKey, Record):
+class StubAttrsWithListFields(StubAttrsRecord):
 
-    list_of_floats: Optional[List[float]] = attrs_field(factory=create_list_of_floats)
+    list_of_floats: Optional[List[float]] = attrs_field(factory=stub_list_of_floats)
     """Stub field."""
 
-    list_of_base_records: Optional[List[StubAttrsRecord]] = attrs_field(factory=create_list_of_base_records)
+    list_of_base_records: Optional[List[StubAttrsRecord]] = attrs_field(factory=stub_list_of_base_records)
     """Stub field."""
 
-    list_of_derived_records: Optional[List[StubAttrsDerivedRecord]] = attrs_field(factory=create_list_of_derived_records)
+    list_of_derived_records: Optional[List[StubAttrsDerivedRecord]] = attrs_field(factory=stub_list_of_derived_records)
     """Stub field."""
 
-    list_of_dates: Optional[List[dt.date]] = attrs_field(factory=create_list_of_dates)
+    list_of_dates: Optional[List[dt.date]] = attrs_field(factory=stub_list_of_dates)
     """Stub field."""
