@@ -32,22 +32,16 @@ from stubs.cl.runtime.data.attrs.stub_attrs_data import StubAttrsData
 class StubAttrsDerivedRecord(StubAttrsRecord):
     """Stub derived class."""
 
-    float_field_2: Optional[float] = attrs_field()
+    derived_float_field: Optional[float] = attrs_field()
     """Stub field."""
 
-    string_field_2: Optional[str] = attrs_field()
-    """Stub field."""
-
-    array_of_string: Optional[List[str]] = attrs_field()
+    derived_string_field: Optional[str] = attrs_field()
     """Stub field."""
 
     list_of_string: Optional[List[str]] = attrs_field()
     """Stub field."""
 
     dict_of_string: Optional[Dict[str, str]] = attrs_field()
-    """Stub field."""
-
-    array_of_float: Optional[List[float]] = attrs_field()
     """Stub field."""
 
     array_of_nullable_float: Optional[List[float]] = attrs_field()
@@ -125,8 +119,8 @@ class StubAttrsDerivedRecord(StubAttrsRecord):
         self.date_field = DateUtil.from_fields(2003, 5, 1)
         self.time_field = TimeUtil.from_fields(10, 15, 30)  # 10:15:30
         self.date_time_field = DateTimeUtil.from_fields(2003, 5, 1, 10, 15)  # 2003-05-01T10:15:00
-        self.string_field_2 = ''
-        self.float_field_2 = 200.0
+        self.derived_string_field = ''
+        self.derived_float_field = 200.0
 
         # lists
         self.list_of_string = ['A', 'B', 'C']
@@ -157,13 +151,13 @@ class StubAttrsDerivedRecord(StubAttrsRecord):
         self.derived_attrs_field = StubAttrsDerivedData()
         self.derived_attrs_field.float_field_3 = 1.0
         self.derived_attrs_field.string_field_3 = 'A'
-        self.derived_attrs_field.float_field_4 = 2.0
-        self.derived_attrs_field.string_field_4 = 'B'
+        self.derived_attrs_field.derived_float_field = 2.0
+        self.derived_attrs_field.derived_string_field = 'B'
         self.derived_from_derived_attrs_field = StubAttrsDerivedFromDerivedData()
         self.derived_from_derived_attrs_field.float_field_3 = 1.0
         self.derived_from_derived_attrs_field.string_field_3 = 'A'
-        self.derived_from_derived_attrs_field.float_field_4 = 2.0
-        self.derived_from_derived_attrs_field.string_field_4 = 'B'
+        self.derived_from_derived_attrs_field.derived_float_field = 2.0
+        self.derived_from_derived_attrs_field.derived_string_field = 'B'
         self.derived_from_derived_attrs_field.float_field_5 = 2.0
         self.derived_from_derived_attrs_field.string_field_5 = 'B'
 

@@ -23,9 +23,9 @@ from stubs.cl.runtime.data.attrs.stub_attrs_data import StubAttrsData
 class StubAttrsDerivedData(StubAttrsData):
     """Stub derived data type."""
 
-    float_field_4: Optional[float] = attrs_field()
+    derived_float_field: Optional[float] = attrs_field()
     """Stub field."""
 
-    string_field_4: Optional[str] = attrs_field()
+    derived_string_field: Optional[str] = attrs_field()
     """Stub field."""
 

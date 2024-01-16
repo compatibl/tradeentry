@@ -54,10 +54,10 @@ class StubAttrsWithPrimitiveFieldsKey(Key):
     key_date_time_field: dt.datetime = attrs_field(default=DateTimeUtil.from_fields(2003, 5, 1, 10, 15))
     """Stub field."""
 
-    # TODO: Change type
-    key_key_field: Key = attrs_field(factory=StubAttrsRecordKey)
+    key_guid_field: OrderedUid = attrs_field(default=OrderedUid('1A' * 16))
     """Stub field."""
 
-    key_guid_field: OrderedUid = attrs_field(default=OrderedUid('1A' * 16))
+    # TODO: Change type
+    key_key_field: Key = attrs_field(factory=StubAttrsRecordKey)
     """Stub field."""
 
