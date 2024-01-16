@@ -56,11 +56,6 @@ class Key(Data, ABC):
         raise RuntimeError(f"Method get_key() for class {type(self).__name__} in module {type(self).__module__} "
                            f"is neither implemented in code nor by a decorator.")
 
-    def to_key(self) -> Self:
-        """Return deep copy of the key base class when invoked for a derived record class."""
-        raise RuntimeError(f"Method to_key() for class {type(self).__name__} in module {type(self).__module__} "
-                           f"is neither implemented in code nor by a decorator.")
-
     def get_generic_key(self) -> str:
         """
         Generic key string defines both the table and the record within the table. It consists of the

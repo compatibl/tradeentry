@@ -53,7 +53,4 @@ class StubCustomRecordKey(Key):
         """Key as string in semicolon-delimited string format without table name."""
         return f"{self.key_field_str};{self.key_field_int}"
 
-    def to_key(self) -> Self:
-        """Return deep copy of the key base class when invoked for a derived record class."""
-        return StubCustomRecordKey(self.key_field_str, self.key_field_int)
 

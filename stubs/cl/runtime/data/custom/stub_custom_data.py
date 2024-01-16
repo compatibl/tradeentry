@@ -41,4 +41,3 @@ class StubCustomData(Data):
             'base_field_str': self.base_field_str,
             'base_field_int': self.base_field_int,
         }
-

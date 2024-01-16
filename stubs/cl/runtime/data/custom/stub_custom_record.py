@@ -36,8 +36,8 @@ class StubCustomRecord(StubCustomRecordKey, Record):
         """Initialize instance attributes."""
 
         super().__init__(
-            key_field_str = key_field_str,
-            key_field_int = key_field_int
+            key_field_str=key_field_str,
+            key_field_int=key_field_int
         )
 
         self.base_field_str = base_field_str
@@ -49,4 +49,3 @@ class StubCustomRecord(StubCustomRecordKey, Record):
             'base_field_str': self.base_field_str,
             'base_field_float': self.base_field_float,
         }
-

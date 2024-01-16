@@ -59,27 +59,6 @@ def attrs_key_impl(cls, *, init=True, label=None):
         cls.get_key = get_key
         cls.get_key._implemented = True
 
-    to_key_method = getattr(cls, "to_key", None)
-    if to_key_method is not None and getattr(to_key_method, "_implemented", False):
-        # Use the method from parent if marked by _implemented, which will not be present
-        # if the method is declared in parent class without implementation. Reassignment
-        # here accelerates the code by preventing lookup at each level of inheritance chain.
-        cls.to_key = to_key_method
-    else:
-        # Implement using module and class name here and mark by _implemented
-        # TODO: Use package alias if specified in settings
-        field_names = {f.name: f for f in attrs.fields(cls)}
-
-        def to_key(self):
-            key = cls()
-            for field_name in field_names.values():  # TODO: Review performance impact
-                value = getattr(self, field_name, None)
-                setattr(key, field_name, value)
-            return key
-
-        cls.to_key = to_key
-        cls.to_key._implemented = True
-
     return cls
 
 
