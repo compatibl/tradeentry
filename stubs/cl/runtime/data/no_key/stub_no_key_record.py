@@ -58,7 +58,4 @@ class StubNoKeyRecord(Key):
         """Key as string in semicolon-delimited string format without table name."""
         return f"{self.key_field_str};{self.key_field_int}"
 
-    def init(self) -> None:
-        """Validate dataclass attributes and use them to initialize object state."""
-        pass
 

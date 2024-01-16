@@ -37,8 +37,3 @@ class Record(ABC):
     __slots__ = []
     """Adding empty __slots__ prevents creation of __dict__ for every instance."""
 
-    def init(self) -> None:
-        """Validate dataclass attributes and use them to initialize object state."""
-
-        # NoOp by default, derived classes will override when required
-        pass

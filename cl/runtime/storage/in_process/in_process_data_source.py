@@ -28,12 +28,6 @@ class InProcessDataSource(DataSource):
 
     _cache: Dict[str, Dict] = attrs_field(factory=dict)
 
-    def init(self) -> None:
-        """Validate dataclass attributes and use them to initialize object state."""
-
-        # Create new cache on init
-        self._cache = {}
-
     def load_many(
         self,
         base_type: Type[TRecord],
@@ -106,9 +100,6 @@ class InProcessDataSource(DataSource):
             class_ = RecordUtil.get_class_type(module_path, class_name)
             record = class_.from_dict(record_dict)
 
-            # Validate attributes and initialize object state
-            record.init()
-
             # Verify that the record has the same key as was passed to the load method
             record_key = record.get_key()
             if record_key != key:
@@ -134,8 +125,6 @@ class InProcessDataSource(DataSource):
 
         # Iterate over records
         for record in records:
-            # Validate attributes and update object state before saving
-            record.init()
 
             # Get primary key and data from record.
             key = record.get_key()
