@@ -19,7 +19,7 @@ from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.data.record import Record
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
-from stubs.cl.runtime.data.attrs.stub_attrs_base_record import StubAttrsBaseRecord
+from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.data.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
 from stubs.cl.runtime.data.attrs.stub_attrs_with_list_fields_key import StubAttrsWithListFieldsKey
 
@@ -33,7 +33,7 @@ class StubAttrsWithListFields(StubAttrsWithListFieldsKey, Record):
     list_of_derived_samples: Optional[List[StubAttrsDerivedRecord]] = attrs_field()
     """Stub field."""
 
-    list_of_base_samples: Optional[List[StubAttrsBaseRecord]] = attrs_field()
+    list_of_base_samples: Optional[List[StubAttrsRecord]] = attrs_field()
     """Stub field."""
 
     list_of_dates: Optional[List[dt.date]] = attrs_field()
@@ -59,12 +59,12 @@ class StubAttrsWithListFields(StubAttrsWithListFieldsKey, Record):
         ]
 
         self.list_of_base_samples = [
-            StubAttrsBaseRecord(record_index=0, record_id='A'),
-            StubAttrsBaseRecord(record_index=1, record_id='A'),
-            StubAttrsBaseRecord(record_index=2, record_id='B'),
-            StubAttrsBaseRecord(record_index=3, record_id='B'),
-            StubAttrsBaseRecord(record_index=4, record_id='C'),
-            StubAttrsBaseRecord(record_index=5, record_id='C'),
+            StubAttrsRecord(record_index=0, record_id='A'),
+            StubAttrsRecord(record_index=1, record_id='A'),
+            StubAttrsRecord(record_index=2, record_id='B'),
+            StubAttrsRecord(record_index=3, record_id='B'),
+            StubAttrsRecord(record_index=4, record_id='C'),
+            StubAttrsRecord(record_index=5, record_id='C'),
         ]
 
         self.list_of_dates = [

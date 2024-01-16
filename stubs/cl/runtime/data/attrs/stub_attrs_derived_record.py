@@ -20,16 +20,16 @@ from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from cl.runtime.primitive.time_util import TimeUtil
-from stubs.cl.runtime.data.attrs.stub_attrs_base_record import StubAttrsBaseRecord
-from stubs.cl.runtime.data.attrs.stub_attrs_base_record_key import StubAttrsBaseRecordKey
+from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
+from stubs.cl.runtime.data.attrs.stub_attrs_record_key import StubAttrsRecordKey
 from stubs.cl.runtime.data.attrs.stub_attrs_derived_data import StubAttrsDerivedData
 from stubs.cl.runtime.data.attrs.stub_attrs_derived_from_derived_data import StubAttrsDerivedFromDerivedData
-from stubs.cl.runtime.data.attrs.stub_attrs_base_data import StubAttrsBaseData
+from stubs.cl.runtime.data.attrs.stub_attrs_data import StubAttrsData
 
 
 @index_fields('float_field_2, -float_field')
 @attrs_record(init=False)
-class StubAttrsDerivedRecord(StubAttrsBaseRecord):
+class StubAttrsDerivedRecord(StubAttrsRecord):
     """Stub derived class."""
 
     float_field_2: Optional[float] = attrs_field()
@@ -65,7 +65,7 @@ class StubAttrsDerivedRecord(StubAttrsBaseRecord):
     dict_of_nullable_float: Optional[Dict[str, float]] = attrs_field()
     """Stub field."""
 
-    base_attrs_field: Optional[StubAttrsBaseData] = attrs_field()
+    base_attrs_field: Optional[StubAttrsData] = attrs_field()
     """Stub field."""
 
     derived_attrs_field: Optional[StubAttrsDerivedData] = attrs_field()
@@ -74,31 +74,31 @@ class StubAttrsDerivedRecord(StubAttrsBaseRecord):
     derived_from_derived_attrs_field: Optional[StubAttrsDerivedFromDerivedData] = attrs_field()
     """Stub field."""
 
-    polymorphic_attrs_field_1: Optional[StubAttrsBaseData] = attrs_field()
+    polymorphic_attrs_field_1: Optional[StubAttrsData] = attrs_field()
     """Stub field."""
 
-    polymorphic_attrs_field_2: Optional[StubAttrsBaseData] = attrs_field()
+    polymorphic_attrs_field_2: Optional[StubAttrsData] = attrs_field()
     """Stub field."""
 
-    before_rename: Optional[StubAttrsBaseData] = attrs_field(name='AfterRename')
+    before_rename: Optional[StubAttrsData] = attrs_field(name='AfterRename')
     """Stub field."""
 
-    data_list_field: Optional[List[StubAttrsBaseData]] = attrs_field()
+    data_list_field: Optional[List[StubAttrsData]] = attrs_field()
     """Stub field."""
 
-    data_dict_field: Optional[Dict[str, StubAttrsBaseData]] = attrs_field()
+    data_dict_field: Optional[Dict[str, StubAttrsData]] = attrs_field()
     """Stub field."""
 
-    key_field: Optional[StubAttrsBaseRecordKey] = attrs_field()
+    key_field: Optional[StubAttrsRecordKey] = attrs_field()
     """Stub field."""
 
-    key_list_field: Optional[List[StubAttrsBaseRecordKey]] = attrs_field()
+    key_list_field: Optional[List[StubAttrsRecordKey]] = attrs_field()
     """Stub field."""
 
-    key_dict_field: Optional[Dict[str, StubAttrsBaseRecordKey]] = attrs_field()
+    key_dict_field: Optional[Dict[str, StubAttrsRecordKey]] = attrs_field()
     """Stub field."""
 
-    dict_of_base_sample_list: Optional[Dict[str, List[StubAttrsBaseRecord]]] = attrs_field()
+    dict_of_base_sample_list: Optional[Dict[str, List[StubAttrsRecord]]] = attrs_field()
     """Stub field."""
 
     def non_virtual_derived_handler(self) -> None:
@@ -151,7 +151,7 @@ class StubAttrsDerivedRecord(StubAttrsBaseRecord):
         }
 
         # Data element
-        self.base_attrs_field = StubAttrsBaseData(float_field_3=1.0, string_field_3='AA')
+        self.base_attrs_field = StubAttrsData(float_field_3=1.0, string_field_3='AA')
 
         # Derived data elements
         self.derived_attrs_field = StubAttrsDerivedData()
@@ -183,7 +183,7 @@ class StubAttrsDerivedRecord(StubAttrsBaseRecord):
 
         # Data element list
         self.data_list_field = [
-            StubAttrsBaseData(float_field_3=1.0, string_field_3='A0'),
+            StubAttrsData(float_field_3=1.0, string_field_3='A0'),
             StubAttrsDerivedData(
                 float_field_3=2.0,
                 string_field_3='A1',
@@ -194,7 +194,7 @@ class StubAttrsDerivedRecord(StubAttrsBaseRecord):
 
         # Data element dict
         self.data_dict_field = {
-            "E1": StubAttrsBaseData(float_field_3=1.0, string_field_3='A0'),
+            "E1": StubAttrsData(float_field_3=1.0, string_field_3='A0'),
             "E2": StubAttrsDerivedData(
                 float_field_3=2.0,
                 string_field_3='A1',
@@ -204,19 +204,19 @@ class StubAttrsDerivedRecord(StubAttrsBaseRecord):
         }
 
         # Key element
-        self.key_field = StubAttrsBaseRecordKey(record_id='BB', record_index=2)
+        self.key_field = StubAttrsRecordKey(record_id='BB', record_index=2)
 
         # Key element list
         self.key_list_field = [
-            StubAttrsBaseRecordKey(record_id='B0', record_index=3),
-            StubAttrsBaseRecordKey(record_id='B1', record_index=4),
+            StubAttrsRecordKey(record_id='B0', record_index=3),
+            StubAttrsRecordKey(record_id='B1', record_index=4),
         ]
 
         # Key element dict
         self.key_dict_field = {
-            "KE1": StubAttrsBaseRecordKey(record_id='B0', record_index=3),
-            "KE2": StubAttrsBaseRecordKey(record_id='B1', record_index=4),
+            "KE1": StubAttrsRecordKey(record_id='B0', record_index=3),
+            "KE2": StubAttrsRecordKey(record_id='B1', record_index=4),
         }
-        base_sample = StubAttrsBaseRecord(record_index=0, record_id='A0')
+        base_sample = StubAttrsRecord(record_index=0, record_id='A0')
         self.dict_of_base_sample_list = {"A0": [base_sample]}
 

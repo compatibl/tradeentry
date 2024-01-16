@@ -27,17 +27,17 @@ from cl.runtime.data.data import Data
 from cl.runtime.data.record import Record
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
-from stubs.cl.runtime.data.attrs.stub_attrs_base_data import StubAttrsBaseData
-from stubs.cl.runtime.data.attrs.stub_attrs_base_record_key import StubAttrsBaseRecordKey
+from stubs.cl.runtime.data.attrs.stub_attrs_data import StubAttrsData
+from stubs.cl.runtime.data.attrs.stub_attrs_record_key import StubAttrsRecordKey
 from stubs.cl.runtime.data.attrs.stub_attrs_enum import StubAttrsEnum
 
 _logger = Logger(__name__)
 
 def nested_data_list_factory():
-    """Create an instance of List[StubAttrsBaseData] with stub data."""
+    """Create an instance of List[StubAttrsData] with stub data."""
     return [
-        StubAttrsBaseData(string_field="abc", float_field=1.0),
-        StubAttrsBaseData(string_field="xyz", float_field=2.0)
+        StubAttrsData(string_field="abc", float_field=1.0),
+        StubAttrsData(string_field="xyz", float_field=2.0)
         ]
 
 @index_fields('float_field, date_field, enum_value')
@@ -47,7 +47,7 @@ def nested_data_list_factory():
 @index_fields('nested_data_list.data.float_field_3')
 @index_fields('nested_attrs_field.data.float_field_3')
 @attrs_record
-class StubAttrsBaseRecord(StubAttrsBaseRecordKey, Record):
+class StubAttrsRecord(StubAttrsRecordKey, Record):
     """Stub record base class."""
     
     version: Optional[int] = attrs_field(default=0)
@@ -74,10 +74,10 @@ class StubAttrsBaseRecord(StubAttrsBaseRecordKey, Record):
     bytes_field: Optional[bytes] = attrs_field(default=bytes([100, 110, 120]))
     """Stub field."""
 
-    nested_attrs_field: Optional[StubAttrsBaseData] = attrs_field(factory=StubAttrsBaseData)
+    nested_attrs_field: Optional[StubAttrsData] = attrs_field(factory=StubAttrsData)
     """Stub field."""
 
-    nested_data_list: Optional[List[StubAttrsBaseData]] = attrs_field(factory=nested_data_list_factory)
+    nested_data_list: Optional[List[StubAttrsData]] = attrs_field(factory=nested_data_list_factory)
     """Stub field."""
 
     @handler()

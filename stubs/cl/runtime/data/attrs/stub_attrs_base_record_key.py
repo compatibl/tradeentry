@@ -19,7 +19,7 @@ from cl.runtime.data.key import Key
 
 
 @attrs_key
-class StubAttrsBaseRecordKey(Key):
+class StubAttrsRecordKey(Key):
     """Stub record base class."""
 
     record_id: Optional[str] = attrs_field(default='abc')

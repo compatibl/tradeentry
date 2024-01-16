@@ -19,7 +19,7 @@ from cl.runtime.data.attrs.attrs_field_util import attrs_field
 
 
 @attrs_data
-class StubAttrsBaseData(Data):
+class StubAttrsData(Data):
     """Stub base data type."""
 
     string_field: Optional[str] = attrs_field()

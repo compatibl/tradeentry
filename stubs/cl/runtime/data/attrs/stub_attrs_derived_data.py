@@ -15,12 +15,12 @@
 from typing import Optional
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
-from stubs.cl.runtime.data.attrs.stub_attrs_base_record_key import StubAttrsBaseRecordKey
-from stubs.cl.runtime.data.attrs.stub_attrs_base_data import StubAttrsBaseData
+from stubs.cl.runtime.data.attrs.stub_attrs_record_key import StubAttrsRecordKey
+from stubs.cl.runtime.data.attrs.stub_attrs_data import StubAttrsData
 
 
 @attrs_record
-class StubAttrsDerivedData(StubAttrsBaseData):
+class StubAttrsDerivedData(StubAttrsData):
     """Stub derived data type."""
 
     float_field_4: Optional[float] = attrs_field()

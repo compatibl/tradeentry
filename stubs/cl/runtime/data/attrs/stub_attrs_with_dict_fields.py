@@ -17,7 +17,7 @@ from typing import Dict, List, Optional
 from cl.runtime.data.record import Record
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
-from stubs.cl.runtime.data.attrs.stub_attrs_base_record import StubAttrsBaseRecord
+from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.data.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
 from stubs.cl.runtime.data.attrs.stub_attrs_with_dict_fields_key import StubAttrsWithDictFieldsKey
 
@@ -32,7 +32,7 @@ class StubAttrsWithDictFields(StubAttrsWithDictFieldsKey, Record):
     dict_of_derived_samples: Optional[Dict[str, StubAttrsDerivedRecord]] = attrs_field()
     """Stub field."""
 
-    dict_of_base_samples: Optional[Dict[str, StubAttrsBaseRecord]] = attrs_field()
+    dict_of_base_samples: Optional[Dict[str, StubAttrsRecord]] = attrs_field()
     """Stub field."""
 
     dict_of_dates: Optional[Dict[str, dt.date]] = attrs_field()
@@ -41,7 +41,7 @@ class StubAttrsWithDictFields(StubAttrsWithDictFieldsKey, Record):
     dict_of_float_list: Optional[Dict[str, List[float]]] = attrs_field()
     """Stub field."""
 
-    dict_of_base_sample_list: Optional[Dict[str, List[StubAttrsBaseRecord]]] = attrs_field()
+    dict_of_base_sample_list: Optional[Dict[str, List[StubAttrsRecord]]] = attrs_field()
     """Stub field."""
 
     dict_of_derived_sample_list: Optional[Dict[str, List[StubAttrsDerivedRecord]]] = attrs_field()

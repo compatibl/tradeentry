@@ -15,7 +15,7 @@
 from cl.runtime.data.key import Key
 from cl.runtime.data.attrs.attrs_key_util import attrs_key
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
-from stubs.cl.runtime.data.attrs.stub_attrs_base_record_key import StubAttrsBaseRecordKey
+from stubs.cl.runtime.data.attrs.stub_attrs_record_key import StubAttrsRecordKey
 
 
 @attrs_key
@@ -25,8 +25,8 @@ class StubAttrsCompositeKey(Key):
     str_key_0: str = attrs_field()
     """String key element."""
 
-    embedded_key_1: StubAttrsBaseRecordKey = attrs_field()
+    embedded_key_1: StubAttrsRecordKey = attrs_field()
     """Embedded key 1."""
 
-    embedded_key_2: StubAttrsBaseRecordKey = attrs_field()
+    embedded_key_2: StubAttrsRecordKey = attrs_field()
     """Embedded key 2."""
