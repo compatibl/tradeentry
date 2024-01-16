@@ -40,6 +40,7 @@ def nested_data_list_factory():
         StubAttrsData(string_field="xyz", float_field=2.0)
         ]
 
+
 @index_fields('float_field, date_field, enum_value')
 @index_fields('date_field')
 @index_fields('record_id, -version', 'CustomIndexName')

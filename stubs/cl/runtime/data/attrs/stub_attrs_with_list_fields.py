@@ -22,7 +22,7 @@ from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.data.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
 
 
-def stub_list_of_floats() -> List[float]:
+def stub_float_list_field() -> List[float]:
     """Create stub values."""
     return [
         0.001,
@@ -34,7 +34,7 @@ def stub_list_of_floats() -> List[float]:
     ]
 
 
-def stub_list_of_dates() -> List[dt.date]:
+def stub_date_list_field() -> List[dt.date]:
     """Create stub values."""
     return [
         DateUtil.from_fields(2001, 1, 1),
@@ -44,7 +44,7 @@ def stub_list_of_dates() -> List[dt.date]:
     ]
 
 
-def stub_list_of_base_records() -> List[StubAttrsRecord]:
+def stub_record_list_field() -> List[StubAttrsRecord]:
     """Create stub values."""
     return [
         StubAttrsRecord(record_index=0, record_id='A'),
@@ -56,7 +56,7 @@ def stub_list_of_base_records() -> List[StubAttrsRecord]:
     ]
 
 
-def stub_list_of_derived_records() -> List[StubAttrsDerivedRecord]:
+def stub_derived_record_list_field() -> List[StubAttrsDerivedRecord]:
     """Create stub values."""
     return [
         StubAttrsDerivedRecord(record_index=0, record_id='A'),
@@ -71,14 +71,15 @@ def stub_list_of_derived_records() -> List[StubAttrsDerivedRecord]:
 @attrs_record
 class StubAttrsWithListFields(StubAttrsRecord):
 
-    list_of_floats: Optional[List[float]] = attrs_field(factory=stub_list_of_floats)
+    float_list_field: Optional[List[float]] = attrs_field(factory=stub_float_list_field)
     """Stub field."""
 
-    list_of_base_records: Optional[List[StubAttrsRecord]] = attrs_field(factory=stub_list_of_base_records)
+    date_list_field: Optional[List[dt.date]] = attrs_field(factory=stub_date_list_field)
     """Stub field."""
 
-    list_of_derived_records: Optional[List[StubAttrsDerivedRecord]] = attrs_field(factory=stub_list_of_derived_records)
+    record_list_field: Optional[List[StubAttrsRecord]] = attrs_field(factory=stub_record_list_field)
     """Stub field."""
 
-    list_of_dates: Optional[List[dt.date]] = attrs_field(factory=stub_list_of_dates)
+    derived_record_list_field: Optional[List[StubAttrsDerivedRecord]] = attrs_field(factory=stub_derived_record_list_field)
     """Stub field."""
+

@@ -25,8 +25,8 @@ from stubs.cl.runtime.data.attrs.stub_attrs_derived_record import StubAttrsDeriv
 class StubAttrsDerivedFromDerivedRecord(StubAttrsDerivedRecord):
     """Two levels in inheritance hierarchy away from StubAttrsRecord."""
 
-    float_field_3: Optional[float] = attrs_field(default="abc")
+    derived_from_derived_str_field: Optional[str] = attrs_field()
     """Stub field."""
 
-    string_field_3: Optional[str] = attrs_field(default=200.0)
+    derived_from_derived_float_field: Optional[float] = attrs_field()
     """Stub field."""

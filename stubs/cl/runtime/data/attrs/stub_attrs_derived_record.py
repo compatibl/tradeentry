@@ -27,7 +27,7 @@ from stubs.cl.runtime.data.attrs.stub_attrs_derived_from_derived_data import Stu
 from stubs.cl.runtime.data.attrs.stub_attrs_data import StubAttrsData
 
 
-@index_fields('float_field_2, -float_field')
+@index_fields('derived_float_field, -float_field')
 @attrs_record(init=False)
 class StubAttrsDerivedRecord(StubAttrsRecord):
     """Stub derived class."""
@@ -38,10 +38,10 @@ class StubAttrsDerivedRecord(StubAttrsRecord):
     derived_string_field: Optional[str] = attrs_field()
     """Stub field."""
 
-    list_of_string: Optional[List[str]] = attrs_field()
+    derived_string_list_field: Optional[List[str]] = attrs_field()
     """Stub field."""
 
-    dict_of_string: Optional[Dict[str, str]] = attrs_field()
+    derived_string_dict_field: Optional[Dict[str, str]] = attrs_field()
     """Stub field."""
 
     array_of_nullable_float: Optional[List[float]] = attrs_field()
@@ -123,12 +123,12 @@ class StubAttrsDerivedRecord(StubAttrsRecord):
         self.derived_float_field = 200.0
 
         # lists
-        self.list_of_string = ['A', 'B', 'C']
+        self.derived_string_list_field = ['A', 'B', 'C']
         self.list_of_float = [1.0, 2.0, 3.0]
         self.list_of_nullable_float = [10.0, None, 30.0]
 
         # dicts
-        self.dict_of_string = {
+        self.derived_string_dict_field = {
             "A": "a",
             "B": "b",
             "C": "c",
@@ -158,8 +158,8 @@ class StubAttrsDerivedRecord(StubAttrsRecord):
         self.derived_from_derived_attrs_field.string_field_3 = 'A'
         self.derived_from_derived_attrs_field.derived_float_field = 2.0
         self.derived_from_derived_attrs_field.derived_string_field = 'B'
-        self.derived_from_derived_attrs_field.float_field_5 = 2.0
-        self.derived_from_derived_attrs_field.string_field_5 = 'B'
+        self.derived_from_derived_attrs_field.derived_from_derived_float_field = 2.0
+        self.derived_from_derived_attrs_field.derived_from_derived_str_field = 'B'
 
         # Polymorphic data elements
         self.polymorphic_attrs_field_1 = StubAttrsDerivedData()

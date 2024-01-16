@@ -22,15 +22,15 @@ from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
 
 
-@index_fields('other_float_field_2, other_string_field_2, -record_index')
+@index_fields('other_float_field, other_string_field, -record_index')
 @attrs_record
 class StubAttrsOtherDerivedRecord(StubAttrsRecord):
     """Another type derived from StubAttrsRecord."""
 
-    other_string_field_2: Optional[str] = attrs_field(default='abc')
+    other_string_field: Optional[str] = attrs_field(default='abc')
     """Stub field."""
 
-    other_float_field_2: Optional[float] = attrs_field(default=200.0)
+    other_float_field: Optional[float] = attrs_field(default=200.0)
     """Stub field."""
 
 

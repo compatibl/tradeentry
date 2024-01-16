@@ -15,7 +15,6 @@
 from typing import Optional
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
-from stubs.cl.runtime.data.attrs.stub_attrs_record_key import StubAttrsRecordKey
 from stubs.cl.runtime.data.attrs.stub_attrs_data import StubAttrsData
 
 
@@ -23,9 +22,9 @@ from stubs.cl.runtime.data.attrs.stub_attrs_data import StubAttrsData
 class StubAttrsDerivedData(StubAttrsData):
     """Stub derived data type."""
 
-    derived_float_field: Optional[float] = attrs_field()
+    derived_string_field: Optional[str] = attrs_field()
     """Stub field."""
 
-    derived_string_field: Optional[str] = attrs_field()
+    derived_float_field: Optional[float] = attrs_field()
     """Stub field."""
 
