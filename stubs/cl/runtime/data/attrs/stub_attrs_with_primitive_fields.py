@@ -18,7 +18,7 @@ from cl.runtime.data.record import Record
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from cl.runtime.data.key import Key
-from stubs.cl.runtime.data.attrs.stub_attrs_enum import StubAttrsEnum
+from stubs.cl.runtime.data.enum.stub_int_enum import StubIntEnum
 from stubs.cl.runtime.data.attrs.stub_attrs_with_primitive_fields_key import StubAttrsWithPrimitiveFieldsKey
 
 
@@ -44,7 +44,7 @@ class StubAttrsWithPrimitiveFields(StubAttrsWithPrimitiveFieldsKey, Record):
     string_field: str = attrs_field()
     """Stub field."""
 
-    enum_field: StubAttrsEnum = attrs_field()
+    enum_field: StubIntEnum = attrs_field()
     """Stub field."""
 
     date_field: dt.date = attrs_field()

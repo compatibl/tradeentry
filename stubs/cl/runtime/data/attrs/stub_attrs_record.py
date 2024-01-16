@@ -29,7 +29,7 @@ from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from stubs.cl.runtime.data.attrs.stub_attrs_data import StubAttrsData
 from stubs.cl.runtime.data.attrs.stub_attrs_record_key import StubAttrsRecordKey
-from stubs.cl.runtime.data.attrs.stub_attrs_enum import StubAttrsEnum
+from stubs.cl.runtime.data.enum.stub_int_enum import StubIntEnum
 
 _logger = Logger(__name__)
 
@@ -59,7 +59,7 @@ class StubAttrsRecord(StubAttrsRecordKey, Record):
     date_field: Optional[dt.date] = attrs_field(default=DateUtil.from_str("2023-05-01"))
     """Stub field."""
 
-    enum_value: Optional[StubAttrsEnum] = attrs_field(default=StubAttrsEnum.ENUM_VALUE_2)
+    enum_value: Optional[StubIntEnum] = attrs_field(default=StubIntEnum.ENUM_VALUE_2)
     """Stub field."""
 
     time_field: Optional[dt.time] = attrs_field(default=TimeUtil.from_str("10:15:00"))
@@ -104,7 +104,7 @@ class StubAttrsRecord(StubAttrsRecordKey, Record):
         self,
         int_arg: int,
         datetime_arg: dt.datetime,
-        enum_arg: StubAttrsEnum,
+        enum_arg: StubIntEnum,
         data_arg: Data,
     ) -> None:
         _logger.info(f"handler_with_arguments(int_arg={int_arg} datetime_arg={datetime_arg}"

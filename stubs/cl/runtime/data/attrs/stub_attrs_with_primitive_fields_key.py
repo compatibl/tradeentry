@@ -17,7 +17,7 @@ from cl.runtime.primitive.ordered_uid import OrderedUid
 from cl.runtime.data.attrs.attrs_key_util import attrs_key
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from cl.runtime.data.key import Key
-from stubs.cl.runtime.data.attrs.stub_attrs_enum import StubAttrsEnum
+from stubs.cl.runtime.data.enum.stub_int_enum import StubIntEnum
 
 
 @attrs_key
@@ -35,7 +35,7 @@ class StubAttrsWithPrimitiveFieldsKey(Key):
     base_string_field: str = attrs_field()
     """Stub field."""
 
-    base_enum_field: StubAttrsEnum = attrs_field()
+    base_enum_field: StubIntEnum = attrs_field()
     """Stub field."""
 
     base_date_field: dt.date = attrs_field()

@@ -15,7 +15,7 @@
 from enum import IntEnum
 
 
-class StubAttrsEnum(IntEnum):  # Enum is derived from IntEnum
+class StubIntEnum(IntEnum):  # Enum is derived from IntEnum
     """Sample enum."""
 
     ENUM_VALUE_1 = 1

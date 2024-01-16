@@ -12,16 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from enum import IntEnum
-from cl.runtime.data.enum_util import enum_class
+import pytest
+from stubs import StubIntEnum
 
 
-@enum_class(label="Stub Int Enum Label")
-class StubIntEnumWithLabel(IntEnum):
-    """Stub enum with custom label that does not match the name."""
+def test_smoke():
+    """Smoke test."""
 
-    ENUM_VALUE_1 = 1
-    """Enum value 1."""
+    assert StubIntEnum.ENUM_VALUE_1 == 1
 
-    ENUM_VALUE_2 = 2
-    """Enum value 2."""
+
+def test_class_label():
+    """Rename test."""
+
+    # TODO: Add test for renamed enum class label
+
+def test_item_label():
+    """Rename test."""
+
+    # TODO: Add test for renamed enum item label
+
+
+if __name__ == '__main__':
+    pytest.main([__file__])
