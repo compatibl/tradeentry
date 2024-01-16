@@ -69,7 +69,7 @@ def stub_derived_record_list_field() -> List[StubAttrsDerivedRecord]:
 
 
 @attrs_record
-class StubAttrsWithListFields(StubAttrsRecord):
+class StubAttrsListFields(StubAttrsRecord):
 
     float_list_field: Optional[List[float]] = attrs_field(factory=stub_float_list_field)
     """Stub field."""

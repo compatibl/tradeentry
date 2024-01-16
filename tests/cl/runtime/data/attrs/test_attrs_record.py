@@ -16,9 +16,9 @@ import pytest
 import cl.runtime as rt
 from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.data.attrs.stub_attrs_record_key import StubAttrsRecordKey
-from stubs.cl.runtime.data.attrs.stub_attrs_with_dict_fields import StubAttrsWithDictFields
-from stubs.cl.runtime.data.attrs.stub_attrs_with_list_fields import StubAttrsWithListFields
-from stubs.cl.runtime.data.attrs.stub_attrs_with_primitive_fields import StubAttrsWithPrimitiveFields
+from stubs.cl.runtime.data.attrs.stub_attrs_dict_fields import StubAttrsDictFields
+from stubs.cl.runtime.data.attrs.stub_attrs_list_fields import StubAttrsListFields
+from stubs.cl.runtime.data.attrs.stub_attrs_primitive_fields import StubAttrsPrimitiveFields
 
 
 def test_smoke():
@@ -47,22 +47,22 @@ def test_smoke():
 def test_with_primitive_fields():
     """Test for a record with primitive fields."""
 
-    record = StubAttrsWithPrimitiveFields()
-    record = StubAttrsWithListFields()
+    record = StubAttrsPrimitiveFields()
+    record = StubAttrsListFields()
     pass
 
 
 def test_with_list_fields():
     """Test for a record with primitive fields."""
 
-    record = StubAttrsWithListFields()
+    record = StubAttrsListFields()
     pass
 
 
 def test_with_dict_fields():
     """Test for a record with primitive fields."""
 
-    record = StubAttrsWithDictFields()
+    record = StubAttrsDictFields()
     pass
 
 

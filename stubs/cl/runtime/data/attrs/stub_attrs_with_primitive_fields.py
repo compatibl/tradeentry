@@ -24,11 +24,11 @@ from cl.runtime.data.key import Key
 from cl.runtime.primitive.time_util import TimeUtil
 from stubs.cl.runtime.data.attrs.stub_attrs_record_key import StubAttrsRecordKey
 from stubs.cl.runtime.data.enum.stub_int_enum import StubIntEnum
-from stubs.cl.runtime.data.attrs.stub_attrs_with_primitive_fields_key import StubAttrsWithPrimitiveFieldsKey
+from stubs.cl.runtime.data.attrs.stub_attrs_primitive_fields_key import StubAttrsPrimitiveFieldsKey
 
 
 @attrs_record
-class StubAttrsWithPrimitiveFields(StubAttrsWithPrimitiveFieldsKey, Record):
+class StubAttrsPrimitiveFields(StubAttrsPrimitiveFieldsKey, Record):
     """Stub record whose elements are primitive types."""
 
     float_field: float = attrs_field(default=1.23)

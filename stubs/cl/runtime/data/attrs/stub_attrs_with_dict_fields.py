@@ -70,7 +70,7 @@ def stub_derived_record_dict_field() -> Dict[str, StubAttrsDerivedRecord]:
 
 
 @attrs_record
-class StubAttrsWithDictFields(StubAttrsRecord):
+class StubAttrsDictFields(StubAttrsRecord):
     """Stub record whose elements are dictionaries."""
 
     float_dict_field: Optional[Dict[str, float]] = attrs_field(factory=stub_float_dict_field)

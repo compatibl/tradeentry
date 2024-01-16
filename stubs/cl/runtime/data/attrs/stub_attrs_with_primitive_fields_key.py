@@ -28,7 +28,7 @@ from stubs.cl.runtime.data.enum.stub_int_enum import StubIntEnum
 
 
 @attrs_key
-class StubAttrsWithPrimitiveFieldsKey(Key):
+class StubAttrsPrimitiveFieldsKey(Key):
 
     key_int_field: int = attrs_field(default=123)
     """Stub field."""
