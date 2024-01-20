@@ -16,7 +16,7 @@ import numpy as np
 from cl.runtime.primitive.float_util import FloatUtil
 
 
-class StubFloatArray:
+class StubFloatArrayUtil:
     """Create mock samples of FloatArray."""
 
     @staticmethod
