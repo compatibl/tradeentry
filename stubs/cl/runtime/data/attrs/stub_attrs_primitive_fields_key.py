@@ -30,34 +30,42 @@ from stubs.cl.runtime.data.enum.stub_int_enum import StubIntEnum
 @attrs_key
 class StubAttrsPrimitiveFieldsKey(Key):
 
-    key_int_field: int = attrs_field(default=123)
+    str_field: str = attrs_field(default="abc")
+    """Stub field."""
+    
+    float_field: float = attrs_field(default="1.23")
     """Stub field."""
 
-    key_long_field: int = attrs_field(default=9007199254740991, subtype='long')
+    int_field: int = attrs_field(default=123)
+    """Stub field."""
+
+    long_field: int = attrs_field(default=9007199254740991, subtype='long')  # Rename subtype
     """The default is maximum safe signed int for JSON: 2^53 - 1."""
+    # TODO: Define maximum safe long in Util class
 
-    key_bool_field: bool = attrs_field(default=True)
+    date_field: dt.date = attrs_field(default=DateUtil.from_fields(2003, 5, 1))
     """Stub field."""
 
-    key_str_field: str = attrs_field(default="abc")
+    time_field: dt.time = attrs_field(default=TimeUtil.from_fields(10, 15, 30))
     """Stub field."""
 
-    key_enum_field: StubIntEnum = attrs_field(default=StubIntEnum.ENUM_VALUE_2)
+    date_time_field: dt.datetime = attrs_field(default=DateTimeUtil.from_fields(2003, 5, 1, 10, 15))
     """Stub field."""
 
-    key_date_field: dt.date = attrs_field(default=DateUtil.from_fields(2003, 5, 1))
+    bool_field: bool = attrs_field(default=True)
     """Stub field."""
 
-    key_time_field: dt.time = attrs_field(default=TimeUtil.from_fields(10, 15, 30))
+    guid_field: OrderedUid = attrs_field(default=OrderedUid('1A' * 16))
     """Stub field."""
 
-    key_date_time_field: dt.datetime = attrs_field(default=DateTimeUtil.from_fields(2003, 5, 1, 10, 15))
+    bytes_field: bytes = attrs_field(default=bytes([100, 110, 120]))
     """Stub field."""
 
-    key_guid_field: OrderedUid = attrs_field(default=OrderedUid('1A' * 16))
+    enum_field: StubIntEnum = attrs_field(default=StubIntEnum.ENUM_VALUE_2)
+    """Stub field."""
+    
+    str_key_field: str = attrs_field(default="abc;123", subtype='StubRecordKey')  # Rename subtype
     """Stub field."""
 
-    # TODO: Change type
-    key_key_field: Key = attrs_field(factory=StubAttrsRecordKey)
+    generic_key_field: str = attrs_field(default="StubAttrsRecord;abc;123", subtype='GenericKey')  # Rename subtype
     """Stub field."""
-

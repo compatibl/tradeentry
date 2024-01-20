@@ -20,6 +20,8 @@ from uuid import UUID
 from bson import ObjectId
 from bson.binary import UUID_SUBTYPE, Binary
 
+# TODO: Rename to TimeStamp, convert to factory method, use native GUID for storage
+
 
 class OrderedUid:
     """

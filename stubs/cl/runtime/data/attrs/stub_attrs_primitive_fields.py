@@ -31,40 +31,41 @@ from stubs.cl.runtime.data.attrs.stub_attrs_primitive_fields_key import StubAttr
 class StubAttrsPrimitiveFields(StubAttrsPrimitiveFieldsKey, Record):
     """Stub record whose elements are primitive types."""
 
-    str_field: str = attrs_field(default="abc")
+    base_str_field: str = attrs_field(default="abc")
     """Stub field."""
 
-    float_field: float = attrs_field(default=1.23)
+    base_float_field: float = attrs_field(default=1.23)
     """Stub field."""
 
-    int_field: int = attrs_field(default=123)
+    base_int_field: int = attrs_field(default=123)
     """Stub field."""
 
-    long_field: int = attrs_field(default=9007199254740991, subtype='long')
+    base_long_field: int = attrs_field(default=9007199254740991, subtype='long')
     """The default is maximum safe signed int for JSON: 2^53 - 1."""
 
-    date_field: dt.date = attrs_field(default=DateUtil.from_fields(2003, 5, 1))
+    base_date_field: dt.date = attrs_field(default=DateUtil.from_fields(2003, 5, 1))
     """Stub field."""
 
-    time_field: dt.time = attrs_field(default=TimeUtil.from_fields(10, 15, 30))
+    base_time_field: dt.time = attrs_field(default=TimeUtil.from_fields(10, 15, 30))
     """Stub field."""
 
-    date_time_field: dt.datetime = attrs_field(default=DateTimeUtil.from_fields(2003, 5, 1, 10, 15))
+    base_date_time_field: dt.datetime = attrs_field(default=DateTimeUtil.from_fields(2003, 5, 1, 10, 15))
     """Stub field."""
 
-    bool_field: bool = attrs_field(default=True)
+    base_bool_field: bool = attrs_field(default=True)
     """Stub field."""
 
-    bytes_field: bytes = attrs_field(default=bytes([100, 110, 120]))
+    base_guid_field: OrderedUid = attrs_field(default=OrderedUid('1A' * 16))
     """Stub field."""
 
-    guid_field: OrderedUid = attrs_field(default=OrderedUid('1A' * 16))
+    base_bytes_field: bytes = attrs_field(default=bytes([100, 110, 120]))
     """Stub field."""
 
-    enum_field: StubIntEnum = attrs_field(default=StubIntEnum.ENUM_VALUE_1)
+    base_enum_field: StubIntEnum = attrs_field(default=StubIntEnum.ENUM_VALUE_1)
     """Stub field."""
 
-    # TODO: Change type
-    key_field: Key = attrs_field(factory=StubAttrsRecordKey)
+    base_str_key_field: str = attrs_field(default="StubAttrsRecord;abc;123", subtype='StubRecordKey')
     """Stub field."""
 
+    base_generic_key_field: str = attrs_field(default="StubAttrsRecord;abc;123", subtype='GenericKey')
+    """Stub field."""
