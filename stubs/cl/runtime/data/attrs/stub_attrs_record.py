@@ -46,7 +46,7 @@ class StubAttrsRecord(StubAttrsRecordKey, Record):
     """Stub record base class."""
     
     version: int = attrs_field(default=0)
-    """Stub field."""
+    """Stub version field."""
 
     @handler()
     def non_virtual_base_handler(self) -> None:
