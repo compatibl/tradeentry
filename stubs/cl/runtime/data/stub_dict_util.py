@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import datetime as dt
-import uuid
+from uuid import UUID
 from typing import Any, Dict
 import pytz
 
@@ -25,13 +25,14 @@ class StubDictUtil:
     def create_primitive() -> Dict[str, Any]:
         """Create a mock dictionary whose fields include all supported primitive types."""
 
+        # TODO: Add bytes
         result = {
             'str_field': 'abc',
+            'float_field': 123.456,
             'bool_field': True,
             'int_field': 123,
             'long_field': 9007199254740991,  # Maximum safe signed int for JSON: 2^53 - 1
             'long_field_str': str(9007199254740991), # Maximum safe signed int for JSON: 2^53 - 1
-            'float_field': 123.456,
             'date_field': dt.date(2003, 4, 21),
             'time_field': dt.time(11, 10, 0),
             'time_field_ms': dt.time(11, 10, 0, 123000),
@@ -39,6 +40,6 @@ class StubDictUtil:
             'datetime_field': dt.datetime(2003, 4, 21, 11, 10, 0, tzinfo=pytz.UTC),
             'datetime_field_ms': dt.datetime(2003, 4, 21, 11, 10, 0, 123000, tzinfo=pytz.UTC),
             'datetime_field_us': dt.datetime(2003, 4, 21, 11, 10, 0, 123456, tzinfo=pytz.UTC),
-            'uuid_field': uuid.UUID('a8098c1a-f86e-11da-bd1a-00112444be1e'),
+            'uuid_field': UUID('1A' * 16),
         }
         return result

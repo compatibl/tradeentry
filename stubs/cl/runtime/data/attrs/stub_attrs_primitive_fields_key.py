@@ -13,17 +13,14 @@
 # limitations under the License.
 
 import datetime as dt
+from uuid import UUID
 
 from cl.runtime.data.attrs.attrs_key_util import attrs_key
 from cl.runtime.primitive.date_time_util import DateTimeUtil
 from cl.runtime.primitive.date_util import DateUtil
-from cl.runtime.primitive.ordered_uid import OrderedUid
-from cl.runtime.data.record import Record
-from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from cl.runtime.data.key import Key
 from cl.runtime.primitive.time_util import TimeUtil
-from stubs.cl.runtime.data.attrs.stub_attrs_record_key import StubAttrsRecordKey
 from stubs.cl.runtime.data.enum.stub_int_enum import StubIntEnum
 
 
@@ -34,6 +31,9 @@ class StubAttrsPrimitiveFieldsKey(Key):
     """Stub field."""
     
     float_field: float = attrs_field(default="1.23")
+    """Stub field."""
+
+    bool_field: bool = attrs_field(default=True)
     """Stub field."""
 
     int_field: int = attrs_field(default=123)
@@ -52,10 +52,7 @@ class StubAttrsPrimitiveFieldsKey(Key):
     date_time_field: dt.datetime = attrs_field(default=DateTimeUtil.from_fields(2003, 5, 1, 10, 15))
     """Stub field."""
 
-    bool_field: bool = attrs_field(default=True)
-    """Stub field."""
-
-    guid_field: OrderedUid = attrs_field(default=OrderedUid('1A' * 16))
+    uuid_field: UUID = attrs_field(default=UUID('1A' * 16))
     """Stub field."""
 
     bytes_field: bytes = attrs_field(default=bytes([100, 110, 120]))
