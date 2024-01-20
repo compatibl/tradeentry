@@ -19,7 +19,7 @@ from stubs.cl.runtime.data.attrs.stub_attrs_record_key import StubAttrsRecordKey
 
 
 @attrs_key
-class StubAttrsCompositeKey(Key):
+class StubAttrsNestedFieldsKey(Key):
     """Record where the key is composite and includes other keys."""
 
     primitive: str = attrs_field(default="abc")

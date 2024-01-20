@@ -14,7 +14,7 @@
 
 import pytest
 import copy
-from stubs.cl.runtime.data.attrs.stub_attrs_composite_key import StubAttrsCompositeKey
+from stubs.cl.runtime.data.attrs.stub_attrs_nested_fields_key import StubAttrsNestedFieldsKey
 from stubs.cl.runtime.data.attrs.stub_attrs_record_key import StubAttrsRecordKey
 
 
@@ -35,9 +35,9 @@ def test_composite_key():
     key_same_as_1 = StubAttrsRecordKey(str_field='A', int_field=0)
     key_2 = StubAttrsRecordKey(str_field='B', int_field=1)
 
-    composite_key_1 = StubAttrsCompositeKey(primitive='A', embedded_1=key_1, embedded_2=key_2)
-    composite_key_1_prime = StubAttrsCompositeKey(primitive='A', embedded_1=key_same_as_1, embedded_2=key_2)
-    composite_key_2 = StubAttrsCompositeKey(primitive='B', embedded_1=key_1, embedded_2=key_2)
+    composite_key_1 = StubAttrsNestedFieldsKey(primitive='A', embedded_1=key_1, embedded_2=key_2)
+    composite_key_1_prime = StubAttrsNestedFieldsKey(primitive='A', embedded_1=key_same_as_1, embedded_2=key_2)
+    composite_key_2 = StubAttrsNestedFieldsKey(primitive='B', embedded_1=key_1, embedded_2=key_2)
 
     assert 'A;A;0;B;1' == str(composite_key_1)
     assert 'B;A;0;B;1' == str(composite_key_2)
