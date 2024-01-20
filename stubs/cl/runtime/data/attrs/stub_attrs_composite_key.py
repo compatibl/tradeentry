@@ -22,11 +22,11 @@ from stubs.cl.runtime.data.attrs.stub_attrs_record_key import StubAttrsRecordKey
 class StubAttrsCompositeKey(Key):
     """Record where the key is composite and includes other keys."""
 
-    str_key_0: str = attrs_field()
+    primitive: str = attrs_field(default="abc")
     """String key element."""
 
-    embedded_key_1: StubAttrsRecordKey = attrs_field()
+    embedded_1: StubAttrsRecordKey = attrs_field(factory=StubAttrsRecordKey)
     """Embedded key 1."""
 
-    embedded_key_2: StubAttrsRecordKey = attrs_field()
+    embedded_2: StubAttrsRecordKey = attrs_field(factory=StubAttrsRecordKey)
     """Embedded key 2."""

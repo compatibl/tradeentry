@@ -23,7 +23,7 @@ from stubs.cl.runtime.data.attrs.stub_attrs_derived_record import StubAttrsDeriv
 from stubs.cl.runtime.data.attrs.stub_attrs_record_key import StubAttrsRecordKey
 
 
-def stub_str_dict_factory() -> Dict[str, str]:
+def stub_attrs_str_dict_factory() -> Dict[str, str]:
     """Create stub values."""
     return {
         "a": "abc",
@@ -31,7 +31,7 @@ def stub_str_dict_factory() -> Dict[str, str]:
     }
 
 
-def stub_float_dict_factory() -> Dict[str, float]:
+def stub_attrs_float_dict_factory() -> Dict[str, float]:
     """Create stub values."""
     return {
         "Key0": 0.001,
@@ -43,7 +43,7 @@ def stub_float_dict_factory() -> Dict[str, float]:
     }
 
 
-def stub_date_dict_factory() -> Dict[str, dt.date]:
+def stub_attrs_date_dict_factory() -> Dict[str, dt.date]:
     """Create stub values."""
     return {
         "a": DateUtil.from_fields(2003, 4, 21),
@@ -51,7 +51,7 @@ def stub_date_dict_factory() -> Dict[str, dt.date]:
     }
 
 
-def stub_data_dict_factory() -> Dict[str, StubAttrsData]:
+def stub_attrs_data_dict_factory() -> Dict[str, StubAttrsData]:
     """Create stub values."""
     return {
         "a": StubAttrsData(str_field='A', int_field=1),
@@ -59,7 +59,7 @@ def stub_data_dict_factory() -> Dict[str, StubAttrsData]:
     }
 
 
-def stub_key_dict_factory() -> Dict[str, StubAttrsRecordKey]:
+def stub_attrs_key_dict_factory() -> Dict[str, StubAttrsRecordKey]:
     """Create stub values."""
     return {
         "a": StubAttrsRecordKey(str_field='A', int_field=1),
@@ -67,7 +67,7 @@ def stub_key_dict_factory() -> Dict[str, StubAttrsRecordKey]:
     }
 
 
-def stub_record_dict_factory() -> Dict[str, StubAttrsRecord]:
+def stub_attrs_record_dict_factory() -> Dict[str, StubAttrsRecord]:
     """Create stub values."""
     return {
         "a": StubAttrsRecord(str_field='A', int_field=1),
@@ -75,7 +75,7 @@ def stub_record_dict_factory() -> Dict[str, StubAttrsRecord]:
     }
 
 
-def stub_derived_record_dict_factory() -> Dict[str, StubAttrsDerivedRecord]:
+def stub_attrs_derived_record_dict_factory() -> Dict[str, StubAttrsDerivedRecord]:
     """Create stub values."""
     return {
         "a": StubAttrsDerivedRecord(str_field='A', int_field=1),
@@ -87,23 +87,23 @@ def stub_derived_record_dict_factory() -> Dict[str, StubAttrsDerivedRecord]:
 class StubAttrsDictFields(StubAttrsRecord):
     """Stub record whose elements are dictionaries."""
 
-    str_dict: Dict[str, str] = attrs_field(factory=stub_str_dict_factory)
+    str_dict: Dict[str, str] = attrs_field(factory=stub_attrs_str_dict_factory)
     """Stub field."""
 
-    float_dict: Dict[str, float] = attrs_field(factory=stub_float_dict_factory)
+    float_dict: Dict[str, float] = attrs_field(factory=stub_attrs_float_dict_factory)
     """Stub field."""
     
-    date_dict: Dict[str, dt.date] = attrs_field(factory=stub_date_dict_factory)
+    date_dict: Dict[str, dt.date] = attrs_field(factory=stub_attrs_date_dict_factory)
     """Stub field."""
 
-    data_dict: Dict[str, StubAttrsData] = attrs_field(factory=stub_data_dict_factory)
+    data_dict: Dict[str, StubAttrsData] = attrs_field(factory=stub_attrs_data_dict_factory)
     """Stub field."""
 
-    key_dict: Dict[str, StubAttrsRecordKey] = attrs_field(factory=stub_key_dict_factory)
+    key_dict: Dict[str, StubAttrsRecordKey] = attrs_field(factory=stub_attrs_key_dict_factory)
     """Stub field."""
 
-    record_dict: Dict[str, StubAttrsRecord] = attrs_field(factory=stub_record_dict_factory)
+    record_dict: Dict[str, StubAttrsRecord] = attrs_field(factory=stub_attrs_record_dict_factory)
     """Stub field."""
 
-    derived_record_dict: Dict[str, StubAttrsDerivedRecord] = attrs_field(factory=stub_derived_record_dict_factory)
+    derived_record_dict: Dict[str, StubAttrsDerivedRecord] = attrs_field(factory=stub_attrs_derived_record_dict_factory)
     """Stub field."""
