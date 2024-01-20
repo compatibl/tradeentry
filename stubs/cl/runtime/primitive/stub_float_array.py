@@ -13,13 +13,10 @@
 # limitations under the License.
 
 import numpy as np
-
 from cl.runtime.primitive.float_util import FloatUtil
 
 
-# TODO: Rename to StubFloatArrayUtil
-
-class StubFloatArray:
+class StubFloatArrayUtil:
     """Create mock samples of FloatArray."""
 
     @staticmethod

@@ -16,57 +16,57 @@ import numpy as np
 import pytest
 
 from cl.runtime.primitive.float_array_util import FloatArrayUtil
-from stubs.cl.runtime.primitive.stub_float_array import StubFloatArray
+from stubs.cl.runtime.primitive.stub_float_array import StubFloatArrayUtil
 
 
 def test_is_strictly_ascending():
     """Test is_strictly_ascending method."""
-    assert FloatArrayUtil.is_strictly_ascending(StubFloatArray.create_strictly_ascending())
-    assert not FloatArrayUtil.is_strictly_ascending(StubFloatArray.create_equal_or_ascending())
-    assert not FloatArrayUtil.is_strictly_ascending(StubFloatArray.create_equal_or_ascending_with_tolerance())
-    assert not FloatArrayUtil.is_strictly_ascending(StubFloatArray.create_strictly_descending())
-    assert not FloatArrayUtil.is_strictly_ascending(StubFloatArray.create_equal_or_descending())
+    assert FloatArrayUtil.is_strictly_ascending(StubFloatArrayUtil.create_strictly_ascending())
+    assert not FloatArrayUtil.is_strictly_ascending(StubFloatArrayUtil.create_equal_or_ascending())
+    assert not FloatArrayUtil.is_strictly_ascending(StubFloatArrayUtil.create_equal_or_ascending_with_tolerance())
+    assert not FloatArrayUtil.is_strictly_ascending(StubFloatArrayUtil.create_strictly_descending())
+    assert not FloatArrayUtil.is_strictly_ascending(StubFloatArrayUtil.create_equal_or_descending())
     assert not FloatArrayUtil.is_strictly_ascending(
-        StubFloatArray.create_equal_or_descending_with_tolerance()
+        StubFloatArrayUtil.create_equal_or_descending_with_tolerance()
     )
 
 
 def test_is_equal_or_ascending():
     """Test is_equal_or_ascending method."""
-    assert FloatArrayUtil.is_equal_or_ascending(StubFloatArray.create_strictly_ascending())
-    assert FloatArrayUtil.is_equal_or_ascending(StubFloatArray.create_equal_or_ascending())
-    assert FloatArrayUtil.is_equal_or_ascending(StubFloatArray.create_equal_or_ascending_with_tolerance())
-    assert not FloatArrayUtil.is_equal_or_ascending(StubFloatArray.create_strictly_descending())
-    assert not FloatArrayUtil.is_equal_or_ascending(StubFloatArray.create_equal_or_descending())
+    assert FloatArrayUtil.is_equal_or_ascending(StubFloatArrayUtil.create_strictly_ascending())
+    assert FloatArrayUtil.is_equal_or_ascending(StubFloatArrayUtil.create_equal_or_ascending())
+    assert FloatArrayUtil.is_equal_or_ascending(StubFloatArrayUtil.create_equal_or_ascending_with_tolerance())
+    assert not FloatArrayUtil.is_equal_or_ascending(StubFloatArrayUtil.create_strictly_descending())
+    assert not FloatArrayUtil.is_equal_or_ascending(StubFloatArrayUtil.create_equal_or_descending())
     assert not FloatArrayUtil.is_equal_or_ascending(
-        StubFloatArray.create_equal_or_descending_with_tolerance()
+        StubFloatArrayUtil.create_equal_or_descending_with_tolerance()
     )
 
 
 def test_is_strictly_descending():
     """Test is_strictly_descending method."""
-    assert not FloatArrayUtil.is_strictly_descending(StubFloatArray.create_strictly_ascending())
-    assert not FloatArrayUtil.is_strictly_descending(StubFloatArray.create_equal_or_ascending())
+    assert not FloatArrayUtil.is_strictly_descending(StubFloatArrayUtil.create_strictly_ascending())
+    assert not FloatArrayUtil.is_strictly_descending(StubFloatArrayUtil.create_equal_or_ascending())
     assert not FloatArrayUtil.is_strictly_descending(
-        StubFloatArray.create_equal_or_ascending_with_tolerance()
+        StubFloatArrayUtil.create_equal_or_ascending_with_tolerance()
     )
-    assert FloatArrayUtil.is_strictly_descending(StubFloatArray.create_strictly_descending())
-    assert not FloatArrayUtil.is_strictly_descending(StubFloatArray.create_equal_or_descending())
+    assert FloatArrayUtil.is_strictly_descending(StubFloatArrayUtil.create_strictly_descending())
+    assert not FloatArrayUtil.is_strictly_descending(StubFloatArrayUtil.create_equal_or_descending())
     assert not FloatArrayUtil.is_strictly_descending(
-        StubFloatArray.create_equal_or_descending_with_tolerance()
+        StubFloatArrayUtil.create_equal_or_descending_with_tolerance()
     )
 
 
 def test_is_equal_or_descending():
     """Test is_equal_or_descending method."""
-    assert not FloatArrayUtil.is_equal_or_descending(StubFloatArray.create_strictly_ascending())
-    assert not FloatArrayUtil.is_equal_or_descending(StubFloatArray.create_equal_or_ascending())
+    assert not FloatArrayUtil.is_equal_or_descending(StubFloatArrayUtil.create_strictly_ascending())
+    assert not FloatArrayUtil.is_equal_or_descending(StubFloatArrayUtil.create_equal_or_ascending())
     assert not FloatArrayUtil.is_equal_or_descending(
-        StubFloatArray.create_equal_or_ascending_with_tolerance()
+        StubFloatArrayUtil.create_equal_or_ascending_with_tolerance()
     )
-    assert FloatArrayUtil.is_equal_or_descending(StubFloatArray.create_strictly_descending())
-    assert FloatArrayUtil.is_equal_or_descending(StubFloatArray.create_equal_or_descending())
-    assert FloatArrayUtil.is_equal_or_descending(StubFloatArray.create_equal_or_descending_with_tolerance())
+    assert FloatArrayUtil.is_equal_or_descending(StubFloatArrayUtil.create_strictly_descending())
+    assert FloatArrayUtil.is_equal_or_descending(StubFloatArrayUtil.create_equal_or_descending())
+    assert FloatArrayUtil.is_equal_or_descending(StubFloatArrayUtil.create_equal_or_descending_with_tolerance())
 
 
 def test_is_zero():

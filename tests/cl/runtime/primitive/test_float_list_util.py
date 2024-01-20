@@ -14,46 +14,46 @@
 
 import pytest
 from cl.runtime.primitive.float_list_util import FloatListUtil
-from stubs.cl.runtime.primitive.stub_float_list import StubFloatList
+from stubs.cl.runtime.primitive.stub_float_list import StubFloatListUtil
 
 
 def test_is_strictly_ascending():
     """Test is_strictly_ascending method."""
-    assert FloatListUtil.is_strictly_ascending(StubFloatList.create_strictly_ascending())
-    assert not FloatListUtil.is_strictly_ascending(StubFloatList.create_equal_or_ascending())
-    assert not FloatListUtil.is_strictly_ascending(StubFloatList.create_equal_or_ascending_with_tolerance())
-    assert not FloatListUtil.is_strictly_ascending(StubFloatList.create_strictly_descending())
-    assert not FloatListUtil.is_strictly_ascending(StubFloatList.create_equal_or_descending())
-    assert not FloatListUtil.is_strictly_ascending(StubFloatList.create_equal_or_descending_with_tolerance())
+    assert FloatListUtil.is_strictly_ascending(StubFloatListUtil.create_strictly_ascending())
+    assert not FloatListUtil.is_strictly_ascending(StubFloatListUtil.create_equal_or_ascending())
+    assert not FloatListUtil.is_strictly_ascending(StubFloatListUtil.create_equal_or_ascending_with_tolerance())
+    assert not FloatListUtil.is_strictly_ascending(StubFloatListUtil.create_strictly_descending())
+    assert not FloatListUtil.is_strictly_ascending(StubFloatListUtil.create_equal_or_descending())
+    assert not FloatListUtil.is_strictly_ascending(StubFloatListUtil.create_equal_or_descending_with_tolerance())
 
 def test_is_equal_or_ascending():
     """Test is_equal_or_ascending method."""
-    assert FloatListUtil.is_equal_or_ascending(StubFloatList.create_strictly_ascending())
-    assert FloatListUtil.is_equal_or_ascending(StubFloatList.create_equal_or_ascending())
-    assert FloatListUtil.is_equal_or_ascending(StubFloatList.create_equal_or_ascending_with_tolerance())
-    assert not FloatListUtil.is_equal_or_ascending(StubFloatList.create_strictly_descending())
-    assert not FloatListUtil.is_equal_or_ascending(StubFloatList.create_equal_or_descending())
-    assert not FloatListUtil.is_equal_or_ascending(StubFloatList.create_equal_or_descending_with_tolerance())
+    assert FloatListUtil.is_equal_or_ascending(StubFloatListUtil.create_strictly_ascending())
+    assert FloatListUtil.is_equal_or_ascending(StubFloatListUtil.create_equal_or_ascending())
+    assert FloatListUtil.is_equal_or_ascending(StubFloatListUtil.create_equal_or_ascending_with_tolerance())
+    assert not FloatListUtil.is_equal_or_ascending(StubFloatListUtil.create_strictly_descending())
+    assert not FloatListUtil.is_equal_or_ascending(StubFloatListUtil.create_equal_or_descending())
+    assert not FloatListUtil.is_equal_or_ascending(StubFloatListUtil.create_equal_or_descending_with_tolerance())
 
 
 def test_is_strictly_descending():
     """Test is_strictly_descending method."""
-    assert not FloatListUtil.is_strictly_descending(StubFloatList.create_strictly_ascending())
-    assert not FloatListUtil.is_strictly_descending(StubFloatList.create_equal_or_ascending())
-    assert not FloatListUtil.is_strictly_descending(StubFloatList.create_equal_or_ascending_with_tolerance())
-    assert FloatListUtil.is_strictly_descending(StubFloatList.create_strictly_descending())
-    assert not FloatListUtil.is_strictly_descending(StubFloatList.create_equal_or_descending())
-    assert not FloatListUtil.is_strictly_descending(StubFloatList.create_equal_or_descending_with_tolerance())
+    assert not FloatListUtil.is_strictly_descending(StubFloatListUtil.create_strictly_ascending())
+    assert not FloatListUtil.is_strictly_descending(StubFloatListUtil.create_equal_or_ascending())
+    assert not FloatListUtil.is_strictly_descending(StubFloatListUtil.create_equal_or_ascending_with_tolerance())
+    assert FloatListUtil.is_strictly_descending(StubFloatListUtil.create_strictly_descending())
+    assert not FloatListUtil.is_strictly_descending(StubFloatListUtil.create_equal_or_descending())
+    assert not FloatListUtil.is_strictly_descending(StubFloatListUtil.create_equal_or_descending_with_tolerance())
 
 
 def test_is_equal_or_descending():
     """Test is_equal_or_descending method."""
-    assert not FloatListUtil.is_equal_or_descending(StubFloatList.create_strictly_ascending())
-    assert not FloatListUtil.is_equal_or_descending(StubFloatList.create_equal_or_ascending())
-    assert not FloatListUtil.is_equal_or_descending(StubFloatList.create_equal_or_ascending_with_tolerance())
-    assert FloatListUtil.is_equal_or_descending(StubFloatList.create_strictly_descending())
-    assert FloatListUtil.is_equal_or_descending(StubFloatList.create_equal_or_descending())
-    assert FloatListUtil.is_equal_or_descending(StubFloatList.create_equal_or_descending_with_tolerance())
+    assert not FloatListUtil.is_equal_or_descending(StubFloatListUtil.create_strictly_ascending())
+    assert not FloatListUtil.is_equal_or_descending(StubFloatListUtil.create_equal_or_ascending())
+    assert not FloatListUtil.is_equal_or_descending(StubFloatListUtil.create_equal_or_ascending_with_tolerance())
+    assert FloatListUtil.is_equal_or_descending(StubFloatListUtil.create_strictly_descending())
+    assert FloatListUtil.is_equal_or_descending(StubFloatListUtil.create_equal_or_descending())
+    assert FloatListUtil.is_equal_or_descending(StubFloatListUtil.create_equal_or_descending_with_tolerance())
 
 
 if __name__ == '__main__':

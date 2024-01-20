@@ -15,9 +15,8 @@
 from typing import List
 from cl.runtime.primitive.float_util import FloatUtil
 
-# TODO: Rename to StubFloatListUtil
 
-class StubFloatList:
+class StubFloatListUtil:
     """Create mock samples of List[float]."""
 
     @staticmethod
