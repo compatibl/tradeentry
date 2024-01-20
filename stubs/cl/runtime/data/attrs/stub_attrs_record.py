@@ -63,9 +63,9 @@ class StubAttrsRecord(StubAttrsRecordKey, Record):
         """Stub viewer."""
         pass
 
-    @viewer(label="After Rename")
-    def before_rename(self) -> None:
-        """Stub viewer."""
+    @viewer(label="Relabeled Viewer New Label")
+    def relabeled_viewer(self) -> None:
+        """Viewer whose label is modified."""
         pass
 
     def handler_with_arguments(

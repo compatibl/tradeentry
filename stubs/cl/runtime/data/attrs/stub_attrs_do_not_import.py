@@ -14,6 +14,7 @@
 
 
 # Do not import this module. Its purpose is testing dynamic import.
+
 class StubAttrsDoNotImport:
-    """For checking dynamic import. Must not be included in import statements or __init__.py."""
+    """This class is for checking dynamic import. It must not be included in import statements."""
     pass

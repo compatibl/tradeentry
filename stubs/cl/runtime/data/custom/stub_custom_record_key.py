@@ -24,25 +24,25 @@ from cl.runtime.data.key import Key
 class StubCustomRecordKey(Key):
     """Stub record used in tests."""
 
-    key_field_str: Optional[str]
+    str_field: Optional[str]
     """First primary key attribute."""
 
-    key_field_int: Optional[int]
+    int_field: Optional[int]
     """Second primary key attribute."""
 
     def __init__(self, *,
-                 key_field_str: str = 'abc',
-                 key_field_int: int = 123
+                 str_field: str = 'abc',
+                 int_field: int = 123
                  ):
         """Initialize instance attributes."""
-        self.key_field_str = key_field_str
-        self.key_field_int = key_field_int
+        self.str_field = str_field
+        self.int_field = int_field
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize to dictionary containing other dictionaries, lists and primitive types."""
         return {
-            'key_field_str': self.key_field_str,
-            'key_field_int': self.key_field_int
+            'str_field': self.str_field,
+            'int_field': self.int_field
         }
 
     def get_table(self) -> str:
@@ -51,6 +51,6 @@ class StubCustomRecordKey(Key):
 
     def get_key(self) -> str:
         """Key as string in semicolon-delimited string format without table name."""
-        return f"{self.key_field_str};{self.key_field_int}"
+        return f"{self.str_field};{self.int_field}"
 
 

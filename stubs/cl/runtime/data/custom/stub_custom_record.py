@@ -22,30 +22,24 @@ from stubs.cl.runtime.data.custom.stub_custom_record_key import StubCustomRecord
 class StubCustomRecord(StubCustomRecordKey, Record):
     """Stub record used in tests."""
 
-    base_field_str: Optional[str]
-    """String attribute of base class."""
-
-    base_field_float: Optional[float]
+    float_field: Optional[float]
     """Float attribute of base class."""
 
     def __init__(self, *,
-                 key_field_str: str = 'abc',
-                 key_field_int: int = 123,
-                 base_field_str: str = 'def',
-                 base_field_float: float = 4.56):
+                 str_field: str = 'abc',
+                 int_field: int = 123,
+                 float_field: float = 4.56):
         """Initialize instance attributes."""
 
         super().__init__(
-            key_field_str=key_field_str,
-            key_field_int=key_field_int
+            str_field=str_field,
+            int_field=int_field
         )
 
-        self.base_field_str = base_field_str
-        self.base_field_float = base_field_float
+        self.float_field = float_field
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize to dictionary containing other dictionaries, lists and primitive types."""
         return super().to_dict() | {
-            'base_field_str': self.base_field_str,
-            'base_field_float': self.base_field_float,
+            'float_field': self.float_field,
         }

@@ -21,7 +21,7 @@ from stubs.cl.runtime.data.attrs.stub_attrs_singleton_key import StubAttrsSingle
 
 @attrs_record
 class StubAttrsSingleton(StubAttrsSingletonKey, Record):
-    """Key for a singleton record has no fields."""
+    """Singleton record has no key fields."""
 
     str_field: str = attrs_field(default="abc")
-    """Stub element."""
+    """Stub field."""

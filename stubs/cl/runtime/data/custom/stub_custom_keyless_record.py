@@ -22,32 +22,27 @@ from cl.runtime.data.record import Record
 class StubCustomKeylessRecord(Key):
     """Stub record used in tests."""
 
-    key_field_str: Optional[str]
+    str_field: Optional[str]
     """First primary key attribute."""
 
-    key_field_int: Optional[int]
+    int_field: Optional[int]
     """Second primary key attribute."""
 
-    base_field_str: Optional[str]
-    """String attribute of base class."""
-
-    base_field_float: Optional[float]
+    float_field: Optional[float]
     """Float attribute of base class."""
 
     def __init__(self):
         """Initialize instance attributes."""
-        self.key_field_str = 'abc'
-        self.key_field_int = 123
-        self.base_field_str = 'def'
-        self.base_field_float = 4.56
+        self.str_field = 'abc'
+        self.int_field = 123
+        self.float_field = 4.56
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize self as dictionary (may return shallow copy)."""
         return {
-            'key_field_str': self.key_field_str,
-            'key_field_int': self.key_field_int,
-            'base_field_str': self.base_field_str,
-            'base_field_float': self.base_field_float,
+            'str_field': self.str_field,
+            'int_field': self.int_field,
+            'float_field': self.float_field,
         }
 
     def get_table(self) -> str:
@@ -56,6 +51,6 @@ class StubCustomKeylessRecord(Key):
 
     def get_key(self) -> str:
         """Key as string in semicolon-delimited string format without table name."""
-        return f"{self.key_field_str};{self.key_field_int}"
+        return f"{self.str_field};{self.int_field}"
 
 

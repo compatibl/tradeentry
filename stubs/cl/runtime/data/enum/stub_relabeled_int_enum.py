@@ -16,8 +16,8 @@ from enum import IntEnum
 from cl.runtime.data.enum_util import enum_class
 
 
-@enum_class(label="Stub Int Enum Label")
-class StubIntEnumWithLabel(IntEnum):
+@enum_class(label="Stub Int Enum New Label")
+class StubRelabeledIntEnum(IntEnum):
     """Stub enum with custom label that does not match the name."""
 
     ENUM_VALUE_1 = 1

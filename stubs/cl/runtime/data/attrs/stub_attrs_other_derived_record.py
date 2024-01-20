@@ -27,10 +27,8 @@ from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
 class StubAttrsOtherDerivedRecord(StubAttrsRecord):
     """Another type derived from StubAttrsRecord."""
 
-    other_str_field: str = attrs_field(default='abc')
-    """Stub field."""
+    other_derived: str = attrs_field(default='other_derived')
+    """Stub field for other derived class."""
 
-    other_float_field: float = attrs_field(default=200.0)
-    """Stub field."""
 
 

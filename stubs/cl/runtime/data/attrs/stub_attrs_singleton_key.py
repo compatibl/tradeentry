@@ -18,4 +18,4 @@ from cl.runtime.data.key import Key
 
 @attrs_key
 class StubAttrsSingletonKey(Key):
-    """Key for a singleton record has no fields."""
+    """Singleton record key has no fields."""

@@ -21,23 +21,23 @@ from cl.runtime import Data
 class StubCustomData(Data):
     """Stub serializable data used in tests."""
 
-    base_field_str: Optional[str]
+    str_field: Optional[str]
     """String attribute of base class."""
 
-    base_field_int: Optional[int]
+    int_field: Optional[int]
     """Float attribute of base class."""
 
     def __init__(self, *,
-                 base_field_str: str = 'abc',
-                 base_field_int: int = 123
+                 str_field: str = 'abc',
+                 int_field: int = 123
                  ):
         """Initialize instance attributes."""
-        self.base_field_str = base_field_str
-        self.base_field_int = base_field_int
+        self.str_field = str_field
+        self.int_field = int_field
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize to dictionary containing other dictionaries, lists and primitive types."""
         return {
-            'base_field_str': self.base_field_str,
-            'base_field_int': self.base_field_int,
+            'str_field': self.str_field,
+            'int_field': self.int_field,
         }

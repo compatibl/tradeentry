@@ -17,6 +17,7 @@ from cl.runtime.data.index_util import index_fields
 from cl.runtime.data.attrs.attrs_record_util import attrs_record
 from cl.runtime.data.attrs.attrs_field_util import attrs_field
 from stubs.cl.runtime.data.attrs.stub_attrs_nested_fields_key import StubAttrsNestedFieldsKey
+from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.data.attrs.stub_attrs_record_key import StubAttrsRecordKey
 from stubs.cl.runtime.data.attrs.stub_attrs_derived_data import StubAttrsDerivedData
 from stubs.cl.runtime.data.attrs.stub_attrs_derived_from_derived_data import StubAttrsDerivedFromDerivedData
@@ -31,9 +32,6 @@ class StubAttrsNestedFields(StubAttrsNestedFieldsKey):
     data_field: StubAttrsData = attrs_field(factory=StubAttrsData)
     """Stub field."""
 
-    key_field: StubAttrsRecordKey = attrs_field(factory=StubAttrsRecordKey)
-    """Stub field."""
-
     derived_data_field: StubAttrsDerivedData = attrs_field(factory=StubAttrsDerivedData)
     """Stub field."""
 
@@ -45,5 +43,11 @@ class StubAttrsNestedFields(StubAttrsNestedFieldsKey):
 
     polymorphic_derived_data_field: StubAttrsDerivedData = attrs_field(default=StubAttrsDerivedFromDerivedData)
     """Declared StubAttrsDerivedData but provided an instance of StubAttrsDerivedFromDerivedData."""
+
+    key_field: StubAttrsRecordKey = attrs_field(factory=StubAttrsRecordKey)
+    """Stub field."""
+
+    record_as_key_field: StubAttrsRecordKey = attrs_field(factory=StubAttrsRecord)
+    """Stub field with key type initialized to record type instance."""
 
 
