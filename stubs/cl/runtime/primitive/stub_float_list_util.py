@@ -16,42 +16,42 @@ from typing import List
 from cl.runtime.primitive.float_util import FloatUtil
 
 
-class StubFloatListUtil:
+class StubFloatUtil:
     """Create mock samples of List[float]."""
 
     @staticmethod
-    def create_strictly_ascending() -> List[float]:
+    def create_strictly_ascending_list() -> List[float]:
         """Create list that is sorted in ascending order with or without tolerance, and has no repeated values."""
         return [1.0, 2.0, 3.0]
 
     @staticmethod
-    def create_equal_or_ascending() -> List[float]:
+    def create_equal_or_ascending_list() -> List[float]:
         """Create list that is sorted in ascending order with or without tolerance, and has repeated values."""
         return [1.0, 2.0, 2.0, 3.0]
 
     @staticmethod
-    def create_equal_or_ascending_with_tolerance() -> List[float]:
+    def create_equal_or_ascending_list_with_tolerance() -> List[float]:
         """
-        Create list that is sorted in ascending order with tolerance,
+        Create list that is sorted in equal or ascending order with tolerance,
         but unsorted without tolerance, and has repeated values.
         """
         tolerance = FloatUtil.tolerance
         return [1.0, 2.0 + 0.1 * tolerance, 2.0, 2.0, 2.0 - 0.1 * tolerance, 3.0]
 
     @staticmethod
-    def create_strictly_descending() -> List[float]:
+    def create_strictly_descending_list() -> List[float]:
         """Create list that is sorted in descending order with or without tolerance, and has no repeated values."""
         return [3.0, 2.0, 1.0]
 
     @staticmethod
-    def create_equal_or_descending() -> List[float]:
+    def create_equal_or_descending_list() -> List[float]:
         """Create list that is sorted in descending order with or without tolerance, and has repeated values."""
         return [3.0, 2.0, 2.0, 1.0]
 
     @staticmethod
-    def create_equal_or_descending_with_tolerance() -> List[float]:
+    def create_equal_or_descending_list_with_tolerance() -> List[float]:
         """
-        Create list that is sorted in descending order with tolerance,
+        Create list that is sorted in equal or descending order with tolerance,
         but unsorted without tolerance, and has repeated values.
         """
         tolerance = FloatUtil.tolerance
