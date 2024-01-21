@@ -34,12 +34,16 @@ def stub_attrs_str_dict_factory() -> Dict[str, str]:
 def stub_attrs_float_dict_factory() -> Dict[str, float]:
     """Create stub values."""
     return {
-        "Key0": 0.001,
-        "Key1": 1.0,
-        "Key2": 2.1,
-        "Key3": 3.005,
-        "Key4": 4.23,
-        "Key5": 555.555
+        "a": 0.0000123456789,
+        "b": 0.000123456789,
+        "c": 0.00123456789,
+        "d": 0.0123456789,
+        "e": 0.123456789,
+        "f": 1.23456789,
+        "g": 12.3456789,
+        "h": 123.456789,
+        "i": 1234.56789,
+        "j": 12345.6789
     }
 
 
