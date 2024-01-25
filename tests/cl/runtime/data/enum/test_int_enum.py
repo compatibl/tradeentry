@@ -27,6 +27,7 @@ def test_class_label():
 
     # TODO: Add test for renamed enum class label
 
+
 def test_item_label():
     """Rename test."""
 

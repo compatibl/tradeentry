@@ -18,8 +18,6 @@ import cl.runtime as rt
 from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.data.custom.stub_custom_record import StubCustomRecord
 
-# Tests for InProcessDataSource
-
 
 def test_smoke():
     """Smoke test."""

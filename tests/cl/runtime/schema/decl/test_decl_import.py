@@ -51,5 +51,5 @@ import cl.runtime.schema.decl.value_decl
 def test_import():
     """Test import of declaration modules."""
 
-    # The test itself is no-op as it is only checking Python module import
+    # TODO: The test itself is no-op as it is only checking Python module import
     pass
