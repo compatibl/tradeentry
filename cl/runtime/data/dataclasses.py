@@ -84,6 +84,12 @@ def data_class_impl(cls, *, init: bool = True, label: str = None):
 
     cls.to_dict = to_dict
 
+    if not hasattr(cls, "init"):
+        def init(self):
+            pass
+
+        cls.init = init
+
     return cls
 
 
