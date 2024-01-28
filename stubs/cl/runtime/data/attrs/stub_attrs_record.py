@@ -19,7 +19,7 @@ from typing import List, Optional
 from cl.runtime.data.handler_util import handler
 from cl.runtime.data.viewer_util import viewer
 from cl.runtime.data.index_util import index_fields
-from cl.runtime.data.context import Context
+from cl.runtime.storage.context import Context
 from cl.runtime.data.data import Data
 from cl.runtime.data.record import Record
 from cl.runtime.data.attrs.attrs_record_util import attrs_record

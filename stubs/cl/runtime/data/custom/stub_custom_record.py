@@ -14,7 +14,7 @@
 
 from __future__ import annotations
 from typing import Any, Dict, Optional
-from cl.runtime.data.context import Context
+from cl.runtime.storage.context import Context
 from cl.runtime.data.record import Record
 from stubs.cl.runtime.data.custom.stub_custom_record_key import StubCustomRecordKey
 

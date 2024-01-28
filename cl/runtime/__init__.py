@@ -1,4 +1,4 @@
-from cl.runtime.data.context import Context
+from cl.runtime.storage.context import Context
 from cl.runtime.data.data import Data
 from cl.runtime.data.record import Key
 from cl.runtime.data.record import Record

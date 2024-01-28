@@ -14,7 +14,7 @@
 
 from __future__ import annotations
 from typing import Any, Dict, Optional
-from cl.runtime.data.context import Context
+from cl.runtime.storage.context import Context
 from cl.runtime.data.key import Key
 from cl.runtime.data.record import Record
 
