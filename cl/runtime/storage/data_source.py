@@ -78,7 +78,7 @@ class DataSource(Data, ABC):
         """
 
     @abstractmethod
-    def save_many(self, records: Iterable[Record], data_set: str) -> None:
+    def save_many(self, records: Iterable[Record], data_set: str | None = None) -> None:
         """
         Save many records to the specified dataset, bypassing the commit queue.
 
@@ -87,7 +87,7 @@ class DataSource(Data, ABC):
         """
 
     @abstractmethod
-    def save_on_commit(self, record: Record, data_set: str) -> None:
+    def save_on_commit(self, record: Record, data_set: str | None = None) -> None:
         """
         Add the record to the commit queue.
 
@@ -98,7 +98,7 @@ class DataSource(Data, ABC):
         """
 
     @abstractmethod
-    def delete_many(self, keys: Iterable[Record], data_set: str) -> None:
+    def delete_many(self, keys: Iterable[Record], data_set: str | None = None) -> None:
         """
         Delete many records in the specified dataset, bypassing
         the commit queue. If an element of the 'keys' argument is
@@ -116,7 +116,7 @@ class DataSource(Data, ABC):
         """
 
     @abstractmethod
-    def delete_on_commit(self, key: Record, data_set: str) -> None:
+    def delete_on_commit(self, key: Record, data_set: str | None = None) -> None:
         """
         Add to commit queue the command to delete record in the
         specified dataset. No error is raised if the record does not
@@ -174,7 +174,7 @@ class DataSource(Data, ABC):
         self,
         base_type: Type[TRecord],
         key: Union[str, TKey],
-        data_set: str,
+        data_set: str | None = None,
         *,
         is_optional: bool = None,
         is_optional_key: bool = None,
@@ -206,7 +206,7 @@ class DataSource(Data, ABC):
             # We know there is exactly one element
             return record
 
-    def save_one(self, record: Record, data_set: str):
+    def save_one(self, record: Record, data_set: str | None = None):
         """
         Save one record to the specified dataset, bypassing the commit queue.
 
@@ -221,7 +221,7 @@ class DataSource(Data, ABC):
         # Pass arguments to save_many(...)
         self.save_many([record], data_set)
 
-    def delete_one(self, key: Record, data_set: str) -> None:
+    def delete_one(self, key: Record, data_set: str | None = None) -> None:
         """
         Delete record with argument key in the specified dataset
         bypassing the commit queue. No error is raised if the record

@@ -14,6 +14,7 @@
 
 from cl.runtime.data.dataclasses import data_class, data_field
 from cl.runtime.storage.data_source import DataSource
+from cl.runtime.storage.null_data_source import NullDataSource
 
 
 @data_class
@@ -31,3 +32,4 @@ class DataSourceManager:
 
     def create_data_source(self) -> DataSource:
         """Create data source with default parameters."""
+        return NullDataSource()
