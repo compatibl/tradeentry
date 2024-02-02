@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import dataclasses
 from typing import Any, Optional
 from typing_extensions import dataclass_transform
+
+from cl.runtime.storage.attrs import attrs_field, attrs_class, attrs_class_impl
 
 
 def data_field(
@@ -47,59 +48,28 @@ def data_field(
         secure: Marks the field as secure TODO(attrs) - Explain further in docs
         filterable: Marks the field as filterable TODO(attrs) - Explain further in docs
     """
-    metadata = {
-        'data_field': True,
-        'optional': optional,
-        'optional_fields': optional_fields,
-        'type': subtype,
-        'name': name,
-        'label': label,
-        'format': formatter,  # TODO(attrs) - switch to formatter in remaining code as format causes Python warning
-        'category': category,
-        'secure': secure,
-        'filterable': filterable,
-    }
-    if factory is None:
-        return dataclasses.field(default=default, metadata=metadata)
-    elif default is None:
-        return dataclasses.field(default_factory=factory, metadata=metadata)
-    else:
-        raise RuntimeError(f"Fields default={default} and factory={factory} in data_class are mutually exclusive.")
+    return attrs_field(
+        default=default,
+        factory=factory,
+        optional=optional,
+        optional_fields=optional_fields,
+        subtype=subtype,
+        name=name,
+        label=label,
+        formatter=formatter,
+        category=category,
+        secure=secure,
+        filterable=filterable
+        )
 
 
 @dataclass_transform()
 def data_class_impl(cls, *, init: bool = True, label: str = None):
     """Performs the actual wrapping irrespective of call syntax with or without parentheses."""
-
-    cls = dataclasses.dataclass(cls)
-
-    # TODO: Remove base fields
-    # fields = {f.name: f for f in dataclasses.fields(cls) if not f.inherited}
-
-    # TODO: Apply init parameter
-    # TODO: Apply label parameter
-
-    def to_dict(self):
-        return dataclasses.asdict(self)
-
-    cls.to_dict = to_dict
-
-    if not hasattr(cls, "init"):
-        def init(self):
-            pass
-
-        cls.init = init
-
-    return cls
+    return attrs_class_impl(cls=cls, init=init, label=label)
 
 
 @dataclass_transform()
 def data_class(cls=None, *, init: bool = True, label: str = None):
     """Runtime decorator dataclasses."""
-
-    # The value of cls type depends on whether parentheses follow the decorator.
-    # It is the class when used as @data_class but None for @data_class().
-    if cls is None:
-        return data_class_impl
-    else:
-        return data_class_impl(cls, init=init, label=label)
+    return attrs_class(cls=cls, init=init, label=label)
