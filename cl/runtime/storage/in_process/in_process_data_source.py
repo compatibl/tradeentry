@@ -15,14 +15,13 @@
 from copy import deepcopy
 from typing import Dict, Iterable, Optional, Type, Union
 
-from cl.runtime.storage.attrs_data_util import attrs_data
 from cl.runtime.storage.attrs import attrs_field, attrs_class
 from cl.runtime.storage.data_source import DataSource, TKey, TRecord
 from cl.runtime.storage.record import Record
 from cl.runtime.storage.record_util import RecordUtil
 
 
-@attrs_data
+@attrs_class
 class InProcessDataSource(DataSource):
     """Data source based on in-memory cache using Python dict."""
 

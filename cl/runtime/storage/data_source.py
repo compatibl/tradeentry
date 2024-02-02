@@ -16,7 +16,6 @@ from abc import ABC, abstractmethod
 from typing import Iterable, Type, TypeVar, Union
 
 from cl.runtime import Data
-from cl.runtime.storage.attrs_data_util import attrs_data
 from cl.runtime.storage.attrs import attrs_field, attrs_class
 from cl.runtime.storage.record import Record
 
@@ -24,7 +23,7 @@ TKey = TypeVar('TKey', contravariant=True)
 TRecord = TypeVar('TRecord', covariant=True)
 
 
-@attrs_data
+@attrs_class
 class DataSource(Data, ABC):
     """Abstract base class for polymorphic data storage API with a directory attribute.
 

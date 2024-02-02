@@ -14,14 +14,13 @@
 
 from __future__ import annotations
 from typing import TYPE_CHECKING, Union
-from cl.runtime.storage.attrs_data_util import attrs_data
 from cl.runtime.storage.attrs import attrs_field, attrs_class
 from cl.runtime.storage.data import Data
 if TYPE_CHECKING:
     from stubs.cl.runtime.storage.attrs.stub_attrs_cyclic_b import StubAttrsCyclicB
 
 
-@attrs_data
+@attrs_class
 class StubAttrsCyclicA(Data):
     """Stub class A with a field whose type is key for class B."""
 

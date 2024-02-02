@@ -13,7 +13,8 @@
 # limitations under the License.
 
 import attrs
-from typing import Any, Optional, dataclass_transform
+from typing import Any, Optional
+from typing_extensions import dataclass_transform
 
 
 def attrs_field(

@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs_data_util import attrs_data
 from cl.runtime.storage.attrs import attrs_field, attrs_class
 from typing import TYPE_CHECKING, List, Optional
 
@@ -26,7 +25,7 @@ if TYPE_CHECKING:
     from cl.runtime.schema.decl.type_argument_decl import TypeArgumentDecl
 
 
-@attrs_data
+@attrs_class
 class TypeMemberDecl(Data):
     """Type member declaration."""
 

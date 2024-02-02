@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs_data_util import attrs_data
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 from cl.runtime.storage.data import Data
 
 
-@attrs_data
+@attrs_class
 class SaveOptions(Data):
     """Optional flags for save methods."""
 

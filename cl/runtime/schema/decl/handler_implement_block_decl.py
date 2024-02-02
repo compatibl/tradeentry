@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs_data_util import attrs_data
 from cl.runtime.storage.attrs import attrs_field, attrs_class
 from typing import List, Optional
 
@@ -21,7 +20,7 @@ from cl.runtime.schema.decl.interface_implement_decl import InterfaceImplementDe
 from cl.runtime.storage.data import Data
 
 
-@attrs_data
+@attrs_class
 class HandlerImplementBlockDecl(Data):
     """Handler implementation block in type declaration."""
 

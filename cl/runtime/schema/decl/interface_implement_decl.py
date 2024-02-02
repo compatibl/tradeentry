@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs_data_util import attrs_data
 from cl.runtime.storage.attrs import attrs_field, attrs_class
 
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
@@ -20,7 +19,7 @@ from cl.runtime.schema.decl.language_key import LanguageKey
 from cl.runtime.storage.data import Data
 
 
-@attrs_data
+@attrs_class
 class InterfaceImplementDecl(Data):
     """Interface implementation data."""
 
