@@ -15,11 +15,11 @@
 import datetime as dt
 from uuid import UUID
 
-from cl.runtime.data.attrs.attrs_key_util import attrs_key
+from cl.runtime.storage.attrs_key_util import attrs_key
 from cl.runtime.primitive.date_time_util import DateTimeUtil
 from cl.runtime.primitive.date_util import DateUtil
-from cl.runtime.data.attrs.attrs_field_util import attrs_field
-from cl.runtime.data.key import Key
+from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.key import Key
 from cl.runtime.primitive.time_util import TimeUtil
 from stubs.cl.runtime.data.enum.stub_int_enum import StubIntEnum
 

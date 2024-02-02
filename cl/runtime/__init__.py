@@ -1,9 +1,9 @@
 from cl.runtime.storage.context import Context
-from cl.runtime.data.data import Data
-from cl.runtime.data.record import Key
-from cl.runtime.data.record import Record
-from cl.runtime.data.dataclasses import data_class, data_field
-from cl.runtime.data.record_util import RecordUtil
+from cl.runtime.storage.data import Data
+from cl.runtime.storage.record import Key
+from cl.runtime.storage.record import Record
+from cl.runtime.storage.dataclasses import data_class, data_field
+from cl.runtime.storage.record_util import RecordUtil
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.in_process.in_process_data_source import InProcessDataSource
 from cl.runtime.view.view import View

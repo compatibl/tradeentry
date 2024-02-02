@@ -16,9 +16,9 @@ from abc import ABC, abstractmethod
 from typing import Iterable, Type, TypeVar, Union
 
 from cl.runtime import Data
-from cl.runtime.data.attrs.attrs_data_util import attrs_data
-from cl.runtime.data.attrs.attrs_field_util import attrs_field
-from cl.runtime.data.record import Record
+from cl.runtime.storage.attrs_data_util import attrs_data
+from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.record import Record
 
 TKey = TypeVar('TKey', contravariant=True)
 TRecord = TypeVar('TRecord', covariant=True)

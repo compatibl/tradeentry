@@ -13,9 +13,9 @@
 # limitations under the License.
 
 from typing import List, Optional
-from cl.runtime.data.record import Record
-from cl.runtime.data.attrs.attrs_record_util import attrs_record
-from cl.runtime.data.attrs.attrs_field_util import attrs_field
+from cl.runtime.storage.record import Record
+from cl.runtime.storage.attrs_record_util import attrs_record
+from cl.runtime.storage.attrs_field_util import attrs_field
 from cl.runtime.schema.decl.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.decl.handler_implement_block_decl import HandlerImplementBlockDecl
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey

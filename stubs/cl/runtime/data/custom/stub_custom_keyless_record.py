@@ -15,8 +15,8 @@
 from __future__ import annotations
 from typing import Any, Dict, Optional
 from cl.runtime.storage.context import Context
-from cl.runtime.data.key import Key
-from cl.runtime.data.record import Record
+from cl.runtime.storage.key import Key
+from cl.runtime.storage.record import Record
 
 
 class StubCustomKeylessRecord(Key):

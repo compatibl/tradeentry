@@ -14,8 +14,8 @@
 
 import datetime as dt
 from typing import Dict, List
-from cl.runtime.data.attrs.attrs_record_util import attrs_record
-from cl.runtime.data.attrs.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs_record_util import attrs_record
+from cl.runtime.storage.attrs_field_util import attrs_field
 from stubs.cl.runtime.data.attrs.stub_attrs_data import StubAttrsData
 from stubs.cl.runtime.data.attrs.stub_attrs_list_fields import stub_attrs_str_list_factory, \
     stub_attrs_float_list_factory, stub_attrs_date_list_factory, stub_attrs_data_list_factory, \

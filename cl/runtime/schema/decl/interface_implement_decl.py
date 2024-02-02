@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.data.attrs.attrs_data_util import attrs_data
-from cl.runtime.data.attrs.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs_data_util import attrs_data
+from cl.runtime.storage.attrs_field_util import attrs_field
 
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.decl.language_key import LanguageKey
-from cl.runtime.data.data import Data
+from cl.runtime.storage.data import Data
 
 
 @attrs_data

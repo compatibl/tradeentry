@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.data.attrs.attrs_record_util import attrs_record
-from cl.runtime.data.attrs.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs_record_util import attrs_record
+from cl.runtime.storage.attrs_field_util import attrs_field
 from cl.runtime.schema.type.type_decl import TypeDecl
 
 

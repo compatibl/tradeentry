@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.data.dataclasses import data_class, data_field
+from cl.runtime.storage.dataclasses import data_class, data_field
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.null_data_source import NullDataSource
 

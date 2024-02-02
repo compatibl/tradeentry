@@ -14,8 +14,8 @@
 
 from typing import final
 import pandas as pd
-from cl.runtime.data.attrs.attrs_record_util import attrs_record
-from cl.runtime.data.attrs.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs_record_util import attrs_record
+from cl.runtime.storage.attrs_field_util import attrs_field
 from cl.runtime.view.view import View
 
 

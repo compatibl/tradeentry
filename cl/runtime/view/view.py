@@ -13,9 +13,9 @@
 # limitations under the License.
 
 from abc import ABC
-from cl.runtime.data.attrs.attrs_record_util import attrs_record
-from cl.runtime.data.attrs.attrs_field_util import attrs_field
-from cl.runtime.data.record import Record
+from cl.runtime.storage.attrs_record_util import attrs_record
+from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.record import Record
 from cl.runtime.view.view_key import ViewKey
 
 

@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.data.attrs.attrs_key_util import attrs_key
-from cl.runtime.data.attrs.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs_key_util import attrs_key
+from cl.runtime.storage.attrs_field_util import attrs_field
 from cl.runtime.schema.decl.module_key import ModuleKey
-from cl.runtime.data.key import Key
+from cl.runtime.storage.key import Key
 
 
 @attrs_key

@@ -14,8 +14,8 @@
 
 import attrs
 from typing_extensions import dataclass_transform
-from cl.runtime.data.attrs.attrs_data_util import attrs_data
-from cl.runtime.data.attrs.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs_data_util import attrs_data
+from cl.runtime.storage.attrs_field_util import attrs_field
 
 
 @dataclass_transform()

@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from enum import IntEnum
-from cl.runtime.data.enum_util import enum_class
+from cl.runtime.storage.enum_util import enum_class
 
 
 @enum_class(label="Stub Int Enum New Label")

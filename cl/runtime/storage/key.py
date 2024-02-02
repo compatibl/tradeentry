@@ -15,7 +15,7 @@
 from __future__ import annotations
 from abc import ABC
 from typing_extensions import Self
-from cl.runtime.data.data import Data
+from cl.runtime.storage.data import Data
 
 
 class Key(Data, ABC):
