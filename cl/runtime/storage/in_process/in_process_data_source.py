@@ -113,14 +113,7 @@ class InProcessDataSource(DataSource):
         return result
 
     def save_many(self, records: Iterable[Record], data_set: str) -> None:
-        """
-        Save many records to the specified dataset, bypassing the commit
-        queue and using save options if provided (see SaveOptions
-        class for details).
-
-        This method does not implicitly call commit(). The commit queue
-        will remain in its original state after the method exits.
-        """
+        """Save many records to the specified dataset, bypassing the commit queue."""
 
         # Iterate over records
         for record in records:
