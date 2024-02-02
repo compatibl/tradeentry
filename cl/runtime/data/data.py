@@ -27,8 +27,7 @@ class Data(ABC):
     The use of this class is optional. The code must not rely on inheritance from this class.
     """
 
-    __slots__ = []
-    """Adding empty __slots__ prevents creation of __dict__ for every instance."""
+    __slots__ = []  # Adding an empty __slots__ declaration prevents the creation of a __dict__ for every instance
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize to dictionary containing other dictionaries, lists and primitive types."""

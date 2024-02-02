@@ -34,6 +34,5 @@ class Record(ABC):
     - Both may be instance, class or static methods, and may have parameters
     """
 
-    __slots__ = []
-    """Adding empty __slots__ prevents creation of __dict__ for every instance."""
+    __slots__ = []  # Adding an empty __slots__ declaration prevents the creation of a __dict__ for every instance
 

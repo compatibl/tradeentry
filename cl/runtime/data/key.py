@@ -28,8 +28,7 @@ class Key(Data, ABC):
     The use of this class is optional. The code must not rely on inheritance from this class.
     """
 
-    __slots__ = []
-    """Adding empty __slots__ prevents creation of __dict__ for every instance."""
+    __slots__ = []  # Adding an empty __slots__ declaration prevents the creation of a __dict__ for every instance
 
     def get_table(self) -> str:
         """
