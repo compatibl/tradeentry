@@ -16,7 +16,7 @@ from __future__ import annotations
 from cl.runtime.storage.index_util import index_fields
 from cl.runtime.storage.attrs_record_util import attrs_record
 from cl.runtime.storage.attrs_field_util import attrs_field
-from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
+from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
 
 
 @index_fields('derived_field, -version')

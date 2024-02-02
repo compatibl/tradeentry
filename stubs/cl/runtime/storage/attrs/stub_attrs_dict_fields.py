@@ -17,10 +17,10 @@ from typing import Dict, List
 from cl.runtime.storage.attrs_record_util import attrs_record
 from cl.runtime.storage.attrs_field_util import attrs_field
 from cl.runtime.primitive.date_util import DateUtil
-from stubs.cl.runtime.data.attrs.stub_attrs_data import StubAttrsData
-from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
-from stubs.cl.runtime.data.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
-from stubs.cl.runtime.data.attrs.stub_attrs_record_key import StubAttrsRecordKey
+from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
+from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
+from stubs.cl.runtime.storage.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
+from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey
 
 
 def stub_attrs_str_dict_factory() -> Dict[str, str]:

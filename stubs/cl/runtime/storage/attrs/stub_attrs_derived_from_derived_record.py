@@ -18,7 +18,7 @@ from cl.runtime.primitive.date_time_util import DateTimeUtil
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.storage.attrs_record_util import attrs_record
 from cl.runtime.storage.attrs_field_util import attrs_field
-from stubs.cl.runtime.data.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
+from stubs.cl.runtime.storage.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
 
 
 @attrs_record

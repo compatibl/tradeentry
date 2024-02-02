@@ -14,11 +14,11 @@
 
 import pytest
 import cl.runtime as rt
-from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
-from stubs.cl.runtime.data.attrs.stub_attrs_record_key import StubAttrsRecordKey
-from stubs.cl.runtime.data.attrs.stub_attrs_dict_fields import StubAttrsDictFields
-from stubs.cl.runtime.data.attrs.stub_attrs_list_fields import StubAttrsListFields
-from stubs.cl.runtime.data.attrs.stub_attrs_primitive_fields import StubAttrsPrimitiveFields
+from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
+from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey
+from stubs.cl.runtime.storage.attrs.stub_attrs_dict_fields import StubAttrsDictFields
+from stubs.cl.runtime.storage.attrs.stub_attrs_list_fields import StubAttrsListFields
+from stubs.cl.runtime.storage.attrs.stub_attrs_primitive_fields import StubAttrsPrimitiveFields
 
 
 def test_smoke():

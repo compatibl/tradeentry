@@ -15,7 +15,7 @@
 from typing import Optional
 from cl.runtime.storage.attrs_record_util import attrs_record
 from cl.runtime.storage.attrs_field_util import attrs_field
-from stubs.cl.runtime.data.attrs.stub_attrs_derived_data import StubAttrsDerivedData
+from stubs.cl.runtime.storage.attrs.stub_attrs_derived_data import StubAttrsDerivedData
 
 
 @attrs_record

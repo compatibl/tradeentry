@@ -18,7 +18,7 @@ from cl.runtime.storage.attrs_data_util import attrs_data
 from cl.runtime.storage.attrs_field_util import attrs_field
 from cl.runtime.storage.data import Data
 if TYPE_CHECKING:
-    from stubs.cl.runtime.data.attrs.stub_attrs_cyclic_a import StubAttrsCyclicA
+    from stubs.cl.runtime.storage.attrs.stub_attrs_cyclic_a import StubAttrsCyclicA
 
 
 @attrs_data
@@ -33,7 +33,7 @@ class StubAttrsCyclicB(Data):
         """Create an instance of this class populated with sample data."""
 
         # Import inside function to avoid cyclic reference error
-        from stubs.cl.runtime.data.attrs.stub_attrs_cyclic_a import StubAttrsCyclicA
+        from stubs.cl.runtime.storage.attrs.stub_attrs_cyclic_a import StubAttrsCyclicA
 
         obj = StubAttrsCyclicB()
         obj.a = StubAttrsCyclicA()

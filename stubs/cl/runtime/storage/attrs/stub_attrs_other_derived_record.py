@@ -19,7 +19,7 @@ from cl.runtime.primitive.date_time_util import DateTimeUtil
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.storage.attrs_record_util import attrs_record
 from cl.runtime.storage.attrs_field_util import attrs_field
-from stubs.cl.runtime.data.attrs.stub_attrs_record import StubAttrsRecord
+from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
 
 
 @index_fields('other_float_field, other_str_field, -int_field')

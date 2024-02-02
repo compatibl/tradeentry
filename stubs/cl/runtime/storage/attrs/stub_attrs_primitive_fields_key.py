@@ -21,7 +21,7 @@ from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.storage.attrs_field_util import attrs_field
 from cl.runtime.storage.key import Key
 from cl.runtime.primitive.time_util import TimeUtil
-from stubs.cl.runtime.data.enum.stub_int_enum import StubIntEnum
+from stubs.cl.runtime.storage.enum.stub_int_enum import StubIntEnum
 
 
 @attrs_key
