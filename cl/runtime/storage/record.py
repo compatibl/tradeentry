@@ -36,3 +36,9 @@ class Record(ABC):
 
     __slots__ = []  # Adding an empty __slots__ declaration prevents the creation of a __dict__ for every instance
 
+    def init(self) -> None:
+        """Similar to __init__ but uses previously set public fields instead of parameters."""
+
+        # Do nothing by default
+        pass
+
