@@ -14,13 +14,12 @@
 
 from typing import List, Optional
 from cl.runtime.storage.record import Record
-from cl.runtime.storage.attrs_record_util import attrs_record
-from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 from cl.runtime.schema.decl.package_dependency import PackageDependency
 from cl.runtime.schema.decl.package_key import PackageKey
 
 
-@attrs_record
+@attrs_class
 class Package(PackageKey, Record):
     """Package is a list of modules and binaries which are deployed together."""
 

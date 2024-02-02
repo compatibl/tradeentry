@@ -13,13 +13,12 @@
 # limitations under the License.
 
 from typing import final
-from cl.runtime.storage.attrs_record_util import attrs_record
-from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 from cl.runtime.view.view import View
 
 
 @final
-@attrs_record
+@attrs_class
 class RecordView(View):
     """View that displays another record specified via its primary key."""
 

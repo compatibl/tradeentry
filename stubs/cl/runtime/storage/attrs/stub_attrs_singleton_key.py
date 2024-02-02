@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs_key_util import attrs_key
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 from cl.runtime.storage.key import Key
 
 
-@attrs_key
+@attrs_class
 class StubAttrsSingletonKey(Key):
     """Singleton record key has no fields."""

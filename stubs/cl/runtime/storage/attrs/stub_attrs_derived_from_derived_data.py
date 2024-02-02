@@ -13,12 +13,11 @@
 # limitations under the License.
 
 from typing import Optional
-from cl.runtime.storage.attrs_record_util import attrs_record
-from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 from stubs.cl.runtime.storage.attrs.stub_attrs_derived_data import StubAttrsDerivedData
 
 
-@attrs_record
+@attrs_class
 class StubAttrsDerivedFromDerivedData(StubAttrsDerivedData):
     """Two levels in inheritance hierarchy away from StubAttrsData."""
 

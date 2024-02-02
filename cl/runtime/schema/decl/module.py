@@ -13,8 +13,7 @@
 # limitations under the License.
 
 from abc import ABC
-from cl.runtime.storage.attrs_record_util import attrs_record
-from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 from typing import List, Optional
 
 from cl.runtime import Record
@@ -22,7 +21,7 @@ from cl.runtime.schema.decl.module_key import ModuleKey
 from cl.runtime.schema.decl.package_key import PackageKey
 
 
-@attrs_record
+@attrs_class
 class Module(ModuleKey, Record):
     """
     Represents a group of related types under a common namespace or directory.

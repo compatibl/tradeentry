@@ -18,14 +18,13 @@ from uuid import UUID
 from cl.runtime.primitive.date_time_util import DateTimeUtil
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.storage.record import Record
-from cl.runtime.storage.attrs_record_util import attrs_record
-from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 from cl.runtime.primitive.time_util import TimeUtil
 from stubs.cl.runtime.storage.enum.stub_int_enum import StubIntEnum
 from stubs.cl.runtime.storage.attrs.stub_attrs_primitive_fields_key import StubAttrsPrimitiveFieldsKey
 
 
-@attrs_record
+@attrs_class
 class StubAttrsPrimitiveFields(StubAttrsPrimitiveFieldsKey, Record):
     """Stub record whose elements are primitive types."""
 

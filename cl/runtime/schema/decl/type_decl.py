@@ -14,8 +14,7 @@
 
 from typing import List, Optional
 from cl.runtime.storage.record import Record
-from cl.runtime.storage.attrs_record_util import attrs_record
-from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 from cl.runtime.schema.decl.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.decl.handler_implement_block_decl import HandlerImplementBlockDecl
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
@@ -27,7 +26,7 @@ from cl.runtime.schema.decl.type_kind import TypeKind
 from cl.runtime.schema.decl.type_param_decl import TypeParamDecl
 
 
-@attrs_record
+@attrs_class
 class TypeDecl(TypeDeclKey, Record):
     """
     Defines type declaration. A tag of entity type XML representation corresponds to each element of the type. The

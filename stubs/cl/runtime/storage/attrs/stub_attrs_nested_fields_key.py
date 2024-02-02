@@ -13,12 +13,11 @@
 # limitations under the License.
 
 from cl.runtime.storage.key import Key
-from cl.runtime.storage.attrs_key_util import attrs_key
-from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey
 
 
-@attrs_key
+@attrs_class
 class StubAttrsNestedFieldsKey(Key):
     """Record where the key is composite and includes other keys."""
 

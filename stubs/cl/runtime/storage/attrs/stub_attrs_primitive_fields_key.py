@@ -15,16 +15,15 @@
 import datetime as dt
 from uuid import UUID
 
-from cl.runtime.storage.attrs_key_util import attrs_key
 from cl.runtime.primitive.date_time_util import DateTimeUtil
 from cl.runtime.primitive.date_util import DateUtil
-from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 from cl.runtime.storage.key import Key
 from cl.runtime.primitive.time_util import TimeUtil
 from stubs.cl.runtime.storage.enum.stub_int_enum import StubIntEnum
 
 
-@attrs_key
+@attrs_class
 class StubAttrsPrimitiveFieldsKey(Key):
 
     str_field: str = attrs_field(default="abc")

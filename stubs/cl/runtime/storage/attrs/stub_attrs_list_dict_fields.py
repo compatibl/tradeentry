@@ -14,8 +14,7 @@
 
 import datetime as dt
 from typing import Dict, List
-from cl.runtime.storage.attrs_record_util import attrs_record
-from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
 from stubs.cl.runtime.storage.attrs.stub_attrs_list_fields import stub_attrs_str_list_factory, \
     stub_attrs_float_list_factory, stub_attrs_date_list_factory, stub_attrs_data_list_factory, \
@@ -81,7 +80,7 @@ def stub_attrs_derived_record_list_dict_factory() -> Dict[str, List[StubAttrsDer
     }
 
 
-@attrs_record
+@attrs_class
 class StubAttrsDictFields(StubAttrsRecord):
     """Stub record whose elements are dictionaries."""
 

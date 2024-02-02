@@ -14,14 +14,13 @@
 
 from typing import List, Optional
 from cl.runtime.storage.record import Record
-from cl.runtime.storage.attrs_record_util import attrs_record
-from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 from cl.runtime.schema.decl.handler_declare_decl import HandlerDeclareDecl
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.decl.type_element_decl import TypeElementDecl
 
 
-@attrs_record
+@attrs_class
 class InterfaceDecl(InterfaceDeclKey, Record):
     """Defines Interface declaration."""
 

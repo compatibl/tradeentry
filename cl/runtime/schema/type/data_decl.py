@@ -12,8 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs_record_util import attrs_record
-from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 from typing import List, Union
 
 from cl.runtime.schema.type.field_decl import FieldDecl
@@ -21,7 +20,7 @@ from cl.runtime.schema.type.type_decl import TypeDecl
 from cl.runtime.schema.type.type_decl_key import TypeDeclKey
 
 
-@attrs_record
+@attrs_class
 class DataDecl(TypeDecl):
     """Declaration for serializable data with fields."""
 

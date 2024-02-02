@@ -22,8 +22,7 @@ from cl.runtime.storage.index_util import index_fields
 from cl.runtime.storage.context import Context
 from cl.runtime.storage.data import Data
 from cl.runtime.storage.record import Record
-from cl.runtime.storage.attrs_record_util import attrs_record
-from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
 from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey
 from stubs.cl.runtime.storage.enum.stub_int_enum import StubIntEnum
@@ -41,7 +40,7 @@ def data_list_field_factory():
 
 @index_fields('version')
 @index_fields('str_field, int_field, -version', 'CustomIndexName')
-@attrs_record
+@attrs_class
 class StubAttrsRecord(StubAttrsRecordKey, Record):
     """Stub record base class."""
     

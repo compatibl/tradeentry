@@ -15,7 +15,7 @@
 from typing import Optional
 from cl.runtime.storage.data import Data
 from cl.runtime.storage.attrs_data_util import attrs_data
-from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 
 
 @attrs_data

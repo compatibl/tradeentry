@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import attrs
-from typing import Any, Optional
+from typing import Any, Optional, dataclass_transform
 
 
 def attrs_field(
@@ -64,3 +64,83 @@ def attrs_field(
         return attrs.field(factory=factory, metadata=metadata)
     else:
         raise RuntimeError(f"Fields default={default} and factory={factory} in data_class are mutually exclusive.")
+
+
+@dataclass_transform()
+def attrs_class_impl(cls, *, init=True, label=None):
+    """Performs the actual wrapping irrespective of call syntax with or without parentheses."""
+
+    cls = attrs.define(cls, init=init)
+
+    # Remove base fields
+    fields = {f.name: f for f in attrs.fields(cls) if not f.inherited}
+
+    def to_dict(self):
+        return attrs.asdict(self)
+    cls.to_dict = to_dict
+
+    get_table_method = getattr(cls, "get_table", None)
+    if get_table_method is not None and getattr(get_table_method, "_implemented", False):
+        # Use the method from parent if marked by _implemented, which will not be present
+        # if the method is declared in parent class without implementation. Reassignment
+        # here accelerates the code by preventing lookup at each level of inheritance chain.
+        cls.get_table = get_table_method
+    else:
+        # Implement using module and class name here and mark by _implemented
+        # TODO: Use package alias if specified in settings
+        def get_table(self):
+            return f"{cls.__module__}.{cls.__name__}"  # TODO: Remove trailing 'Key' if present
+
+        cls.get_table = get_table
+        cls.get_table._implemented = True
+
+    get_key_method = getattr(cls, "get_key", None)
+    if get_key_method is not None and getattr(get_key_method, "_implemented", False):
+        # Use the method from parent if marked by _implemented, which will not be present
+        # if the method is declared in parent class without implementation. Reassignment
+        # here accelerates the code by preventing lookup at each level of inheritance chain.
+        cls.get_key = get_key_method
+    else:
+        # Implement using module and class name here and mark by _implemented
+        # TODO: Use package alias if specified in settings
+        field_names = {f.name: f for f in attrs.fields(cls)}
+
+        def get_key(self):
+            # TODO: Use type-aware method for conversion to string
+            # TODO: Review performance impact
+            field_values = [str(getattr(self, field_name, None)) for field_name in field_names]
+            return ';'.join(field_values)
+
+        cls.get_key = get_key
+        cls.get_key._implemented = True
+
+    init_method = getattr(cls, "init", None)
+    if init_method is not None and getattr(init_method, "_implemented", False):
+        # Use the method from parent if marked by _implemented, which will not be present
+        # if the method is declared in parent class without implementation. Reassignment
+        # here accelerates the code by preventing lookup at each level of inheritance chain.
+        cls.init = init_method
+    else:
+        # Implement here and mark by _implemented
+        def init(self):
+            pass  # TODO: Implement hierarchical calls to parents but only when init has body
+        cls.init = init
+        cls.init._implemented = True
+
+    # Add label if specified
+    if label is not None:
+        cls._label = label
+
+    return cls
+
+
+@dataclass_transform()
+def attrs_class(cls=None, *, init=True, label=None):
+    """Runtime decorator for key, record, and data classes."""
+
+    # The value of cls type depends on whether parentheses follow the decorator.
+    # It is the class when used as @attrs_class but None for @attrs_class().
+    if cls is None:
+        return attrs_class_impl
+    else:
+        return attrs_class_impl(cls, init=init, label=label)

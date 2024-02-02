@@ -14,8 +14,7 @@
 
 from __future__ import annotations
 from cl.runtime.storage.index_util import index_fields
-from cl.runtime.storage.attrs_record_util import attrs_record
-from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 from stubs.cl.runtime.storage.attrs.stub_attrs_nested_fields_key import StubAttrsNestedFieldsKey
 from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey
@@ -25,7 +24,7 @@ from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
 
 
 @index_fields('derived_float_field, -float_field')
-@attrs_record(init=False)
+@attrs_class(init=False)
 class StubAttrsNestedFields(StubAttrsNestedFieldsKey):
     """Stub derived class."""
 

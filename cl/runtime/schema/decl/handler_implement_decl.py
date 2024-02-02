@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from cl.runtime.storage.attrs_data_util import attrs_data
-from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 from typing import Optional
 
 from cl.runtime.schema.decl.language_key import LanguageKey

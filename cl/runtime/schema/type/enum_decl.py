@@ -12,12 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs_record_util import attrs_record
-from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 
 from cl.runtime.schema.type.type_decl import TypeDecl
 
 
-@attrs_record
+@attrs_class
 class EnumDecl(TypeDecl):
     """Declaration for an enum type."""

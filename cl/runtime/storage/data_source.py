@@ -17,7 +17,7 @@ from typing import Iterable, Type, TypeVar, Union
 
 from cl.runtime import Data
 from cl.runtime.storage.attrs_data_util import attrs_data
-from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 from cl.runtime.storage.record import Record
 
 TKey = TypeVar('TKey', contravariant=True)

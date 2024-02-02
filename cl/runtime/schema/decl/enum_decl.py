@@ -14,13 +14,12 @@
 
 from typing import List, Optional
 from cl.runtime.storage.record import Record
-from cl.runtime.storage.attrs_record_util import attrs_record
-from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 from cl.runtime.schema.decl.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.decl.enum_item_decl import EnumItemDecl
 
 
-@attrs_record
+@attrs_class
 class EnumDecl(EnumDeclKey, Record):
     """Enum declaration."""
 

@@ -13,12 +13,11 @@
 # limitations under the License.
 
 from cl.runtime.storage.record import Record
-from cl.runtime.storage.attrs_record_util import attrs_record
-from cl.runtime.storage.attrs_field_util import attrs_field
+from cl.runtime.storage.attrs import attrs_field, attrs_class
 from cl.runtime.schema.type.type_decl_key import TypeDeclKey
 
 
-@attrs_record
+@attrs_class
 class TypeDecl(TypeDeclKey, Record):
     """Base class of type declaration in schema."""
 
