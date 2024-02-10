@@ -13,15 +13,15 @@
 # limitations under the License.
 
 from typing import Optional
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from stubs.cl.runtime.storage.attrs.stub_attrs_derived_data import StubAttrsDerivedData
 
 
-@attrs_class
+@data_class
 class StubAttrsDerivedFromDerivedData(StubAttrsDerivedData):
     """Two levels in inheritance hierarchy away from StubAttrsData."""
 
-    derived_from_derived_field: str = attrs_field(factory="derived_from_derived")
+    derived_from_derived_field: str = data_field(factory="derived_from_derived")
     """Stub field."""
 
 

@@ -12,23 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 
 from cl.runtime.schema.decl.module_key import ModuleKey
 from cl.runtime.storage.key import Key
 
 
-@attrs_class
+@data_class
 class TypeDeclKey(Key):
     """
     Defines type declaration. A tag of entity type XML representation corresponds to each element of the type. The
     names of type elements and corresponding tags coincide.
     """
 
-    module: ModuleKey = attrs_field()
+    module: ModuleKey = data_field()
     """Module reference."""
 
-    name: str = attrs_field()
+    name: str = data_field()
     """Type name is unique when combined with module."""
 
     def get_key(self) -> str:

@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.decl.handler_variable_decl import HandlerVariableDecl
 
 
-@attrs_class
+@data_class
 class HandlerParamDecl(HandlerVariableDecl):
     """Handler parameter declaration."""
 
-    name: str = attrs_field()
+    name: str = data_field()
     """Parameter name."""

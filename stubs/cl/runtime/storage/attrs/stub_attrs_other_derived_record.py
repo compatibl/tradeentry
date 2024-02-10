@@ -17,16 +17,16 @@ from typing import Optional
 from cl.runtime.storage.index_util import index_fields
 from cl.runtime.primitive.date_time_util import DateTimeUtil
 from cl.runtime.primitive.date_util import DateUtil
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
 
 
 @index_fields('other_float_field, other_str_field, -int_field')
-@attrs_class
+@data_class
 class StubAttrsOtherDerivedRecord(StubAttrsRecord):
     """Another type derived from StubAttrsRecord."""
 
-    other_derived: str = attrs_field(default='other_derived')
+    other_derived: str = data_field(default='other_derived')
     """Stub field for other derived class."""
 
 

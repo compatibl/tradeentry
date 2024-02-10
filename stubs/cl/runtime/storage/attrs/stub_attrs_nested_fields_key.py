@@ -13,19 +13,19 @@
 # limitations under the License.
 
 from cl.runtime.storage.key import Key
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey
 
 
-@attrs_class
+@data_class
 class StubAttrsNestedFieldsKey(Key):
     """Record where the key is composite and includes other keys."""
 
-    primitive: str = attrs_field(default="abc")
+    primitive: str = data_field(default="abc")
     """String key element."""
 
-    embedded_1: StubAttrsRecordKey = attrs_field(factory=StubAttrsRecordKey)
+    embedded_1: StubAttrsRecordKey = data_field(factory=StubAttrsRecordKey)
     """Embedded key 1."""
 
-    embedded_2: StubAttrsRecordKey = attrs_field(factory=StubAttrsRecordKey)
+    embedded_2: StubAttrsRecordKey = data_field(factory=StubAttrsRecordKey)
     """Embedded key 2."""

@@ -18,51 +18,51 @@ from uuid import UUID
 from cl.runtime.primitive.date_time_util import DateTimeUtil
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.storage.record import Record
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.primitive.time_util import TimeUtil
 from stubs.cl.runtime.storage.enum.stub_int_enum import StubIntEnum
 from stubs.cl.runtime.storage.attrs.stub_attrs_primitive_fields_key import StubAttrsPrimitiveFieldsKey
 
 
-@attrs_class
+@data_class
 class StubAttrsPrimitiveFields(StubAttrsPrimitiveFieldsKey, Record):
     """Stub record whose elements are primitive types."""
 
-    base_str_field: str = attrs_field(default="abc")
+    base_str_field: str = data_field(default="abc")
     """Stub field."""
 
-    base_float_field: float = attrs_field(default=1.23)
+    base_float_field: float = data_field(default=1.23)
     """Stub field."""
 
-    base_bool_field: bool = attrs_field(default=True)
+    base_bool_field: bool = data_field(default=True)
     """Stub field."""
 
-    base_int_field: int = attrs_field(default=123)
+    base_int_field: int = data_field(default=123)
     """Stub field."""
 
-    base_long_field: int = attrs_field(default=9007199254740991, subtype='long')
+    base_long_field: int = data_field(default=9007199254740991, subtype='long')
     """The default is maximum safe signed int for JSON: 2^53 - 1."""
 
-    base_date_field: dt.date = attrs_field(default=DateUtil.from_fields(2003, 5, 1))
+    base_date_field: dt.date = data_field(default=DateUtil.from_fields(2003, 5, 1))
     """Stub field."""
 
-    base_time_field: dt.time = attrs_field(default=TimeUtil.from_fields(10, 15, 30))
+    base_time_field: dt.time = data_field(default=TimeUtil.from_fields(10, 15, 30))
     """Stub field."""
 
-    base_date_time_field: dt.datetime = attrs_field(default=DateTimeUtil.from_fields(2003, 5, 1, 10, 15))
+    base_date_time_field: dt.datetime = data_field(default=DateTimeUtil.from_fields(2003, 5, 1, 10, 15))
     """Stub field."""
 
-    base_uuid_field: UUID = attrs_field(default=UUID('1A' * 16))
+    base_uuid_field: UUID = data_field(default=UUID('1A' * 16))
     """Stub field."""
 
-    base_bytes_field: bytes = attrs_field(default=bytes([100, 110, 120]))
+    base_bytes_field: bytes = data_field(default=bytes([100, 110, 120]))
     """Stub field."""
 
-    base_enum_field: StubIntEnum = attrs_field(default=StubIntEnum.ENUM_VALUE_1)
+    base_enum_field: StubIntEnum = data_field(default=StubIntEnum.ENUM_VALUE_1)
     """Stub field."""
 
-    base_str_key_field: str = attrs_field(default="StubAttrsRecord;abc;123", subtype='StubRecordKey')
+    base_str_key_field: str = data_field(default="StubAttrsRecord;abc;123", subtype='StubRecordKey')
     """Stub field."""
 
-    base_generic_key_field: str = attrs_field(default="StubAttrsRecord;abc;123", subtype='GenericKey')
+    base_generic_key_field: str = data_field(default="StubAttrsRecord;abc;123", subtype='GenericKey')
     """Stub field."""

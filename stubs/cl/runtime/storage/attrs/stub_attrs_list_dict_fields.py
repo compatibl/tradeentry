@@ -14,7 +14,7 @@
 
 import datetime as dt
 from typing import Dict, List
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
 from stubs.cl.runtime.storage.attrs.stub_attrs_list_fields import stub_attrs_str_list_factory, \
     stub_attrs_float_list_factory, stub_attrs_date_list_factory, stub_attrs_data_list_factory, \
@@ -80,18 +80,18 @@ def stub_attrs_derived_record_list_dict_factory() -> Dict[str, List[StubAttrsDer
     }
 
 
-@attrs_class
+@data_class
 class StubAttrsDictFields(StubAttrsRecord):
     """Stub record whose elements are dictionaries."""
 
-    float_list_dict: Dict[str, List[float]] = attrs_field(factory=stub_attrs_float_list_dict_factory)
+    float_list_dict: Dict[str, List[float]] = data_field(factory=stub_attrs_float_list_dict_factory)
     """Stub field."""
     
-    date_list_dict: Dict[str, List[dt.date]] = attrs_field(factory=stub_attrs_date_list_dict_factory)
+    date_list_dict: Dict[str, List[dt.date]] = data_field(factory=stub_attrs_date_list_dict_factory)
     """Stub field."""
 
-    record_list_dict: Dict[str, List[StubAttrsRecord]] = attrs_field(factory=stub_attrs_record_list_dict_factory)
+    record_list_dict: Dict[str, List[StubAttrsRecord]] = data_field(factory=stub_attrs_record_list_dict_factory)
     """Stub field."""
 
-    derived_record_list_dict: Dict[str, List[StubAttrsDerivedRecord]] = attrs_field(factory=stub_attrs_derived_record_list_dict_factory)
+    derived_record_list_dict: Dict[str, List[StubAttrsDerivedRecord]] = data_field(factory=stub_attrs_derived_record_list_dict_factory)
     """Stub field."""

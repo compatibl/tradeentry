@@ -13,14 +13,14 @@
 # limitations under the License.
 
 from typing import List
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.decl.handler_declare_decl import HandlerDeclareDecl
 from cl.runtime.storage.data import Data
 
 
-@attrs_class
+@data_class
 class HandlerDeclareBlockDecl(Data):
     """Handler declaration block in type declaration."""
 
-    handlers: List[HandlerDeclareDecl] = attrs_field()
+    handlers: List[HandlerDeclareDecl] = data_field()
     """Handler declaration data."""

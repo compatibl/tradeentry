@@ -12,15 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.storage.key import Key
 
 
-@attrs_class
+@data_class
 class PackageDeclKey(Key):
     """Key for the package declaration in schema."""
 
-    package_id: str = attrs_field()
+    package_id: str = data_field()
     """Unique package identifier."""
 
     def get_key(self) -> str:

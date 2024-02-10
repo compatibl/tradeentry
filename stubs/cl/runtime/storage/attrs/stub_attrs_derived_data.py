@@ -13,15 +13,15 @@
 # limitations under the License.
 
 from typing import Optional
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
 
 
-@attrs_class
+@data_class
 class StubAttrsDerivedData(StubAttrsData):
     """Stub derived data type."""
 
-    derived_field: str = attrs_field(default="derived")
+    derived_field: str = data_field(default="derived")
     """Stub field."""
 
 

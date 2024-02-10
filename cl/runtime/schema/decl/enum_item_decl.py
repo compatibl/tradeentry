@@ -12,23 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from typing import List, Optional
 from cl.runtime.storage.data import Data
 
 
-@attrs_class
+@data_class
 class EnumItemDecl(Data):
     """Enum item declaration."""
 
-    name: str = attrs_field()
+    name: str = data_field()
     """Item name."""
 
-    aliases: Optional[List[str]] = attrs_field()
+    aliases: Optional[List[str]] = data_field()
     """Enum item aliases."""
 
-    label: Optional[str] = attrs_field()
+    label: Optional[str] = data_field()
     """Itel label. If not specified, name is used instead."""
 
-    comment: Optional[str] = attrs_field()
+    comment: Optional[str] = data_field()
     """Item additional information."""

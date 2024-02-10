@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.storage.key import Key
 
 
-@attrs_class
+@data_class
 class ViewKey(Key):
     """
     The data shown alongside the record in the front end.
@@ -28,10 +28,10 @@ class ViewKey(Key):
     tab or panel next to the record itself.
     """
 
-    view_for: str = attrs_field()
+    view_for: str = data_field()
     """Primary key of the record for which the view is specified."""
 
-    view_name: str = attrs_field()
+    view_name: str = data_field()
     """Name of the view displayed in the front end."""
 
     @staticmethod

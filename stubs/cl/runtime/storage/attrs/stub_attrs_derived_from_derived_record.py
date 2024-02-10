@@ -16,14 +16,14 @@ from __future__ import annotations
 from typing import Optional
 from cl.runtime.primitive.date_time_util import DateTimeUtil
 from cl.runtime.primitive.date_util import DateUtil
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from stubs.cl.runtime.storage.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
 
 
-@attrs_class
+@data_class
 class StubAttrsDerivedFromDerivedRecord(StubAttrsDerivedRecord):
     """Two levels in inheritance hierarchy away from StubAttrsRecord."""
 
-    derived_from_derived_field: str = attrs_field(factory="derived_from_derived")
+    derived_from_derived_field: str = data_field(factory="derived_from_derived")
     """Stub field."""
 

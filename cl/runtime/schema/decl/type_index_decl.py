@@ -12,19 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from typing import List, Optional
 
 from cl.runtime.schema.decl.index_decl import IndexDecl
 from cl.runtime.storage.data import Data
 
 
-@attrs_class
+@data_class
 class TypeIndexDecl(Data):
     """Type index declaration."""
 
-    name: Optional[str] = attrs_field()
+    name: Optional[str] = data_field()
     """Index name."""
 
-    elements: List[IndexDecl] = attrs_field()
+    elements: List[IndexDecl] = data_field()
     """Index elements."""

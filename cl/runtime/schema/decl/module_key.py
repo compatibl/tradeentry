@@ -13,18 +13,18 @@
 # limitations under the License.
 
 from typing import Optional
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.storage.key import Key
 
 
-@attrs_class
+@data_class
 class ModuleKey(Key):
     """
     Defines Analyst module.
     Module can be represented both as the source code and precomiled dll (defined by flag "Compiled").
     """
 
-    module_name: Optional[str] = attrs_field()
+    module_name: Optional[str] = data_field()
     """Unique module identifier in dot delimited format."""
 
     def get_key(self) -> str:

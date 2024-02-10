@@ -14,7 +14,7 @@
 
 from typing import List, Optional
 from cl.runtime.storage.record import Record
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.decl.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.decl.handler_implement_block_decl import HandlerImplementBlockDecl
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
@@ -26,90 +26,90 @@ from cl.runtime.schema.decl.type_kind import TypeKind
 from cl.runtime.schema.decl.type_param_decl import TypeParamDecl
 
 
-@attrs_class
+@data_class
 class TypeDecl(TypeDeclKey, Record):
     """
     Defines type declaration. A tag of entity type XML representation corresponds to each element of the type. The
     names of type elements and corresponding tags coincide.
     """
 
-    label: str = attrs_field()
+    label: str = data_field()
     """Type label."""
 
-    comment: Optional[str] = attrs_field()
+    comment: Optional[str] = data_field()
     """Type comment. Contains additional information."""
 
-    category: Optional[str] = attrs_field()
+    category: Optional[str] = data_field()
     """Category."""
 
-    shortcut: Optional[str] = attrs_field()
+    shortcut: Optional[str] = data_field()
     """Shortcut."""
 
-    type_params: Optional[List[TypeParamDecl]] = attrs_field()
+    type_params: Optional[List[TypeParamDecl]] = data_field()
     """Type Params"""
 
-    aliases: Optional[List[str]] = attrs_field()
+    aliases: Optional[List[str]] = data_field()
     """Type aliases."""
 
-    kind: Optional[TypeKind] = attrs_field()
+    kind: Optional[TypeKind] = data_field()
     """Type kind."""
 
-    inherit: Optional[TypeDeclKey] = attrs_field()
+    inherit: Optional[TypeDeclKey] = data_field()
     """Parent type reference."""
 
-    inherit_type_arguments: Optional[List[TypeArgumentDecl]] = attrs_field()
+    inherit_type_arguments: Optional[List[TypeArgumentDecl]] = data_field()
     """Inherit Type Argument."""
 
-    interfaces: Optional[List[InterfaceDeclKey]] = attrs_field()
+    interfaces: Optional[List[InterfaceDeclKey]] = data_field()
     """Parent interfaces"""
 
-    declare: Optional[HandlerDeclareBlockDecl] = attrs_field()
+    declare: Optional[HandlerDeclareBlockDecl] = data_field()
     """Handler declaration block."""
 
-    implement: Optional[HandlerImplementBlockDecl] = attrs_field()
+    implement: Optional[HandlerImplementBlockDecl] = data_field()
     """Handler implementation block."""
 
-    elements: Optional[List[TypeElementDecl]] = attrs_field()
+    elements: Optional[List[TypeElementDecl]] = data_field()
     """Element declaration block."""
 
-    keys: Optional[List[str]] = attrs_field()
+    keys: Optional[List[str]] = data_field()
     """Array of key element names."""
 
-    indexes: Optional[List[TypeIndexDecl]] = attrs_field()
+    indexes: Optional[List[TypeIndexDecl]] = data_field()
     """Defines indexes for the type."""
 
-    immutable: Optional[bool] = attrs_field()
+    immutable: Optional[bool] = data_field()
     """Immutable flag."""
 
-    ui_response: Optional[bool] = attrs_field()
+    ui_response: Optional[bool] = data_field()
     """Flag indicating UiResponse."""
 
-    seed: Optional[int] = attrs_field()
+    seed: Optional[int] = data_field()
     """Seed."""
 
-    version: Optional[str] = attrs_field()
+    version: Optional[str] = data_field()
     """Type Version"""
 
-    system: Optional[bool] = attrs_field()
+    system: Optional[bool] = data_field()
     """System."""
 
-    enable_cache: Optional[bool] = attrs_field()
+    enable_cache: Optional[bool] = data_field()
     """Enable cache flag."""
 
-    partial: Optional[bool] = attrs_field()
+    partial: Optional[bool] = data_field()
     """It is possible to split the code over two or more source files."""
 
-    abstract: Optional[bool] = attrs_field()
+    abstract: Optional[bool] = data_field()
     """
     Abstract flag: is a restricted type that cannot be used to create objects (to access it, it must be inherited from
     another type).
     """
 
-    interactive_edit: Optional[bool] = attrs_field()
+    interactive_edit: Optional[bool] = data_field()
     """Interactive Edit"""
 
-    permanent: Optional[bool] = attrs_field()
+    permanent: Optional[bool] = data_field()
     """Save records always permanently."""
 
-    pinned: Optional[bool] = attrs_field()
+    pinned: Optional[bool] = data_field()
     """Store records always in root dataset."""

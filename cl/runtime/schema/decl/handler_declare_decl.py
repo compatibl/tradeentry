@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from typing import List, Optional
 
 from cl.runtime.schema.decl.handler_param_decl import HandlerParamDecl
@@ -21,39 +21,39 @@ from cl.runtime.schema.decl.handler_variable_decl import HandlerVariableDecl
 from cl.runtime.storage.data import Data
 
 
-@attrs_class
+@data_class
 class HandlerDeclareDecl(Data):
     """Handler declaration data."""
 
-    name: str = attrs_field()
+    name: str = data_field()
     """Handler name."""
 
-    label: Optional[str] = attrs_field()
+    label: Optional[str] = data_field()
     """Handler label."""
 
-    comment: Optional[str] = attrs_field()
+    comment: Optional[str] = data_field()
     """Handler comment."""
 
-    type_: HandlerType = attrs_field(name='Type')
+    type_: HandlerType = data_field(name='Type')
     """Handler type."""
 
-    params: Optional[List[HandlerParamDecl]] = attrs_field()
+    params: Optional[List[HandlerParamDecl]] = data_field()
     """Handler parameters."""
 
-    return_: Optional[HandlerVariableDecl] = attrs_field(name='Return')
+    return_: Optional[HandlerVariableDecl] = data_field(name='Return')
     """Handler return value."""
 
-    static: Optional[bool] = attrs_field()
+    static: Optional[bool] = data_field()
     """If set as true, handler will be static, otherwise non-static."""
 
-    hidden: Optional[bool] = attrs_field()
+    hidden: Optional[bool] = data_field()
     """If flag is set, handler will be hidden in UI in user mode."""
 
-    interactive_input: Optional[bool] = attrs_field()
+    interactive_input: Optional[bool] = data_field()
     """Interactive Input"""
 
-    category: Optional[str] = attrs_field()
+    category: Optional[str] = data_field()
     """Category."""
 
-    is_async: Optional[bool] = attrs_field()
+    is_async: Optional[bool] = data_field()
     """Use the flag to specify that a handler is asynchronous."""

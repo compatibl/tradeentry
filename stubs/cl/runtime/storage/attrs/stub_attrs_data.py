@@ -14,15 +14,15 @@
 
 from typing import Optional
 from cl.runtime.storage.data import Data
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 
 
-@attrs_class
+@data_class
 class StubAttrsData(Data):
     """Stub base data type."""
 
-    str_field: str = attrs_field(default="abc")
+    str_field: str = data_field(default="abc")
     """Stub field."""
 
-    int_field: int = attrs_field(default=123)
+    int_field: int = data_field(default=123)
     """Stub field."""

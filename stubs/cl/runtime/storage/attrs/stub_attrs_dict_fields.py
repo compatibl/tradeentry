@@ -14,7 +14,7 @@
 
 import datetime as dt
 from typing import Dict, List
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.primitive.date_util import DateUtil
 from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
 from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
@@ -86,27 +86,27 @@ def stub_attrs_derived_record_dict_factory() -> Dict[str, StubAttrsDerivedRecord
     }
 
 
-@attrs_class
+@data_class
 class StubAttrsDictFields(StubAttrsRecord):
     """Stub record whose elements are dictionaries."""
 
-    str_dict: Dict[str, str] = attrs_field(factory=stub_attrs_str_dict_factory)
+    str_dict: Dict[str, str] = data_field(factory=stub_attrs_str_dict_factory)
     """Stub field."""
 
-    float_dict: Dict[str, float] = attrs_field(factory=stub_attrs_float_dict_factory)
+    float_dict: Dict[str, float] = data_field(factory=stub_attrs_float_dict_factory)
     """Stub field."""
     
-    date_dict: Dict[str, dt.date] = attrs_field(factory=stub_attrs_date_dict_factory)
+    date_dict: Dict[str, dt.date] = data_field(factory=stub_attrs_date_dict_factory)
     """Stub field."""
 
-    data_dict: Dict[str, StubAttrsData] = attrs_field(factory=stub_attrs_data_dict_factory)
+    data_dict: Dict[str, StubAttrsData] = data_field(factory=stub_attrs_data_dict_factory)
     """Stub field."""
 
-    key_dict: Dict[str, StubAttrsRecordKey] = attrs_field(factory=stub_attrs_key_dict_factory)
+    key_dict: Dict[str, StubAttrsRecordKey] = data_field(factory=stub_attrs_key_dict_factory)
     """Stub field."""
 
-    record_dict: Dict[str, StubAttrsRecord] = attrs_field(factory=stub_attrs_record_dict_factory)
+    record_dict: Dict[str, StubAttrsRecord] = data_field(factory=stub_attrs_record_dict_factory)
     """Stub field."""
 
-    derived_record_dict: Dict[str, StubAttrsDerivedRecord] = attrs_field(factory=stub_attrs_derived_record_dict_factory)
+    derived_record_dict: Dict[str, StubAttrsDerivedRecord] = data_field(factory=stub_attrs_derived_record_dict_factory)
     """Stub field."""

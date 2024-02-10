@@ -14,13 +14,13 @@
 
 from typing import Optional
 from cl.runtime.storage.record import Record
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from stubs.cl.runtime.storage.attrs.stub_attrs_singleton_key import StubAttrsSingletonKey
 
 
-@attrs_class
+@data_class
 class StubAttrsSingleton(StubAttrsSingletonKey, Record):
     """Singleton record has no key fields."""
 
-    str_field: str = attrs_field(default="abc")
+    str_field: str = data_field(default="abc")
     """Stub field."""

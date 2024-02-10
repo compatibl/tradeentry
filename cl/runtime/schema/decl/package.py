@@ -14,41 +14,41 @@
 
 from typing import List, Optional
 from cl.runtime.storage.record import Record
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.decl.package_dependency import PackageDependency
 from cl.runtime.schema.decl.package_key import PackageKey
 
 
-@attrs_class
+@data_class
 class Package(PackageKey, Record):
     """Package is a list of modules and binaries which are deployed together."""
 
-    package_shortcut: Optional[str] = attrs_field()
+    package_shortcut: Optional[str] = data_field()
     """
     Unique package shortcut used as a prefix for the type name to resolve possible conflicts in multi-package
     environments.
     """
 
-    comment: Optional[str] = attrs_field()
+    comment: Optional[str] = data_field()
     """Comment."""
 
-    label: str = attrs_field()
+    label: str = data_field()
     """Label (displayed in user interface, may not be unique)."""
 
-    package_path: Optional[str] = attrs_field()
+    package_path: Optional[str] = data_field()
     """Relative package path."""
 
-    dependency_search_paths: Optional[List[str]] = attrs_field()
+    dependency_search_paths: Optional[List[str]] = data_field()
     """Locations to search dependent packages."""
 
-    dependencies: Optional[List[PackageDependency]] = attrs_field()
+    dependencies: Optional[List[PackageDependency]] = data_field()
     """Dependent packages list"""
 
-    shared: Optional[bool] = attrs_field()
+    shared: Optional[bool] = data_field()
     """Package version"""
 
-    version: Optional[str] = attrs_field()
+    version: Optional[str] = data_field()
     """Package version"""
 
-    is_main: Optional[bool] = attrs_field()
+    is_main: Optional[bool] = data_field()
     """Is main package"""

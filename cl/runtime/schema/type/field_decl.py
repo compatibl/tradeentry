@@ -12,31 +12,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from typing import Union
 
 from cl.runtime.schema.type.type_decl_key import TypeDeclKey
 from cl.runtime.storage.data import Data
 
 
-@attrs_class
+@data_class
 class FieldDecl(Data):
     """Base class of type declaration in schema."""
 
-    name: str = attrs_field()
+    name: str = data_field()
     """Field name in code and storage."""
 
-    label: str = attrs_field(optional=True)
+    label: str = data_field(optional=True)
     """Readable field label in the front end."""
 
-    type: Union[str, TypeDeclKey] = attrs_field()
+    type: Union[str, TypeDeclKey] = data_field()
     """Field type."""
 
-    dim: int = attrs_field(optional=True)
+    dim: int = data_field(optional=True)
     """List, array, or tensor dimension (defaults to scalar, i.e., the value of zero, if not specified)."""
 
-    optional: bool = attrs_field(optional=True)
+    optional: bool = data_field(optional=True)
     """True if field is optional (defaults to required if not specified)."""
 
-    contains_optional: bool = attrs_field(optional=True)
+    contains_optional: bool = data_field(optional=True)
     """True if list, array, or tensor elements are optional (defaults to required if not specified)."""

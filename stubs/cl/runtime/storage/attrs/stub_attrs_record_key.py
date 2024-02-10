@@ -13,18 +13,18 @@
 # limitations under the License.
 
 from typing import Optional
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.storage.key import Key
 
 
-@attrs_class
+@data_class
 class StubAttrsRecordKey(Key):
     """Stub record base class."""
 
-    str_field: str = attrs_field(default="abc")
+    str_field: str = data_field(default="abc")
     """Stub field."""
 
-    int_field: int = attrs_field(default=123)
+    int_field: int = data_field(default=123)
     """Stub field."""
 
 

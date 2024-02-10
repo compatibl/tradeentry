@@ -14,33 +14,33 @@
 
 from typing import List, Optional
 from cl.runtime.storage.record import Record
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.decl.handler_declare_decl import HandlerDeclareDecl
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.decl.type_element_decl import TypeElementDecl
 
 
-@attrs_class
+@data_class
 class InterfaceDecl(InterfaceDeclKey, Record):
     """Defines Interface declaration."""
 
-    label: str = attrs_field()
+    label: str = data_field()
     """Type label."""
 
-    comment: Optional[str] = attrs_field()
+    comment: Optional[str] = data_field()
     """Type comment. Contains additional information."""
 
-    aliases: Optional[List[str]] = attrs_field()
+    aliases: Optional[List[str]] = data_field()
     """Interface aliases."""
 
-    interfaces: Optional[List[InterfaceDeclKey]] = attrs_field()
+    interfaces: Optional[List[InterfaceDeclKey]] = data_field()
     """Parent interfaces"""
 
-    handlers: Optional[List[HandlerDeclareDecl]] = attrs_field()
+    handlers: Optional[List[HandlerDeclareDecl]] = data_field()
     """Handler declaration data."""
 
-    elements: Optional[List[TypeElementDecl]] = attrs_field()
+    elements: Optional[List[TypeElementDecl]] = data_field()
     """Element declaration block."""
 
-    attributes: Optional[List[TypeElementDecl]] = attrs_field()
+    attributes: Optional[List[TypeElementDecl]] = data_field()
     """Attribute declaration block."""

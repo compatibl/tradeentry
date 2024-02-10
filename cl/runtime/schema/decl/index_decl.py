@@ -12,19 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from typing import Optional
 
 from cl.runtime.schema.decl.index_sort_order_enum import IndexSortOrderEnum
 from cl.runtime.storage.data import Data
 
 
-@attrs_class
+@data_class
 class IndexDecl(Data):
     """Index declaration."""
 
-    name: str = attrs_field()
+    name: str = data_field()
     """Target index element name."""
 
-    direction: Optional[IndexSortOrderEnum] = attrs_field()
+    direction: Optional[IndexSortOrderEnum] = data_field()
     """Index sort order direction. If not specified ascending sorting will be used."""

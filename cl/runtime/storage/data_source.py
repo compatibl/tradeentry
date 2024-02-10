@@ -16,14 +16,14 @@ from abc import ABC, abstractmethod
 from typing import Iterable, Type, TypeVar, Union
 
 from cl.runtime import Data
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.storage.record import Record
 
 TKey = TypeVar('TKey', contravariant=True)
 TRecord = TypeVar('TRecord', covariant=True)
 
 
-@attrs_class
+@data_class
 class DataSource(Data, ABC):
     """Abstract base class for polymorphic data storage API with a directory attribute.
 
@@ -31,10 +31,10 @@ class DataSource(Data, ABC):
     in-memory cache, distributed cache, filesystem, and types of storage solutions.
     """
 
-    data_source_id: str = attrs_field()
+    data_source_id: str = data_field()
     """Unique data source identifier."""
 
-    read_only: bool = attrs_field(optional=True)
+    read_only: bool = data_field(optional=True)
     """Use this flag to mark the data source as readonly. All write operations will fail with error if set."""
 
     @staticmethod

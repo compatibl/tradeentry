@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.type.type_decl import TypeDecl
 
 
-@attrs_class
+@data_class
 class PrimitiveDecl(TypeDecl):
     """Declaration for a primitive type."""
 
-    base_type: str = attrs_field()
+    base_type: str = data_field()
     """Builtin type in which the data is stored."""

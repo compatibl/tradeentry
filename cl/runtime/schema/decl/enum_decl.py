@@ -14,20 +14,20 @@
 
 from typing import List, Optional
 from cl.runtime.storage.record import Record
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.decl.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.decl.enum_item_decl import EnumItemDecl
 
 
-@attrs_class
+@data_class
 class EnumDecl(EnumDeclKey, Record):
     """Enum declaration."""
 
-    label: str = attrs_field()
+    label: str = data_field()
     """Enum label."""
 
-    comment: Optional[str] = attrs_field()
+    comment: Optional[str] = data_field()
     """Enum comment."""
 
-    items: List[EnumItemDecl] = attrs_field()
+    items: List[EnumItemDecl] = data_field()
     """Array of enum items."""

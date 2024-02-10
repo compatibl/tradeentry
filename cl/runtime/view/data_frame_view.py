@@ -14,14 +14,14 @@
 
 from typing import final
 import pandas as pd
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.view.view import View
 
 
 @final
-@attrs_class
+@data_class
 class DataFrameView(View):
     """View that displays contents of a dataframe."""
 
-    view_of: pd.DataFrame = attrs_field()
+    view_of: pd.DataFrame = data_field()
     """Dataframe with view contents."""

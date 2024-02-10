@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from typing import TYPE_CHECKING, List, Optional
 
 from cl.runtime.schema.decl.enum_decl_key import EnumDeclKey
@@ -25,36 +25,36 @@ if TYPE_CHECKING:
     from cl.runtime.schema.decl.type_argument_decl import TypeArgumentDecl
 
 
-@attrs_class
+@data_class
 class TypeMemberDecl(Data):
     """Type member declaration."""
 
-    type_param: Optional[str] = attrs_field()
+    type_param: Optional[str] = data_field()
     """Type Param"""
 
-    value: Optional[ValueDecl] = attrs_field()
+    value: Optional[ValueDecl] = data_field()
     """Value or atomic element declaration."""
 
-    enum: Optional[EnumDeclKey] = attrs_field()
+    enum: Optional[EnumDeclKey] = data_field()
     """Enumeration element declaration."""
 
-    data: Optional[TypeDeclKey] = attrs_field()
+    data: Optional[TypeDeclKey] = data_field()
     """Data element declaration."""
 
-    key_: Optional[TypeDeclKey] = attrs_field(name='Key')
+    key_: Optional[TypeDeclKey] = data_field(name='Key')
     """Key element declaration."""
 
-    query: Optional[TypeDeclKey] = attrs_field()
+    query: Optional[TypeDeclKey] = data_field()
     """Query element declaration."""
 
-    condition: Optional[TypeDeclKey] = attrs_field()
+    condition: Optional[TypeDeclKey] = data_field()
     """Condition element declaration."""
 
-    type_arguments: Optional[List['TypeArgumentDecl']] = attrs_field()
+    type_arguments: Optional[List['TypeArgumentDecl']] = data_field()
     """Type Argument."""
 
-    interface: Optional[InterfaceDeclKey] = attrs_field()
+    interface: Optional[InterfaceDeclKey] = data_field()
     """Interface element declaration."""
 
-    handler_args: Optional[TypeDeclKey] = attrs_field()
+    handler_args: Optional[TypeDeclKey] = data_field()
     """HandlerArgs element declaration."""

@@ -17,7 +17,7 @@ from typing import Any, Optional
 from typing_extensions import dataclass_transform
 
 
-def attrs_field(
+def data_field(
     *,
     default: Optional[Any] = None,
     factory: Optional[Any] = None,
@@ -68,7 +68,7 @@ def attrs_field(
 
 
 @dataclass_transform()
-def attrs_class_impl(cls, *, init=True, label=None):
+def data_class_impl(cls, *, init=True, label=None):
     """Performs the actual wrapping irrespective of call syntax with or without parentheses."""
 
     cls = attrs.define(cls, init=init)
@@ -136,12 +136,12 @@ def attrs_class_impl(cls, *, init=True, label=None):
 
 
 @dataclass_transform()
-def attrs_class(cls=None, *, init=True, label=None):
+def data_class(cls=None, *, init=True, label=None):
     """Runtime decorator for key, record, and data classes."""
 
     # The value of cls type depends on whether parentheses follow the decorator.
-    # It is the class when used as @attrs_class but None for @attrs_class().
+    # It is the class when used as @data_class but None for @data_class().
     if cls is None:
-        return attrs_class_impl
+        return data_class_impl
     else:
-        return attrs_class_impl(cls, init=init, label=label)
+        return data_class_impl(cls, init=init, label=label)

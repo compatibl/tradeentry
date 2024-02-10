@@ -12,31 +12,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from typing import Optional
 
 from cl.runtime.schema.decl.type_decl_key import TypeDeclKey
 from cl.runtime.schema.decl.type_member_decl import TypeMemberDecl
 
 
-@attrs_class
+@data_class
 class HandlerVariableDecl(TypeMemberDecl):
     """Handler parameter or return variable declaration."""
 
-    vector: Optional[bool] = attrs_field()
+    vector: Optional[bool] = data_field()
     """Flag indicating variable size array (vector) container."""
 
-    object_: Optional[TypeDeclKey] = attrs_field(name='Object')
+    object_: Optional[TypeDeclKey] = data_field(name='Object')
     """Object element declaration."""
 
-    optional: Optional[bool] = attrs_field()
+    optional: Optional[bool] = data_field()
     """Flag indicating optional element."""
 
-    hidden: Optional[bool] = attrs_field()
+    hidden: Optional[bool] = data_field()
     """Flag indicating a hidden element. Hidden elements are visible in API but not in the UI."""
 
-    label: Optional[str] = attrs_field()
+    label: Optional[str] = data_field()
     """Parameter label."""
 
-    comment: Optional[str] = attrs_field()
+    comment: Optional[str] = data_field()
     """Parameter comment. Contains addition information about handler parameter."""

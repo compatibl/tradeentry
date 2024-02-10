@@ -13,14 +13,14 @@
 # limitations under the License.
 
 from typing import List, final
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.view.view import View
 
 
 @final
-@attrs_class
+@data_class
 class RecordListView(View):
     """View that displays a list of record specified via their primary keys."""
 
-    view_of: List[str] = attrs_field()
+    view_of: List[str] = data_field()
     """Primary keys of the displayed records."""

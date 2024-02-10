@@ -13,13 +13,13 @@
 # limitations under the License.
 
 from cl.runtime.storage.record import Record
-from cl.runtime.storage.attrs import attrs_field, attrs_class
+from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.type.package_decl_key import PackageDeclKey
 
 
-@attrs_class
+@data_class
 class PackageDecl(PackageDeclKey, Record):
     """Base class for the package declaration in schema."""
 
-    label: str = attrs_field(optional=True)
+    label: str = data_field(optional=True)
     """Readable package label used by the front end."""

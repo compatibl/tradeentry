@@ -15,7 +15,7 @@
 from typing import Any, Optional
 from typing_extensions import dataclass_transform
 
-from cl.runtime.storage.attrs import attrs_field, attrs_class, attrs_class_impl
+from cl.runtime.storage.attrs import data_field, data_class, data_class_impl
 
 
 def data_field(
@@ -48,7 +48,7 @@ def data_field(
         secure: Marks the field as secure TODO(attrs) - Explain further in docs
         filterable: Marks the field as filterable TODO(attrs) - Explain further in docs
     """
-    return attrs_field(
+    return data_field(
         default=default,
         factory=factory,
         optional=optional,
@@ -66,10 +66,10 @@ def data_field(
 @dataclass_transform()
 def data_class_impl(cls, *, init: bool = True, label: str = None):
     """Performs the actual wrapping irrespective of call syntax with or without parentheses."""
-    return attrs_class_impl(cls=cls, init=init, label=label)
+    return data_class_impl(cls=cls, init=init, label=label)
 
 
 @dataclass_transform()
 def data_class(cls=None, *, init: bool = True, label: str = None):
     """Runtime decorator dataclasses."""
-    return attrs_class(cls=cls, init=init, label=label)
+    return data_class(cls=cls, init=init, label=label)
