@@ -3,6 +3,7 @@ from cl.runtime.storage.data import Data
 from cl.runtime.storage.record import Key
 from cl.runtime.storage.record import Record
 from cl.runtime.storage.attrs import data_class, data_field
+from cl.runtime.attributes.label_decorator import label
 from cl.runtime.storage.record_util import RecordUtil
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.in_process.in_process_data_source import InProcessDataSource
@@ -21,3 +22,4 @@ from cl.runtime.schema.type.data_decl import DataDecl
 from cl.runtime.storage.class_info import ClassInfo
 from cl.runtime.attributes.handler_decorator import handler
 from cl.runtime.attributes.viewer_decorator import viewer
+from cl.runtime.attributes.content_decorator import content
