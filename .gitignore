@@ -1,7 +1,9 @@
 # Using glob syntax
 syntax: glob
 
+**/.env
 **/.mypy_cache
+**/.pytest_cache
 **/__pycache__
 **/venv
 *.db
