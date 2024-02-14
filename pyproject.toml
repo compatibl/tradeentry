@@ -1,0 +1,19 @@
+[tool.black]
+line-length = 120
+skip-string-normalization = true
+include = '\.pyi?$'
+target-version = ['py39']
+force-exclude = '''
+/(
+    \.idea
+  | \.git
+  | \.mypy_cache
+  | \.pytest_cache
+  | \.tox
+  | \.venv
+  | __pycache__
+  | _build
+  | build
+  | dist
+)/
+'''
