@@ -110,6 +110,3 @@ class TypeDecl(TypeDeclKey, Record):
 
     permanent: Optional[bool] = data_field()
     """Save records always permanently."""
-
-    pinned: Optional[bool] = data_field()
-    """Store records always in root dataset."""
