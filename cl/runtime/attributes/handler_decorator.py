@@ -120,26 +120,7 @@ def handler(
         if not isfunction(method) and not ismethod(method):
             raise Exception('@handler decorator should be applied on method or function.')
 
-        # wrap method into client call if language is not python
-        if language != ImplementLanguage.Python:
-            method.metadata = metadata or dict()
-
-            @wraps(method)
-            def run_client(*args, **kwargs):
-                self_param, params = _get_parameters(method, args, kwargs)
-
-                if self_param is not None:
-                    client = self_param.context.client
-                    return client._run_handler_internal(method, params, self_param)
-
-                client = params.pop("context").client
-
-                return client._run_action_internal(method, params)
-
-            wrapped_method = run_client
-        else:
-            wrapped_method = method
-
+        wrapped_method = method
         wrapped_method._cl_handler = True
         wrapped_method._cl_handler_language = language
         wrapped_method._cl_handler_traits = args
