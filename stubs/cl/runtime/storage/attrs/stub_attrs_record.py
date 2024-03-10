@@ -78,12 +78,12 @@ class StubAttrsRecord(StubAttrsRecordKey, Record):
                      f"enum_arg={enum_arg} data_arg={data_arg})")
 
     @staticmethod
-    def static_method(context: Context):
+    def static_method():
         """Sample static method."""
         pass
 
     @classmethod
-    def class_method(cls, context: Context):
+    def class_method(cls):
         """Stub method."""
         pass
 

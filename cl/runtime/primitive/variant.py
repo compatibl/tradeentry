@@ -138,7 +138,7 @@ class Variant:
         return {inner_type.name: serialized_value}
 
     @classmethod
-    def from_bson(cls, dict_: Dict[str, Any], context: Context = None) -> 'Variant':
+    def from_bson(cls, dict_: Dict[str, Any]) -> 'Variant':
         """Deserialize variant from bson."""
 
         if len(dict_) != 1:
