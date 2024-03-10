@@ -120,7 +120,7 @@ class DataSetUtil:
         tokens = DataSetUtil.to_tokens(data_set)
         for token in tokens:
             # TODO: Implement
-            raise NotImplemented()
+            raise NotImplementedError()
 
         # Reverse to return the list ordered from child
         # to parent, beginning with argument and ending with
