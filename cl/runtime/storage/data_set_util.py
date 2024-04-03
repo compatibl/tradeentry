@@ -15,7 +15,7 @@
 from typing import List
 
 
-class DataSetUtil:
+class DatasetUtil:
     """
     Dataset is specified using a forward slash (/) delimited string similar to Linux directory.
     The lookup is performed in the dataset itself first, and then in each parent up to and
@@ -117,7 +117,7 @@ class DataSetUtil:
         result = ['/']
 
         # Create dataset builder and add levels one by one
-        tokens = DataSetUtil.to_tokens(data_set)
+        tokens = DatasetUtil.to_tokens(data_set)
         for token in tokens:
             # TODO: Implement
             raise NotImplementedError()

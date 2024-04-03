@@ -13,49 +13,49 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.storage.data_set_util import DataSetUtil
+from cl.runtime.storage.dataset_util import DatasetUtil
 
 
 def test_to_tokens():
     """Test conversion of dataset string to tokens."""
 
-    assert DataSetUtil.to_tokens("/") == []
-    assert DataSetUtil.to_tokens("/A") == ["A"]
-    assert DataSetUtil.to_tokens("/A/B") == ["A", "B"]
+    assert DatasetUtil.to_tokens("/") == []
+    assert DatasetUtil.to_tokens("/A") == ["A"]
+    assert DatasetUtil.to_tokens("/A/B") == ["A", "B"]
 
     with pytest.raises(Exception):
-        DataSetUtil.to_tokens("")
+        DatasetUtil.to_tokens("")
     with pytest.raises(Exception):
-        DataSetUtil.to_tokens(" ")
+        DatasetUtil.to_tokens(" ")
     with pytest.raises(Exception):
-        DataSetUtil.to_tokens(" A")
+        DatasetUtil.to_tokens(" A")
     with pytest.raises(Exception):
-        DataSetUtil.to_tokens("A ")
+        DatasetUtil.to_tokens("A ")
     with pytest.raises(Exception):
-        DataSetUtil.to_tokens("A")
+        DatasetUtil.to_tokens("A")
     with pytest.raises(Exception):
-        DataSetUtil.to_tokens("/A/")
+        DatasetUtil.to_tokens("/A/")
     with pytest.raises(Exception):
-        DataSetUtil.to_tokens("/ A")
+        DatasetUtil.to_tokens("/ A")
     with pytest.raises(Exception):
-        DataSetUtil.to_tokens("/A /B")
+        DatasetUtil.to_tokens("/A /B")
 
 
 def test_from_tokens():
     """Test conversion of a list of tokens to dataset string."""
 
-    assert DataSetUtil.from_tokens([]) == "/"
-    assert DataSetUtil.from_tokens(["A"]) == "/A"
-    assert DataSetUtil.from_tokens(["A", "B"]) == "/A/B"
+    assert DatasetUtil.from_tokens([]) == "/"
+    assert DatasetUtil.from_tokens(["A"]) == "/A"
+    assert DatasetUtil.from_tokens(["A", "B"]) == "/A/B"
 
     with pytest.raises(Exception):
-        DataSetUtil.from_tokens(["/"])
+        DatasetUtil.from_tokens(["/"])
     with pytest.raises(Exception):
-        DataSetUtil.from_tokens([" "])
+        DatasetUtil.from_tokens([" "])
     with pytest.raises(Exception):
-        DataSetUtil.from_tokens([" A"])
+        DatasetUtil.from_tokens([" A"])
     with pytest.raises(Exception):
-        DataSetUtil.from_tokens(["A "])
+        DatasetUtil.from_tokens(["A "])
 
 
 if __name__ == '__main__':

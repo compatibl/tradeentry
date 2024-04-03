@@ -14,7 +14,7 @@
 
 from typing import TYPE_CHECKING, Optional
 
-from cl.runtime.storage.data_set_util import DataSetUtil
+from cl.runtime.storage.dataset_util import DatasetUtil
 
 if TYPE_CHECKING:
     from cl.runtime.storage.data_source import DataSource
@@ -78,10 +78,10 @@ class Context:
             raise ValueError('The data_set field in context is immutable, create a new context instead.')
 
         # Import inside method to avoid cyclic reference
-        from cl.runtime.storage.data_set_util import DataSetUtil
+        from cl.runtime.storage.dataset_util import DatasetUtil
 
         # Perform validation by converting into tokens, discard the result
-        DataSetUtil.to_tokens(value)
+        DatasetUtil.to_tokens(value)
 
         self.__data_set = value
 
