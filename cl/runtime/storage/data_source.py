@@ -15,16 +15,16 @@
 from abc import ABC, abstractmethod
 from typing import Iterable, Type, TypeVar, Union
 
-from cl.runtime import Data
+from cl.runtime import DataMixin
 from cl.runtime.storage.attrs import data_field, data_class
-from cl.runtime.storage.record_mixin import Record
+from cl.runtime.storage.record_mixin import RecordMixin
 
 TKey = TypeVar('TKey', contravariant=True)
 TRecord = TypeVar('TRecord', covariant=True)
 
 
 @data_class
-class DataSource(Data, ABC):
+class DataSource(DataMixin, ABC):
     """Abstract base class for polymorphic data storage API with a directory attribute.
 
     A data source can be implemented on top a NoSQL DB, relational DB, key-value store, cloud bucket store,
@@ -77,7 +77,7 @@ class DataSource(Data, ABC):
         """
 
     @abstractmethod
-    def save_many(self, records: Iterable[Record], data_set: str | None = None) -> None:
+    def save_many(self, records: Iterable[RecordMixin], data_set: str | None = None) -> None:
         """
         Save many records to the specified dataset, bypassing the commit queue.
 
@@ -86,7 +86,7 @@ class DataSource(Data, ABC):
         """
 
     @abstractmethod
-    def save_on_commit(self, record: Record, data_set: str | None = None) -> None:
+    def save_on_commit(self, record: RecordMixin, data_set: str | None = None) -> None:
         """
         Add the record to the commit queue.
 
@@ -97,7 +97,7 @@ class DataSource(Data, ABC):
         """
 
     @abstractmethod
-    def delete_many(self, keys: Iterable[Record], data_set: str | None = None) -> None:
+    def delete_many(self, keys: Iterable[RecordMixin], data_set: str | None = None) -> None:
         """
         Delete many records in the specified dataset, bypassing
         the commit queue. If an element of the 'keys' argument is
@@ -115,7 +115,7 @@ class DataSource(Data, ABC):
         """
 
     @abstractmethod
-    def delete_on_commit(self, key: Record, data_set: str | None = None) -> None:
+    def delete_on_commit(self, key: RecordMixin, data_set: str | None = None) -> None:
         """
         Add to commit queue the command to delete record in the
         specified dataset. No error is raised if the record does not
@@ -205,7 +205,7 @@ class DataSource(Data, ABC):
             # We know there is exactly one element
             return record
 
-    def save_one(self, record: Record, data_set: str | None = None):
+    def save_one(self, record: RecordMixin, data_set: str | None = None):
         """
         Save one record to the specified dataset, bypassing the commit queue.
 
@@ -220,7 +220,7 @@ class DataSource(Data, ABC):
         # Pass arguments to save_many(...)
         self.save_many([record], data_set)
 
-    def delete_one(self, key: Record, data_set: str | None = None) -> None:
+    def delete_one(self, key: RecordMixin, data_set: str | None = None) -> None:
         """
         Delete record with argument key in the specified dataset
         bypassing the commit queue. No error is raised if the record

@@ -14,11 +14,11 @@
 
 from typing import Optional
 from cl.runtime.storage.attrs import data_field, data_class
-from cl.runtime.storage.key_mixin import Key
+from cl.runtime.storage.key_mixin import KeyMixin
 
 
 @data_class
-class ModuleKey(Key):
+class ModuleKey(KeyMixin):
     """
     Defines Analyst module.
     Module can be represented both as the source code and precomiled dll (defined by flag "Compiled").

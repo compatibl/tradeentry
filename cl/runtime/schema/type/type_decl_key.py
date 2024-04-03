@@ -13,11 +13,11 @@
 # limitations under the License.
 
 from cl.runtime.storage.attrs import data_field, data_class
-from cl.runtime.storage.key_mixin import Key
+from cl.runtime.storage.key_mixin import KeyMixin
 
 
 @data_class
-class TypeDeclKey(Key):
+class TypeDeclKey(KeyMixin):
     """Key for the base class of type declaration in schema."""
 
     type_id: str = data_field()

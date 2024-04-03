@@ -19,7 +19,7 @@ from typing import Any, Callable, Dict, Iterable, Optional, Tuple
 
 from cl.runtime.attributes.implement_language import ImplementLanguage
 from cl.runtime.attributes.method_trait import MethodTrait
-from cl.runtime.storage.key_mixin import Key
+from cl.runtime.storage.key_mixin import KeyMixin
 
 
 def _parse_method_params(method: Callable, method_params: Iterable[Parameter], args: Tuple, kwargs: Dict):
@@ -57,7 +57,7 @@ def _parse_method_params(method: Callable, method_params: Iterable[Parameter], a
     return params
 
 
-def _get_parameters(method: Callable, args: Tuple, kwargs: Dict, ignore_self_arg: bool = False) -> Tuple[Key, Dict]:
+def _get_parameters(method: Callable, args: Tuple, kwargs: Dict, ignore_self_arg: bool = False) -> Tuple[KeyMixin, Dict]:
     """
     Get the parameters of a method, excluding the 'self' parameter if present.
 
@@ -72,7 +72,7 @@ def _get_parameters(method: Callable, args: Tuple, kwargs: Dict, ignore_self_arg
     """
     method_params = signature(method).parameters
 
-    self_param: Optional[Key] = None
+    self_param: Optional[KeyMixin] = None
     params_values: Any = method_params.values()
     args_values = args
 

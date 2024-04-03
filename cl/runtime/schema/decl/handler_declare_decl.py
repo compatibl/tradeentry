@@ -18,11 +18,11 @@ from typing import List, Optional
 from cl.runtime.schema.decl.handler_param_decl import HandlerParamDecl
 from cl.runtime.schema.decl.handler_type import HandlerType
 from cl.runtime.schema.decl.handler_variable_decl import HandlerVariableDecl
-from cl.runtime.storage.data_mixin import Data
+from cl.runtime.storage.data_mixin import DataMixin
 
 
 @data_class
-class HandlerDeclareDecl(Data):
+class HandlerDeclareDecl(DataMixin):
     """Handler declaration data."""
 
     name: str = data_field()

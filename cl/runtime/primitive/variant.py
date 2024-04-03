@@ -22,10 +22,10 @@ from cl.runtime.primitive.schema_helper import enum_name_from_schema, enum_name_
 from cl.runtime.primitive.string_util import to_pascal_case, to_snake_case
 from cl.runtime.primitive.variant_type import VariantType
 from cl.runtime.storage.context import Context
-from cl.runtime.storage.data_mixin import Data
-from cl.runtime.storage.key_mixin import Key
+from cl.runtime.storage.data_mixin import DataMixin
+from cl.runtime.storage.key_mixin import KeyMixin
 
-VariantHint = Union[None, str, float, int, bool, dt.date, dt.time, dt.datetime, IntEnum, Key, Data]
+VariantHint = Union[None, str, float, int, bool, dt.date, dt.time, dt.datetime, IntEnum, KeyMixin, DataMixin]
 
 
 def _get_wrong_type_error_message(type_: type) -> str:
@@ -57,7 +57,7 @@ class Variant:
             self._value = None
         else:
             type_ = type(value)
-            if type_ in Variant._variant_types or Data in type_.__mro__ or IntEnum in type_.__mro__:
+            if type_ in Variant._variant_types or DataMixin in type_.__mro__ or IntEnum in type_.__mro__:
                 self._value = value
             else:
                 raise Exception(_get_wrong_type_error_message(type_))
@@ -86,9 +86,9 @@ class Variant:
 
         elif type_ == str:
             return VariantType.String
-        elif Key in type_.__mro__:
+        elif KeyMixin in type_.__mro__:
             return VariantType.Key
-        elif Data in type_.__mro__:
+        elif DataMixin in type_.__mro__:
             return VariantType.Data
         elif IntEnum in type_.__mro__:
             return VariantType.Enum
@@ -108,7 +108,7 @@ class Variant:
     def to_bson(self) -> Dict[str, Any]:
         """Serialize variant to bson."""
 
-        from cl.runtime.storage.data_mixin import Data
+        from cl.runtime.storage.data_mixin import DataMixin
 
         inner_value = self.value()
         inner_type = self.value_type()
@@ -122,7 +122,7 @@ class Variant:
         ):
             serialized_value = DateTimeAggregateUtil.value_to_iso_int(inner_value)
         elif inner_type in (VariantType.Data, VariantType.Key):
-            serialized_value = inner_value.to_bson(Data)
+            serialized_value = inner_value.to_bson(DataMixin)
         elif inner_type == VariantType.Enum:
             enum_type = type(inner_value)
             enum_type_module = '.'.join(
@@ -170,7 +170,7 @@ class Variant:
             real_type = list(cls._type_mapping.keys())[list(cls._type_mapping.values()).index(variant_type)]
             value = DateTimeAggregateUtil.value_from_iso_int(raw_value, real_type)
         elif variant_type in (VariantType.Data, VariantType.Key):
-            value = Data.from_bson(raw_value, context=context)
+            value = DataMixin.from_bson(raw_value, context=context)
         else:
             value = raw_value
 

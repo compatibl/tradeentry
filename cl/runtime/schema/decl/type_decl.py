@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from typing import List, Optional
-from cl.runtime.storage.record_mixin import Record
+from cl.runtime.storage.record_mixin import RecordMixin
 from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.decl.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.decl.handler_implement_block_decl import HandlerImplementBlockDecl
@@ -27,7 +27,7 @@ from cl.runtime.schema.decl.type_param_decl import TypeParamDecl
 
 
 @data_class
-class TypeDecl(TypeDeclKey, Record):
+class TypeDecl(TypeDeclKey, RecordMixin):
     """
     Defines type declaration. A tag of entity type XML representation corresponds to each element of the type. The
     names of type elements and corresponding tags coincide.

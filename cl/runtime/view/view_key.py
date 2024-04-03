@@ -13,11 +13,11 @@
 # limitations under the License.
 
 from cl.runtime.storage.attrs import data_field, data_class
-from cl.runtime.storage.key_mixin import Key
+from cl.runtime.storage.key_mixin import KeyMixin
 
 
 @data_class
-class ViewKey(Key):
+class ViewKey(KeyMixin):
     """
     The data shown alongside the record in the front end.
 

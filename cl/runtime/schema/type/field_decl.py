@@ -16,11 +16,11 @@ from cl.runtime.storage.attrs import data_field, data_class
 from typing import Union
 
 from cl.runtime.schema.type.type_decl_key import TypeDeclKey
-from cl.runtime.storage.data_mixin import Data
+from cl.runtime.storage.data_mixin import DataMixin
 
 
 @data_class
-class FieldDecl(Data):
+class FieldDecl(DataMixin):
     """Base class of type declaration in schema."""
 
     name: str = data_field()

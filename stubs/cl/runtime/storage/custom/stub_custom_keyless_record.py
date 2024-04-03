@@ -15,11 +15,11 @@
 from __future__ import annotations
 from typing import Any, Dict, Optional
 from cl.runtime.storage.context import Context
-from cl.runtime.storage.key_mixin import Key
-from cl.runtime.storage.record_mixin import Record
+from cl.runtime.storage.key_mixin import KeyMixin
+from cl.runtime.storage.record_mixin import RecordMixin
 
 
-class StubCustomKeylessRecord(Key):
+class StubCustomKeylessRecord(KeyMixin):
     """Stub record used in tests."""
 
     str_field: Optional[str]

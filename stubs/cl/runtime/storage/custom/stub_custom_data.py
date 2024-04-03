@@ -15,10 +15,10 @@
 from __future__ import annotations
 from typing_extensions import Self
 from typing import Any, Dict, Optional
-from cl.runtime import Data
+from cl.runtime import DataMixin
 
 
-class StubCustomData(Data):
+class StubCustomData(DataMixin):
     """Stub serializable data used in tests."""
 
     str_field: Optional[str]

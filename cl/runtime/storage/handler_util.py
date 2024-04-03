@@ -16,7 +16,7 @@ from functools import wraps
 from inspect import Parameter, isfunction, ismethod, signature
 from itertools import islice
 from typing import Any, Callable, Dict, Iterable, Optional, Tuple
-from cl.runtime.storage.key_mixin import Key
+from cl.runtime.storage.key_mixin import KeyMixin
 
 
 def handler(label: str = None):
@@ -63,12 +63,12 @@ def _parse_params(method: Callable, method_params: Iterable[Parameter], args: Tu
     return params
 
 
-def _get_params(method: Callable, args: Tuple, kwargs: Dict, ignore_self_arg: bool = False) -> Tuple[Key, Dict]:
+def _get_params(method: Callable, args: Tuple, kwargs: Dict, ignore_self_arg: bool = False) -> Tuple[KeyMixin, Dict]:
     """Get parameters including self (use for instance methods only)."""
 
     method_params = signature(method).parameters
 
-    self_param: Optional[Key] = None
+    self_param: Optional[KeyMixin] = None
     params_values: Any = method_params.values()
     args_values = args
 

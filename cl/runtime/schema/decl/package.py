@@ -13,14 +13,14 @@
 # limitations under the License.
 
 from typing import List, Optional
-from cl.runtime.storage.record_mixin import Record
+from cl.runtime.storage.record_mixin import RecordMixin
 from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.decl.package_dependency import PackageDependency
 from cl.runtime.schema.decl.package_key import PackageKey
 
 
 @data_class
-class Package(PackageKey, Record):
+class Package(PackageKey, RecordMixin):
     """Package is a list of modules and binaries which are deployed together."""
 
     package_shortcut: Optional[str] = data_field()

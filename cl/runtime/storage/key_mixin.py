@@ -15,10 +15,10 @@
 from __future__ import annotations
 from abc import ABC
 from typing_extensions import Self
-from cl.runtime.storage.data_mixin import Data
+from cl.runtime.storage.data_mixin import DataMixin
 
 
-class Key(Data, ABC):
+class KeyMixin(DataMixin, ABC):
     """
     Optional mixin class for database keys providing static type checkers with method signatures.
 

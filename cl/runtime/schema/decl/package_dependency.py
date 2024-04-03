@@ -15,11 +15,11 @@
 from cl.runtime.storage.attrs import data_field, data_class
 from typing import Optional
 
-from cl.runtime.storage.data_mixin import Data
+from cl.runtime.storage.data_mixin import DataMixin
 
 
 @data_class
-class PackageDependency(Data):
+class PackageDependency(DataMixin):
     """PackageDependency."""
 
     name: str = data_field()

@@ -92,8 +92,8 @@ def test_get_inheritance_chain():
     """Test getting class path from class."""
 
     # Test helper method
-    assert not rt.RecordUtil.is_init_implemented(rt.Data)  # Not present
-    assert not rt.RecordUtil.is_init_implemented(rt.Record)  # Abstract
+    assert not rt.RecordUtil.is_init_implemented(rt.DataMixin)  # Not present
+    assert not rt.RecordUtil.is_init_implemented(rt.RecordMixin)  # Abstract
     assert rt.RecordUtil.is_init_implemented(StubAttrsRecord)  # Implemented
     assert rt.RecordUtil.is_init_implemented(StubAttrsRecord)  # Implemented
 

@@ -13,13 +13,13 @@
 # limitations under the License.
 
 from typing import Optional
-from cl.runtime.storage.record_mixin import Record
+from cl.runtime.storage.record_mixin import RecordMixin
 from cl.runtime.storage.attrs import data_field, data_class
 from stubs.cl.runtime.storage.attrs.stub_attrs_singleton_key import StubAttrsSingletonKey
 
 
 @data_class
-class StubAttrsSingleton(StubAttrsSingletonKey, Record):
+class StubAttrsSingleton(StubAttrsSingletonKey, RecordMixin):
     """Singleton record has no key fields."""
 
     str_field: str = data_field(default="abc")

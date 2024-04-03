@@ -17,7 +17,7 @@ from typing import Dict, Iterable, Optional, Type, Union
 
 from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.storage.data_source import DataSource, TKey, TRecord
-from cl.runtime.storage.record_mixin import Record
+from cl.runtime.storage.record_mixin import RecordMixin
 from cl.runtime.storage.record_util import RecordUtil
 
 
@@ -65,7 +65,7 @@ class InProcessDataSource(DataSource):
                     continue
                 else:
                     raise RuntimeError("Key=None but 'is_optional_key' not set.")
-            elif isinstance(key, Record):
+            elif isinstance(key, RecordMixin):
                 # Handle full record passed instead of the key
                 result.append(key)
                 continue
@@ -112,7 +112,7 @@ class InProcessDataSource(DataSource):
 
         return result
 
-    def save_many(self, records: Iterable[Record], data_set: str) -> None:
+    def save_many(self, records: Iterable[RecordMixin], data_set: str) -> None:
         """Save many records to the specified dataset, bypassing the commit queue."""
 
         # Iterate over records
@@ -137,7 +137,7 @@ class InProcessDataSource(DataSource):
             table_name = record.get_table()
             dataset_cache[key] = record_dict
 
-    def save_on_commit(self, record: Record, data_set: str) -> None:
+    def save_on_commit(self, record: RecordMixin, data_set: str) -> None:
         """
         Add the record to the commit queue.
 
@@ -148,7 +148,7 @@ class InProcessDataSource(DataSource):
         """
         raise NotImplementedError()
 
-    def delete_many(self, keys: Iterable[Record], data_set: str) -> None:
+    def delete_many(self, keys: Iterable[RecordMixin], data_set: str) -> None:
         """
         Delete many records in the specified dataset, bypassing
         the commit queue. If an element of the 'keys' argument is
@@ -166,7 +166,7 @@ class InProcessDataSource(DataSource):
         """
         raise NotImplementedError()
 
-    def delete_on_commit(self, key: Record, data_set: str) -> None:
+    def delete_on_commit(self, key: RecordMixin, data_set: str) -> None:
         """
         Add to commit queue the command to delete record in the
         specified dataset. No error is raised if the record does not

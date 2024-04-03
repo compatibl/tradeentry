@@ -16,11 +16,11 @@ from cl.runtime.storage.attrs import data_field, data_class
 
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.decl.language_key import LanguageKey
-from cl.runtime.storage.data_mixin import Data
+from cl.runtime.storage.data_mixin import DataMixin
 
 
 @data_class
-class InterfaceImplementDecl(Data):
+class InterfaceImplementDecl(DataMixin):
     """Interface implementation data."""
 
     interface: InterfaceDeclKey = data_field()

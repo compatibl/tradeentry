@@ -13,9 +13,9 @@
 # limitations under the License.
 
 from typing import Iterable, Type, TypeVar, Union
-from cl.runtime import data_class, data_field, Key
+from cl.runtime import data_class, data_field, KeyMixin
 from cl.runtime.storage.data_source import DataSource
-from cl.runtime.storage.record_mixin import Record
+from cl.runtime.storage.record_mixin import RecordMixin
 
 TKey = TypeVar('TKey', contravariant=True)
 TRecord = TypeVar('TRecord', covariant=True)
@@ -38,15 +38,15 @@ class NullDataSource(DataSource):
         """Load instances of classes derived from base_type from storage using a sequence of keys."""
         return []
 
-    def save_many(self, records: Iterable[Record], data_set: str | None = None) -> None:
+    def save_many(self, records: Iterable[RecordMixin], data_set: str | None = None) -> None:
         """Save many records to the specified dataset, bypassing the commit queue."""
         pass
 
-    def save_on_commit(self, record: Record, data_set: str | None = None) -> None:
+    def save_on_commit(self, record: RecordMixin, data_set: str | None = None) -> None:
         """Add the record to the commit queue."""
         pass
 
-    def delete_many(self, keys: Iterable[Record], data_set: str | None = None) -> None:
+    def delete_many(self, keys: Iterable[RecordMixin], data_set: str | None = None) -> None:
         """
         Delete many records in the specified dataset, bypassing
         the commit queue. If an element of the 'keys' argument is
@@ -54,7 +54,7 @@ class NullDataSource(DataSource):
         """
         pass
 
-    def delete_on_commit(self, key: Record, data_set: str | None = None) -> None:
+    def delete_on_commit(self, key: RecordMixin, data_set: str | None = None) -> None:
         """
         Add to commit queue the command to delete record in the
         specified dataset. No error is raised if the record does not

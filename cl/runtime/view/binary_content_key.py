@@ -15,11 +15,11 @@
 import attrs
 
 from cl.runtime.storage.attrs import data_class, data_field
-from cl.runtime.storage.key_mixin import Key
+from cl.runtime.storage.key_mixin import KeyMixin
 
 
 @data_class
-class BinaryContentKey(Key):
+class BinaryContentKey(KeyMixin):
     """Display the specified embedded binary content."""
 
     pass

@@ -14,11 +14,11 @@
 
 from cl.runtime.storage.attrs import data_field, data_class
 
-from cl.runtime.storage.key_mixin import Key
+from cl.runtime.storage.key_mixin import KeyMixin
 
 
 @data_class
-class PackageKey(Key):
+class PackageKey(KeyMixin):
     """Package is a list of modules and binaries which are deployed together."""
 
     package_name: str = data_field()

@@ -17,11 +17,11 @@ from typing import List, Optional
 
 from cl.runtime.schema.decl.handler_implement_decl import HandlerImplementDecl
 from cl.runtime.schema.decl.interface_implement_decl import InterfaceImplementDecl
-from cl.runtime.storage.data_mixin import Data
+from cl.runtime.storage.data_mixin import DataMixin
 
 
 @data_class
-class HandlerImplementBlockDecl(Data):
+class HandlerImplementBlockDecl(DataMixin):
     """Handler implementation block in type declaration."""
 
     handlers: Optional[List[HandlerImplementDecl]] = data_field()

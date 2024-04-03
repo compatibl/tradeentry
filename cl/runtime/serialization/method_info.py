@@ -17,12 +17,12 @@ from typing import Any, List, Optional, Tuple, Type
 
 from cl.runtime.attributes import ImplementLanguage, MethodTrait
 from cl.runtime.storage.class_info import ClassInfo
-from cl.runtime.storage.data_mixin import Data
+from cl.runtime.storage.data_mixin import DataMixin
 from cl.runtime.storage.attrs import data_class, data_field
 
 
 @data_class
-class MethodArgumentInfo(Data):
+class MethodArgumentInfo(DataMixin):
     """Method argument information class."""
 
     name: Optional[str] = data_field()
@@ -39,7 +39,7 @@ class MethodArgumentInfo(Data):
 
 
 @data_class
-class MethodInfo(Data):
+class MethodInfo(DataMixin):
     """Method information class."""
 
     method_name: Optional[str] = data_field()

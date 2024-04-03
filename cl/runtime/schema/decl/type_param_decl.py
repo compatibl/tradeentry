@@ -16,11 +16,11 @@ from cl.runtime.storage.attrs import data_field, data_class
 from typing import Optional
 
 from cl.runtime.schema.decl.type_param_constraint_type import TypeParamConstraintType
-from cl.runtime.storage.data_mixin import Data
+from cl.runtime.storage.data_mixin import DataMixin
 
 
 @data_class
-class TypeParamDecl(Data):
+class TypeParamDecl(DataMixin):
     """Type parameter declaration."""
 
     name: str = data_field()

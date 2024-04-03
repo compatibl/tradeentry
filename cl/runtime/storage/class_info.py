@@ -270,20 +270,20 @@ class ClassInfo:
         This is the class derived directly from Data, Record, or RootRecord.
         """
 
-        from cl.runtime.storage.data_mixin import Data
-        from cl.runtime.storage.key_mixin import Key
+        from cl.runtime.storage.data_mixin import DataMixin
+        from cl.runtime.storage.key_mixin import KeyMixin
 
         type_mro = type_.mro()
-        if type_mro[0] in (Data, Key):
+        if type_mro[0] in (DataMixin, KeyMixin):
             raise Exception('Ultimate base is undefined for Data, Key, ' 'only for classes derived from them.')
 
-        if Key in type_.__bases__:
+        if KeyMixin in type_.__bases__:
             raise Exception('Ultimate base is undefined for key classes.')
 
         for i in range(1, len(type_mro)):
-            if type_mro[i] == Key:
+            if type_mro[i] == KeyMixin:
                 return type_mro[i - 2]
-            if type_mro[i] == Data:
+            if type_mro[i] == DataMixin:
                 return type_mro[i - 1]
         raise Exception('Type is not derived from Data, Record, or RootRecord.')
 
@@ -310,22 +310,22 @@ class ClassInfo:
         The class must be derived from Data, error message otherwise.
         """
 
-        from cl.runtime.storage.data_mixin import Data
-        from cl.runtime.storage.key_mixin import Key
+        from cl.runtime.storage.data_mixin import DataMixin
+        from cl.runtime.storage.key_mixin import KeyMixin
 
         type_mro = type_.mro()
-        if type_mro[0] in (Data, Key):
+        if type_mro[0] in (DataMixin, KeyMixin):
             raise Exception('Cannot get inheritance chain for the Root class, ' 'only for classes derived from it.')
 
-        if Key in type_mro:
-            idx = type_mro.index(Key)
-            if Key in type_.__bases__:
+        if KeyMixin in type_mro:
+            idx = type_mro.index(KeyMixin)
+            if KeyMixin in type_.__bases__:
                 chain = [ClassInfo.get_prefixed_name(x) for x in type_mro[idx - 1 :: -1]]
             else:
                 chain = [ClassInfo.get_prefixed_name(x) for x in type_mro[idx - 2 :: -1]]
             return chain
-        elif Data in type_mro:
-            idx = type_mro.index(Data)
+        elif DataMixin in type_mro:
+            idx = type_mro.index(DataMixin)
             return [ClassInfo.get_prefixed_name(x) for x in type_mro[idx - 1 :: -1]]
         raise Exception('Type is not derived from Data')
 
@@ -334,11 +334,11 @@ class ClassInfo:
     def get_key_from_record(type_: type) -> type:
         """Extract associated key from Key derived types."""
 
-        from cl.runtime.storage.key_mixin import Key
+        from cl.runtime.storage.key_mixin import KeyMixin
 
         type_mro = type_.mro()
-        if Key in type_mro:
-            data_index = type_mro.index(Key)
+        if KeyMixin in type_mro:
+            data_index = type_mro.index(KeyMixin)
             return type_mro[data_index - 1]
         else:
             raise Exception(f'Cannot deduce key from {type_.__name__} type not derived from Key.')
@@ -348,11 +348,11 @@ class ClassInfo:
     def get_record_from_key(type_: type) -> type:
         """Extract associated record from Key derived types."""
 
-        from cl.runtime.storage.key_mixin import Key
+        from cl.runtime.storage.key_mixin import KeyMixin
 
         key_type_name = ClassInfo.get_prefixed_name(type_)
 
-        if Key in type_.mro():
+        if KeyMixin in type_.mro():
             if not key_type_name.endswith('Key'):
                 raise Exception(f'Unexpected type name: {key_type_name}. Key type name should end with "Key"')
             record_type_name = key_type_name[:-3]
@@ -367,11 +367,11 @@ class ClassInfo:
     def __init_types():
         """Initialize types, resolving issues with class duplicates in __subclasses__()."""
         from cl.runtime.storage.context import Context
-        from cl.runtime.storage.data_mixin import Data
+        from cl.runtime.storage.data_mixin import DataMixin
 
         # Resolves issue with classes duplicates in __subclasses__()
         gc.collect()
-        children = ClassInfo.__get_runtime_imported_data(Data, [Context, Data])
+        children = ClassInfo.__get_runtime_imported_data(DataMixin, [Context, DataMixin])
         for child in children:
             an_name = ClassInfo.to_analyst_name(child)
             prefixed_name = ClassInfo.get_prefixed_name(child)
@@ -468,9 +468,9 @@ class ClassInfo:
             This function identifies serializable fields by comparing them with the fields defined in the base
             `cl.runtime.storage.data.Data` class. It excludes fields starting with '_' if `remove_protected` is True.
         """
-        from cl.runtime.storage.data_mixin import Data
+        from cl.runtime.storage.data_mixin import DataMixin
 
-        data_fields = vars(Data).keys()
+        data_fields = vars(DataMixin).keys()
         class_fields = ClassInfo.get_class_fields(data_type)
         fields_ = []
         for field_ in class_fields:

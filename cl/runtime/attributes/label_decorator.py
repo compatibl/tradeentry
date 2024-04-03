@@ -16,7 +16,7 @@ import inspect
 from enum import IntEnum
 from typing import Protocol
 
-from cl.runtime.storage.data_mixin import Data
+from cl.runtime.storage.data_mixin import DataMixin
 
 
 def label(label: str):
@@ -27,7 +27,7 @@ def label(label: str):
 
     def wrap(obj):
         if inspect.isclass(obj):
-            if (Data not in obj.__mro__) and (IntEnum not in obj.__mro__) and (Protocol not in obj.__mro__):
+            if (DataMixin not in obj.__mro__) and (IntEnum not in obj.__mro__) and (Protocol not in obj.__mro__):
                 raise Exception('@label should be applied on Data derived class, IntEnum or Protocol')
 
             obj._label = label

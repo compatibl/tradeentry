@@ -14,11 +14,11 @@
 
 from typing import Optional
 from cl.runtime.storage.attrs import data_field, data_class
-from cl.runtime.storage.key_mixin import Key
+from cl.runtime.storage.key_mixin import KeyMixin
 
 
 @data_class
-class StubAttrsRecordKey(Key):
+class StubAttrsRecordKey(KeyMixin):
     """Stub record base class."""
 
     str_field: str = data_field(default="abc")

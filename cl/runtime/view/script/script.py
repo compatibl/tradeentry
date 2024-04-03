@@ -18,12 +18,12 @@ import attrs
 
 from cl.runtime.view.script.script_language import ScriptLanguage
 from cl.runtime.primitive.variant import Variant
-from cl.runtime.storage.data_mixin import Data
+from cl.runtime.storage.data_mixin import DataMixin
 from cl.runtime.storage.attrs import data_class, data_field
 
 
 @data_class
-class Script(Data):
+class Script(DataMixin):
     """Script body element"""
 
     name: Optional[Variant] = data_field()

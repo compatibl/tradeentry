@@ -16,11 +16,11 @@ from cl.runtime.storage.attrs import data_field, data_class
 from typing import Optional
 
 from cl.runtime.schema.decl.language_key import LanguageKey
-from cl.runtime.storage.data_mixin import Data
+from cl.runtime.storage.data_mixin import DataMixin
 
 
 @data_class
-class HandlerImplementDecl(Data):
+class HandlerImplementDecl(DataMixin):
     """Handler implementation data."""
 
     name: str = data_field()

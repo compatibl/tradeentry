@@ -15,11 +15,11 @@
 from __future__ import annotations
 from typing import Any, Dict, Optional
 from cl.runtime.storage.context import Context
-from cl.runtime.storage.record_mixin import Record
+from cl.runtime.storage.record_mixin import RecordMixin
 from stubs.cl.runtime.storage.custom.stub_custom_record_key import StubCustomRecordKey
 
 
-class StubCustomRecord(StubCustomRecordKey, Record):
+class StubCustomRecord(StubCustomRecordKey, RecordMixin):
     """Stub record used in tests."""
 
     float_field: Optional[float]

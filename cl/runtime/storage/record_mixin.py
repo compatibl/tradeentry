@@ -15,10 +15,10 @@
 from abc import ABC
 from typing import Optional
 from cl.runtime import Context
-from cl.runtime.storage.key_mixin import Key
+from cl.runtime.storage.key_mixin import KeyMixin
 
 
-class Record(ABC):
+class RecordMixin(ABC):
     """
     Optional mixin class for database records providing static type checkers with method signatures.
 

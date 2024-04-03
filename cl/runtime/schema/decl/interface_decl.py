@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from typing import List, Optional
-from cl.runtime.storage.record_mixin import Record
+from cl.runtime.storage.record_mixin import RecordMixin
 from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.decl.handler_declare_decl import HandlerDeclareDecl
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
@@ -21,7 +21,7 @@ from cl.runtime.schema.decl.type_element_decl import TypeElementDecl
 
 
 @data_class
-class InterfaceDecl(InterfaceDeclKey, Record):
+class InterfaceDecl(InterfaceDeclKey, RecordMixin):
     """Defines Interface declaration."""
 
     label: str = data_field()

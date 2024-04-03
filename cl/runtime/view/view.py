@@ -14,12 +14,12 @@
 
 from abc import ABC
 from cl.runtime.storage.attrs import data_field, data_class
-from cl.runtime.storage.record_mixin import Record
+from cl.runtime.storage.record_mixin import RecordMixin
 from cl.runtime.view.view_key import ViewKey
 
 
 @data_class
-class View(ViewKey, Record, ABC):
+class View(ViewKey, RecordMixin, ABC):
     """
     The data shown alongside the record in the front end.
 

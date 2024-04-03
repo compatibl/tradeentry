@@ -16,11 +16,11 @@ from cl.runtime.storage.attrs import data_field, data_class
 from typing import Optional
 
 from cl.runtime.schema.decl.index_sort_order_enum import IndexSortOrderEnum
-from cl.runtime.storage.data_mixin import Data
+from cl.runtime.storage.data_mixin import DataMixin
 
 
 @data_class
-class IndexDecl(Data):
+class IndexDecl(DataMixin):
     """Index declaration."""
 
     name: str = data_field()

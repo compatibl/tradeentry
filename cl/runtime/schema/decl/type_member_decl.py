@@ -19,14 +19,14 @@ from cl.runtime.schema.decl.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.decl.type_decl_key import TypeDeclKey
 from cl.runtime.schema.decl.value_decl import ValueDecl
-from cl.runtime.storage.data_mixin import Data
+from cl.runtime.storage.data_mixin import DataMixin
 
 if TYPE_CHECKING:
     from cl.runtime.schema.decl.type_argument_decl import TypeArgumentDecl
 
 
 @data_class
-class TypeMemberDecl(Data):
+class TypeMemberDecl(DataMixin):
     """Type member declaration."""
 
     type_param: Optional[str] = data_field()

@@ -16,11 +16,11 @@ from cl.runtime.storage.attrs import data_field, data_class
 from typing import List, Optional
 
 from cl.runtime.schema.decl.index_decl import IndexDecl
-from cl.runtime.storage.data_mixin import Data
+from cl.runtime.storage.data_mixin import DataMixin
 
 
 @data_class
-class TypeIndexDecl(Data):
+class TypeIndexDecl(DataMixin):
     """Type index declaration."""
 
     name: Optional[str] = data_field()

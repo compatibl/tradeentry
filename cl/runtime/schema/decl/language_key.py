@@ -13,11 +13,11 @@
 # limitations under the License.
 
 from cl.runtime.storage.attrs import data_field, data_class
-from cl.runtime.storage.key_mixin import Key
+from cl.runtime.storage.key_mixin import KeyMixin
 
 
 @data_class
-class LanguageKey(Key):
+class LanguageKey(KeyMixin):
     language_id: str = data_field(name='LanguageID')
     """Language."""
 

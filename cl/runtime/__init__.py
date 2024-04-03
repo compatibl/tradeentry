@@ -1,7 +1,7 @@
 from cl.runtime.storage.context import Context
-from cl.runtime.storage.data_mixin import Data
-from cl.runtime.storage.key_mixin import Key
-from cl.runtime.storage.record_mixin import Record
+from cl.runtime.storage.data_mixin import DataMixin
+from cl.runtime.storage.key_mixin import KeyMixin
+from cl.runtime.storage.record_mixin import RecordMixin
 from cl.runtime.storage.attrs import data_class, data_field
 from cl.runtime.attributes.label_decorator import label
 from cl.runtime.storage.record_util import RecordUtil

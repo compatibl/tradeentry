@@ -20,8 +20,8 @@ from cl.runtime.storage.handler_util import handler
 from cl.runtime.storage.viewer_util import viewer
 from cl.runtime.storage.index_util import index_fields
 from cl.runtime.storage.context import Context
-from cl.runtime.storage.data_mixin import Data
-from cl.runtime.storage.record_mixin import Record
+from cl.runtime.storage.data_mixin import DataMixin
+from cl.runtime.storage.record_mixin import RecordMixin
 from cl.runtime.storage.attrs import data_field, data_class
 from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
 from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey
@@ -41,7 +41,7 @@ def data_list_field_factory():
 @index_fields('version')
 @index_fields('str_field, int_field, -version', 'CustomIndexName')
 @data_class
-class StubAttrsRecord(StubAttrsRecordKey, Record):
+class StubAttrsRecord(StubAttrsRecordKey, RecordMixin):
     """Stub record base class."""
     
     version: int = data_field(default=0)
@@ -72,7 +72,7 @@ class StubAttrsRecord(StubAttrsRecordKey, Record):
         int_arg: int,
         datetime_arg: dt.datetime,
         enum_arg: StubIntEnum,
-        data_arg: Data,
+        data_arg: DataMixin,
     ) -> None:
         _logger.info(f"handler_with_arguments(int_arg={int_arg} datetime_arg={datetime_arg}"
                      f"enum_arg={enum_arg} data_arg={data_arg})")

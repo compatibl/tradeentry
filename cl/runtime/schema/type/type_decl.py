@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.record_mixin import Record
+from cl.runtime.storage.record_mixin import RecordMixin
 from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.type.type_decl_key import TypeDeclKey
 
 
 @data_class
-class TypeDecl(TypeDeclKey, Record):
+class TypeDecl(TypeDeclKey, RecordMixin):
     """Base class of type declaration in schema."""
 
     label: str = data_field(optional=True)

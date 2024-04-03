@@ -15,11 +15,11 @@
 from cl.runtime.storage.attrs import data_field, data_class
 
 from cl.runtime.schema.decl.module_key import ModuleKey
-from cl.runtime.storage.key_mixin import Key
+from cl.runtime.storage.key_mixin import KeyMixin
 
 
 @data_class
-class TypeDeclKey(Key):
+class TypeDeclKey(KeyMixin):
     """
     Defines type declaration. A tag of entity type XML representation corresponds to each element of the type. The
     names of type elements and corresponding tags coincide.

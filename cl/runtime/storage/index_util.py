@@ -14,9 +14,9 @@
 
 import inspect
 from typing import Any, Dict, List, Optional, Tuple, Type, TypeVar
-from cl.runtime.storage.key_mixin import Key
+from cl.runtime.storage.key_mixin import KeyMixin
 
-TRecord = TypeVar('TRecord', bound=Key)
+TRecord = TypeVar('TRecord', bound=KeyMixin)
 
 
 def index_fields(definition: str, name: str = None):
@@ -50,7 +50,7 @@ def index_fields(definition: str, name: str = None):
     def wrap(cls: Type[TRecord]):
         if not inspect.isclass(cls):
             raise Exception('@index_fields should be applied on class')
-        if Key not in cls.__mro__:
+        if KeyMixin not in cls.__mro__:
             raise Exception('@index_fields should be applied on Record derived class')
 
         # Set _has_index_fields attribute

@@ -13,12 +13,12 @@
 # limitations under the License.
 
 from typing import Optional
-from cl.runtime.storage.data_mixin import Data
+from cl.runtime.storage.data_mixin import DataMixin
 from cl.runtime.storage.attrs import data_field, data_class
 
 
 @data_class
-class StubAttrsData(Data):
+class StubAttrsData(DataMixin):
     """Stub base data type."""
 
     str_field: str = data_field(default="abc")

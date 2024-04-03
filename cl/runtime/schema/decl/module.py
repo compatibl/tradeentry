@@ -16,13 +16,13 @@ from abc import ABC
 from cl.runtime.storage.attrs import data_field, data_class
 from typing import List, Optional
 
-from cl.runtime import Record
+from cl.runtime import RecordMixin
 from cl.runtime.schema.decl.module_key import ModuleKey
 from cl.runtime.schema.decl.package_key import PackageKey
 
 
 @data_class
-class Module(ModuleKey, Record):
+class Module(ModuleKey, RecordMixin):
     """
     Represents a group of related types under a common namespace or directory.
     """

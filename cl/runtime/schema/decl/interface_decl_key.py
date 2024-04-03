@@ -14,11 +14,11 @@
 
 from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.decl.module_key import ModuleKey
-from cl.runtime.storage.key_mixin import Key
+from cl.runtime.storage.key_mixin import KeyMixin
 
 
 @data_class
-class InterfaceDeclKey(Key):
+class InterfaceDeclKey(KeyMixin):
     """Defines Interface declaration."""
 
     module: ModuleKey = data_field()

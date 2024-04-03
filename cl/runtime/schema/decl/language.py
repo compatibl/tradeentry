@@ -13,13 +13,13 @@
 # limitations under the License.
 
 from typing import Optional, final
-from cl.runtime import Record
+from cl.runtime import RecordMixin
 from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.decl.language_key import LanguageKey
 
 
 @final
 @data_class
-class Language(LanguageKey, Record):
+class Language(LanguageKey, RecordMixin):
     language_label: Optional[str] = data_field()
     """Language label displayed in user interface (may not be unique)."""

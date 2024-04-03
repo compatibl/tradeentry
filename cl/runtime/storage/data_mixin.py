@@ -17,7 +17,7 @@ from typing_extensions import Self
 from typing import Any, Dict
 
 
-class Data(ABC):
+class DataMixin(ABC):
     """
     Optional mixin class for serializable data providing static type checkers with method signatures.
 
