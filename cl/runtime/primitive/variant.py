@@ -22,8 +22,8 @@ from cl.runtime.primitive.schema_helper import enum_name_from_schema, enum_name_
 from cl.runtime.primitive.string_util import to_pascal_case, to_snake_case
 from cl.runtime.primitive.variant_type import VariantType
 from cl.runtime.storage.context import Context
-from cl.runtime.storage.data import Data
-from cl.runtime.storage.key import Key
+from cl.runtime.storage.data_mixin import Data
+from cl.runtime.storage.key_mixin import Key
 
 VariantHint = Union[None, str, float, int, bool, dt.date, dt.time, dt.datetime, IntEnum, Key, Data]
 
@@ -108,7 +108,7 @@ class Variant:
     def to_bson(self) -> Dict[str, Any]:
         """Serialize variant to bson."""
 
-        from cl.runtime.storage.data import Data
+        from cl.runtime.storage.data_mixin import Data
 
         inner_value = self.value()
         inner_type = self.value_type()

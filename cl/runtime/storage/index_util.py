@@ -14,7 +14,7 @@
 
 import inspect
 from typing import Any, Dict, List, Optional, Tuple, Type, TypeVar
-from cl.runtime.storage.key import Key
+from cl.runtime.storage.key_mixin import Key
 
 TRecord = TypeVar('TRecord', bound=Key)
 

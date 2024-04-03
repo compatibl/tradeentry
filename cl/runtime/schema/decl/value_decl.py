@@ -15,7 +15,7 @@
 from cl.runtime.storage.attrs import data_field, data_class
 
 from cl.runtime.schema.decl.atomic_type import AtomicType
-from cl.runtime.storage.data import Data
+from cl.runtime.storage.data_mixin import Data
 
 
 @data_class

@@ -15,7 +15,7 @@
 from typing import List
 from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.decl.handler_declare_decl import HandlerDeclareDecl
-from cl.runtime.storage.data import Data
+from cl.runtime.storage.data_mixin import Data
 
 
 @data_class

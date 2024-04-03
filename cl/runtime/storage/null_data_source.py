@@ -15,7 +15,7 @@
 from typing import Iterable, Type, TypeVar, Union
 from cl.runtime import data_class, data_field, Key
 from cl.runtime.storage.data_source import DataSource
-from cl.runtime.storage.record import Record
+from cl.runtime.storage.record_mixin import Record
 
 TKey = TypeVar('TKey', contravariant=True)
 TRecord = TypeVar('TRecord', covariant=True)

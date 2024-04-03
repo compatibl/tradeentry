@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from typing import List, Optional
-from cl.runtime.storage.record import Record
+from cl.runtime.storage.record_mixin import Record
 from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.decl.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.decl.enum_item_decl import EnumItemDecl

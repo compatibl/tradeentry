@@ -18,7 +18,7 @@ import attrs
 
 from cl.runtime.view.script.script_language import ScriptLanguage
 from cl.runtime.primitive.variant import Variant
-from cl.runtime.storage.data import Data
+from cl.runtime.storage.data_mixin import Data
 from cl.runtime.storage.attrs import data_class, data_field
 
 

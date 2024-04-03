@@ -17,7 +17,7 @@ from typing import Dict, Iterable, Optional, Type, Union
 
 from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.storage.data_source import DataSource, TKey, TRecord
-from cl.runtime.storage.record import Record
+from cl.runtime.storage.record_mixin import Record
 from cl.runtime.storage.record_util import RecordUtil
 
 

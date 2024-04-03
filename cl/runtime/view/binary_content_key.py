@@ -15,7 +15,7 @@
 import attrs
 
 from cl.runtime.storage.attrs import data_class, data_field
-from cl.runtime.storage.key import Key
+from cl.runtime.storage.key_mixin import Key
 
 
 @data_class

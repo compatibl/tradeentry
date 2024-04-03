@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from typing import Optional
-from cl.runtime.storage.data import Data
+from cl.runtime.storage.data_mixin import Data
 from cl.runtime.storage.attrs import data_field, data_class
 
 

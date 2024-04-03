@@ -16,7 +16,7 @@ from cl.runtime.storage.attrs import data_field, data_class
 from typing import List, Optional
 
 from cl.runtime.schema.decl.index_decl import IndexDecl
-from cl.runtime.storage.data import Data
+from cl.runtime.storage.data_mixin import Data
 
 
 @data_class

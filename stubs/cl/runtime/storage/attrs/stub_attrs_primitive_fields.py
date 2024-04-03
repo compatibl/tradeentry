@@ -17,7 +17,7 @@ from uuid import UUID
 
 from cl.runtime.primitive.date_time_util import DateTimeUtil
 from cl.runtime.primitive.date_util import DateUtil
-from cl.runtime.storage.record import Record
+from cl.runtime.storage.record_mixin import Record
 from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.primitive.time_util import TimeUtil
 from stubs.cl.runtime.storage.enum.stub_int_enum import StubIntEnum

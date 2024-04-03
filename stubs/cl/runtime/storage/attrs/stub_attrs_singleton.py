@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from typing import Optional
-from cl.runtime.storage.record import Record
+from cl.runtime.storage.record_mixin import Record
 from cl.runtime.storage.attrs import data_field, data_class
 from stubs.cl.runtime.storage.attrs.stub_attrs_singleton_key import StubAttrsSingletonKey
 

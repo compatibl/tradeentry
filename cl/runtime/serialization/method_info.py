@@ -17,7 +17,7 @@ from typing import Any, List, Optional, Tuple, Type
 
 from cl.runtime.attributes import ImplementLanguage, MethodTrait
 from cl.runtime.storage.class_info import ClassInfo
-from cl.runtime.storage.data import Data
+from cl.runtime.storage.data_mixin import Data
 from cl.runtime.storage.attrs import data_class, data_field
 
 

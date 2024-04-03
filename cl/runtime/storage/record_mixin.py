@@ -15,7 +15,7 @@
 from abc import ABC
 from typing import Optional
 from cl.runtime import Context
-from cl.runtime.storage.key import Key
+from cl.runtime.storage.key_mixin import Key
 
 
 class Record(ABC):

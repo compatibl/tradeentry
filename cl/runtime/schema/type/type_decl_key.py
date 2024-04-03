@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from cl.runtime.storage.attrs import data_field, data_class
-from cl.runtime.storage.key import Key
+from cl.runtime.storage.key_mixin import Key
 
 
 @data_class

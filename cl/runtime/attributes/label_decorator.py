@@ -16,7 +16,7 @@ import inspect
 from enum import IntEnum
 from typing import Protocol
 
-from cl.runtime.storage.data import Data
+from cl.runtime.storage.data_mixin import Data
 
 
 def label(label: str):

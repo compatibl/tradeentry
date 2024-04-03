@@ -19,7 +19,7 @@ from typing import Any, Callable, Dict, Iterable, Optional, Tuple
 
 from cl.runtime.attributes.implement_language import ImplementLanguage
 from cl.runtime.attributes.method_trait import MethodTrait
-from cl.runtime.storage.key import Key
+from cl.runtime.storage.key_mixin import Key
 
 
 def _parse_method_params(method: Callable, method_params: Iterable[Parameter], args: Tuple, kwargs: Dict):

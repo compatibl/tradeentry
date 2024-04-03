@@ -16,7 +16,7 @@ from cl.runtime.storage.attrs import data_field, data_class
 from typing import Optional
 
 from cl.runtime.schema.decl.language_key import LanguageKey
-from cl.runtime.storage.data import Data
+from cl.runtime.storage.data_mixin import Data
 
 
 @data_class

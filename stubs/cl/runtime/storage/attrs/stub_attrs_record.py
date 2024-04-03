@@ -20,8 +20,8 @@ from cl.runtime.storage.handler_util import handler
 from cl.runtime.storage.viewer_util import viewer
 from cl.runtime.storage.index_util import index_fields
 from cl.runtime.storage.context import Context
-from cl.runtime.storage.data import Data
-from cl.runtime.storage.record import Record
+from cl.runtime.storage.data_mixin import Data
+from cl.runtime.storage.record_mixin import Record
 from cl.runtime.storage.attrs import data_field, data_class
 from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
 from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey

@@ -17,7 +17,7 @@ from typing import List, Optional
 
 from cl.runtime.schema.decl.handler_implement_decl import HandlerImplementDecl
 from cl.runtime.schema.decl.interface_implement_decl import InterfaceImplementDecl
-from cl.runtime.storage.data import Data
+from cl.runtime.storage.data_mixin import Data
 
 
 @data_class
