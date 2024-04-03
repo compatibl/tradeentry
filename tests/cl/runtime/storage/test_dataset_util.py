@@ -19,43 +19,63 @@ from cl.runtime.storage.dataset_util import DatasetUtil
 def test_to_tokens():
     """Test conversion of dataset string to tokens."""
 
-    assert DatasetUtil.to_tokens("/") == []
-    assert DatasetUtil.to_tokens("/A") == ["A"]
-    assert DatasetUtil.to_tokens("/A/B") == ["A", "B"]
+    assert DatasetUtil.to_tokens(None) == []
+    assert DatasetUtil.to_tokens("") == []
+    assert DatasetUtil.to_tokens("A") == ["A"]
+    assert DatasetUtil.to_tokens("A\\B") == ["A", "B"]
 
     with pytest.raises(Exception):
-        DatasetUtil.to_tokens("")
+        assert DatasetUtil.to_tokens(" ")
     with pytest.raises(Exception):
-        DatasetUtil.to_tokens(" ")
+        assert DatasetUtil.to_tokens(" A")
     with pytest.raises(Exception):
-        DatasetUtil.to_tokens(" A")
+        assert DatasetUtil.to_tokens("A ")
     with pytest.raises(Exception):
-        DatasetUtil.to_tokens("A ")
+        assert DatasetUtil.to_tokens(" A\\B")
     with pytest.raises(Exception):
-        DatasetUtil.to_tokens("A")
+        assert DatasetUtil.to_tokens("A\\B ")
     with pytest.raises(Exception):
-        DatasetUtil.to_tokens("/A/")
+        assert DatasetUtil.to_tokens("A \\B")
     with pytest.raises(Exception):
-        DatasetUtil.to_tokens("/ A")
+        assert DatasetUtil.to_tokens("A\\ B")
     with pytest.raises(Exception):
-        DatasetUtil.to_tokens("/A /B")
+        DatasetUtil.to_tokens("\\A")
+    with pytest.raises(Exception):
+        DatasetUtil.to_tokens("A\\")
+    with pytest.raises(Exception):
+        DatasetUtil.to_tokens("\\A\\")
+    with pytest.raises(Exception):
+        DatasetUtil.to_tokens("\\ A")
+    with pytest.raises(Exception):
+        DatasetUtil.to_tokens("\\A \\B")
 
 
-def test_from_tokens():
-    """Test conversion of a list of tokens to dataset string."""
+def test_combine():
+    """Test method combine(...)"""
 
-    assert DatasetUtil.from_tokens([]) == "/"
-    assert DatasetUtil.from_tokens(["A"]) == "/A"
-    assert DatasetUtil.from_tokens(["A", "B"]) == "/A/B"
+    assert DatasetUtil.combine() is None
+    assert DatasetUtil.combine(None) is None
+    assert DatasetUtil.combine('') is None
+    assert DatasetUtil.combine("A") == "A"
+    assert DatasetUtil.combine("A", "B") == "A\\B"
+    assert DatasetUtil.combine(None, "A", "B") == "A\\B"
 
     with pytest.raises(Exception):
-        DatasetUtil.from_tokens(["/"])
+        DatasetUtil.combine("\\")
     with pytest.raises(Exception):
-        DatasetUtil.from_tokens([" "])
+        DatasetUtil.combine(" ")
     with pytest.raises(Exception):
-        DatasetUtil.from_tokens([" A"])
+        DatasetUtil.combine(" A")
     with pytest.raises(Exception):
-        DatasetUtil.from_tokens(["A "])
+        DatasetUtil.combine("A ")
+    with pytest.raises(Exception):
+        DatasetUtil.combine("\\A", "B")
+    with pytest.raises(Exception):
+        DatasetUtil.combine("A", "B\\")
+    with pytest.raises(Exception):
+        DatasetUtil.combine("A", "\\B")
+    with pytest.raises(Exception):
+        DatasetUtil.combine("A\\", "B")
 
 
 if __name__ == '__main__':
