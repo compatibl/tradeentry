@@ -95,20 +95,30 @@ class RecordUtil:
         be present in MRO, error otherwise.
         """
 
+        # Get the list of classes in MRO
         complete_mro = [f"{c.__module__}.{c.__name__}" for c in cls.mro()]
+
+        # Find classes whose name has Key suffix in MRO list
         key_class_indices = [index for index, string in enumerate(complete_mro) if string.endswith('Key')]
         key_class_count = len(key_class_indices)
 
-        if key_class_count == 1:
-            key_class_index = key_class_indices[0]
-            result = complete_mro[:key_class_index+1]
-            return result
-        elif key_class_count == 0:
+        # Make sure there is only one such class in the inheritance chain
+        if key_class_count == 0:
             raise RuntimeError(f"Class {cls.__module__}.{cls.__name__} has no parent with suffix `Key`. "
                                "Add Key suffix to key class name or implement `KeyMixin` interface.")
-        else:
+        elif key_class_count > 1:
             raise RuntimeError(f"Class {cls.__module__}.{cls.__name__} has more than one parent with suffix `Key`. "
                                "Ensure only one class has suffix `Key` or implement `KeyMixin` interface.")
+
+        # Truncate the inheritance chain to drop classes after the class with Key suffix
+        key_class_index = key_class_indices[0]
+        fully_qualified_names = complete_mro[:key_class_index+1]
+
+        # TODO: Add package aliases
+        # Remove module from fully qualified names
+        result = [name.split('.')[-1] for name in fully_qualified_names]
+
+        return result
 
     @staticmethod
     def to_dict(obj: Any) -> Dict[str, Any]:
@@ -146,10 +156,6 @@ class RecordUtil:
 
         # Remove Key suffix if present, otherwise return the original name
         result = inheritance_chain[-1].removesuffix("Key")
-
-        # TODO: Implement package alias mapping
-        # Remove module
-        result = result.split('.')[-1]
 
         return result
 

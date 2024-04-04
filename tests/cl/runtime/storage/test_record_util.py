@@ -80,25 +80,25 @@ def test_get_class_type():
 def test_get_inheritance_chain():
     """Test getting class path from class."""
 
-    key_path = rt.RecordUtil.get_class_path(StubAttrsRecordKey)
-    base_path = rt.RecordUtil.get_class_path(StubAttrsRecord)
-    derived_path = rt.RecordUtil.get_class_path(StubAttrsDerivedRecord)
+    key_class = "StubAttrsRecordKey"
+    base_class = "StubAttrsRecord"
+    derived_class = "StubAttrsDerivedRecord"
 
     # Key class, returns self
-    assert rt.RecordUtil.get_inheritance_chain(StubAttrsRecordKey) == [key_path]
+    assert rt.RecordUtil.get_inheritance_chain(StubAttrsRecordKey) == [key_class]
 
     # Common base class, returns self and key class
-    assert rt.RecordUtil.get_inheritance_chain(StubAttrsRecord) == [base_path, key_path]
+    assert rt.RecordUtil.get_inheritance_chain(StubAttrsRecord) == [base_class, key_class]
 
     # Derived class, returns self, common base and key
-    assert rt.RecordUtil.get_inheritance_chain(StubAttrsDerivedRecord) == [derived_path, base_path, key_path]
+    assert rt.RecordUtil.get_inheritance_chain(StubAttrsDerivedRecord) == [derived_class, base_class, key_class]
 
     # Invoke for a type that does not have a key class
     with pytest.raises(RuntimeError):
         rt.RecordUtil.get_inheritance_chain(StubAttrsData)
 
     # Call one more time and confirm that method results are cached
-    assert rt.RecordUtil.get_inheritance_chain(StubAttrsRecord) == [base_path, key_path]
+    assert rt.RecordUtil.get_inheritance_chain(StubAttrsRecord) == [base_class, key_class]
     assert rt.RecordUtil.get_inheritance_chain.cache_info().hits > 0
 
 
