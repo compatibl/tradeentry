@@ -14,7 +14,9 @@
 
 import sys
 from importlib import import_module
-from typing import List, Tuple, Type
+from typing import List, Tuple, Type, Any, Dict
+
+import attrs
 from memoization import cached
 
 from cl.runtime import KeyMixin
@@ -88,20 +90,94 @@ class RecordUtil:
     @cached(custom_key_maker=lambda cls: f"{cls.__module__}.{cls.__name__}")
     def get_inheritance_chain(cls: Type) -> List[str]:
         """
-        Returns the list of fully qualified parent class names starting from this class.
-        Key class is included, but in case of multiple inheritance it may not be the last.
+        Returns the list of fully qualified class names in MRO order starting from this class
+        and ending with the class that has suffix Key. Exactly one class with suffix Key should
+        be present in MRO, error otherwise.
         """
 
-        # The list of base classes for which a polymorphic query can return this record.
-        # It includes only those classes in MRO of this record that implement get_table()
-        # method, and its return value must be the same for all of them.
-        result = [
-            f"{c.__module__}.{c.__name__}" for c in cls.mro() if issubclass(c, KeyMixin) and c != KeyMixin
-        ]
+        complete_mro = [f"{c.__module__}.{c.__name__}" for c in cls.mro()]
+        key_class_indices = [index for index, string in enumerate(complete_mro) if string.endswith('Key')]
+        key_class_count = len(key_class_indices)
 
-        if len(result) == 0:
-            raise RuntimeError(f"To be stored in a data source, class {cls.__module__}.{cls.__name__} "
-                               f"must inherit from KeyMixin.")
+        if key_class_count == 1:
+            key_class_index = key_class_indices[0]
+            result = complete_mro[:key_class_index+1]
+            return result
+        elif key_class_count == 0:
+            raise RuntimeError(f"Class {cls.__module__}.{cls.__name__} has no parent with suffix `Key`. "
+                               "Add Key suffix to key class name or implement `KeyMixin` interface.")
+        else:
+            raise RuntimeError(f"Class {cls.__module__}.{cls.__name__} has more than one parent with suffix `Key`. "
+                               "Ensure only one class has suffix `Key` or implement `KeyMixin` interface.")
+
+    @staticmethod
+    def to_dict(obj: Any) -> Dict[str, Any]:
+        """Serialize to dictionary containing other dictionaries, lists and primitive types."""
+
+        # TODO: Add memoization
+        cls = type(obj)
+        if attrs.has(cls):
+            return attrs.asdict(obj)
+        else:
+            raise RuntimeError(f"Class {cls.__module__}.{cls.__name__} does not use one of the supported frameworks "
+                               f"(dataclasses, attrs, pydantic) and does not inherit from DataMixin or RecordMixin.")
+
+    @staticmethod
+    def from_dict(cls, data: Dict[str, Any]) -> Any:
+        """Create an instance of cls from dictionary containing other dictionaries, lists and primitive types."""
+        result = cls()
+        for key, value in data.items():
+            if key != "_t":
+                setattr(result, key, value)
+        return result
+
+    @staticmethod
+    @cached(custom_key_maker=lambda cls: f"{cls.__module__}.{cls.__name__}")
+    def get_table(cls: Type) -> str:
+        """
+        Name of the database table where records for this key is stored.
+
+        By convention, table name consists of a namespace (full package path or short alias)
+        followed by the dot delimiter and then the key class name without suffix Key.
+        """
+
+        # The last element of inheritance chain is the key class
+        inheritance_chain = RecordUtil.get_inheritance_chain(cls)
+
+        # Remove Key suffix if present, otherwise return the original name
+        result = inheritance_chain[-1].removesuffix("Key")
+
+        # TODO: Implement package alias mapping
+        # Remove module
+        result = result.split('.')[-1]
 
         return result
 
+    def get_key(self) -> str:
+        """
+        Key as string in semicolon-delimited string format without table name.
+
+        For composite keys, the embedded keys are concatenated in the order of their declaration without brackets:
+
+            - No primary key fields: '' (i.e. empty string)
+            - One primary key field A: 'A'
+            - Two primary key fields A and B: 'A;B'
+            - Two primary key fields 'A1;A2' and 'B': 'A1;A2;B'
+        """
+        raise RuntimeError(f"Method get_key() for class {type(self).__name__} in module {type(self).__module__} "
+                           f"is neither implemented in code nor by a decorator.")
+
+    def get_generic_key(self) -> str:
+        """
+        Generic key string defines both the table and the record within the table. It consists of the
+        table name followed by the primary key in semicolon-delimited string format.
+
+        By convention, table name consists of a namespace (full package path or short alias) followed by
+        the class name of the common base to all classes stored in the table with dot delimiter:
+
+        - No primary key fields: 'namespace.RecordType'
+        - One primary key field A: 'namespace.RecordType;A'
+        - Two primary key fields A and B: 'namespace.RecordType;A;B'
+        - Two primary key fields 'A1;A2' and 'B': 'namespace.RecordType;A1;A2;B'
+        """
+        return f"{self.get_table()};{self.get_key()}"

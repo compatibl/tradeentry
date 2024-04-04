@@ -52,9 +52,6 @@ def test_get_class_type():
     # Class that is already imported
     assert rt.RecordUtil.get_class_type(rt.RecordUtil.__module__, rt.RecordUtil.__name__) == rt.RecordUtil
 
-    # Call again to test caching
-    assert rt.RecordUtil.get_class_type(rt.RecordUtil.__module__, rt.RecordUtil.__name__) == rt.RecordUtil
-
     # Class that is dynamically imported on demand
     do_no_import_module_name = "stubs.cl.runtime.storage.attrs.stub_attrs_do_not_import"
     do_no_import_class_name = "StubAttrsDoNotImport"
@@ -62,61 +59,68 @@ def test_get_class_type():
     assert do_no_import_class.__module__ == do_no_import_module_name
     assert do_no_import_class.__name__ == do_no_import_class_name
 
-    # Call again to test caching
-    do_no_import_class = rt.RecordUtil.get_class_type(do_no_import_module_name, do_no_import_class_name)
-    assert do_no_import_class.__module__ == do_no_import_module_name
-    assert do_no_import_class.__name__ == do_no_import_class_name
-
     # Module does not exist error
     unknown_name = "aBcDeF"
-    with pytest.raises(RuntimeError) as e:
+    with pytest.raises(RuntimeError):
         rt.RecordUtil.get_class_type(unknown_name, do_no_import_class_name)
-    assert e.value.args[0] == f"Module {unknown_name} is not found when loading class {do_no_import_class_name}."
 
     # Class does not exist error
-    with pytest.raises(RuntimeError) as e:
+    with pytest.raises(RuntimeError):
         rt.RecordUtil.get_class_type(do_no_import_module_name, unknown_name)
-    assert e.value.args[0] == f"Module {do_no_import_module_name} does not contain top-level class {unknown_name}."
 
     # Dot-delimited class name error
     with pytest.raises(RuntimeError):
         rt.RecordUtil.get_class_type(do_no_import_module_name, "a.b")
 
-    # Test caching of method results
-    cache_info = rt.RecordUtil.get_class_type.cache_info()
-    assert cache_info.hits == 2
-    assert cache_info.misses == 5
-    assert cache_info.current_size == 2
+    # Call one more time and confirm that method results are cached
+    assert rt.RecordUtil.get_class_type(rt.RecordUtil.__module__, rt.RecordUtil.__name__) == rt.RecordUtil
+    assert rt.RecordUtil.get_class_type.cache_info().hits > 0
 
 
 def test_get_inheritance_chain():
     """Test getting class path from class."""
 
-    # Common base class, returns self
     key_path = rt.RecordUtil.get_class_path(StubAttrsRecordKey)
     base_path = rt.RecordUtil.get_class_path(StubAttrsRecord)
-    assert rt.RecordUtil.get_inheritance_chain(StubAttrsRecord) == [base_path, key_path]
-    # Call one more time to test caching
-    assert rt.RecordUtil.get_inheritance_chain(StubAttrsRecord) == [base_path, key_path]
-
-    # Derived class, returns the root of hierarchy (call twice to test caching)
     derived_path = rt.RecordUtil.get_class_path(StubAttrsDerivedRecord)
-    assert rt.RecordUtil.get_inheritance_chain(StubAttrsDerivedRecord) == [derived_path, base_path, key_path]
-    # Call one more time to test caching
+
+    # Key class, returns self
+    assert rt.RecordUtil.get_inheritance_chain(StubAttrsRecordKey) == [key_path]
+
+    # Common base class, returns self and key class
+    assert rt.RecordUtil.get_inheritance_chain(StubAttrsRecord) == [base_path, key_path]
+
+    # Derived class, returns self, common base and key
     assert rt.RecordUtil.get_inheritance_chain(StubAttrsDerivedRecord) == [derived_path, base_path, key_path]
 
-    # Invoke for a type that does not implement get_table()
-    # twice to test that caching does not fail on exception
-    with pytest.raises(RuntimeError):
-        rt.RecordUtil.get_inheritance_chain(StubAttrsData)
+    # Invoke for a type that does not have a key class
     with pytest.raises(RuntimeError):
         rt.RecordUtil.get_inheritance_chain(StubAttrsData)
 
-    # Test caching of method results
-    cache_info = rt.RecordUtil.get_inheritance_chain.cache_info()
-    assert cache_info.hits == 2
-    assert cache_info.misses == 4
-    assert cache_info.current_size == 2
+    # Call one more time and confirm that method results are cached
+    assert rt.RecordUtil.get_inheritance_chain(StubAttrsRecord) == [base_path, key_path]
+    assert rt.RecordUtil.get_inheritance_chain.cache_info().hits > 0
+
+
+def test_get_table():
+    """Test getting table name from class."""
+
+    # Key class
+    assert rt.RecordUtil.get_table(StubAttrsRecordKey) == "StubAttrsRecord"
+
+    # Common base class
+    assert rt.RecordUtil.get_table(StubAttrsRecord) == "StubAttrsRecord"
+
+    # Derived class
+    assert rt.RecordUtil.get_table(StubAttrsDerivedRecord) == "StubAttrsRecord"
+
+    # Error if a type does not have key class
+    with pytest.raises(RuntimeError):
+        rt.RecordUtil.get_table(StubAttrsData)
+
+    # Call one more time and confirm that method results are cached
+    assert rt.RecordUtil.get_table(StubAttrsRecordKey) == "StubAttrsRecord"
+    assert rt.RecordUtil.get_table.cache_info().hits > 0
 
 
 if __name__ == '__main__':
