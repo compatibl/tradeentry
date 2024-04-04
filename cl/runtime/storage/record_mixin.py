@@ -37,8 +37,13 @@ class RecordMixin(ABC):
     __slots__ = []  # Adding an empty __slots__ declaration prevents the creation of a __dict__ for every instance
 
     def init(self) -> None:
-        """Similar to __init__ but uses previously set public fields instead of parameters."""
+        """Similar to __init__ but uses previously set fields instead of parameters (not invoked by data source)."""
 
         # Do nothing by default
         pass
 
+    def validate(self) -> None:
+        """Validate previously set fields (invoked by data source before saving and after loading)."""
+
+        # Do nothing by default
+        pass
