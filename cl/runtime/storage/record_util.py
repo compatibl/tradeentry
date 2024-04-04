@@ -17,6 +17,8 @@ from importlib import import_module
 from typing import List, Tuple, Type
 from memoization import cached
 
+from cl.runtime import KeyMixin
+
 
 class RecordUtil:
     """Helper methods for Record."""
@@ -85,35 +87,21 @@ class RecordUtil:
     @staticmethod
     @cached(custom_key_maker=lambda cls: f"{cls.__module__}.{cls.__name__}")
     def get_inheritance_chain(cls: Type) -> List[str]:
-        """Returns inheritance chain as the list of class path strings.
-
-        - The argument cls is either a literal class type, for example StubClass,
-          or a type variable obtained from a class instance, for example type(stub_class_instance)
-        - The result is in MRO order and includes only those classes that implement get_table()
-        - Return value of get_table() must be the same for all classes in the inheritance chain.
+        """
+        Returns the list of fully qualified parent class names starting from this class.
+        Key class is included, but in case of multiple inheritance it may not be the last.
         """
 
         # The list of base classes for which a polymorphic query can return this record.
         # It includes only those classes in MRO of this record that implement get_table()
         # method, and its return value must be the same for all of them.
         result = [
-            f"{c.__module__}.{c.__name__}" for c in cls.mro() if RecordUtil.is_init_implemented(c)
+            f"{c.__module__}.{c.__name__}" for c in cls.mro() if issubclass(c, KeyMixin) and c != KeyMixin
         ]
 
-        # TODO: Implement memoize
         if len(result) == 0:
-            class_path = RecordUtil.get_class_path(cls)
-            raise RuntimeError(
-                f"To be stored in a data source, class {class_path} or its base must implement the method "
-                f"get_table() returning the name of the table where records of this type are stored."
-            )
+            raise RuntimeError(f"To be stored in a data source, class {cls.__module__}.{cls.__name__} "
+                               f"must inherit from KeyMixin.")
 
         return result
 
-    @staticmethod
-    @cached(custom_key_maker=lambda cls: f"{cls.__module__}.{cls.__name__}")
-    def is_init_implemented(cls: Type):
-        """Return true if `init(self)` method is present and marked by _implemented."""
-
-        method = getattr(cls, "init", None)
-        return method is not None and getattr(method, "_implemented", False)

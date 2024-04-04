@@ -15,6 +15,7 @@
 import pytest
 import cl.runtime as rt
 from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
+from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey
 from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.storage.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
 
@@ -91,21 +92,18 @@ def test_get_class_type():
 def test_get_inheritance_chain():
     """Test getting class path from class."""
 
-    # Test helper method
-    assert not rt.RecordUtil.is_init_implemented(rt.DataMixin)  # Not present
-    assert not rt.RecordUtil.is_init_implemented(rt.RecordMixin)  # Abstract
-    assert rt.RecordUtil.is_init_implemented(StubAttrsRecord)  # Implemented
-    assert rt.RecordUtil.is_init_implemented(StubAttrsRecord)  # Implemented
-
-    # Common base class, returns self (call twice to test caching)
+    # Common base class, returns self
+    key_path = rt.RecordUtil.get_class_path(StubAttrsRecordKey)
     base_path = rt.RecordUtil.get_class_path(StubAttrsRecord)
-    assert rt.RecordUtil.get_inheritance_chain(StubAttrsRecord) == [base_path]
-    assert rt.RecordUtil.get_inheritance_chain(StubAttrsRecord) == [base_path]
+    assert rt.RecordUtil.get_inheritance_chain(StubAttrsRecord) == [base_path, key_path]
+    # Call one more time to test caching
+    assert rt.RecordUtil.get_inheritance_chain(StubAttrsRecord) == [base_path, key_path]
 
     # Derived class, returns the root of hierarchy (call twice to test caching)
     derived_path = rt.RecordUtil.get_class_path(StubAttrsDerivedRecord)
-    assert rt.RecordUtil.get_inheritance_chain(StubAttrsDerivedRecord) == [derived_path, base_path]
-    assert rt.RecordUtil.get_inheritance_chain(StubAttrsDerivedRecord) == [derived_path, base_path]
+    assert rt.RecordUtil.get_inheritance_chain(StubAttrsDerivedRecord) == [derived_path, base_path, key_path]
+    # Call one more time to test caching
+    assert rt.RecordUtil.get_inheritance_chain(StubAttrsDerivedRecord) == [derived_path, base_path, key_path]
 
     # Invoke for a type that does not implement get_table()
     # twice to test that caching does not fail on exception
