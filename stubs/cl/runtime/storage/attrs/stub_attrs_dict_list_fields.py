@@ -89,7 +89,7 @@ def stub_attrs_derived_record_dict_list_factory() -> List[Dict[str, StubAttrsDer
 
 
 @data_class
-class StubAttrsDictFields(StubAttrsRecord):
+class StubAttrsDictListFields(StubAttrsRecord):
     """Stub record whose elements are dictionaries."""
 
     float_dict_list: List[Dict[str, float]] = data_field(factory=stub_attrs_float_dict_list_factory)

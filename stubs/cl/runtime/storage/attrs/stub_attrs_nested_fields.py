@@ -28,7 +28,7 @@ from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
 class StubAttrsNestedFields(StubAttrsNestedFieldsKey):
     """Stub derived class."""
 
-    data_field: StubAttrsData = data_field(factory=StubAttrsData)
+    base_data_field: StubAttrsData = data_field(factory=StubAttrsData)
     """Stub field."""
 
     derived_data_field: StubAttrsDerivedData = data_field(factory=StubAttrsDerivedData)
@@ -46,7 +46,7 @@ class StubAttrsNestedFields(StubAttrsNestedFieldsKey):
     key_field: StubAttrsRecordKey = data_field(factory=StubAttrsRecordKey)
     """Stub field."""
 
-    record_as_key_field: StubAttrsRecordKey = data_field(factory=StubAttrsRecord)
+    record_as_key_field: StubAttrsRecordKey = data_field(factory=lambda: StubAttrsRecord())
     """Stub field with key type initialized to record type instance."""
 
 
