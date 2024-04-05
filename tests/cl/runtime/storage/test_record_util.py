@@ -123,5 +123,28 @@ def test_get_table():
     assert rt.RecordUtil.get_table.cache_info().hits > 0
 
 
+def test_to_from_dict():
+    """Test dictionary serialization roundtrip."""
+
+    # List of types for which serialization will be tested
+    stub_types = [StubAttrsData, StubAttrsRecord]
+
+    for stub_type in stub_types:
+
+        # Create a stub type instance with default field values
+        obj = stub_type()
+
+        # Serialize to dict
+        data = rt.RecordUtil.to_dict(obj)
+
+        # Restore from dict
+        restored_obj = rt.RecordUtil.from_dict(stub_type, data)
+
+        # Compare
+        assert obj == restored_obj
+
+
+
+
 if __name__ == '__main__':
     pytest.main([__file__])
