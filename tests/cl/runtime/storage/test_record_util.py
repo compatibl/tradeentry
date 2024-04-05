@@ -14,10 +14,27 @@
 
 import pytest
 from cl.runtime import RecordUtil
-from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
-from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey
-from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
-from stubs.cl.runtime.storage.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
+from stubs.cl.runtime import StubAttrsCyclicA
+from stubs.cl.runtime import StubAttrsCyclicB
+from stubs.cl.runtime import StubAttrsData
+from stubs.cl.runtime import StubAttrsDerivedData
+from stubs.cl.runtime import StubAttrsDerivedFromDerivedData
+from stubs.cl.runtime import StubAttrsDerivedFromDerivedRecord
+from stubs.cl.runtime import StubAttrsDerivedRecord
+from stubs.cl.runtime import StubAttrsDictFields
+from stubs.cl.runtime import StubAttrsDictListFields
+from stubs.cl.runtime import StubAttrsDoNotImport
+from stubs.cl.runtime import StubAttrsListDictFields
+from stubs.cl.runtime import StubAttrsListFields
+from stubs.cl.runtime import StubAttrsNestedFields
+from stubs.cl.runtime import StubAttrsNestedFieldsKey
+from stubs.cl.runtime import StubAttrsOtherDerivedRecord
+from stubs.cl.runtime import StubAttrsPrimitiveFields
+from stubs.cl.runtime import StubAttrsPrimitiveFieldsKey
+from stubs.cl.runtime import StubAttrsRecord
+from stubs.cl.runtime import StubAttrsRecordKey
+from stubs.cl.runtime import StubAttrsSingleton
+from stubs.cl.runtime import StubAttrsSingletonKey
 
 
 def test_get_class_path():
@@ -127,7 +144,29 @@ def test_to_from_dict():
     """Test dictionary serialization roundtrip."""
 
     # List of types for which serialization will be tested
-    stub_types = [StubAttrsData, StubAttrsRecord]
+    stub_types = [
+        StubAttrsCyclicA,
+        StubAttrsCyclicB,
+        StubAttrsData,
+        StubAttrsDerivedData,
+        StubAttrsDerivedFromDerivedData,
+        StubAttrsDerivedFromDerivedRecord,
+        StubAttrsDerivedRecord,
+        StubAttrsDictFields,
+        StubAttrsDictListFields,
+        StubAttrsDoNotImport,
+        StubAttrsListDictFields,
+        StubAttrsListFields,
+        StubAttrsNestedFields,
+        StubAttrsNestedFieldsKey,
+        StubAttrsOtherDerivedRecord,
+        StubAttrsPrimitiveFields,
+        StubAttrsPrimitiveFieldsKey,
+        StubAttrsRecord,
+        StubAttrsRecordKey,
+        StubAttrsSingleton,
+        StubAttrsSingletonKey
+    ]
 
     for stub_type in stub_types:
 
@@ -142,8 +181,6 @@ def test_to_from_dict():
 
         # Compare
         assert obj == restored_obj
-
-
 
 
 if __name__ == '__main__':
