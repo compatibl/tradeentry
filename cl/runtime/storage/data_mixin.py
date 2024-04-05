@@ -39,6 +39,6 @@ class DataMixin(ABC):
         """Create from dictionary containing other dictionaries, lists and primitive types."""
         result = cls()
         for key, value in data.items():
-            if key != "_t":
+            if key != "_type" and key != "_chain":
                 setattr(result, key, value)
         return result

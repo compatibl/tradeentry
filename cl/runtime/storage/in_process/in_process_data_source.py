@@ -92,8 +92,7 @@ class InProcessDataSource(DataSource):
 
             # Create record instance and populate it from dictionary
             # Final type name is the last element of type discriminators list
-            type_discriminators = record_dict['_t']
-            class_path = type_discriminators[0]
+            class_path = record_dict['_type']
             module_path, class_name = RecordUtil.split_class_path(class_path)
 
             class_ = RecordUtil.get_class_type(module_path, class_name)
@@ -127,7 +126,9 @@ class InProcessDataSource(DataSource):
             record_dict = deepcopy(record_dict)
 
             # Add the list of types from base to derived
-            record_dict["_t"] = RecordUtil.get_inheritance_chain(type(record))
+            record_type = type(record)
+            record_dict["_type"] = RecordUtil.get_class_path(record_type)
+            record_dict["_chain"] = RecordUtil.get_inheritance_chain(record_type)
 
             # Try to retrieve dataset dictionary, insert if it does not yet exist
             dataset_cache = self._cache.setdefault(data_set, {})

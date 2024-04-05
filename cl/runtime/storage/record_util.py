@@ -13,13 +13,10 @@
 # limitations under the License.
 
 import sys
+import attrs
 from importlib import import_module
 from typing import List, Tuple, Type, Any, Dict
-
-import attrs
 from memoization import cached
-
-from cl.runtime import KeyMixin
 
 
 class RecordUtil:
@@ -121,6 +118,55 @@ class RecordUtil:
         return result
 
     @staticmethod
+    @cached(custom_key_maker=lambda cls: f"{cls.__module__}.{cls.__name__}")
+    def get_table(cls: Type) -> str:
+        """
+        Name of the database table where records for this key is stored.
+
+        By convention, table name consists of a namespace (full package path or short alias)
+        followed by the dot delimiter and then the key class name without suffix Key.
+        """
+
+        # The last element of inheritance chain is the key class
+        inheritance_chain = RecordUtil.get_inheritance_chain(cls)
+
+        # Remove Key suffix if present, otherwise return the original name
+        result = inheritance_chain[-1].removesuffix("Key")
+
+        return result
+
+    @staticmethod
+    def get_key(obj: Any) -> str:
+        """
+        Key as string in semicolon-delimited string format without table name.
+
+        For composite keys, the embedded keys are concatenated in the order of their declaration without brackets:
+
+            - No primary key fields: '' (i.e. empty string)
+            - One primary key field A: 'A'
+            - Two primary key fields A and B: 'A;B'
+            - Two primary key fields 'A1;A2' and 'B': 'A1;A2;B'
+        """
+        raise RuntimeError(f"Method get_key() for class {type(self).__name__} in module {type(self).__module__} "
+                           f"is neither implemented in code nor by a decorator.")
+
+    @staticmethod
+    def get_generic_key(obj: Any) -> str:
+        """
+        Generic key string defines both the table and the record within the table. It consists of the
+        table name followed by the primary key in semicolon-delimited string format.
+
+        By convention, table name consists of a namespace (full package path or short alias) followed by
+        the class name of the common base to all classes stored in the table with dot delimiter:
+
+        - No primary key fields: 'namespace.RecordType'
+        - One primary key field A: 'namespace.RecordType;A'
+        - Two primary key fields A and B: 'namespace.RecordType;A;B'
+        - Two primary key fields 'A1;A2' and 'B': 'namespace.RecordType;A1;A2;B'
+        """
+        return f"{RecordUtil.get_table(type(obj))};{RecordUtil.get_key(obj)}"
+
+    @staticmethod
     def to_dict(obj: Any) -> Dict[str, Any]:
         """Serialize to dictionary containing other dictionaries, lists and primitive types."""
 
@@ -140,50 +186,3 @@ class RecordUtil:
             if key != "_t":
                 setattr(result, key, value)
         return result
-
-    @staticmethod
-    @cached(custom_key_maker=lambda cls: f"{cls.__module__}.{cls.__name__}")
-    def get_table(cls: Type) -> str:
-        """
-        Name of the database table where records for this key is stored.
-
-        By convention, table name consists of a namespace (full package path or short alias)
-        followed by the dot delimiter and then the key class name without suffix Key.
-        """
-
-        # The last element of inheritance chain is the key class
-        inheritance_chain = RecordUtil.get_inheritance_chain(cls)
-
-        # Remove Key suffix if present, otherwise return the original name
-        result = inheritance_chain[-1].removesuffix("Key")
-
-        return result
-
-    def get_key(self) -> str:
-        """
-        Key as string in semicolon-delimited string format without table name.
-
-        For composite keys, the embedded keys are concatenated in the order of their declaration without brackets:
-
-            - No primary key fields: '' (i.e. empty string)
-            - One primary key field A: 'A'
-            - Two primary key fields A and B: 'A;B'
-            - Two primary key fields 'A1;A2' and 'B': 'A1;A2;B'
-        """
-        raise RuntimeError(f"Method get_key() for class {type(self).__name__} in module {type(self).__module__} "
-                           f"is neither implemented in code nor by a decorator.")
-
-    def get_generic_key(self) -> str:
-        """
-        Generic key string defines both the table and the record within the table. It consists of the
-        table name followed by the primary key in semicolon-delimited string format.
-
-        By convention, table name consists of a namespace (full package path or short alias) followed by
-        the class name of the common base to all classes stored in the table with dot delimiter:
-
-        - No primary key fields: 'namespace.RecordType'
-        - One primary key field A: 'namespace.RecordType;A'
-        - Two primary key fields A and B: 'namespace.RecordType;A;B'
-        - Two primary key fields 'A1;A2' and 'B': 'namespace.RecordType;A1;A2;B'
-        """
-        return f"{self.get_table()};{self.get_key()}"
