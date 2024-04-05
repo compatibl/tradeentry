@@ -15,7 +15,7 @@
 import sys
 import attrs
 from importlib import import_module
-from typing import List, Tuple, Type, Any, Dict
+from typing import List, Tuple, Type, Any, Dict, get_type_hints
 from memoization import cached
 
 
@@ -181,8 +181,10 @@ class RecordUtil:
     @staticmethod
     def from_dict(cls, data: Dict[str, Any]) -> Any:
         """Create an instance of cls from dictionary containing other dictionaries, lists and primitive types."""
-        result = cls()
-        for key, value in data.items():
-            if key != "_t":
-                setattr(result, key, value)
-        return result
+        if isinstance(data, dict):
+            field_types = get_type_hints(cls)
+            return cls(**{k: RecordUtil.from_dict(field_types[k], v) for k, v in data.items()})
+        elif isinstance(data, list):
+            return [RecordUtil.from_dict(cls.__args__[0], item) for item in data]
+        else:
+            return data
