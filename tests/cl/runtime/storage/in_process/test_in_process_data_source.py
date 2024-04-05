@@ -13,8 +13,8 @@
 # limitations under the License.
 
 import pytest
-
 import cl.runtime as rt
+from cl.runtime import Context, InProcessDataSource
 from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.storage.custom.stub_custom_record import StubCustomRecord
 
@@ -23,11 +23,10 @@ def test_smoke():
     """Smoke test."""
 
     # Create data source and dataset
-    data_source = rt.InProcessDataSource()
+    data_source = InProcessDataSource()
     data_set = "sample"
 
     # Create test record and populate with sample data
-    context = rt.Context()
     record = StubAttrsRecord()
     key = record.get_key()
     record_dict = record.to_dict()

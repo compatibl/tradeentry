@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import pytest
-import cl.runtime as rt
 from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey
 from stubs.cl.runtime.storage.attrs.stub_attrs_dict_fields import StubAttrsDictFields
@@ -29,7 +28,6 @@ def test_smoke():
     assert sample_key.get_key() == 'abc;123'
 
     # Create test record and populate with sample data
-    context = rt.Context()
     record = StubAttrsRecord()
 
     # Test primary key
