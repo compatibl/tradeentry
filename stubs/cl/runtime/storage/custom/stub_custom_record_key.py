@@ -33,14 +33,14 @@ class StubCustomRecordKey(KeyMixin):
     int_field: Optional[int]
     """Second primary key attribute."""
 
-    def __init__(self, *, str_field: str = 'abc', int_field: int = 123):
+    def __init__(self, *, str_field: str = "abc", int_field: int = 123):
         """Initialize instance attributes."""
         self.str_field = str_field
         self.int_field = int_field
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize to dictionary containing other dictionaries, lists and primitive types."""
-        return {'str_field': self.str_field, 'int_field': self.int_field}
+        return {"str_field": self.str_field, "int_field": self.int_field}
 
     def get_table(self) -> str:
         """Name of the database table where the record for this key is stored."""

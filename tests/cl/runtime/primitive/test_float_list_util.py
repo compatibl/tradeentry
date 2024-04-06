@@ -57,5 +57,5 @@ def test_is_equal_or_descending():
     assert FloatListUtil.is_equal_or_descending(StubFloatUtil.create_equal_or_descending_list_with_tolerance())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

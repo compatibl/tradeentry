@@ -43,7 +43,7 @@ class TypeMemberDecl(DataMixin):
     data: Optional[TypeDeclKey] = data_field()
     """Data element declaration."""
 
-    key_: Optional[TypeDeclKey] = data_field(name='Key')
+    key_: Optional[TypeDeclKey] = data_field(name="Key")
     """Key element declaration."""
 
     query: Optional[TypeDeclKey] = data_field()
@@ -52,7 +52,7 @@ class TypeMemberDecl(DataMixin):
     condition: Optional[TypeDeclKey] = data_field()
     """Condition element declaration."""
 
-    type_arguments: Optional[List['TypeArgumentDecl']] = data_field()
+    type_arguments: Optional[List["TypeArgumentDecl"]] = data_field()
     """Type Argument."""
 
     interface: Optional[InterfaceDeclKey] = data_field()

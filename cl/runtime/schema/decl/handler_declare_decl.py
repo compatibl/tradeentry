@@ -35,13 +35,13 @@ class HandlerDeclareDecl(DataMixin):
     comment: Optional[str] = data_field()
     """Handler comment."""
 
-    type_: HandlerType = data_field(name='Type')
+    type_: HandlerType = data_field(name="Type")
     """Handler type."""
 
     params: Optional[List[HandlerParamDecl]] = data_field()
     """Handler parameters."""
 
-    return_: Optional[HandlerVariableDecl] = data_field(name='Return')
+    return_: Optional[HandlerVariableDecl] = data_field(name="Return")
     """Handler return value."""
 
     static: Optional[bool] = data_field()

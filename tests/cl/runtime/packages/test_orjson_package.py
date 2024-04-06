@@ -43,5 +43,5 @@ def test_smoke():
     #   assert dict_data == deserialized_pretty_print_data
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

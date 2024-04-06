@@ -63,7 +63,7 @@ class TypeElementDecl(TypeMemberDecl):
     category: Optional[str] = data_field()
     """Category."""
 
-    format_: Optional[str] = data_field(name='Format')
+    format_: Optional[str] = data_field(name="Format")
     """Specifies UI Format for the element."""
 
     output: Optional[bool] = data_field()

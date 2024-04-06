@@ -68,13 +68,13 @@ class RecordFieldInfo:
 class RecordInfo:
     """Holds info for record type."""
 
-    __types_map: Dict[type, 'RecordInfo'] = dict()
+    __types_map: Dict[type, "RecordInfo"] = dict()
     """Container to hold already created RecordInfo objects. Used as cache."""
 
     fields: Optional[List[RecordFieldInfo]] = data_field()
     """List of fields info."""
 
-    methods: Optional[Dict[str, 'MethodInfo']] = data_field()  # noqa
+    methods: Optional[Dict[str, "MethodInfo"]] = data_field()  # noqa
     """List of methods info."""
 
     def __init__(self, data_type: type):
@@ -125,7 +125,7 @@ class RecordInfo:
         return typed_fields
 
     @classmethod
-    def get_type_info(cls, type_: type) -> 'RecordInfo':
+    def get_type_info(cls, type_: type) -> "RecordInfo":
         """Get type info from cache or create new RecordInfo object."""
         type_info = cls.__types_map.get(type_, None)
 
@@ -136,12 +136,12 @@ class RecordInfo:
         return type_info
 
     @classmethod
-    def get_method_info(cls, type_: type, method_name: str) -> 'MethodInfo':  # noqa
+    def get_method_info(cls, type_: type, method_name: str) -> "MethodInfo":  # noqa
         """Get method info from cache or create new Method info object."""
         type_info = cls.get_type_info(type_)
         method_info = type_info.methods.get(method_name, None)
 
         if method_info is None:
-            raise ValueError(f'Type {type_} has no method {method_name}.')
+            raise ValueError(f"Type {type_} has no method {method_name}.")
 
         return method_info

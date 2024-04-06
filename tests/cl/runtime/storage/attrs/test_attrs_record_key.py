@@ -25,7 +25,7 @@ def test_smoke():
     # Test type and key
     table_name = key.get_table()
     assert table_name == f"{type(key).__module__}.{type(key).__name__}"
-    assert key.get_key() == 'abc;123'
+    assert key.get_key() == "abc;123"
 
     # Test roundtrip serialization
     key_dict = key.to_dict()
@@ -35,5 +35,5 @@ def test_smoke():
     assert key_dict == key_clone_dict
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

@@ -25,7 +25,7 @@ from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey
 
 
-@index_fields('derived_float_field, -float_field')
+@index_fields("derived_float_field, -float_field")
 @data_class(init=False)
 class StubAttrsNestedFields(StubAttrsNestedFieldsKey):
     """Stub derived class."""

@@ -45,5 +45,5 @@ def test_smoke():
     # TODO - check that when loading by record key it is the same instance
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

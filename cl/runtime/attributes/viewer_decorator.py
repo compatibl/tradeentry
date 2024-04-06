@@ -46,7 +46,7 @@ def viewer(
 
     def wrap(method):
         if not inspect.isfunction(method) and not inspect.ismethod(method):
-            raise Exception('@viewer decorator should be applied on method or function.')
+            raise Exception("@viewer decorator should be applied on method or function.")
 
         method = handler(*args, language=language)(method)
         method._cl_viewer = True

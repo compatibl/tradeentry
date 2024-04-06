@@ -78,5 +78,5 @@ def test_is_zero():
     assert not FloatArrayUtil.is_zero(np.array([0.0, 1.0]))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

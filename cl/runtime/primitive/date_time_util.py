@@ -28,12 +28,12 @@ class DateTimeUtil:
         # Check timezone
         offset = value.utcoffset()
         if offset is not None and value.utcoffset().total_seconds() != 0:
-            raise RuntimeError(f'Datetime {value} is not in UTC timezone.')
+            raise RuntimeError(f"Datetime {value} is not in UTC timezone.")
 
         # Check whole milliseconds
         if value.microsecond % 1000 != 0:
             raise RuntimeError(
-                f'Datetime {value} has fractional milliseconds. ' f'Only whole milliseconds are accepted.'
+                f"Datetime {value} has fractional milliseconds. " f"Only whole milliseconds are accepted."
             )
 
     @staticmethod
@@ -77,16 +77,16 @@ class DateTimeUtil:
 
     @staticmethod
     def to_str(value: dt.datetime) -> str:
-        result: str = value.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3]
+        result: str = value.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
         return result
 
     @staticmethod
     def from_str(value_str: str) -> Any:
-        if value_str.endswith('Z'):
+        if value_str.endswith("Z"):
             raise Exception(
-                f'String {value_str} passed to dt.datetime ctor must not end with capital Z that '
-                f'indicates UTC timezone because dt.datetime is always specified in UTC, and its'
-                f'standard string representation does not include timezone (UTC is always used).'
+                f"String {value_str} passed to dt.datetime ctor must not end with capital Z that "
+                f"indicates UTC timezone because dt.datetime is always specified in UTC, and its"
+                f"standard string representation does not include timezone (UTC is always used)."
             )
 
             # Convert from string in yyyy-mm-ddThh:mm:ss.fff format

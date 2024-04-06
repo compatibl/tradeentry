@@ -54,7 +54,7 @@ class OrderedUid:
     a centrally incremented identifier would cause a performance hit.
     """
 
-    __slots__ = ('__bytes',)
+    __slots__ = ("__bytes",)
 
     __bytes: bytes
     """Bytes of length 16."""
@@ -68,27 +68,27 @@ class OrderedUid:
             time_now = time.time_ns() // 1000_000
 
             # Pack timestamp and concat with ObjectId bytes without timestamp
-            ts_part = struct.pack('>q', time_now)
+            ts_part = struct.pack(">q", time_now)
             self.__bytes = ts_part + oid.binary[4:]
         elif isinstance(value, str):
             if len(value) != 32:
                 raise ValueError(
-                    f'Cannot convert OrderedUid from string of length {len(value)}, '
-                    f'expected 32-character hex string.'
+                    f"Cannot convert OrderedUid from string of length {len(value)}, "
+                    f"expected 32-character hex string."
                 )
 
             self.__bytes = bytes.fromhex(value)
         elif isinstance(value, bytes):
             if len(value) != 16:
                 raise ValueError(
-                    f'Can not convert OrderedUid from bytes of length {len(value)}, ' f'expected 16-byte binary.'
+                    f"Can not convert OrderedUid from bytes of length {len(value)}, " f"expected 16-byte binary."
                 )
 
             self.__bytes = value
         else:
             raise TypeError(
-                f'Can not convert OrderedUid from value of type {type(value).__name__}, '
-                f'expected 32-character hex string hex string or 16-byte binary.'
+                f"Can not convert OrderedUid from value of type {type(value).__name__}, "
+                f"expected 32-character hex string hex string or 16-byte binary."
             )
 
     @property
@@ -101,17 +101,17 @@ class OrderedUid:
         return Binary(self.__bytes, UUID_SUBTYPE)
 
     @classmethod
-    def from_bson(cls, value: Union[Binary, UUID]) -> 'OrderedUid':
+    def from_bson(cls, value: Union[Binary, UUID]) -> "OrderedUid":
         """Deserialize OrderedUid from bson."""
 
         if isinstance(value, Binary):
             if value.subtype != UUID_SUBTYPE:
-                raise ValueError(f'Expected GUID Binary value, got {value.subtype}.')
+                raise ValueError(f"Expected GUID Binary value, got {value.subtype}.")
             obj = cls(bytes(value))
         elif isinstance(value, UUID):
             obj = cls(value.bytes)
         else:
-            raise TypeError(f'Expected Binary or UUID value type, got {type(value).__name__}')
+            raise TypeError(f"Expected Binary or UUID value type, got {type(value).__name__}")
 
         return obj
 

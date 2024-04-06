@@ -33,8 +33,8 @@ VariantHint = Union[None, str, float, int, bool, dt.date, dt.time, dt.datetime, 
 
 def _get_wrong_type_error_message(type_: type) -> str:
     # strip typing.Union[] from available types description
-    available_types = str(VariantHint).split('[', 1)[1][:-1]
-    return f'Variant cannot hold {type_.__name__} type. Available types are {available_types}'
+    available_types = str(VariantHint).split("[", 1)[1][:-1]
+    return f"Variant cannot hold {type_.__name__} type. Available types are {available_types}"
 
 
 class Variant:
@@ -51,7 +51,7 @@ class Variant:
         dt.datetime: VariantType.DateTime,
         IntEnum: VariantType.Enum,
     }
-    __slots__ = ('_value',)
+    __slots__ = ("_value",)
     _value: VariantHint
 
     def __init__(self, value: VariantHint):
@@ -128,12 +128,12 @@ class Variant:
             serialized_value = inner_value.to_bson(DataMixin)
         elif inner_type == VariantType.Enum:
             enum_type = type(inner_value)
-            enum_type_module = '.'.join(
-                to_pascal_case(module_part) for module_part in enum_type.__module__.split('.')[:-1]
+            enum_type_module = ".".join(
+                to_pascal_case(module_part) for module_part in enum_type.__module__.split(".")[:-1]
             )
             serialized_value = {
-                '_t': f'{enum_type_module}.{enum_type.__name__}',
-                'Value': enum_name_to_schema(inner_value),
+                "_t": f"{enum_type_module}.{enum_type.__name__}",
+                "Value": enum_name_to_schema(inner_value),
             }
         else:
             serialized_value = inner_value
@@ -141,11 +141,11 @@ class Variant:
         return {inner_type.name: serialized_value}
 
     @classmethod
-    def from_bson(cls, dict_: Dict[str, Any]) -> 'Variant':
+    def from_bson(cls, dict_: Dict[str, Any]) -> "Variant":
         """Deserialize variant from bson."""
 
         if len(dict_) != 1:
-            raise ValueError(f'Unexpected Variant format: {dict_}')
+            raise ValueError(f"Unexpected Variant format: {dict_}")
 
         variant_type_name, raw_value = next(iter(dict_.items()))
         variant_type = VariantType[variant_type_name]
@@ -154,17 +154,17 @@ class Variant:
             return cls(None)
 
         if raw_value is None:
-            raise ValueError(f'Expected variant type {variant_type.name}, got None.')
+            raise ValueError(f"Expected variant type {variant_type.name}, got None.")
 
         if variant_type == VariantType.Enum:
-            enum_type_module_str = raw_value['_t']
-            enum_type_name = enum_type_module_str[enum_type_module_str.rfind('.') + 1 :]
-            enum_type_module_str = '.'.join(
-                to_snake_case(module_part) for module_part in enum_type_module_str.split('.')
+            enum_type_module_str = raw_value["_t"]
+            enum_type_name = enum_type_module_str[enum_type_module_str.rfind(".") + 1 :]
+            enum_type_module_str = ".".join(
+                to_snake_case(module_part) for module_part in enum_type_module_str.split(".")
             )
             enum_type_module = importlib.import_module(enum_type_module_str)
             enum_type = getattr(enum_type_module, enum_type_name)
-            value = enum_name_from_schema(enum_type, raw_value['Value'])
+            value = enum_name_from_schema(enum_type, raw_value["Value"])
         elif variant_type == VariantType.Long:
             value = int(raw_value)
         elif (

@@ -19,7 +19,7 @@ from cl.runtime.storage.key_mixin import KeyMixin
 
 @data_class
 class LanguageKey(KeyMixin):
-    language_id: str = data_field(name='LanguageID')
+    language_id: str = data_field(name="LanguageID")
     """Language."""
 
     def get_key(self) -> str:

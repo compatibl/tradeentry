@@ -25,7 +25,7 @@ class FloatArrayUtil:
     def equal(cls, array_1: np.ndarray, array_2: np.ndarray) -> bool:
         """Returns true if the two arrays have the same length and each element is equal within float tolerance."""
         if len(array_1) != len(array_2):
-            raise RuntimeError('Arrays have different length of {len(array_1)} and {len(array_2)}.')
+            raise RuntimeError("Arrays have different length of {len(array_1)} and {len(array_2)}.")
         return FloatArrayUtil.is_zero(array_1 - array_2)
 
     @classmethod

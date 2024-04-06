@@ -34,9 +34,9 @@ def test_cyclic_record():
     b_2.a = StubAttrsCyclicA.create()
 
     # Test for annotation retrospection
-    assert StubAttrsCyclicA.__annotations__ == {'b': 'StubAttrsCyclicB'}
-    assert StubAttrsCyclicB.__annotations__ == {'a': 'StubAttrsCyclicA'}
+    assert StubAttrsCyclicA.__annotations__ == {"b": "StubAttrsCyclicB"}
+    assert StubAttrsCyclicB.__annotations__ == {"a": "StubAttrsCyclicA"}
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

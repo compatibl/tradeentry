@@ -21,11 +21,11 @@ def test_smoke():
     """Smoke test for OrderedUid."""
 
     guid1 = OrderedUid(bytes([26] * 16))
-    guid2 = OrderedUid('1A' * 16)
+    guid2 = OrderedUid("1A" * 16)
     assert guid1.binary == guid2.binary
 
     pytest.raises(ValueError, lambda: OrderedUid(bytes(12)))
-    pytest.raises(ValueError, lambda: OrderedUid('1234567890ABC'))
+    pytest.raises(ValueError, lambda: OrderedUid("1234567890ABC"))
     pytest.raises(TypeError, lambda: OrderedUid(23))
 
     bson_binary = guid1.to_bson()
@@ -36,5 +36,5 @@ def test_smoke():
     pytest.raises(TypeError, lambda: OrderedUid.from_bson(bytes(16)))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

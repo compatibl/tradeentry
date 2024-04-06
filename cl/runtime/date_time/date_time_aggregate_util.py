@@ -48,11 +48,11 @@ class DateTimeAggregateUtil:  # TODO: Refactor to make the API similar to other 
     value - name of aggregation method.
     """
     _methods_map: Dict[str, str] = {
-        'validate': 'validate_expected',
-        'to_iso_int': 'value_to_iso_int',
-        'from_iso_int': 'value_from_iso_int',
-        'to_str': 'value_to_str',
-        'from_str': 'value_from_str',
+        "validate": "validate_expected",
+        "to_iso_int": "value_to_iso_int",
+        "from_iso_int": "value_from_iso_int",
+        "to_str": "value_to_str",
+        "from_str": "value_from_str",
     }
 
     @staticmethod

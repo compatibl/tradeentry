@@ -26,7 +26,7 @@ def test_smoke():
     table_name = base_record.get_table()
     assert table_name == f"{type(base_record).__module__}.{type(base_record).__name__}"
     key = base_record.get_key()
-    assert key == 'abc;123'
+    assert key == "abc;123"
 
     # Test roundtrip serialization
     base_record_dict = base_record.to_dict()
@@ -36,5 +36,5 @@ def test_smoke():
     assert base_record_dict == base_record_clone_dict
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

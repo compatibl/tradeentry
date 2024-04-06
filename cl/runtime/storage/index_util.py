@@ -22,7 +22,7 @@ from typing import Tuple
 from typing import Type
 from typing import TypeVar
 
-TRecord = TypeVar('TRecord', bound=KeyMixin)
+TRecord = TypeVar("TRecord", bound=KeyMixin)
 
 
 def index_fields(definition: str, name: str = None):
@@ -55,20 +55,20 @@ def index_fields(definition: str, name: str = None):
 
     def wrap(cls: Type[TRecord]):
         if not inspect.isclass(cls):
-            raise Exception('@index_fields should be applied on class')
+            raise Exception("@index_fields should be applied on class")
         if KeyMixin not in cls.__mro__:
-            raise Exception('@index_fields should be applied on Record derived class')
+            raise Exception("@index_fields should be applied on Record derived class")
 
         # Set _has_index_fields attribute
-        if not hasattr(cls, '_has_index_fields'):
+        if not hasattr(cls, "_has_index_fields"):
             cls._has_index_fields = True
 
         # Add index elements list to cls
-        if '_index_fields' not in cls.__dict__:
+        if "_index_fields" not in cls.__dict__:
             cls._index_fields = list()
 
         # Remove + prefix from definition if specified
-        index_definition = definition if not definition.startswith('+') else definition[1:]
+        index_definition = definition if not definition.startswith("+") else definition[1:]
         index_name = name
         index = (index_definition, index_name)
 
@@ -90,20 +90,20 @@ def get_index_fields_dict(cls: Type[TRecord]) -> Dict[str, Dict[str, Any]]:
     result: Dict[str, Dict[str, Any]] = dict()
 
     # Check if index elements exists
-    if not getattr(cls, '_has_index_fields', False):
+    if not getattr(cls, "_has_index_fields", False):
         return result
 
     # Iterate over base classes and extract index elements
-    for base_cls in filter(lambda x: '_index_fields' in x.__dict__, cls.__mro__):
+    for base_cls in filter(lambda x: "_index_fields" in x.__dict__, cls.__mro__):
         for index_def, index_name in base_cls._index_fields:  # type: str, str
-            prev_value = result.setdefault(index_def, {'index_name': index_name})
+            prev_value = result.setdefault(index_def, {"index_name": index_name})
 
             # If already included, check that the name matches, error message otherwise
-            if prev_value['index_name'] != index_name:
+            if prev_value["index_name"] != index_name:
                 raise Exception(
-                    f'The same index definition {index_def} is provided with two different '
+                    f"The same index definition {index_def} is provided with two different "
                     f'custom index names {index_name} and {prev_value["index_name"]} in the inheritance chain '
-                    f'for class {cls.__name__}.'
+                    f"for class {cls.__name__}."
                 )
 
     return result

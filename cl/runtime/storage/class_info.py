@@ -30,7 +30,7 @@ from typing import TypeVar
 from typing import Union
 from typing import get_type_hints
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class Transform(str, Enum):
@@ -110,23 +110,23 @@ class ClassInfo:
         try:
             module_ = importlib.import_module(module_name)
         except ImportError as error:
-            raise Exception(f'Cannot import module: {error.name}. Check sys.path')
+            raise Exception(f"Cannot import module: {error.name}. Check sys.path")
 
         derived_types: Set[Type[T]] = set()
 
-        packages = list(pkgutil.walk_packages(path=module_.__path__, prefix=module_.__name__ + '.'))
+        packages = list(pkgutil.walk_packages(path=module_.__path__, prefix=module_.__name__ + "."))
         modules = [x for x in packages if not x.ispkg]
         for m in modules:
             try:
                 m_imp = importlib.import_module(m.name)
             except SyntaxError as error:
-                print(f'Cannot import module: {m.name}. Error: {error.msg}. Line: {error.lineno}, {error.offset}')
+                print(f"Cannot import module: {m.name}. Error: {error.msg}. Line: {error.lineno}, {error.offset}")
                 continue
             except NameError as error:
-                print(f'Cannot import module: {m.name}. Error: {error.args}')
+                print(f"Cannot import module: {m.name}. Error: {error.args}")
                 continue
             except ModuleNotFoundError as error:
-                print(f'Cannot import module: {m.name}. Error: {str(error)}')
+                print(f"Cannot import module: {m.name}. Error: {str(error)}")
                 continue
             classes = inspect.getmembers(m_imp, inspect.isclass)
             derived_types.update([x[1] for x in classes if base_type in x[1].__mro__])
@@ -146,7 +146,7 @@ class ClassInfo:
 
             if name not in ClassInfo.__data_types_map:
                 raise Exception(
-                    f'Class {name} is not found in ClassInfo data types map. ' f'Import this class before loading.',
+                    f"Class {name} is not found in ClassInfo data types map. " f"Import this class before loading.",
                 )
 
         return ClassInfo.__data_types_map[name]
@@ -172,8 +172,8 @@ class ClassInfo:
         Returns:
             The corresponding short name.
         """
-        cls_name = name.split('.')[-1]
-        if cls_name != 'Data' and cls_name.endswith('Data'):
+        cls_name = name.split(".")[-1]
+        if cls_name != "Data" and cls_name.endswith("Data"):
             return cls_name[:-4]
         return cls_name
 
@@ -193,20 +193,20 @@ class ClassInfo:
         module_name = type_.__module__
 
         # Join module parts, except last, in pascal case
-        parts = [to_pascal_case(x) for x in module_name.split('.')[:-1]]
+        parts = [to_pascal_case(x) for x in module_name.split(".")[:-1]]
         data_name = f'{".".join(parts)}.{type_.__name__}'
 
         # Return full analyst name
         if (
-            type_name.endswith('Key')
-            or type_name.endswith('Query')
-            or type_name.endswith('Args')
-            or type_name.endswith('Condition')
+            type_name.endswith("Key")
+            or type_name.endswith("Query")
+            or type_name.endswith("Args")
+            or type_name.endswith("Condition")
         ):
             return data_name
         else:
             # Add Data suffix for record types
-            return data_name + 'Data'
+            return data_name + "Data"
 
     @staticmethod
     def get_type_module_to_pascal_case(type_: Type) -> str:
@@ -219,7 +219,7 @@ class ClassInfo:
         Returns:
             The module name in PascalCase.
         """
-        module_to_pascal_case = '.'.join([to_pascal_case(part) for part in type_.__module__.split('.')[:-1]])
+        module_to_pascal_case = ".".join([to_pascal_case(part) for part in type_.__module__.split(".")[:-1]])
 
         return module_to_pascal_case
 
@@ -233,7 +233,7 @@ class ClassInfo:
         shortname = ClassInfo.get_type_package_shortname(type_)
 
         if shortname is not None:
-            return f'{shortname}.{type_name}'
+            return f"{shortname}.{type_name}"
         else:
             return type_name
 
@@ -281,17 +281,17 @@ class ClassInfo:
 
         type_mro = type_.mro()
         if type_mro[0] in (DataMixin, KeyMixin):
-            raise Exception('Ultimate base is undefined for Data, Key, ' 'only for classes derived from them.')
+            raise Exception("Ultimate base is undefined for Data, Key, " "only for classes derived from them.")
 
         if KeyMixin in type_.__bases__:
-            raise Exception('Ultimate base is undefined for key classes.')
+            raise Exception("Ultimate base is undefined for key classes.")
 
         for i in range(1, len(type_mro)):
             if type_mro[i] == KeyMixin:
                 return type_mro[i - 2]
             if type_mro[i] == DataMixin:
                 return type_mro[i - 1]
-        raise Exception('Type is not derived from Data, Record, or RootRecord.')
+        raise Exception("Type is not derived from Data, Record, or RootRecord.")
 
     @staticmethod
     def get_collection_name(type_: type) -> str:
@@ -321,7 +321,7 @@ class ClassInfo:
 
         type_mro = type_.mro()
         if type_mro[0] in (DataMixin, KeyMixin):
-            raise Exception('Cannot get inheritance chain for the Root class, ' 'only for classes derived from it.')
+            raise Exception("Cannot get inheritance chain for the Root class, " "only for classes derived from it.")
 
         if KeyMixin in type_mro:
             idx = type_mro.index(KeyMixin)
@@ -333,7 +333,7 @@ class ClassInfo:
         elif DataMixin in type_mro:
             idx = type_mro.index(DataMixin)
             return [ClassInfo.get_prefixed_name(x) for x in type_mro[idx - 1 :: -1]]
-        raise Exception('Type is not derived from Data')
+        raise Exception("Type is not derived from Data")
 
     @staticmethod
     @memoize
@@ -347,7 +347,7 @@ class ClassInfo:
             data_index = type_mro.index(KeyMixin)
             return type_mro[data_index - 1]
         else:
-            raise Exception(f'Cannot deduce key from {type_.__name__} type not derived from Key.')
+            raise Exception(f"Cannot deduce key from {type_.__name__} type not derived from Key.")
 
     @staticmethod
     @memoize
@@ -359,7 +359,7 @@ class ClassInfo:
         key_type_name = ClassInfo.get_prefixed_name(type_)
 
         if KeyMixin in type_.mro():
-            if not key_type_name.endswith('Key'):
+            if not key_type_name.endswith("Key"):
                 raise Exception(f'Unexpected type name: {key_type_name}. Key type name should end with "Key"')
             record_type_name = key_type_name[:-3]
 
@@ -367,7 +367,7 @@ class ClassInfo:
             record_type = ClassInfo.get_type(record_type_name)
             return record_type
         else:
-            raise Exception(f'Cannot deduce record from {type_.__name__} type not derived from Key.')
+            raise Exception(f"Cannot deduce record from {type_.__name__} type not derived from Key.")
 
     @staticmethod
     def __init_types():
@@ -440,7 +440,7 @@ class ClassInfo:
                 else:
                     class_fields = attrs.asdict(data_type, recurse=recurse)
         if not class_fields:
-            raise ValueError(f'Type {data_type} is not correctly decorated')
+            raise ValueError(f"Type {data_type} is not correctly decorated")
 
         if serializable:
             serializable_fields = [field.name for field in ClassInfo.get_serializable_fields(data_type)]
@@ -482,7 +482,7 @@ class ClassInfo:
         for field_ in class_fields:
             if field_.name not in data_fields:
                 if remove_protected:
-                    if not field_.name.startswith('_'):
+                    if not field_.name.startswith("_"):
                         fields_.append(field_)
                 else:
                     fields_.append(field_)
@@ -552,7 +552,7 @@ class ClassInfo:
         keys_to_update = [key for key in ClassInfo.__data_types_map if key.startswith(module_name_in_pascal_case)]
 
         for key in keys_to_update:
-            new_key = f'{shortname}.{ClassInfo.__data_types_map[key].__name__}'
+            new_key = f"{shortname}.{ClassInfo.__data_types_map[key].__name__}"
             ClassInfo.__data_types_map[new_key] = ClassInfo.__data_types_map[key]
 
     @staticmethod
@@ -572,6 +572,6 @@ class ClassInfo:
         Example:
         If module_name = 'example.module.name', the returned value will be 'Example.Module.Name'.
         """
-        parts = [to_pascal_case(x) for x in module_name.split('.')]
-        module_name_in_pascal_case = '.'.join(parts)
+        parts = [to_pascal_case(x) for x in module_name.split(".")]
+        module_name_in_pascal_case = ".".join(parts)
         return module_name_in_pascal_case

@@ -32,11 +32,11 @@ class Context:
     """
 
     __slots__ = (
-        '__data_source',
-        '__data_set',
+        "__data_source",
+        "__data_set",
     )
 
-    __data_source: Optional['DataSource']
+    __data_source: Optional["DataSource"]
     __data_set: Optional[str]
 
     def __init__(self):
@@ -53,15 +53,15 @@ class Context:
         """Default dataset of the context."""
 
     @property
-    def data_source(self) -> 'DataSource':
+    def data_source(self) -> "DataSource":
         """Return data_source property, error message if not set."""
 
         if not self.__data_source:
-            raise Exception('Data source property is not set in Context.')
+            raise Exception("Data source property is not set in Context.")
         return self.__data_source
 
     @data_source.setter
-    def data_source(self, value: 'DataSource') -> None:
+    def data_source(self, value: "DataSource") -> None:
         """Set data_source property and pass self to its init method."""
         self.__data_source = value
 
@@ -70,7 +70,7 @@ class Context:
         """Return data_set property, error message if not set."""
 
         if self.__data_set is None:
-            raise Exception('Dataset property is not set in Context.')
+            raise Exception("Dataset property is not set in Context.")
         return self.__data_set
 
     @data_set.setter
@@ -78,7 +78,7 @@ class Context:
         """Set data_set property."""
 
         if self.__data_set is not None:
-            raise ValueError('The data_set field in context is immutable, create a new context instead.')
+            raise ValueError("The data_set field in context is immutable, create a new context instead.")
 
         # Import inside method to avoid cyclic reference
         from cl.runtime.storage.dataset_util import DatasetUtil

@@ -24,11 +24,11 @@ class TimeUtil:
     @staticmethod
     def validate(value: dt.time) -> None:
         if value.tzinfo is not None:
-            raise Exception(f'Local time of the day {value} must have None time zone.')
+            raise Exception(f"Local time of the day {value} must have None time zone.")
 
         # Check whole milliseconds
         if value.microsecond % 1000 != 0:
-            raise RuntimeError(f'Time {value} has fractional milliseconds. ' f'Only whole milliseconds are accepted.')
+            raise RuntimeError(f"Time {value} has fractional milliseconds. " f"Only whole milliseconds are accepted.")
 
     @staticmethod
     def to_iso_int(value: dt.time) -> int:
@@ -60,23 +60,23 @@ class TimeUtil:
         # Convert to string in ISO format without timezone, with
         # 3 digits after decimal points for seconds, irrespective of
         # how many digits are actually required.
-        result_to_microseconds: str = value.strftime('%H:%M:%S.%f')
+        result_to_microseconds: str = value.strftime("%H:%M:%S.%f")
         result: str = result_to_microseconds[:-3]
         return result
 
     @staticmethod
     def from_str(value_str: str) -> Any:
         if not value_str[-1].isdigit():
-            raise Exception(f'String {value_str} passed to time_from_str(...) method ' f'must not include timezone.')
+            raise Exception(f"String {value_str} passed to time_from_str(...) method " f"must not include timezone.")
 
         # Convert to datetime and set UTC timezone
         time_from_str: dt.time
-        if '.' in value_str:
+        if "." in value_str:
             # Has milliseconds
-            t = dt.datetime.strptime(value_str, '%H:%M:%S.%f').time()
+            t = dt.datetime.strptime(value_str, "%H:%M:%S.%f").time()
         else:
             # Does not have milliseconds
-            t = dt.datetime.strptime(value_str, '%H:%M:%S').time()
+            t = dt.datetime.strptime(value_str, "%H:%M:%S").time()
 
         # Round the result to whole milliseconds
         rounded_microsecond: int = round(t.microsecond / 1000.0) * 1000

@@ -20,7 +20,7 @@ from cl.runtime.storage.index_util import index_fields
 from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
 
 
-@index_fields('derived_field, -version')
+@index_fields("derived_field, -version")
 @data_class(init=False)
 class StubAttrsDerivedRecord(StubAttrsRecord):
     """Stub derived class."""

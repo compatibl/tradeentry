@@ -33,4 +33,4 @@ class TypeDeclKey(KeyMixin):
 
     def get_key(self) -> str:
         """Return primary key of this instance in semicolon-delimited string format."""
-        return f'{self.module};{self.name}'
+        return f"{self.module};{self.name}"

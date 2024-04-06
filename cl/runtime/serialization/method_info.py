@@ -102,23 +102,23 @@ class MethodInfo(DataMixin):
         method = getattr(type_, method_name, None)
 
         if method is None:
-            raise ValueError(f'Type {type_.__name__} does not have method {method_name}')
+            raise ValueError(f"Type {type_.__name__} does not have method {method_name}")
 
         # added by handler decorator
-        self.label = method.__dict__.get('_label', None)
+        self.label = method.__dict__.get("_label", None)
 
         # added by viewer decorator
-        self.is_cl_viewer = hasattr(method, '_cl_viewer')
+        self.is_cl_viewer = hasattr(method, "_cl_viewer")
 
         # added by process decorator
-        self.is_cl_process = hasattr(method, '_cl_process')
+        self.is_cl_process = hasattr(method, "_cl_process")
 
         # added by handler decorator
-        self.is_cl_handler = hasattr(method, '_cl_handler')
+        self.is_cl_handler = hasattr(method, "_cl_handler")
 
-        self.is_cl_content = hasattr(method, '_cl_content')
+        self.is_cl_content = hasattr(method, "_cl_content")
 
-        self.is_abstract = getattr(method, '__isabstractmethod__', False)
+        self.is_abstract = getattr(method, "__isabstractmethod__", False)
         self.is_static = isinstance(inspect.getattr_static(type_, method_name), staticmethod)
 
         self.hidden = False
@@ -127,7 +127,7 @@ class MethodInfo(DataMixin):
 
         # check _cl_handler_traits added by handler decorator
         self.handler_traits = None
-        if '_cl_handler_traits' in method.__dict__:
+        if "_cl_handler_traits" in method.__dict__:
             handler_traits: Tuple[MethodTrait] = method._cl_handler_traits
             self.handler_traits = handler_traits
             for item in handler_traits:
@@ -142,9 +142,9 @@ class MethodInfo(DataMixin):
         if self.is_cl_handler or self.is_cl_content and method._cl_handler_language is not None:
             self.handler_language = method._cl_handler_language
 
-        self.docstring = getattr(method, '__doc__')
+        self.docstring = getattr(method, "__doc__")
         method_hints = ClassInfo.get_type_hints(method)
-        self.return_type = method_hints.get('return', inspect.Signature.empty)
+        self.return_type = method_hints.get("return", inspect.Signature.empty)
 
         self.arguments = []
         method_arguments = inspect.signature(method)

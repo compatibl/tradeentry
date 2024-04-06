@@ -57,7 +57,7 @@ def _parse_method_params(method: Callable, method_params: Iterable[Parameter], a
         elif param.default != Parameter.empty:
             param_value = param.default
         else:
-            raise Exception(f'Wrong arguments count for {method.__qualname__} handler.')
+            raise Exception(f"Wrong arguments count for {method.__qualname__} handler.")
 
         params[param.name] = param_value
 
@@ -86,7 +86,7 @@ def _get_parameters(
     args_values = args
 
     # get self parameter
-    if 'self' in method_params.keys():
+    if "self" in method_params.keys():
         if not ignore_self_arg:
             self_param = args[0]
             args_values = args[1:]
@@ -127,7 +127,7 @@ def handler(
 
     def wrap(method: Callable):
         if not isfunction(method) and not ismethod(method):
-            raise Exception('@handler decorator should be applied on method or function.')
+            raise Exception("@handler decorator should be applied on method or function.")
 
         wrapped_method = method
         wrapped_method._cl_handler = True

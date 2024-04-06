@@ -28,7 +28,7 @@ class StubCustomRecord(StubCustomRecordKey, RecordMixin):
     float_field: Optional[float]
     """Float attribute of base class."""
 
-    def __init__(self, *, str_field: str = 'abc', int_field: int = 123, float_field: float = 4.56):
+    def __init__(self, *, str_field: str = "abc", int_field: int = 123, float_field: float = 4.56):
         """Initialize instance attributes."""
 
         super().__init__(str_field=str_field, int_field=int_field)
@@ -38,5 +38,5 @@ class StubCustomRecord(StubCustomRecordKey, RecordMixin):
     def to_dict(self) -> Dict[str, Any]:
         """Serialize to dictionary containing other dictionaries, lists and primitive types."""
         return super().to_dict() | {
-            'float_field': self.float_field,
+            "float_field": self.float_field,
         }

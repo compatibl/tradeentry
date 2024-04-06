@@ -25,7 +25,7 @@ def viewer(*, label: str = None):
 
     def wrap(method):
         if not inspect.isfunction(method) and not inspect.ismethod(method):
-            raise Exception('@viewer decorator can only be applied to a class or static method.')
+            raise Exception("@viewer decorator can only be applied to a class or static method.")
 
         wrapped_method = method
         wrapped_method._handler = True

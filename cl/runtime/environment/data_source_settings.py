@@ -17,10 +17,10 @@ import os
 from typing import Final
 from typing import Sequence
 
-CL_RUNTIME_SETTINGS_FILE: Final[str] = 'settings.json'
+CL_RUNTIME_SETTINGS_FILE: Final[str] = "settings.json"
 """Settings file name."""
 
-CL_RUNTIME_SETTINGS_ENV: Final[str] = os.environ.get('CL_RUNTIME_SETTINGS_ENV', 'default')
+CL_RUNTIME_SETTINGS_ENV: Final[str] = os.environ.get("CL_RUNTIME_SETTINGS_ENV", "default")
 """Name of settings environment which should be used."""
 
 settings = dynaconf.Dynaconf(
@@ -29,20 +29,20 @@ settings = dynaconf.Dynaconf(
     env=CL_RUNTIME_SETTINGS_ENV,
 )
 
-CL_RUNTIME_MODULES: Final[Sequence[str]] = settings.get('CL_RUNTIME_MODULES', ['cl.runtime'])
+CL_RUNTIME_MODULES: Final[Sequence[str]] = settings.get("CL_RUNTIME_MODULES", ["cl.runtime"])
 """Modules visible to Runtime."""
 
-CL_RUNTIME_DB_NAME: Final[str] = settings.get('CL_RUNTIME_DB_NAME')
+CL_RUNTIME_DB_NAME: Final[str] = settings.get("CL_RUNTIME_DB_NAME")
 """DB name."""
 
-CL_RUNTIME_DB_PATTERN: Final[str] = settings.get('CL_RUNTIME_DB_PATTERN')
+CL_RUNTIME_DB_PATTERN: Final[str] = settings.get("CL_RUNTIME_DB_PATTERN")
 """DB search pattern."""
 
-CL_RUNTIME_DB_DRIVER_NAME: Final[str] = settings.get('CL_RUNTIME_DB_DRIVER_NAME')
+CL_RUNTIME_DB_DRIVER_NAME: Final[str] = settings.get("CL_RUNTIME_DB_DRIVER_NAME")
 """DB driver name."""
 
-CL_RUNTIME_DB_DRIVER_VERSION: Final[str] = settings.get('CL_RUNTIME_DB_DRIVER_VERSION')
+CL_RUNTIME_DB_DRIVER_VERSION: Final[str] = settings.get("CL_RUNTIME_DB_DRIVER_VERSION")
 """DB driver version."""
 
-CL_RUNTIME_WORKERS_COUNT: Final[int] = int(settings.get('CL_RUNTIME_WORKERS_COUNT'))
+CL_RUNTIME_WORKERS_COUNT: Final[int] = int(settings.get("CL_RUNTIME_WORKERS_COUNT"))
 """Number of handler and viewer workers to be spawned."""

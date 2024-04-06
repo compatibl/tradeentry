@@ -38,8 +38,8 @@ class ViewKey(KeyMixin):
     @staticmethod
     def create_key(view_for: str, view_name: str) -> str:
         """Create primary key from arguments in semicolon-delimited string format."""
-        return f'{view_for};{view_name}'
+        return f"{view_for};{view_name}"
 
     def get_key(self) -> str:
         """Return primary key of this instance in semicolon-delimited string format."""
-        return f'{self.view_for};{self.view_name}'
+        return f"{self.view_for};{self.view_name}"

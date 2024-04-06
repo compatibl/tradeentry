@@ -29,7 +29,7 @@ def get_caller_name(*, caller_file: str) -> str:
     return file_name
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope="function")
 def pytest_local_dir(request):
     """
     Pytest fixture to be used as follows:

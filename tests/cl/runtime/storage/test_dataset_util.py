@@ -55,7 +55,7 @@ def test_combine():
 
     assert DatasetUtil.combine() is None
     assert DatasetUtil.combine(None) is None
-    assert DatasetUtil.combine('') is None
+    assert DatasetUtil.combine("") is None
     assert DatasetUtil.combine("A") == "A"
     assert DatasetUtil.combine("A", "B") == "A\\B"
     assert DatasetUtil.combine(None, "A", "B") == "A\\B"
@@ -78,5 +78,5 @@ def test_combine():
         DatasetUtil.combine("A\\", "B")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

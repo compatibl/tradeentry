@@ -38,8 +38,8 @@ def data_list_field_factory():
     return [StubAttrsData(str_field="abc", int_field=1), StubAttrsData(str_field="xyz", int_field=2)]
 
 
-@index_fields('version')
-@index_fields('str_field, int_field, -version', 'CustomIndexName')
+@index_fields("version")
+@index_fields("str_field, int_field, -version", "CustomIndexName")
 @data_class
 class StubAttrsRecord(StubAttrsRecordKey, RecordMixin):
     """Stub record base class."""

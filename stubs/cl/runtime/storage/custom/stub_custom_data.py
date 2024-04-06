@@ -30,7 +30,7 @@ class StubCustomData(DataMixin):
     int_field: Optional[int]
     """Float attribute of base class."""
 
-    def __init__(self, *, str_field: str = 'abc', int_field: int = 123):
+    def __init__(self, *, str_field: str = "abc", int_field: int = 123):
         """Initialize instance attributes."""
         self.str_field = str_field
         self.int_field = int_field
@@ -38,6 +38,6 @@ class StubCustomData(DataMixin):
     def to_dict(self) -> Dict[str, Any]:
         """Serialize to dictionary containing other dictionaries, lists and primitive types."""
         return {
-            'str_field': self.str_field,
-            'int_field': self.int_field,
+            "str_field": self.str_field,
+            "int_field": self.int_field,
         }

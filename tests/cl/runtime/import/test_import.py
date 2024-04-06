@@ -26,18 +26,18 @@ def _check_package(package_root: str) -> List[str]:  # TODO: Move this method to
     try:
         package_import = __import__(package_root)
     except ImportError as error:
-        raise Exception(f'Cannot import module: {error.name}. Check sys.path')
+        raise Exception(f"Cannot import module: {error.name}. Check sys.path")
 
-    packages = list(pkgutil.walk_packages(path=package_import.__path__, prefix=package_import.__name__ + '.'))
+    packages = list(pkgutil.walk_packages(path=package_import.__path__, prefix=package_import.__name__ + "."))
     modules = [x for x in packages if not x.ispkg]
     for m in modules:
         try:
             package_import = importlib.import_module(m.name)
         except SyntaxError as error:
-            errors.append(f'Cannot import module: {m.name}. Error: {error.msg}. Line: {error.lineno}, {error.offset}')
+            errors.append(f"Cannot import module: {m.name}. Error: {error.msg}. Line: {error.lineno}, {error.offset}")
             continue
         except Exception as error:
-            errors.append(f'Cannot import module: {m.name}. Error: {error.args}')
+            errors.append(f"Cannot import module: {m.name}. Error: {error.args}")
 
     return errors
 
@@ -45,9 +45,9 @@ def _check_package(package_root: str) -> List[str]:  # TODO: Move this method to
 def test_import():
     errors = _check_package("cl.runtime")
     if errors:
-        print('\n'.join(errors))
+        print("\n".join(errors))
     assert 0 == len(errors)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

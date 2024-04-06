@@ -29,7 +29,7 @@ class Script(DataMixin):
     name: Optional[Variant] = data_field()
     """Script name."""
 
-    language: Optional[ScriptLanguage] = data_field(label='Script Language')
+    language: Optional[ScriptLanguage] = data_field(label="Script Language")
     """Script Language."""
 
     body: List[str] = data_field()

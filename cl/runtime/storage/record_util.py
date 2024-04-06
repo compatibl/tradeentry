@@ -62,7 +62,7 @@ class RecordUtil:
             This method caches its return value and is only called once for each combination of arguments.
         """
 
-        if '.' in class_name:
+        if "." in class_name:
             raise RuntimeError(
                 f"Class name {class_name} is dot-delimited. "
                 f"Only top-level class names without delimiter can be stored."
@@ -101,7 +101,7 @@ class RecordUtil:
         complete_mro = [f"{c.__module__}.{c.__name__}" for c in cls.mro()]
 
         # Find classes whose name has Key suffix in MRO list
-        key_class_indices = [index for index, string in enumerate(complete_mro) if string.endswith('Key')]
+        key_class_indices = [index for index, string in enumerate(complete_mro) if string.endswith("Key")]
         key_class_count = len(key_class_indices)
 
         # Make sure there is only one such class in the inheritance chain
@@ -122,7 +122,7 @@ class RecordUtil:
 
         # TODO: Add package aliases
         # Remove module from fully qualified names
-        result = [name.split('.')[-1] for name in fully_qualified_names]
+        result = [name.split(".")[-1] for name in fully_qualified_names]
 
         return result
 

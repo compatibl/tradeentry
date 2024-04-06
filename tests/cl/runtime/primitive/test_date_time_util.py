@@ -21,7 +21,7 @@ def test_smoke():
     """Smoke test"""
 
     # Created dates t1-t5 must match this value of string and/or Unix millis
-    date_str: str = '2003-05-01T10:15:30.500'
+    date_str: str = "2003-05-01T10:15:30.500"
     iso_int: int = 20030501101530500
 
     # Validation
@@ -47,5 +47,5 @@ def test_smoke():
     assert DateTimeUtil.to_str(from_iso_int) == date_str
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

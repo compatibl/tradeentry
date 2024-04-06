@@ -36,16 +36,16 @@ class StubCustomKeylessRecord(KeyMixin):
 
     def __init__(self):
         """Initialize instance attributes."""
-        self.str_field = 'abc'
+        self.str_field = "abc"
         self.int_field = 123
         self.float_field = 4.56
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize self as dictionary (may return shallow copy)."""
         return {
-            'str_field': self.str_field,
-            'int_field': self.int_field,
-            'float_field': self.float_field,
+            "str_field": self.str_field,
+            "int_field": self.int_field,
+            "float_field": self.float_field,
         }
 
     def get_table(self) -> str:

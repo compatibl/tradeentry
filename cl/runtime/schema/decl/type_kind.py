@@ -34,4 +34,4 @@ class TypeKind(IntEnum):
     def custom_labels(cls):
         """Custom enum item labels dict."""
 
-        return {cls.AbstractElement: 'AbstractElement'}
+        return {cls.AbstractElement: "AbstractElement"}

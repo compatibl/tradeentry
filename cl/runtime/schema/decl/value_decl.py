@@ -22,5 +22,5 @@ from cl.runtime.storage.data_mixin import DataMixin
 class ValueDecl(DataMixin):
     """Value or atomic element declaration."""
 
-    type_: AtomicType = data_field(name='Type')
+    type_: AtomicType = data_field(name="Type")
     """Value or atomic element type enumeration."""

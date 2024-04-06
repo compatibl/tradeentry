@@ -54,7 +54,7 @@ class FloatUtil:
             precision=FloatUtil.tolerance_digits,
             unique=True,
             fractional=True,
-            trim='.',
+            trim=".",
         )
         return result
 
@@ -88,5 +88,5 @@ class FloatUtil:
         """Convert float to int if within tolerance from int, error otherwise."""
         result = int(round(value))
         if not cls.equal(result, value):
-            raise RuntimeError(f'Cannot convert {value} to int because it is not within roundoff tolerance of an int.')
+            raise RuntimeError(f"Cannot convert {value} to int because it is not within roundoff tolerance of an int.")
         return result

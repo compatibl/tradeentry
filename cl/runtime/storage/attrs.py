@@ -49,16 +49,16 @@ def data_field(
         filterable: Marks the field as filterable TODO(attrs) - Explain further in docs
     """
     metadata = {
-        'data_field': True,
-        'optional': optional,
-        'optional_fields': optional_fields,
-        'type': subtype,
-        'name': name,
-        'label': label,
-        'format': formatter,  # TODO(attrs) - switch to formatter in remaining code as format causes Python warning
-        'category': category,
-        'secure': secure,
-        'filterable': filterable,
+        "data_field": True,
+        "optional": optional,
+        "optional_fields": optional_fields,
+        "type": subtype,
+        "name": name,
+        "label": label,
+        "format": formatter,  # TODO(attrs) - switch to formatter in remaining code as format causes Python warning
+        "category": category,
+        "secure": secure,
+        "filterable": filterable,
     }
     if factory is None:
         return attrs.field(default=default, metadata=metadata)
@@ -112,7 +112,7 @@ def data_class_impl(cls, *, init=True, label=None):
             # TODO: Use type-aware method for conversion to string
             # TODO: Review performance impact
             field_values = [str(getattr(self, field_name, None)) for field_name in field_names]
-            return ';'.join(field_values)
+            return ";".join(field_values)
 
         cls.get_key = get_key
         cls.get_key._implemented = True

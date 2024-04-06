@@ -25,12 +25,12 @@ def create_aggregation_method(interface_method: str, cls) -> Callable:
             target_type = type(value)
 
         if target_type not in cls._utils_map:
-            raise Exception(f'Type {target_type.__name__} has not util class.')
+            raise Exception(f"Type {target_type.__name__} has not util class.")
 
         util_class = cls._utils_map[target_type]
 
         if not hasattr(util_class, interface_method):
-            raise Exception(f'Util class {util_class.__name__} has not method {interface_method}.')
+            raise Exception(f"Util class {util_class.__name__} has not method {interface_method}.")
 
         real_method = getattr(util_class, interface_method)
 
@@ -59,11 +59,11 @@ def aggregation_class(cls):
             else:
                 raise Exception()
     """
-    if not hasattr(cls, '_methods_map'):
-        raise Exception(f'Class {str(cls)} has not _methods_map.')
+    if not hasattr(cls, "_methods_map"):
+        raise Exception(f"Class {str(cls)} has not _methods_map.")
 
-    if not hasattr(cls, '_utils_map'):
-        raise Exception(f'Class {str(cls)} has not _utils_map.')
+    if not hasattr(cls, "_utils_map"):
+        raise Exception(f"Class {str(cls)} has not _utils_map.")
 
     for interface_method, new_aggregation_method in cls._methods_map.items():
         setattr(

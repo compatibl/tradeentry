@@ -19,22 +19,22 @@ from cl.runtime.primitive.float_util import FloatUtil
 def test_format():
     """Test conversion of float to string."""
 
-    assert FloatUtil.format(1000.0) == '1000.'
-    assert FloatUtil.format(-1000.0) == '-1000.'
-    assert FloatUtil.format(0) == '0.'
-    assert FloatUtil.format(0.01) == '0.01'
-    assert FloatUtil.format(-0.01) == '-0.01'
-    assert FloatUtil.format(1000.0000000000000000000000123) == '1000.'
-    assert FloatUtil.format(1000.000123000000000000000000123) == '1000.000123'
-    assert FloatUtil.format(1000.112233445566778899) == '1000.1122334456'
-    assert FloatUtil.format(0.000112233445566778899) == '0.0001122334'
+    assert FloatUtil.format(1000.0) == "1000."
+    assert FloatUtil.format(-1000.0) == "-1000."
+    assert FloatUtil.format(0) == "0."
+    assert FloatUtil.format(0.01) == "0.01"
+    assert FloatUtil.format(-0.01) == "-0.01"
+    assert FloatUtil.format(1000.0000000000000000000000123) == "1000."
+    assert FloatUtil.format(1000.000123000000000000000000123) == "1000.000123"
+    assert FloatUtil.format(1000.112233445566778899) == "1000.1122334456"
+    assert FloatUtil.format(0.000112233445566778899) == "0.0001122334"
     assert (
-        FloatUtil.format(1000000000000000000000000.000123000000000000000000123) == '1000000000000000000000000.'
+        FloatUtil.format(1000000000000000000000000.000123000000000000000000123) == "1000000000000000000000000."
     )  # Float precision not enough for the fractional part .000123
     assert (
-        FloatUtil.format(-1000000000000000000000000.000123000000000000000000123) == '-1000000000000000000000000.'
+        FloatUtil.format(-1000000000000000000000000.000123000000000000000000123) == "-1000000000000000000000000."
     )  # Float precision not enough for the fractional part .000123
-    assert FloatUtil.format(0.000000000000000000000000123) == '0.'
+    assert FloatUtil.format(0.000000000000000000000000123) == "0."
 
 
 def test_get_int():
@@ -46,5 +46,5 @@ def test_get_int():
         assert FloatUtil.get_int(value=0.5) == 1
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

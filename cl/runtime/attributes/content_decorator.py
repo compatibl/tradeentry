@@ -31,7 +31,7 @@ def content(method: Callable[..., Any], language: ImplementLanguage = ImplementL
     if inspect.isfunction(method) or inspect.ismethod(method):
         # Checking for parameters
         method_params = dict(inspect.signature(method).parameters)
-        starts_from = 1 if 'self' in method_params.keys() else 0
+        starts_from = 1 if "self" in method_params.keys() else 0
         params = list(islice(method_params.values(), starts_from, None))
         if params:
             raise Exception("The function decorated by the 'content' decorator should not have any input parameters.")

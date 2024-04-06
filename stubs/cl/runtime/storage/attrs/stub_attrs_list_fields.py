@@ -57,32 +57,32 @@ def stub_attrs_date_list_factory() -> List[dt.date]:
 def stub_attrs_data_list_factory() -> List[StubAttrsData]:
     """Create stub values."""
     return [
-        StubAttrsData(str_field='A', int_field=0),
-        StubAttrsData(str_field='B', int_field=1),
+        StubAttrsData(str_field="A", int_field=0),
+        StubAttrsData(str_field="B", int_field=1),
     ]
 
 
 def stub_attrs_key_list_factory() -> List[StubAttrsRecordKey]:
     """Create stub values."""
     return [
-        StubAttrsRecordKey(str_field='A', int_field=0),
-        StubAttrsRecordKey(str_field='B', int_field=1),
+        StubAttrsRecordKey(str_field="A", int_field=0),
+        StubAttrsRecordKey(str_field="B", int_field=1),
     ]
 
 
 def stub_attrs_record_list_factory() -> List[StubAttrsRecord]:
     """Create stub values."""
     return [
-        StubAttrsRecord(str_field='A', int_field=0),
-        StubAttrsRecord(str_field='B', int_field=1),
+        StubAttrsRecord(str_field="A", int_field=0),
+        StubAttrsRecord(str_field="B", int_field=1),
     ]
 
 
 def stub_attrs_derived_record_list_factory() -> List[StubAttrsDerivedRecord]:
     """Create stub values."""
     return [
-        StubAttrsDerivedRecord(str_field='A', int_field=0),
-        StubAttrsDerivedRecord(str_field='B', int_field=1),
+        StubAttrsDerivedRecord(str_field="A", int_field=0),
+        StubAttrsDerivedRecord(str_field="B", int_field=1),
     ]
 
 

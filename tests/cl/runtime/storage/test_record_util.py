@@ -183,5 +183,5 @@ def test_to_from_dict():
         assert obj == restored_obj
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

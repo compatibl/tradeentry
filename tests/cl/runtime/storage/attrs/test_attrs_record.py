@@ -25,14 +25,14 @@ def test_smoke():
 
     # Create and test standalone key
     sample_key = StubAttrsRecordKey()
-    assert sample_key.get_key() == 'abc;123'
+    assert sample_key.get_key() == "abc;123"
 
     # Create test record and populate with sample data
     record = StubAttrsRecord()
 
     # Test primary key
     key = record.get_key()
-    assert key == 'abc;123'
+    assert key == "abc;123"
 
     # Test roundtrip serialization
     record_dict = record.to_dict()
@@ -64,5 +64,5 @@ def test_with_dicts():
     pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

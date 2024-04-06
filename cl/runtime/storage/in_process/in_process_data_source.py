@@ -78,7 +78,7 @@ class InProcessDataSource(DataSource):
             elif isinstance(key, str):
                 key = key
             else:
-                raise RuntimeError(f'Key {key} is not a string, Key, or Record')
+                raise RuntimeError(f"Key {key} is not a string, Key, or Record")
 
             # Try to retrieve dataset dictionary, insert if it does not yet exist
             dataset_cache = self._cache.setdefault(data_set, {})
@@ -98,7 +98,7 @@ class InProcessDataSource(DataSource):
 
             # Create record instance and populate it from dictionary
             # Final type name is the last element of type discriminators list
-            class_path = record_dict['_type']
+            class_path = record_dict["_type"]
             module_path, class_name = RecordUtil.split_class_path(class_path)
 
             class_ = RecordUtil.get_class_type(module_path, class_name)
@@ -108,8 +108,8 @@ class InProcessDataSource(DataSource):
             record_key = record.get_key()
             if record_key != key:
                 raise RuntimeError(
-                    f'Record get_key() method returns {record_key} which does '
-                    f'not match the argument {key} passed to the load method.'
+                    f"Record get_key() method returns {record_key} which does "
+                    f"not match the argument {key} passed to the load method."
                 )
 
             # TODO - refactor to improve speed

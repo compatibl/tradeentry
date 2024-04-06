@@ -26,7 +26,7 @@ if TYPE_CHECKING:
 
 def element_name_to_schema(field_: Any) -> str:
     """Process attribute field name to correct schema name."""
-    metadata_name: str = field_.metadata.get('name', None)
+    metadata_name: str = field_.metadata.get("name", None)
     if metadata_name:
         return metadata_name
     return to_pascal_case(field_.name)
@@ -35,20 +35,20 @@ def element_name_to_schema(field_: Any) -> str:
 def enum_name_to_schema(enum_: IntEnum) -> str:
     """Process enum item name to correct schema name."""
     enum_value = enum_.name
-    if enum_value.endswith('_'):
+    if enum_value.endswith("_"):
         return enum_value[:-1]
     return enum_value
 
 
 def enum_name_from_schema(cls: Type[IntEnum], value: str) -> IntEnum:
     """Process enum item name to correct schema name."""
-    if value in ('False', 'None', 'True'):
-        return cls[value + '_']
+    if value in ("False", "None", "True"):
+        return cls[value + "_"]
     else:
         return cls[value]
 
 
-def param_name_from_schema(schema_param_name: str, method_info: 'MethodInfo'):
+def param_name_from_schema(schema_param_name: str, method_info: "MethodInfo"):
     """
     Map a schema parameter name to the corresponding method parameter name based on the method's docstring.
 
@@ -61,6 +61,6 @@ def param_name_from_schema(schema_param_name: str, method_info: 'MethodInfo'):
     """
     parsed_doc = parse_method_docstring(method_info.docstring)
     for param_name, param_doc in parsed_doc.parameters.items():
-        if param_doc.meta.get('name', '') == schema_param_name:
+        if param_doc.meta.get("name", "") == schema_param_name:
             return param_name
     return to_snake_case(schema_param_name)

@@ -20,14 +20,14 @@ from cl.runtime.primitive.string_util import to_snake_case
 def test_functions():
     """Smoke test for functions in string_util."""
 
-    assert 'AbcDef' == to_pascal_case('abc_def')
-    assert 'Some2dPoint' == to_pascal_case('some2d_point')
-    assert 'Great2DPicture' == to_pascal_case('great2_d_picture')
+    assert "AbcDef" == to_pascal_case("abc_def")
+    assert "Some2dPoint" == to_pascal_case("some2d_point")
+    assert "Great2DPicture" == to_pascal_case("great2_d_picture")
 
-    assert 'abc_def' == to_snake_case('AbcDef')
-    assert 'some2d_point' == to_snake_case('Some2dPoint')
-    assert 'great2_d_picture' == to_snake_case('Great2DPicture')
+    assert "abc_def" == to_snake_case("AbcDef")
+    assert "some2d_point" == to_snake_case("Some2dPoint")
+    assert "great2_d_picture" == to_snake_case("Great2DPicture")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

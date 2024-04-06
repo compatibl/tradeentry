@@ -31,8 +31,8 @@ class DatasetUtil:
     * 'A\\B' - two-token dataset for which parent is dataset A
     """
 
-    __separator = '\\'
-    __two_separators = '\\\\'
+    __separator = "\\"
+    __two_separators = "\\\\"
 
     @staticmethod
     def root() -> Optional[str]:
@@ -50,7 +50,7 @@ class DatasetUtil:
         Split delimited dataset into tokens, excluding root.
         For root dataset, this method returns an empty list.
         """
-        if dataset is None or dataset == '':
+        if dataset is None or dataset == "":
             # Root dataset has no tokens
             result = []
         else:
@@ -77,7 +77,7 @@ class DatasetUtil:
         result = [DatasetUtil.root()]
 
         # Return if argument is empty
-        if dataset is None or dataset == '':
+        if dataset is None or dataset == "":
             return result
 
         # Split into tokens
@@ -87,7 +87,7 @@ class DatasetUtil:
         lookup_path = None
         result = [None]
         for token in dataset_tokens:
-            if token is None or token == '':
+            if token is None or token == "":
                 raise RuntimeError(f"Dataset {dataset} has empty tokens.")
             if lookup_path is None:
                 lookup_path = token
@@ -106,7 +106,7 @@ class DatasetUtil:
         Combine one or more datasets paths with validation, where each path may contain more than one token.
         Empty paths are ignored.
         """
-        normalized_paths = [DatasetUtil.normalize(p) for p in dataset_paths if (p is not None and p != '')]
+        normalized_paths = [DatasetUtil.normalize(p) for p in dataset_paths if (p is not None and p != "")]
         if len(normalized_paths) > 0:
             return DatasetUtil.__separator.join(normalized_paths)
         else:
@@ -126,7 +126,7 @@ class DatasetUtil:
         * 'A' - single-token dataset for which parent is root dataset
         * 'A\\B' - two-token dataset for which parent is dataset A
         """
-        if dataset_path is None or dataset_path == '':
+        if dataset_path is None or dataset_path == "":
             # The value of None is valid, return without raising exception
             return None
 
@@ -134,15 +134,15 @@ class DatasetUtil:
         dataset_path = unquote(dataset_path)
 
         if dataset_path.startswith(DatasetUtil.__separator):
-            raise Exception(f'Dataset `{dataset_path}` must not start with a backslash separator.')
+            raise Exception(f"Dataset `{dataset_path}` must not start with a backslash separator.")
         if dataset_path.endswith(DatasetUtil.__separator):
-            raise Exception(f'Dataset `{dataset_path}` must not end with a backslash separator.')
+            raise Exception(f"Dataset `{dataset_path}` must not end with a backslash separator.")
         if DatasetUtil.__two_separators in dataset_path:
-            raise Exception(f'Dataset `{dataset_path}` contains two backslash separators in a row.')
-        if dataset_path.startswith(' '):
-            raise Exception(f'Dataset `{dataset_path}` has a leading space.')
-        if dataset_path.endswith(' '):
-            raise Exception(f'Dataset `{dataset_path}` has a trailing space.')
+            raise Exception(f"Dataset `{dataset_path}` contains two backslash separators in a row.")
+        if dataset_path.startswith(" "):
+            raise Exception(f"Dataset `{dataset_path}` has a leading space.")
+        if dataset_path.endswith(" "):
+            raise Exception(f"Dataset `{dataset_path}` has a trailing space.")
 
         return dataset_path
 
@@ -150,7 +150,7 @@ class DatasetUtil:
     def validate_token(dataset_token: Optional[str]) -> None:
         """Validate a single dataset token."""
 
-        if dataset_token.startswith(' '):
-            raise Exception(f'Dataset token `{dataset_token}` has a leading space.')
-        if dataset_token.endswith(' '):
-            raise Exception(f'Dataset token `{dataset_token}` has a trailing space.')
+        if dataset_token.startswith(" "):
+            raise Exception(f"Dataset token `{dataset_token}` has a leading space.")
+        if dataset_token.endswith(" "):
+            raise Exception(f"Dataset token `{dataset_token}` has a trailing space.")

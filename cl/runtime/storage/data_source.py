@@ -23,8 +23,8 @@ from typing import Type
 from typing import TypeVar
 from typing import Union
 
-TKey = TypeVar('TKey', contravariant=True)
-TRecord = TypeVar('TRecord', covariant=True)
+TKey = TypeVar("TKey", contravariant=True)
+TRecord = TypeVar("TRecord", covariant=True)
 
 
 @data_class

@@ -26,7 +26,7 @@ class HandlerVariableDecl(TypeMemberDecl):
     vector: Optional[bool] = data_field()
     """Flag indicating variable size array (vector) container."""
 
-    object_: Optional[TypeDeclKey] = data_field(name='Object')
+    object_: Optional[TypeDeclKey] = data_field(name="Object")
     """Object element declaration."""
 
     optional: Optional[bool] = data_field()

@@ -40,5 +40,5 @@ class Module(ModuleKey, RecordMixin):
     package: PackageKey = data_field()
     """Package refence."""
 
-    copyright_: Optional[str] = data_field(name='Copyright')
+    copyright_: Optional[str] = data_field(name="Copyright")
     """Company name used in Copyright src header."""

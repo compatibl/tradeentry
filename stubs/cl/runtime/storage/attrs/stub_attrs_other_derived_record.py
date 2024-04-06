@@ -23,10 +23,10 @@ from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
 from typing import Optional
 
 
-@index_fields('other_float_field, other_str_field, -int_field')
+@index_fields("other_float_field, other_str_field, -int_field")
 @data_class
 class StubAttrsOtherDerivedRecord(StubAttrsRecord):
     """Another type derived from StubAttrsRecord."""
 
-    other_derived: str = data_field(default='other_derived')
+    other_derived: str = data_field(default="other_derived")
     """Stub field for other derived class."""

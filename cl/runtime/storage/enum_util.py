@@ -19,7 +19,7 @@ def enum_class_impl(cls, *, label=None):
     """Performs the actual wrapping irrespective of call syntax with or without parentheses."""
 
     if not issubclass(cls, IntEnum):
-        raise TypeError('Expected StrEnum or IntEnum derived type.')  # TODO: Review if StrEnum should be used
+        raise TypeError("Expected StrEnum or IntEnum derived type.")  # TODO: Review if StrEnum should be used
 
     # Add label if specified
     if label is not None:

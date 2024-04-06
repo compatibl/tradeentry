@@ -32,5 +32,5 @@ def test_smoke():
     assert obj_dict == obj_clone_dict
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

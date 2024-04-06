@@ -37,7 +37,7 @@ class StubAttrsPrimitiveFieldsKey(KeyMixin):
     int_field: int = data_field(default=123)
     """Stub field."""
 
-    long_field: int = data_field(default=9007199254740991, subtype='long')  # Rename subtype
+    long_field: int = data_field(default=9007199254740991, subtype="long")  # Rename subtype
     """The default is maximum safe signed int for JSON: 2^53 - 1."""
     # TODO: Define maximum safe long in Util class
 
@@ -50,7 +50,7 @@ class StubAttrsPrimitiveFieldsKey(KeyMixin):
     date_time_field: dt.datetime = data_field(default=DateTimeUtil.from_fields(2003, 5, 1, 10, 15))
     """Stub field."""
 
-    uuid_field: UUID = data_field(default=UUID('1A' * 16))
+    uuid_field: UUID = data_field(default=UUID("1A" * 16))
     """Stub field."""
 
     bytes_field: bytes = data_field(default=bytes([100, 110, 120]))
@@ -59,8 +59,8 @@ class StubAttrsPrimitiveFieldsKey(KeyMixin):
     enum_field: StubIntEnum = data_field(default=StubIntEnum.ENUM_VALUE_2)
     """Stub field."""
 
-    str_key_field: str = data_field(default="abc;123", subtype='StubRecordKey')  # Rename subtype
+    str_key_field: str = data_field(default="abc;123", subtype="StubRecordKey")  # Rename subtype
     """Stub field."""
 
-    generic_key_field: str = data_field(default="StubAttrsRecord;abc;123", subtype='GenericKey')  # Rename subtype
+    generic_key_field: str = data_field(default="StubAttrsRecord;abc;123", subtype="GenericKey")  # Rename subtype
     """Stub field."""

@@ -27,7 +27,7 @@ def label(label: str):
     def wrap(obj):
         if inspect.isclass(obj):
             if (DataMixin not in obj.__mro__) and (IntEnum not in obj.__mro__) and (Protocol not in obj.__mro__):
-                raise Exception('@label should be applied on Data derived class, IntEnum or Protocol')
+                raise Exception("@label should be applied on Data derived class, IntEnum or Protocol")
 
             obj._label = label
             return obj
@@ -35,6 +35,6 @@ def label(label: str):
             obj._label = label
             return obj
         else:
-            raise Exception('@label should be applied on class or method')
+            raise Exception("@label should be applied on class or method")
 
     return wrap

@@ -16,30 +16,30 @@ import re
 from typing import List
 from typing import Pattern
 
-__first_cap_re: Pattern = re.compile('(.)([A-Z][a-z]+)')
-__all_cap_re: Pattern = re.compile('([a-z0-9])([A-Z])')
-__to_pascal_re: Pattern = re.compile('(?:^|_+)(.)')
+__first_cap_re: Pattern = re.compile("(.)([A-Z][a-z]+)")
+__all_cap_re: Pattern = re.compile("([a-z0-9])([A-Z])")
+__to_pascal_re: Pattern = re.compile("(?:^|_+)(.)")
 
-eol: str = '\n'
+eol: str = "\n"
 """Literal string for newline."""
 
 
 def to_pascal_case(name: str) -> str:
     """Converts strings to PascalCase also removing underscores. No spaces expected."""
-    return __to_pascal_re.sub(lambda match: f'{match.group(1).upper()}', name)
+    return __to_pascal_re.sub(lambda match: f"{match.group(1).upper()}", name)
 
 
 def to_snake_case(name: str) -> str:
     """Converts PascalCase strings to snake_case. No spaces expected."""
-    s1: str = __first_cap_re.sub(r'\1_\2', name)
-    result: str = __all_cap_re.sub(r'\1_\2', s1).lower()
+    s1: str = __first_cap_re.sub(r"\1_\2", name)
+    result: str = __all_cap_re.sub(r"\1_\2", s1).lower()
     return result
 
 
 def split_by_uppercase(value: str) -> List[str]:
     """Splits input string by any uppercase char."""
 
-    parts = re.findall('[A-Z][^A-Z]*', value)
+    parts = re.findall("[A-Z][^A-Z]*", value)
     if value and not parts:
         parts = [value]
 
@@ -58,7 +58,7 @@ def header_to_label(header: str) -> str:
     """
     Convert string to words separated by space that start from upper case for all elements of input list.
     """
-    return ' '.join(re.findall(r'[A-Z][^A-Z]*', to_pascal_case(header)))
+    return " ".join(re.findall(r"[A-Z][^A-Z]*", to_pascal_case(header)))
 
 
 def replace_prefix(value: str, old_prefix: str, new_prefix: str) -> str:

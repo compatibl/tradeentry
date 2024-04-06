@@ -18,8 +18,8 @@ from typing import Optional
 from typing import Pattern
 
 # Regexp for docstring parsing
-__parameters_re: Pattern = re.compile(r'Parameters\s+----------')
-__returns_re: Pattern = re.compile(r'Returns\s+-------')
+__parameters_re: Pattern = re.compile(r"Parameters\s+----------")
+__returns_re: Pattern = re.compile(r"Returns\s+-------")
 
 
 class MethodDocstringParameter:
@@ -71,24 +71,24 @@ class EnumItemDocstring:
 def _parse_param_metadata(line: str) -> Optional[Dict[str, str]]:
     """Parse param line in format 'param_name : param_type[, ..]'."""
 
-    param_options = line.split(',')
+    param_options = line.split(",")
 
     # Parse first item in format '[name : ]type'
-    name_type = [x.strip() for x in param_options[0].split(' : ')]
+    name_type = [x.strip() for x in param_options[0].split(" : ")]
 
     if len(name_type) > 2:
         return None
 
     result = dict()
     if len(name_type) == 2:
-        result['_name'] = name_type[0]
-        result['_type'] = name_type[1]
+        result["_name"] = name_type[0]
+        result["_type"] = name_type[1]
     else:
-        result['_type'] = name_type[0]
+        result["_type"] = name_type[0]
 
     # Parse param options in format 'key[=val]'
     for opt in param_options[1:]:
-        key_val = [x.strip() for x in opt.split('=')]
+        key_val = [x.strip() for x in opt.split("=")]
 
         if len(key_val) > 2:
             return None
@@ -106,13 +106,13 @@ def _parse_method_docstring_param(param_line: str) -> MethodDocstringParameter:
     param_meta = _parse_param_metadata(param_line)
 
     result = MethodDocstringParameter()
-    result.name = param_meta.pop('_name', None)
-    result.type_ = param_meta.pop('_type', None)
+    result.name = param_meta.pop("_name", None)
+    result.type_ = param_meta.pop("_type", None)
     result.meta = param_meta
 
-    if 'optional' in param_meta:
-        param_opt = param_meta['optional']
-        if param_opt is None or param_opt == 'True':
+    if "optional" in param_meta:
+        param_opt = param_meta["optional"]
+        if param_opt is None or param_opt == "True":
             result.optional = True
 
     return result
@@ -155,7 +155,7 @@ def _parse_method_docstring_parameters(parameters_block: str, result: MethodDocs
                 break
 
             # Check if next line is not param comment
-            param_type_next = parameters_lines[i].split(' : ')
+            param_type_next = parameters_lines[i].split(" : ")
             if len(param_type_next) >= 2:
                 continue
 
@@ -203,16 +203,16 @@ def parse_enum_items_definition(enum_item_docstring: str, enum_type_name: str, e
     """Parse enum label in format 'Item Label = label name.(not case sensitive)."""
 
     result = EnumItemDocstring()
-    label_exist = re.compile(r'item\s*label\s*=', flags=re.I).search(enum_item_docstring)
+    label_exist = re.compile(r"item\s*label\s*=", flags=re.I).search(enum_item_docstring)
 
     if label_exist:
         result.comment = enum_item_docstring[: label_exist.start()].strip()
-        correct_setup_label_structure = len(enum_item_docstring[label_exist.start() :].split('=')) == 2
+        correct_setup_label_structure = len(enum_item_docstring[label_exist.start() :].split("=")) == 2
 
         if not correct_setup_label_structure:
             raise RuntimeError(f"Invalid {enum_type_name} item label definition in the item {enum_item}.")
 
-        result.label = enum_item_docstring[label_exist.start() :].split('=')[1].strip()
+        result.label = enum_item_docstring[label_exist.start() :].split("=")[1].strip()
     else:
         result.comment = enum_item_docstring.strip()
 

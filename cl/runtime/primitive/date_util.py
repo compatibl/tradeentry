@@ -44,10 +44,10 @@ class DateUtil:
 
     @staticmethod
     def from_str(value_str: str) -> Any:
-        if value_str.endswith('Z'):
+        if value_str.endswith("Z"):
             raise Exception(
-                f'String {value_str} passed to dt.date ctor must not end with capital Z that '
-                f'indicates UTC timezone because dt.date does not include timezone.'
+                f"String {value_str} passed to dt.date ctor must not end with capital Z that "
+                f"indicates UTC timezone because dt.date does not include timezone."
             )
 
         # Convert from string in yyyy-mm-dd format
