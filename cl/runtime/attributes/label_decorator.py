@@ -13,10 +13,9 @@
 # limitations under the License.
 
 import inspect
+from cl.runtime.storage.data_mixin import DataMixin
 from enum import IntEnum
 from typing import Protocol
-
-from cl.runtime.storage.data_mixin import DataMixin
 
 
 def label(label: str):

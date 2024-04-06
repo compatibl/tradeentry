@@ -12,12 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Optional, final
-
+from cl.runtime.primitive.variant import Variant
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
 from cl.runtime.view.binary_content_key import BinaryContentKey
 from cl.runtime.view.binary_content_type_enum import BinaryContentTypeEnum
-from cl.runtime.primitive.variant import Variant
-from cl.runtime.storage.attrs import data_class, data_field
+from typing import Optional
+from typing import final
 
 
 @final

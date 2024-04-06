@@ -13,9 +13,10 @@
 # limitations under the License.
 
 from __future__ import annotations
+
 from abc import ABC
-from typing_extensions import Self
 from cl.runtime.storage.data_mixin import DataMixin
+from typing_extensions import Self
 
 
 class KeyMixin(DataMixin, ABC):
@@ -38,13 +39,15 @@ class KeyMixin(DataMixin, ABC):
         followed by the dot delimiter and then the class name of the common base to all records
         stored in the table: 'namespace.RecordType'
         """
-        raise RuntimeError(f"Method get_table() for class {type(self).__name__} in module {type(self).__module__} "
-                           f"is neither implemented in code nor by a decorator.")
+        raise RuntimeError(
+            f"Method get_table() for class {type(self).__name__} in module {type(self).__module__} "
+            f"is neither implemented in code nor by a decorator."
+        )
 
     def get_key(self) -> str:
         """
-        Key as string in semicolon-delimited string format without table name. 
-        
+        Key as string in semicolon-delimited string format without table name.
+
         For composite keys, the embedded keys are concatenated in the order of their declaration without brackets:
 
             - No primary key fields: '' (i.e. empty string)
@@ -52,8 +55,10 @@ class KeyMixin(DataMixin, ABC):
             - Two primary key fields A and B: 'A;B'
             - Two primary key fields 'A1;A2' and 'B': 'A1;A2;B'
         """
-        raise RuntimeError(f"Method get_key() for class {type(self).__name__} in module {type(self).__module__} "
-                           f"is neither implemented in code nor by a decorator.")
+        raise RuntimeError(
+            f"Method get_key() for class {type(self).__name__} in module {type(self).__module__} "
+            f"is neither implemented in code nor by a decorator."
+        )
 
     def get_generic_key(self) -> str:
         """

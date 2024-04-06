@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.record_mixin import RecordMixin
-from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.type.package_decl_key import PackageDeclKey
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
+from cl.runtime.storage.record_mixin import RecordMixin
 
 
 @data_class

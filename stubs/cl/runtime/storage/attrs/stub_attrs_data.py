@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Optional
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
 from cl.runtime.storage.data_mixin import DataMixin
-from cl.runtime.storage.attrs import data_field, data_class
+from typing import Optional
 
 
 @data_class

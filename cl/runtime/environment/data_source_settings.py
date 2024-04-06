@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-from typing import Final, Sequence
 import dynaconf
+import os
+from typing import Final
+from typing import Sequence
 
 CL_RUNTIME_SETTINGS_FILE: Final[str] = 'settings.json'
 """Settings file name."""

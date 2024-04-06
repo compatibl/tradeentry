@@ -13,9 +13,9 @@
 # limitations under the License.
 
 from abc import ABC
-from typing import Optional
 from cl.runtime import Context
 from cl.runtime.storage.key_mixin import KeyMixin
+from typing import Optional
 
 
 class RecordMixin(ABC):

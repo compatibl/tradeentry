@@ -12,15 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from copy import copy
-from typing import Any, Dict, Generic, List, Optional, Type, get_args, get_origin
-
-from typing_inspect import get_generic_bases
-
 from cl.runtime.primitive.schema_helper import element_name_to_schema
-from cl.runtime.serialization.type_info import TypeInfo, TypeKind, get_type_methods, set_generic_params
-from cl.runtime.storage.class_info import ClassInfo
+from cl.runtime.serialization.type_info import TypeInfo
+from cl.runtime.serialization.type_info import TypeKind
+from cl.runtime.serialization.type_info import get_type_methods
+from cl.runtime.serialization.type_info import set_generic_params
 from cl.runtime.storage.attrs import data_field
+from cl.runtime.storage.class_info import ClassInfo
+from copy import copy
+from typing import Any
+from typing import Dict
+from typing import Generic
+from typing import List
+from typing import Optional
+from typing import Type
+from typing import get_args
+from typing import get_origin
+from typing_inspect import get_generic_bases
 
 
 class RecordFieldInfo:

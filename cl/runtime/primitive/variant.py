@@ -14,16 +14,19 @@
 
 import datetime as dt
 import importlib
-from enum import IntEnum
-from typing import Any, Dict, Union
-
 from cl.runtime.date_time.date_time_aggregate_util import DateTimeAggregateUtil
-from cl.runtime.primitive.schema_helper import enum_name_from_schema, enum_name_to_schema
-from cl.runtime.primitive.string_util import to_pascal_case, to_snake_case
+from cl.runtime.primitive.schema_helper import enum_name_from_schema
+from cl.runtime.primitive.schema_helper import enum_name_to_schema
+from cl.runtime.primitive.string_util import to_pascal_case
+from cl.runtime.primitive.string_util import to_snake_case
 from cl.runtime.primitive.variant_type import VariantType
 from cl.runtime.storage.context import Context
 from cl.runtime.storage.data_mixin import DataMixin
 from cl.runtime.storage.key_mixin import KeyMixin
+from enum import IntEnum
+from typing import Any
+from typing import Dict
+from typing import Union
 
 VariantHint = Union[None, str, float, int, bool, dt.date, dt.time, dt.datetime, IntEnum, KeyMixin, DataMixin]
 

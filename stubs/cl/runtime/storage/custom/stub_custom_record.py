@@ -13,10 +13,13 @@
 # limitations under the License.
 
 from __future__ import annotations
-from typing import Any, Dict, Optional
+
 from cl.runtime.storage.context import Context
 from cl.runtime.storage.record_mixin import RecordMixin
 from stubs.cl.runtime.storage.custom.stub_custom_record_key import StubCustomRecordKey
+from typing import Any
+from typing import Dict
+from typing import Optional
 
 
 class StubCustomRecord(StubCustomRecordKey, RecordMixin):
@@ -25,16 +28,10 @@ class StubCustomRecord(StubCustomRecordKey, RecordMixin):
     float_field: Optional[float]
     """Float attribute of base class."""
 
-    def __init__(self, *,
-                 str_field: str = 'abc',
-                 int_field: int = 123,
-                 float_field: float = 4.56):
+    def __init__(self, *, str_field: str = 'abc', int_field: int = 123, float_field: float = 4.56):
         """Initialize instance attributes."""
 
-        super().__init__(
-            str_field=str_field,
-            int_field=int_field
-        )
+        super().__init__(str_field=str_field, int_field=int_field)
 
         self.float_field = float_field
 

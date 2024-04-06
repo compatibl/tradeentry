@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Optional
-from cl.runtime.storage.attrs import data_field, data_class
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
 from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
+from typing import Optional
 
 
 @data_class
@@ -23,5 +24,3 @@ class StubAttrsDerivedData(StubAttrsData):
 
     derived_field: str = data_field(default="derived")
     """Stub field."""
-
-

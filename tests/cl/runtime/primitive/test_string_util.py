@@ -13,8 +13,8 @@
 # limitations under the License.
 
 import pytest
-
-from cl.runtime.primitive.string_util import to_pascal_case, to_snake_case
+from cl.runtime.primitive.string_util import to_pascal_case
+from cl.runtime.primitive.string_util import to_snake_case
 
 
 def test_functions():

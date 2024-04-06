@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import pytest
 import datetime as dt
-from dateutil.relativedelta import relativedelta
+import pytest
 from cl.runtime.primitive.date_util import DateUtil
+from dateutil.relativedelta import relativedelta
 
 
 def test_smoke():

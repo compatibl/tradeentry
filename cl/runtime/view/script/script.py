@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Optional
-
 import attrs
-
-from cl.runtime.view.script.script_language import ScriptLanguage
 from cl.runtime.primitive.variant import Variant
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
 from cl.runtime.storage.data_mixin import DataMixin
-from cl.runtime.storage.attrs import data_class, data_field
+from cl.runtime.view.script.script_language import ScriptLanguage
+from typing import List
+from typing import Optional
 
 
 @data_class

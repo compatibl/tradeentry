@@ -13,8 +13,14 @@
 # limitations under the License.
 
 import inspect
-from typing import Any, Dict, List, Optional, Tuple, Type, TypeVar
 from cl.runtime.storage.key_mixin import KeyMixin
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import Tuple
+from typing import Type
+from typing import TypeVar
 
 TRecord = TypeVar('TRecord', bound=KeyMixin)
 
@@ -90,9 +96,7 @@ def get_index_fields_dict(cls: Type[TRecord]) -> Dict[str, Dict[str, Any]]:
     # Iterate over base classes and extract index elements
     for base_cls in filter(lambda x: '_index_fields' in x.__dict__, cls.__mro__):
         for index_def, index_name in base_cls._index_fields:  # type: str, str
-            prev_value = result.setdefault(
-                index_def, {'index_name': index_name}
-            )
+            prev_value = result.setdefault(index_def, {'index_name': index_name})
 
             # If already included, check that the name matches, error message otherwise
             if prev_value['index_name'] != index_name:

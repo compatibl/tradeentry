@@ -12,10 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
-from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.decl.handler_declare_decl import HandlerDeclareDecl
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
 from cl.runtime.storage.data_mixin import DataMixin
+from typing import List
 
 
 @data_class

@@ -13,14 +13,16 @@
 # limitations under the License.
 
 from __future__ import annotations
+
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
 from cl.runtime.storage.index_util import index_fields
-from cl.runtime.storage.attrs import data_field, data_class
+from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
+from stubs.cl.runtime.storage.attrs.stub_attrs_derived_data import StubAttrsDerivedData
+from stubs.cl.runtime.storage.attrs.stub_attrs_derived_from_derived_data import StubAttrsDerivedFromDerivedData
 from stubs.cl.runtime.storage.attrs.stub_attrs_nested_fields_key import StubAttrsNestedFieldsKey
 from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey
-from stubs.cl.runtime.storage.attrs.stub_attrs_derived_data import StubAttrsDerivedData
-from stubs.cl.runtime.storage.attrs.stub_attrs_derived_from_derived_data import StubAttrsDerivedFromDerivedData
-from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
 
 
 @index_fields('derived_float_field, -float_field')
@@ -34,7 +36,9 @@ class StubAttrsNestedFields(StubAttrsNestedFieldsKey):
     derived_data_field: StubAttrsDerivedData = data_field(factory=StubAttrsDerivedData)
     """Stub field."""
 
-    derived_from_derived_data_field: StubAttrsDerivedFromDerivedData = data_field(default=StubAttrsDerivedFromDerivedData)
+    derived_from_derived_data_field: StubAttrsDerivedFromDerivedData = data_field(
+        default=StubAttrsDerivedFromDerivedData
+    )
     """Stub field."""
 
     polymorphic_data_field: StubAttrsData = data_field(factory=StubAttrsDerivedData)
@@ -48,5 +52,3 @@ class StubAttrsNestedFields(StubAttrsNestedFieldsKey):
 
     record_as_key_field: StubAttrsRecordKey = data_field(factory=lambda: StubAttrsRecord())
     """Stub field with key type initialized to record type instance."""
-
-

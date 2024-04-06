@@ -12,13 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from copy import deepcopy
-from typing import Dict, Iterable, Optional, Type, Union
-
-from cl.runtime.storage.attrs import data_field, data_class
-from cl.runtime.storage.data_source import DataSource, TKey, TRecord
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
+from cl.runtime.storage.data_source import DataSource
+from cl.runtime.storage.data_source import TKey
+from cl.runtime.storage.data_source import TRecord
 from cl.runtime.storage.record_mixin import RecordMixin
 from cl.runtime.storage.record_util import RecordUtil
+from copy import deepcopy
+from typing import Dict
+from typing import Iterable
+from typing import Optional
+from typing import Type
+from typing import Union
 
 
 @data_class
@@ -116,7 +122,6 @@ class InProcessDataSource(DataSource):
 
         # Iterate over records
         for record in records:
-
             # Get primary key and data from record.
             key = record.get_key()
             record_dict = record.to_dict()

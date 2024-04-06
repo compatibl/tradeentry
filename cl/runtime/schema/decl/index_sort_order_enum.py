@@ -15,7 +15,6 @@
 from enum import IntEnum
 
 
-
 class IndexSortOrderEnum(IntEnum):
     """Index sorting order."""
 

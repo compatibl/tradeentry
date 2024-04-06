@@ -13,7 +13,9 @@
 # limitations under the License.
 
 import re
-from typing import Dict, Optional, Pattern
+from typing import Dict
+from typing import Optional
+from typing import Pattern
 
 # Regexp for docstring parsing
 __parameters_re: Pattern = re.compile(r'Parameters\s+----------')

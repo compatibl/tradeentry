@@ -12,17 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import attrs
 import gc
 import importlib
 import inspect
 import pkgutil
 from abc import ABCMeta
-from enum import Enum
-from typing import Any, Dict, List, Optional, Set, Type, TypeVar, Union, get_type_hints
-
-import attrs
-
 from cl.runtime.primitive.string_util import to_pascal_case
+from enum import Enum
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import Set
+from typing import Type
+from typing import TypeVar
+from typing import Union
+from typing import get_type_hints
 
 T = TypeVar('T')
 

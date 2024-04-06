@@ -12,16 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from datetime import date, datetime, time
-from typing import Any, Dict, Optional, Type
-
 import pytz
-
 from cl.runtime.date_time.aggregation_class import aggregation_class
 from cl.runtime.date_time.base_date_time_util import BaseDateTimeUtil
-from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.primitive.date_time_util import DateTimeUtil
+from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.primitive.time_util import TimeUtil
+from datetime import date
+from datetime import datetime
+from datetime import time
+from typing import Any
+from typing import Dict
+from typing import Optional
+from typing import Type
 
 
 @aggregation_class

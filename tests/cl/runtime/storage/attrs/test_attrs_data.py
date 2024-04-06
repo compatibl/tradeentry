@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import pytest
 import cl.runtime as rt
+import pytest
 from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
 
 

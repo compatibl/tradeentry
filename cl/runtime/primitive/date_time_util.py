@@ -13,7 +13,9 @@
 # limitations under the License.
 
 import datetime as dt
-from typing import Any, Optional, Tuple
+from typing import Any
+from typing import Optional
+from typing import Tuple
 
 
 class DateTimeUtil:
@@ -142,13 +144,6 @@ class DateTimeUtil:
             millisecond = 0
 
         result = dt.datetime(
-            year,
-            month,
-            day,
-            hour,
-            minute,
-            second,
-            microsecond=1000*millisecond,
-            tzinfo=dt.timezone.utc
+            year, month, day, hour, minute, second, microsecond=1000 * millisecond, tzinfo=dt.timezone.utc
         )
         return result

@@ -13,7 +13,9 @@
 # limitations under the License.
 
 import datetime as dt
-from typing import Any, Tuple, Optional
+from typing import Any
+from typing import Optional
+from typing import Tuple
 
 
 class TimeUtil:
@@ -97,13 +99,7 @@ class TimeUtil:
         if millisecond is None:
             millisecond = 0
 
-        result = dt.time(
-            hour,
-            minute,
-            second,
-            microsecond=1000 * millisecond,
-            tzinfo=dt.timezone.utc
-        )
+        result = dt.time(hour, minute, second, microsecond=1000 * millisecond, tzinfo=dt.timezone.utc)
         return result
 
     @staticmethod

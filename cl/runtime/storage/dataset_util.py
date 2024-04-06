@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Optional
+from typing import List
+from typing import Optional
 from urllib.parse import unquote
 
 
@@ -50,11 +51,9 @@ class DatasetUtil:
         For root dataset, this method returns an empty list.
         """
         if dataset is None or dataset == '':
-
             # Root dataset has no tokens
             result = []
         else:
-
             # If not root, split into tokens
             dataset = DatasetUtil.normalize(dataset)
             result = dataset.split(DatasetUtil.separator())

@@ -13,21 +13,20 @@
 # limitations under the License.
 
 import datetime as dt
-from typing import Dict, List
-from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.primitive.date_util import DateUtil
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
 from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
-from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.storage.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
+from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey
+from typing import Dict
+from typing import List
 
 
 def stub_attrs_str_dict_factory() -> Dict[str, str]:
     """Create stub values."""
-    return {
-        "a": "abc",
-        "b": "def"
-    }
+    return {"a": "abc", "b": "def"}
 
 
 def stub_attrs_float_dict_factory() -> Dict[str, float]:
@@ -42,7 +41,7 @@ def stub_attrs_float_dict_factory() -> Dict[str, float]:
         "g": 12.3456789,
         "h": 123.456789,
         "i": 1234.56789,
-        "j": 12345.6789
+        "j": 12345.6789,
     }
 
 
@@ -95,7 +94,7 @@ class StubAttrsDictFields(StubAttrsRecord):
 
     float_dict: Dict[str, float] = data_field(factory=stub_attrs_float_dict_factory)
     """Stub field."""
-    
+
     date_dict: Dict[str, dt.date] = data_field(factory=stub_attrs_date_dict_factory)
     """Stub field."""
 

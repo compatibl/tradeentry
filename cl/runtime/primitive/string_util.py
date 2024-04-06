@@ -13,7 +13,8 @@
 # limitations under the License.
 
 import re
-from typing import List, Pattern
+from typing import List
+from typing import Pattern
 
 __first_cap_re: Pattern = re.compile('(.)([A-Z][a-z]+)')
 __all_cap_re: Pattern = re.compile('([a-z0-9])([A-Z])')

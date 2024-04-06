@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import inspect
-
 from cl.runtime.attributes.handler_decorator import handler
 from cl.runtime.attributes.implement_language import ImplementLanguage
 from cl.runtime.attributes.method_trait import MethodTrait

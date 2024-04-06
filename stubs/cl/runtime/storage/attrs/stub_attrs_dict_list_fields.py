@@ -13,23 +13,24 @@
 # limitations under the License.
 
 import datetime as dt
-from typing import Dict, List
-from cl.runtime.storage.attrs import data_field, data_class
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
 from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
-from stubs.cl.runtime.storage.attrs.stub_attrs_dict_fields import stub_attrs_date_dict_factory, \
-    stub_attrs_data_dict_factory, stub_attrs_key_dict_factory, stub_attrs_record_dict_factory, \
-    stub_attrs_derived_record_dict_factory
-from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.storage.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
+from stubs.cl.runtime.storage.attrs.stub_attrs_dict_fields import stub_attrs_data_dict_factory
+from stubs.cl.runtime.storage.attrs.stub_attrs_dict_fields import stub_attrs_date_dict_factory
+from stubs.cl.runtime.storage.attrs.stub_attrs_dict_fields import stub_attrs_derived_record_dict_factory
+from stubs.cl.runtime.storage.attrs.stub_attrs_dict_fields import stub_attrs_key_dict_factory
+from stubs.cl.runtime.storage.attrs.stub_attrs_dict_fields import stub_attrs_record_dict_factory
+from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey
+from typing import Dict
+from typing import List
 
 
 def stub_attrs_str_dict_list_factory() -> List[str]:
     """Create stub values."""
-    return [
-        "abc",
-        "def"
-    ]
+    return ["abc", "def"]
 
 
 def stub_attrs_float_dict_list_factory() -> List[float]:
@@ -44,11 +45,11 @@ def stub_attrs_float_dict_list_factory() -> List[float]:
         12.3456789,
         123.456789,
         1234.56789,
-        12345.6789
+        12345.6789,
     ]
 
 
-def stub_attrs_date_dict_list_factory() ->  List[Dict[str, dt.date]]:
+def stub_attrs_date_dict_list_factory() -> List[Dict[str, dt.date]]:
     """Create stub values."""
     return [
         stub_attrs_date_dict_factory(),
@@ -94,12 +95,14 @@ class StubAttrsDictListFields(StubAttrsRecord):
 
     float_dict_list: List[Dict[str, float]] = data_field(factory=stub_attrs_float_dict_list_factory)
     """Stub field."""
-    
+
     date_dict_list: List[Dict[str, dt.date]] = data_field(factory=stub_attrs_date_dict_list_factory)
     """Stub field."""
 
     record_dict_list: List[Dict[str, StubAttrsRecord]] = data_field(factory=stub_attrs_record_dict_list_factory)
     """Stub field."""
 
-    derived_record_dict_list: List[Dict[str, StubAttrsDerivedRecord]] = data_field(factory=stub_attrs_derived_record_dict_factory)
+    derived_record_dict_list: List[Dict[str, StubAttrsDerivedRecord]] = data_field(
+        factory=stub_attrs_derived_record_dict_factory
+    )
     """Stub field."""

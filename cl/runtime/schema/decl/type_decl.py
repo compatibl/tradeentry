@@ -12,9 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Optional
-from cl.runtime.storage.record_mixin import RecordMixin
-from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.decl.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.decl.handler_implement_block_decl import HandlerImplementBlockDecl
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
@@ -24,6 +21,11 @@ from cl.runtime.schema.decl.type_element_decl import TypeElementDecl
 from cl.runtime.schema.decl.type_index_decl import TypeIndexDecl
 from cl.runtime.schema.decl.type_kind import TypeKind
 from cl.runtime.schema.decl.type_param_decl import TypeParamDecl
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
+from cl.runtime.storage.record_mixin import RecordMixin
+from typing import List
+from typing import Optional
 
 
 @data_class

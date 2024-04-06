@@ -13,8 +13,10 @@
 # limitations under the License.
 
 from __future__ import annotations
+
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
 from cl.runtime.storage.index_util import index_fields
-from cl.runtime.storage.attrs import data_field, data_class
 from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
 
 
@@ -31,4 +33,3 @@ class StubAttrsDerivedRecord(StubAttrsRecord):
 
     def virtual_base_handler(self) -> None:
         pass
-

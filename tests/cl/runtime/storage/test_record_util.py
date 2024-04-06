@@ -166,11 +166,10 @@ def test_to_from_dict():
         StubAttrsRecord,
         StubAttrsRecordKey,
         StubAttrsSingleton,
-        StubAttrsSingletonKey
+        StubAttrsSingletonKey,
     ]
 
     for stub_type in stub_types:
-
         # Create a stub type instance with default field values
         obj = stub_type()
 

@@ -13,12 +13,17 @@
 # limitations under the License.
 
 import inspect
-from typing import Any, List, Optional, Tuple, Type
-
-from cl.runtime.attributes import ImplementLanguage, MethodTrait
+from cl.runtime.attributes import ImplementLanguage
+from cl.runtime.attributes import MethodTrait
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
 from cl.runtime.storage.class_info import ClassInfo
 from cl.runtime.storage.data_mixin import DataMixin
-from cl.runtime.storage.attrs import data_class, data_field
+from typing import Any
+from typing import List
+from typing import Optional
+from typing import Tuple
+from typing import Type
 
 
 @data_class

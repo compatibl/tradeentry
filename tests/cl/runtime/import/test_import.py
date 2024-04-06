@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import attrs
 import importlib
 import inspect
 import pkgutil
-import attrs
-from typing import List
 import pytest
+from typing import List
 
 
 def _check_package(package_root: str) -> List[str]:  # TODO: Move this method to cl.runtime.testing module

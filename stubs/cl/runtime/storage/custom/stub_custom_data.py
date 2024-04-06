@@ -13,9 +13,12 @@
 # limitations under the License.
 
 from __future__ import annotations
-from typing_extensions import Self
-from typing import Any, Dict, Optional
+
 from cl.runtime import DataMixin
+from typing import Any
+from typing import Dict
+from typing import Optional
+from typing_extensions import Self
 
 
 class StubCustomData(DataMixin):
@@ -27,10 +30,7 @@ class StubCustomData(DataMixin):
     int_field: Optional[int]
     """Float attribute of base class."""
 
-    def __init__(self, *,
-                 str_field: str = 'abc',
-                 int_field: int = 123
-                 ):
+    def __init__(self, *, str_field: str = 'abc', int_field: int = 123):
         """Initialize instance attributes."""
         self.str_field = str_field
         self.int_field = int_field

@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import pytest
 import cl.runtime as rt
-from cl.runtime import Context, InProcessDataSource
+import pytest
+from cl.runtime import Context
+from cl.runtime import InProcessDataSource
 from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.storage.custom.stub_custom_record import StubCustomRecord
 

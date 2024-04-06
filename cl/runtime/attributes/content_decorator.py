@@ -14,12 +14,12 @@
 
 
 import inspect
-from itertools import islice
-from typing import Any, Callable
-
-from cl.runtime.view.binary_content import BinaryContent
 from cl.runtime.attributes.handler_decorator import handler
 from cl.runtime.attributes.implement_language import ImplementLanguage
+from cl.runtime.view.binary_content import BinaryContent
+from itertools import islice
+from typing import Any
+from typing import Callable
 
 
 def content(method: Callable[..., Any], language: ImplementLanguage = ImplementLanguage.Python):

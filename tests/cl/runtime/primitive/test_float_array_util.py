@@ -14,7 +14,6 @@
 
 import numpy as np
 import pytest
-
 from cl.runtime.primitive.float_array_util import FloatArrayUtil
 from stubs.cl.runtime.primitive.stub_float_util import StubFloatUtil
 
@@ -37,9 +36,7 @@ def test_is_equal_or_ascending():
     """Test is_equal_or_ascending method."""
     assert FloatArrayUtil.is_equal_or_ascending(np.array(StubFloatUtil.create_strictly_ascending_list()))
     assert FloatArrayUtil.is_equal_or_ascending(np.array(StubFloatUtil.create_equal_or_ascending_list()))
-    assert FloatArrayUtil.is_equal_or_ascending(
-        np.array(StubFloatUtil.create_equal_or_ascending_list_with_tolerance())
-    )
+    assert FloatArrayUtil.is_equal_or_ascending(np.array(StubFloatUtil.create_equal_or_ascending_list_with_tolerance()))
     assert not FloatArrayUtil.is_equal_or_ascending(np.array(StubFloatUtil.create_strictly_descending_list()))
     assert not FloatArrayUtil.is_equal_or_ascending(np.array(StubFloatUtil.create_equal_or_descending_list()))
     assert not FloatArrayUtil.is_equal_or_ascending(

@@ -13,8 +13,8 @@
 # limitations under the License.
 
 import attrs
-
-from cl.runtime.storage.attrs import data_class, data_field
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
 from cl.runtime.storage.key_mixin import KeyMixin
 
 

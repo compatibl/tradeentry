@@ -12,10 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Optional, final
 from cl.runtime import RecordMixin
-from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.decl.language_key import LanguageKey
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
+from typing import Optional
+from typing import final
 
 
 @final

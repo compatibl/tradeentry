@@ -13,9 +13,10 @@
 # limitations under the License.
 
 import datetime as dt
-from uuid import UUID
-from typing import Any, Dict
 import pytz
+from typing import Any
+from typing import Dict
+from uuid import UUID
 
 
 class StubDictUtil:
@@ -32,7 +33,7 @@ class StubDictUtil:
             'bool_field': True,
             'int_field': 123,
             'long_field': 9007199254740991,  # Maximum safe signed int for JSON: 2^53 - 1
-            'long_field_str': str(9007199254740991), # Maximum safe signed int for JSON: 2^53 - 1
+            'long_field_str': str(9007199254740991),  # Maximum safe signed int for JSON: 2^53 - 1
             'date_field': dt.date(2003, 4, 21),
             'time_field': dt.time(11, 10, 0),
             'time_field_ms': dt.time(11, 10, 0, 123000),

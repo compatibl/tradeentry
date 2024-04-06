@@ -13,10 +13,13 @@
 # limitations under the License.
 
 from __future__ import annotations
-from typing import Any, Dict, Optional
+
 from cl.runtime.storage.context import Context
 from cl.runtime.storage.key_mixin import KeyMixin
 from cl.runtime.storage.record_mixin import RecordMixin
+from typing import Any
+from typing import Dict
+from typing import Optional
 
 
 class StubCustomKeylessRecord(KeyMixin):
@@ -52,5 +55,3 @@ class StubCustomKeylessRecord(KeyMixin):
     def get_key(self) -> str:
         """Key as string in semicolon-delimited string format without table name."""
         return f"{self.str_field};{self.int_field}"
-
-

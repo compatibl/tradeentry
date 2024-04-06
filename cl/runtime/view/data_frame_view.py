@@ -12,10 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import final
 import pandas as pd
-from cl.runtime.storage.attrs import data_field, data_class
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
 from cl.runtime.view.view import View
+from typing import final
 
 
 @final

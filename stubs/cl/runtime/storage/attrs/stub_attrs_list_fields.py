@@ -13,22 +13,21 @@
 # limitations under the License.
 
 from __future__ import annotations
+
 import datetime as dt
-from typing import List
-from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.primitive.date_util import DateUtil
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
 from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
-from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.storage.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
+from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey
+from typing import List
 
 
 def stub_attrs_str_list_factory() -> List[str]:
     """Create stub values."""
-    return [
-        "abc",
-        "def"
-    ]
+    return ["abc", "def"]
 
 
 def stub_attrs_float_list_factory() -> List[float]:
@@ -43,7 +42,7 @@ def stub_attrs_float_list_factory() -> List[float]:
         12.3456789,
         123.456789,
         1234.56789,
-        12345.6789
+        12345.6789,
     ]
 
 
@@ -89,7 +88,6 @@ def stub_attrs_derived_record_list_factory() -> List[StubAttrsDerivedRecord]:
 
 @data_class
 class StubAttrsListFields(StubAttrsRecord):
-
     str_list: List[str] = data_field(factory=stub_attrs_str_list_factory)
     """Stub field."""
 

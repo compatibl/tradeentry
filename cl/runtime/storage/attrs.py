@@ -13,7 +13,8 @@
 # limitations under the License.
 
 import attrs
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 from typing_extensions import dataclass_transform
 
 
@@ -78,6 +79,7 @@ def data_class_impl(cls, *, init=True, label=None):
 
     def to_dict(self):
         return attrs.asdict(self)
+
     cls.to_dict = to_dict
 
     get_table_method = getattr(cls, "get_table", None)
@@ -125,6 +127,7 @@ def data_class_impl(cls, *, init=True, label=None):
         # Implement here and mark by _implemented
         def init(self):
             pass  # TODO: Implement hierarchical calls to parents but only when init has body
+
         cls.init = init
         cls.init._implemented = True
 

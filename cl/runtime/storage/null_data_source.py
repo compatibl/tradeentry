@@ -12,10 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Iterable, Type, TypeVar, Union
-from cl.runtime import data_class, data_field, KeyMixin
+from cl.runtime import KeyMixin
+from cl.runtime import data_class
+from cl.runtime import data_field
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.record_mixin import RecordMixin
+from typing import Iterable
+from typing import Type
+from typing import TypeVar
+from typing import Union
 
 TKey = TypeVar('TKey', contravariant=True)
 TRecord = TypeVar('TRecord', covariant=True)

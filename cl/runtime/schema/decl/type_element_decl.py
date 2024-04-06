@@ -12,11 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs import data_field, data_class
-from typing import List, Optional
-
 from cl.runtime.schema.decl.element_modification_type import ElementModificationType
 from cl.runtime.schema.decl.type_member_decl import TypeMemberDecl
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
+from typing import List
+from typing import Optional
 
 
 @data_class

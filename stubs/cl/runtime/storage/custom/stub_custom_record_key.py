@@ -13,11 +13,15 @@
 # limitations under the License.
 
 from __future__ import annotations
-from typing_extensions import Self
-from typing import Any, Dict, Optional
+
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
 from cl.runtime.storage.context import Context
-from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.storage.key_mixin import KeyMixin
+from typing import Any
+from typing import Dict
+from typing import Optional
+from typing_extensions import Self
 
 
 class StubCustomRecordKey(KeyMixin):
@@ -29,20 +33,14 @@ class StubCustomRecordKey(KeyMixin):
     int_field: Optional[int]
     """Second primary key attribute."""
 
-    def __init__(self, *,
-                 str_field: str = 'abc',
-                 int_field: int = 123
-                 ):
+    def __init__(self, *, str_field: str = 'abc', int_field: int = 123):
         """Initialize instance attributes."""
         self.str_field = str_field
         self.int_field = int_field
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize to dictionary containing other dictionaries, lists and primitive types."""
-        return {
-            'str_field': self.str_field,
-            'int_field': self.int_field
-        }
+        return {'str_field': self.str_field, 'int_field': self.int_field}
 
     def get_table(self) -> str:
         """Name of the database table where the record for this key is stored."""
@@ -51,5 +49,3 @@ class StubCustomRecordKey(KeyMixin):
     def get_key(self) -> str:
         """Key as string in semicolon-delimited string format without table name."""
         return f"{self.str_field};{self.int_field}"
-
-

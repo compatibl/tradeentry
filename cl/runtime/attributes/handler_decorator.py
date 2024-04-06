@@ -12,14 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from functools import wraps
-from inspect import Parameter, isfunction, ismethod, signature
-from itertools import islice
-from typing import Any, Callable, Dict, Iterable, Optional, Tuple
-
 from cl.runtime.attributes.implement_language import ImplementLanguage
 from cl.runtime.attributes.method_trait import MethodTrait
 from cl.runtime.storage.key_mixin import KeyMixin
+from functools import wraps
+from inspect import Parameter
+from inspect import isfunction
+from inspect import ismethod
+from inspect import signature
+from itertools import islice
+from typing import Any
+from typing import Callable
+from typing import Dict
+from typing import Iterable
+from typing import Optional
+from typing import Tuple
 
 
 def _parse_method_params(method: Callable, method_params: Iterable[Parameter], args: Tuple, kwargs: Dict):
@@ -57,7 +64,9 @@ def _parse_method_params(method: Callable, method_params: Iterable[Parameter], a
     return params
 
 
-def _get_parameters(method: Callable, args: Tuple, kwargs: Dict, ignore_self_arg: bool = False) -> Tuple[KeyMixin, Dict]:
+def _get_parameters(
+    method: Callable, args: Tuple, kwargs: Dict, ignore_self_arg: bool = False
+) -> Tuple[KeyMixin, Dict]:
     """
     Get the parameters of a method, excluding the 'self' parameter if present.
 

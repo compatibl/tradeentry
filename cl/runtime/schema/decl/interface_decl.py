@@ -12,12 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Optional
-from cl.runtime.storage.record_mixin import RecordMixin
-from cl.runtime.storage.attrs import data_field, data_class
 from cl.runtime.schema.decl.handler_declare_decl import HandlerDeclareDecl
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.decl.type_element_decl import TypeElementDecl
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
+from cl.runtime.storage.record_mixin import RecordMixin
+from typing import List
+from typing import Optional
 
 
 @data_class

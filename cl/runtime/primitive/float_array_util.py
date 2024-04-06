@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import numpy as np
-
 from cl.runtime.primitive.float_util import FloatUtil
 
 

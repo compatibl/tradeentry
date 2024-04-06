@@ -13,11 +13,13 @@
 # limitations under the License.
 
 from __future__ import annotations
-from typing import Optional
+
 from cl.runtime.primitive.date_time_util import DateTimeUtil
 from cl.runtime.primitive.date_util import DateUtil
-from cl.runtime.storage.attrs import data_field, data_class
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
 from stubs.cl.runtime.storage.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
+from typing import Optional
 
 
 @data_class
@@ -26,4 +28,3 @@ class StubAttrsDerivedFromDerivedRecord(StubAttrsDerivedRecord):
 
     derived_from_derived_field: str = data_field(default="derived_from_derived")
     """Stub field."""
-

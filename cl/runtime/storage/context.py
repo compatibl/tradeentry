@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import TYPE_CHECKING, Optional
-
 from cl.runtime.storage.dataset_util import DatasetUtil
+from typing import TYPE_CHECKING
+from typing import Optional
 
 if TYPE_CHECKING:
     from cl.runtime.storage.data_source import DataSource
@@ -31,7 +31,10 @@ class Context:
     * Filesystem access (if available)
     """
 
-    __slots__ = ('__data_source', '__data_set',)
+    __slots__ = (
+        '__data_source',
+        '__data_set',
+    )
 
     __data_source: Optional['DataSource']
     __data_set: Optional[str]
@@ -98,5 +101,3 @@ class Context:
 
         # Return False to propagate exception to the caller
         return False
-
-

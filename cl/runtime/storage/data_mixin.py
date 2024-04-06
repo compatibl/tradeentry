@@ -13,8 +13,9 @@
 # limitations under the License.
 
 from abc import ABC
+from typing import Any
+from typing import Dict
 from typing_extensions import Self
-from typing import Any, Dict
 
 
 class DataMixin(ABC):
@@ -31,8 +32,10 @@ class DataMixin(ABC):
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize to dictionary containing other dictionaries, lists and primitive types."""
-        raise RuntimeError(f"Method to_dict() for class {type(self).__name__} in module {type(self).__module__} "
-                           f"is neither implemented in code nor by a decorator.")
+        raise RuntimeError(
+            f"Method to_dict() for class {type(self).__name__} in module {type(self).__module__} "
+            f"is neither implemented in code nor by a decorator."
+        )
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> Self:

@@ -13,12 +13,13 @@
 # limitations under the License.
 
 from abc import ABC
-from cl.runtime.storage.attrs import data_field, data_class
-from typing import List, Optional
-
 from cl.runtime import RecordMixin
 from cl.runtime.schema.decl.module_key import ModuleKey
 from cl.runtime.schema.decl.package_key import PackageKey
+from cl.runtime.storage.attrs import data_class
+from cl.runtime.storage.attrs import data_field
+from typing import List
+from typing import Optional
 
 
 @data_class

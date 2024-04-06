@@ -12,11 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from enum import IntEnum
-from typing import TYPE_CHECKING, Any, Type
-
-from cl.runtime.primitive.string_util import to_pascal_case, to_snake_case
+from cl.runtime.primitive.string_util import to_pascal_case
+from cl.runtime.primitive.string_util import to_snake_case
 from cl.runtime.schema.docstring_parser import parse_method_docstring
+from enum import IntEnum
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Type
 
 if TYPE_CHECKING:
     from cl.runtime.serialization.method_info import MethodInfo

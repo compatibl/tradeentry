@@ -15,10 +15,11 @@
 import binascii
 import struct
 import time
+from bson import ObjectId
+from bson.binary import UUID_SUBTYPE
+from bson.binary import Binary
 from typing import Union
 from uuid import UUID
-from bson import ObjectId
-from bson.binary import UUID_SUBTYPE, Binary
 
 # TODO: Rename to TimeStamp, convert to factory method, use native GUID for storage
 
@@ -80,8 +81,7 @@ class OrderedUid:
         elif isinstance(value, bytes):
             if len(value) != 16:
                 raise ValueError(
-                    f'Can not convert OrderedUid from bytes of length {len(value)}, '
-                    f'expected 16-byte binary.'
+                    f'Can not convert OrderedUid from bytes of length {len(value)}, ' f'expected 16-byte binary.'
                 )
 
             self.__bytes = value

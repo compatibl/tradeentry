@@ -16,6 +16,7 @@ from typing import Callable
 
 # TODO: Refactor to make the API similar to other utilities
 
+
 def create_aggregation_method(interface_method: str, cls) -> Callable:
     """Create aggregation method for specified interface method."""
 

@@ -12,11 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import sys
 import attrs
+import sys
 from importlib import import_module
-from typing import List, Tuple, Type, Any, Dict, get_type_hints
 from memoization import cached
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Tuple
+from typing import Type
+from typing import get_type_hints
 
 
 class RecordUtil:
@@ -101,15 +106,19 @@ class RecordUtil:
 
         # Make sure there is only one such class in the inheritance chain
         if key_class_count == 0:
-            raise RuntimeError(f"Class {cls.__module__}.{cls.__name__} has no parent with suffix `Key`. "
-                               "Add Key suffix to key class name or implement `KeyMixin` interface.")
+            raise RuntimeError(
+                f"Class {cls.__module__}.{cls.__name__} has no parent with suffix `Key`. "
+                "Add Key suffix to key class name or implement `KeyMixin` interface."
+            )
         elif key_class_count > 1:
-            raise RuntimeError(f"Class {cls.__module__}.{cls.__name__} has more than one parent with suffix `Key`. "
-                               "Ensure only one class has suffix `Key` or implement `KeyMixin` interface.")
+            raise RuntimeError(
+                f"Class {cls.__module__}.{cls.__name__} has more than one parent with suffix `Key`. "
+                "Ensure only one class has suffix `Key` or implement `KeyMixin` interface."
+            )
 
         # Truncate the inheritance chain to drop classes after the class with Key suffix
         key_class_index = key_class_indices[0]
-        fully_qualified_names = complete_mro[:key_class_index+1]
+        fully_qualified_names = complete_mro[: key_class_index + 1]
 
         # TODO: Add package aliases
         # Remove module from fully qualified names
@@ -147,8 +156,10 @@ class RecordUtil:
             - Two primary key fields A and B: 'A;B'
             - Two primary key fields 'A1;A2' and 'B': 'A1;A2;B'
         """
-        raise RuntimeError(f"Method get_key() for class {type(self).__name__} in module {type(self).__module__} "
-                           f"is neither implemented in code nor by a decorator.")
+        raise RuntimeError(
+            f"Method get_key() for class {type(self).__name__} in module {type(self).__module__} "
+            f"is neither implemented in code nor by a decorator."
+        )
 
     @staticmethod
     def get_generic_key(obj: Any) -> str:
@@ -175,8 +186,10 @@ class RecordUtil:
         if attrs.has(cls):
             return attrs.asdict(obj)
         else:
-            raise RuntimeError(f"Class {cls.__module__}.{cls.__name__} does not use one of the supported frameworks "
-                               f"(dataclasses, attrs, pydantic) and does not inherit from DataMixin or RecordMixin.")
+            raise RuntimeError(
+                f"Class {cls.__module__}.{cls.__name__} does not use one of the supported frameworks "
+                f"(dataclasses, attrs, pydantic) and does not inherit from DataMixin or RecordMixin."
+            )
 
     @staticmethod
     def from_dict(cls, data: Dict[str, Any]) -> Any:

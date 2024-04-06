@@ -12,9 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from math import log10
-
 import numpy as np
+from math import log10
 
 
 class FloatUtil:

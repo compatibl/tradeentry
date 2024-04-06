@@ -13,7 +13,8 @@
 # limitations under the License.
 
 import datetime as dt
-from typing import Any, Tuple
+from typing import Any
+from typing import Tuple
 
 
 class DateUtil:
@@ -54,11 +55,7 @@ class DateUtil:
         return date_from_str
 
     @staticmethod
-    def from_fields(
-        year: int,
-        month: int,
-        day: int
-    ) -> dt.date:
+    def from_fields(year: int, month: int, day: int) -> dt.date:
         """Create from year, month, and date fields."""
         return dt.date(year, month, day)
 
