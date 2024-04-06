@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from stubs import StubIntEnum
+from stubs.cl.runtime import StubIntEnum
 
 
 def test_smoke():
