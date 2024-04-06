@@ -2,7 +2,7 @@
 line-length = 120
 skip-string-normalization = true
 include = '\.pyi?$'
-target-version = ['py39']
+target-version = ['py310']
 force-exclude = '''
 /(
     \.idea
