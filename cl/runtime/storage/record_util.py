@@ -157,7 +157,7 @@ class RecordUtil:
             - Two primary key fields 'A1;A2' and 'B': 'A1;A2;B'
         """
         raise RuntimeError(
-            f"Method get_key() for class {type(self).__name__} in module {type(self).__module__} "
+            f"Method get_key() for class {type(obj).__name__} in module {type(obj).__module__} "
             f"is neither implemented in code nor by a decorator."
         )
 

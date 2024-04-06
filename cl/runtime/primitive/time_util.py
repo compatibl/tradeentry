@@ -67,10 +67,9 @@ class TimeUtil:
     @staticmethod
     def from_str(value_str: str) -> Any:
         if not value_str[-1].isdigit():
-            raise Exception(f"String {value_str} passed to time_from_str(...) method " f"must not include timezone.")
+            raise Exception(f"String {value_str} passed to from_str(...) method " f"must not include timezone.")
 
         # Convert to datetime and set UTC timezone
-        time_from_str: dt.time
         if "." in value_str:
             # Has milliseconds
             t = dt.datetime.strptime(value_str, "%H:%M:%S.%f").time()

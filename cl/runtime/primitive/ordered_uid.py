@@ -119,6 +119,6 @@ class OrderedUid:
         return binascii.hexlify(self.__bytes).decode()
 
     def __eq__(self, other):
-        if type(other) != OrderedUid:
+        if not isinstance(other, OrderedUid):
             return False
         return self.binary == other.binary

@@ -77,7 +77,7 @@ def _get_parameters(
     - ignore_self_arg (bool, optional): If True, ignores the 'self' parameter. Defaults to False.
 
     Returns:
-    Tuple[Optional[Key], Dict]: A tuple containing the 'self' parameter (if present) and a dictionary of parsed parameters.
+    Tuple[Key | None, Dict]: A tuple containing the 'self' parameter (if present) and a dictionary of parsed parameters.
     """
     method_params = signature(method).parameters
 

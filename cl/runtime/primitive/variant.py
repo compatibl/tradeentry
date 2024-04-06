@@ -13,18 +13,10 @@
 # limitations under the License.
 
 import datetime as dt
-import importlib
-from cl.runtime.date_time.date_time_aggregate_util import DateTimeAggregateUtil
-from cl.runtime.primitive.schema_helper import enum_name_from_schema
-from cl.runtime.primitive.schema_helper import enum_name_to_schema
-from cl.runtime.primitive.string_util import to_pascal_case
-from cl.runtime.primitive.string_util import to_snake_case
 from cl.runtime.primitive.variant_type import VariantType
-from cl.runtime.storage.context import Context
 from cl.runtime.storage.data_mixin import DataMixin
 from cl.runtime.storage.key_mixin import KeyMixin
 from enum import IntEnum
-from typing import Any
 from typing import Dict
 from typing import Union
 
@@ -107,74 +99,3 @@ class Variant:
     def value(self) -> VariantHint:
         """Value held by the variant, which may be None."""
         return self._value
-
-    def to_bson(self) -> Dict[str, Any]:
-        """Serialize variant to bson."""
-
-        from cl.runtime.storage.data_mixin import DataMixin
-
-        inner_value = self.value()
-        inner_type = self.value_type()
-
-        if inner_value is None:
-            serialized_value = None
-        elif inner_type in (
-            VariantType.Date,
-            VariantType.Time,
-            VariantType.DateTime,
-        ):
-            serialized_value = DateTimeAggregateUtil.value_to_iso_int(inner_value)
-        elif inner_type in (VariantType.Data, VariantType.Key):
-            serialized_value = inner_value.to_bson(DataMixin)
-        elif inner_type == VariantType.Enum:
-            enum_type = type(inner_value)
-            enum_type_module = ".".join(
-                to_pascal_case(module_part) for module_part in enum_type.__module__.split(".")[:-1]
-            )
-            serialized_value = {
-                "_t": f"{enum_type_module}.{enum_type.__name__}",
-                "Value": enum_name_to_schema(inner_value),
-            }
-        else:
-            serialized_value = inner_value
-
-        return {inner_type.name: serialized_value}
-
-    @classmethod
-    def from_bson(cls, dict_: Dict[str, Any]) -> "Variant":
-        """Deserialize variant from bson."""
-
-        if len(dict_) != 1:
-            raise ValueError(f"Unexpected Variant format: {dict_}")
-
-        variant_type_name, raw_value = next(iter(dict_.items()))
-        variant_type = VariantType[variant_type_name]
-
-        if variant_type == VariantType.Empty:
-            return cls(None)
-
-        if raw_value is None:
-            raise ValueError(f"Expected variant type {variant_type.name}, got None.")
-
-        if variant_type == VariantType.Enum:
-            enum_type_module_str = raw_value["_t"]
-            enum_type_name = enum_type_module_str[enum_type_module_str.rfind(".") + 1 :]
-            enum_type_module_str = ".".join(
-                to_snake_case(module_part) for module_part in enum_type_module_str.split(".")
-            )
-            enum_type_module = importlib.import_module(enum_type_module_str)
-            enum_type = getattr(enum_type_module, enum_type_name)
-            value = enum_name_from_schema(enum_type, raw_value["Value"])
-        elif variant_type == VariantType.Long:
-            value = int(raw_value)
-        elif (
-            variant_type == VariantType.Date or variant_type == VariantType.Time or variant_type == VariantType.DateTime
-        ):
-            real_type = list(cls._type_mapping.keys())[list(cls._type_mapping.values()).index(variant_type)]
-            value = DateTimeAggregateUtil.value_from_iso_int(raw_value, real_type)
-        elif variant_type in (VariantType.Data, VariantType.Key):
-            value = DataMixin.from_bson(raw_value, context=context)
-        else:
-            value = raw_value
-
-        return cls(value)
