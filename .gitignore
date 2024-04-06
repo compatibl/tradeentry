@@ -4,6 +4,7 @@ syntax: glob
 **/.env
 **/.mypy_cache
 **/.pytest_cache
+**/.secrets.*
 **/__pycache__
 **/venv
 *.db

@@ -1,0 +1,20 @@
+# Settings specified under default heading apply to all environments
+[default]
+
+    # Used to load SchemaSettings class
+    [default.schema_settings]
+
+        # Map module prefix or glob (wildcard) pattern to package alias
+        #   - Multiple prefixes and patterns can have the same alias
+        #   - If the key contains one or more wildcard symbols it is matched as a pattern, otherwise as a prefix
+        [default.schema_settings.package_aliases]
+        "cl.runtime" = "rt"
+
+        # Replace class name for UI and REST. Label will override for UI if defined.
+        [default.schema_settings.type_aliases]
+        "SampleClass" = "OtherClass"
+
+        # Replace class label for UI. Does not affect REST.
+        [default.schema_settings.type_labels]
+        "SampleClass" = "SampleLabel"
+
