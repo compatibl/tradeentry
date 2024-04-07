@@ -30,6 +30,14 @@ def test_smoke():
     # Add using methods
     obj.add_alias("uvw.*.xyz", "u")
     obj.add_alias("qrs?.*", "q")
+    obj.add_alias("a123", "n")
+
+    # Try adding invalid patterns
+    with pytest.raises(RuntimeError):
+        obj.add_alias("Abc", "u")
+        obj.add_alias(".abc", "u")
+        obj.add_alias("abc.", "u")
+        obj.add_alias("abc..def.", "u")
 
     assert obj.get_alias("abc") == "a"
     assert obj.get_alias("abc.def") == "a"
@@ -47,6 +55,19 @@ def test_smoke():
     assert obj.get_alias("qrs.abc") is None
     assert obj.get_alias("qrst") is None
     assert obj.get_alias("qrst.abc") == "q"
+
+    assert obj.get_alias("a123") == "n"
+    assert obj.get_alias("a123.def") == "n"
+    assert obj.get_alias("a123def") is None
+
+    with pytest.raises(RuntimeError):
+        obj.get_alias("Abc")
+        obj.get_alias(".abc")
+        obj.get_alias("abc.")
+        obj.get_alias("abc..def.")
+        obj.get_alias("abc.*.def")
+        obj.get_alias("abc?.def")
+        obj.get_alias("abc[.]def")
 
 
 if __name__ == "__main__":

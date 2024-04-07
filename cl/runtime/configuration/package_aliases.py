@@ -12,9 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import re
 from dataclasses import dataclass, field
 from fnmatch import fnmatch
 from typing import Dict
+
+# Module pattern including lowercase letters and numbers, *, ?, [, ] with dot delimiter
+pattern_regex_str = r"^([a-z\d\*\?\[\]]+\.)*[a-z\d\*\?\[\]]+$"
+pattern_regex = re.compile(pattern_regex_str)
+
+# Module including lowercase letters and numbers with dot delimiter
+module_regex_str = r"^[a-z0-9]+(\.[a-z0-9]+)*$"
+module_regex = re.compile(module_regex_str)
+
+# Glob wildcard symbols including *, ?, and [
+glob_regex_str = r"[\*\?\[]"
+glob_regex = re.compile(glob_regex_str)
 
 
 @dataclass(slots=True, init=False)
@@ -55,17 +68,28 @@ class PackageAliases:
         - Multiple patterns and namespaces can have the same alias.
         - If the key contains one or more wildcard symbols it is matched as a pattern, otherwise as a namespace.
         """
-        if '*' not in pattern and '?' not in pattern and '[' not in pattern:
+
+        # Validate to detect when pattern is not suitable for a module string
+        if not pattern_regex.match(pattern):
+            raise RuntimeError(f"Package alias pattern {pattern} does not consist of dot-delimited lowercase "
+                               f"letters and numbers with glob wildcard characters *?[].")
+
+        if glob_regex.search(pattern):
+            # Glob pattern
+            self._pattern_dict[pattern] = alias
+        else:
             # Match `namespace` exactly and `namespace.` as a prefix to avoid
             # having namespace a match module abc
             self._exact_dict[pattern] = alias
             self._prefix_dict[pattern + "."] = alias
-        else:
-            # Glob pattern
-            self._pattern_dict[pattern] = alias
 
     def get_alias(self, module: str) -> str | None:
         """Get alias for the module or None if alias is not set."""
+
+        # Validate to detect when argument is not a module string
+        if not module_regex.match(module):
+            raise RuntimeError(f"Module {module} does not consist of dot-delimited lowercase letters or numbers.")
+
         # Exact matches
         for exact, alias in self._exact_dict.items():
             if exact == module:
