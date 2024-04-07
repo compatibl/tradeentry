@@ -16,6 +16,9 @@ import re
 from dataclasses import dataclass, field
 from fnmatch import fnmatch
 from typing import Dict
+from cl.runtime.settings.config import dynaconf_settings
+
+# This module defines global variable `package_aliases_settings`
 
 # Module pattern including lowercase letters and numbers, *, ?, [, ] with dot delimiter
 pattern_regex_str = r"^([a-z0-9_\*\?\[\]]+\.)*[a-z0-9_\*\?\[\]]+$"
@@ -107,3 +110,7 @@ class PackageAliases:
 
         # No matches, return None
         return None
+
+
+# Load settings from configuration
+package_aliases_settings = PackageAliases(dynaconf_settings.package_aliases)

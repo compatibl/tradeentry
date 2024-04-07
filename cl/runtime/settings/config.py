@@ -14,13 +14,10 @@
 
 from dynaconf import Dynaconf
 
-from cl.runtime.configuration.package_aliases import PackageAliases
-
-settings = Dynaconf(
+# Create a global settings variable that will be imported by the individual settings modules
+dynaconf_settings = Dynaconf(
     environments=True,
     envvar_prefix="CL_RUNTIME",
     env_switcher="CL_RUNTIME_CONFIG",
     settings_files=['settings.yaml', '.secrets.yaml'],
 )
-
-package_aliases_settings = PackageAliases(settings.package_aliases)

@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.config import settings, package_aliases_settings
+from cl.runtime.settings.package_aliases import package_aliases_settings
 
 
 def test_config():

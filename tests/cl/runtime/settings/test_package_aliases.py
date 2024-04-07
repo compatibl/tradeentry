@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.configuration.package_aliases import PackageAliases
+from cl.runtime.settings.package_aliases import PackageAliases
 
 
 def test_smoke():
