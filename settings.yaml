@@ -1,0 +1,18 @@
+# Settings specified under default heading apply to all environments
+default:
+
+    # Data source settings
+    data_source:
+        type: cl.runtime.Sqlite
+        filename: SampleName
+
+    # Package aliases using namespace or module glob pattern
+    # - Multiple patterns and namespaces can have the same alias.
+    # - If the key contains one or more wildcard symbols it is matched as a pattern, otherwise as a namespace.
+    package_aliases:
+        cl.runtime: rt
+        stubs.cl.runtime: rt
+
+    # Replace type label for UI. Does not affect REST.
+    type_labels:
+        SampleClass: SampleLabel

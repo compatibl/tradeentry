@@ -18,11 +18,11 @@ from fnmatch import fnmatch
 from typing import Dict
 
 # Module pattern including lowercase letters and numbers, *, ?, [, ] with dot delimiter
-pattern_regex_str = r"^([a-z\d\*\?\[\]]+\.)*[a-z\d\*\?\[\]]+$"
+pattern_regex_str = r"^([a-z0-9_\*\?\[\]]+\.)*[a-z0-9_\*\?\[\]]+$"
 pattern_regex = re.compile(pattern_regex_str)
 
 # Module including lowercase letters and numbers with dot delimiter
-module_regex_str = r"^[a-z0-9]+(\.[a-z0-9]+)*$"
+module_regex_str = r"^[a-z0-9_]+(\.[a-z0-9_]+)*$"
 module_regex = re.compile(module_regex_str)
 
 # Glob wildcard symbols including *, ?, and [
