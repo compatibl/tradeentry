@@ -17,7 +17,7 @@ from dynaconf import Dynaconf
 # Create a global settings variable that will be imported by the individual settings modules
 dynaconf_settings = Dynaconf(
     environments=True,
-    envvar_prefix="CL_RUNTIME",
-    env_switcher="CL_RUNTIME_CONFIG",
+    envvar_prefix="CL",
+    env_switcher="CL_CONFIG_ENV",
     settings_files=['settings.yaml', '.secrets.yaml'],
 )
