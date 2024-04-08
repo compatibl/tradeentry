@@ -13,13 +13,14 @@
 # limitations under the License.
 
 from __future__ import annotations
+
 import re
+from cl.runtime.settings.config import dynaconf_settings
 from dataclasses import dataclass
 from fnmatch import fnmatch
-from typing import Dict, ClassVar
 from orjson import orjson
-from cl.runtime.settings.config import dynaconf_settings
-
+from typing import ClassVar
+from typing import Dict
 
 # Module pattern including lowercase letters and numbers, *, ?, [, ] with dot delimiter
 _pattern_regex_str = r"^([a-z0-9_\*\?\[\]]+\.)*[a-z0-9_\*\?\[\]]+$"
@@ -88,8 +89,10 @@ class PackageAliases:
 
         # Validate to detect when pattern is not suitable for a module string
         if not _pattern_regex.match(pattern):
-            raise RuntimeError(f"Package alias pattern {pattern} does not consist of dot-delimited lowercase "
-                               f"letters and numbers with glob wildcard characters *?[].")
+            raise RuntimeError(
+                f"Package alias pattern {pattern} does not consist of dot-delimited lowercase "
+                f"letters and numbers with glob wildcard characters *?[]."
+            )
 
         if _glob_regex.search(pattern):
             # Glob pattern

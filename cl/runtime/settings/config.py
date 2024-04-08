@@ -19,5 +19,5 @@ dynaconf_settings = Dynaconf(
     environments=True,
     envvar_prefix="CL",
     env_switcher="CL_CONFIG_ENV",
-    settings_files=['settings.yaml', '.secrets.yaml'],
+    settings_files=["settings.yaml", ".secrets.yaml"],
 )

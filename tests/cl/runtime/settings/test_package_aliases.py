@@ -23,7 +23,7 @@ def test_smoke():
     obj = PackageAliases(
         {
             "abc": "a",
-            "def.ghi": "d"
+            "def.ghi": "d",
         }
     )
 

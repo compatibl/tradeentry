@@ -14,7 +14,8 @@
 
 import pytest
 from cl.runtime.serialization.type_settings import TypeSettings
-from stubs.cl.runtime import StubAttrsRecord, StubAttrsDerivedRecord
+from stubs.cl.runtime import StubAttrsDerivedRecord
+from stubs.cl.runtime import StubAttrsRecord
 from stubs.cl.runtime.storage.attrs.stub_attrs_aliased_record import StubAttrsAliasedRecord
 
 

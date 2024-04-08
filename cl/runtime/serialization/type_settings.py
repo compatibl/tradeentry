@@ -13,7 +13,8 @@
 # limitations under the License.
 
 from logging import getLogger
-from typing import Dict, Type
+from typing import Dict
+from typing import Type
 
 logger = getLogger(__name__)  # TODO: Use standard way to get default logger
 
@@ -35,7 +36,7 @@ class TypeSettings:
             typename = type_.__name__
         elif isinstance(type_, str):
             type_path = type_
-            typename = type_.rsplit('.', 1)[-1]
+            typename = type_.rsplit(".", 1)[-1]
         else:
             raise TypeError("First argument of `TypeSettings.get_type_alias` must be either path or string.")
 
