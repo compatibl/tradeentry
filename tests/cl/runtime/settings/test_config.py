@@ -13,14 +13,14 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.settings.package_aliases import package_aliases_settings
+from cl.runtime.settings.package_aliases import PackageAliases
 
 
 def test_config():
     """Test Dynaconf configuration loader."""
 
-    assert package_aliases_settings.get_alias("cl.runtime") == "rt"
-    assert package_aliases_settings.get_alias("stubs.cl.runtime") == "rt"
+    assert PackageAliases.default().get_alias("cl.runtime") == "rt"
+    assert PackageAliases.default().get_alias("stubs.cl.runtime") == "rt"
 
 
 if __name__ == "__main__":

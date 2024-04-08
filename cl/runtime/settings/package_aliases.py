@@ -12,13 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 from fnmatch import fnmatch
-from typing import Dict
+from typing import Dict, ClassVar
+from orjson import orjson
 from cl.runtime.settings.config import dynaconf_settings
 
-# This module defines global variable `package_aliases_settings`
 
 # Module pattern including lowercase letters and numbers, *, ?, [, ] with dot delimiter
 pattern_regex_str = r"^([a-z0-9_\*\?\[\]]+\.)*[a-z0-9_\*\?\[\]]+$"
@@ -42,6 +43,9 @@ class PackageAliases:
     - If the key contains one or more wildcard symbols it is matched as a pattern, otherwise as a namespace.
     """
 
+    __default: ClassVar[PackageAliases | None] = None
+    """Default instance is initialized from settings and may be subsequently modified in code."""
+
     _exact_dict: Dict[str, str]
     """Keys in this dictionary must match the entire module string exactly."""
 
@@ -51,8 +55,17 @@ class PackageAliases:
     _pattern_dict: Dict[str, str]
     """Keys in this dictionary are matched as a glob wildcard pattern."""
 
-    def __init__(self, alias_dict: Dict[str, str] | None = None):
+    def __init__(self, alias_dict: Dict[str, str] | str | None = None):
         """Initialize from dictionary of aliases where key is namespace or glob pattern and value is alias."""
+
+        # Parse if dictionary is passed as string
+        if isinstance(alias_dict, str):
+            try:
+                alias_dict = orjson.loads(alias_dict)
+            except orjson.JSONDecodeError as e:
+                raise RuntimeError(f"Error decoding this `package_aliases` string into JSON: {alias_dict}")
+        elif not isinstance(alias_dict, dict):
+            raise RuntimeError(f"Param `package_aliases` with type {type(alias_dict)} is neither dict nor JSON string")
 
         # Must initialize here if defining a custom init
         self._exact_dict = dict()
@@ -111,6 +124,11 @@ class PackageAliases:
         # No matches, return None
         return None
 
+    @staticmethod
+    def default() -> PackageAliases:
+        """Default instance is initialized from settings and may be subsequently modified in code."""
 
-# Load settings from configuration
-package_aliases_settings = PackageAliases(dynaconf_settings.package_aliases)
+        if PackageAliases.__default is None:
+            # Load from configuration if not set
+            PackageAliases.__default = PackageAliases(dynaconf_settings.package_aliases)
+        return PackageAliases.__default
