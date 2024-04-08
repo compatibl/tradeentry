@@ -14,7 +14,7 @@
 
 from __future__ import annotations
 import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from fnmatch import fnmatch
 from typing import Dict, ClassVar
 from orjson import orjson
@@ -46,31 +46,32 @@ class PackageAliases:
     __default: ClassVar[PackageAliases | None] = None
     """Default instance is initialized from settings and may be subsequently modified in code."""
 
-    _exact_dict: Dict[str, str]
+    __exact_dict: Dict[str, str]
     """Keys in this dictionary must match the entire module string exactly."""
 
-    _prefix_dict: Dict[str, str]
+    __prefix_dict: Dict[str, str]
     """Keys in this dictionary must match module prefix."""
 
-    _pattern_dict: Dict[str, str]
+    __pattern_dict: Dict[str, str]
     """Keys in this dictionary are matched as a glob wildcard pattern."""
 
     def __init__(self, alias_dict: Dict[str, str] | str | None = None):
         """Initialize from dictionary of aliases where key is namespace or glob pattern and value is alias."""
 
-        # Parse if dictionary is passed as string
         if isinstance(alias_dict, str):
+            # If the input is a string, try parsing into JSON
             try:
                 alias_dict = orjson.loads(alias_dict)
             except orjson.JSONDecodeError as e:
-                raise RuntimeError(f"Error decoding this `package_aliases` string into JSON: {alias_dict}")
+                raise RuntimeError(f"Error decoding `package_aliases` string into JSON. Input string: {alias_dict}")
         elif not isinstance(alias_dict, dict):
-            raise RuntimeError(f"Param `package_aliases` with type {type(alias_dict)} is neither dict nor JSON string")
+            # Dict and JSON string are the only two valid input types
+            raise RuntimeError(f"Param `package_aliases` with type {type(alias_dict)} is neither dict nor JSON string.")
 
         # Must initialize here if defining a custom init
-        self._exact_dict = dict()
-        self._prefix_dict = dict()
-        self._pattern_dict = dict()
+        self.__exact_dict = dict()
+        self.__prefix_dict = dict()
+        self.__pattern_dict = dict()
 
         # Read dictionary of aliases passed as a parameter
         if alias_dict is not None:
@@ -92,12 +93,12 @@ class PackageAliases:
 
         if _glob_regex.search(pattern):
             # Glob pattern
-            self._pattern_dict[pattern] = alias
+            self.__pattern_dict[pattern] = alias
         else:
             # Match `namespace` exactly and `namespace.` as a prefix to avoid
             # having namespace a match module abc
-            self._exact_dict[pattern] = alias
-            self._prefix_dict[pattern + "."] = alias
+            self.__exact_dict[pattern] = alias
+            self.__prefix_dict[pattern + "."] = alias
 
     def get_alias(self, module: str) -> str | None:
         """Get alias for the module or None if alias is not set."""
@@ -107,17 +108,17 @@ class PackageAliases:
             raise RuntimeError(f"Module {module} does not consist of dot-delimited lowercase letters or numbers.")
 
         # Exact matches
-        for exact, alias in self._exact_dict.items():
+        for exact, alias in self.__exact_dict.items():
             if exact == module:
                 return alias
 
         # Prefix matches
-        for prefix, alias in self._prefix_dict.items():
+        for prefix, alias in self.__prefix_dict.items():
             if module.startswith(prefix):
                 return alias
 
         # Glob pattern matches
-        for pattern, alias in self._pattern_dict.items():
+        for pattern, alias in self.__pattern_dict.items():
             if fnmatch(module, pattern):
                 return alias
 
