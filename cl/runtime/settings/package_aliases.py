@@ -22,16 +22,16 @@ from cl.runtime.settings.config import dynaconf_settings
 
 
 # Module pattern including lowercase letters and numbers, *, ?, [, ] with dot delimiter
-pattern_regex_str = r"^([a-z0-9_\*\?\[\]]+\.)*[a-z0-9_\*\?\[\]]+$"
-pattern_regex = re.compile(pattern_regex_str)
+_pattern_regex_str = r"^([a-z0-9_\*\?\[\]]+\.)*[a-z0-9_\*\?\[\]]+$"
+_pattern_regex = re.compile(_pattern_regex_str)
 
 # Module including lowercase letters and numbers with dot delimiter
-module_regex_str = r"^[a-z0-9_]+(\.[a-z0-9_]+)*$"
-module_regex = re.compile(module_regex_str)
+_module_regex_str = r"^[a-z0-9_]+(\.[a-z0-9_]+)*$"
+_module_regex = re.compile(_module_regex_str)
 
 # Glob wildcard symbols including *, ?, and [
-glob_regex_str = r"[\*\?\[]"
-glob_regex = re.compile(glob_regex_str)
+_glob_regex_str = r"[\*\?\[]"
+_glob_regex = re.compile(_glob_regex_str)
 
 
 @dataclass(slots=True, init=False)
@@ -86,11 +86,11 @@ class PackageAliases:
         """
 
         # Validate to detect when pattern is not suitable for a module string
-        if not pattern_regex.match(pattern):
+        if not _pattern_regex.match(pattern):
             raise RuntimeError(f"Package alias pattern {pattern} does not consist of dot-delimited lowercase "
                                f"letters and numbers with glob wildcard characters *?[].")
 
-        if glob_regex.search(pattern):
+        if _glob_regex.search(pattern):
             # Glob pattern
             self._pattern_dict[pattern] = alias
         else:
@@ -103,7 +103,7 @@ class PackageAliases:
         """Get alias for the module or None if alias is not set."""
 
         # Validate to detect when argument is not a module string
-        if not module_regex.match(module):
+        if not _module_regex.match(module):
             raise RuntimeError(f"Module {module} does not consist of dot-delimited lowercase letters or numbers.")
 
         # Exact matches
