@@ -5,6 +5,7 @@ default:
     data_source:
         type: cl.runtime.Sqlite
         filename: SampleName
+        temp_db: Temp.*
 
     # Package aliases using namespace or module glob pattern
     # - Multiple patterns and namespaces can have the same alias.
