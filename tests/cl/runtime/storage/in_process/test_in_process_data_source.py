@@ -33,10 +33,10 @@ def test_smoke():
     record_dict = record.to_dict()
 
     # Test saving and loading
-    data_source.save_one(record, data_set)
+    data_source.save_many([record], data_set)
     records = data_source.load_many(StubCustomRecord, [key, record], data_set)
-    record_from_str_key = data_source.load_one(StubCustomRecord, key, data_set)
-    record_from_record_as_key = data_source.load_one(StubCustomRecord, record, data_set)
+    record_from_str_key = data_source.load_many(StubCustomRecord, [key], data_set)[0]
+    record_from_record_as_key = data_source.load_many(StubCustomRecord, [record], data_set)[0]
 
     # Check loaded record
     loaded_record_dict = record_from_str_key.to_dict()

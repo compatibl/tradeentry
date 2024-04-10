@@ -14,21 +14,20 @@
 
 from cl.runtime.storage.attrs import data_class
 from cl.runtime.storage.attrs import data_field
-from cl.runtime.storage.data_source import DataSource
-from cl.runtime.storage.data_source import TKey
-from cl.runtime.storage.data_source import TRecord
 from cl.runtime.storage.record_mixin import RecordMixin
 from cl.runtime.storage.record_util import RecordUtil
 from copy import deepcopy
-from typing import Dict
+from typing import Dict, TypeVar
 from typing import Iterable
-from typing import Optional
 from typing import Type
 from typing import Union
 
+TKey = TypeVar("TKey", contravariant=True)
+TRecord = TypeVar("TRecord", covariant=True)
+
 
 @data_class
-class InProcessDataSource(DataSource):
+class InProcessDataSource:
     """Data source based on in-memory cache using Python dict."""
 
     _cache: Dict[str, Dict] = data_field(factory=dict)
