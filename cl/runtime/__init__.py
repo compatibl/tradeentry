@@ -9,7 +9,6 @@ from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.in_process.in_process_data_source import InProcessDataSource
 from cl.runtime.view.view import View
 from cl.runtime.view.record_view import RecordView
-from cl.runtime.view.data_frame_view import DataFrameView
 from cl.runtime.view.record_list_view import RecordListView
 from cl.runtime.schema.type.package_decl_key import PackageDeclKey
 from cl.runtime.schema.type.package_decl import PackageDecl

@@ -16,7 +16,6 @@
 import inspect
 from cl.runtime.attributes.handler_decorator import handler
 from cl.runtime.attributes.implement_language import ImplementLanguage
-from cl.runtime.view.binary_content import BinaryContent
 from itertools import islice
 from typing import Any
 from typing import Callable
@@ -37,9 +36,9 @@ def content(method: Callable[..., Any], language: ImplementLanguage = ImplementL
             raise Exception("The function decorated by the 'content' decorator should not have any input parameters.")
 
         expected_return_type = inspect.signature(method).return_annotation
-        if expected_return_type not in [str, bytes, BinaryContent]:
+        if expected_return_type is not str:
             raise TypeError(
-                "The function decorated by the 'content' decorator should return str, bytes, or BinaryContent.",
+                "The function decorated by the 'content' decorator should return string.",
             )
 
         method = handler(language=language)(method)
