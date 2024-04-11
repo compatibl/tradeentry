@@ -17,9 +17,10 @@ from cl.runtime.storage.attrs import data_field
 from cl.runtime.storage.record_mixin import RecordMixin
 from cl.runtime.storage.record_util import RecordUtil
 from copy import deepcopy
-from typing import Dict, TypeVar
+from typing import Dict
 from typing import Iterable
 from typing import Type
+from typing import TypeVar
 from typing import Union
 
 TKey = TypeVar("TKey", contravariant=True)

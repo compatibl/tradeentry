@@ -17,7 +17,10 @@ from abc import abstractmethod
 from cl.runtime.storage.attrs import data_class
 from cl.runtime.storage.data_source_key import DataSourceKey
 from cl.runtime.storage.record_mixin import RecordMixin
-from typing import Dict, Any, Iterable, List
+from typing import Any
+from typing import Dict
+from typing import Iterable
+from typing import List
 
 
 @data_class
@@ -58,10 +61,10 @@ class DataSource(DataSourceKey, RecordMixin, ABC):
 
     @abstractmethod
     def save_many(
-            self,
-            table: str,
-            records: Iterable[Dict[str, Any]],
-            dataset: List[str] | str | None = None,
+        self,
+        table: str,
+        records: Iterable[Dict[str, Any]],
+        dataset: List[str] | str | None = None,
     ) -> None:
         """
         Save records serialized as dicts into the specified table (overwrite if already exists).
@@ -74,10 +77,10 @@ class DataSource(DataSourceKey, RecordMixin, ABC):
 
     @abstractmethod
     def delete_many(
-            self,
-            table: str,
-            keys: Iterable[Dict[str, Any] | str],
-            dataset: List[str] | str | None = None,
+        self,
+        table: str,
+        keys: Iterable[Dict[str, Any] | str],
+        dataset: List[str] | str | None = None,
     ) -> None:
         """
         Delete records in the specified table using a list of keys (no error if does not exist).
