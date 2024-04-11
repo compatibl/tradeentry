@@ -36,7 +36,7 @@ class InProcessDataSource:
         self,
         base_type: Type[TRecord],
         keys: Iterable[Union[str, TKey]],
-        data_set: str,
+        dataset: str,
         *,
         is_optional: bool = None,
         is_optional_key: bool = None,
@@ -55,7 +55,7 @@ class InProcessDataSource:
         Args:
             base_type: Loaded records must be derived from `base_type`
             keys: Sequence of string keys or key classes for which records will be loaded.
-            data_set: Directory-like attribute used to organize the data.
+            dataset: Directory-like attribute used to organize the data.
             is_optional: Return None if the record is not found. Default is to raise an error.
             is_optional_key: Return None if a key is None. Default is to raise an error.
             is_unordered: Do not order result in the order of keys. Default is to order the result.
@@ -80,7 +80,7 @@ class InProcessDataSource:
                 raise RuntimeError(f"Key {key} is not a string, Key, or Record")
 
             # Try to retrieve dataset dictionary, insert if it does not yet exist
-            dataset_cache = self._cache.setdefault(data_set, {})
+            dataset_cache = self._cache.setdefault(dataset, {})
 
             # Retrieve the record using get method that returns None if the key is not found
             record_dict = dataset_cache.get(key)
@@ -116,7 +116,7 @@ class InProcessDataSource:
 
         return result
 
-    def save_many(self, records: Iterable[RecordMixin], data_set: str) -> None:
+    def save_many(self, records: Iterable[RecordMixin], dataset: str) -> None:
         """Save many records to the specified dataset, bypassing the commit queue."""
 
         # Iterate over records
@@ -135,14 +135,14 @@ class InProcessDataSource:
             record_dict["_chain"] = RecordUtil.get_inheritance_chain(record_type)
 
             # Try to retrieve dataset dictionary, insert if it does not yet exist
-            dataset_cache = self._cache.setdefault(data_set, {})
+            dataset_cache = self._cache.setdefault(dataset, {})
 
             # TODO: Support tables
             # Insert the record into dataset dictionary
             table_name = record.get_table()
             dataset_cache[key] = record_dict
 
-    def save_on_commit(self, record: RecordMixin, data_set: str) -> None:
+    def save_on_commit(self, record: RecordMixin, dataset: str) -> None:
         """
         Add the record to the commit queue.
 
@@ -153,7 +153,7 @@ class InProcessDataSource:
         """
         raise NotImplementedError()
 
-    def delete_many(self, keys: Iterable[RecordMixin], data_set: str) -> None:
+    def delete_many(self, keys: Iterable[RecordMixin], dataset: str) -> None:
         """
         Delete many records in the specified dataset, bypassing
         the commit queue. If an element of the 'keys' argument is
@@ -171,7 +171,7 @@ class InProcessDataSource:
         """
         raise NotImplementedError()
 
-    def delete_on_commit(self, key: RecordMixin, data_set: str) -> None:
+    def delete_on_commit(self, key: RecordMixin, dataset: str) -> None:
         """
         Add to commit queue the command to delete record in the
         specified dataset. No error is raised if the record does not

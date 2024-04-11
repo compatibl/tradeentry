@@ -25,7 +25,7 @@ def test_smoke():
 
     # Create data source and dataset
     data_source = InProcessDataSource()
-    data_set = "sample"
+    dataset = "sample"
 
     # Create test record and populate with sample data
     record = StubAttrsRecord()
@@ -33,10 +33,10 @@ def test_smoke():
     record_dict = record.to_dict()
 
     # Test saving and loading
-    data_source.save_many([record], data_set)
-    records = data_source.load_many(StubCustomRecord, [key, record], data_set)
-    record_from_str_key = data_source.load_many(StubCustomRecord, [key], data_set)[0]
-    record_from_record_as_key = data_source.load_many(StubCustomRecord, [record], data_set)[0]
+    data_source.save_many([record], dataset)
+    records = data_source.load_many(StubCustomRecord, [key, record], dataset)
+    record_from_str_key = data_source.load_many(StubCustomRecord, [key], dataset)[0]
+    record_from_record_as_key = data_source.load_many(StubCustomRecord, [record], dataset)[0]
 
     # Check loaded record
     loaded_record_dict = record_from_str_key.to_dict()

@@ -34,7 +34,7 @@ class NullDataSource(DataSource):
         self,
         base_type: Type[TRecord],
         keys: Iterable[Union[str, TKey]],
-        data_set: str | None = None,
+        dataset: str | None = None,
         *,
         is_optional: bool = None,
         is_optional_key: bool = None,
@@ -43,15 +43,15 @@ class NullDataSource(DataSource):
         """Load instances of classes derived from base_type from storage using a sequence of keys."""
         return []
 
-    def save_many(self, records: Iterable[RecordMixin], data_set: str | None = None) -> None:
+    def save_many(self, records: Iterable[RecordMixin], dataset: str | None = None) -> None:
         """Save many records to the specified dataset, bypassing the commit queue."""
         pass
 
-    def save_on_commit(self, record: RecordMixin, data_set: str | None = None) -> None:
+    def save_on_commit(self, record: RecordMixin, dataset: str | None = None) -> None:
         """Add the record to the commit queue."""
         pass
 
-    def delete_many(self, keys: Iterable[RecordMixin], data_set: str | None = None) -> None:
+    def delete_many(self, keys: Iterable[RecordMixin], dataset: str | None = None) -> None:
         """
         Delete many records in the specified dataset, bypassing
         the commit queue. If an element of the 'keys' argument is
@@ -59,7 +59,7 @@ class NullDataSource(DataSource):
         """
         pass
 
-    def delete_on_commit(self, key: RecordMixin, data_set: str | None = None) -> None:
+    def delete_on_commit(self, key: RecordMixin, dataset: str | None = None) -> None:
         """
         Add to commit queue the command to delete record in the
         specified dataset. No error is raised if the record does not
@@ -94,7 +94,7 @@ class NullDataSource(DataSource):
         self,
         base_type: Type[TRecord],
         key: Union[str, TKey],
-        data_set: str | None = None,
+        dataset: str | None = None,
         *,
         is_optional: bool = None,
         is_optional_key: bool = None,

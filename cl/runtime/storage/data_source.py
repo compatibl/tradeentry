@@ -29,7 +29,7 @@ class DataSource(DataSourceKey, RecordMixin, ABC):
         self,
         table: str,
         keys: Iterable[Dict[str, Any] | str],
-        data_set: List[str] | str | None = None,
+        dataset: List[str] | str | None = None,
     ) -> Iterable[Dict[str, Any] | None]:
         """
         Load records serialized into dicts from the specified table using a list of keys.
@@ -37,7 +37,7 @@ class DataSource(DataSourceKey, RecordMixin, ABC):
         Args:
             table: Table from which the records will be deleted
             keys: Each key is either a dictionary of primary key fields or semicolon-delimited string
-            data_set: List of datasets in lookup order, single dataset, or None for root dataset
+            dataset: List of datasets in lookup order, single dataset, or None for root dataset
         """
 
     @abstractmethod
@@ -45,7 +45,7 @@ class DataSource(DataSourceKey, RecordMixin, ABC):
         self,
         table: str,
         query: Dict[str, Any],
-        data_set: List[str] | str | None = None,
+        dataset: List[str] | str | None = None,
     ) -> Iterable[Dict[str, Any]]:
         """
         Load records serialized into dicts from the specified table using a query.
@@ -53,7 +53,7 @@ class DataSource(DataSourceKey, RecordMixin, ABC):
         Args:
             table: Table from which the records will be deleted
             query: Dictionary of conditions
-            data_set: List of datasets in lookup order, single dataset, or None for root dataset
+            dataset: List of datasets in lookup order, single dataset, or None for root dataset
         """
 
     @abstractmethod
@@ -61,7 +61,7 @@ class DataSource(DataSourceKey, RecordMixin, ABC):
             self,
             table: str,
             records: Iterable[Dict[str, Any]],
-            data_set: List[str] | str | None = None,
+            dataset: List[str] | str | None = None,
     ) -> None:
         """
         Save records serialized as dicts into the specified table (overwrite if already exists).
@@ -69,7 +69,7 @@ class DataSource(DataSourceKey, RecordMixin, ABC):
         Args:
             table: Table to which the records will be saved
             records: Each serialized into dict where each level is primitive type, dict, or list.
-            data_set: List of datasets in lookup order, single dataset, or None for root dataset
+            dataset: List of datasets in lookup order, single dataset, or None for root dataset
         """
 
     @abstractmethod
@@ -77,7 +77,7 @@ class DataSource(DataSourceKey, RecordMixin, ABC):
             self,
             table: str,
             keys: Iterable[Dict[str, Any] | str],
-            data_set: List[str] | str | None = None,
+            dataset: List[str] | str | None = None,
     ) -> None:
         """
         Delete records in the specified table using a list of keys (no error if does not exist).
@@ -85,7 +85,7 @@ class DataSource(DataSourceKey, RecordMixin, ABC):
         Args:
             table: Table from which the records will be deleted
             keys: Each key is either a dictionary of primary key fields or semicolon-delimited string
-            data_set: List of datasets in lookup order, single dataset, or None for root dataset
+            dataset: List of datasets in lookup order, single dataset, or None for root dataset
         """
 
     @abstractmethod

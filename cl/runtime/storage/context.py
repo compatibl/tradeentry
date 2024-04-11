@@ -33,11 +33,11 @@ class Context:
 
     __slots__ = (
         "__data_source",
-        "__data_set",
+        "__dataset",
     )
 
     __data_source: Optional["DataSource"]
-    __data_set: Optional[str]
+    __dataset: Optional[str]
 
     def __init__(self):
         """
@@ -49,7 +49,7 @@ class Context:
         self.__data_source = None
         """Default data source of the context."""
 
-        self.__data_set = None
+        self.__dataset = None
         """Default dataset of the context."""
 
     @property
@@ -66,19 +66,19 @@ class Context:
         self.__data_source = value
 
     @property
-    def data_set(self) -> str:
-        """Return data_set property, error message if not set."""
+    def dataset(self) -> str:
+        """Return dataset property, error message if not set."""
 
-        if self.__data_set is None:
+        if self.__dataset is None:
             raise Exception("Dataset property is not set in Context.")
-        return self.__data_set
+        return self.__dataset
 
-    @data_set.setter
-    def data_set(self, value: str) -> None:
-        """Set data_set property."""
+    @dataset.setter
+    def dataset(self, value: str) -> None:
+        """Set dataset property."""
 
-        if self.__data_set is not None:
-            raise ValueError("The data_set field in context is immutable, create a new context instead.")
+        if self.__dataset is not None:
+            raise ValueError("The dataset field in context is immutable, create a new context instead.")
 
         # Import inside method to avoid cyclic reference
         from cl.runtime.storage.dataset_util import DatasetUtil
@@ -86,7 +86,7 @@ class Context:
         # Perform validation by converting into tokens, discard the result
         DatasetUtil.to_tokens(value)
 
-        self.__data_set = value
+        self.__dataset = value
 
     def __enter__(self):
         """Supports with syntax for resource disposal."""
