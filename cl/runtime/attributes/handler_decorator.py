@@ -12,10 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.attributes.implement_language import ImplementLanguage
-from cl.runtime.attributes.method_trait import MethodTrait
 from cl.runtime.storage.key_mixin import KeyMixin
-from functools import wraps
 from inspect import Parameter
 from inspect import isfunction
 from inspect import ismethod
@@ -95,11 +92,7 @@ def _get_parameters(
     return self_param, _parse_method_params(method, params_values, args_values, kwargs)
 
 
-def handler(
-    *args: MethodTrait,
-    language: ImplementLanguage = ImplementLanguage.Python,
-    metadata: Optional[Dict] = None,
-):
+def handler(metadata: Optional[Dict] = None):
     """
     Decorator for identifying functions that are handlers.
 
@@ -117,14 +110,6 @@ def handler(
     prohibited, best practice is to pass such parameters by
     specifying their key rather than their data.
     """
-    if len(args) == 1:
-        method = args[0]
-        if isfunction(method) or ismethod(method):
-            method._cl_handler = True
-            method._cl_handler_language = ImplementLanguage.Python
-            method._cl_handler_traits = tuple()
-            return method
-
     def wrap(method: Callable):
         if not isfunction(method) and not ismethod(method):
             raise Exception("@handler decorator should be applied on method or function.")

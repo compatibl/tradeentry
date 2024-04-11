@@ -14,16 +14,9 @@
 
 import inspect
 from cl.runtime.attributes.handler_decorator import handler
-from cl.runtime.attributes.implement_language import ImplementLanguage
-from cl.runtime.attributes.method_trait import MethodTrait
 
 
-def viewer(
-    *args: MethodTrait,
-    language: ImplementLanguage = ImplementLanguage.Python,
-    view_name: str = None,
-    view_type: str = None,
-):
+def viewer():
     """
     Decorator for identifying viewer methods.
 
@@ -48,7 +41,7 @@ def viewer(
         if not inspect.isfunction(method) and not inspect.ismethod(method):
             raise Exception("@viewer decorator should be applied on method or function.")
 
-        method = handler(*args, language=language)(method)
+        method = handler(*args)(method)
         method._cl_viewer = True
         method._cl_viewer_view_name = view_name
         method._view_type = view_type
@@ -57,7 +50,7 @@ def viewer(
     if len(args) == 1:
         maybe_method = args[0]
         if inspect.isfunction(maybe_method) or inspect.ismethod(maybe_method):
-            maybe_method = handler(language=language)(maybe_method)
+            maybe_method = handler()(maybe_method)
             maybe_method._cl_viewer = True
             maybe_method._cl_viewer_view_name = view_name
             maybe_method._view_type = view_type

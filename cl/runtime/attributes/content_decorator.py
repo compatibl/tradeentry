@@ -15,13 +15,12 @@
 
 import inspect
 from cl.runtime.attributes.handler_decorator import handler
-from cl.runtime.attributes.implement_language import ImplementLanguage
 from itertools import islice
 from typing import Any
 from typing import Callable
 
 
-def content(method: Callable[..., Any], language: ImplementLanguage = ImplementLanguage.Python):
+def content(method: Callable[..., Any]):
     """
     Decorator for identifying content methods.
     A content method must not take any parameters.
