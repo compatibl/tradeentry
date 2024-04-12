@@ -15,20 +15,18 @@
 from __future__ import annotations
 
 import datetime as dt
+
+from cl.runtime.decorators.handler_decorator import handler
+from cl.runtime.decorators.viewer_decorator import viewer
 from cl.runtime.storage.attrs import data_class
 from cl.runtime.storage.attrs import data_field
-from cl.runtime.storage.context import Context
 from cl.runtime.storage.data_mixin import DataMixin
-from cl.runtime.storage.handler_util import handler
 from cl.runtime.storage.index_util import index_fields
 from cl.runtime.storage.record_mixin import RecordMixin
-from cl.runtime.storage.viewer_util import viewer
 from logging import Logger
 from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
 from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey
 from stubs.cl.runtime.storage.enum.stub_int_enum import StubIntEnum
-from typing import List
-from typing import Optional
 
 _logger = Logger(__name__)
 
@@ -47,60 +45,3 @@ class StubAttrsRecord(StubAttrsRecordKey, RecordMixin):
     version: int = data_field(default=0)
     """Stub version field."""
 
-    @handler()
-    def non_virtual_base_handler(self) -> None:
-        """Stub handler."""
-        pass
-
-    @handler()
-    def virtual_base_handler(self) -> None:
-        """Stub handler."""
-        pass
-
-    @viewer()
-    def default_named_viewer(self) -> None:
-        """Stub viewer."""
-        pass
-
-    @viewer(label="Relabeled Viewer New Label")
-    def relabeled_viewer(self) -> None:
-        """Viewer whose label is modified."""
-        pass
-
-    def handler_with_arguments(
-        self,
-        int_arg: int,
-        datetime_arg: dt.datetime,
-        enum_arg: StubIntEnum,
-        data_arg: DataMixin,
-    ) -> None:
-        _logger.info(
-            f"handler_with_arguments(int_arg={int_arg} datetime_arg={datetime_arg}"
-            f"enum_arg={enum_arg} data_arg={data_arg})"
-        )
-
-    @staticmethod
-    def static_method():
-        """Sample static method."""
-        pass
-
-    @classmethod
-    def class_method(cls):
-        """Stub method."""
-        pass
-
-    def handler_with_args(self, arg_1: str, arg_2: str) -> str:
-        """Stub method."""
-        return arg_1 + arg_2
-
-    def handler_with_args_and_optional(self, arg_1: str, arg_2: str, arg_3: str = None) -> str:
-        """Stub method."""
-        return arg_1 + arg_2
-
-    def handler_with_reserved_param_name(self, from_: dt.date = None) -> dt.date:
-        """Stub method."""
-        return from_
-
-    def handler_with_error(self):
-        """Stub method."""
-        raise RuntimeError("Error in handler.")
