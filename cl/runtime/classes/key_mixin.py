@@ -15,7 +15,7 @@
 from __future__ import annotations
 
 from abc import ABC
-from cl.runtime.storage.data_mixin import DataMixin
+from cl.runtime.classes.data_mixin import DataMixin
 from typing_extensions import Self
 
 

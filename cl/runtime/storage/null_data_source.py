@@ -16,7 +16,7 @@ from cl.runtime import KeyMixin
 from cl.runtime import data_class
 from cl.runtime import data_field
 from cl.runtime.storage.data_source import DataSource
-from cl.runtime.storage.record_mixin import RecordMixin
+from cl.runtime.classes.record_mixin import RecordMixin
 from typing import Iterable
 from typing import Type
 from typing import TypeVar

@@ -14,9 +14,9 @@
 
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.decl.language_key import LanguageKey
-from cl.runtime.storage.attrs import data_class
-from cl.runtime.storage.attrs import data_field
-from cl.runtime.storage.data_mixin import DataMixin
+from cl.runtime.classes.attrs import data_class
+from cl.runtime.classes.attrs import data_field
+from cl.runtime.classes.data_mixin import DataMixin
 
 
 @data_class

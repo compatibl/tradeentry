@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs import data_class
-from cl.runtime.storage.attrs import data_field
-from cl.runtime.storage.record_mixin import RecordMixin
-from cl.runtime.storage.record_util import RecordUtil
+from cl.runtime.classes.attrs import data_class
+from cl.runtime.classes.attrs import data_field
+from cl.runtime.classes.record_mixin import RecordMixin
+from cl.runtime.classes.record_util import RecordUtil
 from copy import deepcopy
 from typing import Dict
 from typing import Iterable

@@ -13,19 +13,19 @@
 # limitations under the License.
 
 import datetime as dt
-from cl.runtime.storage.attrs import data_class
-from cl.runtime.storage.attrs import data_field
-from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
-from stubs.cl.runtime.storage.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
-from stubs.cl.runtime.storage.attrs.stub_attrs_list_fields import stub_attrs_data_list_factory
-from stubs.cl.runtime.storage.attrs.stub_attrs_list_fields import stub_attrs_date_list_factory
-from stubs.cl.runtime.storage.attrs.stub_attrs_list_fields import stub_attrs_derived_record_list_factory
-from stubs.cl.runtime.storage.attrs.stub_attrs_list_fields import stub_attrs_float_list_factory
-from stubs.cl.runtime.storage.attrs.stub_attrs_list_fields import stub_attrs_key_list_factory
-from stubs.cl.runtime.storage.attrs.stub_attrs_list_fields import stub_attrs_record_list_factory
-from stubs.cl.runtime.storage.attrs.stub_attrs_list_fields import stub_attrs_str_list_factory
-from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
-from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey
+from cl.runtime.classes.attrs import data_class
+from cl.runtime.classes.attrs import data_field
+from stubs.cl.runtime.classes.attrs.stub_attrs_data import StubAttrsData
+from stubs.cl.runtime.classes.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
+from stubs.cl.runtime.classes.attrs.stub_attrs_list_fields import stub_attrs_data_list_factory
+from stubs.cl.runtime.classes.attrs.stub_attrs_list_fields import stub_attrs_date_list_factory
+from stubs.cl.runtime.classes.attrs.stub_attrs_list_fields import stub_attrs_derived_record_list_factory
+from stubs.cl.runtime.classes.attrs.stub_attrs_list_fields import stub_attrs_float_list_factory
+from stubs.cl.runtime.classes.attrs.stub_attrs_list_fields import stub_attrs_key_list_factory
+from stubs.cl.runtime.classes.attrs.stub_attrs_list_fields import stub_attrs_record_list_factory
+from stubs.cl.runtime.classes.attrs.stub_attrs_list_fields import stub_attrs_str_list_factory
+from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecord
+from stubs.cl.runtime.classes.attrs.stub_attrs_record_key import StubAttrsRecordKey
 from typing import Dict
 from typing import List
 

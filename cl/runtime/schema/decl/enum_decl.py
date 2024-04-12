@@ -14,9 +14,9 @@
 
 from cl.runtime.schema.decl.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.decl.enum_item_decl import EnumItemDecl
-from cl.runtime.storage.attrs import data_class
-from cl.runtime.storage.attrs import data_field
-from cl.runtime.storage.record_mixin import RecordMixin
+from cl.runtime.classes.attrs import data_class
+from cl.runtime.classes.attrs import data_field
+from cl.runtime.classes.record_mixin import RecordMixin
 from typing import List
 from typing import Optional
 

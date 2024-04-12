@@ -14,8 +14,8 @@
 
 import cl.runtime as rt
 import pytest
-from stubs.cl.runtime.storage.attrs.stub_attrs_cyclic_a import StubAttrsCyclicA
-from stubs.cl.runtime.storage.attrs.stub_attrs_cyclic_b import StubAttrsCyclicB
+from stubs.cl.runtime.classes.attrs.stub_attrs_cyclic_a import StubAttrsCyclicA
+from stubs.cl.runtime.classes.attrs.stub_attrs_cyclic_b import StubAttrsCyclicB
 
 
 def test_cyclic_record():

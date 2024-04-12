@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.attrs import data_class
-from cl.runtime.storage.attrs import data_field
-from cl.runtime.storage.record_mixin import RecordMixin
-from stubs.cl.runtime.storage.attrs.stub_attrs_singleton_key import StubAttrsSingletonKey
+from cl.runtime.classes.attrs import data_class
+from cl.runtime.classes.attrs import data_field
+from cl.runtime.classes.record_mixin import RecordMixin
+from stubs.cl.runtime.classes.attrs.stub_attrs_singleton_key import StubAttrsSingletonKey
 from typing import Optional
 
 

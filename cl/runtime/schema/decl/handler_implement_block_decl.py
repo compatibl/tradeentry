@@ -14,9 +14,9 @@
 
 from cl.runtime.schema.decl.handler_implement_decl import HandlerImplementDecl
 from cl.runtime.schema.decl.interface_implement_decl import InterfaceImplementDecl
-from cl.runtime.storage.attrs import data_class
-from cl.runtime.storage.attrs import data_field
-from cl.runtime.storage.data_mixin import DataMixin
+from cl.runtime.classes.attrs import data_class
+from cl.runtime.classes.attrs import data_field
+from cl.runtime.classes.data_mixin import DataMixin
 from typing import List
 from typing import Optional
 

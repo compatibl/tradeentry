@@ -20,7 +20,7 @@ from cl.runtime import DataMixin
 from cl.runtime import RecordMixin
 from cl.runtime.decorators.handler_decorator import handler
 from stubs.cl.runtime.decorators.stub_handler_methods_key import StubHandlerMethodsKey
-from stubs.cl.runtime.storage.enum.stub_int_enum import StubIntEnum
+from stubs.cl.runtime.classes.enum.stub_int_enum import StubIntEnum
 
 
 def print_method_info():  # TODO: Move into DebugUtil(s)

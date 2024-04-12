@@ -14,15 +14,15 @@
 
 from __future__ import annotations
 
-from cl.runtime.storage.attrs import data_class
-from cl.runtime.storage.attrs import data_field
+from cl.runtime.classes.attrs import data_class
+from cl.runtime.classes.attrs import data_field
 from cl.runtime.storage.index_util import index_fields
-from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
-from stubs.cl.runtime.storage.attrs.stub_attrs_derived_data import StubAttrsDerivedData
-from stubs.cl.runtime.storage.attrs.stub_attrs_derived_from_derived_data import StubAttrsDerivedFromDerivedData
-from stubs.cl.runtime.storage.attrs.stub_attrs_nested_fields_key import StubAttrsNestedFieldsKey
-from stubs.cl.runtime.storage.attrs.stub_attrs_record import StubAttrsRecord
-from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey
+from stubs.cl.runtime.classes.attrs.stub_attrs_data import StubAttrsData
+from stubs.cl.runtime.classes.attrs.stub_attrs_derived_data import StubAttrsDerivedData
+from stubs.cl.runtime.classes.attrs.stub_attrs_derived_from_derived_data import StubAttrsDerivedFromDerivedData
+from stubs.cl.runtime.classes.attrs.stub_attrs_nested_fields_key import StubAttrsNestedFieldsKey
+from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecord
+from stubs.cl.runtime.classes.attrs.stub_attrs_record_key import StubAttrsRecordKey
 
 
 @index_fields("derived_float_field, -float_field")

@@ -13,9 +13,9 @@
 # limitations under the License.
 
 from cl.runtime.schema.decl.module_key import ModuleKey
-from cl.runtime.storage.attrs import data_class
-from cl.runtime.storage.attrs import data_field
-from cl.runtime.storage.key_mixin import KeyMixin
+from cl.runtime.classes.attrs import data_class
+from cl.runtime.classes.attrs import data_field
+from cl.runtime.classes.key_mixin import KeyMixin
 
 
 @data_class

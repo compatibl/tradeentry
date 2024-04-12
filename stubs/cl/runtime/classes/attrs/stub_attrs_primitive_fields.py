@@ -16,11 +16,11 @@ import datetime as dt
 from cl.runtime.primitive.date_time_util import DateTimeUtil
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.primitive.time_util import TimeUtil
-from cl.runtime.storage.attrs import data_class
-from cl.runtime.storage.attrs import data_field
-from cl.runtime.storage.record_mixin import RecordMixin
-from stubs.cl.runtime.storage.attrs.stub_attrs_primitive_fields_key import StubAttrsPrimitiveFieldsKey
-from stubs.cl.runtime.storage.enum.stub_int_enum import StubIntEnum
+from cl.runtime.classes.attrs import data_class
+from cl.runtime.classes.attrs import data_field
+from cl.runtime.classes.record_mixin import RecordMixin
+from stubs.cl.runtime.classes.attrs.stub_attrs_primitive_fields_key import StubAttrsPrimitiveFieldsKey
+from stubs.cl.runtime.classes.enum.stub_int_enum import StubIntEnum
 from uuid import UUID
 
 

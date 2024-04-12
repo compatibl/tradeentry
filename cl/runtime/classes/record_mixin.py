@@ -14,7 +14,7 @@
 
 from abc import ABC
 from cl.runtime import Context
-from cl.runtime.storage.key_mixin import KeyMixin
+from cl.runtime.classes.key_mixin import KeyMixin
 from typing import Optional
 
 

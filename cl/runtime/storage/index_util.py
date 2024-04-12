@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import inspect
-from cl.runtime.storage.key_mixin import KeyMixin
+from cl.runtime.classes.key_mixin import KeyMixin
 from typing import Any
 from typing import Dict
 from typing import List

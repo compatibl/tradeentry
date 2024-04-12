@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.enum_util import enum_class
+from cl.runtime.classes.enum_util import enum_class
 from enum import IntEnum
 
 

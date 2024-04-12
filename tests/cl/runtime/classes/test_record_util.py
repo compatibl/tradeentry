@@ -70,7 +70,7 @@ def test_get_class_type():
     assert RecordUtil.get_class_type(RecordUtil.__module__, RecordUtil.__name__) == RecordUtil
 
     # Class that is dynamically imported on demand
-    do_no_import_module_name = "stubs.cl.runtime.storage.attrs.stub_attrs_do_not_import"
+    do_no_import_module_name = "stubs.cl.runtime.classes.attrs.stub_attrs_do_not_import"
     do_no_import_class_name = "StubAttrsDoNotImport"
     do_no_import_class = RecordUtil.get_class_type(do_no_import_module_name, do_no_import_class_name)
     assert do_no_import_class.__module__ == do_no_import_module_name

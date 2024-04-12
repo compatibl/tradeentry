@@ -15,8 +15,8 @@
 from __future__ import annotations
 
 from cl.runtime.storage.context import Context
-from cl.runtime.storage.record_mixin import RecordMixin
-from stubs.cl.runtime.storage.custom.stub_custom_record_key import StubCustomRecordKey
+from cl.runtime.classes.record_mixin import RecordMixin
+from stubs.cl.runtime.classes.custom.stub_custom_record_key import StubCustomRecordKey
 from typing import Any
 from typing import Dict
 from typing import Optional

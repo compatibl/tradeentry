@@ -276,8 +276,8 @@ class ClassInfo:
         This is the class derived directly from Data, Record, or RootRecord.
         """
 
-        from cl.runtime.storage.data_mixin import DataMixin
-        from cl.runtime.storage.key_mixin import KeyMixin
+        from cl.runtime.classes.data_mixin import DataMixin
+        from cl.runtime.classes.key_mixin import KeyMixin
 
         type_mro = type_.mro()
         if type_mro[0] in (DataMixin, KeyMixin):
@@ -316,8 +316,8 @@ class ClassInfo:
         The class must be derived from Data, error message otherwise.
         """
 
-        from cl.runtime.storage.data_mixin import DataMixin
-        from cl.runtime.storage.key_mixin import KeyMixin
+        from cl.runtime.classes.data_mixin import DataMixin
+        from cl.runtime.classes.key_mixin import KeyMixin
 
         type_mro = type_.mro()
         if type_mro[0] in (DataMixin, KeyMixin):
@@ -340,7 +340,7 @@ class ClassInfo:
     def get_key_from_record(type_: type) -> type:
         """Extract associated key from Key derived types."""
 
-        from cl.runtime.storage.key_mixin import KeyMixin
+        from cl.runtime.classes.key_mixin import KeyMixin
 
         type_mro = type_.mro()
         if KeyMixin in type_mro:
@@ -354,7 +354,7 @@ class ClassInfo:
     def get_record_from_key(type_: type) -> type:
         """Extract associated record from Key derived types."""
 
-        from cl.runtime.storage.key_mixin import KeyMixin
+        from cl.runtime.classes.key_mixin import KeyMixin
 
         key_type_name = ClassInfo.get_prefixed_name(type_)
 
@@ -373,7 +373,7 @@ class ClassInfo:
     def __init_types():
         """Initialize types, resolving issues with class duplicates in __subclasses__()."""
         from cl.runtime.storage.context import Context
-        from cl.runtime.storage.data_mixin import DataMixin
+        from cl.runtime.classes.data_mixin import DataMixin
 
         # Resolves issue with classes duplicates in __subclasses__()
         gc.collect()
@@ -474,7 +474,7 @@ class ClassInfo:
             This function identifies serializable fields by comparing them with the fields defined in the base
             `cl.runtime.storage.data.Data` class. It excludes fields starting with '_' if `remove_protected` is True.
         """
-        from cl.runtime.storage.data_mixin import DataMixin
+        from cl.runtime.classes.data_mixin import DataMixin
 
         data_fields = vars(DataMixin).keys()
         class_fields = ClassInfo.get_class_fields(data_type)

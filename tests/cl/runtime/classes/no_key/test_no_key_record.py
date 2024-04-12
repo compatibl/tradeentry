@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from stubs.cl.runtime.storage.custom.stub_custom_keyless_record import StubCustomKeylessRecord
+from stubs.cl.runtime.classes.custom.stub_custom_keyless_record import StubCustomKeylessRecord
 
 
 def test_smoke():

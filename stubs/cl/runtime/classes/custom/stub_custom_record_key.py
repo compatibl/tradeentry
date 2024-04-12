@@ -14,10 +14,10 @@
 
 from __future__ import annotations
 
-from cl.runtime.storage.attrs import data_class
-from cl.runtime.storage.attrs import data_field
+from cl.runtime.classes.attrs import data_class
+from cl.runtime.classes.attrs import data_field
 from cl.runtime.storage.context import Context
-from cl.runtime.storage.key_mixin import KeyMixin
+from cl.runtime.classes.key_mixin import KeyMixin
 from typing import Any
 from typing import Dict
 from typing import Optional

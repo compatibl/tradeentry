@@ -17,15 +17,15 @@ from __future__ import annotations
 import datetime as dt
 from cl.runtime.decorators.handler_decorator import handler
 from cl.runtime.decorators.viewer_decorator import viewer
-from cl.runtime.storage.attrs import data_class
-from cl.runtime.storage.attrs import data_field
-from cl.runtime.storage.data_mixin import DataMixin
+from cl.runtime.classes.attrs import data_class
+from cl.runtime.classes.attrs import data_field
+from cl.runtime.classes.data_mixin import DataMixin
 from cl.runtime.storage.index_util import index_fields
-from cl.runtime.storage.record_mixin import RecordMixin
+from cl.runtime.classes.record_mixin import RecordMixin
 from logging import Logger
-from stubs.cl.runtime.storage.attrs.stub_attrs_data import StubAttrsData
-from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey
-from stubs.cl.runtime.storage.enum.stub_int_enum import StubIntEnum
+from stubs.cl.runtime.classes.attrs.stub_attrs_data import StubAttrsData
+from stubs.cl.runtime.classes.attrs.stub_attrs_record_key import StubAttrsRecordKey
+from stubs.cl.runtime.classes.enum.stub_int_enum import StubIntEnum
 
 _logger = Logger(__name__)
 

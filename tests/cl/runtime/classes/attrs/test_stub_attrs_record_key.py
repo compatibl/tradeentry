@@ -14,8 +14,8 @@
 
 import copy
 import pytest
-from stubs.cl.runtime.storage.attrs.stub_attrs_nested_fields_key import StubAttrsNestedFieldsKey
-from stubs.cl.runtime.storage.attrs.stub_attrs_record_key import StubAttrsRecordKey
+from stubs.cl.runtime.classes.attrs.stub_attrs_nested_fields_key import StubAttrsNestedFieldsKey
+from stubs.cl.runtime.classes.attrs.stub_attrs_record_key import StubAttrsRecordKey
 
 
 def test_smoke():

@@ -13,9 +13,9 @@
 # limitations under the License.
 
 from cl.runtime.schema.type.type_decl_key import TypeDeclKey
-from cl.runtime.storage.attrs import data_class
-from cl.runtime.storage.attrs import data_field
-from cl.runtime.storage.record_mixin import RecordMixin
+from cl.runtime.classes.attrs import data_class
+from cl.runtime.classes.attrs import data_field
+from cl.runtime.classes.record_mixin import RecordMixin
 
 
 @data_class
