@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 def content_impl(method, *, label=None):
     """Decorator to mark methods that summarize the record for AI."""
 

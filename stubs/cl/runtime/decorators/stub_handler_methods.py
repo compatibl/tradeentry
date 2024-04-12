@@ -14,9 +14,10 @@
 
 from __future__ import annotations
 
-import inspect
 import datetime as dt
-from cl.runtime import RecordMixin, DataMixin
+import inspect
+from cl.runtime import DataMixin
+from cl.runtime import RecordMixin
 from cl.runtime.decorators.handler_decorator import handler
 from stubs.cl.runtime.decorators.stub_handler_methods_key import StubHandlerMethodsKey
 from stubs.cl.runtime.storage.enum.stub_int_enum import StubIntEnum

@@ -20,4 +20,3 @@ from cl.runtime.schema.type.primitive_decl import PrimitiveDecl
 from cl.runtime.schema.type.enum_decl import EnumDecl
 from cl.runtime.schema.type.data_decl import DataDecl
 from cl.runtime.storage.class_info import ClassInfo
-

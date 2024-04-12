@@ -15,7 +15,6 @@
 from __future__ import annotations
 
 import datetime as dt
-
 from cl.runtime.decorators.handler_decorator import handler
 from cl.runtime.decorators.viewer_decorator import viewer
 from cl.runtime.storage.attrs import data_class
@@ -44,4 +43,3 @@ class StubAttrsRecord(StubAttrsRecordKey, RecordMixin):
 
     version: int = data_field(default=0)
     """Stub version field."""
-
