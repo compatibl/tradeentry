@@ -16,11 +16,15 @@ from __future__ import annotations
 
 import datetime as dt
 import inspect
+from logging import getLogger
+
 from cl.runtime import DataMixin
 from cl.runtime import RecordMixin
 from cl.runtime.decorators.handler_decorator import handler
 from stubs.cl.runtime.decorators.stub_handler_methods_key import StubHandlerMethodsKey
 from stubs.cl.runtime.classes.enum.stub_int_enum import StubIntEnum
+
+_logger = getLogger(__name__)
 
 
 def print_method_info():  # TODO: Move into DebugUtil(s)
