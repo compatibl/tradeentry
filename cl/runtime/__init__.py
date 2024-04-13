@@ -6,7 +6,8 @@ from cl.runtime.classes.record_mixin import RecordMixin
 from cl.runtime.classes.attrs import data_class, data_field
 from cl.runtime.classes.record_util import RecordUtil
 from cl.runtime.storage.data_source import DataSource
-from cl.runtime.storage.context import Context
+from cl.runtime.rest.context import Context
+from cl.runtime.rest.basic_context import BasicContext
 from cl.runtime.storage.in_process.in_process_data_source import InProcessDataSource
 from cl.runtime.view.view import View
 from cl.runtime.view.record_view import RecordView
@@ -19,4 +20,3 @@ from cl.runtime.schema.type.field_decl import FieldDecl
 from cl.runtime.schema.type.primitive_decl import PrimitiveDecl
 from cl.runtime.schema.type.enum_decl import EnumDecl
 from cl.runtime.schema.type.data_decl import DataDecl
-from cl.runtime.storage.class_info import ClassInfo

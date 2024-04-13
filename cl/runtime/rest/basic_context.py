@@ -14,39 +14,60 @@
 
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
-from dataclasses import dataclass
 from logging import Logger
-from typing import Optional, List
+from typing import List
 from cl.runtime import DataSource
+from cl.runtime.rest.context import Context
 from cl.runtime.rest.progress import Progress
-from cl.runtime.storage.dataset_util import DatasetUtil
 
 
-class Context(ABC):
+class BasicContext(Context):
     """Provides logging, data source, dataset, and progress reporting."""
 
-    @abstractmethod
+    __slots__ = ["__logger", "__data_source", "__read_dataset", "__write_dataset", "__progress"]
+
+    __logger: Logger
+    __data_source: DataSource | None
+    __read_dataset: List[str] | str | None
+    __write_dataset: str | None
+    __progress: Progress | None
+
+    def __init__(
+            self,
+            *,
+            logger: Logger,
+            data_source: DataSource | None = None,
+            read_dataset: List[str] | str | None = None,
+            write_dataset: str | None = None,
+            progress: Progress | None = None,
+    ):
+        """Normalize and validate inputs."""
+
+        self.__logger = logger  # Specify default logger
+        self.__data_source = data_source
+        self.__read_dataset = read_dataset
+        self.__write_dataset = write_dataset
+        self.__progress = progress
+
     def logger(self) -> Logger:
         """Return the context logger."""
+        return self.__logger
 
-    @abstractmethod
     def data_source(self) -> DataSource | None:
         """Return the context data source or None if not set."""
+        return self.__data_source
 
-    @abstractmethod
     def read_dataset(self) -> List[str] | str | None:
         """Return the context read dataset or None if not set."""
+        return self.__read_dataset
 
-    @abstractmethod
     def write_dataset(self) -> str | None:
         """Return the context write dataset or None if not set."""
+        return self.__write_dataset
 
-    @abstractmethod
     def progress(self) -> Progress | None:
         """Return the context progress or None if not set."""
-
-    @abstractmethod
+        return self.__progress
     def with_params(
             self,
             *,
@@ -57,11 +78,26 @@ class Context(ABC):
             progress: Progress | None = None,
     ) -> Context:
         """Create a copy of self where some or all of the attributes are modified."""
+        return BasicContext(
+            logger=self.__logger if logger is None else logger,
+            data_source=self.__data_source if data_source is None else data_source,
+            read_dataset=self.__read_dataset if read_dataset is None else read_dataset,
+            write_dataset=self.__write_dataset if write_dataset is None else write_dataset,
+            progress=self.__progress if progress is None else progress,
+        )
 
-    @abstractmethod
     def __enter__(self):
         """Supports `with` operator for resource disposal."""
 
-    @abstractmethod
+        return self
+
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Supports `with` operator for resource disposal."""
+
+        # TODO: Support resource disposal for the data source
+        if self.__data_source is not None:
+            # self.__data_source.disconnect()
+            pass
+
+        # Return False to propagate exception to the caller
+        return False
