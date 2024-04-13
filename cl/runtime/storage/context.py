@@ -12,92 +12,93 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.dataset_util import DatasetUtil
-from typing import TYPE_CHECKING
-from typing import Optional
+from __future__ import annotations
 
-if TYPE_CHECKING:
-    from cl.runtime.storage.data_source import DataSource
+from dataclasses import dataclass
+from logging import Logger
+from typing import Optional, List
+from cl.runtime import DataSource
+from cl.runtime.rest.progress import Progress
+from cl.runtime.storage.dataset_util import DatasetUtil
 
 
 class Context:
-    """
-    Context provides:
+    """Provides logging, data source, dataset, and progress reporting."""
 
-    * Default data source
-    * Default dataset of the default data source
-    * Logging
-    * Progress reporting
-    * Filesystem access (if available)
-    """
+    __slots__ = ["__logger", "__data_source", "__read_dataset", "__write_dataset", "__progress"]
 
-    __slots__ = (
-        "__data_source",
-        "__dataset",
-    )
+    __logger: Logger
+    __data_source: DataSource | None
+    __read_dataset: List[str] | str | None
+    __write_dataset: str | None
+    __progress: Progress | None
 
-    __data_source: Optional["DataSource"]
-    __dataset: Optional[str]
+    def __init__(
+            self,
+            *,
+            logger: Logger,
+            data_source: DataSource | None = None,
+            read_dataset: List[str] | str | None = None,
+            write_dataset: str | None = None,
+            progress: Progress | None = None,
+    ):
+        """Normalize and validate inputs."""
 
-    def __init__(self):
-        """
-        Set instant variables to None here. They will be
-        set and then initialized by the respective
-        property setter.
-        """
+        self.__logger = logger  # Specify default logger
+        self.__data_source = data_source
+        self.__read_dataset = read_dataset
+        self.__write_dataset = write_dataset
+        self.__progress = progress
 
-        self.__data_source = None
-        """Default data source of the context."""
+    def logger(self) -> Logger:
+        """Return the context logger."""
+        return self.__logger
 
-        self.__dataset = None
-        """Default dataset of the context."""
-
-    @property
-    def data_source(self) -> "DataSource":
-        """Return data_source property, error message if not set."""
-
-        if not self.__data_source:
-            raise Exception("Data source property is not set in Context.")
+    def data_source(self) -> DataSource | None:
+        """Return the context data source or None if not set."""
         return self.__data_source
 
-    @data_source.setter
-    def data_source(self, value: "DataSource") -> None:
-        """Set data_source property and pass self to its init method."""
-        self.__data_source = value
+    def read_dataset(self) -> List[str] | str | None:
+        """Return the context read dataset or None if not set."""
+        return self.__read_dataset
 
-    @property
-    def dataset(self) -> str:
-        """Return dataset property, error message if not set."""
+    def write_dataset(self) -> str | None:
+        """Return the context write dataset or None if not set."""
+        return self.__write_dataset
 
-        if self.__dataset is None:
-            raise Exception("Dataset property is not set in Context.")
-        return self.__dataset
-
-    @dataset.setter
-    def dataset(self, value: str) -> None:
-        """Set dataset property."""
-
-        if self.__dataset is not None:
-            raise ValueError("The dataset field in context is immutable, create a new context instead.")
-
-        # Import inside method to avoid cyclic reference
-        from cl.runtime.storage.dataset_util import DatasetUtil
-
-        # Perform validation by converting into tokens, discard the result
-        DatasetUtil.to_tokens(value)
-
-        self.__dataset = value
+    def progress(self) -> Progress | None:
+        """Return the context progress or None if not set."""
+        return self.__progress
+    def with_params(
+            self,
+            *,
+            logger: Logger | None = None,
+            data_source: DataSource | None = None,
+            read_dataset: List[str] | str | None = None,
+            write_dataset: str | None = None,
+            progress: Progress | None = None,
+    ) -> Context:
+        """Create a copy of self where some or all of the attributes are modified."""
+        return Context(
+            logger=self.__logger if logger is None else logger,
+            data_source=self.__data_source if data_source is None else data_source,
+            read_dataset=self.__read_dataset if read_dataset is None else read_dataset,
+            write_dataset=self.__write_dataset if write_dataset is None else write_dataset,
+            progress=self.__progress if progress is None else progress,
+        )
 
     def __enter__(self):
-        """Supports with syntax for resource disposal."""
+        """Supports `with` operator for resource disposal."""
 
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Supports with syntax for resource disposal."""
+        """Supports `with` operator for resource disposal."""
 
+        # TODO: Support resource disposal for the data source
         if self.__data_source is not None:
-            self.__data_source.__exit__(exc_type, exc_val, exc_tb)
+            # self.__data_source.disconnect()
+            pass
 
         # Return False to propagate exception to the caller
         return False
