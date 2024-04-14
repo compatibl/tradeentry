@@ -139,15 +139,15 @@ class KeyMixin(DataMixin, ABC):
         keys = [x for x in records_or_keys if x is not None and (isinstance(x, str) or type(x) is cls)]
 
         # Convert keys to the required format
-        key_kind = data_source.key_kind()
-        if key_kind == 'dict':
+        key_format = data_source.key_format()
+        if key_format == 'dict':
             # Required key format is dict
             keys = [k if not isinstance(k, str) else k.dict_key() for k in keys]
-        elif key_kind == 'str':
+        elif key_format == 'str':
             # Required key format is str
             keys = [k if isinstance(k, str) else k.str_key() for k in keys]
         else:
-            raise RuntimeError(f"Key kind `{key_kind}` in data source `{data_source.data_source_id}` is not supported.")
+            raise RuntimeError(f"Unsupported key format `{key_format}` in data source `{data_source.data_source_id}`.")
 
         # Populate with records or strings first
         records = [

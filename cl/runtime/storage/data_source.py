@@ -30,7 +30,7 @@ class DataSource(ABC):
     """Unique data source identifier."""
 
     @abstractmethod
-    def key_kind(self) -> Literal['dict', 'str']:
+    def key_format(self) -> Literal['dict', 'str']:
         """Return `dict` if the data source accepts dict key and `str` if it accepts string key."""
 
     @abstractmethod
