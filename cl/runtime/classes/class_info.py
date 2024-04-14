@@ -181,7 +181,9 @@ class ClassInfo(ABC):
         # TODO: Add memoization
         cls = type(obj)
         if attrs.has(cls):
-            return attrs.asdict(obj)
+            result = attrs.asdict(obj)
+            result["_class"] = f"{cls.__module__}.{cls.__name__}"
+            return result
         else:
             raise RuntimeError(
                 f"Class {cls.__module__}.{cls.__name__} does not use one of the supported frameworks "
@@ -208,8 +210,8 @@ class ClassInfo(ABC):
 
         if isinstance(data, dict):
             field_types = get_type_hints(class_type)
-            return class_type(**{k: ClassInfo._deserialize(field_types[k], v) for k, v in data.items()})
+            return class_type(**{k: ClassInfo._deserialize(field_types[k], v) for k, v in data.items() if k != "_class"})
         elif isinstance(data, list):
-            return [ClassInfo.from_dict(class_type.__args__[0], item) for item in data]
+            return [ClassInfo._deserialize(class_type.__args__[0], item) for item in data]
         else:
             return data

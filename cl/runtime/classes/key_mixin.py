@@ -15,7 +15,7 @@
 from __future__ import annotations
 
 from abc import ABC
-from typing import Dict, Any, List, TypeVar, Type, Literal
+from typing import Dict, Any, List, TypeVar, Type, Literal, get_type_hints
 
 from cl.runtime.classes.class_info import ClassInfo
 from cl.runtime.classes.data_mixin import DataMixin
@@ -56,36 +56,89 @@ class KeyMixin(DataMixin, ABC):
         )
 
     @classmethod
-    def to_str_key(cls: Type[TRecordOrKey], record_or_key: TRecordOrKey | dict | str | None) -> str | None:
+    def to_str_key(cls, key_type: Type[TKey], record_or_key: Self | TKey | dict | str | None) -> str | None:
         """
-        Key as string in semicolon-delimited string format without table name.
+        Convert all key formats to semicolon-delimited string without table name.
 
-        For composite keys, the embedded keys are concatenated in the order of their declaration without brackets:
+        Notes:
+            For composite keys, the embedded keys are concatenated in the order of their declaration without brackets:
 
-            - No primary key fields: '' (i.e. empty string)
-            - One primary key field A: 'A'
-            - Two primary key fields A and B: 'A;B'
-            - Two primary key fields 'A1;A2' and 'B': 'A1;A2;B'
+                - No primary key fields: '' (i.e. empty string)
+                - One primary key field A: 'A'
+                - Two primary key fields A and B: 'A;B'
+                - Two primary key fields 'A1;A2' and 'B': 'A1;A2;B'
+
+        Returns:
+            Key as string in semicolon-delimited string format without table name.
+
+        Args:
+            key_type: Type of key class.
+            record_or_key: Record, key, dict, semicolon-delimited string, or None.
         """
         if record_or_key is None:
             return None
         elif isinstance(record_or_key, str):
             return record_or_key
         elif isinstance(record_or_key, dict):
-            raise NotImplementedError()
-        elif type(record_or_key).__name__.endswith("Key") or isinstance(record_or_key, cls):
-            pass
+            field_types = get_type_hints(key_type)
+            if len(record_or_key) != len(field_types):
+                dict_keys = record_or_key.keys()
+                dict_keys_desc = ", ".join(f"`{dict_keys}`")
+                field_names = field_types.keys()
+                key_fields_desc = ", ".join(f"`{field_names}`")
+                raise RuntimeError(f"Dict key {record_or_key} has {len(dict_keys)} tokens for key type "
+                                   f"{key_type.__name__} which has {len(field_names)} fields. "
+                                   f"Dict keys: {dict_keys_desc}. Key fields: {key_fields_desc}.")
+            tokens = [record_or_key[x] for x in field_types]
+            result = ";".join(tokens)
+            return result
+        elif record_or_key is key_type or isinstance(record_or_key, cls):
+            field_types = get_type_hints(key_type)
+            tokens = [str(getattr(record_or_key, x)) for x in field_types]
+            result = ";".join(tokens)
+            return result
         else:
             raise RuntimeError(
-                f"Wrong parameter type {type(record_or_key).__name__} for converting class {cls.__name__} "
+                f"Wrong parameter type `{type(record_or_key).__name__}` for converting class `{cls.__name__}` "
                 f"to string key."
             )
 
     @classmethod
-    def to_dict_key(cls: Type[TRecordOrKey], record_or_key: TRecordOrKey | dict | str | None) -> Dict[str, Any] | None:
-        """Return key as a dict of primary key fields."""
-        if False:  # TODO: Implement
+    def to_dict_key(cls, key_type: Type[TKey], record_or_key: Self | TKey | dict | str | None) -> Dict[str, Any] | None:
+        """
+        Convert all key formats to key dict.
+
+        Notes:
+            For composite keys, the embedded keys are represented as embedded dicts.
+
+        Returns:
+            Dict of key fields.
+
+        Args:
+            key_type: Type of key class.
+            record_or_key: Record, key, dict, semicolon-delimited string, or None.
+        """
+
+        if record_or_key is None:
             return None
+        elif isinstance(record_or_key, str):
+            # Use field names as keys and tokens as values
+            field_types = get_type_hints(key_type)
+            field_names = field_types.keys()
+            tokens = record_or_key.split(";")
+            if len(tokens) != len(field_names):
+                key_fields_desc = ", ".join(f"`{field_names}`")
+                raise RuntimeError(f"String key `{record_or_key}` has {len(tokens)} tokens for key type "
+                                   f"`{key_type.__name__}` which has {len(field_names)} fields: {key_fields_desc}")
+            result = dict(zip(field_names, tokens))
+            return result
+        elif isinstance(record_or_key, dict):
+            # Create a copy
+            return dict(record_or_key)
+        elif record_or_key is key_type or isinstance(record_or_key, cls):
+            field_types = get_type_hints(key_type)
+            result = {x: getattr(record_or_key, x) for x in field_types}
+            return result
         else:
             raise RuntimeError(
                 f"Wrong parameter type {type(record_or_key).__name__} for converting class {cls.__name__} "
@@ -108,19 +161,20 @@ class KeyMixin(DataMixin, ABC):
         """
         raise NotImplementedError()
 
-    def __repr__(self) -> str:
+    def __str__(self) -> str:
         """
         Key as string in semicolon-delimited string format without table name.
 
         Notes:
             This method is for debugging purposes only and may be overridden in derived types. Do not use in code.
         """
-        return type(self).to_str_key(self)
+        class_type = type(self)  # TODO: Support calling this method for types derived from key
+        return class_type.to_str_key(class_type, self)
 
     @classmethod
     def load_many(
             cls,
-            key_type_or_table: Type[TKey] | str,
+            key_type: Type[TKey],
             records_or_keys: List[Self | None] | List[TKey | None] | List[dict | None] | List[str | None] | None,
             dataset: List[str] | str | None = None,
             *,
@@ -135,13 +189,17 @@ class KeyMixin(DataMixin, ABC):
             A result element is None if the record is not found or the key is None.
 
         Args:
-            key_type_or_table: Type of key class or table name as string
+            key_type: Type of key class.
             records_or_keys: Each element is a record, key, semicolon-delimited string, or None.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
             context: Optional context, if None current context will be used
         """
 
-        # TODO: Check - This method should not be called for a key class
+        # TODO: Does not yet support embedded keys
+
+        # This method should not be called for the key class
+        if cls == key_type:
+            raise RuntimeError(f"Method `load_many` should not be called for the key class {key_type.__name__}")
 
         # Return None if `records_or_keys` is empty or None
         if records_or_keys is None or len(records_or_keys) == 0:
@@ -155,8 +213,8 @@ class KeyMixin(DataMixin, ABC):
         key_formats: List[str] = [
             "str" if isinstance(x, str) else
             "dict" if isinstance(x, dict) else
-            "key" if type(x).__name__.endswith("Key") else
-            "record" if isinstance(x, cls)  else
+            "key" if x is key_type else
+            "record" if isinstance(x, cls) else
             f"unknown.{type(x).__name__}"
             for x in records_or_keys if x is not None
         ]
@@ -170,8 +228,8 @@ class KeyMixin(DataMixin, ABC):
             # Report the first 10 unknown types
             desc = ", ".join(unknown[:10])
             raise RuntimeError(f"Param `records_or_keys` of method `load_many` can only contain the following "
-                               f"types: record derived from `{cls.__name__}`, key, dict, or string. "
-                               f"These types are not supported: {desc}.")
+                               f"types: str, dict, `{key_type.__name__}`, or any class derived from `{cls.__name__}`. "
+                               f"The following types are not supported: {desc}.")
 
         # Determine format, error message if more than one is present
         if len(key_formats) > 1:
@@ -194,22 +252,8 @@ class KeyMixin(DataMixin, ABC):
 
         else:
 
-            # Determine table name
-            table: str
-            if isinstance(key_type_or_table, type):
-                # Type of key class
-                key_class_name = key_type_or_table.__name__
-                if key_class_name.endswith("Key"):
-                    table = key_class_name.removesuffix("Key")
-                else:
-                    raise RuntimeError(f"Invalid value `{key_class_name}` of `key_type_or_table` parameter, "
-                                       f"if type rather than string is specified the type name must end with `Key`.")
-            elif isinstance(key_type_or_table, str):
-                # String, use directly
-                table = key_type_or_table
-            else:
-                raise RuntimeError(f"Invalid type `{type(key_type_or_table)}` of `key_type_or_table` parameter, "
-                                   f"must be either string or type of the key class.")
+            # Determine table name, use key_type with removed Key suffix if present
+            table = key_type.removesuffix("Key")
 
             # Get data source from the current or specified context
             context = Context.current() if context is not None else context
@@ -222,10 +266,10 @@ class KeyMixin(DataMixin, ABC):
             required_format = data_source.key_format()
             if required_format == 'dict':
                 if key_format != "dict":
-                    loaded_keys = [cls.to_dict_key(k) for k in loaded_keys]
+                    loaded_keys = [cls.to_dict_key(key_type, k) for k in loaded_keys]
             elif required_format == 'str':
                 if key_format != "str":
-                    loaded_keys = [cls.to_str_key(k) for k in loaded_keys]
+                    loaded_keys = [cls.to_str_key(key_type, k) for k in loaded_keys]
             else:
                 raise RuntimeError(f"Key format `{required_format}` required by data source "
                                    f"`{data_source.data_source_id}` is not supported.")

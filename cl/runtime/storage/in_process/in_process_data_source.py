@@ -99,9 +99,7 @@ class InProcessDataSource:
             # Create record instance and populate it from dictionary
             # Final type name is the last element of type discriminators list
             class_path = record_dict["_type"]
-            module_path, class_name = ClassInfo.split_class_path(class_path)
-
-            class_ = ClassInfo.get_class_type(module_path, class_name)
+            class_ = ClassInfo.get_class_type(class_path)
             record = class_.from_dict(record_dict)
 
             # Verify that the record has the same key as was passed to the load method

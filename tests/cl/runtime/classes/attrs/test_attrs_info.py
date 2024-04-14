@@ -67,30 +67,27 @@ def test_get_class_type():
     """Test getting class from module and class strings."""
 
     # Class that is already imported
-    assert ClassInfo.get_class_type(ClassInfo.__module__, ClassInfo.__name__) == ClassInfo
+    class_info_path = f"{ClassInfo.__module__}.{ClassInfo.__name__}"
+    assert ClassInfo.get_class_type(class_info_path) == ClassInfo
 
     # Class that is dynamically imported on demand
-    do_no_import_module_name = "stubs.cl.runtime.classes.attrs.stub_attrs_do_not_import"
-    do_no_import_class_name = "StubAttrsDoNotImport"
-    do_no_import_class = ClassInfo.get_class_type(do_no_import_module_name, do_no_import_class_name)
-    assert do_no_import_class.__module__ == do_no_import_module_name
-    assert do_no_import_class.__name__ == do_no_import_class_name
+    do_no_import_class_path = "stubs.cl.runtime.classes.attrs.stub_attrs_do_not_import.StubAttrsDoNotImport"
+    do_no_import_class = ClassInfo.get_class_type(do_no_import_class_path)
+    assert do_no_import_class_path == f"{do_no_import_class.__module__}.{do_no_import_class.__name__}"
 
     # Module does not exist error
     unknown_name = "aBcDeF"
     with pytest.raises(RuntimeError):
-        ClassInfo.get_class_type(unknown_name, do_no_import_class_name)
+        path_with_unknown_module = "unknown_module.StubAttrsDoNotImport"
+        ClassInfo.get_class_type(path_with_unknown_module)
 
     # Class does not exist error
     with pytest.raises(RuntimeError):
-        ClassInfo.get_class_type(do_no_import_module_name, unknown_name)
-
-    # Dot-delimited class name error
-    with pytest.raises(RuntimeError):
-        ClassInfo.get_class_type(do_no_import_module_name, "a.b")
+        path_with_unknown_class = "stubs.cl.runtime.classes.attrs.stub_attrs_do_not_import.UnknownClass"
+        ClassInfo.get_class_type(path_with_unknown_class)
 
     # Call one more time and confirm that method results are cached
-    assert ClassInfo.get_class_type(ClassInfo.__module__, ClassInfo.__name__) == ClassInfo
+    assert ClassInfo.get_class_type(class_info_path) == ClassInfo
     assert ClassInfo.get_class_type.cache_info().hits > 0
 
 
@@ -177,7 +174,7 @@ def test_to_from_dict():
         data = ClassInfo.to_dict(obj)
 
         # Restore from dict
-        restored_obj = ClassInfo.from_dict(stub_type, data)
+        restored_obj = ClassInfo.from_dict(data)
 
         # Compare
         assert obj == restored_obj
