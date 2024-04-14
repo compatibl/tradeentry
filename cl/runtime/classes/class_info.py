@@ -52,22 +52,18 @@ class ClassInfo(ABC):
 
     @staticmethod
     @cached
-    def get_class_type(module_path: str, class_name: str) -> Type:
-        """Get class from module name and class name.
-
-        Args:
-            module_path: Dot-delimited Python module path.
-            class_name: Top-level class name without delimiters.
+    def get_class_type(class_path: str) -> Type:
+        """
+        Get class type from string in `module.ClassName` format, importing the module if necessary.
 
         Notes:
-            This method caches its return value and is only called once for each combination of arguments.
+            Return value is cached to increase performance.
+
+        Args:
+            class_path: String in module.ClassName format.
         """
 
-        if "." in class_name:
-            raise RuntimeError(
-                f"Class name {class_name} is dot-delimited. "
-                f"Only top-level class names without delimiter can be stored."
-            )
+        module_path, class_name = ClassInfo.split_class_path(class_path)
 
         # Check that the module exists and is fully initialized
         module = sys.modules.get(module_path)
@@ -193,12 +189,27 @@ class ClassInfo(ABC):
             )
 
     @staticmethod
-    def from_dict(cls, data: Dict[str, Any]) -> Any:
+    def from_dict(data: Dict[str, Any]) -> Any:
         """Create an instance of cls from dictionary containing other dictionaries, lists and primitive types."""
+
+        class_str = data.get("_class")
+        if class_str is not None:
+            class_type = ClassInfo.get_class_type(class_str)
+        else:
+            raise RuntimeError("Serialized record must include field `_class` containing "
+                               "fully qualified class name in `module.ClassName` format.")
+
+        result = ClassInfo._deserialize(class_type, data)
+        return result
+
+    @staticmethod
+    def _deserialize(class_type: Type, data: Dict[str, Any]) -> Any:
+        """Create an instance of cls from dictionary containing other dictionaries, lists and primitive types."""
+
         if isinstance(data, dict):
-            field_types = get_type_hints(cls)
-            return cls(**{k: ClassInfo.from_dict(field_types[k], v) for k, v in data.items()})
+            field_types = get_type_hints(class_type)
+            return class_type(**{k: ClassInfo._deserialize(field_types[k], v) for k, v in data.items()})
         elif isinstance(data, list):
-            return [ClassInfo.from_dict(cls.__args__[0], item) for item in data]
+            return [ClassInfo.from_dict(class_type.__args__[0], item) for item in data]
         else:
             return data
