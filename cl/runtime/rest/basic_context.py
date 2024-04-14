@@ -16,7 +16,7 @@ from __future__ import annotations
 
 from logging import Logger
 from typing import List
-from cl.runtime import DataSource
+from cl.runtime.storage.data_source import DataSource
 from cl.runtime.rest.context import Context
 from cl.runtime.rest.progress import Progress
 

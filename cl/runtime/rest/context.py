@@ -15,12 +15,10 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
 from logging import Logger
-from typing import Optional, List
-from cl.runtime import DataSource
+from typing import List
+from cl.runtime.storage.data_source import DataSource
 from cl.runtime.rest.progress import Progress
-from cl.runtime.storage.dataset_util import DatasetUtil
 
 
 class Context(ABC):

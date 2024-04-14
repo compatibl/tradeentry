@@ -4,7 +4,7 @@ from cl.runtime.classes.data_mixin import DataMixin
 from cl.runtime.classes.key_mixin import KeyMixin
 from cl.runtime.classes.record_mixin import RecordMixin
 from cl.runtime.classes.attrs_util import data_class, data_field
-from cl.runtime.classes.record_util import ClassInfo
+from cl.runtime.classes.class_info import ClassInfo
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.rest.context import Context
 from cl.runtime.rest.basic_context import BasicContext
