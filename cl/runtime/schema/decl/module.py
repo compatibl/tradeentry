@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from abc import ABC
-from cl.runtime import RecordMixin
+from cl.runtime.classes.record_mixin import RecordMixin
 from cl.runtime.schema.decl.module_key import ModuleKey
 from cl.runtime.schema.decl.package_key import PackageKey
 from cl.runtime.classes.attrs_util import data_class

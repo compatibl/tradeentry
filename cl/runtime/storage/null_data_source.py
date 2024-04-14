@@ -12,9 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime import KeyMixin
-from cl.runtime import data_class
-from cl.runtime import data_field
+from dataclasses import dataclass
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.classes.record_mixin import RecordMixin
 from typing import Iterable
@@ -26,7 +24,7 @@ TKey = TypeVar("TKey", contravariant=True)
 TRecord = TypeVar("TRecord", covariant=True)
 
 
-@data_class
+@dataclass(slots=True, init=True, frozen=True)
 class NullDataSource(DataSource):
     """Null data source discards the data written into it, and returns no data."""
 

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime import RecordMixin
+from cl.runtime.classes.record_mixin import RecordMixin
 from cl.runtime.schema.decl.language_key import LanguageKey
 from cl.runtime.classes.attrs_util import data_class
 from cl.runtime.classes.attrs_util import data_field
