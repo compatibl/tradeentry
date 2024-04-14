@@ -15,8 +15,13 @@
 from __future__ import annotations
 
 from abc import ABC
+from typing import Dict, Any, Iterable, List
+
 from cl.runtime.classes.data_mixin import DataMixin
 from typing_extensions import Self
+
+from cl.runtime.classes.record_mixin import RecordMixin
+from cl.runtime.rest.context import Context
 
 
 class KeyMixin(DataMixin, ABC):
@@ -60,6 +65,13 @@ class KeyMixin(DataMixin, ABC):
             f"is neither implemented in code nor by a decorator."
         )
 
+    def dict_key(self) -> Dict[str, Any]:
+        """Return key as a dict of primary key fields."""
+        raise RuntimeError(
+            f"Method dict_key() for class {type(self).__name__} in module {type(self).__module__} "
+            f"is neither implemented in code nor by a decorator."
+        )
+
     def get_generic_key(self) -> str:
         """
         Generic key string defines both the table and the record within the table. It consists of the
@@ -83,3 +95,82 @@ class KeyMixin(DataMixin, ABC):
         Data source implementation must use get_key() method instead.
         """
         return self.get_key()
+
+    @classmethod
+    def load_many(
+            cls,
+            records_or_keys: List[Self | str | None],
+            dataset: List[str] | str | None = None,
+            *,
+            context: Context = None
+    ) -> List[Self | None]:
+        """
+        Load serialized records from a single table using a list of keys.
+        If a record is passed instead of a key, the record is returned without data source lookup.
+
+        Returns:
+            Iterable of records with the same length and in the same order as the list of keys.
+            A result element is None if the record is not found or the key is None.
+
+        Args:
+            records_or_keys: Each element is a record, key, semicolon-delimited string, or None.
+            dataset: List of datasets in lookup order, single dataset, or None for root dataset.
+            context: Optional context, if None current context will be used
+        """
+
+        key_class_name = cls.__name__
+        if key_class_name.endswith("Key"):
+            table = key_class_name.removesuffix("Key")
+        else:
+            raise RuntimeError(f"An implementation of `load_many` for key classes was called "
+                               f"for class {key_class_name} whose name does not end with `Key`.")
+
+        context = Context.current() if context is not None else context
+        data_source = context.data_source()
+
+        # Check for the presence of unrelated types
+        unrelated = [x for x in records_or_keys if not (isinstance(x, cls) or isinstance(x, str) or x is None)]
+        if unrelated:
+            raise RuntimeError(f"Unrelated type `{type(unrelated[0])}` is passed to `load_many` "
+                               f"method for key class `{cls.__name__}`.")
+
+        # Keys are strings or have the exact type cls (any derived type is assumed to be a record).
+        # Because other elements are excluded, the resulting array may have smaller size than `records_or_keys`
+        keys = [x for x in records_or_keys if x is not None and (isinstance(x, str) or type(x) is cls)]
+
+        # Convert keys to the required format
+        key_kind = data_source.key_kind()
+        if key_kind == 'dict':
+            # Required key format is dict
+            keys = [k if not isinstance(k, str) else k.dict_key() for k in keys]
+        elif key_kind == 'str':
+            # Required key format is str
+            keys = [k if isinstance(k, str) else k.str_key() for k in keys]
+        else:
+            raise RuntimeError(f"Key kind `{key_kind}` in data source `{data_source.data_source_id}` is not supported.")
+
+        # Populate with records or strings first
+        records = [
+            x if x is None or isinstance(x, str) or (isinstance(x, cls) and type(x) is not cls) else x.str_key()
+            for x in records_or_keys
+        ]
+
+        # Each lookup must not exceed data source batch size
+        loaded_records = {}
+        keys_size = len(keys)
+        batch_size = data_source.batch_size()
+        batches = [keys[i:i + batch_size] for i in range(0, keys_size, batch_size)]
+        for batch_keys in batches:
+
+            # Get unordered list of serialized records in dict format
+            batch_dicts = data_source.load_unordered(table, batch_keys, dataset)
+
+            # Create classes from serialized dicts
+            batch_records: List[Self] = []
+
+            # Add classes to dict
+            loaded_records.update({x.str_key(): x for x in batch_records})
+
+        # Replace string elements by lookup from `loaded_records`, default to None if not found
+        result = [loaded_records.get(x, None) if isinstance(x, str) else x for x in records]
+        return result
