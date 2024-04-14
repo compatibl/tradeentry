@@ -14,37 +14,51 @@
 
 from abc import ABC
 from abc import abstractmethod
-from cl.runtime.classes.attrs import data_class
-from cl.runtime.storage.data_source_key import DataSourceKey
-from cl.runtime.classes.record_mixin import RecordMixin
-from typing import Any
+from collections import OrderedDict
+from dataclasses import dataclass
+from typing import Any, Literal
 from typing import Dict
 from typing import Iterable
 from typing import List
 
 
-@data_class
-class DataSource(DataSourceKey, RecordMixin, ABC):
+@dataclass(slots=True, init=True, frozen=True)
+class DataSource(ABC):
     """Abstract base class for polymorphic data storage with dataset isolation."""
 
+    data_source_id: str
+    """Unique data source identifier."""
+
     @abstractmethod
-    def load_many(
+    def key_kind(self) -> Literal['dict', 'str']:
+        """Return `dict` if the data source accepts dict key and `str` if it accepts string key."""
+
+    @abstractmethod
+    def batch_size(self) -> int:
+        """Maximum number or records the data source can return in a single call, error if exceeded."""
+
+    @abstractmethod
+    def load_unordered(
         self,
         table: str,
-        keys: Iterable[Dict[str, Any] | str | None],
+        keys: Iterable[Dict[str, Any]] | Iterable[str],
         dataset: List[str] | str | None = None,
     ) -> Iterable[Dict[str, Any] | None]:
         """
-        Load serialized records from a single table using a list of keys.
+        Return serialized records in arbitrary order, skipping records that are not found.
+
+        Notes:
+            - For `dict` key kind, keys are dicts with primary key fields.
+            - For `str` key kind, keys are strings in semicolon-delimited format.
+            - Keys cannot be None or empty dicts or strings
+            - Error if keys size exceeds batch size.
         
         Returns:
-            Iterable with the same length and in the same order as the list of keys containing dicts.
-            where each level is a supported primitive type, list, or another dict.
-            A result element is None if the record is not found or the key is None.
+            Iterable with serialized records  where each level is a supported primitive type, list, or another dict.
 
         Args:
             table: Table from which the records will be loaded.
-            keys: Each element is either a dictionary of primary key fields or semicolon-delimited string.
+            keys: Iterable of dict or string keys.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
         """
 
