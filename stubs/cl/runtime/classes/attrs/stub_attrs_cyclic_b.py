@@ -14,8 +14,8 @@
 
 from __future__ import annotations
 
-from cl.runtime.classes.attrs import data_class
-from cl.runtime.classes.attrs import data_field
+from cl.runtime.classes.attrs_util import data_class
+from cl.runtime.classes.attrs_util import data_field
 from cl.runtime.classes.data_mixin import DataMixin
 from typing import TYPE_CHECKING
 from typing import Union

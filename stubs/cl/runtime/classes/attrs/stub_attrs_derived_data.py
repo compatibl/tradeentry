@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.classes.attrs import data_class
-from cl.runtime.classes.attrs import data_field
+from cl.runtime.classes.attrs_util import data_class
+from cl.runtime.classes.attrs_util import data_field
 from stubs.cl.runtime.classes.attrs.stub_attrs_data import StubAttrsData
 from typing import Optional
 

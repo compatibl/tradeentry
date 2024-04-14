@@ -14,8 +14,8 @@
 
 from cl.runtime.schema.decl.package_dependency import PackageDependency
 from cl.runtime.schema.decl.package_key import PackageKey
-from cl.runtime.classes.attrs import data_class
-from cl.runtime.classes.attrs import data_field
+from cl.runtime.classes.attrs_util import data_class
+from cl.runtime.classes.attrs_util import data_field
 from cl.runtime.classes.record_mixin import RecordMixin
 from typing import List
 from typing import Optional

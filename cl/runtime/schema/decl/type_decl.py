@@ -21,8 +21,8 @@ from cl.runtime.schema.decl.type_element_decl import TypeElementDecl
 from cl.runtime.schema.decl.type_index_decl import TypeIndexDecl
 from cl.runtime.schema.decl.type_kind import TypeKind
 from cl.runtime.schema.decl.type_param_decl import TypeParamDecl
-from cl.runtime.classes.attrs import data_class
-from cl.runtime.classes.attrs import data_field
+from cl.runtime.classes.attrs_util import data_class
+from cl.runtime.classes.attrs_util import data_field
 from cl.runtime.classes.record_mixin import RecordMixin
 from typing import List
 from typing import Optional

@@ -14,8 +14,8 @@
 
 from cl.runtime import RecordMixin
 from cl.runtime.schema.decl.language_key import LanguageKey
-from cl.runtime.classes.attrs import data_class
-from cl.runtime.classes.attrs import data_field
+from cl.runtime.classes.attrs_util import data_class
+from cl.runtime.classes.attrs_util import data_field
 from typing import Optional
 from typing import final
 

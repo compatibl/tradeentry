@@ -14,8 +14,8 @@
 
 from cl.runtime.schema.decl.element_modification_type import ElementModificationType
 from cl.runtime.schema.decl.type_member_decl import TypeMemberDecl
-from cl.runtime.classes.attrs import data_class
-from cl.runtime.classes.attrs import data_field
+from cl.runtime.classes.attrs_util import data_class
+from cl.runtime.classes.attrs_util import data_field
 from typing import List
 from typing import Optional
 

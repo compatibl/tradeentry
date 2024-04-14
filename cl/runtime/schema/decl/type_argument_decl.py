@@ -13,8 +13,8 @@
 # limitations under the License.
 
 from cl.runtime.schema.decl.type_member_decl import TypeMemberDecl
-from cl.runtime.classes.attrs import data_class
-from cl.runtime.classes.attrs import data_field
+from cl.runtime.classes.attrs_util import data_class
+from cl.runtime.classes.attrs_util import data_field
 
 
 @data_class

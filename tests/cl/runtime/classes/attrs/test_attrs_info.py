@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime import RecordUtil
+from cl.runtime import ClassInfo
 from stubs.cl.runtime import StubAttrsCyclicA
 from stubs.cl.runtime import StubAttrsCyclicB
 from stubs.cl.runtime import StubAttrsData
@@ -42,11 +42,11 @@ def test_get_class_path():
 
     # Base class
     base_path = f"{StubAttrsRecord.__module__}.{StubAttrsRecord.__name__}"
-    assert RecordUtil.get_class_path(StubAttrsRecord) == base_path
+    assert ClassInfo.get_class_path(StubAttrsRecord) == base_path
 
     # Derived class
     derived_path = f"{StubAttrsDerivedRecord.__module__}.{StubAttrsDerivedRecord.__name__}"
-    assert RecordUtil.get_class_path(StubAttrsDerivedRecord) == derived_path
+    assert ClassInfo.get_class_path(StubAttrsDerivedRecord) == derived_path
 
 
 def test_split_class_path():
@@ -55,43 +55,43 @@ def test_split_class_path():
     # Base class
     base_path = f"{StubAttrsRecord.__module__}.{StubAttrsRecord.__name__}"
     base_result = StubAttrsRecord.__module__, StubAttrsRecord.__name__
-    assert RecordUtil.split_class_path(base_path) == base_result
+    assert ClassInfo.split_class_path(base_path) == base_result
 
     # Derived class
     derived_path = f"{StubAttrsDerivedRecord.__module__}.{StubAttrsDerivedRecord.__name__}"
     derived_result = StubAttrsDerivedRecord.__module__, StubAttrsDerivedRecord.__name__
-    assert RecordUtil.split_class_path(derived_path) == derived_result
+    assert ClassInfo.split_class_path(derived_path) == derived_result
 
 
 def test_get_class_type():
     """Test getting class from module and class strings."""
 
     # Class that is already imported
-    assert RecordUtil.get_class_type(RecordUtil.__module__, RecordUtil.__name__) == RecordUtil
+    assert ClassInfo.get_class_type(ClassInfo.__module__, ClassInfo.__name__) == ClassInfo
 
     # Class that is dynamically imported on demand
     do_no_import_module_name = "stubs.cl.runtime.classes.attrs.stub_attrs_do_not_import"
     do_no_import_class_name = "StubAttrsDoNotImport"
-    do_no_import_class = RecordUtil.get_class_type(do_no_import_module_name, do_no_import_class_name)
+    do_no_import_class = ClassInfo.get_class_type(do_no_import_module_name, do_no_import_class_name)
     assert do_no_import_class.__module__ == do_no_import_module_name
     assert do_no_import_class.__name__ == do_no_import_class_name
 
     # Module does not exist error
     unknown_name = "aBcDeF"
     with pytest.raises(RuntimeError):
-        RecordUtil.get_class_type(unknown_name, do_no_import_class_name)
+        ClassInfo.get_class_type(unknown_name, do_no_import_class_name)
 
     # Class does not exist error
     with pytest.raises(RuntimeError):
-        RecordUtil.get_class_type(do_no_import_module_name, unknown_name)
+        ClassInfo.get_class_type(do_no_import_module_name, unknown_name)
 
     # Dot-delimited class name error
     with pytest.raises(RuntimeError):
-        RecordUtil.get_class_type(do_no_import_module_name, "a.b")
+        ClassInfo.get_class_type(do_no_import_module_name, "a.b")
 
     # Call one more time and confirm that method results are cached
-    assert RecordUtil.get_class_type(RecordUtil.__module__, RecordUtil.__name__) == RecordUtil
-    assert RecordUtil.get_class_type.cache_info().hits > 0
+    assert ClassInfo.get_class_type(ClassInfo.__module__, ClassInfo.__name__) == ClassInfo
+    assert ClassInfo.get_class_type.cache_info().hits > 0
 
 
 def test_get_inheritance_chain():
@@ -102,42 +102,42 @@ def test_get_inheritance_chain():
     derived_class = "StubAttrsDerivedRecord"
 
     # Key class, returns self
-    assert RecordUtil.get_inheritance_chain(StubAttrsRecordKey) == [key_class]
+    assert ClassInfo.get_inheritance_chain(StubAttrsRecordKey) == [key_class]
 
     # Common base class, returns self and key class
-    assert RecordUtil.get_inheritance_chain(StubAttrsRecord) == [base_class, key_class]
+    assert ClassInfo.get_inheritance_chain(StubAttrsRecord) == [base_class, key_class]
 
     # Derived class, returns self, common base and key
-    assert RecordUtil.get_inheritance_chain(StubAttrsDerivedRecord) == [derived_class, base_class, key_class]
+    assert ClassInfo.get_inheritance_chain(StubAttrsDerivedRecord) == [derived_class, base_class, key_class]
 
     # Invoke for a type that does not have a key class
     with pytest.raises(RuntimeError):
-        RecordUtil.get_inheritance_chain(StubAttrsData)
+        ClassInfo.get_inheritance_chain(StubAttrsData)
 
     # Call one more time and confirm that method results are cached
-    assert RecordUtil.get_inheritance_chain(StubAttrsRecord) == [base_class, key_class]
-    assert RecordUtil.get_inheritance_chain.cache_info().hits > 0
+    assert ClassInfo.get_inheritance_chain(StubAttrsRecord) == [base_class, key_class]
+    assert ClassInfo.get_inheritance_chain.cache_info().hits > 0
 
 
 def test_get_table():
     """Test getting table name from class."""
 
     # Key class
-    assert RecordUtil.get_table(StubAttrsRecordKey) == "StubAttrsRecord"
+    assert ClassInfo.get_table(StubAttrsRecordKey) == "StubAttrsRecord"
 
     # Common base class
-    assert RecordUtil.get_table(StubAttrsRecord) == "StubAttrsRecord"
+    assert ClassInfo.get_table(StubAttrsRecord) == "StubAttrsRecord"
 
     # Derived class
-    assert RecordUtil.get_table(StubAttrsDerivedRecord) == "StubAttrsRecord"
+    assert ClassInfo.get_table(StubAttrsDerivedRecord) == "StubAttrsRecord"
 
     # Error if a type does not have key class
     with pytest.raises(RuntimeError):
-        RecordUtil.get_table(StubAttrsData)
+        ClassInfo.get_table(StubAttrsData)
 
     # Call one more time and confirm that method results are cached
-    assert RecordUtil.get_table(StubAttrsRecordKey) == "StubAttrsRecord"
-    assert RecordUtil.get_table.cache_info().hits > 0
+    assert ClassInfo.get_table(StubAttrsRecordKey) == "StubAttrsRecord"
+    assert ClassInfo.get_table.cache_info().hits > 0
 
 
 def test_to_from_dict():
@@ -174,10 +174,10 @@ def test_to_from_dict():
         obj = stub_type()
 
         # Serialize to dict
-        data = RecordUtil.to_dict(obj)
+        data = ClassInfo.to_dict(obj)
 
         # Restore from dict
-        restored_obj = RecordUtil.from_dict(stub_type, data)
+        restored_obj = ClassInfo.from_dict(stub_type, data)
 
         # Compare
         assert obj == restored_obj

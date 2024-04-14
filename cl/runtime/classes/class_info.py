@@ -14,6 +14,7 @@
 
 import attrs
 import sys
+from abc import ABC
 from importlib import import_module
 from memoization import cached
 from typing import Any
@@ -24,7 +25,7 @@ from typing import Type
 from typing import get_type_hints
 
 
-class RecordUtil:
+class ClassInfo(ABC):
     """Helper methods for Record."""
 
     @staticmethod
@@ -137,7 +138,7 @@ class RecordUtil:
         """
 
         # The last element of inheritance chain is the key class
-        inheritance_chain = RecordUtil.get_inheritance_chain(cls)
+        inheritance_chain = ClassInfo.get_inheritance_chain(cls)
 
         # Remove Key suffix if present, otherwise return the original name
         result = inheritance_chain[-1].removesuffix("Key")
@@ -175,7 +176,7 @@ class RecordUtil:
         - Two primary key fields A and B: 'namespace.RecordType;A;B'
         - Two primary key fields 'A1;A2' and 'B': 'namespace.RecordType;A1;A2;B'
         """
-        return f"{RecordUtil.get_table(type(obj))};{RecordUtil.get_key(obj)}"
+        return f"{ClassInfo.get_table(type(obj))};{ClassInfo.get_key(obj)}"
 
     @staticmethod
     def to_dict(obj: Any) -> Dict[str, Any]:
@@ -196,8 +197,8 @@ class RecordUtil:
         """Create an instance of cls from dictionary containing other dictionaries, lists and primitive types."""
         if isinstance(data, dict):
             field_types = get_type_hints(cls)
-            return cls(**{k: RecordUtil.from_dict(field_types[k], v) for k, v in data.items()})
+            return cls(**{k: ClassInfo.from_dict(field_types[k], v) for k, v in data.items()})
         elif isinstance(data, list):
-            return [RecordUtil.from_dict(cls.__args__[0], item) for item in data]
+            return [ClassInfo.from_dict(cls.__args__[0], item) for item in data]
         else:
             return data

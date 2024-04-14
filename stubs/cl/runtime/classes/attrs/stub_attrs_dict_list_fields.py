@@ -13,8 +13,8 @@
 # limitations under the License.
 
 import datetime as dt
-from cl.runtime.classes.attrs import data_class
-from cl.runtime.classes.attrs import data_field
+from cl.runtime.classes.attrs_util import data_class
+from cl.runtime.classes.attrs_util import data_field
 from stubs.cl.runtime.classes.attrs.stub_attrs_data import StubAttrsData
 from stubs.cl.runtime.classes.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
 from stubs.cl.runtime.classes.attrs.stub_attrs_dict_fields import stub_attrs_data_dict_factory

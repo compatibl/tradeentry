@@ -13,8 +13,8 @@
 # limitations under the License.
 
 from cl.runtime.schema.type.type_decl_key import TypeDeclKey
-from cl.runtime.classes.attrs import data_class
-from cl.runtime.classes.attrs import data_field
+from cl.runtime.classes.attrs_util import data_class
+from cl.runtime.classes.attrs_util import data_field
 from cl.runtime.classes.record_mixin import RecordMixin
 
 

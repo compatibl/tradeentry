@@ -13,8 +13,8 @@
 # limitations under the License.
 
 from abc import ABC
-from cl.runtime.classes.attrs import data_class
-from cl.runtime.classes.attrs import data_field
+from cl.runtime.classes.attrs_util import data_class
+from cl.runtime.classes.attrs_util import data_field
 from cl.runtime.classes.record_mixin import RecordMixin
 from cl.runtime.view.view_key import ViewKey
 

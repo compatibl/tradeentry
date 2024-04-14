@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.classes.attrs import data_class
-from cl.runtime.classes.attrs import data_field
+from cl.runtime.classes.attrs_util import data_class
+from cl.runtime.classes.attrs_util import data_field
 from cl.runtime.classes.record_mixin import RecordMixin
-from cl.runtime.classes.record_util import RecordUtil
+from cl.runtime.classes.record_util import ClassInfo
 from copy import deepcopy
 from typing import Dict
 from typing import Iterable
@@ -99,9 +99,9 @@ class InProcessDataSource:
             # Create record instance and populate it from dictionary
             # Final type name is the last element of type discriminators list
             class_path = record_dict["_type"]
-            module_path, class_name = RecordUtil.split_class_path(class_path)
+            module_path, class_name = ClassInfo.split_class_path(class_path)
 
-            class_ = RecordUtil.get_class_type(module_path, class_name)
+            class_ = ClassInfo.get_class_type(module_path, class_name)
             record = class_.from_dict(record_dict)
 
             # Verify that the record has the same key as was passed to the load method
@@ -132,8 +132,8 @@ class InProcessDataSource:
 
             # Add the list of types from base to derived
             record_type = type(record)
-            record_dict["_type"] = RecordUtil.get_class_path(record_type)
-            record_dict["_chain"] = RecordUtil.get_inheritance_chain(record_type)
+            record_dict["_type"] = ClassInfo.get_class_path(record_type)
+            record_dict["_chain"] = ClassInfo.get_inheritance_chain(record_type)
 
             # Try to retrieve dataset dictionary, insert if it does not yet exist
             dataset_cache = self._cache.setdefault(dataset, {})
