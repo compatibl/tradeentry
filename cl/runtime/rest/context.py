@@ -26,12 +26,17 @@ from cl.runtime.storage.dataset_util import DatasetUtil
 class Context(ABC):
     """Provides logging, data source, dataset, and progress reporting."""
 
+    @staticmethod
+    def current() -> Context:
+        """Return current context, error message if not set."""
+        raise NotImplementedError()
+
     @abstractmethod
     def logger(self) -> Logger:
         """Return the context logger."""
 
     @abstractmethod
-    def data_source(self) -> DataSource | None:
+    def data_source(self) -> DataSource:
         """Return the context data source or None if not set."""
 
     @abstractmethod
@@ -43,7 +48,7 @@ class Context(ABC):
         """Return the context write dataset or None if not set."""
 
     @abstractmethod
-    def progress(self) -> Progress | None:
+    def progress(self) -> Progress:
         """Return the context progress or None if not set."""
 
     @abstractmethod

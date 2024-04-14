@@ -27,27 +27,27 @@ class BasicContext(Context):
     __slots__ = ["__logger", "__data_source", "__read_dataset", "__write_dataset", "__progress"]
 
     __logger: Logger
-    __data_source: DataSource | None
+    __data_source: DataSource
     __read_dataset: List[str] | str | None
     __write_dataset: str | None
-    __progress: Progress | None
+    __progress: Progress
 
     def __init__(
             self,
             *,
             logger: Logger,
-            data_source: DataSource | None = None,
+            data_source: DataSource,
             read_dataset: List[str] | str | None = None,
             write_dataset: str | None = None,
-            progress: Progress | None = None,
+            progress: Progress,
     ):
         """Normalize and validate inputs."""
 
-        self.__logger = logger  # Specify default logger
-        self.__data_source = data_source
+        self.__logger = logger  # Specify default
+        self.__data_source = data_source # Specify default
         self.__read_dataset = read_dataset
         self.__write_dataset = write_dataset
-        self.__progress = progress
+        self.__progress = progress # Specify default
 
     def logger(self) -> Logger:
         """Return the context logger."""
@@ -68,6 +68,7 @@ class BasicContext(Context):
     def progress(self) -> Progress | None:
         """Return the context progress or None if not set."""
         return self.__progress
+
     def with_params(
             self,
             *,
