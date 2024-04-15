@@ -17,13 +17,13 @@ import sys
 from abc import ABC
 from importlib import import_module
 from memoization import cached
-from typing import Any
+from typing import Any, TypeVar, Literal
 from typing import Dict
 from typing import List
 from typing import Tuple
 from typing import Type
 from typing import get_type_hints
-
+from cl.runtime.rest.context import Context
 
 class ClassInfo(ABC):
     """Helper methods for Record."""
@@ -202,6 +202,208 @@ class ClassInfo(ABC):
                                "fully qualified class name in `module.ClassName` format.")
 
         result = ClassInfo._deserialize(class_type, data)
+        return result
+
+    @staticmethod
+    def to_str_key(key_type: Type, record_or_key: Any) -> str | None:
+        """
+        Convert all key formats to semicolon-delimited string without table name.
+
+        Notes:
+            For composite keys, the embedded keys are concatenated in the order of their declaration without brackets:
+
+                - No primary key fields: '' (i.e. empty string)
+                - One primary key field A: 'A'
+                - Two primary key fields A and B: 'A;B'
+                - Two primary key fields 'A1;A2' and 'B': 'A1;A2;B'
+
+        Returns:
+            Key as string in semicolon-delimited string format without table name.
+
+        Args:
+            key_type: Type of the key class.
+            record_or_key: Record, key, dict, semicolon-delimited string, or None.
+        """
+        if record_or_key is None:
+            return None
+        elif isinstance(record_or_key, str):
+            return record_or_key
+        elif isinstance(record_or_key, dict):
+            field_types = get_type_hints(key_type)
+            if len(record_or_key) != len(field_types):
+                dict_keys = record_or_key.keys()
+                dict_keys_desc = ", ".join(f"`{dict_keys}`")
+                field_names = field_types.keys()
+                key_fields_desc = ", ".join(f"`{field_names}`")
+                raise RuntimeError(f"Dict key {record_or_key} has {len(dict_keys)} tokens for key type "
+                                   f"{key_type.__name__} which has {len(field_names)} fields. "
+                                   f"Dict keys: {dict_keys_desc}. Key fields: {key_fields_desc}.")
+            tokens = [record_or_key[x] for x in field_types]
+            result = ";".join(tokens)
+            return result
+        elif isinstance(record_or_key, key_type):
+            field_types = get_type_hints(key_type)
+            tokens = [str(getattr(record_or_key, x)) for x in field_types]
+            result = ";".join(tokens)
+            return result
+        else:
+            raise RuntimeError(
+                f"Cannot create string key for a record or key object because its type "
+                f"`{type(record_or_key).__name__}` is not derived from the specified key type `{key_type.__name__}`."
+            )
+
+    @staticmethod
+    def to_dict_key(key_type: Type, record_or_key: Any) -> Dict[str, Any] | None:
+        """
+        Convert all key formats to key dict.
+
+        Notes:
+            For composite keys, the embedded keys are represented as embedded dicts.
+
+        Returns:
+            Dict of key fields.
+
+        Args:
+            key_type: Type of key class.
+            record_or_key: Record, key, dict, semicolon-delimited string, or None.
+        """
+
+        if record_or_key is None:
+            return None
+        elif isinstance(record_or_key, str):
+            # Use field names as keys and tokens as values
+            field_types = get_type_hints(key_type)
+            field_names = field_types.keys()
+            tokens = record_or_key.split(";")
+            if len(tokens) != len(field_names):
+                key_fields_desc = ", ".join(f"`{field_names}`")
+                raise RuntimeError(f"String key `{record_or_key}` has {len(tokens)} tokens for key type "
+                                   f"`{key_type.__name__}` which has {len(field_names)} fields: {key_fields_desc}")
+            result = dict(zip(field_names, tokens))
+            return result
+        elif isinstance(record_or_key, dict):
+            # Create a copy
+            return dict(record_or_key)
+        elif isinstance(record_or_key, key_type):
+            field_types = get_type_hints(key_type)
+            result = {x: getattr(record_or_key, x) for x in field_types}
+            return result
+        else:
+            raise RuntimeError(
+                f"Cannot create dict key for a record or key object because its type "
+                f"`{type(record_or_key).__name__}` is not derived from the specified key type `{key_type.__name__}`."
+            )
+
+    @classmethod
+    def to_generic_key(cls: Type, record_or_key: Any) -> str | None:
+        """
+        Generic key string defines both the table and the record within the table. It consists of the
+        table name followed by the primary key in semicolon-delimited string format.
+
+        By convention, table name consists of a namespace (full package path or short alias) followed by
+        the class name of the common base to all classes stored in the table with dot delimiter:
+
+        - No primary key fields: 'namespace.RecordType'
+        - One primary key field A: 'namespace.RecordType;A'
+        - Two primary key fields A and B: 'namespace.RecordType;A;B'
+        - Two primary key fields 'A1;A2' and 'B': 'namespace.RecordType;A1;A2;B'
+        """
+        raise NotImplementedError()
+
+    def __str__(self) -> str:
+        """
+        Key as string in semicolon-delimited string format without table name.
+
+        Notes:
+            This method is for debugging purposes only and may be overridden in derived types. Do not use in code.
+        """
+        class_type = type(self)  # TODO: Support calling this method for types derived from key
+        return class_type.to_str_key(class_type, self)
+
+    @staticmethod
+    def load_many(
+            record_type: Type,
+            records_or_keys: List[Any] | None,
+            dataset: List[str] | str | None = None,
+            *,
+            context: Context = None
+    ) -> List[Any] | None:
+        """
+        Load serialized records from a single table using a list of keys.
+        If records are passed instead of keys, they are returned without data source lookup.
+
+        Returns:
+            Iterable of records with the same length and in the same order as the list of keys.
+            A result element is None if the record is not found or the key is None.
+
+        Args:
+            record_type: Type of the record class.
+            records_or_keys: Each element is a record, key object, key tuple, key string, or None.
+            dataset: List of datasets in lookup order, single dataset, or None for root dataset.
+            context: Optional context, if None current context will be used
+        """
+
+        # TODO: Does not yet support embedded keys
+
+        if records_or_keys is None or len(records_or_keys) == 0:
+            # If `records_or_keys` is None or has zero size, return None
+            return None
+
+        # Split into two lists, one with records specified as a parameter or None and the other with keys
+        param_records = [x is None or isinstance(x, record_type) for x in records_or_keys]
+        keys = [not (x is None or isinstance(x, record_type)) for x in records_or_keys]
+
+        if all(x is None for x in keys) == 0:
+            # If there are no keys, return `param_records` and stop further processing
+            return param_records
+
+        # Determine key type from record_type by searching MRO until a class with Key suffix is found
+        key_type = ClassInfo.get_key_type(record_type)
+
+        # Get data source from the current or specified context
+        context = Context.current() if context is not None else context
+        data_source = context.data_source()
+        required_format = data_source.key_format()
+
+        if required_format == "str":
+            # Data source expects string key format, convert
+            # TODO: Optimize
+            keys = [ClassInfo.to_str_key(key_type, x) for x in keys]
+        elif required_format == "tuple":
+            # Data source expects dict key format, convert
+            # TODO: Optimize
+            keys = [ClassInfo.to_tuple_key(key_type, x) for x in keys]
+        else:
+            # Should not happen, handling as a precaution
+            raise RuntimeError(f"Unknown required key format `{required_format}` "
+                               f"for data source `{data_source.data_source_id}`.")
+
+        # Determine table name from key_type by removing Key suffix if present
+        table = ClassInfo.get_table(key_type)
+
+        # List without elements that are None
+        loaded_keys = [x for x in keys if x is not None]
+
+        # Each lookup must not exceed data source batch size
+        batch_size = data_source.batch_size()
+        batches = [loaded_keys[i:i + batch_size] for i in range(0, len(loaded_keys), batch_size)]
+        loaded_records_dict = {}
+        for batch_keys in batches:
+
+            # Get unordered list of serialized record data
+            batch_data = data_source.load_unordered(table, batch_keys, dataset)
+
+            # Create classes from serialized data
+            batch_records_dict = [ClassInfo.from_dict(x) for x in batch_data]
+
+            # Accumulate in `all_records_dict`
+            loaded_records_dict.update(batch_records_dict)
+
+        # Replace keys by records, default to None if not found
+        loaded_records = [loaded_records_dict.get(x, None) if x is not None else None for x in keys]
+
+        # Collate with priority for the first list, however they should not overlap
+        result = [x if y is None else y for x, y in zip(param_records, loaded_records)]
         return result
 
     @staticmethod

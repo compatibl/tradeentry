@@ -12,7 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import annotations
 from abc import ABC
+from typing import List, Any
+from typing_extensions import Self
+from cl.runtime.classes.class_info import ClassInfo
+from cl.runtime.rest.context import Context
 
 
 class RecordMixin(ABC):
@@ -44,3 +49,26 @@ class RecordMixin(ABC):
 
         # Do nothing by default
         pass
+
+    @classmethod
+    def load_many(
+            cls: Self,
+            records_or_keys: List[Any | None] | None = None,
+            dataset: List[str] | str | None = None,
+            *,
+            context: Context = None
+    ) -> List[Self | None] | None:
+        """
+        Load serialized records from a single table using a list of keys.
+        If records are passed instead of keys, they are returned without data source lookup.
+
+        Returns:
+            Iterable of records with the same length and in the same order as the list of keys.
+            A result element is None if the record is not found or the key is None.
+
+        Args:
+            records_or_keys: Each element is a record, key, semicolon-delimited string, or None.
+            dataset: List of datasets in lookup order, single dataset, or None for root dataset.
+            context: Optional context, if None current context will be used
+        """
+        return ClassInfo.load_many(cls, records_or_keys, dataset, context=context)
