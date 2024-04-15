@@ -25,6 +25,7 @@ from typing import Type
 from typing import get_type_hints
 from cl.runtime.rest.context import Context
 
+
 class ClassInfo(ABC):
     """Helper methods for Record."""
 
@@ -87,7 +88,7 @@ class ClassInfo(ABC):
 
     @staticmethod
     @cached(custom_key_maker=lambda cls: f"{cls.__module__}.{cls.__name__}")
-    def get_inheritance_chain(cls: Type) -> List[str]:
+    def get_inheritance_chain(record_type: Type) -> List[str]:
         """
         Returns the list of fully qualified class names in MRO order starting from this class
         and ending with the class that has suffix Key. Exactly one class with suffix Key should
@@ -95,7 +96,7 @@ class ClassInfo(ABC):
         """
 
         # Get the list of classes in MRO
-        complete_mro = [f"{c.__module__}.{c.__name__}" for c in cls.mro()]
+        complete_mro = [f"{c.__module__}.{c.__name__}" for c in record_type.mro()]
 
         # Find classes whose name has Key suffix in MRO list
         key_class_indices = [index for index, string in enumerate(complete_mro) if string.endswith("Key")]
@@ -104,12 +105,12 @@ class ClassInfo(ABC):
         # Make sure there is only one such class in the inheritance chain
         if key_class_count == 0:
             raise RuntimeError(
-                f"Class {cls.__module__}.{cls.__name__} has no parent with suffix `Key`. "
+                f"Class {record_type.__module__}.{record_type.__name__} has no parent with suffix `Key`. "
                 "Add Key suffix to key class name or implement `KeyMixin` interface."
             )
         elif key_class_count > 1:
             raise RuntimeError(
-                f"Class {cls.__module__}.{cls.__name__} has more than one parent with suffix `Key`. "
+                f"Class {record_type.__module__}.{record_type.__name__} has more than one parent with suffix `Key`. "
                 "Ensure only one class has suffix `Key` or implement `KeyMixin` interface."
             )
 
@@ -120,6 +121,24 @@ class ClassInfo(ABC):
         # TODO: Add package aliases
         # Remove module from fully qualified names
         result = [name.split(".")[-1] for name in fully_qualified_names]
+
+        return result
+
+    @staticmethod
+    @cached(custom_key_maker=lambda cls: f"{cls.__module__}.{cls.__name__}")
+    def get_key_type(record_type: Type) -> str:
+        """
+        Name of the database table where records for this key is stored.
+
+        By convention, table name consists of a namespace (full package path or short alias)
+        followed by the dot delimiter and then the key class name without suffix Key.
+        """
+
+        # The last element of inheritance chain is the key class
+        inheritance_chain = ClassInfo.get_inheritance_chain(record_type)
+
+        # Remove Key suffix if present, otherwise return the original name
+        result = inheritance_chain[-1].removesuffix("Key")
 
         return result
 
@@ -205,55 +224,7 @@ class ClassInfo(ABC):
         return result
 
     @staticmethod
-    def to_str_key(key_type: Type, record_or_key: Any) -> str | None:
-        """
-        Convert all key formats to semicolon-delimited string without table name.
-
-        Notes:
-            For composite keys, the embedded keys are concatenated in the order of their declaration without brackets:
-
-                - No primary key fields: '' (i.e. empty string)
-                - One primary key field A: 'A'
-                - Two primary key fields A and B: 'A;B'
-                - Two primary key fields 'A1;A2' and 'B': 'A1;A2;B'
-
-        Returns:
-            Key as string in semicolon-delimited string format without table name.
-
-        Args:
-            key_type: Type of the key class.
-            record_or_key: Record, key, dict, semicolon-delimited string, or None.
-        """
-        if record_or_key is None:
-            return None
-        elif isinstance(record_or_key, str):
-            return record_or_key
-        elif isinstance(record_or_key, dict):
-            field_types = get_type_hints(key_type)
-            if len(record_or_key) != len(field_types):
-                dict_keys = record_or_key.keys()
-                dict_keys_desc = ", ".join(f"`{dict_keys}`")
-                field_names = field_types.keys()
-                key_fields_desc = ", ".join(f"`{field_names}`")
-                raise RuntimeError(f"Dict key {record_or_key} has {len(dict_keys)} tokens for key type "
-                                   f"{key_type.__name__} which has {len(field_names)} fields. "
-                                   f"Dict keys: {dict_keys_desc}. Key fields: {key_fields_desc}.")
-            tokens = [record_or_key[x] for x in field_types]
-            result = ";".join(tokens)
-            return result
-        elif isinstance(record_or_key, key_type):
-            field_types = get_type_hints(key_type)
-            tokens = [str(getattr(record_or_key, x)) for x in field_types]
-            result = ";".join(tokens)
-            return result
-        else:
-            raise RuntimeError(
-                f"Cannot create string key for a record or key object because its type "
-                f"`{type(record_or_key).__name__}` is not derived from the specified key type `{key_type.__name__}`."
-            )
-
-    @staticmethod
-    def to_dict_key(key_type: Type, record_or_key: Any) -> Dict[str, Any] | None:
+    def to_tuple_key(key_type: Type, record_or_key: Any) -> Tuple | None:
         """
         Convert all key formats to key dict.
 
@@ -267,35 +238,20 @@ class ClassInfo(ABC):
             key_type: Type of key class.
             record_or_key: Record, key, dict, semicolon-delimited string, or None.
         """
-
-        if record_or_key is None:
-            return None
-        elif isinstance(record_or_key, str):
-            # Use field names as keys and tokens as values
+        if record_or_key is None or isinstance(record_or_key, tuple):
+            return record_or_key
+        elif type(record_or_key) is key_type:
             field_types = get_type_hints(key_type)
-            field_names = field_types.keys()
-            tokens = record_or_key.split(";")
-            if len(tokens) != len(field_names):
-                key_fields_desc = ", ".join(f"`{field_names}`")
-                raise RuntimeError(f"String key `{record_or_key}` has {len(tokens)} tokens for key type "
-                                   f"`{key_type.__name__}` which has {len(field_names)} fields: {key_fields_desc}")
-            result = dict(zip(field_names, tokens))
-            return result
-        elif isinstance(record_or_key, dict):
-            # Create a copy
-            return dict(record_or_key)
-        elif isinstance(record_or_key, key_type):
-            field_types = get_type_hints(key_type)
-            result = {x: getattr(record_or_key, x) for x in field_types}
+            result = tuple(getattr(record_or_key, x) for x in field_types)
             return result
         else:
             raise RuntimeError(
-                f"Cannot create dict key for a record or key object because its type "
-                f"`{type(record_or_key).__name__}` is not derived from the specified key type `{key_type.__name__}`."
+                f"Cannot convert key object to tuple because its type `{type(record_or_key).__name__}` "
+                f"is not the same as key type `{key_type.__name__}`."
             )
 
-    @classmethod
-    def to_generic_key(cls: Type, record_or_key: Any) -> str | None:
+    @staticmethod
+    def to_generic_key(key_type: Type, record_or_key: Any) -> Tuple | None:
         """
         Generic key string defines both the table and the record within the table. It consists of the
         table name followed by the primary key in semicolon-delimited string format.
@@ -309,16 +265,6 @@ class ClassInfo(ABC):
         - Two primary key fields 'A1;A2' and 'B': 'namespace.RecordType;A1;A2;B'
         """
         raise NotImplementedError()
-
-    def __str__(self) -> str:
-        """
-        Key as string in semicolon-delimited string format without table name.
-
-        Notes:
-            This method is for debugging purposes only and may be overridden in derived types. Do not use in code.
-        """
-        class_type = type(self)  # TODO: Support calling this method for types derived from key
-        return class_type.to_str_key(class_type, self)
 
     @staticmethod
     def load_many(
@@ -338,7 +284,7 @@ class ClassInfo(ABC):
 
         Args:
             record_type: Type of the record class.
-            records_or_keys: Each element is a record, key object, key tuple, key string, or None.
+            records_or_keys: Each element is a record, key object, key tuple, or None.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
             context: Optional context, if None current context will be used
         """
@@ -349,7 +295,7 @@ class ClassInfo(ABC):
             # If `records_or_keys` is None or has zero size, return None
             return None
 
-        # Split into two lists, one with records specified as a parameter or None and the other with keys
+        # Split into two lists, one with records which also includes None and the other with keys
         param_records = [x is None or isinstance(x, record_type) for x in records_or_keys]
         keys = [not (x is None or isinstance(x, record_type)) for x in records_or_keys]
 
@@ -363,20 +309,9 @@ class ClassInfo(ABC):
         # Get data source from the current or specified context
         context = Context.current() if context is not None else context
         data_source = context.data_source()
-        required_format = data_source.key_format()
 
-        if required_format == "str":
-            # Data source expects string key format, convert
-            # TODO: Optimize
-            keys = [ClassInfo.to_str_key(key_type, x) for x in keys]
-        elif required_format == "tuple":
-            # Data source expects dict key format, convert
-            # TODO: Optimize
-            keys = [ClassInfo.to_tuple_key(key_type, x) for x in keys]
-        else:
-            # Should not happen, handling as a precaution
-            raise RuntimeError(f"Unknown required key format `{required_format}` "
-                               f"for data source `{data_source.data_source_id}`.")
+        # Convert key objects to key tuples
+        keys = [ClassInfo.to_tuple_key(key_type, x) for x in keys]
 
         # Determine table name from key_type by removing Key suffix if present
         table = ClassInfo.get_table(key_type)

@@ -24,8 +24,8 @@ def test_smoke():
     key_1 = StubAttrsRecordKey(str_field="A", int_field=0)
     key_2 = StubAttrsRecordKey(str_field="B", int_field=0)
 
-    assert "A;0" == StubAttrsRecordKey.to_str_key(StubAttrsRecordKey, key_1)
-    assert "B;0" == StubAttrsRecordKey.to_str_key(StubAttrsRecordKey, key_2)
+    assert "A;0" == str(key_1)
+    assert "B;0" == str(key_2)
 
 
 def test_composite_key():

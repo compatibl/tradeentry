@@ -16,7 +16,7 @@ from abc import ABC
 from abc import abstractmethod
 from collections import OrderedDict
 from dataclasses import dataclass
-from typing import Any, Literal
+from typing import Any, Literal, Tuple
 from typing import Dict
 from typing import Iterable
 from typing import List
@@ -30,10 +30,6 @@ class DataSource(ABC):
     """Unique data source identifier."""
 
     @abstractmethod
-    def key_format(self) -> Literal['dict', 'str']:
-        """Return `dict` if the data source accepts dict key and `str` if it accepts string key."""
-
-    @abstractmethod
     def batch_size(self) -> int:
         """Maximum number or records the data source can return in a single call, error if exceeded."""
 
@@ -41,7 +37,7 @@ class DataSource(ABC):
     def load_unordered(
         self,
         table: str,
-        keys: Iterable[Dict[str, Any]] | Iterable[str],
+        keys: Iterable[Tuple],
         dataset: List[str] | str | None = None,
     ) -> Iterable[Dict[str, Any] | None]:
         """
@@ -58,7 +54,7 @@ class DataSource(ABC):
 
         Args:
             table: Table from which the records will be loaded.
-            keys: Iterable of dict or string keys.
+            keys: Iterable of key tuples in declaration order.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
         """
 
@@ -103,7 +99,7 @@ class DataSource(ABC):
     def delete_many(
         self,
         table: str,
-        keys: Iterable[Dict[str, Any] | str],
+        keys: Iterable[Tuple],
         dataset: List[str] | str | None = None,
     ) -> None:
         """

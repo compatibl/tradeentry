@@ -70,11 +70,7 @@ class KeyMixin(DataMixin, ABC):
         raise NotImplementedError()
 
     def __str__(self) -> str:
-        """
-        Key as string in semicolon-delimited string format without table name.
-
-        Notes:
-            This method is for debugging purposes only and may be overridden in derived types. Do not use in code.
-        """
+        """Key as string in semicolon-delimited string format without table name."""
         class_type = type(self)  # TODO: Support calling this method for types derived from key
-        return ClassInfo.to_str_key(class_type, class_type, self)
+        tuple_key = class_type.to_tuple_key(class_type, self)
+        return ";".join(tuple_key)
