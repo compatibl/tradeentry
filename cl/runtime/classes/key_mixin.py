@@ -71,6 +71,10 @@ class KeyMixin(DataMixin, ABC):
 
     def __str__(self) -> str:
         """Key as string in semicolon-delimited string format without table name."""
-        class_type = type(self)  # TODO: Support calling this method for types derived from key
-        tuple_key = class_type.to_tuple_key(class_type, self)
-        return ";".join(tuple_key)
+
+        # TODO: Support calling this method for types derived from key
+        class_type = type(self)
+
+        # TODO - leaves embedded key an object instead of converting to tuple
+        tuple_key = ClassInfo.to_tuple_key(class_type, self)
+        return ";".join(str(x) for x in tuple_key)

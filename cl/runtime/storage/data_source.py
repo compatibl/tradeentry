@@ -39,7 +39,7 @@ class DataSource(ABC):
         table: str,
         keys: Iterable[Tuple],
         dataset: List[str] | str | None = None,
-    ) -> Iterable[Dict[str, Any] | None]:
+    ) -> Iterable[Dict[Tuple, Any] | None]:
         """
         Return serialized records in arbitrary order, skipping records that are not found.
 

@@ -52,8 +52,8 @@ class RecordMixin(ABC):
 
     @classmethod
     def load_many(
-            cls: Self,
-            records_or_keys: List[Any | None] | None = None,
+            cls,
+            records_or_keys: List[Any] | None = None,
             dataset: List[str] | str | None = None,
             *,
             context: Context = None
