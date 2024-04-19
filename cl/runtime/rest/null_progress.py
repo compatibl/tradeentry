@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from cl.runtime.rest.progress import Progress
 
-class Progress:
-    """Use for progress reporting."""
+
+class NullProgress(Progress):
+    """Receives and discards progress reporting."""
