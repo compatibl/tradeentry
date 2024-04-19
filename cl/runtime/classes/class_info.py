@@ -17,13 +17,12 @@ import sys
 from abc import ABC
 from importlib import import_module
 from memoization import cached
-from typing import Any, TypeVar, Literal
+from typing import Any
 from typing import Dict
 from typing import List
 from typing import Tuple
 from typing import Type
 from typing import get_type_hints
-from cl.runtime.rest.context import Context
 
 
 class ClassInfo(ABC):
@@ -87,7 +86,7 @@ class ClassInfo(ABC):
             raise RuntimeError(f"Module {module_path} does not contain top-level class {class_name}.")
 
     @staticmethod
-    @cached(custom_key_maker=lambda cls: f"{cls.__module__}.{cls.__name__}")
+    @cached(custom_key_maker=lambda record_type: f"{record_type.__module__}.{record_type.__name__}")
     def get_inheritance_chain(record_type: Type) -> List[str]:
         """
         Returns the list of fully qualified class names in MRO order starting from this class
@@ -125,7 +124,7 @@ class ClassInfo(ABC):
         return result
 
     @staticmethod
-    @cached(custom_key_maker=lambda cls: f"{cls.__module__}.{cls.__name__}")
+    @cached(custom_key_maker=lambda record_type: f"{record_type.__module__}.{record_type.__name__}")
     def get_key_type(record_type: Type) -> str:
         """
         Name of the database table where records for this key is stored.
@@ -143,8 +142,8 @@ class ClassInfo(ABC):
         return result
 
     @staticmethod
-    @cached(custom_key_maker=lambda cls: f"{cls.__module__}.{cls.__name__}")
-    def get_table(cls: Type) -> str:
+    @cached(custom_key_maker=lambda record_type: f"{record_type.__module__}.{record_type.__name__}")
+    def get_table(record_type: Type) -> str:
         """
         Name of the database table where records for this key is stored.
 
@@ -153,7 +152,7 @@ class ClassInfo(ABC):
         """
 
         # The last element of inheritance chain is the key class
-        inheritance_chain = ClassInfo.get_inheritance_chain(cls)
+        inheritance_chain = ClassInfo.get_inheritance_chain(record_type)
 
         # Remove Key suffix if present, otherwise return the original name
         result = inheritance_chain[-1].removesuffix("Key")
@@ -265,81 +264,6 @@ class ClassInfo(ABC):
         - Two primary key fields 'A1;A2' and 'B': 'namespace.RecordType;A1;A2;B'
         """
         raise NotImplementedError()
-
-    @staticmethod
-    def load_many(
-            record_type: Type,
-            records_or_keys: List[Any] | None,
-            dataset: List[str] | str | None = None,
-            *,
-            context: Context = None
-    ) -> List[Any] | None:
-        """
-        Load serialized records from a single table using a list of keys.
-        If records are passed instead of keys, they are returned without data source lookup.
-
-        Returns:
-            Iterable of records with the same length and in the same order as the list of keys.
-            A result element is None if the record is not found or the key is None.
-
-        Args:
-            record_type: Type of the record class.
-            records_or_keys: Each element is a record, key object, key tuple, or None.
-            dataset: List of datasets in lookup order, single dataset, or None for root dataset.
-            context: Optional context, if None current context will be used
-        """
-
-        # TODO: Does not yet support embedded keys
-
-        if records_or_keys is None or len(records_or_keys) == 0:
-            # If `records_or_keys` is None or has zero size, return None
-            return None
-
-        # Split into two lists, one with records which also includes None and the other with keys
-        param_records = [x is None or isinstance(x, record_type) for x in records_or_keys]
-        keys = [not (x is None or isinstance(x, record_type)) for x in records_or_keys]
-
-        if all(x is None for x in keys) == 0:
-            # If there are no keys, return `param_records` and stop further processing
-            return param_records
-
-        # Determine key type from record_type by searching MRO until a class with Key suffix is found
-        key_type = ClassInfo.get_key_type(record_type)
-
-        # Get data source from the current or specified context
-        context = Context.current() if context is not None else context
-        data_source = context.data_source()
-
-        # Convert key objects to key tuples
-        keys = [ClassInfo.to_tuple_key(key_type, x) for x in keys]
-
-        # Determine table name from key_type by removing Key suffix if present
-        table = ClassInfo.get_table(key_type)
-
-        # List without elements that are None
-        loaded_keys = [x for x in keys if x is not None]
-
-        # Each lookup must not exceed data source batch size
-        batch_size = data_source.batch_size()
-        batches = [loaded_keys[i:i + batch_size] for i in range(0, len(loaded_keys), batch_size)]
-        loaded_records_dict = {}
-        for batch_keys in batches:
-
-            # Get unordered list of serialized record data
-            batch_data = data_source.load_unordered(table, batch_keys, dataset)
-
-            # Create classes from serialized data
-            batch_records_dict = [ClassInfo.from_dict(x) for x in batch_data]
-
-            # Accumulate in `all_records_dict`
-            loaded_records_dict.update(batch_records_dict)
-
-        # Replace keys by records, default to None if not found
-        loaded_records = [loaded_records_dict.get(x, None) if x is not None else None for x in keys]
-
-        # Collate with priority for the first list, however they should not overlap
-        result = [x if y is None else y for x, y in zip(param_records, loaded_records)]
-        return result
 
     @staticmethod
     def _deserialize(class_type: Type, data: Dict[str, Any]) -> Any:
