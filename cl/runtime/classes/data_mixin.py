@@ -12,10 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
+import dataclasses
+from abc import ABC, abstractmethod
 from typing import Any
 from typing import Dict
 from typing_extensions import Self
+
+from cl.runtime.classes.class_info import ClassInfo
 
 
 class DataMixin(ABC):
@@ -32,6 +35,11 @@ class DataMixin(ABC):
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize to dictionary containing other dictionaries, lists and primitive types."""
+        type_ = type(self)
+        if dataclasses.is_dataclass(type_):
+            result = dataclasses.asdict(self)  # noqa
+            result["_class"] = f"{type_.__module__}.{type_.__name__}"
+            return result
         raise RuntimeError(
             f"Method to_dict() for class {type(self).__name__} in module {type(self).__module__} "
             f"is neither implemented in code nor by a decorator."
@@ -40,8 +48,18 @@ class DataMixin(ABC):
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> Self:
         """Create from dictionary containing other dictionaries, lists and primitive types."""
-        result = cls()
+
+        # Create record instance and populate it from dictionary
+        serialized_class_path: str = data["_class"]
+        serialized_class = ClassInfo.get_class_type(serialized_class_path)
+
+        if not issubclass(serialized_class, cls):
+            raise RuntimeError(f"Class {serialized_class.__name__} specified"
+                               f"by the `_class` field in serialized data is not a subclass "
+                               f"of {cls.__name__} into which this data is deserialized.")
+
+        result = serialized_class()
         for key, value in data.items():
-            if key != "_type" and key != "_chain":
+            if key != "_class" and key != "_match":
                 setattr(result, key, value)
         return result
