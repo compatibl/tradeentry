@@ -28,7 +28,7 @@ def test_smoke():
     obj_dict = obj.to_dict()
     obj_clone = StubCustomData.from_dict(obj_dict)
     obj_clone_dict = obj_clone.to_dict()
-    assert len(obj_dict) == 2
+    assert len(obj_dict) == 3
     assert obj_dict == obj_clone_dict
 
 

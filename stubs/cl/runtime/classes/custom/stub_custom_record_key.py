@@ -36,7 +36,12 @@ class StubCustomRecordKey(KeyMixin):
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize to dictionary containing other dictionaries, lists and primitive types."""
-        return {"str_field": self.str_field, "int_field": self.int_field}
+        class_type = type(self)
+        return {
+            "_class": f"{class_type.__module__}.{class_type.__name__}",
+            "str_field": self.str_field,
+            "int_field": self.int_field
+        }
 
     def get_table(self) -> str:
         """Name of the database table where the record for this key is stored."""

@@ -38,7 +38,7 @@ def test_smoke():
     record_dict = record.to_dict()
     record_clone = StubAttrsRecord.from_dict(record_dict)
     record_clone_dict = record_clone.to_dict()
-    assert len(record_dict) == 3
+    assert len(record_dict) == 4
     assert record_dict == record_clone_dict
 
 

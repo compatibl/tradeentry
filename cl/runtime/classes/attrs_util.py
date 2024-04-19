@@ -78,7 +78,11 @@ def data_class_impl(cls, *, init=True, label=None):
     fields = {f.name: f for f in attrs.fields(cls) if not f.inherited}
 
     def to_dict(self):
-        return attrs.asdict(self)
+        # TODO: Refactor
+        result = attrs.asdict(self)
+        class_type = type(self)
+        result["_class"] = f"{class_type.__module__}.{class_type.__name__}"
+        return result
 
     cls.to_dict = to_dict
 

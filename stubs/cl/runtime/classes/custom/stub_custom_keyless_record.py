@@ -15,7 +15,7 @@
 from __future__ import annotations
 
 from cl.runtime.classes.key_mixin import KeyMixin
-from typing import Any
+from typing import Any, Literal, Tuple, Type
 from typing import Dict
 from typing import Optional
 
@@ -40,16 +40,14 @@ class StubCustomKeylessRecord(KeyMixin):
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize self as dictionary (may return shallow copy)."""
+        class_type = type(self)
         return {
+            "_class": f"{class_type.__module__}.{class_type.__name__}",
             "str_field": self.str_field,
             "int_field": self.int_field,
             "float_field": self.float_field,
         }
 
-    def get_table(self) -> str:
-        """Name of the database table where the record for this key is stored."""
-        return f"{type(self).__module__}.{type(self).__name__}"
-
-    def get_key(self) -> str:
+    def get_key(self) -> Tuple[Type[StubCustomKeylessRecord], str, int]:
         """Key as string in semicolon-delimited string format without table name."""
-        return f"{self.str_field};{self.int_field}"
+        return StubCustomKeylessRecord, self.str_field, self.int_field

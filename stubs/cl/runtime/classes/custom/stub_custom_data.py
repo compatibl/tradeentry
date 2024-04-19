@@ -37,7 +37,9 @@ class StubCustomData(DataMixin):
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize to dictionary containing other dictionaries, lists and primitive types."""
+        class_type = type(self)
         return {
+            "_class": f"{class_type.__module__}.{class_type.__name__}",
             "str_field": self.str_field,
             "int_field": self.int_field,
         }
