@@ -14,8 +14,10 @@
 
 from __future__ import annotations
 
-from logging import Logger
+from logging import Logger, getLogger
 from typing import List
+
+from cl.runtime.rest.null_progress import NullProgress
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.rest.context import Context
 from cl.runtime.rest.progress import Progress
@@ -35,19 +37,19 @@ class BasicContext(Context):
     def __init__(
             self,
             *,
-            logger: Logger,
-            data_source: DataSource,
+            logger: Logger | None = None,
+            data_source: DataSource | None = None,
             read_dataset: List[str] | str | None = None,
             write_dataset: str | None = None,
-            progress: Progress,
+            progress: Progress | None = None,
     ):
         """Normalize and validate inputs."""
 
-        self.__logger = logger  # Specify default
-        self.__data_source = data_source # Specify default
+        self.__logger = logger if logger is not None else getLogger(__name__)
+        self.__data_source = data_source if data_source is not None else DataSource.default()
         self.__read_dataset = read_dataset
         self.__write_dataset = write_dataset
-        self.__progress = progress # Specify default
+        self.__progress = progress if progress is not None else NullProgress()
 
     def logger(self) -> Logger:
         """Return the context logger."""
@@ -55,6 +57,8 @@ class BasicContext(Context):
 
     def data_source(self) -> DataSource | None:
         """Return the context data source or None if not set."""
+        if self.__data_source is None:
+            raise RuntimeError("Context data source has not been set.")
         return self.__data_source
 
     def read_dataset(self) -> List[str] | str | None:
