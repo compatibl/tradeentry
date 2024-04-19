@@ -13,14 +13,20 @@
 # limitations under the License.
 
 from __future__ import annotations
-from abc import ABC
-from typing import List, Any
+from abc import ABC, abstractmethod
+from typing import List, Any, Tuple
 from typing_extensions import Self
-from cl.runtime.classes.class_info import ClassInfo
+
+from cl.runtime.classes.data_mixin import DataMixin
 from cl.runtime.rest.context import Context
 
+NONE = 0  # Code indicating None
+KEY = 1  # Code indicating tuple
+RECORD = 2  # Code indicating record
+UNKNOWN = 3  # Code indicating unknown type
 
-class RecordMixin(ABC):
+
+class RecordMixin(DataMixin, ABC):
     """
     Optional mixin class for database records providing static type checkers with method signatures.
 
@@ -50,16 +56,20 @@ class RecordMixin(ABC):
         # Do nothing by default
         pass
 
+    @abstractmethod
+    def get_key(self) -> Tuple:
+        """Return key as tuple in (BaseClass, key_field_1, key_field_2, ...) format."""
+
     @classmethod
     def load_many(
             cls,
-            records_or_keys: List[Any] | None = None,
+            records_or_keys: List[Self | Tuple | None],
             dataset: List[str] | str | None = None,
             *,
             context: Context = None
-    ) -> List[Self | None] | None:
+    ) -> List[Self | None]:
         """
-        Load serialized records from a single table using a list of keys.
+        Load serialized records from a single table using a list of keys in tuple format.
         If records are passed instead of keys, they are returned without data source lookup.
 
         Returns:
@@ -67,8 +77,57 @@ class RecordMixin(ABC):
             A result element is None if the record is not found or the key is None.
 
         Args:
-            records_or_keys: Each element is a record, key, semicolon-delimited string, or None.
+            records_or_keys: Each element is a record, key in tuple format, or None.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
             context: Optional context, if None current context will be used
         """
-        return ClassInfo.load_many(cls, records_or_keys, dataset, context=context)
+        # TODO: Does not yet support embedded keys
+
+        # Handle empty input
+        if len(records_or_keys) == 0:
+            return []
+
+        # Assign codes to input elements
+        coded_inputs = [
+            (NONE, x) if x is None else
+            (KEY, x) if isinstance(x, tuple) else
+            (RECORD, x) if isinstance(x, cls) else
+            (UNKNOWN, x)
+            for x in records_or_keys
+        ]
+
+        # Check for unknown input types
+        unknown_inputs = [x[1] for x in coded_inputs if x[0] == UNKNOWN]
+        if len(unknown_inputs) > 0:
+            unknown_types = [str(type(x).__name__) for x in unknown_inputs[:5]]
+            unknown_types_str = ", ".join(unknown_types)
+            raise RuntimeError(f"Param `records_or_keys` of method `load_many` can have elements "
+                               f"of type {cls.__name__}, tuple, or None. The following "
+                               f"parameter types are invalid: {unknown_types_str}")
+
+        # Keys without preserving position in list, excludes None
+        keys = [x[1] for x in coded_inputs if x[0] == KEY]
+
+        if len(keys) == 0:
+            # If there are no keys, return a copy of the input list and stop further processing
+            return list(records_or_keys)
+
+        # Get data source from the current or specified context
+        context = Context.current() if context is None else context
+        data_source = context.data_source()
+
+        # Each lookup must not exceed data source batch size
+        batch_size = data_source.batch_size()
+        batches = [keys[i:i + batch_size] for i in range(0, len(keys), batch_size)]
+        records_dict = {}
+        for batch_keys in batches:
+
+            # Get unordered dict of serialized record data
+            batch_data = data_source.load_unordered(batch_keys, dataset)  # noqa
+
+            # Create class instances and accumulate in records_dict
+            records_dict.update({key: cls.from_dict(value) for key, value in batch_data.items()})
+
+        # Replace key by record defaulting to None, otherwise return input record or None
+        result = [records_dict.get(x[1], None) if x[0] == KEY else x[1] for x in coded_inputs]
+        return result
