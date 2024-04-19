@@ -12,37 +12,33 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
+import dataclasses
 import pytest
-from cl.runtime import Context
-from cl.runtime import InProcessDataSource
-from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecord
-from stubs.cl.runtime.classes.custom.stub_custom_record import StubCustomRecord
+from cl.runtime import DataSource
+from cl.runtime.rest.basic_context import BasicContext
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_base import StubDataclassBase
 
 
 def test_smoke():
     """Smoke test."""
 
-    # Create data source and dataset
-    data_source = InProcessDataSource()
-    dataset = "sample"
+    with BasicContext() as context:
 
-    # Create test record and populate with sample data
-    record = StubAttrsRecord()
-    key = record.get_key()
-    record_dict = record.to_dict()
+        # Create test record and populate with sample data
+        record = StubDataclassBase()
+        key = record.get_key()
+        record_dict = dataclasses.asdict(record)
+        record_dict["_class"] = f"{StubDataclassBase.__module__}.{StubDataclassBase.__name__}"
 
-    # Test saving and loading
-    data_source.save_many([record], dataset)
-    records = data_source.load_many(StubCustomRecord, [key, record], dataset)
-    record_from_str_key = data_source.load_many(StubCustomRecord, [key], dataset)[0]
-    record_from_record_as_key = data_source.load_many(StubCustomRecord, [record], dataset)[0]
+        # Test saving and loading
+        dataset = "sample"
+        DataSource.default().save_many([(key, record_dict)], dataset)
+        loaded_records = StubDataclassBase.load_many([record, key, None], dataset, context=context)
 
-    # Check loaded record
-    loaded_record_dict = record_from_str_key.to_dict()
-    assert loaded_record_dict == record_dict
-
-    # TODO - check that when loading by record key it is the same instance
+        # Check loaded records
+        for loaded_record in loaded_records:
+            if loaded_record is not None:
+                assert loaded_record == record
 
 
 if __name__ == "__main__":

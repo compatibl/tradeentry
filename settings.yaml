@@ -3,7 +3,7 @@ default:
 
     # Data source settings
     data_source:
-        type: cl.runtime.Sqlite
+        type: cl.runtime.LocalCache
         filename: SampleName
         temp_db: Temp.*
 

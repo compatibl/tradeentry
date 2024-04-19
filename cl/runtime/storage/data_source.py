@@ -12,49 +12,48 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import annotations
+
 from abc import ABC
 from abc import abstractmethod
-from collections import OrderedDict
 from dataclasses import dataclass
-from typing import Any, Literal, Tuple
+from typing import Any, Tuple, ClassVar
 from typing import Dict
 from typing import Iterable
 from typing import List
+
+from cl.runtime.classes.class_info import ClassInfo
+from cl.runtime.settings.config import dynaconf_settings
 
 
 @dataclass(slots=True, init=True, frozen=True)
 class DataSource(ABC):
     """Abstract base class for polymorphic data storage with dataset isolation."""
 
+    __default: ClassVar[DataSource] = None
+
     data_source_id: str
     """Unique data source identifier."""
 
     @abstractmethod
     def batch_size(self) -> int:
-        """Maximum number or records the data source can return in a single call, error if exceeded."""
+        """Maximum number or records the data source will return in a single call, error if exceeded."""
 
     @abstractmethod
     def load_unordered(
-        self,
-        table: str,
-        keys: Iterable[Tuple],
-        dataset: List[str] | str | None = None,
-    ) -> Iterable[Dict[Tuple, Any] | None]:
+            self,
+            keys: Iterable[Tuple],
+            dataset: List[str] | str | None = None,
+    ) -> Dict[Tuple, Any]:
         """
         Return serialized records in arbitrary order, skipping records that are not found.
-
-        Notes:
-            - For `dict` key kind, keys are dicts with primary key fields.
-            - For `str` key kind, keys are strings in semicolon-delimited format.
-            - Keys cannot be None or empty dicts or strings
-            - Error if keys size exceeds batch size.
+        Error if the size of keys iterable exceeds batch size.
         
         Returns:
-            Iterable with serialized records  where each level is a supported primitive type, list, or another dict.
+            Iterable with serialized records where each level is a supported primitive type, list, or another dict.
 
         Args:
-            table: Table from which the records will be loaded.
-            keys: Iterable of key tuples in declaration order.
+            keys: Iterable of keys in tuple format consisting of base type followed by key fields.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
         """
 
@@ -82,16 +81,14 @@ class DataSource(ABC):
     @abstractmethod
     def save_many(
         self,
-        table: str,
-        records: Iterable[Dict[str, Any] | None],
+        key_record_pairs: Iterable[Tuple[Tuple, Dict[str, Any]]],
         dataset: List[str] | str | None = None,
     ) -> None:
         """
-        Save serialized records to a single table (overwrite records that already exist).
+        Save serialized records (overwrite records that already exist).
 
         Args:
-            table: Table to which the records will be saved.
-            records: Iterable of dicts where each level is a supported primitive type, list, or another dict.
+            key_record_pairs: Iterable of tuples where first element is key and second is serialized record.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
         """
 
@@ -117,3 +114,13 @@ class DataSource(ABC):
         Permanently delete (drop) the database without the possibility of recovery.
         Error if data source identifier does not match the temp_db pattern in settings.
         """
+
+    @staticmethod
+    def default() -> DataSource:
+        """Default data source is initialized from settings and cannot be modified in code."""
+
+        if DataSource.__default is None:
+            # Load from configuration if not set
+            data_source_type = ClassInfo.get_class_type(dynaconf_settings.data_source.type)
+            DataSource.__default = data_source_type(dynaconf_settings.data_source)
+        return DataSource.__default
