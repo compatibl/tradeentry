@@ -44,38 +44,39 @@ class LocalCache(DataSource):
             self,
             keys: Iterable[Tuple],
             dataset: List[str] | str | None = None,
-    ) -> Dict[Tuple, Any]:
+    ) -> Iterable[Tuple[Tuple, Type, Dict[str, Any]]]:
 
-        result = {}
+        result = []
         for key in keys:  # TODO: Accelerate by avoiding for loop
 
             # Try to retrieve dataset dictionary, insert if it does not yet exist
             dataset_cache = self._cache.setdefault(dataset, {})
 
             # Retrieve the record using get method that returns None if the key is not found
-            serialized_record = dataset_cache.get(key)
+            record = dataset_cache.get(key)
 
             # Only add if the result is not None
-            if serialized_record is not None:
-                result[key] = serialized_record
+            if record is not None:
+                type_, dict_ = record
+                result.append((key, type_, dict_))
 
         return result
 
     def save_many(
         self,
-        key_record_pairs: Iterable[Tuple[Tuple, Dict[str, Any]]],
+        key_record_pairs: Iterable[Tuple[Tuple, Type, Dict[str, Any]]],
         dataset: List[str] | str | None = None,
     ) -> None:
 
         # Iterate over key-record pairs
-        for key, record in key_record_pairs:
+        for key, type_, dict_ in key_record_pairs:
 
             # Try to retrieve dataset dictionary, insert if it does not yet exist
             dataset_cache = self._cache.setdefault(dataset, {})
 
             # TODO: Support tables
             # Insert the record into dataset dictionary
-            dataset_cache[key] = record
+            dataset_cache[key] = (type_, dict_)
 
     def load_by_query(
             self,

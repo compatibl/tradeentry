@@ -14,7 +14,7 @@
 
 from __future__ import annotations
 from abc import ABC, abstractmethod
-from typing import List, Any, Tuple, Type
+from typing import List, Any, Tuple, Type, Dict
 from typing_extensions import Self
 
 from cl.runtime.classes.data_mixin import DataMixin
@@ -60,6 +60,10 @@ class RecordMixin(DataMixin, ABC):
     @abstractmethod
     def get_key(self) -> Tuple[Type, ...]:
         """Return key as tuple in (RecordClass, key_field_1, key_field_2, ...) format."""
+
+    @abstractmethod
+    def to_dict(self) -> Tuple[Type[Self], Dict[str, Any]]:
+        """Serialize to dictionary containing other dictionaries, lists and primitive types."""
 
     @classmethod
     def load_many(
@@ -127,7 +131,7 @@ class RecordMixin(DataMixin, ABC):
             batch_data = data_source.load_unordered(batch_keys, dataset)  # noqa
 
             # Create class instances and accumulate in records_dict
-            records_dict.update({key: cls.from_dict(value) for key, value in batch_data.items()})
+            records_dict.update({key: type_(**dict_) for key, type_, dict_ in batch_data})
 
         # Replace key by record defaulting to None, otherwise return input record or None
         result = [records_dict.get(x[1], None) if x[0] == KEY else x[1] for x in coded_inputs]

@@ -12,8 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass, field
-from typing import Tuple, Type
+from dataclasses import dataclass, field, asdict
+from typing import Tuple, Type, Dict, Any
+from typing_extensions import Self
 from cl.runtime.classes.record_mixin import RecordMixin
 
 StubDataclassBaseKey = Tuple[Type['StubDataclassBase'], str, int]
@@ -31,3 +32,7 @@ class StubDataclassBase(RecordMixin):
 
     def get_key(self) -> StubDataclassBaseKey:
         return StubDataclassBase, self.str_field, self.int_field
+
+    def to_dict(self) -> Tuple[StubDataclassBaseKey, Type[Self], Dict[str, Any]]:
+        """Serialize to dictionary containing other dictionaries, lists and primitive types."""
+        return self.get_key(), self.__class__, asdict(self)

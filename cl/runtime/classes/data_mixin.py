@@ -34,18 +34,6 @@ class DataMixin(ABC):
     __slots__ = ()
     """To prevent creation of __dict__ in derived types."""
 
-    def to_dict(self) -> Dict[str, Any]:
-        """Serialize to dictionary containing other dictionaries, lists and primitive types."""
-        type_ = type(self)
-        if dataclasses.is_dataclass(type_):
-            result = dataclasses.asdict(self)  # noqa
-            result["_class"] = f"{type_.__module__}.{type_.__name__}"
-            return result
-        raise RuntimeError(
-            f"Method to_dict() for class {type(self).__name__} in module {type(self).__module__} "
-            f"is neither implemented in code nor by a decorator."
-        )
-
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> Self:
         """Create from dictionary containing other dictionaries, lists and primitive types."""

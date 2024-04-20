@@ -27,18 +27,16 @@ def test_smoke():
         # Create test record and populate with sample data
         record = StubDataclassBase()
         key = record.get_key()
-        record_dict = dataclasses.asdict(record)
-        record_dict["_class"] = f"{StubDataclassBase.__module__}.{StubDataclassBase.__name__}"
+        serialized_record = record.to_dict()
 
         # Test saving and loading
         dataset = "sample"
-        DataSource.default().save_many([(key, record_dict)], dataset)
+        DataSource.default().save_many([serialized_record], dataset)
         loaded_records = StubDataclassBase.load_many([record, key, None], dataset, context=context)
 
-        # Check loaded records
-        for loaded_record in loaded_records:
-            if loaded_record is not None:
-                assert loaded_record == record
+        assert loaded_records[0] == record
+        assert loaded_records[1] == record
+        assert loaded_records[2] is None
 
 
 if __name__ == "__main__":

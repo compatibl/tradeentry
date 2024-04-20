@@ -17,7 +17,7 @@ from __future__ import annotations
 from abc import ABC
 from abc import abstractmethod
 from dataclasses import dataclass
-from typing import Any, Tuple, ClassVar
+from typing import Any, Tuple, ClassVar, Type
 from typing import Dict
 from typing import Iterable
 from typing import List
@@ -44,7 +44,7 @@ class DataSource(ABC):
             self,
             keys: Iterable[Tuple],
             dataset: List[str] | str | None = None,
-    ) -> Dict[Tuple, Any]:
+    ) -> Iterable[Tuple[Tuple, Type, Dict[str, Any]]]:
         """
         Return serialized records in arbitrary order, skipping records that are not found.
         Error if the size of keys iterable exceeds batch size.
@@ -81,7 +81,7 @@ class DataSource(ABC):
     @abstractmethod
     def save_many(
         self,
-        key_record_pairs: Iterable[Tuple[Tuple, Dict[str, Any]]],
+        key_record_pairs: Iterable[Tuple[Tuple, Type, Dict[str, Any]]],
         dataset: List[str] | str | None = None,
     ) -> None:
         """
