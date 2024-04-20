@@ -12,13 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
 from cl.runtime.classes.record_mixin import RecordMixin
-from stubs.cl.runtime.classes.custom.stub_custom_base_key import StubCustomBaseKey
-from typing import Any
+from typing import Any, Tuple, Type, TYPE_CHECKING
 from typing import Dict
 from typing import Optional
+
+StubCustomBaseKey = Tuple[Type['StubCustomBase'], str, int]
 
 
 class StubCustomBase(RecordMixin):
