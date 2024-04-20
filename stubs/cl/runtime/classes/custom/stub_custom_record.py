@@ -21,8 +21,14 @@ from typing import Dict
 from typing import Optional
 
 
-class StubCustomRecord(StubCustomRecordKey, RecordMixin):
+class StubCustomRecord(RecordMixin):
     """Stub record used in tests."""
+
+    str_field: Optional[str]
+    """First primary key attribute."""
+
+    int_field: Optional[int]
+    """Second primary key attribute."""
 
     float_field: Optional[float]
     """Float attribute of base class."""
@@ -30,12 +36,19 @@ class StubCustomRecord(StubCustomRecordKey, RecordMixin):
     def __init__(self, *, str_field: str = "abc", int_field: int = 123, float_field: float = 4.56):
         """Initialize instance attributes."""
 
-        super().__init__(str_field=str_field, int_field=int_field)
-
+        self.str_field = str_field
+        self.int_field = int_field
         self.float_field = float_field
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize to dictionary containing other dictionaries, lists and primitive types."""
-        return super().to_dict() | {
+        class_type = type(self)
+        return {
+            "_class": f"{class_type.__module__}.{class_type.__name__}",
+            "str_field": self.str_field,
+            "int_field": self.int_field,
             "float_field": self.float_field,
         }
+
+    def get_key(self) -> StubCustomRecordKey:
+        return StubCustomRecord, self.str_field, self.int_field

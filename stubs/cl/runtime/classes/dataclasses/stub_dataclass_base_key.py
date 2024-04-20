@@ -12,25 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
-from dataclasses import dataclass, field
-from typing import TYPE_CHECKING
-from cl.runtime.classes.record_mixin import RecordMixin
+from typing import Tuple, Type, TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from stubs.cl.runtime.classes.dataclasses.stub_dataclass_base_key import StubDataclassBaseKey
+    from stubs.cl.runtime.classes.dataclasses.stub_dataclass_base import StubDataclassBase
 
 
-@dataclass
-class StubDataclassBase(RecordMixin):
-    """Stub record base class."""
-
-    str_field: str = field(default="abc")
-    """Stub field."""
-
-    int_field: int = field(default=123)
-    """Stub field."""
-
-    def get_key(self) -> StubDataclassBaseKey:
-        return StubDataclassBase, self.str_field, self.int_field
+StubDataclassBaseKey = Tuple[Type[StubDataclassBase], str, int]

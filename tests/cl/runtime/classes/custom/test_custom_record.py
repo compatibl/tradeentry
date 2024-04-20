@@ -23,10 +23,8 @@ def test_smoke():
     base_record = StubCustomRecord()
 
     # Test type and key
-    table_name = base_record.get_table()
-    assert table_name == f"{type(base_record).__module__}.{type(base_record).__name__}"
     key = base_record.get_key()
-    assert key == "abc;123"
+    assert key == (StubCustomRecord, "abc", 123)
 
     # Test roundtrip serialization
     base_record_dict = base_record.to_dict()

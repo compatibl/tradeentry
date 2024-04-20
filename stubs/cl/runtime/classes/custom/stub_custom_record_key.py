@@ -12,41 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
+from typing import Tuple, Type
 
-from cl.runtime.classes.key_mixin import KeyMixin
-from typing import Any
-from typing import Dict
-from typing import Optional
-
-
-class StubCustomRecordKey(KeyMixin):
-    """Stub record used in tests."""
-
-    str_field: Optional[str]
-    """First primary key attribute."""
-
-    int_field: Optional[int]
-    """Second primary key attribute."""
-
-    def __init__(self, *, str_field: str = "abc", int_field: int = 123):
-        """Initialize instance attributes."""
-        self.str_field = str_field
-        self.int_field = int_field
-
-    def to_dict(self) -> Dict[str, Any]:
-        """Serialize to dictionary containing other dictionaries, lists and primitive types."""
-        class_type = type(self)
-        return {
-            "_class": f"{class_type.__module__}.{class_type.__name__}",
-            "str_field": self.str_field,
-            "int_field": self.int_field
-        }
-
-    def get_table(self) -> str:
-        """Name of the database table where the record for this key is stored."""
-        return f"{type(self).__module__}.{type(self).__name__}"
-
-    def get_key(self) -> str:
-        """Key as string in semicolon-delimited string format without table name."""
-        return f"{self.str_field};{self.int_field}"
+StubCustomRecordKey = Tuple[Type, str, int]
