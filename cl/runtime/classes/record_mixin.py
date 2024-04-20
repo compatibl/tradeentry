@@ -14,7 +14,7 @@
 
 from __future__ import annotations
 from abc import ABC, abstractmethod
-from typing import List, Any, Tuple
+from typing import List, Any, Tuple, Type
 from typing_extensions import Self
 
 from cl.runtime.classes.data_mixin import DataMixin
@@ -42,7 +42,8 @@ class RecordMixin(DataMixin, ABC):
     - Both may be instance, class or static methods, and may have parameters
     """
 
-    __slots__ = []  # Adding an empty __slots__ declaration prevents the creation of a __dict__ for every instance
+    __slots__ = ()
+    """To prevent creation of __dict__ in derived types."""
 
     def init(self) -> None:
         """Similar to __init__ but uses previously set fields instead of parameters (not invoked by data source)."""
@@ -57,8 +58,8 @@ class RecordMixin(DataMixin, ABC):
         pass
 
     @abstractmethod
-    def get_key(self) -> Tuple:
-        """Return key as tuple in (BaseClass, key_field_1, key_field_2, ...) format."""
+    def get_key(self) -> Tuple[Type, ...]:
+        """Return key as tuple in (RecordClass, key_field_1, key_field_2, ...) format."""
 
     @classmethod
     def load_many(
@@ -66,7 +67,7 @@ class RecordMixin(DataMixin, ABC):
             records_or_keys: List[Self | Tuple | None],
             dataset: List[str] | str | None = None,
             *,
-            context: Context = None
+            context: Context | None = None
     ) -> List[Self | None]:
         """
         Load serialized records from a single table using a list of keys in tuple format.

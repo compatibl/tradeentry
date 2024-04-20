@@ -30,7 +30,7 @@ from cl.runtime.settings.config import dynaconf_settings
 class DataSource(ABC):
     """Abstract base class for polymorphic data storage with dataset isolation."""
 
-    __default: ClassVar[DataSource] = None
+    __default: ClassVar[DataSource | None] = None
 
     data_source_id: str
     """Unique data source identifier."""

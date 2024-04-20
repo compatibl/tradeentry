@@ -26,7 +26,7 @@ from cl.runtime.rest.progress import Progress
 class BasicContext(Context):
     """Provides logging, data source, dataset, and progress reporting."""
 
-    __slots__ = ["__logger", "__data_source", "__read_dataset", "__write_dataset", "__progress"]
+    __slots__ = ("__logger", "__data_source", "__read_dataset", "__write_dataset", "__progress")
 
     __logger: Logger
     __data_source: DataSource
