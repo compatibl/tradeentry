@@ -15,13 +15,13 @@
 from __future__ import annotations
 
 from cl.runtime.classes.record_mixin import RecordMixin
-from stubs.cl.runtime.classes.custom.stub_custom_record_key import StubCustomRecordKey
+from stubs.cl.runtime.classes.custom.stub_custom_base_key import StubCustomBaseKey
 from typing import Any
 from typing import Dict
 from typing import Optional
 
 
-class StubCustomRecord(RecordMixin):
+class StubCustomBase(RecordMixin):
     """Stub record used in tests."""
 
     str_field: Optional[str]
@@ -50,5 +50,5 @@ class StubCustomRecord(RecordMixin):
             "float_field": self.float_field,
         }
 
-    def get_key(self) -> StubCustomRecordKey:
-        return StubCustomRecord, self.str_field, self.int_field
+    def get_key(self) -> StubCustomBaseKey:
+        return StubCustomBase, self.str_field, self.int_field

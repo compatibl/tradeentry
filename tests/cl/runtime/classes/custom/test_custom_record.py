@@ -13,22 +13,22 @@
 # limitations under the License.
 
 import pytest
-from stubs.cl.runtime.classes.custom.stub_custom_record import StubCustomRecord
+from stubs.cl.runtime.classes.custom.stub_custom_base import StubCustomBase
 
 
 def test_smoke():
     """Smoke test."""
 
     # Create test base_record and populate with sample data
-    base_record = StubCustomRecord()
+    base_record = StubCustomBase()
 
     # Test type and key
     key = base_record.get_key()
-    assert key == (StubCustomRecord, "abc", 123)
+    assert key == (StubCustomBase, "abc", 123)
 
     # Test roundtrip serialization
     base_record_dict = base_record.to_dict()
-    base_record_clone = StubCustomRecord.from_dict(base_record_dict)
+    base_record_clone = StubCustomBase.from_dict(base_record_dict)
     base_record_clone_dict = base_record_clone.to_dict()
     assert len(base_record_dict) == 4
     assert base_record_dict == base_record_clone_dict

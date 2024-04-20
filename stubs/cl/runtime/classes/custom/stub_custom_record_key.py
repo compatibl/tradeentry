@@ -14,4 +14,4 @@
 
 from typing import Tuple, Type
 
-StubCustomRecordKey = Tuple[Type, str, int]
+StubCustomBaseKey = Tuple[Type, str, int]
