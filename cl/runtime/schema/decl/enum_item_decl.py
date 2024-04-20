@@ -14,13 +14,12 @@
 
 from cl.runtime.classes.attrs_util import data_class
 from cl.runtime.classes.attrs_util import data_field
-from cl.runtime.classes.data_mixin import DataMixin
 from typing import List
 from typing import Optional
 
 
 @data_class
-class EnumItemDecl(DataMixin):
+class EnumItemDecl:
     """Enum item declaration."""
 
     name: str = data_field()

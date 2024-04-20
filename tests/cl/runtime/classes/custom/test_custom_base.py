@@ -20,18 +20,20 @@ def test_smoke():
     """Smoke test."""
 
     # Create test base_record and populate with sample data
-    base_record = StubCustomBase()
+    record = StubCustomBase()
 
     # Test type and key
-    key = base_record.get_key()
+    key = record.get_key()
     assert key == (StubCustomBase, "abc", 123)
 
     # Test roundtrip serialization
-    base_record_dict = base_record.to_dict()
-    base_record_clone = StubCustomBase.from_dict(base_record_dict)
-    base_record_clone_dict = base_record_clone.to_dict()
-    assert len(base_record_dict) == 4
-    assert base_record_dict == base_record_clone_dict
+    serialized_key, serialized_type, serialized_dict = record.to_dict()
+    record_clone = StubCustomBase(**serialized_dict)
+    clone_key, clone_type, clone_dict = record_clone.to_dict()
+    assert serialized_key == key
+    assert clone_type == StubCustomBase
+    assert len(clone_dict) == 3
+    assert clone_dict == serialized_dict
 
 
 if __name__ == "__main__":

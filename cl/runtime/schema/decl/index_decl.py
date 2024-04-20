@@ -15,12 +15,11 @@
 from cl.runtime.schema.decl.index_sort_order_enum import IndexSortOrderEnum
 from cl.runtime.classes.attrs_util import data_class
 from cl.runtime.classes.attrs_util import data_field
-from cl.runtime.classes.data_mixin import DataMixin
 from typing import Optional
 
 
 @data_class
-class IndexDecl(DataMixin):
+class IndexDecl:
     """Index declaration."""
 
     name: str = data_field()

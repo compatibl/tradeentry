@@ -17,7 +17,6 @@ from abc import ABC, abstractmethod
 from typing import List, Any, Tuple, Type, Dict
 from typing_extensions import Self
 
-from cl.runtime.classes.data_mixin import DataMixin
 from cl.runtime.rest.context import Context
 
 NONE = 0  # Code indicating None
@@ -26,7 +25,7 @@ RECORD = 2  # Code indicating record
 UNKNOWN = 3  # Code indicating unknown type
 
 
-class RecordMixin(DataMixin, ABC):
+class RecordMixin(ABC):
     """
     Optional mixin class for database records providing static type checkers with method signatures.
 
@@ -62,7 +61,7 @@ class RecordMixin(DataMixin, ABC):
         """Return key as tuple in (RecordClass, key_field_1, key_field_2, ...) format."""
 
     @abstractmethod
-    def to_dict(self) -> Tuple[Type[Self], Dict[str, Any]]:
+    def to_dict(self) -> Tuple[Tuple[Type, ...], Type[Self], Dict[str, Any]]:
         """Serialize to dictionary containing other dictionaries, lists and primitive types."""
 
     @classmethod

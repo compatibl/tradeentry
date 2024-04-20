@@ -21,7 +21,7 @@ from cl.runtime.classes.attrs_util import data_field
 from stubs.cl.runtime.classes.attrs.stub_attrs_data import StubAttrsData
 from stubs.cl.runtime.classes.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
 from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecord
-from stubs.cl.runtime.classes.attrs.stub_attrs_record_key import StubAttrsRecordKey
+from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecordKey
 from typing import List
 
 
@@ -65,8 +65,8 @@ def stub_attrs_data_list_factory() -> List[StubAttrsData]:
 def stub_attrs_key_list_factory() -> List[StubAttrsRecordKey]:
     """Create stub values."""
     return [
-        StubAttrsRecordKey(str_field="A", int_field=0),
-        StubAttrsRecordKey(str_field="B", int_field=1),
+        (StubAttrsRecord, "A", 0),
+        (StubAttrsRecord, "B", 1),
     ]
 
 

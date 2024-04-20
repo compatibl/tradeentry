@@ -17,29 +17,28 @@ from stubs.cl.runtime.classes.attrs.stub_attrs_dict_fields import StubAttrsDictF
 from stubs.cl.runtime.classes.attrs.stub_attrs_list_fields import StubAttrsListFields
 from stubs.cl.runtime.classes.attrs.stub_attrs_primitive_fields import StubAttrsPrimitiveFields
 from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecord
-from stubs.cl.runtime.classes.attrs.stub_attrs_record_key import StubAttrsRecordKey
+from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecordKey
 
 
 def test_smoke():
     """Smoke test."""
-
-    # Create and test standalone key
-    sample_key = StubAttrsRecordKey()
-    assert sample_key.get_key() == "abc;123"
 
     # Create test record and populate with sample data
     record = StubAttrsRecord()
 
     # Test primary key
     key = record.get_key()
-    assert key == "abc;123"
+    assert key == (StubAttrsRecord, "abc", 123)
 
     # Test roundtrip serialization
-    record_dict = record.to_dict()
-    record_clone = StubAttrsRecord.from_dict(record_dict)
-    record_clone_dict = record_clone.to_dict()
-    assert len(record_dict) == 4
-    assert record_dict == record_clone_dict
+    record_key, record_type, record_dict = record.to_dict()
+    record_clone = StubAttrsRecord(**record_dict)
+    clone_key, clone_type, clone_dict = record_clone.to_dict()
+    assert len(record_dict) == 3
+    assert clone_key == key
+    assert clone_type == StubAttrsRecord
+    assert clone_dict == record_dict
+
 
 
 def test_with_primitive_fields():

@@ -23,7 +23,7 @@ from stubs.cl.runtime.classes.attrs.stub_attrs_dict_fields import stub_attrs_der
 from stubs.cl.runtime.classes.attrs.stub_attrs_dict_fields import stub_attrs_key_dict_factory
 from stubs.cl.runtime.classes.attrs.stub_attrs_dict_fields import stub_attrs_record_dict_factory
 from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecord
-from stubs.cl.runtime.classes.attrs.stub_attrs_record_key import StubAttrsRecordKey
+from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecordKey
 from typing import Dict
 from typing import List
 

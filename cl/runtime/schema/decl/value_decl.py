@@ -15,11 +15,10 @@
 from cl.runtime.schema.decl.atomic_type import AtomicType
 from cl.runtime.classes.attrs_util import data_class
 from cl.runtime.classes.attrs_util import data_field
-from cl.runtime.classes.data_mixin import DataMixin
 
 
 @data_class
-class ValueDecl(DataMixin):
+class ValueDecl:
     """Value or atomic element declaration."""
 
     type_: AtomicType = data_field(name="Type")

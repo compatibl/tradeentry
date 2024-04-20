@@ -12,21 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
-from cl.runtime.classes.key_mixin import KeyMixin
-from stubs.cl.runtime.classes.attrs.stub_attrs_record_key import StubAttrsRecordKey
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
+from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecordKey
 
 
-@data_class
-class StubAttrsNestedFieldsKey(KeyMixin):
+@dataclass
+class StubAttrsNestedFieldsKey:
     """Record where the key is composite and includes other keys."""
 
     primitive: str = data_field(default="abc")
     """String key element."""
 
-    embedded_1: StubAttrsRecordKey = data_field(factory=StubAttrsRecordKey)
+    embedded_1: StubAttrsRecordKey = data_field(default_factory=StubAttrsRecordKey)
     """Embedded key 1."""
 
-    embedded_2: StubAttrsRecordKey = data_field(factory=StubAttrsRecordKey)
+    embedded_2: StubAttrsRecordKey = data_field(default_factory=StubAttrsRecordKey)
     """Embedded key 2."""

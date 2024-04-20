@@ -18,7 +18,6 @@ from cl.runtime.schema.decl.type_decl_key import TypeDeclKey
 from cl.runtime.schema.decl.value_decl import ValueDecl
 from cl.runtime.classes.attrs_util import data_class
 from cl.runtime.classes.attrs_util import data_field
-from cl.runtime.classes.data_mixin import DataMixin
 from typing import TYPE_CHECKING
 from typing import List
 from typing import Optional
@@ -28,7 +27,7 @@ if TYPE_CHECKING:
 
 
 @data_class
-class TypeMemberDecl(DataMixin):
+class TypeMemberDecl:
     """Type member declaration."""
 
     type_param: Optional[str] = data_field()

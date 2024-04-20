@@ -12,14 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
-from cl.runtime.classes.key_mixin import KeyMixin
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from typing import Optional
 
 
-@data_class
-class ModuleKey(KeyMixin):
+@dataclass
+class ModuleKey:
     """
     Defines Analyst module.
     Module can be represented both as the source code and precomiled dll (defined by flag "Compiled").

@@ -16,7 +16,6 @@ from __future__ import annotations
 
 from cl.runtime.classes.attrs_util import data_class
 from cl.runtime.classes.attrs_util import data_field
-from cl.runtime.classes.data_mixin import DataMixin
 from typing import TYPE_CHECKING
 from typing import Union
 
@@ -25,7 +24,7 @@ if TYPE_CHECKING:
 
 
 @data_class
-class StubAttrsCyclicA(DataMixin):
+class StubAttrsCyclicA:
     """Stub class A with a field whose type is key for class B."""
 
     b: StubAttrsCyclicB = data_field()

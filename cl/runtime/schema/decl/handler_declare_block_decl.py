@@ -15,12 +15,11 @@
 from cl.runtime.schema.decl.handler_declare_decl import HandlerDeclareDecl
 from cl.runtime.classes.attrs_util import data_class
 from cl.runtime.classes.attrs_util import data_field
-from cl.runtime.classes.data_mixin import DataMixin
 from typing import List
 
 
 @data_class
-class HandlerDeclareBlockDecl(DataMixin):
+class HandlerDeclareBlockDecl:
     """Handler declaration block in type declaration."""
 
     handlers: List[HandlerDeclareDecl] = data_field()

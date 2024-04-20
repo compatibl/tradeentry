@@ -22,7 +22,7 @@ from stubs.cl.runtime.classes.attrs.stub_attrs_derived_data import StubAttrsDeri
 from stubs.cl.runtime.classes.attrs.stub_attrs_derived_from_derived_data import StubAttrsDerivedFromDerivedData
 from stubs.cl.runtime.classes.attrs.stub_attrs_nested_fields_key import StubAttrsNestedFieldsKey
 from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecord
-from stubs.cl.runtime.classes.attrs.stub_attrs_record_key import StubAttrsRecordKey
+from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecordKey
 
 
 @index_fields("derived_float_field, -float_field")

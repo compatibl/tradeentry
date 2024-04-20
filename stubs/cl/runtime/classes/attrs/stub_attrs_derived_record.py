@@ -14,18 +14,16 @@
 
 from __future__ import annotations
 
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
-from cl.runtime.storage.index_util import index_fields
+from dataclasses import dataclass
 from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecord
 
 
-@index_fields("derived_field, -version")
-@data_class(init=False)
+# @index_fields("derived_field, -version")  # TODO: Refactor index_fields
+@dataclass(slots=True)
 class StubAttrsDerivedRecord(StubAttrsRecord):
     """Stub derived class."""
 
-    derived_field: str = data_field(default="derived")
+    derived_field: str = "derived"
     """Stub field."""
 
     def non_virtual_derived_handler(self) -> None:

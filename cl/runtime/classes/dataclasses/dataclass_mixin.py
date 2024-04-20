@@ -12,18 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
-from cl.runtime.classes.key_mixin import KeyMixin
-from typing import Optional
+from __future__ import annotations
+from abc import ABC
+from dataclasses import asdict, dataclass
+from typing import Any, Tuple, Type, Dict
+from typing_extensions import Self
+
+from cl.runtime.classes.record_mixin import RecordMixin
 
 
-@data_class
-class StubAttrsRecordKey(KeyMixin):
-    """Stub record base class."""
+@dataclass(slots=True)
+class DataclassMixin(RecordMixin, ABC):
+    """Mixin methods for dataclass records."""
 
-    str_field: str = data_field(default="abc")
-    """Stub field."""
+    def to_dict(self) -> Tuple[Tuple[Type, ...], Type[Self], Dict[str, Any]]:
+        return self.get_key(), self.__class__, asdict(self)
 
-    int_field: int = data_field(default=123)
-    """Stub field."""

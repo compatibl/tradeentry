@@ -12,13 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
-from cl.runtime.classes.key_mixin import KeyMixin
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 
 
-@data_class
-class TypeDeclKey(KeyMixin):
+@dataclass
+class TypeDeclKey:
     """Key for the base class of type declaration in schema."""
 
     type_id: str = data_field()

@@ -12,13 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
-from cl.runtime.classes.key_mixin import KeyMixin
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 
 
-@data_class
-class LanguageKey(KeyMixin):
+@dataclass
+class LanguageKey:
     language_id: str = data_field(name="LanguageID")
     """Language."""
 

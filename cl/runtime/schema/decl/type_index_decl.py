@@ -15,13 +15,12 @@
 from cl.runtime.schema.decl.index_decl import IndexDecl
 from cl.runtime.classes.attrs_util import data_class
 from cl.runtime.classes.attrs_util import data_field
-from cl.runtime.classes.data_mixin import DataMixin
 from typing import List
 from typing import Optional
 
 
 @data_class
-class TypeIndexDecl(DataMixin):
+class TypeIndexDecl:
     """Type index declaration."""
 
     name: Optional[str] = data_field()

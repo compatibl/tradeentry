@@ -14,32 +14,26 @@
 
 from __future__ import annotations
 
-import datetime as dt
-from cl.runtime.decorators.handler_decorator import handler
-from cl.runtime.decorators.viewer_decorator import viewer
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
-from cl.runtime.classes.data_mixin import DataMixin
-from cl.runtime.storage.index_util import index_fields
-from cl.runtime.classes.record_mixin import RecordMixin
-from logging import Logger
-from stubs.cl.runtime.classes.attrs.stub_attrs_data import StubAttrsData
-from stubs.cl.runtime.classes.attrs.stub_attrs_record_key import StubAttrsRecordKey
-from stubs.cl.runtime.classes.enum.stub_int_enum import StubIntEnum
+from dataclasses import dataclass
+from typing import Tuple, Type
+from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
 
-_logger = Logger(__name__)
+StubAttrsRecordKey = Tuple[Type['StubAttrsRecord'], str, int]
 
 
-def data_list_field_factory():
-    """Create an instance of List[StubAttrsData] with stub data."""
-    return [StubAttrsData(str_field="abc", int_field=1), StubAttrsData(str_field="xyz", int_field=2)]
-
-
-@index_fields("version")
-@index_fields("str_field, int_field, -version", "CustomIndexName")
-@data_class
-class StubAttrsRecord(StubAttrsRecordKey, RecordMixin):
+@dataclass(slots=True)
+class StubAttrsRecord(DataclassMixin):
     """Stub record base class."""
 
-    version: int = data_field(default=0)
+    str_field: str = "abc"
+    """Stub field."""
+
+    int_field: int = 123
+    """Stub field."""
+
+    version: int = 0
     """Stub version field."""
+
+    def get_key(self) -> StubAttrsRecordKey:
+        return StubAttrsRecord, self.str_field, self.int_field
+

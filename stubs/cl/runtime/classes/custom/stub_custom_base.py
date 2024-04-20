@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import annotations
 from cl.runtime.classes.record_mixin import RecordMixin
 from typing import Any, Tuple, Type
 from typing import Dict
@@ -39,15 +40,17 @@ class StubCustomBase(RecordMixin):
         self.int_field = int_field
         self.float_field = float_field
 
-    def to_dict(self) -> Dict[str, Any]:
-        """Serialize to dictionary containing other dictionaries, lists and primitive types."""
+    def to_dict(self) -> Tuple[StubCustomBaseKey, Type[StubCustomBase], Dict[str, Any]]:
         class_type = type(self)
-        return {
-            "_class": f"{class_type.__module__}.{class_type.__name__}",
-            "str_field": self.str_field,
-            "int_field": self.int_field,
-            "float_field": self.float_field,
-        }
+        return (
+            self.get_key(),
+            StubCustomBase,
+            {
+                "str_field": self.str_field,
+                "int_field": self.int_field,
+                "float_field": self.float_field,
+            }
+        )
 
     def get_key(self) -> StubCustomBaseKey:
         return StubCustomBase, self.str_field, self.int_field

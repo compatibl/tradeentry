@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import inspect
-from cl.runtime.classes.key_mixin import KeyMixin
 from typing import Any
 from typing import Dict
 from typing import List
@@ -22,7 +21,7 @@ from typing import Tuple
 from typing import Type
 from typing import TypeVar
 
-TRecord = TypeVar("TRecord", bound=KeyMixin)
+TRecord = TypeVar("TRecord")
 
 
 def index_fields(definition: str, name: str = None):
@@ -56,8 +55,6 @@ def index_fields(definition: str, name: str = None):
     def wrap(cls: Type[TRecord]):
         if not inspect.isclass(cls):
             raise Exception("@index_fields should be applied on class")
-        if KeyMixin not in cls.__mro__:
-            raise Exception("@index_fields should be applied on Record derived class")
 
         # Set _has_index_fields attribute
         if not hasattr(cls, "_has_index_fields"):

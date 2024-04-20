@@ -14,12 +14,11 @@
 
 from cl.runtime.classes.attrs_util import data_class
 from cl.runtime.classes.attrs_util import data_field
-from cl.runtime.classes.data_mixin import DataMixin
 from typing import Optional
 
 
 @data_class
-class PackageDependency(DataMixin):
+class PackageDependency:
     """PackageDependency."""
 
     name: str = data_field()

@@ -18,7 +18,6 @@ import datetime as dt
 import inspect
 from logging import getLogger
 
-from cl.runtime import DataMixin
 from cl.runtime import RecordMixin
 from cl.runtime.decorators.handler_decorator import handler
 from stubs.cl.runtime.decorators.stub_handler_methods_key import StubHandlerMethodsKey
@@ -148,7 +147,7 @@ class StubHandlerMethods(StubHandlerMethodsKey, RecordMixin):
         int_arg: int,
         datetime_arg: dt.datetime,
         enum_arg: StubIntEnum,
-        data_arg: DataMixin,
+        data_arg: Any,
     ) -> None:
         _logger.info(
             f"handler_with_arguments(int_arg={int_arg} datetime_arg={datetime_arg}"

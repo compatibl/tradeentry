@@ -13,13 +13,12 @@
 # limitations under the License.
 
 from cl.runtime.schema.decl.module_key import ModuleKey
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
-from cl.runtime.classes.key_mixin import KeyMixin
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 
 
-@data_class
-class EnumDeclKey(KeyMixin):
+@dataclass
+class EnumDeclKey:
     """Enum declaration."""
 
     module: ModuleKey = data_field()

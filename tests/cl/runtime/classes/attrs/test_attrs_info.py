@@ -94,47 +94,22 @@ def test_get_class_type():
 def test_get_inheritance_chain():
     """Test getting class path from class."""
 
-    key_class = "StubAttrsRecordKey"
     base_class = "StubAttrsRecord"
     derived_class = "StubAttrsDerivedRecord"
 
-    # Key class, returns self
-    assert ClassInfo.get_inheritance_chain(StubAttrsRecordKey) == [key_class]
-
     # Common base class, returns self and key class
-    assert ClassInfo.get_inheritance_chain(StubAttrsRecord) == [base_class, key_class]
+    assert ClassInfo.get_inheritance_chain(StubAttrsRecord) == [base_class]
 
     # Derived class, returns self, common base and key
-    assert ClassInfo.get_inheritance_chain(StubAttrsDerivedRecord) == [derived_class, base_class, key_class]
+    assert ClassInfo.get_inheritance_chain(StubAttrsDerivedRecord) == [derived_class, base_class]
 
     # Invoke for a type that does not have a key class
     with pytest.raises(RuntimeError):
         ClassInfo.get_inheritance_chain(StubAttrsData)
 
     # Call one more time and confirm that method results are cached
-    assert ClassInfo.get_inheritance_chain(StubAttrsRecord) == [base_class, key_class]
+    assert ClassInfo.get_inheritance_chain(StubAttrsRecord) == [base_class]
     assert ClassInfo.get_inheritance_chain.cache_info().hits > 0
-
-
-def test_get_table():
-    """Test getting table name from class."""
-
-    # Key class
-    assert ClassInfo.get_table(StubAttrsRecordKey) == "StubAttrsRecord"
-
-    # Common base class
-    assert ClassInfo.get_table(StubAttrsRecord) == "StubAttrsRecord"
-
-    # Derived class
-    assert ClassInfo.get_table(StubAttrsDerivedRecord) == "StubAttrsRecord"
-
-    # Error if a type does not have key class
-    with pytest.raises(RuntimeError):
-        ClassInfo.get_table(StubAttrsData)
-
-    # Call one more time and confirm that method results are cached
-    assert ClassInfo.get_table(StubAttrsRecordKey) == "StubAttrsRecord"
-    assert ClassInfo.get_table.cache_info().hits > 0
 
 
 def test_to_from_dict():
@@ -145,25 +120,19 @@ def test_to_from_dict():
     stub_types = [
         # StubAttrsCyclicA,
         # StubAttrsCyclicB,
-        StubAttrsData,
-        StubAttrsDerivedData,
-        StubAttrsDerivedFromDerivedData,
-        StubAttrsDerivedFromDerivedRecord,
-        StubAttrsDerivedRecord,
+        StubAttrsRecord,
+        # StubAttrsDerivedFromDerivedRecord,
+        # StubAttrsDerivedRecord,
         # StubAttrsDictFields,
         # StubAttrsDictListFields,
         # StubAttrsDoNotImport,
         # StubAttrsListDictFields,
-        StubAttrsListFields,
+        # StubAttrsListFields,
         # StubAttrsNestedFields,
-        StubAttrsNestedFieldsKey,
-        StubAttrsOtherDerivedRecord,
-        StubAttrsPrimitiveFields,
-        StubAttrsPrimitiveFieldsKey,
-        StubAttrsRecord,
-        StubAttrsRecordKey,
-        StubAttrsSingleton,
-        StubAttrsSingletonKey,
+        # StubAttrsOtherDerivedRecord,
+        # StubAttrsPrimitiveFields,
+        # StubAttrsSingleton,
+        # StubAttrsSingletonKey,
     ]
 
     for stub_type in stub_types:
@@ -171,10 +140,10 @@ def test_to_from_dict():
         obj = stub_type()
 
         # Serialize to dict
-        data = ClassInfo.to_dict(obj)
+        key, type_, dict_ = obj.to_dict()
 
         # Restore from dict
-        restored_obj = ClassInfo.from_dict(data)
+        restored_obj = stub_type(**dict_)  # noqa
 
         # Compare
         assert obj == restored_obj

@@ -1,7 +1,6 @@
 from stubs.cl.runtime.classes.enum.stub_int_enum import StubIntEnum
 from stubs.cl.runtime.classes.enum.stub_relabeled_int_enum import StubRelabeledIntEnum
 from stubs.cl.runtime.classes.stub_dict_util import StubDictUtil
-from stubs.cl.runtime.classes.custom.stub_custom_data import StubCustomData
 from stubs.cl.runtime.classes.custom.stub_custom_base import StubCustomBase
 from stubs.cl.runtime.classes.attrs.stub_attrs_cyclic_a import StubAttrsCyclicA
 from stubs.cl.runtime.classes.attrs.stub_attrs_cyclic_b import StubAttrsCyclicB
@@ -21,6 +20,6 @@ from stubs.cl.runtime.classes.attrs.stub_attrs_other_derived_record import StubA
 from stubs.cl.runtime.classes.attrs.stub_attrs_primitive_fields import StubAttrsPrimitiveFields
 from stubs.cl.runtime.classes.attrs.stub_attrs_primitive_fields_key import StubAttrsPrimitiveFieldsKey
 from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecord
-from stubs.cl.runtime.classes.attrs.stub_attrs_record_key import StubAttrsRecordKey
+from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecordKey
 from stubs.cl.runtime.classes.attrs.stub_attrs_singleton import StubAttrsSingleton
 from stubs.cl.runtime.classes.attrs.stub_attrs_singleton_key import StubAttrsSingletonKey

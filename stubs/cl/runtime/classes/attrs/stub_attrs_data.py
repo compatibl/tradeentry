@@ -12,14 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.classes.attrs_util import data_class
+from dataclasses import dataclass
 from cl.runtime.classes.attrs_util import data_field
-from cl.runtime.classes.data_mixin import DataMixin
-from typing import Optional
 
 
-@data_class
-class StubAttrsData(DataMixin):
+@dataclass(slots=True)
+class StubAttrsData:
     """Stub base data type."""
 
     str_field: str = data_field(default="abc")

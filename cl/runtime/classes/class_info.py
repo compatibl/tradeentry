@@ -95,27 +95,18 @@ class ClassInfo(ABC):
         """
 
         # Get the list of classes in MRO
-        complete_mro = [f"{c.__module__}.{c.__name__}" for c in record_type.mro()]
-
-        # Find classes whose name has Key suffix in MRO list
-        key_class_indices = [index for index, string in enumerate(complete_mro) if string.endswith("Key")]
-        key_class_count = len(key_class_indices)
+        fully_qualified_names = [
+            f"{c.__module__}.{c.__name__}"
+            for c in record_type.mro()
+            if hasattr(c, 'get_key') and callable(getattr(c, 'get_key')) and
+            not getattr(getattr(c, 'get_key'), '__isabstractmethod__', False)
+        ]
 
         # Make sure there is only one such class in the inheritance chain
-        if key_class_count == 0:
+        if len(fully_qualified_names) == 0:
             raise RuntimeError(
-                f"Class {record_type.__module__}.{record_type.__name__} has no parent with suffix `Key`. "
-                "Add Key suffix to key class name or implement `KeyMixin` interface."
+                f"Class {record_type.__module__}.{record_type.__name__} does not implement get_key(self) method."
             )
-        elif key_class_count > 1:
-            raise RuntimeError(
-                f"Class {record_type.__module__}.{record_type.__name__} has more than one parent with suffix `Key`. "
-                "Ensure only one class has suffix `Key` or implement `KeyMixin` interface."
-            )
-
-        # Truncate the inheritance chain to drop classes after the class with Key suffix
-        key_class_index = key_class_indices[0]
-        fully_qualified_names = complete_mro[: key_class_index + 1]
 
         # TODO: Add package aliases
         # Remove module from fully qualified names
@@ -205,22 +196,8 @@ class ClassInfo(ABC):
         else:
             raise RuntimeError(
                 f"Class {cls.__module__}.{cls.__name__} does not use one of the supported frameworks "
-                f"(dataclasses, attrs, pydantic) and does not inherit from DataMixin or RecordMixin."
+                f"(dataclasses, attrs, pydantic)."
             )
-
-    @staticmethod
-    def from_dict(data: Dict[str, Any]) -> Any:
-        """Create an instance of cls from dictionary containing other dictionaries, lists and primitive types."""
-
-        class_str = data.get("_class")
-        if class_str is not None:
-            class_type = ClassInfo.get_class_type(class_str)
-        else:
-            raise RuntimeError("Serialized record must include field `_class` containing "
-                               "fully qualified class name in `module.ClassName` format.")
-
-        result = ClassInfo._deserialize(class_type, data)
-        return result
 
     @staticmethod
     def to_tuple_key(key_type: Type, record_or_key: Any) -> Tuple | None:
@@ -266,7 +243,7 @@ class ClassInfo(ABC):
         raise NotImplementedError()
 
     @staticmethod
-    def _deserialize(class_type: Type, data: Dict[str, Any]) -> Any:
+    def _deserialize(class_type: Type, data: Dict[str, Any]) -> Any:  # TODO: Deprecated?
         """Create an instance of cls from dictionary containing other dictionaries, lists and primitive types."""
 
         if isinstance(data, dict):
