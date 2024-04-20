@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Tuple, Type
+from typing import Tuple, Type
 from cl.runtime.classes.record_mixin import RecordMixin
 
 StubDataclassBaseKey = Tuple[Type['StubDataclassBase'], str, int]

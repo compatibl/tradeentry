@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from cl.runtime.classes.record_mixin import RecordMixin
-from typing import Any, Tuple, Type, TYPE_CHECKING
+from typing import Any, Tuple, Type
 from typing import Dict
 from typing import Optional
 
