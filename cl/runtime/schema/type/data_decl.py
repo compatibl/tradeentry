@@ -16,7 +16,7 @@ from cl.runtime.schema.type.field_decl import FieldDecl
 from cl.runtime.schema.type.type_decl import TypeDecl
 from cl.runtime.schema.type.type_decl import TypeDeclKey
 from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from typing import List
 
 
@@ -24,10 +24,10 @@ from typing import List
 class DataDecl(TypeDecl):
     """Declaration for serializable data with fields."""
 
-    parent: TypeDeclKey = data_field(optional=True)
+    parent: TypeDeclKey = datafield(optional=True)
     """Parent type key or record must resolve to DataDecl or its descendants."""
 
-    fields: List[FieldDecl] = data_field()
+    fields: List[FieldDecl] = datafield()
     """
     List of fields with detailed type information.
 

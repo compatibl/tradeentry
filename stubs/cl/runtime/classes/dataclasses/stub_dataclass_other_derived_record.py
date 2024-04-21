@@ -17,7 +17,7 @@ from __future__ import annotations
 from cl.runtime.primitive.date_time_util import DateTimeUtil
 from cl.runtime.primitive.date_util import DateUtil
 from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from cl.runtime.storage.index_util import index_fields
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_record import StubDataclassRecord
 from typing import Optional
@@ -28,5 +28,5 @@ from typing import Optional
 class StubDataclassOtherDerivedRecord(StubDataclassRecord):
     """Another type derived from StubDataclassRecord."""
 
-    other_derived: str = data_field(default="other_derived")
+    other_derived: str = datafield(default="other_derived")
     """Stub field for other derived class."""

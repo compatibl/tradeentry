@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
 from dataclasses import dataclass
 
@@ -21,5 +21,5 @@ from dataclasses import dataclass
 class StubDataclassAliasedRecord(DataclassMixin):  # TODO: Specify alias
     """Stub record class with typename alias."""
 
-    a: int = data_field()
+    a: int = datafield()
 

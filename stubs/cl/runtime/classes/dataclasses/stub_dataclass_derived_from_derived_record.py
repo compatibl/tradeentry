@@ -17,7 +17,7 @@ from __future__ import annotations
 from cl.runtime.primitive.date_time_util import DateTimeUtil
 from cl.runtime.primitive.date_util import DateUtil
 from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
 from typing import Optional
 
@@ -26,5 +26,5 @@ from typing import Optional
 class StubDataclassDerivedFromDerivedRecord(StubDataclassDerivedRecord):
     """Two levels in inheritance hierarchy away from StubDataclassRecord."""
 
-    derived_from_derived_field: str = data_field(default="derived_from_derived")
+    derived_from_derived_field: str = datafield(default="derived_from_derived")
     """Stub field."""

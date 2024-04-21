@@ -16,7 +16,7 @@ from abc import ABC
 from dataclasses import dataclass
 from typing import Tuple, Type
 
-from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
 
 ViewKey = Tuple[Type['View'], Tuple[Type, ...], str]
@@ -34,10 +34,10 @@ class View(DataclassMixin, ABC):
     tab or panel next to the record itself.
     """
 
-    view_for: Tuple[Type, ...] = data_field()
+    view_for: Tuple[Type, ...] = datafield()
     """Primary key of the record for which the view is specified."""
 
-    view_name: str = data_field()
+    view_name: str = datafield()
     """Name of the view displayed in the front end."""
 
     def get_key(self) -> ViewKey:

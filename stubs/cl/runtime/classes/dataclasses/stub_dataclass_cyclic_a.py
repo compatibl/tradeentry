@@ -15,7 +15,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from typing import TYPE_CHECKING
 from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
 from typing import Tuple, Type
@@ -30,10 +30,10 @@ StubDataclassCyclicAKey = Tuple[Type['StubDataclassCyclicA'], 'StubDataclassCycl
 class StubDataclassCyclicA(DataclassMixin):
     """Stub class A with a field whose type is key for class B."""
 
-    key: StubDataclassCyclicBKey | None = data_field()
+    key: StubDataclassCyclicBKey | None = datafield()
     """Key for class B."""
 
-    b: StubDataclassCyclicB | None = data_field()
+    b: StubDataclassCyclicB | None = datafield()
     """Key for class B."""
 
     def get_key(self) -> StubDataclassCyclicAKey:

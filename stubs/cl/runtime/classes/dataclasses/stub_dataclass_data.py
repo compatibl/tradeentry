@@ -14,15 +14,15 @@
 
 from dataclasses import dataclass
 
-from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 
 
 @dataclass(slots=True)
 class StubDataclassData:
     """Stub base data type."""
 
-    str_field: str = data_field(default="abc")
+    str_field: str = datafield(default="abc")
     """Stub field."""
 
-    int_field: int = data_field(default=123)
+    int_field: int = datafield(default=123)
     """Stub field."""

@@ -14,7 +14,7 @@
 
 import datetime as dt
 from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_data import StubDataclassData
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_list_fields import stub_dataclass_data_list_factory
@@ -90,16 +90,16 @@ def stub_dataclass_derived_record_list_dict_factory() -> Dict[str, List[StubData
 class StubDataclassListDictFields(StubDataclassRecord):
     """Stub record whose elements are dictionaries."""
 
-    float_list_dict: Dict[str, List[float]] = data_field(default_factory=stub_dataclass_float_list_dict_factory)
+    float_list_dict: Dict[str, List[float]] = datafield(default_factory=stub_dataclass_float_list_dict_factory)
     """Stub field."""
 
-    date_list_dict: Dict[str, List[dt.date]] = data_field(default_factory=stub_dataclass_date_list_dict_factory)
+    date_list_dict: Dict[str, List[dt.date]] = datafield(default_factory=stub_dataclass_date_list_dict_factory)
     """Stub field."""
 
-    record_list_dict: Dict[str, List[StubDataclassRecord]] = data_field(default_factory=stub_dataclass_record_list_dict_factory)
+    record_list_dict: Dict[str, List[StubDataclassRecord]] = datafield(default_factory=stub_dataclass_record_list_dict_factory)
     """Stub field."""
 
-    derived_record_list_dict: Dict[str, List[StubDataclassDerivedRecord]] = data_field(
+    derived_record_list_dict: Dict[str, List[StubDataclassDerivedRecord]] = datafield(
         default_factory=stub_dataclass_derived_record_list_dict_factory
     )
     """Stub field."""

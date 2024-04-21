@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
 from typing import Optional, Tuple, Type
 
@@ -24,7 +24,7 @@ StubDataclassSingletonKey = Tuple[Type['StubDataclassSingleton']]
 class StubDataclassSingleton(DataclassMixin):
     """Singleton record has no key fields."""
 
-    str_field: str = data_field(default="abc")
+    str_field: str = datafield(default="abc")
     """Stub field."""
 
     def get_key(self) -> StubDataclassSingletonKey:

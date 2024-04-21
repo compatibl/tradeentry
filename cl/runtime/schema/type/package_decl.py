@@ -14,7 +14,7 @@
 
 from dataclasses import dataclass
 from typing import Tuple, Type
-from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
 
 PackageDeclKey = Tuple[Type['PackageDecl'], str]
@@ -24,10 +24,10 @@ PackageDeclKey = Tuple[Type['PackageDecl'], str]
 class PackageDecl(DataclassMixin):
     """Base class for the package declaration in schema."""
 
-    package_id: str = data_field()
+    package_id: str = datafield()
     """Unique package identifier."""
 
-    label: str = data_field(optional=True)
+    label: str = datafield(optional=True)
     """Readable package label used by the front end."""
 
     def get_key(self) -> PackageDeclKey:

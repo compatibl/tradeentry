@@ -14,12 +14,12 @@
 
 from cl.runtime.schema.type.type_decl import TypeDecl
 from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 
 
 @dataclass
 class PrimitiveDecl(TypeDecl):
     """Declaration for a primitive type."""
 
-    base_type: str = data_field()
+    base_type: str = datafield()
     """Builtin type in which the data is stored."""

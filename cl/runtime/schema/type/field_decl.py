@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.type.type_decl import TypeDeclKey
 
 
@@ -21,20 +21,20 @@ from cl.runtime.schema.type.type_decl import TypeDeclKey
 class FieldDecl:
     """Base class of type declaration in schema."""
 
-    name: str = data_field()
+    name: str = datafield()
     """Field name in code and storage."""
 
-    label: str = data_field(optional=True)
+    label: str = datafield(optional=True)
     """Readable field label in the front end."""
 
-    type: TypeDeclKey = data_field()
+    type: TypeDeclKey = datafield()
     """Field type."""
 
-    dim: int = data_field(optional=True)
+    dim: int = datafield(optional=True)
     """List, array, or tensor dimension (defaults to scalar, i.e., the value of zero, if not specified)."""
 
-    optional: bool = data_field(optional=True)
+    optional: bool = datafield(optional=True)
     """True if field is optional (defaults to required if not specified)."""
 
-    contains_optional: bool = data_field(optional=True)
+    contains_optional: bool = datafield(optional=True)
     """True if list, array, or tensor elements are optional (defaults to required if not specified)."""

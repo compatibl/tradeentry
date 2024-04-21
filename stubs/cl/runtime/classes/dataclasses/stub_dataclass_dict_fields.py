@@ -15,7 +15,7 @@
 import datetime as dt
 from cl.runtime.primitive.date_util import DateUtil
 from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_data import StubDataclassData
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_record import StubDataclassRecord
@@ -88,23 +88,23 @@ def stub_dataclass_derived_record_dict_factory() -> Dict[str, StubDataclassDeriv
 class StubDataclassDictFields(StubDataclassRecord):
     """Stub record whose elements are dictionaries."""
 
-    str_dict: Dict[str, str] = data_field(default_factory=stub_dataclass_str_dict_factory)
+    str_dict: Dict[str, str] = datafield(default_factory=stub_dataclass_str_dict_factory)
     """Stub field."""
 
-    float_dict: Dict[str, float] = data_field(default_factory=stub_dataclass_float_dict_factory)
+    float_dict: Dict[str, float] = datafield(default_factory=stub_dataclass_float_dict_factory)
     """Stub field."""
 
-    date_dict: Dict[str, dt.date] = data_field(default_factory=stub_dataclass_date_dict_factory)
+    date_dict: Dict[str, dt.date] = datafield(default_factory=stub_dataclass_date_dict_factory)
     """Stub field."""
 
-    data_dict: Dict[str, StubDataclassData] = data_field(default_factory=stub_dataclass_data_dict_factory)
+    data_dict: Dict[str, StubDataclassData] = datafield(default_factory=stub_dataclass_data_dict_factory)
     """Stub field."""
 
-    key_dict: Dict[str, StubDataclassRecordKey] = data_field(default_factory=stub_dataclass_key_dict_factory)
+    key_dict: Dict[str, StubDataclassRecordKey] = datafield(default_factory=stub_dataclass_key_dict_factory)
     """Stub field."""
 
-    record_dict: Dict[str, StubDataclassRecord] = data_field(default_factory=stub_dataclass_record_dict_factory)
+    record_dict: Dict[str, StubDataclassRecord] = datafield(default_factory=stub_dataclass_record_dict_factory)
     """Stub field."""
 
-    derived_record_dict: Dict[str, StubDataclassDerivedRecord] = data_field(default_factory=stub_dataclass_derived_record_dict_factory)
+    derived_record_dict: Dict[str, StubDataclassDerivedRecord] = datafield(default_factory=stub_dataclass_derived_record_dict_factory)
     """Stub field."""

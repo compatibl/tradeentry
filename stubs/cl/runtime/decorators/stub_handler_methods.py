@@ -18,7 +18,7 @@ import datetime as dt
 import inspect
 from logging import getLogger
 from typing import Tuple, Type
-from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.decorators.handler_decorator import handler
 from stubs.cl.runtime.classes.enum.stub_int_enum import StubIntEnum
@@ -43,7 +43,7 @@ StubHandlerMethodsKey = Tuple[Type['StubHandlerMethods'], str]
 class StubHandlerMethods(DataclassMixin):
     """Stub record base class."""
 
-    stub_id: str = data_field(default="abc")
+    stub_id: str = datafield(default="abc")
     """Stub identifier."""
 
     def get_key(self) -> StubHandlerMethodsKey:

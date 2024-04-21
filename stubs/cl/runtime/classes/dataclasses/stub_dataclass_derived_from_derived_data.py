@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_derived_data import StubDataclassDerivedData
 from typing import Optional
 
@@ -22,5 +22,5 @@ from typing import Optional
 class StubDataclassDerivedFromDerivedData(StubDataclassDerivedData):
     """Two levels in inheritance hierarchy away from StubDataclassData."""
 
-    derived_from_derived_field: str = data_field(default="derived_from_derived")
+    derived_from_derived_field: str = datafield(default="derived_from_derived")
     """Stub field."""

@@ -30,7 +30,7 @@ class DataclassMixin(RecordMixin, ABC):
         return self.get_key(), self.__class__, asdict(self)
 
 
-def data_field(
+def datafield(
         *,
         default: T | None = None,
         default_factory: Any | None = None,
@@ -61,7 +61,7 @@ def data_field(
         filterable: Marks the field as filterable TODO(dataclasses) - Explain further in docs
     """
     metadata = {
-        "data_field": True,
+        "datafield": True,
         "optional": optional,
         "optional_fields": optional_fields, # TODO(dataclasses) - rename
         "type": subtype,

@@ -17,7 +17,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Tuple, Type
 
-from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.storage.index_util import index_fields
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_data import StubDataclassData
@@ -34,36 +34,36 @@ StubDataclassNestedFieldsKey = Tuple[Type['StubDataclassNestedFields'], str, Stu
 class StubDataclassNestedFields(DataclassMixin):
     """Stub derived class."""
 
-    primitive: str = data_field(default="abc")
+    primitive: str = datafield(default="abc")
     """String key element."""
 
-    embedded_1: StubDataclassRecordKey = data_field(default_factory=StubDataclassRecordKey)
+    embedded_1: StubDataclassRecordKey = datafield(default_factory=StubDataclassRecordKey)
     """Embedded key 1."""
 
-    embedded_2: StubDataclassRecordKey = data_field(default_factory=StubDataclassRecordKey)
+    embedded_2: StubDataclassRecordKey = datafield(default_factory=StubDataclassRecordKey)
     """Embedded key 2."""
 
-    base_data_field: StubDataclassData = data_field(default_factory=StubDataclassData)
+    base_datafield: StubDataclassData = datafield(default_factory=StubDataclassData)
     """Stub field."""
 
-    derived_data_field: StubDataclassDerivedData = data_field(default_factory=StubDataclassDerivedData)
+    derived_datafield: StubDataclassDerivedData = datafield(default_factory=StubDataclassDerivedData)
     """Stub field."""
 
-    derived_from_derived_data_field: StubDataclassDerivedFromDerivedData = data_field(
+    derived_from_derived_datafield: StubDataclassDerivedFromDerivedData = datafield(
         default=StubDataclassDerivedFromDerivedData
     )
     """Stub field."""
 
-    polymorphic_data_field: StubDataclassData = data_field(default_factory=StubDataclassDerivedData)
+    polymorphic_datafield: StubDataclassData = datafield(default_factory=StubDataclassDerivedData)
     """Declared StubDataclassData but provided an instance of StubDataclassDerivedData."""
 
-    polymorphic_derived_data_field: StubDataclassDerivedData = data_field(default=StubDataclassDerivedFromDerivedData)
+    polymorphic_derived_datafield: StubDataclassDerivedData = datafield(default=StubDataclassDerivedFromDerivedData)
     """Declared StubDataclassDerivedData but provided an instance of StubDataclassDerivedFromDerivedData."""
 
-    key_field: StubDataclassRecordKey = data_field(default_factory=StubDataclassRecordKey)
+    key_field: StubDataclassRecordKey = datafield(default_factory=StubDataclassRecordKey)
     """Stub field."""
 
-    record_as_key_field: StubDataclassRecordKey = data_field(default_factory=lambda: StubDataclassRecord())
+    record_as_key_field: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecord())
     """Stub field with key type initialized to record type instance."""
 
     def get_key(self) -> StubDataclassNestedFieldsKey:

@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from cl.runtime.view.view import View
 from typing import final
 
@@ -23,5 +23,5 @@ from typing import final
 class RecordView(View):
     """View that displays another record specified via its primary key."""
 
-    view_of: str = data_field()
+    view_of: str = datafield()
     """Primary key of the displayed record."""

@@ -16,7 +16,7 @@ from typing import Tuple, Type
 
 from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
 from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 
 TypeDeclKey = Tuple[Type['TypeDecl'], str]
 
@@ -25,13 +25,13 @@ TypeDeclKey = Tuple[Type['TypeDecl'], str]
 class TypeDecl(DataclassMixin):
     """Base class of type declaration in schema."""
 
-    type_id: str = data_field()
+    type_id: str = datafield()
     """
     Unique dot-delimited type identifier. May optionally include package alias.
     Used for table name in storage, and _type field in JSON.
     """
 
-    label: str = data_field(optional=True)
+    label: str = datafield(optional=True)
     """Readable type label in the front end."""
 
     def get_key(self) -> TypeDeclKey:

@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from cl.runtime.view.view import View
 from typing import List
 from typing import final
@@ -24,5 +24,5 @@ from typing import final
 class RecordListView(View):
     """View that displays a list of record specified via their primary keys."""
 
-    view_of: List[str] = data_field()
+    view_of: List[str] = datafield()
     """Primary keys of the displayed records."""
