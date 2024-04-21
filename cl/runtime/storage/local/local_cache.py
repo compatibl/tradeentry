@@ -25,12 +25,7 @@ from typing import Iterable
 from typing import List
 from typing import Tuple
 from typing import Type
-from typing import TypeVar
-from typing import Union
-
-TKey = TypeVar("TKey", contravariant=True)
-TRecord = TypeVar("TRecord", covariant=True)
-
+from cl.runtime.storage.data_source import RecordType, KeyType
 
 @dataclass(slots=True, init=True, frozen=True)
 class LocalCache(DataSource):
@@ -44,9 +39,9 @@ class LocalCache(DataSource):
 
     def load_unordered(
         self,
-        keys: Iterable[Tuple],
+        keys: Iterable[KeyType],
         dataset: List[str] | str | None = None,
-    ) -> Iterable[Tuple[Tuple, Type, Dict[str, Any]]]:
+    ) -> Iterable[RecordType]:
         result = []
         for key in keys:  # TODO: Accelerate by avoiding for loop
             # Try to retrieve dataset dictionary, insert if it does not yet exist
@@ -62,13 +57,23 @@ class LocalCache(DataSource):
 
         return result
 
+    def load_by_query(
+        self,
+        base_type: Type,
+        record_type: Type,
+        query: Dict[str, Any] | None,
+        order: Dict[str, int] | None = None,
+        dataset: List[str] | str | None = None,
+    ) -> Iterable[RecordType]:
+        raise NotImplementedError()
+
     def save_many(
         self,
-        key_record_pairs: Iterable[Tuple[Tuple, Type, Dict[str, Any]]],
+        records: Iterable[RecordType],
         dataset: List[str] | str | None = None,
     ) -> None:
         # Iterate over key-record pairs
-        for key, type_, dict_ in key_record_pairs:
+        for key, type_, dict_ in records:
             # Try to retrieve dataset dictionary, insert if it does not yet exist
             dataset_cache = self._cache.setdefault(dataset, {})
 
@@ -76,19 +81,9 @@ class LocalCache(DataSource):
             # Insert the record into dataset dictionary
             dataset_cache[key] = (type_, dict_)
 
-    def load_by_query(
-        self,
-        table: str,
-        query: Dict[str, Any] | None,
-        order: Dict[str, int] | None = None,
-        dataset: List[str] | str | None = None,
-    ) -> Iterable[Dict[str, Any]]:
-        raise NotImplementedError()
-
     def delete_many(
         self,
-        table: str,
-        keys: Iterable[Tuple],
+        keys: Iterable[KeyType],
         dataset: List[str] | str | None = None,
     ) -> None:
         raise NotImplementedError()

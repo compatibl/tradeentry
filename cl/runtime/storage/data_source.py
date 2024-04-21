@@ -27,6 +27,9 @@ from typing import List
 from typing import Tuple
 from typing import Type
 
+KeyType = Tuple[Type, ...]
+RecordType = Tuple[KeyType, Type, Dict[str, Any]]
+
 
 @dataclass(slots=True, init=True, frozen=True)
 class DataSource(ABC):
@@ -44,15 +47,15 @@ class DataSource(ABC):
     @abstractmethod
     def load_unordered(
         self,
-        keys: Iterable[Tuple],
+        keys: Iterable[KeyType],
         dataset: List[str] | str | None = None,
-    ) -> Iterable[Tuple[Tuple, Type, Dict[str, Any]]]:
+    ) -> Iterable[RecordType]:
         """
-        Return serialized records in arbitrary order, skipping records that are not found.
+        Return tuples of (key, type, dict) for records in arbitrary order, skipping records that are not found.
         Error if the size of keys iterable exceeds batch size.
 
         Returns:
-            Iterable with serialized records where each level is a supported primitive type, list, or another dict.
+            Tuples of (key, type, dict) where type is record class and dict contains serialized record data.
 
         Args:
             keys: Iterable of keys in tuple format consisting of base type followed by key fields.
@@ -62,20 +65,22 @@ class DataSource(ABC):
     @abstractmethod
     def load_by_query(
         self,
-        table: str,
+        base_type: Type,
+        record_type: Type,
         query: Dict[str, Any] | None,
         order: Dict[str, int] | None = None,
         dataset: List[str] | str | None = None,
-    ) -> Iterable[Dict[str, Any]]:
+    ) -> Iterable[RecordType]:
         """
         Load serialized records from a single table by query.
 
         Returns:
-            Iterable containing dicts where each level is a supported primitive type, list, or another dict.
+            Tuples of (key, type, dict) where type is record class and dict contains serialized record data.
 
         Args:
-            table: Table from which the records will be loaded.
-            query: NoSQL query as dict in MongoDB format, or None to load all records from the table.
+            base_type: Base class for which the key is defined
+            record_type: Query will match this class and its descendants, must derive from base `base_type`
+            query: NoSQL query on fields in MongoDB format, or None to load all records from the table.
             order: NoSQL sorting order in MongoDB format, or None if the result can be in any order.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
         """
@@ -83,22 +88,21 @@ class DataSource(ABC):
     @abstractmethod
     def save_many(
         self,
-        key_record_pairs: Iterable[Tuple[Tuple, Type, Dict[str, Any]]],
+        records: Iterable[RecordType],
         dataset: List[str] | str | None = None,
     ) -> None:
         """
         Save serialized records (overwrite records that already exist).
 
         Args:
-            key_record_pairs: Iterable of tuples where first element is key and second is serialized record.
+            records: Tuples of (key, type, dict) where type is record class and dict contains serialized record data.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
         """
 
     @abstractmethod
     def delete_many(
         self,
-        table: str,
-        keys: Iterable[Tuple],
+        keys: Iterable[KeyType],
         dataset: List[str] | str | None = None,
     ) -> None:
         """

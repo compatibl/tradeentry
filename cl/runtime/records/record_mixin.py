@@ -51,7 +51,7 @@ class RecordMixin(ABC):
 
     @abstractmethod
     def get_key(self) -> Tuple[Type, ...]:
-        """Return a tuple starting from the base record class followed by the primary key fields."""
+        """Base class for which the key is defined followed by the values of primary key fields in this class."""
 
     @abstractmethod
     def pack(self) -> Tuple[Tuple[Type, ...], Type[Self], Dict[str, Any]]:
