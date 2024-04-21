@@ -5,7 +5,7 @@ from cl.runtime.classes.class_info import ClassInfo
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.rest.context import Context
 from cl.runtime.rest.basic_context import BasicContext
-from cl.runtime.storage.local_cache import LocalCache
+from cl.runtime.storage.local.local_cache import LocalCache
 from cl.runtime.view.view import View
 from cl.runtime.view.record_view import RecordView
 from cl.runtime.view.record_list_view import RecordListView
