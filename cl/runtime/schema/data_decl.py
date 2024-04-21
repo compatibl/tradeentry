@@ -13,9 +13,9 @@
 # limitations under the License.
 
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
-from cl.runtime.schema.type.field_decl import FieldDecl
-from cl.runtime.schema.type.type_decl import TypeDecl
-from cl.runtime.schema.type.type_decl import TypeDeclKey
+from cl.runtime.schema.field_decl import FieldDecl
+from cl.runtime.schema.type_decl import TypeDecl
+from cl.runtime.schema.type_decl import TypeDeclKey
 from dataclasses import dataclass
 from typing import List
 
