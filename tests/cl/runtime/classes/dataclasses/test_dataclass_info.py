@@ -136,7 +136,7 @@ def test_to_from_dict():
         obj = stub_type()
 
         # Serialize to dict
-        key, type_, dict_ = obj.to_dict()
+        key, type_, dict_ = obj.pack()
 
         # Restore from dict
         restored_obj = stub_type(**dict_)  # noqa

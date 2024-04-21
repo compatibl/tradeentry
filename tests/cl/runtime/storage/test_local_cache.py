@@ -27,7 +27,7 @@ def test_smoke():
         # Create test record and populate with sample data
         record = StubDataclassBase()
         key = record.get_key()
-        serialized_record = record.to_dict()
+        serialized_record = record.pack()
 
         # Test saving and loading
         dataset = "sample"

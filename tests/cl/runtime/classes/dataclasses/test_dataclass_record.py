@@ -31,9 +31,9 @@ def test_smoke():
     assert key == (StubDataclassRecord, "abc", 123)
 
     # Test roundtrip serialization
-    record_key, record_type, record_dict = record.to_dict()
+    record_key, record_type, record_dict = record.pack()
     record_clone = StubDataclassRecord(**record_dict)
-    clone_key, clone_type, clone_dict = record_clone.to_dict()
+    clone_key, clone_type, clone_dict = record_clone.pack()
     assert len(record_dict) == 3
     assert clone_key == key
     assert clone_type == StubDataclassRecord

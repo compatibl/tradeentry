@@ -40,7 +40,7 @@ class StubCustomBase(RecordMixin):
         self.int_field = int_field
         self.float_field = float_field
 
-    def to_dict(self) -> Tuple[StubCustomBaseKey, Type[StubCustomBase], Dict[str, Any]]:
+    def pack(self) -> Tuple[StubCustomBaseKey, Type[StubCustomBase], Dict[str, Any]]:
         class_type = type(self)
         return (
             self.get_key(),

@@ -61,7 +61,7 @@ class RecordMixin(ABC):
         """Return key as tuple in (RecordClass, key_field_1, key_field_2, ...) format."""
 
     @abstractmethod
-    def to_dict(self) -> Tuple[Tuple[Type, ...], Type[Self], Dict[str, Any]]:
+    def pack(self) -> Tuple[Tuple[Type, ...], Type[Self], Dict[str, Any]]:
         """Serialize to dictionary containing other dictionaries, lists and primitive types."""
 
     @classmethod

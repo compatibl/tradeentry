@@ -184,7 +184,7 @@ class ClassInfo(ABC):
         return f"{ClassInfo.get_table(type(obj))};{ClassInfo.get_key(obj)}"
 
     @staticmethod
-    def to_dict(obj: Any) -> Dict[str, Any]:
+    def pack(obj: Any) -> Dict[str, Any]:
         """Serialize to dictionary containing other dictionaries, lists and primitive types."""
 
         # TODO: Add memoization

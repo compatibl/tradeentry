@@ -26,7 +26,7 @@ T = TypeVar("T")
 class DataclassMixin(RecordMixin, ABC):
     """Mixin methods for dataclass records."""
 
-    def to_dict(self) -> Tuple[Tuple[Type, ...], Type[Self], Dict[str, Any]]:
+    def pack(self) -> Tuple[Tuple[Type, ...], Type[Self], Dict[str, Any]]:
         return self.get_key(), self.__class__, asdict(self)
 
 
