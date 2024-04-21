@@ -18,7 +18,6 @@ from stubs.cl.runtime.classes.attrs.stub_attrs_nested_fields import StubAttrsNes
 from stubs.cl.runtime.classes.attrs.stub_attrs_nested_fields_key import StubAttrsNestedFieldsKey
 from stubs.cl.runtime.classes.attrs.stub_attrs_other_derived_record import StubAttrsOtherDerivedRecord
 from stubs.cl.runtime.classes.attrs.stub_attrs_primitive_fields import StubAttrsPrimitiveFields
-from stubs.cl.runtime.classes.attrs.stub_attrs_primitive_fields_key import StubAttrsPrimitiveFieldsKey
 from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecordKey
 from stubs.cl.runtime.classes.attrs.stub_attrs_singleton import StubAttrsSingleton

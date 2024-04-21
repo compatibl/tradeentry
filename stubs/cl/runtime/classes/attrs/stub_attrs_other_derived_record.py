@@ -16,15 +16,15 @@ from __future__ import annotations
 
 from cl.runtime.primitive.date_time_util import DateTimeUtil
 from cl.runtime.primitive.date_util import DateUtil
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from cl.runtime.storage.index_util import index_fields
 from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecord
 from typing import Optional
 
 
 @index_fields("other_float_field, other_str_field, -int_field")
-@data_class
+@dataclass
 class StubAttrsOtherDerivedRecord(StubAttrsRecord):
     """Another type derived from StubAttrsRecord."""
 

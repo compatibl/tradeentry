@@ -12,21 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime import RecordMixin
-from cl.runtime import data_class
-from cl.runtime import data_field
-from cl.runtime.serialization.type_settings import TypeSettings
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
 from dataclasses import dataclass
-from stubs.cl.runtime import StubAttrsRecordKey
 
 
-@data_class
-class StubAttrsAliasedRecord:
+@dataclass
+class StubAttrsAliasedRecord(DataclassMixin):  # TODO: Specify alias
     """Stub record class with typename alias."""
 
     a: int = data_field()
 
-
-StubAttrsAliasedRecord()
-
-TypeSettings.set_type_alias(StubAttrsAliasedRecord, "StubAttrsAliasedRecordNewName")

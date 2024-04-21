@@ -13,11 +13,11 @@
 # limitations under the License.
 
 from cl.runtime.schema.decl.handler_variable_decl import HandlerVariableDecl
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 
 
-@data_class
+@dataclass
 class HandlerParamDecl(HandlerVariableDecl):
     """Handler parameter declaration."""
 

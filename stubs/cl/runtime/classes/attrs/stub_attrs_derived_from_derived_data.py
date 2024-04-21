@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from stubs.cl.runtime.classes.attrs.stub_attrs_derived_data import StubAttrsDerivedData
 from typing import Optional
 
 
-@data_class
+@dataclass
 class StubAttrsDerivedFromDerivedData(StubAttrsDerivedData):
     """Two levels in inheritance hierarchy away from StubAttrsData."""
 

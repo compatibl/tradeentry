@@ -13,7 +13,8 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.classes.attrs_util import data_field
+
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 
 
 @dataclass(slots=True)

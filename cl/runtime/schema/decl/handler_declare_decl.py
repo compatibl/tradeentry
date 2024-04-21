@@ -15,13 +15,13 @@
 from cl.runtime.schema.decl.handler_param_decl import HandlerParamDecl
 from cl.runtime.schema.decl.handler_type import HandlerType
 from cl.runtime.schema.decl.handler_variable_decl import HandlerVariableDecl
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from typing import List
 from typing import Optional
 
 
-@data_class
+@dataclass
 class HandlerDeclareDecl:
     """Handler declaration data."""
 

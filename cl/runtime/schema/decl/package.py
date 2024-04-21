@@ -14,14 +14,14 @@
 
 from cl.runtime.schema.decl.package_dependency import PackageDependency
 from cl.runtime.schema.decl.package_key import PackageKey
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from cl.runtime.classes.record_mixin import RecordMixin
 from typing import List
 from typing import Optional
 
 
-@data_class
+@dataclass
 class Package(PackageKey, RecordMixin):
     """Package is a list of modules and binaries which are deployed together."""
 

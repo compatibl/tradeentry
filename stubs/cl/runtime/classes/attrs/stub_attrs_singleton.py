@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from cl.runtime.classes.record_mixin import RecordMixin
 from stubs.cl.runtime.classes.attrs.stub_attrs_singleton_key import StubAttrsSingletonKey
 from typing import Optional
 
 
-@data_class
+@dataclass
 class StubAttrsSingleton(StubAttrsSingletonKey, RecordMixin):
     """Singleton record has no key fields."""
 

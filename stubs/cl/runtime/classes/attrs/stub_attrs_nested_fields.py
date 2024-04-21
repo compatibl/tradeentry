@@ -14,8 +14,8 @@
 
 from __future__ import annotations
 
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from cl.runtime.storage.index_util import index_fields
 from stubs.cl.runtime.classes.attrs.stub_attrs_data import StubAttrsData
 from stubs.cl.runtime.classes.attrs.stub_attrs_derived_data import StubAttrsDerivedData
@@ -26,14 +26,14 @@ from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecordKey
 
 
 @index_fields("derived_float_field, -float_field")
-@data_class(init=False)
+@dataclass(init=False)
 class StubAttrsNestedFields(StubAttrsNestedFieldsKey):
     """Stub derived class."""
 
-    base_data_field: StubAttrsData = data_field(factory=StubAttrsData)
+    base_data_field: StubAttrsData = data_field(default_factory=StubAttrsData)
     """Stub field."""
 
-    derived_data_field: StubAttrsDerivedData = data_field(factory=StubAttrsDerivedData)
+    derived_data_field: StubAttrsDerivedData = data_field(default_factory=StubAttrsDerivedData)
     """Stub field."""
 
     derived_from_derived_data_field: StubAttrsDerivedFromDerivedData = data_field(
@@ -41,14 +41,14 @@ class StubAttrsNestedFields(StubAttrsNestedFieldsKey):
     )
     """Stub field."""
 
-    polymorphic_data_field: StubAttrsData = data_field(factory=StubAttrsDerivedData)
+    polymorphic_data_field: StubAttrsData = data_field(default_factory=StubAttrsDerivedData)
     """Declared StubAttrsData but provided an instance of StubAttrsDerivedData."""
 
     polymorphic_derived_data_field: StubAttrsDerivedData = data_field(default=StubAttrsDerivedFromDerivedData)
     """Declared StubAttrsDerivedData but provided an instance of StubAttrsDerivedFromDerivedData."""
 
-    key_field: StubAttrsRecordKey = data_field(factory=StubAttrsRecordKey)
+    key_field: StubAttrsRecordKey = data_field(default_factory=StubAttrsRecordKey)
     """Stub field."""
 
-    record_as_key_field: StubAttrsRecordKey = data_field(factory=lambda: StubAttrsRecord())
+    record_as_key_field: StubAttrsRecordKey = data_field(default_factory=lambda: StubAttrsRecord())
     """Stub field with key type initialized to record type instance."""

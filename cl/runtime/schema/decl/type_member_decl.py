@@ -16,8 +16,8 @@ from cl.runtime.schema.decl.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.decl.type_decl_key import TypeDeclKey
 from cl.runtime.schema.decl.value_decl import ValueDecl
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from typing import TYPE_CHECKING
 from typing import List
 from typing import Optional
@@ -26,7 +26,7 @@ if TYPE_CHECKING:
     from cl.runtime.schema.decl.type_argument_decl import TypeArgumentDecl
 
 
-@data_class
+@dataclass
 class TypeMemberDecl:
     """Type member declaration."""
 

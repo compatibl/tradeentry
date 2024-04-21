@@ -13,12 +13,12 @@
 # limitations under the License.
 
 from cl.runtime.schema.type.type_decl_key import TypeDeclKey
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from cl.runtime.classes.record_mixin import RecordMixin
 
 
-@data_class
+@dataclass
 class TypeDecl(TypeDeclKey, RecordMixin):
     """Base class of type declaration in schema."""
 

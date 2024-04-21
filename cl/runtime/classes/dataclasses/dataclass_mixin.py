@@ -17,7 +17,6 @@ from abc import ABC
 from dataclasses import asdict, dataclass
 from typing import Any, Tuple, Type, Dict
 from typing_extensions import Self
-
 from cl.runtime.classes.record_mixin import RecordMixin
 
 
@@ -27,4 +26,3 @@ class DataclassMixin(RecordMixin, ABC):
 
     def to_dict(self) -> Tuple[Tuple[Type, ...], Type[Self], Dict[str, Any]]:
         return self.get_key(), self.__class__, asdict(self)
-

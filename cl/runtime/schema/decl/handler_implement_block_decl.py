@@ -14,13 +14,13 @@
 
 from cl.runtime.schema.decl.handler_implement_decl import HandlerImplementDecl
 from cl.runtime.schema.decl.interface_implement_decl import InterfaceImplementDecl
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from typing import List
 from typing import Optional
 
 
-@data_class
+@dataclass
 class HandlerImplementBlockDecl:
     """Handler implementation block in type declaration."""
 

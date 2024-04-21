@@ -15,13 +15,13 @@
 from cl.runtime.schema.type.field_decl import FieldDecl
 from cl.runtime.schema.type.type_decl import TypeDecl
 from cl.runtime.schema.type.type_decl_key import TypeDeclKey
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from typing import List
 from typing import Union
 
 
-@data_class
+@dataclass
 class DataDecl(TypeDecl):
     """Declaration for serializable data with fields."""
 

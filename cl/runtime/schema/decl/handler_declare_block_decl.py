@@ -13,12 +13,12 @@
 # limitations under the License.
 
 from cl.runtime.schema.decl.handler_declare_decl import HandlerDeclareDecl
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from typing import List
 
 
-@data_class
+@dataclass
 class HandlerDeclareBlockDecl:
     """Handler declaration block in type declaration."""
 

@@ -16,13 +16,13 @@ from abc import ABC
 from cl.runtime.classes.record_mixin import RecordMixin
 from cl.runtime.schema.decl.module_key import ModuleKey
 from cl.runtime.schema.decl.package_key import PackageKey
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from typing import List
 from typing import Optional
 
 
-@data_class
+@dataclass
 class Module(ModuleKey, RecordMixin):
     """
     Represents a group of related types under a common namespace or directory.

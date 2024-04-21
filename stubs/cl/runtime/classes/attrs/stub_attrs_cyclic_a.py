@@ -14,8 +14,8 @@
 
 from __future__ import annotations
 
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from typing import TYPE_CHECKING
 from typing import Union
 
@@ -23,7 +23,7 @@ if TYPE_CHECKING:
     from stubs.cl.runtime.classes.attrs.stub_attrs_cyclic_b import StubAttrsCyclicB
 
 
-@data_class
+@dataclass
 class StubAttrsCyclicA:
     """Stub class A with a field whose type is key for class B."""
 

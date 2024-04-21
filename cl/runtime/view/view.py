@@ -13,13 +13,13 @@
 # limitations under the License.
 
 from abc import ABC
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from cl.runtime.classes.record_mixin import RecordMixin
 from cl.runtime.view.view_key import ViewKey
 
 
-@data_class
+@dataclass
 class View(ViewKey, RecordMixin, ABC):
     """
     The data shown alongside the record in the front end.

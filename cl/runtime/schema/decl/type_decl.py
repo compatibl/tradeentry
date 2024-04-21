@@ -21,14 +21,14 @@ from cl.runtime.schema.decl.type_element_decl import TypeElementDecl
 from cl.runtime.schema.decl.type_index_decl import TypeIndexDecl
 from cl.runtime.schema.decl.type_kind import TypeKind
 from cl.runtime.schema.decl.type_param_decl import TypeParamDecl
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from cl.runtime.classes.record_mixin import RecordMixin
 from typing import List
 from typing import Optional
 
 
-@data_class
+@dataclass
 class TypeDecl(TypeDeclKey, RecordMixin):
     """
     Defines type declaration. A tag of entity type XML representation corresponds to each element of the type. The

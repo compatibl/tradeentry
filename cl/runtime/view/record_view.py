@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from cl.runtime.view.view import View
 from typing import final
 
 
 @final
-@data_class
+@dataclass
 class RecordView(View):
     """View that displays another record specified via its primary key."""
 

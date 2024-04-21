@@ -13,12 +13,12 @@
 # limitations under the License.
 
 from cl.runtime.schema.decl.type_param_constraint_type import TypeParamConstraintType
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from typing import Optional
 
 
-@data_class
+@dataclass
 class TypeParamDecl:
     """Type parameter declaration."""
 

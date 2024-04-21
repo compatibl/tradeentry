@@ -15,14 +15,14 @@
 from cl.runtime.schema.decl.handler_declare_decl import HandlerDeclareDecl
 from cl.runtime.schema.decl.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.decl.type_element_decl import TypeElementDecl
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from cl.runtime.classes.record_mixin import RecordMixin
 from typing import List
 from typing import Optional
 
 
-@data_class
+@dataclass
 class InterfaceDecl(InterfaceDeclKey, RecordMixin):
     """Defines Interface declaration."""
 

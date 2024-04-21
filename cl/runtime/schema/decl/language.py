@@ -14,14 +14,14 @@
 
 from cl.runtime.classes.record_mixin import RecordMixin
 from cl.runtime.schema.decl.language_key import LanguageKey
-from cl.runtime.classes.attrs_util import data_class
-from cl.runtime.classes.attrs_util import data_field
+from dataclasses import dataclass
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from typing import Optional
 from typing import final
 
 
 @final
-@data_class
+@dataclass
 class Language(LanguageKey, RecordMixin):
     language_label: Optional[str] = data_field()
     """Language label displayed in user interface (may not be unique)."""

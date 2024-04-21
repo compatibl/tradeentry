@@ -17,10 +17,10 @@ from __future__ import annotations
 import datetime as dt
 import inspect
 from logging import getLogger
-
-from cl.runtime import RecordMixin
+from typing import Tuple, Type
+from cl.runtime.classes.dataclasses.dataclass_fields import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.decorators.handler_decorator import handler
-from stubs.cl.runtime.decorators.stub_handler_methods_key import StubHandlerMethodsKey
 from stubs.cl.runtime.classes.enum.stub_int_enum import StubIntEnum
 
 _logger = getLogger(__name__)
@@ -37,8 +37,17 @@ def print_method_info():  # TODO: Move into DebugUtil(s)
     print(f"Called {method_name}({params_output})")
 
 
-class StubHandlerMethods(StubHandlerMethodsKey, RecordMixin):
+StubHandlerMethodsKey = Tuple[Type['StubHandlerMethods'], str]
+
+
+class StubHandlerMethods(DataclassMixin):
     """Stub record base class."""
+
+    stub_id: str = data_field(default="abc")
+    """Stub identifier."""
+
+    def get_key(self) -> StubHandlerMethodsKey:
+        return StubHandlerMethods, self.stub_id
 
     @handler
     def instance_handler_1a(self) -> None:

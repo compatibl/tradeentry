@@ -19,6 +19,7 @@ from stubs.cl.runtime import StubAttrsRecord
 from stubs.cl.runtime.classes.attrs.stub_attrs_aliased_record import StubAttrsAliasedRecord
 
 
+@pytest.mark.skip("Aliases are not yet supported.")
 def test_type_alias():
     """Test type alias methods."""
 

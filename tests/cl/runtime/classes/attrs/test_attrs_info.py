@@ -30,7 +30,6 @@ from stubs.cl.runtime import StubAttrsNestedFields
 from stubs.cl.runtime import StubAttrsNestedFieldsKey
 from stubs.cl.runtime import StubAttrsOtherDerivedRecord
 from stubs.cl.runtime import StubAttrsPrimitiveFields
-from stubs.cl.runtime import StubAttrsPrimitiveFieldsKey
 from stubs.cl.runtime import StubAttrsRecord
 from stubs.cl.runtime import StubAttrsRecordKey
 from stubs.cl.runtime import StubAttrsSingleton
