@@ -15,13 +15,14 @@
 from dataclasses import dataclass, field, asdict
 from typing import Tuple, Type, Dict, Any
 from typing_extensions import Self
-from cl.runtime.classes.record_mixin import RecordMixin
+
+from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
 
 StubDataclassBaseKey = Tuple[Type['StubDataclassBase'], str, int]
 
 
 @dataclass
-class StubDataclassBase(RecordMixin):
+class StubDataclassBase(DataclassMixin):
     """Stub record base class."""
 
     str_field: str = field(default="abc")
@@ -33,6 +34,3 @@ class StubDataclassBase(RecordMixin):
     def get_key(self) -> StubDataclassBaseKey:
         return StubDataclassBase, self.str_field, self.int_field
 
-    def to_dict(self) -> Tuple[StubDataclassBaseKey, Type[Self], Dict[str, Any]]:
-        """Serialize to dictionary containing other dictionaries, lists and primitive types."""
-        return self.get_key(), self.__class__, asdict(self)

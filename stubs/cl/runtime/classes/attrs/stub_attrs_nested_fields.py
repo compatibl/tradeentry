@@ -15,20 +15,33 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Tuple, Type
+
 from cl.runtime.classes.dataclasses.dataclass_fields import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.storage.index_util import index_fields
 from stubs.cl.runtime.classes.attrs.stub_attrs_data import StubAttrsData
 from stubs.cl.runtime.classes.attrs.stub_attrs_derived_data import StubAttrsDerivedData
 from stubs.cl.runtime.classes.attrs.stub_attrs_derived_from_derived_data import StubAttrsDerivedFromDerivedData
-from stubs.cl.runtime.classes.attrs.stub_attrs_nested_fields_key import StubAttrsNestedFieldsKey
 from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecordKey
 
+StubAttrsNestedFieldsKey = Tuple[Type['StubAttrsNestedFields'], str, StubAttrsRecordKey, StubAttrsRecordKey]
 
-@index_fields("derived_float_field, -float_field")
+
+# @index_fields("derived_float_field, -float_field") # TODO: index_fields
 @dataclass(init=False)
-class StubAttrsNestedFields(StubAttrsNestedFieldsKey):
+class StubAttrsNestedFields(DataclassMixin):
     """Stub derived class."""
+
+    primitive: str = data_field(default="abc")
+    """String key element."""
+
+    embedded_1: StubAttrsRecordKey = data_field(default_factory=StubAttrsRecordKey)
+    """Embedded key 1."""
+
+    embedded_2: StubAttrsRecordKey = data_field(default_factory=StubAttrsRecordKey)
+    """Embedded key 2."""
 
     base_data_field: StubAttrsData = data_field(default_factory=StubAttrsData)
     """Stub field."""
@@ -52,3 +65,6 @@ class StubAttrsNestedFields(StubAttrsNestedFieldsKey):
 
     record_as_key_field: StubAttrsRecordKey = data_field(default_factory=lambda: StubAttrsRecord())
     """Stub field with key type initialized to record type instance."""
+
+    def get_key(self) -> StubAttrsNestedFieldsKey:
+        return StubAttrsNestedFields, self.primitive, self.embedded_1, self.embedded_2

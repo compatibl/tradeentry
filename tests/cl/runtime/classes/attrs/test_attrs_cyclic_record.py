@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cl.runtime as rt
 import pytest
 from stubs.cl.runtime.classes.attrs.stub_attrs_cyclic_a import StubAttrsCyclicA
 from stubs.cl.runtime.classes.attrs.stub_attrs_cyclic_b import StubAttrsCyclicB
@@ -34,8 +33,13 @@ def test_cyclic_record():
     b_2.a = StubAttrsCyclicA.create()
 
     # Test for annotation retrospection
-    assert StubAttrsCyclicA.__annotations__ == {"b": "StubAttrsCyclicB"}
-    assert StubAttrsCyclicB.__annotations__ == {"a": "StubAttrsCyclicA"}
+    assert StubAttrsCyclicA.__annotations__ == {"key": "StubAttrsCyclicBKey | None", "b": "StubAttrsCyclicB | None"}
+    assert StubAttrsCyclicB.__annotations__ == {"id": "str | None", "a": "StubAttrsCyclicA | None"}
+
+    # Test for keys
+
+    assert b_1.get_key() == (StubAttrsCyclicB, "a")
+    assert a_1.get_key() == (StubAttrsCyclicA, (StubAttrsCyclicB, "b"))
 
 
 if __name__ == "__main__":

@@ -19,16 +19,26 @@ from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from typing import TYPE_CHECKING
 from typing import Union
 
+from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
+from typing import Tuple, Type
+
 if TYPE_CHECKING:
     from stubs.cl.runtime.classes.attrs.stub_attrs_cyclic_a import StubAttrsCyclicA
 
+StubAttrsCyclicBKey = Tuple[Type['StubAttrsCyclicB'], str]
 
 @dataclass
-class StubAttrsCyclicB:
+class StubAttrsCyclicB(DataclassMixin):
     """Stub class A with a field whose type is key for class B."""
 
-    a: StubAttrsCyclicA = data_field()
+    id: str | None = data_field()
+    """String identifier for class A."""
+
+    a: StubAttrsCyclicA | None = data_field()
     """Key for class A."""
+
+    def get_key(self) -> StubAttrsCyclicBKey:
+        return StubAttrsCyclicB, self.id
 
     @staticmethod
     def create() -> StubAttrsCyclicB:
@@ -38,5 +48,6 @@ class StubAttrsCyclicB:
         from stubs.cl.runtime.classes.attrs.stub_attrs_cyclic_a import StubAttrsCyclicA
 
         obj = StubAttrsCyclicB()
+        obj.id = "a"
         obj.a = StubAttrsCyclicA()
         return obj

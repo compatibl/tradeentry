@@ -12,15 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.schema.type.package_decl_key import PackageDeclKey
 from dataclasses import dataclass
+from typing import Tuple, Type
 from cl.runtime.classes.dataclasses.dataclass_fields import data_field
-from cl.runtime.classes.record_mixin import RecordMixin
+from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
+
+PackageDeclKey = Tuple[Type['PackageDecl'], str]
 
 
 @dataclass
-class PackageDecl(PackageDeclKey, RecordMixin):
+class PackageDecl(DataclassMixin):
     """Base class for the package declaration in schema."""
+
+    package_id: str = data_field()
+    """Unique package identifier."""
 
     label: str = data_field(optional=True)
     """Readable package label used by the front end."""
+
+    def get_key(self) -> PackageDeclKey:
+        return PackageDecl, self.package_id
+

@@ -12,15 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.schema.type.type_decl_key import TypeDeclKey
+from typing import Tuple, Type
+
+from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
 from dataclasses import dataclass
 from cl.runtime.classes.dataclasses.dataclass_fields import data_field
-from cl.runtime.classes.record_mixin import RecordMixin
+
+TypeDeclKey = Tuple[Type['TypeDecl'], str]
 
 
 @dataclass
-class TypeDecl(TypeDeclKey, RecordMixin):
+class TypeDecl(DataclassMixin):
     """Base class of type declaration in schema."""
+
+    type_id: str = data_field()
+    """
+    Unique dot-delimited type identifier. May optionally include package alias.
+    Used for table name in storage, and _type field in JSON.
+    """
 
     label: str = data_field(optional=True)
     """Readable type label in the front end."""
+
+    def get_key(self) -> TypeDeclKey:
+        return TypeDecl, self.type_id

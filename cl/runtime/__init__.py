@@ -9,9 +9,7 @@ from cl.runtime.storage.local_cache import LocalCache
 from cl.runtime.view.view import View
 from cl.runtime.view.record_view import RecordView
 from cl.runtime.view.record_list_view import RecordListView
-from cl.runtime.schema.type.package_decl_key import PackageDeclKey
 from cl.runtime.schema.type.package_decl import PackageDecl
-from cl.runtime.schema.type.type_decl_key import TypeDeclKey
 from cl.runtime.schema.type.type_decl import TypeDecl
 from cl.runtime.schema.type.field_decl import FieldDecl
 from cl.runtime.schema.type.primitive_decl import PrimitiveDecl

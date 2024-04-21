@@ -15,10 +15,8 @@ from stubs.cl.runtime.classes.attrs.stub_attrs_do_not_import import StubAttrsDoN
 from stubs.cl.runtime.classes.attrs.stub_attrs_list_dict_fields import StubAttrsListDictFields
 from stubs.cl.runtime.classes.attrs.stub_attrs_list_fields import StubAttrsListFields
 from stubs.cl.runtime.classes.attrs.stub_attrs_nested_fields import StubAttrsNestedFields
-from stubs.cl.runtime.classes.attrs.stub_attrs_nested_fields_key import StubAttrsNestedFieldsKey
 from stubs.cl.runtime.classes.attrs.stub_attrs_other_derived_record import StubAttrsOtherDerivedRecord
 from stubs.cl.runtime.classes.attrs.stub_attrs_primitive_fields import StubAttrsPrimitiveFields
 from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecord
 from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecordKey
 from stubs.cl.runtime.classes.attrs.stub_attrs_singleton import StubAttrsSingleton
-from stubs.cl.runtime.classes.attrs.stub_attrs_singleton_key import StubAttrsSingletonKey

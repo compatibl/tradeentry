@@ -14,13 +14,16 @@
 
 from abc import ABC
 from dataclasses import dataclass
+from typing import Tuple, Type
+
 from cl.runtime.classes.dataclasses.dataclass_fields import data_field
-from cl.runtime.classes.record_mixin import RecordMixin
-from cl.runtime.view.view_key import ViewKey
+from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
+
+ViewKey = Tuple[Type['View'], Tuple[Type, ...], str]
 
 
 @dataclass
-class View(ViewKey, RecordMixin, ABC):
+class View(DataclassMixin, ABC):
     """
     The data shown alongside the record in the front end.
 
@@ -31,17 +34,13 @@ class View(ViewKey, RecordMixin, ABC):
     tab or panel next to the record itself.
     """
 
-    view_for: str = data_field()
+    view_for: Tuple[Type, ...] = data_field()
     """Primary key of the record for which the view is specified."""
 
     view_name: str = data_field()
     """Name of the view displayed in the front end."""
 
-    @staticmethod
-    def create_key(view_for: str, view_name: str) -> str:
-        """Create primary key from arguments in semicolon-delimited string format."""
-        return f"{view_for};{view_name}"
-
-    def get_key(self) -> str:
+    def get_key(self) -> ViewKey:
         """Return primary key of this instance in semicolon-delimited string format."""
-        return f"{self.view_for};{self.view_name}"
+        return View, self.view_for, self.view_name
+

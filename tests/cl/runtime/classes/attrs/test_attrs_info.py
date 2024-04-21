@@ -27,13 +27,11 @@ from stubs.cl.runtime import StubAttrsDoNotImport
 from stubs.cl.runtime import StubAttrsListDictFields
 from stubs.cl.runtime import StubAttrsListFields
 from stubs.cl.runtime import StubAttrsNestedFields
-from stubs.cl.runtime import StubAttrsNestedFieldsKey
 from stubs.cl.runtime import StubAttrsOtherDerivedRecord
 from stubs.cl.runtime import StubAttrsPrimitiveFields
 from stubs.cl.runtime import StubAttrsRecord
 from stubs.cl.runtime import StubAttrsRecordKey
 from stubs.cl.runtime import StubAttrsSingleton
-from stubs.cl.runtime import StubAttrsSingletonKey
 
 
 def test_get_class_path():
@@ -131,7 +129,6 @@ def test_to_from_dict():
         # StubAttrsOtherDerivedRecord,
         # StubAttrsPrimitiveFields,
         # StubAttrsSingleton,
-        # StubAttrsSingletonKey,
     ]
 
     for stub_type in stub_types:

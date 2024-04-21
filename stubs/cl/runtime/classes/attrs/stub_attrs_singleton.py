@@ -14,14 +14,19 @@
 
 from dataclasses import dataclass
 from cl.runtime.classes.dataclasses.dataclass_fields import data_field
-from cl.runtime.classes.record_mixin import RecordMixin
-from stubs.cl.runtime.classes.attrs.stub_attrs_singleton_key import StubAttrsSingletonKey
-from typing import Optional
+from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
+from typing import Optional, Tuple, Type
+
+StubAttrsSingletonKey = Tuple[Type['StubAttrsSingleton']]
 
 
 @dataclass
-class StubAttrsSingleton(StubAttrsSingletonKey, RecordMixin):
+class StubAttrsSingleton(DataclassMixin):
     """Singleton record has no key fields."""
 
     str_field: str = data_field(default="abc")
     """Stub field."""
+
+    def get_key(self) -> StubAttrsSingletonKey:
+        return (StubAttrsSingleton,)
+

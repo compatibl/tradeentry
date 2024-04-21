@@ -12,10 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.schema.type.type_decl_key import TypeDeclKey
 from dataclasses import dataclass
 from cl.runtime.classes.dataclasses.dataclass_fields import data_field
-from typing import Union
+from cl.runtime.schema.type.type_decl import TypeDeclKey
 
 
 @dataclass
@@ -28,7 +27,7 @@ class FieldDecl:
     label: str = data_field(optional=True)
     """Readable field label in the front end."""
 
-    type: Union[str, TypeDeclKey] = data_field()
+    type: TypeDeclKey = data_field()
     """Field type."""
 
     dim: int = data_field(optional=True)

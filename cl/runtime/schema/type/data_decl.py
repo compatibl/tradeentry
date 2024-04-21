@@ -14,18 +14,17 @@
 
 from cl.runtime.schema.type.field_decl import FieldDecl
 from cl.runtime.schema.type.type_decl import TypeDecl
-from cl.runtime.schema.type.type_decl_key import TypeDeclKey
+from cl.runtime.schema.type.type_decl import TypeDeclKey
 from dataclasses import dataclass
 from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from typing import List
-from typing import Union
 
 
 @dataclass
 class DataDecl(TypeDecl):
     """Declaration for serializable data with fields."""
 
-    parent: Union[str, TypeDeclKey] = data_field(optional=True)
+    parent: TypeDeclKey = data_field(optional=True)
     """Parent type key or record must resolve to DataDecl or its descendants."""
 
     fields: List[FieldDecl] = data_field()

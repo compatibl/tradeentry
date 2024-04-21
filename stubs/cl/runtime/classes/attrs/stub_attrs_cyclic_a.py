@@ -17,18 +17,27 @@ from __future__ import annotations
 from dataclasses import dataclass
 from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from typing import TYPE_CHECKING
-from typing import Union
+from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
+from typing import Tuple, Type
 
 if TYPE_CHECKING:
-    from stubs.cl.runtime.classes.attrs.stub_attrs_cyclic_b import StubAttrsCyclicB
+    from stubs.cl.runtime.classes.attrs.stub_attrs_cyclic_b import StubAttrsCyclicB, StubAttrsCyclicBKey
+
+StubAttrsCyclicAKey = Tuple[Type['StubAttrsCyclicA'], 'StubAttrsCyclicBKey']
 
 
 @dataclass
-class StubAttrsCyclicA:
+class StubAttrsCyclicA(DataclassMixin):
     """Stub class A with a field whose type is key for class B."""
 
-    b: StubAttrsCyclicB = data_field()
+    key: StubAttrsCyclicBKey | None = data_field()
     """Key for class B."""
+
+    b: StubAttrsCyclicB | None = data_field()
+    """Key for class B."""
+
+    def get_key(self) -> StubAttrsCyclicAKey:
+        return StubAttrsCyclicA, self.key
 
     @staticmethod
     def create() -> StubAttrsCyclicA:
@@ -38,5 +47,6 @@ class StubAttrsCyclicA:
         from stubs.cl.runtime.classes.attrs.stub_attrs_cyclic_b import StubAttrsCyclicB
 
         obj = StubAttrsCyclicA()
+        obj.key = StubAttrsCyclicB(id="b").get_key()
         obj.b = StubAttrsCyclicB()
         return obj
