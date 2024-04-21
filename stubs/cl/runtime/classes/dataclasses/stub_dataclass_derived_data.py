@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_fields import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_data import StubDataclassData
 from typing import Optional
 

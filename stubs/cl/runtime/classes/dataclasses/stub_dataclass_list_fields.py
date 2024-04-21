@@ -17,7 +17,7 @@ from __future__ import annotations
 import datetime as dt
 from cl.runtime.primitive.date_util import DateUtil
 from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_fields import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_data import StubDataclassData
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_record import StubDataclassRecord

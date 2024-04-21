@@ -17,7 +17,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Tuple, Type
 
-from cl.runtime.classes.dataclasses.dataclass_fields import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
 from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.storage.index_util import index_fields
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_data import StubDataclassData

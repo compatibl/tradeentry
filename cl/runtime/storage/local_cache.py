@@ -16,7 +16,7 @@ from dataclasses import dataclass, field
 
 from cl.runtime import DataSource
 from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_fields import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
 from cl.runtime.classes.record_mixin import RecordMixin
 from cl.runtime.classes.class_info import ClassInfo
 from copy import deepcopy

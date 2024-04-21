@@ -14,7 +14,7 @@
 
 from dataclasses import dataclass
 
-from cl.runtime.classes.dataclasses.dataclass_fields import data_field
+from cl.runtime.classes.dataclasses.dataclass_mixin import data_field
 
 
 @dataclass(slots=True)
