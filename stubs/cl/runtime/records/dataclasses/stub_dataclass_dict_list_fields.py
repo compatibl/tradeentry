@@ -13,17 +13,17 @@
 # limitations under the License.
 
 import datetime as dt
-from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from dataclasses import dataclass
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_data import StubDataclassData
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_dict_fields import stub_dataclass_data_dict_factory
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_dict_fields import stub_dataclass_date_dict_factory
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_dict_fields import stub_dataclass_derived_record_dict_factory
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_dict_fields import stub_dataclass_key_dict_factory
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_dict_fields import stub_dataclass_record_dict_factory
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_record import StubDataclassRecord
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_record import StubDataclassRecordKey
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_data import StubDataclassData
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_dict_fields import stub_dataclass_data_dict_factory
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_dict_fields import stub_dataclass_date_dict_factory
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_dict_fields import stub_dataclass_derived_record_dict_factory
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_dict_fields import stub_dataclass_key_dict_factory
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_dict_fields import stub_dataclass_record_dict_factory
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecordKey
 from typing import Dict
 from typing import List
 

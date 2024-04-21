@@ -13,9 +13,9 @@
 # limitations under the License.
 
 from cl.runtime import DataSource
-from cl.runtime.classes.class_info import ClassInfo
-from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
-from cl.runtime.classes.record_mixin import RecordMixin
+from cl.runtime.records.class_info import ClassInfo
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from cl.runtime.records.record_mixin import RecordMixin
 from copy import deepcopy
 from dataclasses import dataclass
 from dataclasses import field

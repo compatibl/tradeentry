@@ -13,8 +13,8 @@
 # limitations under the License.
 
 import pytest
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_cyclic_a import StubDataclassCyclicA
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_a import StubDataclassCyclicA
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB
 
 
 def test_cyclic_record():

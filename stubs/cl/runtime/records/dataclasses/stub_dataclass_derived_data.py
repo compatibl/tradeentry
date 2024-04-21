@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from dataclasses import dataclass
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_data import StubDataclassData
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_data import StubDataclassData
 from typing import Optional
 
 

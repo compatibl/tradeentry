@@ -15,13 +15,13 @@
 from __future__ import annotations
 
 import datetime as dt
-from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.primitive.date_util import DateUtil
 from dataclasses import dataclass
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_data import StubDataclassData
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_record import StubDataclassRecord
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_record import StubDataclassRecordKey
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_data import StubDataclassData
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecordKey
 from typing import List
 
 

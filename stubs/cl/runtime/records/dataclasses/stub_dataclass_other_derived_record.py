@@ -14,12 +14,12 @@
 
 from __future__ import annotations
 
-from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.primitive.date_time_util import DateTimeUtil
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.storage.index_util import index_fields
 from dataclasses import dataclass
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_record import StubDataclassRecord
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
 from typing import Optional
 
 

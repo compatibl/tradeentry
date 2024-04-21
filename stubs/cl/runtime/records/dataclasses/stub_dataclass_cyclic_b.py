@@ -14,8 +14,8 @@
 
 from __future__ import annotations
 
-from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
-from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 from typing import Tuple
@@ -23,7 +23,7 @@ from typing import Type
 from typing import Union
 
 if TYPE_CHECKING:
-    from stubs.cl.runtime.classes.dataclasses.stub_dataclass_cyclic_a import StubDataclassCyclicA
+    from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_a import StubDataclassCyclicA
 
 StubDataclassCyclicBKey = Tuple[Type["StubDataclassCyclicB"], str]
 
@@ -46,7 +46,7 @@ class StubDataclassCyclicB(DataclassMixin):
         """Create an instance of this class populated with sample data."""
 
         # Import inside function to avoid cyclic reference error
-        from stubs.cl.runtime.classes.dataclasses.stub_dataclass_cyclic_a import StubDataclassCyclicA
+        from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_a import StubDataclassCyclicA
 
         obj = StubDataclassCyclicB()
         obj.id = "a"

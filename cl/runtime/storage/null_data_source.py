@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.classes.record_mixin import RecordMixin
+from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.storage.data_source import DataSource
 from dataclasses import dataclass
 from typing import Iterable

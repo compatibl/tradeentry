@@ -14,7 +14,7 @@
 
 import orjson
 import pytest
-from stubs.cl.runtime.classes.stub_dict_util import StubDictUtil
+from stubs.cl.runtime.records.stub_dict_util import StubDictUtil
 
 
 def test_smoke():

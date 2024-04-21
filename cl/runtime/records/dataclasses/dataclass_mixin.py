@@ -15,7 +15,7 @@
 from __future__ import annotations
 
 from abc import ABC
-from cl.runtime.classes.record_mixin import RecordMixin
+from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import asdict
 from dataclasses import dataclass
 from dataclasses import field

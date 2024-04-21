@@ -18,7 +18,7 @@ from abc import ABC
 
 import attrs
 
-from cl.runtime.classes.record_mixin import RecordMixin
+from cl.runtime.records.record_mixin import RecordMixin
 from typing import Any
 from typing import Dict
 from typing import Tuple

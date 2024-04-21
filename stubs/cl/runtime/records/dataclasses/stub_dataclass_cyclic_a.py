@@ -14,16 +14,16 @@
 
 from __future__ import annotations
 
-from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
-from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 from typing import Tuple
 from typing import Type
 
 if TYPE_CHECKING:
-    from stubs.cl.runtime.classes.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB
-    from stubs.cl.runtime.classes.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicBKey
+    from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB
+    from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicBKey
 
 StubDataclassCyclicAKey = Tuple[Type["StubDataclassCyclicA"], "StubDataclassCyclicBKey"]
 
@@ -46,7 +46,7 @@ class StubDataclassCyclicA(DataclassMixin):
         """Create an instance of this class populated with sample data."""
 
         # Import inside function to avoid cyclic reference error
-        from stubs.cl.runtime.classes.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB
+        from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB
 
         obj = StubDataclassCyclicA()
         obj.key = StubDataclassCyclicB(id="b").get_key()

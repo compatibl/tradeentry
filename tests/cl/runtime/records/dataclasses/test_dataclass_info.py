@@ -69,7 +69,7 @@ def test_get_class_type():
 
     # Class that is dynamically imported on demand
     do_no_import_class_path = (
-        "stubs.cl.runtime.classes.dataclasses.stub_dataclass_do_not_import.StubDataclassDoNotImport"
+        "stubs.cl.runtime.records.dataclasses.stub_dataclass_do_not_import.StubDataclassDoNotImport"
     )
     do_no_import_class = ClassInfo.get_class_type(do_no_import_class_path)
     assert do_no_import_class_path == f"{do_no_import_class.__module__}.{do_no_import_class.__name__}"
@@ -82,7 +82,7 @@ def test_get_class_type():
 
     # Class does not exist error
     with pytest.raises(RuntimeError):
-        path_with_unknown_class = "stubs.cl.runtime.classes.dataclasses.stub_dataclass_do_not_import.UnknownClass"
+        path_with_unknown_class = "stubs.cl.runtime.records.dataclasses.stub_dataclass_do_not_import.UnknownClass"
         ClassInfo.get_class_type(path_with_unknown_class)
 
     # Call one more time and confirm that method results are cached

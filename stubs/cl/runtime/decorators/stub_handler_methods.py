@@ -16,11 +16,11 @@ from __future__ import annotations
 
 import datetime as dt
 import inspect
-from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
-from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.decorators.handler_decorator import handler
 from logging import getLogger
-from stubs.cl.runtime.classes.enum.stub_int_enum import StubIntEnum
+from stubs.cl.runtime.records.enum.stub_int_enum import StubIntEnum
 from typing import Tuple
 from typing import Type
 

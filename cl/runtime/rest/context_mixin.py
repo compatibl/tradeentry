@@ -17,7 +17,7 @@ from __future__ import annotations
 from abc import ABC
 from abc import abstractmethod
 
-from cl.runtime.classes.record_mixin import RecordMixin
+from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.rest.progress import Progress
 from cl.runtime.storage.data_source import DataSource
 from logging import Logger

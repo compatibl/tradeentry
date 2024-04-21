@@ -13,11 +13,11 @@
 # limitations under the License.
 
 import pytest
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_dict_fields import StubDataclassDictFields
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_list_fields import StubDataclassListFields
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_primitive_fields import StubDataclassPrimitiveFields
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_record import StubDataclassRecord
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_record import StubDataclassRecordKey
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_dict_fields import StubDataclassDictFields
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_list_fields import StubDataclassListFields
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_primitive_fields import StubDataclassPrimitiveFields
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecordKey
 
 
 def test_smoke():

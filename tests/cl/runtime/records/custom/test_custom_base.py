@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from stubs.cl.runtime.classes.custom.stub_custom_base import StubCustomBase
+from stubs.cl.runtime.records.custom.stub_custom_base import StubCustomBase
 
 
 def test_smoke():

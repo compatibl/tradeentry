@@ -16,7 +16,7 @@ import pytest
 from cl.runtime.serialization.type_settings import TypeSettings
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassRecord
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_aliased_record import StubDataclassAliasedRecord
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_aliased_record import StubDataclassAliasedRecord
 
 
 @pytest.mark.skip("Aliases are not yet supported.")
