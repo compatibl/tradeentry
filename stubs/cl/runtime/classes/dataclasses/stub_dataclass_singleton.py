@@ -17,16 +17,16 @@ from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
 from typing import Optional, Tuple, Type
 
-StubAttrsSingletonKey = Tuple[Type['StubAttrsSingleton']]
+StubDataclassSingletonKey = Tuple[Type['StubDataclassSingleton']]
 
 
 @dataclass
-class StubAttrsSingleton(DataclassMixin):
+class StubDataclassSingleton(DataclassMixin):
     """Singleton record has no key fields."""
 
     str_field: str = data_field(default="abc")
     """Stub field."""
 
-    def get_key(self) -> StubAttrsSingletonKey:
-        return (StubAttrsSingleton,)
+    def get_key(self) -> StubDataclassSingletonKey:
+        return (StubDataclassSingleton,)
 

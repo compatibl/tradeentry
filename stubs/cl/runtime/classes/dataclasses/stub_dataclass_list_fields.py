@@ -18,19 +18,19 @@ import datetime as dt
 from cl.runtime.primitive.date_util import DateUtil
 from dataclasses import dataclass
 from cl.runtime.classes.dataclasses.dataclass_fields import data_field
-from stubs.cl.runtime.classes.attrs.stub_attrs_data import StubAttrsData
-from stubs.cl.runtime.classes.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
-from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecord
-from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecordKey
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_data import StubDataclassData
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_record import StubDataclassRecord
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_record import StubDataclassRecordKey
 from typing import List
 
 
-def stub_attrs_str_list_factory() -> List[str]:
+def stub_dataclass_str_list_factory() -> List[str]:
     """Create stub values."""
     return ["abc", "def"]
 
 
-def stub_attrs_float_list_factory() -> List[float]:
+def stub_dataclass_float_list_factory() -> List[float]:
     """Create stub values."""
     return [
         0.0000123456789,
@@ -46,7 +46,7 @@ def stub_attrs_float_list_factory() -> List[float]:
     ]
 
 
-def stub_attrs_date_list_factory() -> List[dt.date]:
+def stub_dataclass_date_list_factory() -> List[dt.date]:
     """Create stub values."""
     return [
         DateUtil.from_fields(2003, 4, 21),
@@ -54,57 +54,57 @@ def stub_attrs_date_list_factory() -> List[dt.date]:
     ]
 
 
-def stub_attrs_data_list_factory() -> List[StubAttrsData]:
+def stub_dataclass_data_list_factory() -> List[StubDataclassData]:
     """Create stub values."""
     return [
-        StubAttrsData(str_field="A", int_field=0),
-        StubAttrsData(str_field="B", int_field=1),
+        StubDataclassData(str_field="A", int_field=0),
+        StubDataclassData(str_field="B", int_field=1),
     ]
 
 
-def stub_attrs_key_list_factory() -> List[StubAttrsRecordKey]:
+def stub_dataclass_key_list_factory() -> List[StubDataclassRecordKey]:
     """Create stub values."""
     return [
-        (StubAttrsRecord, "A", 0),
-        (StubAttrsRecord, "B", 1),
+        (StubDataclassRecord, "A", 0),
+        (StubDataclassRecord, "B", 1),
     ]
 
 
-def stub_attrs_record_list_factory() -> List[StubAttrsRecord]:
+def stub_dataclass_record_list_factory() -> List[StubDataclassRecord]:
     """Create stub values."""
     return [
-        StubAttrsRecord(str_field="A", int_field=0),
-        StubAttrsRecord(str_field="B", int_field=1),
+        StubDataclassRecord(str_field="A", int_field=0),
+        StubDataclassRecord(str_field="B", int_field=1),
     ]
 
 
-def stub_attrs_derived_record_list_factory() -> List[StubAttrsDerivedRecord]:
+def stub_dataclass_derived_record_list_factory() -> List[StubDataclassDerivedRecord]:
     """Create stub values."""
     return [
-        StubAttrsDerivedRecord(str_field="A", int_field=0),
-        StubAttrsDerivedRecord(str_field="B", int_field=1),
+        StubDataclassDerivedRecord(str_field="A", int_field=0),
+        StubDataclassDerivedRecord(str_field="B", int_field=1),
     ]
 
 
 @dataclass
-class StubAttrsListFields(StubAttrsRecord):
-    str_list: List[str] = data_field(default_factory=stub_attrs_str_list_factory)
+class StubDataclassListFields(StubDataclassRecord):
+    str_list: List[str] = data_field(default_factory=stub_dataclass_str_list_factory)
     """Stub field."""
 
-    float_list: List[float] = data_field(default_factory=stub_attrs_float_list_factory)
+    float_list: List[float] = data_field(default_factory=stub_dataclass_float_list_factory)
     """Stub field."""
 
-    date_list: List[dt.date] = data_field(default_factory=stub_attrs_date_list_factory)
+    date_list: List[dt.date] = data_field(default_factory=stub_dataclass_date_list_factory)
     """Stub field."""
 
-    data_list: List[StubAttrsData] = data_field(default_factory=stub_attrs_data_list_factory)
+    data_list: List[StubDataclassData] = data_field(default_factory=stub_dataclass_data_list_factory)
     """Stub field."""
 
-    key_list: List[StubAttrsRecordKey] = data_field(default_factory=stub_attrs_key_list_factory)
+    key_list: List[StubDataclassRecordKey] = data_field(default_factory=stub_dataclass_key_list_factory)
     """Stub field."""
 
-    record_list: List[StubAttrsRecord] = data_field(default_factory=stub_attrs_record_list_factory)
+    record_list: List[StubDataclassRecord] = data_field(default_factory=stub_dataclass_record_list_factory)
     """Stub field."""
 
-    derived_record_list: List[StubAttrsDerivedRecord] = data_field(default_factory=stub_attrs_derived_record_list_factory)
+    derived_record_list: List[StubDataclassDerivedRecord] = data_field(default_factory=stub_dataclass_derived_record_list_factory)
     """Stub field."""

@@ -13,33 +13,33 @@
 # limitations under the License.
 
 import pytest
-from stubs.cl.runtime.classes.attrs.stub_attrs_cyclic_a import StubAttrsCyclicA
-from stubs.cl.runtime.classes.attrs.stub_attrs_cyclic_b import StubAttrsCyclicB
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_cyclic_a import StubDataclassCyclicA
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB
 
 
 def test_cyclic_record():
-    """Test for a cyclic import where classes StubAttrsCyclicA and StubAttrsCyclicB reference each other."""
+    """Test for a cyclic import where classes StubDataclassCyclicA and StubDataclassCyclicB reference each other."""
 
     # Create inside the class with import inside function
-    a_1 = StubAttrsCyclicA.create()
-    b_1 = StubAttrsCyclicB.create()
+    a_1 = StubDataclassCyclicA.create()
+    b_1 = StubDataclassCyclicB.create()
 
     # Create A outside the class
-    a_2 = StubAttrsCyclicA()
-    a_2.b = StubAttrsCyclicB.create()
+    a_2 = StubDataclassCyclicA()
+    a_2.b = StubDataclassCyclicB.create()
 
     # Create B outside the class
-    b_2 = StubAttrsCyclicB()
-    b_2.a = StubAttrsCyclicA.create()
+    b_2 = StubDataclassCyclicB()
+    b_2.a = StubDataclassCyclicA.create()
 
     # Test for annotation retrospection
-    assert StubAttrsCyclicA.__annotations__ == {"key": "StubAttrsCyclicBKey | None", "b": "StubAttrsCyclicB | None"}
-    assert StubAttrsCyclicB.__annotations__ == {"id": "str | None", "a": "StubAttrsCyclicA | None"}
+    assert StubDataclassCyclicA.__annotations__ == {"key": "StubDataclassCyclicBKey | None", "b": "StubDataclassCyclicB | None"}
+    assert StubDataclassCyclicB.__annotations__ == {"id": "str | None", "a": "StubDataclassCyclicA | None"}
 
     # Test for keys
 
-    assert b_1.get_key() == (StubAttrsCyclicB, "a")
-    assert a_1.get_key() == (StubAttrsCyclicA, (StubAttrsCyclicB, "b"))
+    assert b_1.get_key() == (StubDataclassCyclicB, "a")
+    assert a_1.get_key() == (StubDataclassCyclicA, (StubDataclassCyclicB, "b"))
 
 
 if __name__ == "__main__":

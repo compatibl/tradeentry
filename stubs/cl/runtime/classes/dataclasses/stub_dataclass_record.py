@@ -18,11 +18,11 @@ from dataclasses import dataclass
 from typing import Tuple, Type
 from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
 
-StubAttrsRecordKey = Tuple[Type['StubAttrsRecord'], str, int]
+StubDataclassRecordKey = Tuple[Type['StubDataclassRecord'], str, int]
 
 
 @dataclass(slots=True)
-class StubAttrsRecord(DataclassMixin):
+class StubDataclassRecord(DataclassMixin):
     """Stub record base class."""
 
     str_field: str = "abc"
@@ -34,6 +34,6 @@ class StubAttrsRecord(DataclassMixin):
     version: int = 0
     """Stub version field."""
 
-    def get_key(self) -> StubAttrsRecordKey:
-        return StubAttrsRecord, self.str_field, self.int_field
+    def get_key(self) -> StubDataclassRecordKey:
+        return StubDataclassRecord, self.str_field, self.int_field
 

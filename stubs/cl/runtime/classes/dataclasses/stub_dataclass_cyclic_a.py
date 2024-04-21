@@ -21,32 +21,32 @@ from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
 from typing import Tuple, Type
 
 if TYPE_CHECKING:
-    from stubs.cl.runtime.classes.attrs.stub_attrs_cyclic_b import StubAttrsCyclicB, StubAttrsCyclicBKey
+    from stubs.cl.runtime.classes.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB, StubDataclassCyclicBKey
 
-StubAttrsCyclicAKey = Tuple[Type['StubAttrsCyclicA'], 'StubAttrsCyclicBKey']
+StubDataclassCyclicAKey = Tuple[Type['StubDataclassCyclicA'], 'StubDataclassCyclicBKey']
 
 
 @dataclass
-class StubAttrsCyclicA(DataclassMixin):
+class StubDataclassCyclicA(DataclassMixin):
     """Stub class A with a field whose type is key for class B."""
 
-    key: StubAttrsCyclicBKey | None = data_field()
+    key: StubDataclassCyclicBKey | None = data_field()
     """Key for class B."""
 
-    b: StubAttrsCyclicB | None = data_field()
+    b: StubDataclassCyclicB | None = data_field()
     """Key for class B."""
 
-    def get_key(self) -> StubAttrsCyclicAKey:
-        return StubAttrsCyclicA, self.key
+    def get_key(self) -> StubDataclassCyclicAKey:
+        return StubDataclassCyclicA, self.key
 
     @staticmethod
-    def create() -> StubAttrsCyclicA:
+    def create() -> StubDataclassCyclicA:
         """Create an instance of this class populated with sample data."""
 
         # Import inside function to avoid cyclic reference error
-        from stubs.cl.runtime.classes.attrs.stub_attrs_cyclic_b import StubAttrsCyclicB
+        from stubs.cl.runtime.classes.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB
 
-        obj = StubAttrsCyclicA()
-        obj.key = StubAttrsCyclicB(id="b").get_key()
-        obj.b = StubAttrsCyclicB()
+        obj = StubDataclassCyclicA()
+        obj.key = StubDataclassCyclicB(id="b").get_key()
+        obj.b = StubDataclassCyclicB()
         return obj

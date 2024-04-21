@@ -13,30 +13,30 @@
 # limitations under the License.
 
 import pytest
-from stubs.cl.runtime.classes.attrs.stub_attrs_dict_fields import StubAttrsDictFields
-from stubs.cl.runtime.classes.attrs.stub_attrs_list_fields import StubAttrsListFields
-from stubs.cl.runtime.classes.attrs.stub_attrs_primitive_fields import StubAttrsPrimitiveFields
-from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecord
-from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecordKey
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_dict_fields import StubDataclassDictFields
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_list_fields import StubDataclassListFields
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_primitive_fields import StubDataclassPrimitiveFields
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_record import StubDataclassRecord
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_record import StubDataclassRecordKey
 
 
 def test_smoke():
     """Smoke test."""
 
     # Create test record and populate with sample data
-    record = StubAttrsRecord()
+    record = StubDataclassRecord()
 
     # Test primary key
     key = record.get_key()
-    assert key == (StubAttrsRecord, "abc", 123)
+    assert key == (StubDataclassRecord, "abc", 123)
 
     # Test roundtrip serialization
     record_key, record_type, record_dict = record.to_dict()
-    record_clone = StubAttrsRecord(**record_dict)
+    record_clone = StubDataclassRecord(**record_dict)
     clone_key, clone_type, clone_dict = record_clone.to_dict()
     assert len(record_dict) == 3
     assert clone_key == key
-    assert clone_type == StubAttrsRecord
+    assert clone_type == StubDataclassRecord
     assert clone_dict == record_dict
 
 
@@ -44,22 +44,22 @@ def test_smoke():
 def test_with_primitive_fields():
     """Test for a record with primitive fields."""
 
-    record = StubAttrsPrimitiveFields()
-    record = StubAttrsListFields()
+    record = StubDataclassPrimitiveFields()
+    record = StubDataclassListFields()
     pass
 
 
 def test_with_lists():
     """Test for a record with primitive fields."""
 
-    record = StubAttrsListFields()
+    record = StubDataclassListFields()
     pass
 
 
 def test_with_dicts():
     """Test for a record with primitive fields."""
 
-    record = StubAttrsDictFields()
+    record = StubDataclassDictFields()
     pass
 
 

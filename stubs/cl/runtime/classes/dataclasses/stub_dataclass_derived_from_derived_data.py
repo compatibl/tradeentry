@@ -14,13 +14,13 @@
 
 from dataclasses import dataclass
 from cl.runtime.classes.dataclasses.dataclass_fields import data_field
-from stubs.cl.runtime.classes.attrs.stub_attrs_derived_data import StubAttrsDerivedData
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_derived_data import StubDataclassDerivedData
 from typing import Optional
 
 
 @dataclass
-class StubAttrsDerivedFromDerivedData(StubAttrsDerivedData):
-    """Two levels in inheritance hierarchy away from StubAttrsData."""
+class StubDataclassDerivedFromDerivedData(StubDataclassDerivedData):
+    """Two levels in inheritance hierarchy away from StubDataclassData."""
 
     derived_from_derived_field: str = data_field(default="derived_from_derived")
     """Stub field."""

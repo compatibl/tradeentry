@@ -14,12 +14,12 @@
 
 from dataclasses import dataclass
 from cl.runtime.classes.dataclasses.dataclass_fields import data_field
-from stubs.cl.runtime.classes.attrs.stub_attrs_data import StubAttrsData
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_data import StubDataclassData
 from typing import Optional
 
 
 @dataclass
-class StubAttrsDerivedData(StubAttrsData):
+class StubDataclassDerivedData(StubDataclassData):
     """Stub derived data type."""
 
     derived_field: str = data_field(default="derived")

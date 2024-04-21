@@ -18,7 +18,7 @@ from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 
 
 @dataclass(slots=True)
-class StubAttrsData:
+class StubDataclassData:
     """Stub base data type."""
 
     str_field: str = data_field(default="abc")

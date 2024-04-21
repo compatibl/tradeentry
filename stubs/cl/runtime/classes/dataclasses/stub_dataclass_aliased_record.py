@@ -18,7 +18,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class StubAttrsAliasedRecord(DataclassMixin):  # TODO: Specify alias
+class StubDataclassAliasedRecord(DataclassMixin):  # TODO: Specify alias
     """Stub record class with typename alias."""
 
     a: int = data_field()

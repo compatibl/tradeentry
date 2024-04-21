@@ -15,12 +15,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecord
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_record import StubDataclassRecord
 
 
 # @index_fields("derived_field, -version")  # TODO: Refactor index_fields
 @dataclass(slots=True)
-class StubAttrsDerivedRecord(StubAttrsRecord):
+class StubDataclassDerivedRecord(StubDataclassRecord):
     """Stub derived class."""
 
     derived_field: str = "derived"

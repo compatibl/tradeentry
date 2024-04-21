@@ -16,7 +16,7 @@
 # Do not import this module. Its purpose is testing dynamic import.
 
 
-class StubAttrsDoNotImport:
+class StubDataclassDoNotImport:
     """This class is for checking dynamic import. It must not be included in import statements."""
 
     pass

@@ -25,8 +25,8 @@ from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from stubs.cl.runtime.classes.enum.stub_int_enum import StubIntEnum
 from uuid import UUID
 
-StubAttrsPrimitiveFieldsKey = Tuple[
-    Type['StubAttrsPrimitiveFields'],
+StubDataclassPrimitiveFieldsKey = Tuple[
+    Type['StubDataclassPrimitiveFields'],
     str,
     float,
     bool,
@@ -43,7 +43,7 @@ StubAttrsPrimitiveFieldsKey = Tuple[
 
 
 @dataclass
-class StubAttrsPrimitiveFields(DataclassMixin):
+class StubDataclassPrimitiveFields(DataclassMixin):
     """Stub record whose elements are primitive types."""
 
     str_field: str = data_field(default="abc")
@@ -81,7 +81,7 @@ class StubAttrsPrimitiveFields(DataclassMixin):
     """Stub field."""
 
     # TODO: Avoid cyclic reference
-    # key_field: 'StubAttrsRecordKey' = data_field(default=(StubAttrsPrimitiveFields, "abc", 123))
+    # key_field: 'StubDataclassRecordKey' = data_field(default=(StubDataclassPrimitiveFields, "abc", 123))
     # """Stub field."""
 
     base_str_field: str = data_field(default="abc")
@@ -117,15 +117,15 @@ class StubAttrsPrimitiveFields(DataclassMixin):
     base_enum_field: StubIntEnum = data_field(default=StubIntEnum.ENUM_VALUE_1)
     """Stub field."""
 
-    base_str_key_field: str = data_field(default="StubAttrsRecord;abc;123", subtype="StubRecordKey")
+    base_str_key_field: str = data_field(default="StubDataclassRecord;abc;123", subtype="StubRecordKey")
     """Stub field."""
 
-    base_generic_key_field: str = data_field(default="StubAttrsRecord;abc;123", subtype="GenericKey")
+    base_generic_key_field: str = data_field(default="StubDataclassRecord;abc;123", subtype="GenericKey")
     """Stub field."""
 
-    def get_key(self) -> StubAttrsPrimitiveFieldsKey:
+    def get_key(self) -> StubDataclassPrimitiveFieldsKey:
         return (
-            StubAttrsPrimitiveFields,
+            StubDataclassPrimitiveFields,
             self.str_field,
             self.float_field,
             self.bool_field,

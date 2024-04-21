@@ -18,13 +18,13 @@ from cl.runtime.primitive.date_time_util import DateTimeUtil
 from cl.runtime.primitive.date_util import DateUtil
 from dataclasses import dataclass
 from cl.runtime.classes.dataclasses.dataclass_fields import data_field
-from stubs.cl.runtime.classes.attrs.stub_attrs_derived_record import StubAttrsDerivedRecord
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
 from typing import Optional
 
 
 @dataclass
-class StubAttrsDerivedFromDerivedRecord(StubAttrsDerivedRecord):
-    """Two levels in inheritance hierarchy away from StubAttrsRecord."""
+class StubDataclassDerivedFromDerivedRecord(StubDataclassDerivedRecord):
+    """Two levels in inheritance hierarchy away from StubDataclassRecord."""
 
     derived_from_derived_field: str = data_field(default="derived_from_derived")
     """Stub field."""

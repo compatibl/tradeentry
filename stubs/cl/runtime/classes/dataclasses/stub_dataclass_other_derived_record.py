@@ -19,14 +19,14 @@ from cl.runtime.primitive.date_util import DateUtil
 from dataclasses import dataclass
 from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from cl.runtime.storage.index_util import index_fields
-from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecord
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_record import StubDataclassRecord
 from typing import Optional
 
 
 @index_fields("other_float_field, other_str_field, -int_field")
 @dataclass
-class StubAttrsOtherDerivedRecord(StubAttrsRecord):
-    """Another type derived from StubAttrsRecord."""
+class StubDataclassOtherDerivedRecord(StubDataclassRecord):
+    """Another type derived from StubDataclassRecord."""
 
     other_derived: str = data_field(default="other_derived")
     """Stub field for other derived class."""

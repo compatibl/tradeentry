@@ -20,51 +20,51 @@ from typing import Tuple, Type
 from cl.runtime.classes.dataclasses.dataclass_fields import data_field
 from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.storage.index_util import index_fields
-from stubs.cl.runtime.classes.attrs.stub_attrs_data import StubAttrsData
-from stubs.cl.runtime.classes.attrs.stub_attrs_derived_data import StubAttrsDerivedData
-from stubs.cl.runtime.classes.attrs.stub_attrs_derived_from_derived_data import StubAttrsDerivedFromDerivedData
-from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecord
-from stubs.cl.runtime.classes.attrs.stub_attrs_record import StubAttrsRecordKey
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_data import StubDataclassData
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_derived_data import StubDataclassDerivedData
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_derived_from_derived_data import StubDataclassDerivedFromDerivedData
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_record import StubDataclassRecord
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_record import StubDataclassRecordKey
 
-StubAttrsNestedFieldsKey = Tuple[Type['StubAttrsNestedFields'], str, StubAttrsRecordKey, StubAttrsRecordKey]
+StubDataclassNestedFieldsKey = Tuple[Type['StubDataclassNestedFields'], str, StubDataclassRecordKey, StubDataclassRecordKey]
 
 
 # @index_fields("derived_float_field, -float_field") # TODO: index_fields
 @dataclass(init=False)
-class StubAttrsNestedFields(DataclassMixin):
+class StubDataclassNestedFields(DataclassMixin):
     """Stub derived class."""
 
     primitive: str = data_field(default="abc")
     """String key element."""
 
-    embedded_1: StubAttrsRecordKey = data_field(default_factory=StubAttrsRecordKey)
+    embedded_1: StubDataclassRecordKey = data_field(default_factory=StubDataclassRecordKey)
     """Embedded key 1."""
 
-    embedded_2: StubAttrsRecordKey = data_field(default_factory=StubAttrsRecordKey)
+    embedded_2: StubDataclassRecordKey = data_field(default_factory=StubDataclassRecordKey)
     """Embedded key 2."""
 
-    base_data_field: StubAttrsData = data_field(default_factory=StubAttrsData)
+    base_data_field: StubDataclassData = data_field(default_factory=StubDataclassData)
     """Stub field."""
 
-    derived_data_field: StubAttrsDerivedData = data_field(default_factory=StubAttrsDerivedData)
+    derived_data_field: StubDataclassDerivedData = data_field(default_factory=StubDataclassDerivedData)
     """Stub field."""
 
-    derived_from_derived_data_field: StubAttrsDerivedFromDerivedData = data_field(
-        default=StubAttrsDerivedFromDerivedData
+    derived_from_derived_data_field: StubDataclassDerivedFromDerivedData = data_field(
+        default=StubDataclassDerivedFromDerivedData
     )
     """Stub field."""
 
-    polymorphic_data_field: StubAttrsData = data_field(default_factory=StubAttrsDerivedData)
-    """Declared StubAttrsData but provided an instance of StubAttrsDerivedData."""
+    polymorphic_data_field: StubDataclassData = data_field(default_factory=StubDataclassDerivedData)
+    """Declared StubDataclassData but provided an instance of StubDataclassDerivedData."""
 
-    polymorphic_derived_data_field: StubAttrsDerivedData = data_field(default=StubAttrsDerivedFromDerivedData)
-    """Declared StubAttrsDerivedData but provided an instance of StubAttrsDerivedFromDerivedData."""
+    polymorphic_derived_data_field: StubDataclassDerivedData = data_field(default=StubDataclassDerivedFromDerivedData)
+    """Declared StubDataclassDerivedData but provided an instance of StubDataclassDerivedFromDerivedData."""
 
-    key_field: StubAttrsRecordKey = data_field(default_factory=StubAttrsRecordKey)
+    key_field: StubDataclassRecordKey = data_field(default_factory=StubDataclassRecordKey)
     """Stub field."""
 
-    record_as_key_field: StubAttrsRecordKey = data_field(default_factory=lambda: StubAttrsRecord())
+    record_as_key_field: StubDataclassRecordKey = data_field(default_factory=lambda: StubDataclassRecord())
     """Stub field with key type initialized to record type instance."""
 
-    def get_key(self) -> StubAttrsNestedFieldsKey:
-        return StubAttrsNestedFields, self.primitive, self.embedded_1, self.embedded_2
+    def get_key(self) -> StubDataclassNestedFieldsKey:
+        return StubDataclassNestedFields, self.primitive, self.embedded_1, self.embedded_2
