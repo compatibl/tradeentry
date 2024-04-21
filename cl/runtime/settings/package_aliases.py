@@ -64,7 +64,8 @@ class PackageAliases:
             try:
                 alias_dict = orjson.loads(alias_dict)
             except orjson.JSONDecodeError as e:
-                raise RuntimeError(f"Error decoding `package_aliases` string into JSON. Input string: {alias_dict}")
+                raise RuntimeError(f"Error decoding `package_aliases` string into JSON.\n"
+                                   f"Input string:\n{alias_dict}\nError:\n{e}.")
         elif not isinstance(alias_dict, dict):
             # Dict and JSON string are the only two valid input types
             raise RuntimeError(f"Param `package_aliases` with type {type(alias_dict)} is neither dict nor JSON string.")

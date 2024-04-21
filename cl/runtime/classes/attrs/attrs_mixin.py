@@ -15,10 +15,10 @@
 from __future__ import annotations
 
 from abc import ABC
+
+import attrs
+
 from cl.runtime.classes.record_mixin import RecordMixin
-from dataclasses import asdict
-from dataclasses import dataclass
-from dataclasses import field
 from typing import Any
 from typing import Dict
 from typing import Tuple
@@ -29,15 +29,15 @@ from typing_extensions import Self
 T = TypeVar("T")
 
 
-@dataclass(slots=True)
-class DataclassMixin(RecordMixin, ABC):
+@attrs.define
+class AttrsMixin(RecordMixin, ABC):
     """Mixin methods for dataclass records."""
 
     def pack(self) -> Tuple[Tuple[Type, ...], Type[Self], Dict[str, Any]]:
-        return self.get_key(), self.__class__, asdict(self)
+        return self.get_key(), self.__class__, attrs.asdict(self)  # noqa
 
 
-def datafield(
+def attrs_field(
     *,
     default: T | None = None,
     default_factory: Any | None = None,
@@ -80,11 +80,11 @@ def datafield(
         "filterable": filterable,
     }
     if default_factory is None:
-        return field(default=default, metadata=metadata)
+        return attrs.field(default=default, metadata=metadata)
     elif default is None:
-        return field(default_factory=default_factory, metadata=metadata)
+        return attrs.field(factory=default_factory, metadata=metadata)
     else:
         raise RuntimeError(
-            f"Params default={default} and default_factory={default_factory} in `datafield` method "
+            f"Params default={default} and default_factory={default_factory} in `attrs_field` method "
             f"are mutually exclusive but both are specified."
         )

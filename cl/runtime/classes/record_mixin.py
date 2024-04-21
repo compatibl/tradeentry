@@ -49,6 +49,14 @@ class RecordMixin(ABC):
     __slots__ = ()
     """To prevent creation of __dict__ in derived types."""
 
+    @abstractmethod
+    def get_key(self) -> Tuple[Type, ...]:
+        """Return a tuple starting from the base record class followed by the primary key fields."""
+
+    @abstractmethod
+    def pack(self) -> Tuple[Tuple[Type, ...], Type[Self], Dict[str, Any]]:
+        """Return a tuple of containing the record's key, class, and data serialized into a dictionary."""
+
     def init(self) -> None:
         """Similar to __init__ but uses previously set fields instead of parameters (not invoked by data source)."""
 
@@ -60,14 +68,6 @@ class RecordMixin(ABC):
 
         # Do nothing by default
         pass
-
-    @abstractmethod
-    def get_key(self) -> Tuple[Type, ...]:
-        """Return key as tuple in (RecordClass, key_field_1, key_field_2, ...) format."""
-
-    @abstractmethod
-    def pack(self) -> Tuple[Tuple[Type, ...], Type[Self], Dict[str, Any]]:
-        """Serialize to dictionary containing other dictionaries, lists and primitive types."""
 
     @classmethod
     def load_many(
