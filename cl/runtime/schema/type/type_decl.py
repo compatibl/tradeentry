@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Tuple, Type
-
 from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
-from dataclasses import dataclass
 from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
+from dataclasses import dataclass
+from typing import Tuple
+from typing import Type
 
-TypeDeclKey = Tuple[Type['TypeDecl'], str]
+TypeDeclKey = Tuple[Type["TypeDecl"], str]
 
 
 @dataclass

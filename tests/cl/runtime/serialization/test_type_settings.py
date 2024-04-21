@@ -27,7 +27,9 @@ def test_type_alias():
 
     assert TypeSettings.get_type_alias(StubDataclassRecord) == "StubDataclassRecord"  # Alias is not set
     assert TypeSettings.get_type_alias(StubDataclassDerivedRecord) == "StubDataclassRenamedRecord"  # Alias set in test
-    assert TypeSettings.get_type_alias(StubDataclassAliasedRecord) == "StubDataclassAliasedRecordNewName"  # Alias set in class
+    assert (
+        TypeSettings.get_type_alias(StubDataclassAliasedRecord) == "StubDataclassAliasedRecordNewName"
+    )  # Alias set in class
 
 
 if __name__ == "__main__":

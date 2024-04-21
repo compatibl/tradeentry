@@ -13,8 +13,8 @@
 # limitations under the License.
 
 import datetime as dt
-from dataclasses import dataclass
 from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
+from dataclasses import dataclass
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_data import StubDataclassData
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_list_fields import stub_dataclass_data_list_factory
@@ -96,7 +96,9 @@ class StubDataclassListDictFields(StubDataclassRecord):
     date_list_dict: Dict[str, List[dt.date]] = datafield(default_factory=stub_dataclass_date_list_dict_factory)
     """Stub field."""
 
-    record_list_dict: Dict[str, List[StubDataclassRecord]] = datafield(default_factory=stub_dataclass_record_list_dict_factory)
+    record_list_dict: Dict[str, List[StubDataclassRecord]] = datafield(
+        default_factory=stub_dataclass_record_list_dict_factory
+    )
     """Stub field."""
 
     derived_record_list_dict: Dict[str, List[StubDataclassDerivedRecord]] = datafield(

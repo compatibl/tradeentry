@@ -12,12 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
-from typing import Tuple, Type
-from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
+from dataclasses import dataclass
+from typing import Tuple
+from typing import Type
 
-PackageDeclKey = Tuple[Type['PackageDecl'], str]
+PackageDeclKey = Tuple[Type["PackageDecl"], str]
 
 
 @dataclass
@@ -32,4 +33,3 @@ class PackageDecl(DataclassMixin):
 
     def get_key(self) -> PackageDeclKey:
         return PackageDecl, self.package_id
-

@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
 from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from cl.runtime.view.view import View
+from dataclasses import dataclass
 from typing import List
 from typing import final
 

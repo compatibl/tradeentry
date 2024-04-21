@@ -12,13 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass, field, asdict
-from typing import Tuple, Type, Dict, Any
+from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
+from dataclasses import asdict
+from dataclasses import dataclass
+from dataclasses import field
+from typing import Any
+from typing import Dict
+from typing import Tuple
+from typing import Type
 from typing_extensions import Self
 
-from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
-
-StubDataclassBaseKey = Tuple[Type['StubDataclassBase'], str, int]
+StubDataclassBaseKey = Tuple[Type["StubDataclassBase"], str, int]
 
 
 @dataclass
@@ -33,4 +37,3 @@ class StubDataclassBase(DataclassMixin):
 
     def get_key(self) -> StubDataclassBaseKey:
         return StubDataclassBase, self.str_field, self.int_field
-

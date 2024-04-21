@@ -15,9 +15,9 @@
 from __future__ import annotations
 
 import datetime as dt
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from cl.runtime.primitive.date_util import DateUtil
 from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_data import StubDataclassData
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_record import StubDataclassRecord
@@ -106,5 +106,7 @@ class StubDataclassListFields(StubDataclassRecord):
     record_list: List[StubDataclassRecord] = datafield(default_factory=stub_dataclass_record_list_factory)
     """Stub field."""
 
-    derived_record_list: List[StubDataclassDerivedRecord] = datafield(default_factory=stub_dataclass_derived_record_list_factory)
+    derived_record_list: List[StubDataclassDerivedRecord] = datafield(
+        default_factory=stub_dataclass_derived_record_list_factory
+    )
     """Stub field."""

@@ -16,14 +16,16 @@ from __future__ import annotations
 
 from abc import ABC
 from abc import abstractmethod
+from cl.runtime.classes.class_info import ClassInfo
+from cl.runtime.settings.config import dynaconf_settings
 from dataclasses import dataclass
-from typing import Any, Tuple, ClassVar, Type
+from typing import Any
+from typing import ClassVar
 from typing import Dict
 from typing import Iterable
 from typing import List
-
-from cl.runtime.classes.class_info import ClassInfo
-from cl.runtime.settings.config import dynaconf_settings
+from typing import Tuple
+from typing import Type
 
 
 @dataclass(slots=True, init=True, frozen=True)
@@ -41,14 +43,14 @@ class DataSource(ABC):
 
     @abstractmethod
     def load_unordered(
-            self,
-            keys: Iterable[Tuple],
-            dataset: List[str] | str | None = None,
+        self,
+        keys: Iterable[Tuple],
+        dataset: List[str] | str | None = None,
     ) -> Iterable[Tuple[Tuple, Type, Dict[str, Any]]]:
         """
         Return serialized records in arbitrary order, skipping records that are not found.
         Error if the size of keys iterable exceeds batch size.
-        
+
         Returns:
             Iterable with serialized records where each level is a supported primitive type, list, or another dict.
 
@@ -67,7 +69,7 @@ class DataSource(ABC):
     ) -> Iterable[Dict[str, Any]]:
         """
         Load serialized records from a single table by query.
-        
+
         Returns:
             Iterable containing dicts where each level is a supported primitive type, list, or another dict.
 

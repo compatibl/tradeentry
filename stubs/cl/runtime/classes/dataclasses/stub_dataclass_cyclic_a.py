@@ -14,16 +14,18 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
-from typing import TYPE_CHECKING
 from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
-from typing import Tuple, Type
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
+from dataclasses import dataclass
+from typing import TYPE_CHECKING
+from typing import Tuple
+from typing import Type
 
 if TYPE_CHECKING:
-    from stubs.cl.runtime.classes.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB, StubDataclassCyclicBKey
+    from stubs.cl.runtime.classes.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB
+    from stubs.cl.runtime.classes.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicBKey
 
-StubDataclassCyclicAKey = Tuple[Type['StubDataclassCyclicA'], 'StubDataclassCyclicBKey']
+StubDataclassCyclicAKey = Tuple[Type["StubDataclassCyclicA"], "StubDataclassCyclicBKey"]
 
 
 @dataclass

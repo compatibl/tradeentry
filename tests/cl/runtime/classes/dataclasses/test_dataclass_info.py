@@ -68,7 +68,9 @@ def test_get_class_type():
     assert ClassInfo.get_class_type(class_info_path) == ClassInfo
 
     # Class that is dynamically imported on demand
-    do_no_import_class_path = "stubs.cl.runtime.classes.dataclasses.stub_dataclass_do_not_import.StubDataclassDoNotImport"
+    do_no_import_class_path = (
+        "stubs.cl.runtime.classes.dataclasses.stub_dataclass_do_not_import.StubDataclassDoNotImport"
+    )
     do_no_import_class = ClassInfo.get_class_type(do_no_import_class_path)
     assert do_no_import_class_path == f"{do_no_import_class.__module__}.{do_no_import_class.__name__}"
 

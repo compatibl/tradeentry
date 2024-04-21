@@ -12,12 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
-from typing import Optional, Tuple, Type
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
+from dataclasses import dataclass
+from typing import Optional
+from typing import Tuple
+from typing import Type
 
-StubDataclassSingletonKey = Tuple[Type['StubDataclassSingleton']]
+StubDataclassSingletonKey = Tuple[Type["StubDataclassSingleton"]]
 
 
 @dataclass
@@ -29,4 +31,3 @@ class StubDataclassSingleton(DataclassMixin):
 
     def get_key(self) -> StubDataclassSingletonKey:
         return (StubDataclassSingleton,)
-

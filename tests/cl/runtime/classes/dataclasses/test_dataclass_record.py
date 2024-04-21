@@ -40,7 +40,6 @@ def test_smoke():
     assert clone_dict == record_dict
 
 
-
 def test_with_primitive_fields():
     """Test for a record with primitive fields."""
 

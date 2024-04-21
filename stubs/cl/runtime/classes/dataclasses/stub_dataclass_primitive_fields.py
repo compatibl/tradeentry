@@ -13,20 +13,21 @@
 # limitations under the License.
 
 from __future__ import annotations
-import datetime as dt
-from typing import Tuple, Type
 
+import datetime as dt
 from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from cl.runtime.primitive.date_time_util import DateTimeUtil
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.primitive.time_util import TimeUtil
 from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from stubs.cl.runtime.classes.enum.stub_int_enum import StubIntEnum
+from typing import Tuple
+from typing import Type
 from uuid import UUID
 
 StubDataclassPrimitiveFieldsKey = Tuple[
-    Type['StubDataclassPrimitiveFields'],
+    Type["StubDataclassPrimitiveFields"],
     str,
     float,
     bool,

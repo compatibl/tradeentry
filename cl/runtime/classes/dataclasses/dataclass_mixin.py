@@ -13,11 +13,18 @@
 # limitations under the License.
 
 from __future__ import annotations
+
 from abc import ABC
-from dataclasses import asdict, dataclass, field
-from typing import Any, Tuple, Type, Dict, TypeVar
-from typing_extensions import Self
 from cl.runtime.classes.record_mixin import RecordMixin
+from dataclasses import asdict
+from dataclasses import dataclass
+from dataclasses import field
+from typing import Any
+from typing import Dict
+from typing import Tuple
+from typing import Type
+from typing import TypeVar
+from typing_extensions import Self
 
 T = TypeVar("T")
 
@@ -31,18 +38,18 @@ class DataclassMixin(RecordMixin, ABC):
 
 
 def datafield(
-        *,
-        default: T | None = None,
-        default_factory: Any | None = None,
-        optional: bool = False,
-        optional_fields: bool = True,
-        subtype: str | None = None,
-        name: str | None = None,
-        label: str | None = None,
-        formatter: str | None = None,
-        category: str | None = None,
-        secure: bool = False,
-        filterable: bool = False,
+    *,
+    default: T | None = None,
+    default_factory: Any | None = None,
+    optional: bool = False,
+    optional_fields: bool = True,
+    subtype: str | None = None,
+    name: str | None = None,
+    label: str | None = None,
+    formatter: str | None = None,
+    category: str | None = None,
+    secure: bool = False,
+    filterable: bool = False,
 ) -> T:
     """Field in dataclass with additional parameters to define runtime-specific metadata.
 
@@ -63,7 +70,7 @@ def datafield(
     metadata = {
         "datafield": True,
         "optional": optional,
-        "optional_fields": optional_fields, # TODO(dataclasses) - rename
+        "optional_fields": optional_fields,  # TODO(dataclasses) - rename
         "type": subtype,
         "name": name,
         "label": label,
@@ -77,5 +84,7 @@ def datafield(
     elif default is None:
         return field(default_factory=default_factory, metadata=metadata)
     else:
-        raise RuntimeError(f"Params default={default} and default_factory={default_factory} in datafield method "
-                           f"are mutually exclusive but both are specified.")
+        raise RuntimeError(
+            f"Params default={default} and default_factory={default_factory} in datafield method "
+            f"are mutually exclusive but both are specified."
+        )

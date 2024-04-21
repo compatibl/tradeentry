@@ -13,11 +13,16 @@
 # limitations under the License.
 
 from __future__ import annotations
-from abc import ABC, abstractmethod
-from typing import List, Any, Tuple, Type, Dict
-from typing_extensions import Self
 
+from abc import ABC
+from abc import abstractmethod
 from cl.runtime.rest.context import Context
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Tuple
+from typing import Type
+from typing_extensions import Self
 
 NONE = 0  # Code indicating None
 KEY = 1  # Code indicating tuple
@@ -66,11 +71,11 @@ class RecordMixin(ABC):
 
     @classmethod
     def load_many(
-            cls,
-            records_or_keys: List[Self | Tuple | None],
-            dataset: List[str] | str | None = None,
-            *,
-            context: Context | None = None
+        cls,
+        records_or_keys: List[Self | Tuple | None],
+        dataset: List[str] | str | None = None,
+        *,
+        context: Context | None = None,
     ) -> List[Self | None]:
         """
         Load serialized records from a single table using a list of keys in tuple format.
@@ -93,10 +98,13 @@ class RecordMixin(ABC):
 
         # Assign codes to input elements
         coded_inputs = [
-            (NONE, x) if x is None else
-            (KEY, x) if isinstance(x, tuple) else
-            (RECORD, x) if isinstance(x, cls) else
-            (UNKNOWN, x)
+            (NONE, x)
+            if x is None
+            else (KEY, x)
+            if isinstance(x, tuple)
+            else (RECORD, x)
+            if isinstance(x, cls)
+            else (UNKNOWN, x)
             for x in records_or_keys
         ]
 
@@ -105,9 +113,11 @@ class RecordMixin(ABC):
         if len(unknown_inputs) > 0:
             unknown_types = [str(type(x).__name__) for x in unknown_inputs[:5]]
             unknown_types_str = ", ".join(unknown_types)
-            raise RuntimeError(f"Param `records_or_keys` of method `load_many` can have elements "
-                               f"of type {cls.__name__}, tuple, or None. The following "
-                               f"parameter types are invalid: {unknown_types_str}")
+            raise RuntimeError(
+                f"Param `records_or_keys` of method `load_many` can have elements "
+                f"of type {cls.__name__}, tuple, or None. The following "
+                f"parameter types are invalid: {unknown_types_str}"
+            )
 
         # Keys without preserving position in list, excludes None
         keys = [x[1] for x in coded_inputs if x[0] == KEY]
@@ -122,10 +132,9 @@ class RecordMixin(ABC):
 
         # Each lookup must not exceed data source batch size
         batch_size = data_source.batch_size()
-        batches = [keys[i:i + batch_size] for i in range(0, len(keys), batch_size)]
+        batches = [keys[i : i + batch_size] for i in range(0, len(keys), batch_size)]
         records_dict = {}
         for batch_keys in batches:
-
             # Get unordered dict of serialized record data
             batch_data = data_source.load_unordered(batch_keys, dataset)  # noqa
 

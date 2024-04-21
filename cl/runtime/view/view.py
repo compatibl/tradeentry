@@ -13,13 +13,13 @@
 # limitations under the License.
 
 from abc import ABC
-from dataclasses import dataclass
-from typing import Tuple, Type
-
-from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
+from dataclasses import dataclass
+from typing import Tuple
+from typing import Type
 
-ViewKey = Tuple[Type['View'], Tuple[Type, ...], str]
+ViewKey = Tuple[Type["View"], Tuple[Type, ...], str]
 
 
 @dataclass
@@ -43,4 +43,3 @@ class View(DataclassMixin, ABC):
     def get_key(self) -> ViewKey:
         """Return primary key of this instance in semicolon-delimited string format."""
         return View, self.view_for, self.view_name
-

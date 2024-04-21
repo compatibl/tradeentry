@@ -16,12 +16,13 @@ from __future__ import annotations
 
 import datetime as dt
 import inspect
-from logging import getLogger
-from typing import Tuple, Type
-from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from cl.runtime.decorators.handler_decorator import handler
+from logging import getLogger
 from stubs.cl.runtime.classes.enum.stub_int_enum import StubIntEnum
+from typing import Tuple
+from typing import Type
 
 _logger = getLogger(__name__)
 
@@ -37,7 +38,7 @@ def print_method_info():  # TODO: Move into DebugUtil(s)
     print(f"Called {method_name}({params_output})")
 
 
-StubHandlerMethodsKey = Tuple[Type['StubHandlerMethods'], str]
+StubHandlerMethodsKey = Tuple[Type["StubHandlerMethods"], str]
 
 
 class StubHandlerMethods(DataclassMixin):

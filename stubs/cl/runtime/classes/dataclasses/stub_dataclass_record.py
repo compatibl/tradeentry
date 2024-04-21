@@ -14,11 +14,12 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Tuple, Type
 from cl.runtime.classes.dataclasses.dataclass_mixin import DataclassMixin
+from dataclasses import dataclass
+from typing import Tuple
+from typing import Type
 
-StubDataclassRecordKey = Tuple[Type['StubDataclassRecord'], str, int]
+StubDataclassRecordKey = Tuple[Type["StubDataclassRecord"], str, int]
 
 
 @dataclass(slots=True)
@@ -36,4 +37,3 @@ class StubDataclassRecord(DataclassMixin):
 
     def get_key(self) -> StubDataclassRecordKey:
         return StubDataclassRecord, self.str_field, self.int_field
-

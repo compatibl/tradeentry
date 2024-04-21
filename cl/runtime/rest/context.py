@@ -14,11 +14,12 @@
 
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
+from cl.runtime.rest.progress import Progress
+from cl.runtime.storage.data_source import DataSource
 from logging import Logger
 from typing import List
-from cl.runtime.storage.data_source import DataSource
-from cl.runtime.rest.progress import Progress
 
 
 class Context(ABC):
@@ -51,13 +52,13 @@ class Context(ABC):
 
     @abstractmethod
     def with_params(
-            self,
-            *,
-            logger: Logger | None = None,
-            data_source: DataSource | None = None,
-            read_dataset: List[str] | str | None = None,
-            write_dataset: str | None = None,
-            progress: Progress | None = None,
+        self,
+        *,
+        logger: Logger | None = None,
+        data_source: DataSource | None = None,
+        read_dataset: List[str] | str | None = None,
+        write_dataset: str | None = None,
+        progress: Progress | None = None,
     ) -> Context:
         """Create a copy of self where some or all of the attributes are modified."""
 

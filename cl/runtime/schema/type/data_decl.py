@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.type.field_decl import FieldDecl
 from cl.runtime.schema.type.type_decl import TypeDecl
 from cl.runtime.schema.type.type_decl import TypeDeclKey
 from dataclasses import dataclass
-from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from typing import List
 
 

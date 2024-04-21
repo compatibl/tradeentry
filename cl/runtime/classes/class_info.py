@@ -98,8 +98,9 @@ class ClassInfo(ABC):
         fully_qualified_names = [
             f"{c.__module__}.{c.__name__}"
             for c in record_type.mro()
-            if hasattr(c, 'get_key') and callable(getattr(c, 'get_key')) and
-            not getattr(getattr(c, 'get_key'), '__isabstractmethod__', False)
+            if hasattr(c, "get_key")
+            and callable(getattr(c, "get_key"))
+            and not getattr(getattr(c, "get_key"), "__isabstractmethod__", False)
         ]
 
         # Make sure there is only one such class in the inheritance chain
@@ -248,7 +249,9 @@ class ClassInfo(ABC):
 
         if isinstance(data, dict):
             field_types = get_type_hints(class_type)
-            return class_type(**{k: ClassInfo._deserialize(field_types[k], v) for k, v in data.items() if k != "_class"})
+            return class_type(
+                **{k: ClassInfo._deserialize(field_types[k], v) for k, v in data.items() if k != "_class"}
+            )
         elif isinstance(data, list):
             return [ClassInfo._deserialize(class_type.__args__[0], item) for item in data]
         else:

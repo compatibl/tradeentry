@@ -13,12 +13,15 @@
 # limitations under the License.
 
 from __future__ import annotations
+
 from cl.runtime.classes.record_mixin import RecordMixin
-from typing import Any, Tuple, Type
+from typing import Any
 from typing import Dict
 from typing import Optional
+from typing import Tuple
+from typing import Type
 
-StubCustomBaseKey = Tuple[Type['StubCustomBase'], str, int]
+StubCustomBaseKey = Tuple[Type["StubCustomBase"], str, int]
 
 
 class StubCustomBase(RecordMixin):
@@ -49,7 +52,7 @@ class StubCustomBase(RecordMixin):
                 "str_field": self.str_field,
                 "int_field": self.int_field,
                 "float_field": self.float_field,
-            }
+            },
         )
 
     def get_key(self) -> StubCustomBaseKey:

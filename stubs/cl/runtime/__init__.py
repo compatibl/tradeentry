@@ -6,8 +6,12 @@ from stubs.cl.runtime.classes.dataclasses.stub_dataclass_cyclic_a import StubDat
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_data import StubDataclassData
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_derived_data import StubDataclassDerivedData
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_derived_from_derived_data import StubDataclassDerivedFromDerivedData
-from stubs.cl.runtime.classes.dataclasses.stub_dataclass_derived_from_derived_record import StubDataclassDerivedFromDerivedRecord
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_derived_from_derived_data import (
+    StubDataclassDerivedFromDerivedData,
+)
+from stubs.cl.runtime.classes.dataclasses.stub_dataclass_derived_from_derived_record import (
+    StubDataclassDerivedFromDerivedRecord,
+)
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_dict_fields import StubDataclassDictFields
 from stubs.cl.runtime.classes.dataclasses.stub_dataclass_dict_list_fields import StubDataclassDictListFields

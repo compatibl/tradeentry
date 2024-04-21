@@ -12,16 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass, field
-
 from cl.runtime import DataSource
-from dataclasses import dataclass
+from cl.runtime.classes.class_info import ClassInfo
 from cl.runtime.classes.dataclasses.dataclass_mixin import datafield
 from cl.runtime.classes.record_mixin import RecordMixin
-from cl.runtime.classes.class_info import ClassInfo
 from copy import deepcopy
-from typing import Dict, Tuple, List, Any
+from dataclasses import dataclass
+from dataclasses import field
+from typing import Any
+from typing import Dict
 from typing import Iterable
+from typing import List
+from typing import Tuple
 from typing import Type
 from typing import TypeVar
 from typing import Union
@@ -41,14 +43,12 @@ class LocalCache(DataSource):
         return 1000000
 
     def load_unordered(
-            self,
-            keys: Iterable[Tuple],
-            dataset: List[str] | str | None = None,
+        self,
+        keys: Iterable[Tuple],
+        dataset: List[str] | str | None = None,
     ) -> Iterable[Tuple[Tuple, Type, Dict[str, Any]]]:
-
         result = []
         for key in keys:  # TODO: Accelerate by avoiding for loop
-
             # Try to retrieve dataset dictionary, insert if it does not yet exist
             dataset_cache = self._cache.setdefault(dataset, {})
 
@@ -67,10 +67,8 @@ class LocalCache(DataSource):
         key_record_pairs: Iterable[Tuple[Tuple, Type, Dict[str, Any]]],
         dataset: List[str] | str | None = None,
     ) -> None:
-
         # Iterate over key-record pairs
         for key, type_, dict_ in key_record_pairs:
-
             # Try to retrieve dataset dictionary, insert if it does not yet exist
             dataset_cache = self._cache.setdefault(dataset, {})
 
@@ -79,19 +77,19 @@ class LocalCache(DataSource):
             dataset_cache[key] = (type_, dict_)
 
     def load_by_query(
-            self,
-            table: str,
-            query: Dict[str, Any] | None,
-            order: Dict[str, int] | None = None,
-            dataset: List[str] | str | None = None,
+        self,
+        table: str,
+        query: Dict[str, Any] | None,
+        order: Dict[str, int] | None = None,
+        dataset: List[str] | str | None = None,
     ) -> Iterable[Dict[str, Any]]:
         raise NotImplementedError()
 
     def delete_many(
-            self,
-            table: str,
-            keys: Iterable[Tuple],
-            dataset: List[str] | str | None = None,
+        self,
+        table: str,
+        keys: Iterable[Tuple],
+        dataset: List[str] | str | None = None,
     ) -> None:
         raise NotImplementedError()
 
