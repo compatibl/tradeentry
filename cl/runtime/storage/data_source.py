@@ -27,8 +27,23 @@ from typing import List
 from typing import Tuple
 from typing import Type
 
-KeyType = Tuple[Type, ...]
-RecordType = Tuple[KeyType, Type, Dict[str, Any]]
+# Base type and values of key fields
+KeyType = Tuple[
+    Type,               # First tuple element is base type which determines the table where key lookup is performed
+    ...                 # Remaining tuple elements are primary key fields in the order of declaration
+]
+
+# Record type and serialized record data
+RecordType = Tuple[
+    Type,               # Record type (type into which the record will be deserialized)
+    Dict[str, Any]      # Record data serialized into a dictionary
+]
+
+# Key and record data in one tuple
+PackType = Tuple[
+    KeyType,            # Base type and key fields
+    RecordType,         # Record type and serialized data
+]
 
 
 @dataclass(slots=True, init=True, frozen=True)
@@ -47,9 +62,10 @@ class DataSource(ABC):
     @abstractmethod
     def load_unordered(
         self,
+        base_type: Type,
         keys: Iterable[KeyType],
         dataset: List[str] | str | None = None,
-    ) -> Iterable[RecordType]:
+    ) -> Iterable[PackType]:
         """
         Return tuples of (key, type, dict) for records in arbitrary order, skipping records that are not found.
         Error if the size of keys iterable exceeds batch size.
@@ -58,7 +74,8 @@ class DataSource(ABC):
             Tuples of (key, type, dict) where type is record class and dict contains serialized record data.
 
         Args:
-            keys: Iterable of keys in tuple format consisting of base type followed by key fields.
+            base_type: Base type determines the table where key lookup is performed.
+            keys: Tuple of primary key fields in the order of declaration.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
         """
 
@@ -66,35 +83,38 @@ class DataSource(ABC):
     def load_by_query(
         self,
         base_type: Type,
-        record_type: Type,
+        match_type: Type,
         query: Dict[str, Any] | None,
         order: Dict[str, int] | None = None,
         dataset: List[str] | str | None = None,
-    ) -> Iterable[RecordType]:
+    ) -> Iterable[PackType]:
         """
         Load serialized records from a single table by query.
 
         Returns:
-            Tuples of (key, type, dict) where type is record class and dict contains serialized record data.
+            Tuples of (base_type, record_type, key_tuple, data_dict) where `key_tuple` contains primary key fields
+            in declaration order and `data_dict` contains record data serialized into a dictionary.
 
         Args:
-            base_type: Base class for which the key is defined
-            record_type: Query will match this class and its descendants, must derive from base `base_type`
-            query: NoSQL query on fields in MongoDB format, or None to load all records from the table.
-            order: NoSQL sorting order in MongoDB format, or None if the result can be in any order.
+            base_type: Base type determines the table where key lookup is performed.
+            match_type: Query will only match objects of this type and its descendants. Must derive from `base_type`.
+            query: NoSQL query on fields of `match_type` class in MongoDB format, or None to load all records.
+            order: NoSQL order defined on fields of `match_type` in MongoDB format, or None if no sorting is required.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
         """
 
     @abstractmethod
     def save_many(
         self,
-        records: Iterable[RecordType],
+        base_type: Type,
+        records: Iterable[PackType],
         dataset: List[str] | str | None = None,
     ) -> None:
         """
         Save serialized records (overwrite records that already exist).
 
         Args:
+            base_type: Base type determines the table where key lookup is performed.
             records: Tuples of (key, type, dict) where type is record class and dict contains serialized record data.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
         """
@@ -110,7 +130,7 @@ class DataSource(ABC):
 
         Args:
             table: Table from which the records will be deleted.
-            keys: Each key is either a dictionary of primary key fields or semicolon-delimited string.
+            keys: Tuple of primary key fields in the order of declaration.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
         """
 

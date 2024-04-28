@@ -41,8 +41,11 @@ def test_cyclic_record():
 
     # Test for keys
 
+    assert b_1.get_base() == StubDataclassCyclicB
     assert b_1.get_key() == (StubDataclassCyclicB, "a")
+    assert a_1.get_base() == StubDataclassCyclicA
     assert a_1.get_key() == (StubDataclassCyclicA, (StubDataclassCyclicB, "b"))
+    pass
 
 
 if __name__ == "__main__":

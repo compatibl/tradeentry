@@ -13,25 +13,22 @@
 # limitations under the License.
 
 from cl.runtime import DataSource
-from cl.runtime.records.class_info import ClassInfo
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
-from cl.runtime.records.record_mixin import RecordMixin
-from copy import deepcopy
 from dataclasses import dataclass
 from dataclasses import field
-from typing import Any
+from typing import Any, TYPE_CHECKING
 from typing import Dict
 from typing import Iterable
 from typing import List
 from typing import Tuple
 from typing import Type
-from cl.runtime.storage.data_source import RecordType, KeyType
+from cl.runtime.storage.data_source import PackType, KeyType
+
 
 @dataclass(slots=True, init=True, frozen=True)
 class LocalCache(DataSource):
     """Data source based on in-memory cache using Python dict."""
 
-    _cache: Dict[str, Dict] = field(default_factory=dict)
+    _cache: Dict[str, Dict[Type, Dict[Tuple, Any]]] = field(default_factory=dict)
 
     def batch_size(self) -> int:
         """Maximum number or records the data source will return in a single call, error if exceeded."""
@@ -39,51 +36,84 @@ class LocalCache(DataSource):
 
     def load_unordered(
         self,
+        base_type: Type,
         keys: Iterable[KeyType],
         dataset: List[str] | str | None = None,
-    ) -> Iterable[RecordType]:
+    ) -> Iterable[PackType]:
+
+        # Try to retrieve dataset dictionary, insert if it does not yet exist
+        dataset_cache = self._cache.setdefault(dataset, {})
+
+        # Try to retrieve table dictionary, insert if it does not yet exist
+        table_cache = dataset_cache.setdefault(base_type, {})
+
         result = []
         for key in keys:  # TODO: Accelerate by avoiding for loop
-            # Try to retrieve dataset dictionary, insert if it does not yet exist
-            dataset_cache = self._cache.setdefault(dataset, {})
 
-            # Retrieve the record using get method that returns None if the key is not found
-            record = dataset_cache.get(key)
+            # Separate type parameter which is the leading tuple element
+            key_type = key[0]
+            key_fields = key[1:]
+
+            # Retrieve the record from table cache using get method
+            # Will return None if the key is not found
+            record = table_cache.get(key_fields)
 
             # Only add if the result is not None
             if record is not None:
-                type_, dict_ = record
-                result.append((key, type_, dict_))
+                record_type, record_dict = record
+                if not issubclass(record_type, key_type):
+                    key_fields_str_list = [str(k) for k in key_fields]
+                    raise RuntimeError(f"In method `load_unordered`,"
+                                       f"class `{record_type}` is not a subclass of `{key_type}` "
+                                       f"specified with key fields `{';'.join(key_fields_str_list)}`")
+                result.append((key, record_type, record_dict))
 
         return result
 
     def load_by_query(
         self,
         base_type: Type,
-        record_type: Type,
+        match_type: Type,
         query: Dict[str, Any] | None,
         order: Dict[str, int] | None = None,
         dataset: List[str] | str | None = None,
-    ) -> Iterable[RecordType]:
+    ) -> Iterable[PackType]:
         raise NotImplementedError()
 
     def save_many(
         self,
-        records: Iterable[RecordType],
+        base_type: Type,
+        records: Iterable[PackType],
         dataset: List[str] | str | None = None,
     ) -> None:
+
+        # Try to retrieve dataset dictionary, insert if it does not yet exist
+        dataset_cache = self._cache.setdefault(dataset, {})
+
+        # Try to retrieve table dictionary, insert if it does not yet exist
+        table_cache = dataset_cache.setdefault(base_type, {})
+
         # Iterate over key-record pairs
-        for key, type_, dict_ in records:
-            # Try to retrieve dataset dictionary, insert if it does not yet exist
-            dataset_cache = self._cache.setdefault(dataset, {})
+        for key, record_type, record_dict in records:
+
+            # Separate type parameter which is the leading tuple element
+            key_type = key[0]
+            key_fields = key[1:]
+
+            if not issubclass(record_type, key_type):
+                key_fields_str_list = [str(k) for k in key_fields]
+                raise RuntimeError(f"In method `save_many`,"
+                                   f"class `{record_type}` is not a subclass of `{key_type}` "
+                                   f"specified with key fields `{';'.join(key_fields_str_list)}`")
 
             # TODO: Support tables
             # Insert the record into dataset dictionary
-            dataset_cache[key] = (type_, dict_)
+            table_cache[key_fields] = (record_type, record_dict)
 
     def delete_many(
         self,
-        keys: Iterable[KeyType],
+        base_type: Type,
+        keys: Iterable[Tuple],
         dataset: List[str] | str | None = None,
     ) -> None:
         raise NotImplementedError()

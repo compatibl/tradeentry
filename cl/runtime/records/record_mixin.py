@@ -16,6 +16,9 @@ from __future__ import annotations
 
 from abc import ABC
 from abc import abstractmethod
+
+from memoization import cached
+
 from cl.runtime.rest.context import Context
 from typing import Any
 from typing import Dict
@@ -70,9 +73,42 @@ class RecordMixin(ABC):
         pass
 
     @classmethod
+    @cached
+    def get_base(cls) -> Type:
+        """
+        Base type determines the table where key lookup is performed. This method relies on base type
+        being the last class in MRO where method `get_key` is not abstract and caches the result.
+        Override if required.
+        """
+
+        # Last element in the list of superclasses where method `get_key` is not abstract
+        return cls.get_superclasses()[-1]
+
+    @classmethod
+    @cached
+    def get_superclasses(cls) -> List[Type]:
+        """
+        The list of superclasses where method `get_key` is not abstract for use in query type matching.
+        The result is cached. Override if required.
+        """
+
+        # Get the list of classes in MRO
+        result = [c for c in cls.mro()
+                  if hasattr(c, "get_key")
+                  and callable(getattr(c, "get_key"))
+                  and not getattr(getattr(c, "get_key"), "__isabstractmethod__", False)
+                  ]
+
+        # Make sure there is only one such class in the inheritance chain
+        if len(result) == 0:
+            raise RuntimeError(f"Class {cls.__module__}.{cls.__name__} does not implement get_key(self) method.")
+        else:
+            return result
+
+    @classmethod
     def load_many(
         cls,
-        records_or_keys: List[Self | Tuple | None],
+        records_or_keys: List[Self | Tuple[Type[Self], ...] | None],
         dataset: List[str] | str | None = None,
         *,
         context: Context | None = None,
@@ -101,7 +137,7 @@ class RecordMixin(ABC):
             (NONE, x)
             if x is None
             else (KEY, x)
-            if isinstance(x, tuple)
+            if isinstance(x, tuple) and len(x) > 0 and isinstance(x[0], type) and issubclass(x[0], cls)
             else (RECORD, x)
             if isinstance(x, cls)
             else (UNKNOWN, x)
@@ -114,9 +150,10 @@ class RecordMixin(ABC):
             unknown_types = [str(type(x).__name__) for x in unknown_inputs[:5]]
             unknown_types_str = ", ".join(unknown_types)
             raise RuntimeError(
-                f"Param `records_or_keys` of method `load_many` can have elements "
-                f"of type {cls.__name__}, tuple, or None. The following "
-                f"parameter types are invalid: {unknown_types_str}"
+                f"Elements of `records_or_keys` param in `load_many` can be objects of "
+                f"class {cls.__name__} or its subclass, tuple where the first element "
+                f"is the type of this class or its subclass, or None. The following "
+                f"parameter types are not accepted by this method: {unknown_types_str}"
             )
 
         # Keys without preserving position in list, excludes None
@@ -129,14 +166,15 @@ class RecordMixin(ABC):
         # Get data source from the current or specified context
         context = Context.current() if context is None else context
         data_source = context.data_source()
+        base_type = cls.get_base()
 
         # Each lookup must not exceed data source batch size
         batch_size = data_source.batch_size()
-        batches = [keys[i : i + batch_size] for i in range(0, len(keys), batch_size)]
+        batches = [keys[i: i + batch_size] for i in range(0, len(keys), batch_size)]
         records_dict = {}
         for batch_keys in batches:
             # Get unordered dict of serialized record data
-            batch_data = data_source.load_unordered(batch_keys, dataset)  # noqa
+            batch_data = data_source.load_unordered(base_type, batch_keys, dataset)
 
             # Create class instances and accumulate in records_dict
             records_dict.update({key: type_(**dict_) for key, type_, dict_ in batch_data})
