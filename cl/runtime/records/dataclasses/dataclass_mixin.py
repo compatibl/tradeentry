@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
 from abc import ABC
 from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import asdict
@@ -33,7 +31,7 @@ T = TypeVar("T")
 class DataclassMixin(RecordMixin, ABC):
     """Mixin methods for dataclass records."""
 
-    def pack(self) -> Tuple[Tuple[Type, ...], Type[Self], Dict[str, Any]]:
+    def pack(self) -> Tuple[Tuple[Type[Self], ...], Type[Self], Dict[str, Any]]:
         return self.get_key(), self.__class__, asdict(self)
 
 

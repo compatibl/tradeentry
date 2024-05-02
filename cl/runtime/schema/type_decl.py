@@ -35,4 +35,4 @@ class TypeDecl(DataclassMixin):
     """Readable type label in the front end."""
 
     def get_key(self) -> TypeDeclKey:
-        return TypeDecl, self.type_id
+        return type(self), self.type_id

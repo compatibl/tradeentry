@@ -42,4 +42,4 @@ class View(DataclassMixin, ABC):
 
     def get_key(self) -> ViewKey:
         """Return primary key of this instance in semicolon-delimited string format."""
-        return View, self.view_for, self.view_name
+        return type(self), self.view_for, self.view_name

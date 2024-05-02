@@ -20,7 +20,6 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING
 from typing import Tuple
 from typing import Type
-from typing import Union
 
 if TYPE_CHECKING:
     from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_a import StubDataclassCyclicA
@@ -39,7 +38,7 @@ class StubDataclassCyclicB(DataclassMixin):
     """Key for class A."""
 
     def get_key(self) -> StubDataclassCyclicBKey:
-        return StubDataclassCyclicB, self.id
+        return type(self), self.id
 
     @staticmethod
     def create() -> StubDataclassCyclicB:

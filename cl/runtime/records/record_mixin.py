@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
 from abc import ABC
 from abc import abstractmethod
 
@@ -57,7 +55,7 @@ class RecordMixin(ABC):
         """Base class for which the key is defined followed by the values of primary key fields in this class."""
 
     @abstractmethod
-    def pack(self) -> Tuple[Tuple[Type, ...], Type[Self], Dict[str, Any]]:
+    def pack(self) -> Tuple[Tuple[Type[Self], ...], Type[Self], Dict[str, Any]]:
         """Return a tuple of containing the record's key, class, and data serialized into a dictionary."""
 
     def init(self) -> None:

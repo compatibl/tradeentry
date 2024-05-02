@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from dataclasses import dataclass
 from typing import Tuple
@@ -36,4 +34,4 @@ class StubDataclassRecord(DataclassMixin):
     """Stub version field."""
 
     def get_key(self) -> StubDataclassRecordKey:
-        return StubDataclassRecord, self.str_field, self.int_field
+        return type(self), self.str_field, self.int_field

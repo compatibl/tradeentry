@@ -12,16 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
-from cl.runtime.primitive.date_time_util import DateTimeUtil
-from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.storage.index_util import index_fields
 from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
-from typing import Optional
-
 
 @index_fields("other_float_field, other_str_field, -int_field")
 @dataclass

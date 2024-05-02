@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
 from cl.runtime.rest.context import Context
 from cl.runtime.rest.null_progress import NullProgress
 from cl.runtime.rest.progress import Progress

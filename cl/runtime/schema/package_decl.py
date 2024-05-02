@@ -32,4 +32,4 @@ class PackageDecl(DataclassMixin):
     """Readable package label used by the front end."""
 
     def get_key(self) -> PackageDeclKey:
-        return PackageDecl, self.package_id
+        return type(self), self.package_id

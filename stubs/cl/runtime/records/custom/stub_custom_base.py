@@ -12,9 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
 from cl.runtime.records.record_mixin import RecordMixin
+from typing_extensions import Self
 from typing import Any
 from typing import Dict
 from typing import Optional
@@ -43,8 +42,7 @@ class StubCustomBase(RecordMixin):
         self.int_field = int_field
         self.float_field = float_field
 
-    def pack(self) -> Tuple[StubCustomBaseKey, Type[StubCustomBase], Dict[str, Any]]:
-        class_type = type(self)
+    def pack(self) -> Tuple[StubCustomBaseKey, Type[Self], Dict[str, Any]]:
         return (
             self.get_key(),
             StubCustomBase,
@@ -56,4 +54,4 @@ class StubCustomBase(RecordMixin):
         )
 
     def get_key(self) -> StubCustomBaseKey:
-        return StubCustomBase, self.str_field, self.int_field
+        return type(self), self.str_field, self.int_field

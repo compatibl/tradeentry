@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
 import datetime as dt
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
@@ -126,7 +124,7 @@ class StubDataclassPrimitiveFields(DataclassMixin):
 
     def get_key(self) -> StubDataclassPrimitiveFieldsKey:
         return (
-            StubDataclassPrimitiveFields,
+            type(self),
             self.str_field,
             self.float_field,
             self.bool_field,

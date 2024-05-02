@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.storage.index_util import index_fields
@@ -71,4 +69,4 @@ class StubDataclassNestedFields(DataclassMixin):
     """Stub field with key type initialized to record type instance."""
 
     def get_key(self) -> StubDataclassNestedFieldsKey:
-        return StubDataclassNestedFields, self.primitive, self.embedded_1, self.embedded_2
+        return type(self), self.primitive, self.embedded_1, self.embedded_2

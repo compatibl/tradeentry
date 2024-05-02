@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
 

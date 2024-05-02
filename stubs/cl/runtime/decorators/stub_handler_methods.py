@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
 import datetime as dt
 import inspect
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
@@ -21,7 +19,7 @@ from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.decorators.handler_decorator import handler
 from logging import getLogger
 from stubs.cl.runtime.records.enum.stub_int_enum import StubIntEnum
-from typing import Tuple
+from typing import Tuple, Any
 from typing import Type
 
 _logger = getLogger(__name__)
@@ -48,7 +46,7 @@ class StubHandlerMethods(DataclassMixin):
     """Stub identifier."""
 
     def get_key(self) -> StubHandlerMethodsKey:
-        return StubHandlerMethods, self.stub_id
+        return type(self), self.stub_id
 
     @handler
     def instance_handler_1a(self) -> None:

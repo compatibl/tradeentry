@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
 import datetime as dt
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.primitive.date_util import DateUtil

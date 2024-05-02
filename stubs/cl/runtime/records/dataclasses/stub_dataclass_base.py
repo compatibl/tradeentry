@@ -36,4 +36,4 @@ class StubDataclassBase(DataclassMixin):
     """Stub field."""
 
     def get_key(self) -> StubDataclassBaseKey:
-        return StubDataclassBase, self.str_field, self.int_field
+        return type(self), self.str_field, self.int_field

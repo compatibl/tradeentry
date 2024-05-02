@@ -30,4 +30,4 @@ class StubDataclassSingleton(DataclassMixin):
     """Stub field."""
 
     def get_key(self) -> StubDataclassSingletonKey:
-        return (StubDataclassSingleton,)
+        return (type(self),)
