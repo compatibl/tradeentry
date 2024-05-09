@@ -170,14 +170,14 @@ class RecordMixin(ABC):
 
         # Each lookup must not exceed data source batch size
         batch_size = data_source.batch_size()
-        batches = [keys[i : i + batch_size] for i in range(0, len(keys), batch_size)]
+        batches = [keys[i: i + batch_size] for i in range(0, len(keys), batch_size)]
         records_dict = {}
         for batch_keys in batches:
             # Get unordered dict of serialized record data
             batch_data = data_source.load_unordered(base_type, batch_keys, dataset)
 
-            # Create class instances and accumulate in records_dict
-            records_dict.update({key: type_(**dict_) for key, type_, dict_ in batch_data})
+            # Create class instances and accumulate in records_dict, key[0] is type
+            records_dict.update({key: key[0](**dict_) for key, dict_ in batch_data})
 
         # Replace key by record defaulting to None, otherwise return input record or None
         result = [records_dict.get(x[1], None) if x[0] == _KEY else x[1] for x in coded_inputs]

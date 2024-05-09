@@ -54,21 +54,33 @@ class LocalCache(DataSource):
             key_type = key[0]
             key_fields = key[1:]
 
+            # Check that key_type is a subclass of base_type
+            if not issubclass(key_type, base_type):
+                key_fields_str_list = [str(k) for k in key_fields]
+                raise RuntimeError(
+                    f"In method `save_many`,"
+                    f"`key_type={key_type.__name__}` is not a subclass of `base_type={base_type.__name__}` "
+                    f"specified with key fields `{';'.join(key_fields_str_list)}`"
+                )
+
             # Retrieve the record from table cache using get method
             # Will return None if the key is not found
             record = table_cache.get(key_fields)
 
             # Only add if the result is not None
             if record is not None:
-                record_type, record_dict = record
+                record_key, record_data = record
+                record_type = record_key[0]
+
+                # Check that record_type is a subclass of key_type
                 if not issubclass(record_type, key_type):
                     key_fields_str_list = [str(k) for k in key_fields]
                     raise RuntimeError(
                         f"In method `load_unordered`,"
-                        f"class `{record_type}` is not a subclass of `{key_type}` "
+                        f"`record_type={record_type.__name__}` is not a subclass of `key_type={key_type.__name__}` "
                         f"specified with key fields `{';'.join(key_fields_str_list)}`"
                     )
-                result.append((key, record_type, record_dict))
+                result.append(record)
 
         return result
 
@@ -95,14 +107,23 @@ class LocalCache(DataSource):
         table_cache = dataset_cache.setdefault(base_type, {})
 
         # Iterate over key-record pairs
-        for key, data in records:
-            # Separate type parameter which is the leading tuple element
+        for record in records:
+            # Parse generic record data
+            key = record[0]
             key_type = key[0]
             key_fields = key[1:]
 
+            if not issubclass(key_type, base_type):
+                key_fields_str_list = [str(k) for k in key_fields]
+                raise RuntimeError(
+                    f"In method `save_many`,"
+                    f"`key_type={key_type.__name__}` is not a subclass of `base_type={base_type.__name__}` "
+                    f"specified with key fields `{';'.join(key_fields_str_list)}`"
+                )
+
             # TODO: Support tables
             # Insert the record into dataset dictionary
-            table_cache[key_fields] = (key_type, data)
+            table_cache[key_fields] = record
 
     def delete_many(
         self,
