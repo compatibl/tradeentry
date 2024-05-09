@@ -31,8 +31,8 @@ T = TypeVar("T")
 class AttrsMixin(RecordMixin, ABC):
     """Mixin methods for dataclass records."""
 
-    def pack(self) -> Tuple[Tuple[Type[Self], ...], Type[Self], Dict[str, Any]]:
-        return self.get_key(), self.__class__, attrs.asdict(self)  # noqa
+    def pack(self) -> Tuple[Tuple[Type[Self], ...], Dict[str, Any]]:
+        return self.get_key(), attrs.asdict(self)  # noqa
 
 
 def attrs_field(

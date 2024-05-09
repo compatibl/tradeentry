@@ -134,17 +134,21 @@ def test_to_from_dict():
     ]
 
     for stub_type in stub_types:
-        # Create a stub type instance with default field values
-        obj = stub_type()
 
-        # Serialize to dict
-        key, type_, dict_ = obj.pack()
+        # Create a stub type instance with default field values
+        record = stub_type()
+        key = record.get_key()
+        packed_key, packed_dict = record.pack()
+        assert packed_key == key
 
         # Restore from dict
-        restored_obj = stub_type(**dict_)  # noqa
+        record_clone = stub_type(**packed_dict)  # noqa
+        clone_key, clone_dict = record_clone.pack()
 
         # Compare
-        assert obj == restored_obj
+        assert clone_key == key
+        assert clone_dict == packed_dict
+        assert record_clone == record
 
 
 if __name__ == "__main__":

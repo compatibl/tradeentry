@@ -27,23 +27,17 @@ from typing import List
 from typing import Tuple
 from typing import Type
 
-# Base type and values of key fields
 KeyType = Tuple[
-    Type,               # First tuple element is base type which determines the table where key lookup is performed
-    ...                 # Remaining tuple elements are primary key fields in the order of declaration
+    Type,               # First element is the record's type
+    ...                 # Remaining elements are primary key fields in the order of declaration
 ]
+"""Tuple of (type, primary key fields)."""
 
-# Record type and serialized record data
-RecordType = Tuple[
-    Type,               # Record type (type into which the record will be deserialized)
+PackType = Tuple[
+    KeyType,            # Tuple of (type, primary key fields)
     Dict[str, Any]      # Record data serialized into a dictionary
 ]
-
-# Key and record data in one tuple
-PackType = Tuple[
-    KeyType,            # Base type and key fields
-    RecordType,         # Record type and serialized data
-]
+"""Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data."""
 
 
 @dataclass(slots=True, init=True, frozen=True)
@@ -67,11 +61,7 @@ class DataSource(ABC):
         dataset: List[str] | str | None = None,
     ) -> Iterable[PackType]:
         """
-        Return tuples of (key, type, dict) for records in arbitrary order, skipping records that are not found.
-        Error if the size of keys iterable exceeds batch size.
-
-        Returns:
-            Tuples of (key, type, dict) where type is record class and dict contains serialized record data.
+        Return tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data.
 
         Args:
             base_type: Base type determines the table where key lookup is performed.
@@ -115,7 +105,7 @@ class DataSource(ABC):
 
         Args:
             base_type: Base type determines the table where key lookup is performed.
-            records: Tuples of (key, type, dict) where type is record class and dict contains serialized record data.
+            records: Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
         """
 

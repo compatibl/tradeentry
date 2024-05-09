@@ -31,18 +31,21 @@ def test_smoke():
     assert key == (StubDataclassRecord, "abc", 123)
 
     # Test roundtrip serialization
-    record_key, record_type, record_dict = record.pack()
-    record_clone = StubDataclassRecord(**record_dict)
-    clone_key, clone_type, clone_dict = record_clone.pack()
-    assert len(record_dict) == 3
+    packed_key, packed_dict = record.pack()
+    assert packed_key == key
+
+    record_clone = StubDataclassRecord(**packed_dict)
+    clone_key, clone_dict = record_clone.pack()
+    assert len(packed_dict) == 3
     assert clone_key == key
-    assert clone_type == StubDataclassRecord
-    assert clone_dict == record_dict
+    assert clone_dict == packed_dict
+    assert record_clone == record
 
 
 def test_with_primitive_fields():
     """Test for a record with primitive fields."""
 
+    # TODO: Complete
     record = StubDataclassPrimitiveFields()
     record = StubDataclassListFields()
     pass

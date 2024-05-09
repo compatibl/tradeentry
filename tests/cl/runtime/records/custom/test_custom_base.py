@@ -27,13 +27,14 @@ def test_smoke():
     assert key == (StubCustomBase, "abc", 123)
 
     # Test roundtrip serialization
-    serialized_key, serialized_type, serialized_dict = record.pack()
-    record_clone = StubCustomBase(**serialized_dict)
-    clone_key, clone_type, clone_dict = record_clone.pack()
-    assert serialized_key == key
-    assert clone_type == StubCustomBase
+    packed_key, packed_dict = record.pack()
+    assert packed_key == key
+
+    record_clone = StubCustomBase(**packed_dict)
+    clone_key, clone_dict = record_clone.pack()
+    assert clone_key == key
     assert len(clone_dict) == 3
-    assert clone_dict == serialized_dict
+    assert clone_dict == packed_dict
 
 
 if __name__ == "__main__":

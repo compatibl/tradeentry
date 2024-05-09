@@ -11,9 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing_extensions import Self
 
 from cl.runtime.records.record_mixin import RecordMixin
-from typing_extensions import Self
 from typing import Any
 from typing import Dict
 from typing import Optional
@@ -42,16 +42,12 @@ class StubCustomBase(RecordMixin):
         self.int_field = int_field
         self.float_field = float_field
 
-    def pack(self) -> Tuple[StubCustomBaseKey, Type[Self], Dict[str, Any]]:
-        return (
-            self.get_key(),
-            StubCustomBase,
-            {
-                "str_field": self.str_field,
-                "int_field": self.int_field,
-                "float_field": self.float_field,
-            },
-        )
+    def pack(self) -> Tuple[Tuple[Type[Self], ...], Dict[str, Any]]:
+        return self.get_key(), {
+            "str_field": self.str_field,
+            "int_field": self.int_field,
+            "float_field": self.float_field,
+        }
 
     def get_key(self) -> StubCustomBaseKey:
         return type(self), self.str_field, self.int_field

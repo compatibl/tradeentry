@@ -51,12 +51,12 @@ class RecordMixin(ABC):
     """To prevent creation of __dict__ in derived types."""
 
     @abstractmethod
-    def get_key(self) -> Tuple[Type, ...]:
-        """Base class for which the key is defined followed by the values of primary key fields in this class."""
+    def get_key(self) -> Tuple[Type[Self], ...]:
+        """Tuple of (type, primary key fields)."""
 
     @abstractmethod
-    def pack(self) -> Tuple[Tuple[Type[Self], ...], Type[Self], Dict[str, Any]]:
-        """Return a tuple of containing the record's key, class, and data serialized into a dictionary."""
+    def pack(self) -> Tuple[Tuple[Type[Self], ...], Dict[str, Any]]:
+        """Tuple of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data."""
 
     def init(self) -> None:
         """Similar to __init__ but uses previously set fields instead of parameters (not invoked by data source)."""

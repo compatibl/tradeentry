@@ -31,8 +31,8 @@ T = TypeVar("T")
 class DataclassMixin(RecordMixin, ABC):
     """Mixin methods for dataclass records."""
 
-    def pack(self) -> Tuple[Tuple[Type[Self], ...], Type[Self], Dict[str, Any]]:
-        return self.get_key(), self.__class__, asdict(self)
+    def pack(self) -> Tuple[Tuple[Type[Self], ...], Dict[str, Any]]:
+        return self.get_key(), asdict(self)
 
 
 def datafield(

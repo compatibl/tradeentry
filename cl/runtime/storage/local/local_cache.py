@@ -94,21 +94,15 @@ class LocalCache(DataSource):
         table_cache = dataset_cache.setdefault(base_type, {})
 
         # Iterate over key-record pairs
-        for key, record_type, record_dict in records:
+        for key, data in records:
 
             # Separate type parameter which is the leading tuple element
             key_type = key[0]
             key_fields = key[1:]
 
-            if not issubclass(record_type, key_type):
-                key_fields_str_list = [str(k) for k in key_fields]
-                raise RuntimeError(f"In method `save_many`,"
-                                   f"class `{record_type}` is not a subclass of `{key_type}` "
-                                   f"specified with key fields `{';'.join(key_fields_str_list)}`")
-
             # TODO: Support tables
             # Insert the record into dataset dictionary
-            table_cache[key_fields] = (record_type, record_dict)
+            table_cache[key_fields] = (key_type, data)
 
     def delete_many(
         self,

@@ -27,11 +27,11 @@ def test_smoke():
         # Create test record and populate with sample data
         record = StubDataclassBase()
         key = record.get_key()
-        serialized_record = record.pack()
+        record_pack = record.pack()
 
         # Test saving and loading
         dataset = "sample"
-        DataSource.default().save_many(StubDataclassBase, [serialized_record], dataset)
+        DataSource.default().save_many(StubDataclassBase, [record_pack], dataset)
         loaded_records = StubDataclassBase.load_many([record, key, None], dataset, context=context)
 
         assert loaded_records[0] == record
