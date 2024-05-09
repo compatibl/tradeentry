@@ -45,18 +45,19 @@ class DataSource(ABC):
     @abstractmethod
     def load_unordered(
         self,
-        base_type: Type,
         keys: Iterable[GenericKey],
         dataset: List[str] | str | None = None,
     ) -> Iterable[GenericRecord]:
         """
-        Load serialized records from a single table associated with `base_type` using a list of keys.
+        Load records using a list of keys from the table associated with the record's base type.
+
+        Notes:
+            The base type is determined using class method `record_type.get_base_type()`
 
         Returns:
             Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data.
 
         Args:
-            base_type: Base type determines the table where data source operations are performed.
             keys: Tuple of primary key fields in the order of declaration.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
         """

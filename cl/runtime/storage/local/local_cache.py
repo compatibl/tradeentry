@@ -40,50 +40,38 @@ class LocalCache(DataSource):
 
     def load_unordered(
         self,
-        base_type: Type,
         keys: Iterable[GenericKey],
         dataset: List[str] | str | None = None,
     ) -> Iterable[GenericRecord]:
         # Try to retrieve dataset dictionary, insert if it does not yet exist
         dataset_cache = self._cache.setdefault(dataset, {})
 
-        # Try to retrieve table dictionary, insert if it does not yet exist
-        table_cache = dataset_cache.setdefault(base_type, {})
+        # Group keys by base type
+        grouped_keys = groupby(keys, key=lambda x: x[0].get_base())
 
-        result = []
-        for key in keys:  # TODO: Accelerate by avoiding for loop
-            # Separate type parameter which is the leading tuple element
-            key_type = key[0]
-            key_fields = key[1:]
+        # Process separately for each base type
+        result_dict = []
+        for base_type, keys_for_base_type in grouped_keys:
 
-            # Check that key_type is a subclass of base_type
-            if not issubclass(key_type, base_type):
-                key_fields_str_list = [str(k) for k in key_fields]
-                raise RuntimeError(
-                    f"In method `save_many`,"
-                    f"`key_type={key_type.__name__}` is not a subclass of `base_type={base_type.__name__}` "
-                    f"specified with key fields `{';'.join(key_fields_str_list)}`"
-                )
+            # Try to retrieve table dictionary, insert if it does not yet exist
+            table_cache = dataset_cache.setdefault(base_type, {})
 
-            # Retrieve the record from table cache using get method
-            # Will return None if the key is not found
-            record = table_cache.get(key_fields)
+            # Accumulate loaded (key, record) pairs
+            result_dict.extend((x, table_cache[x[1:]]) for x in keys_for_base_type if x[1:] in table_cache)
 
-            # Only add if the result is not None
-            if record is not None:
-                record_key, record_data = record
-                record_type = record_key[0]
+        # Report error when record type is not a subclass of the respective key type
+        not_subclass_records = [(k, v) for k, v in result_dict if not issubclass(v[0][0], k[0])]
+        if len(not_subclass_records) > 0:
+            not_subclass_records = not_subclass_records[:5]  # Report the first 5 errors
+            pair_reports_str = "\n".join(
+                [f"key_type={k[0].__name__} record_type={v[0][0].__name__}" for k, v in not_subclass_records]
+            )
+            raise RuntimeError(
+                f"In method `load_unordered`, for the following (key_type, record_type) pairs "
+                f"record_type is not a subclass of key_type:\n{pair_reports_str}\n")
 
-                # Check that record_type is a subclass of key_type
-                if not issubclass(record_type, key_type):
-                    key_fields_str_list = [str(k) for k in key_fields]
-                    raise RuntimeError(
-                        f"In method `load_unordered`,"
-                        f"`record_type={record_type.__name__}` is not a subclass of `key_type={key_type.__name__}` "
-                        f"specified with key fields `{';'.join(key_fields_str_list)}`"
-                    )
-                result.append(record)
-
+        # Discard keys and return the records
+        result = [v for k, v in result_dict]
         return result
 
     def load_by_query(
@@ -104,7 +92,7 @@ class LocalCache(DataSource):
         # Try to retrieve dataset dictionary, insert if it does not yet exist
         dataset_cache = self._cache.setdefault(dataset, {})
 
-        # Group by base type
+        # Group records by base type
         grouped_records = groupby(records, key=lambda record: record[0][0].get_base())
 
         # Process separately for each base type

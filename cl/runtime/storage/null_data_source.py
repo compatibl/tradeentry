@@ -35,7 +35,6 @@ class NullDataSource(DataSource):
 
     def load_unordered(
         self,
-        base_type: Type,
         keys: Iterable[GenericKey],
         dataset: List[str] | str | None = None,
     ) -> Iterable[GenericRecord]:

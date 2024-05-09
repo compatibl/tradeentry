@@ -179,7 +179,7 @@ class RecordMixin(ABC):
         records_dict = {}
         for batch_keys in batches:
             # Get unordered dict of serialized record data
-            batch_data = data_source.load_unordered(base_type, batch_keys, dataset)
+            batch_data = data_source.load_unordered(batch_keys, dataset)
 
             # Create class instances and accumulate in records_dict, key[0] is type
             records_dict.update({key: key[0](**dict_) for key, dict_ in batch_data})
