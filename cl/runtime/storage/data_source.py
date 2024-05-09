@@ -87,15 +87,16 @@ class DataSource(ABC):
     @abstractmethod
     def save_many(
         self,
-        base_type: Type,
         records: Iterable[GenericRecord],
         dataset: List[str] | str | None = None,
     ) -> None:
         """
-        Save serialized records to a single table associated with `base_type` (overwrite records that already exist).
+        Save records to the table associated with the record's base type. Overwrites existing records.
+
+        Notes:
+            The base type is determined using class method `record_type.get_base_type()`
 
         Args:
-            base_type: Base type determines the table where data source operations are performed.
             records: Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
         """

@@ -30,7 +30,7 @@ def test_smoke():
 
         # Test saving and loading
         dataset = "sample"
-        DataSource.default().save_many(StubDataclassBase, [record_pack], dataset)
+        DataSource.default().save_many([record_pack], dataset)
         loaded_records = StubDataclassBase.load_many([record, key, None], dataset, context=context)
 
         assert loaded_records[0] == record

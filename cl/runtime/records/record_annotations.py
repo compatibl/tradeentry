@@ -27,7 +27,8 @@ GenericData = Dict[str, Any]
 """Serialized record data."""
 
 GenericRecord = Tuple[
-    GenericKey, GenericData  # Tuple of (type, primary key fields)  # Record data serialized into a dictionary
+    GenericKey,  # Tuple of (type, primary key fields)
+    GenericData,  # Record data serialized into a dictionary
 ]
 """Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data."""
 

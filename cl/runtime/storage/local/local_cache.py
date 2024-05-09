@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from itertools import groupby
 
 from cl.runtime import DataSource
 from cl.runtime.records.record_annotations import GenericQuery, GenericOrder
@@ -97,34 +98,26 @@ class LocalCache(DataSource):
 
     def save_many(
         self,
-        base_type: Type,
         records: Iterable[GenericRecord],
         dataset: List[str] | str | None = None,
     ) -> None:
         # Try to retrieve dataset dictionary, insert if it does not yet exist
         dataset_cache = self._cache.setdefault(dataset, {})
 
-        # Try to retrieve table dictionary, insert if it does not yet exist
-        table_cache = dataset_cache.setdefault(base_type, {})
+        # Group by base type
+        grouped_records = groupby(records, key=lambda record: record[0][0].get_base())
 
-        # Iterate over key-record pairs
-        for record in records:
-            # Parse generic record data
-            key = record[0]
-            key_type = key[0]
-            key_fields = key[1:]
+        # Process separately for each base type
+        for base_type, records_for_base_type in grouped_records:
+    
+            # Try to retrieve table dictionary using `base_type` as key, insert if it does not yet exist
+            table_cache = dataset_cache.setdefault(base_type, {})
+    
+            # Create a dict of new records using primary key fields tuple as key
+            saved_records = {record[0][1:]: record for record in records_for_base_type}
 
-            if not issubclass(key_type, base_type):
-                key_fields_str_list = [str(k) for k in key_fields]
-                raise RuntimeError(
-                    f"In method `save_many`,"
-                    f"`key_type={key_type.__name__}` is not a subclass of `base_type={base_type.__name__}` "
-                    f"specified with key fields `{';'.join(key_fields_str_list)}`"
-                )
-
-            # TODO: Support tables
-            # Insert the record into dataset dictionary
-            table_cache[key_fields] = record
+            # Update table cache, adding records and overwriting existing records with saved records
+            table_cache.update(saved_records)
 
     def delete_many(
         self,
