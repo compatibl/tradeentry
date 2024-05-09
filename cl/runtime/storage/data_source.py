@@ -49,37 +49,38 @@ class DataSource(ABC):
         dataset: List[str] | str | None = None,
     ) -> Iterable[GenericRecord]:
         """
-        Load records using a list of keys from the table associated with the record's base type.
+        Load records from the table associated with the base class of each key's type.
 
         Notes:
-            The base type is determined using class method `record_type.get_base_type()`
+            The base type is determined using `key[0].get_base_type()`. Override if required.
 
         Returns:
             Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data.
 
         Args:
-            keys: Tuple of primary key fields in the order of declaration.
+            keys: Tuple of the key type followed by the primary key fields in the order of declaration.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
         """
 
     @abstractmethod
     def load_by_query(
         self,
-        base_type: Type,
         match_type: Type,
         query: GenericQuery | None,
         order: GenericOrder | None = None,
         dataset: List[str] | str | None = None,
     ) -> Iterable[GenericRecord]:
         """
-        Load serialized records from a single table associated with `base_type` by query.
+        Load records of match_type or its subclasses from the table associated with the base class of match_type.
+
+        Notes:
+            The base type is determined using `match_type.get_base_type()`. Override if required.
 
         Returns:
             Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data.
 
         Args:
-            base_type: Base type determines the table where data source operations are performed.
-            match_type: Query will only match objects of this type and its descendants. Must derive from `base_type`.
+            match_type: Query will only match objects of this type or its subclasses.
             query: NoSQL query on fields of `match_type` class in MongoDB format, or None to load all records.
             order: NoSQL order defined on fields of `match_type` in MongoDB format, or None if no sorting is required.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
@@ -92,10 +93,10 @@ class DataSource(ABC):
         dataset: List[str] | str | None = None,
     ) -> None:
         """
-        Save records to the table associated with the record's base type. Overwrites existing records.
+        Save records to the table associated with the base class of each record's type. Overwrites existing records.
 
         Notes:
-            The base type is determined using class method `record_type.get_base_type()`
+            The base type is determined using `record_type.get_base_type()`. Override if required.
 
         Args:
             records: Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data.
@@ -105,16 +106,17 @@ class DataSource(ABC):
     @abstractmethod
     def delete_many(
         self,
-        base_type: Type,
         keys: Iterable[GenericKey],
         dataset: List[str] | str | None = None,
     ) -> None:
         """
-        Delete records a single table associated with `base_type` using a list of keys (no error if does not exist).
+        Delete records from the table associated with each key's base type.
+
+        Notes:
+            The base type is determined using `key[0].get_base_type()`
 
         Args:
-            base_type: Base type determines the table where data source operations are performed.
-            keys: Tuple of primary key fields in the order of declaration.
+            keys: Tuple of the key type followed by the primary key fields in the order of declaration.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
         """
 

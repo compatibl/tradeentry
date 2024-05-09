@@ -42,7 +42,6 @@ class NullDataSource(DataSource):
 
     def load_by_query(
         self,
-        base_type: Type,
         match_type: Type,
         query: Dict[str, Any] | None,
         order: Dict[str, int] | None = None,
@@ -52,7 +51,6 @@ class NullDataSource(DataSource):
 
     def save_many(
         self,
-        base_type: Type,
         records: Iterable[GenericRecord],
         dataset: List[str] | str | None = None,
     ) -> None:

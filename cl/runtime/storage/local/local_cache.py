@@ -76,7 +76,6 @@ class LocalCache(DataSource):
 
     def load_by_query(
         self,
-        base_type: Type,
         match_type: Type,
         query: GenericQuery | None,
         order: GenericOrder | None = None,
@@ -109,7 +108,6 @@ class LocalCache(DataSource):
 
     def delete_many(
         self,
-        base_type: Type,
         keys: Iterable[Tuple],
         dataset: List[str] | str | None = None,
     ) -> None:
