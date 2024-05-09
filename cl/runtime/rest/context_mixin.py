@@ -13,7 +13,8 @@
 # limitations under the License.
 
 from cl.runtime.records.record_mixin import RecordMixin
-from typing import List, Iterable
+from typing import Iterable
+from typing import List
 
 
 class ContextMixin:

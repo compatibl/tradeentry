@@ -12,10 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
-
 import attrs
-
+from abc import ABC
 from cl.runtime.records.record_annotations import GenericRecord
 from cl.runtime.records.record_mixin import RecordMixin
 from typing import Any

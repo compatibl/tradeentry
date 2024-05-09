@@ -13,8 +13,8 @@
 # limitations under the License.
 
 import datetime as dt
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.primitive.date_util import DateUtil
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_data import StubDataclassData
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord

@@ -13,15 +13,17 @@
 # limitations under the License.
 
 from cl.runtime import DataSource
+from cl.runtime.storage.data_source import GenericKey
+from cl.runtime.storage.data_source import GenericRecord
 from dataclasses import dataclass
 from dataclasses import field
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING
+from typing import Any
 from typing import Dict
 from typing import Iterable
 from typing import List
 from typing import Tuple
 from typing import Type
-from cl.runtime.storage.data_source import GenericRecord, GenericKey
 
 
 @dataclass(slots=True, init=True, frozen=True)
@@ -40,7 +42,6 @@ class LocalCache(DataSource):
         keys: Iterable[GenericKey],
         dataset: List[str] | str | None = None,
     ) -> Iterable[GenericRecord]:
-
         # Try to retrieve dataset dictionary, insert if it does not yet exist
         dataset_cache = self._cache.setdefault(dataset, {})
 
@@ -49,7 +50,6 @@ class LocalCache(DataSource):
 
         result = []
         for key in keys:  # TODO: Accelerate by avoiding for loop
-
             # Separate type parameter which is the leading tuple element
             key_type = key[0]
             key_fields = key[1:]
@@ -63,9 +63,11 @@ class LocalCache(DataSource):
                 record_type, record_dict = record
                 if not issubclass(record_type, key_type):
                     key_fields_str_list = [str(k) for k in key_fields]
-                    raise RuntimeError(f"In method `load_unordered`,"
-                                       f"class `{record_type}` is not a subclass of `{key_type}` "
-                                       f"specified with key fields `{';'.join(key_fields_str_list)}`")
+                    raise RuntimeError(
+                        f"In method `load_unordered`,"
+                        f"class `{record_type}` is not a subclass of `{key_type}` "
+                        f"specified with key fields `{';'.join(key_fields_str_list)}`"
+                    )
                 result.append((key, record_type, record_dict))
 
         return result
@@ -86,7 +88,6 @@ class LocalCache(DataSource):
         records: Iterable[GenericRecord],
         dataset: List[str] | str | None = None,
     ) -> None:
-
         # Try to retrieve dataset dictionary, insert if it does not yet exist
         dataset_cache = self._cache.setdefault(dataset, {})
 
@@ -95,7 +96,6 @@ class LocalCache(DataSource):
 
         # Iterate over key-record pairs
         for key, data in records:
-
             # Separate type parameter which is the leading tuple element
             key_type = key[0]
             key_fields = key[1:]

@@ -13,15 +13,17 @@
 # limitations under the License.
 
 from cl.runtime import DataSource
+from cl.runtime.storage.data_source import GenericKey
+from cl.runtime.storage.data_source import GenericRecord
 from dataclasses import dataclass
 from dataclasses import field
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING
+from typing import Any
 from typing import Dict
 from typing import Iterable
 from typing import List
 from typing import Tuple
 from typing import Type
-from cl.runtime.storage.data_source import GenericRecord, GenericKey
 
 
 @dataclass(slots=True, init=True, frozen=True)
@@ -37,7 +39,6 @@ class NullDataSource(DataSource):
         keys: Iterable[GenericKey],
         dataset: List[str] | str | None = None,
     ) -> Iterable[GenericRecord]:
-
         raise NotImplementedError()
 
     def load_by_query(
@@ -48,7 +49,6 @@ class NullDataSource(DataSource):
         order: Dict[str, int] | None = None,
         dataset: List[str] | str | None = None,
     ) -> Iterable[GenericRecord]:
-
         raise NotImplementedError()
 
     def save_many(
@@ -57,7 +57,6 @@ class NullDataSource(DataSource):
         records: Iterable[GenericRecord],
         dataset: List[str] | str | None = None,
     ) -> None:
-
         raise NotImplementedError()
 
     def delete_many(
@@ -65,9 +64,7 @@ class NullDataSource(DataSource):
         keys: Iterable[Tuple],
         dataset: List[str] | str | None = None,
     ) -> None:
-
         raise NotImplementedError()
 
     def delete_db(self) -> None:
-
         raise NotImplementedError()

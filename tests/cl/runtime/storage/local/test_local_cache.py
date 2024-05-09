@@ -23,7 +23,6 @@ def test_smoke():
     """Smoke test."""
 
     with BasicContext() as context:
-
         # Create test record and populate with sample data
         record = StubDataclassBase()
         key = record.get_key()

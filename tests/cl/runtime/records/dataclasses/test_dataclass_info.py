@@ -134,7 +134,6 @@ def test_to_from_dict():
     ]
 
     for stub_type in stub_types:
-
         # Create a stub type instance with default field values
         record = stub_type()
         key = record.get_key()

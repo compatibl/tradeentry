@@ -18,8 +18,8 @@ from typing import Tuple
 from typing import Type
 
 GenericKey = Tuple[
-    Type,               # First element is the record's type
-    ...                 # Remaining elements are primary key fields in the order of declaration
+    Type,  # First element is the record's type
+    ...,  # Remaining elements are primary key fields in the order of declaration
 ]
 """Tuple of (type, primary key fields)."""
 
@@ -27,7 +27,6 @@ GenericData = Dict[str, Any]
 """Serialized record data."""
 
 GenericRecord = Tuple[
-    GenericKey,            # Tuple of (type, primary key fields)
-    GenericData            # Record data serialized into a dictionary
+    GenericKey, GenericData  # Tuple of (type, primary key fields)  # Record data serialized into a dictionary
 ]
 """Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data."""

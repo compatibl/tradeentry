@@ -12,15 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing_extensions import Self
-
-from cl.runtime.records.record_annotations import GenericRecord, GenericData
+from cl.runtime.records.record_annotations import GenericData
+from cl.runtime.records.record_annotations import GenericRecord
 from cl.runtime.records.record_mixin import RecordMixin
 from typing import Any
 from typing import Dict
 from typing import Optional
 from typing import Tuple
 from typing import Type
+from typing_extensions import Self
 
 StubCustomBaseKey = Tuple[Type["StubCustomBase"], str, int]
 
