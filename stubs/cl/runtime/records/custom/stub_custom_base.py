@@ -14,7 +14,7 @@
 
 from typing_extensions import Self
 
-from cl.runtime.records.record_annotations import PackType, DataType
+from cl.runtime.records.record_annotations import GenericRecord, GenericData
 from cl.runtime.records.record_mixin import RecordMixin
 from typing import Any
 from typing import Dict
@@ -44,7 +44,7 @@ class StubCustomBase(RecordMixin):
         self.int_field = int_field
         self.float_field = float_field
 
-    def pack(self) -> Tuple[StubCustomBaseKey, DataType]:
+    def pack(self) -> Tuple[StubCustomBaseKey, GenericData]:
         return self.get_key(), {
             "str_field": self.str_field,
             "int_field": self.int_field,

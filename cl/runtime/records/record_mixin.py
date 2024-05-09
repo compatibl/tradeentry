@@ -17,7 +17,7 @@ from abc import abstractmethod
 
 from memoization import cached
 
-from cl.runtime.records.record_annotations import KeyType, PackType
+from cl.runtime.records.record_annotations import GenericKey, GenericRecord
 from cl.runtime.rest.context import Context
 from typing import Any
 from typing import Dict
@@ -52,11 +52,11 @@ class RecordMixin(ABC):
     """To prevent creation of __dict__ in derived types."""
 
     @abstractmethod
-    def get_key(self) -> KeyType:
+    def get_key(self) -> GenericKey:
         """Tuple of (type, primary key fields)."""
 
     @abstractmethod
-    def pack(self) -> PackType:
+    def pack(self) -> GenericRecord:
         """Tuple of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data."""
 
     def init(self) -> None:
@@ -75,9 +75,12 @@ class RecordMixin(ABC):
     @cached
     def get_base(cls) -> Type:
         """
-        Base type determines the table where key lookup is performed. This method relies on base type
-        being the last class in MRO where method `get_key` is not abstract and caches the result.
-        Override if required.
+        Base type determines the table where data source operations are performed.
+
+        Notes:
+            The implementation relies on base type being the last class in MRO
+            where method `get_key` is not abstract and caches the result.
+            Override if required.
         """
 
         # Last element in the list of superclasses where method `get_key` is not abstract
@@ -107,7 +110,7 @@ class RecordMixin(ABC):
     @classmethod
     def load_many(
         cls,
-        records_or_keys: List[Self | KeyType | None],
+        records_or_keys: List[Self | GenericKey | None],
         dataset: List[str] | str | None = None,
         *,
         context: Context | None = None,

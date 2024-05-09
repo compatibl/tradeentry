@@ -14,7 +14,7 @@
 
 from abc import ABC
 
-from cl.runtime.records.record_annotations import PackType
+from cl.runtime.records.record_annotations import GenericRecord
 from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import asdict
 from dataclasses import dataclass
@@ -33,7 +33,7 @@ T = TypeVar("T")
 class DataclassMixin(RecordMixin, ABC):
     """Mixin methods for dataclass records."""
 
-    def pack(self) -> PackType:
+    def pack(self) -> GenericRecord:
         return self.get_key(), asdict(self)
 
 

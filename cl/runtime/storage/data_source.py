@@ -17,7 +17,7 @@ from __future__ import annotations
 from abc import ABC
 from abc import abstractmethod
 from cl.runtime.records.class_info import ClassInfo
-from cl.runtime.records.record_annotations import PackType, KeyType
+from cl.runtime.records.record_annotations import GenericRecord, GenericKey
 from cl.runtime.settings.config import dynaconf_settings
 from dataclasses import dataclass
 from typing import Any
@@ -45,14 +45,17 @@ class DataSource(ABC):
     def load_unordered(
         self,
         base_type: Type,
-        keys: Iterable[KeyType],
+        keys: Iterable[GenericKey],
         dataset: List[str] | str | None = None,
-    ) -> Iterable[PackType]:
+    ) -> Iterable[GenericRecord]:
         """
-        Return tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data.
+        Load serialized records from a single table associated with `base_type` using a list of keys.
+
+        Returns:
+            Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data.
 
         Args:
-            base_type: Base type determines the table where key lookup is performed.
+            base_type: Base type determines the table where data source operations are performed.
             keys: Tuple of primary key fields in the order of declaration.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
         """
@@ -65,16 +68,15 @@ class DataSource(ABC):
         query: Dict[str, Any] | None,
         order: Dict[str, int] | None = None,
         dataset: List[str] | str | None = None,
-    ) -> Iterable[PackType]:
+    ) -> Iterable[GenericRecord]:
         """
-        Load serialized records from a single table by query.
+        Load serialized records from a single table associated with `base_type` by query.
 
         Returns:
-            Tuples of (base_type, record_type, key_tuple, data_dict) where `key_tuple` contains primary key fields
-            in declaration order and `data_dict` contains record data serialized into a dictionary.
+            Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data.
 
         Args:
-            base_type: Base type determines the table where key lookup is performed.
+            base_type: Base type determines the table where data source operations are performed.
             match_type: Query will only match objects of this type and its descendants. Must derive from `base_type`.
             query: NoSQL query on fields of `match_type` class in MongoDB format, or None to load all records.
             order: NoSQL order defined on fields of `match_type` in MongoDB format, or None if no sorting is required.
@@ -85,14 +87,14 @@ class DataSource(ABC):
     def save_many(
         self,
         base_type: Type,
-        records: Iterable[PackType],
+        records: Iterable[GenericRecord],
         dataset: List[str] | str | None = None,
     ) -> None:
         """
-        Save serialized records (overwrite records that already exist).
+        Save serialized records to a single table associated with `base_type` (overwrite records that already exist).
 
         Args:
-            base_type: Base type determines the table where key lookup is performed.
+            base_type: Base type determines the table where data source operations are performed.
             records: Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
         """
@@ -100,14 +102,15 @@ class DataSource(ABC):
     @abstractmethod
     def delete_many(
         self,
-        keys: Iterable[KeyType],
+        base_type: Type,
+        keys: Iterable[GenericKey],
         dataset: List[str] | str | None = None,
     ) -> None:
         """
-        Delete records in the specified table using a list of keys (no error if does not exist).
+        Delete records a single table associated with `base_type` using a list of keys (no error if does not exist).
 
         Args:
-            table: Table from which the records will be deleted.
+            base_type: Base type determines the table where data source operations are performed.
             keys: Tuple of primary key fields in the order of declaration.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
         """

@@ -21,7 +21,7 @@ from typing import Iterable
 from typing import List
 from typing import Tuple
 from typing import Type
-from cl.runtime.storage.data_source import PackType, KeyType
+from cl.runtime.storage.data_source import GenericRecord, GenericKey
 
 
 @dataclass(slots=True, init=True, frozen=True)
@@ -34,10 +34,10 @@ class NullDataSource(DataSource):
     def load_unordered(
         self,
         base_type: Type,
-        keys: Iterable[KeyType],
+        keys: Iterable[GenericKey],
         dataset: List[str] | str | None = None,
-    ) -> Iterable[PackType]:
-        
+    ) -> Iterable[GenericRecord]:
+
         raise NotImplementedError()
 
     def load_by_query(
@@ -47,14 +47,14 @@ class NullDataSource(DataSource):
         query: Dict[str, Any] | None,
         order: Dict[str, int] | None = None,
         dataset: List[str] | str | None = None,
-    ) -> Iterable[PackType]:
-        
+    ) -> Iterable[GenericRecord]:
+
         raise NotImplementedError()
 
     def save_many(
         self,
         base_type: Type,
-        records: Iterable[PackType],
+        records: Iterable[GenericRecord],
         dataset: List[str] | str | None = None,
     ) -> None:
 

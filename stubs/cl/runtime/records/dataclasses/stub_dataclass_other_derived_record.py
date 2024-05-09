@@ -17,6 +17,7 @@ from cl.runtime.storage.index_util import index_fields
 from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
 
+
 @index_fields("other_float_field, other_str_field, -int_field")
 @dataclass
 class StubDataclassOtherDerivedRecord(StubDataclassRecord):

@@ -17,17 +17,17 @@ from typing import Dict
 from typing import Tuple
 from typing import Type
 
-KeyType = Tuple[
+GenericKey = Tuple[
     Type,               # First element is the record's type
     ...                 # Remaining elements are primary key fields in the order of declaration
 ]
 """Tuple of (type, primary key fields)."""
 
-DataType = Dict[str, Any]
+GenericData = Dict[str, Any]
 """Serialized record data."""
 
-PackType = Tuple[
-    KeyType,            # Tuple of (type, primary key fields)
-    DataType            # Record data serialized into a dictionary
+GenericRecord = Tuple[
+    GenericKey,            # Tuple of (type, primary key fields)
+    GenericData            # Record data serialized into a dictionary
 ]
 """Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data."""
