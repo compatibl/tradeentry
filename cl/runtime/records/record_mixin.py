@@ -14,22 +14,18 @@
 
 from abc import ABC
 from abc import abstractmethod
-
-from memoization import cached
-
-from cl.runtime.records.record_annotations import GenericKey, GenericRecord
+from cl.runtime.records.record_annotations import GenericKey
+from cl.runtime.records.record_annotations import GenericRecord
 from cl.runtime.rest.context import Context
-from typing import Any
-from typing import Dict
+from memoization import cached
 from typing import List
-from typing import Tuple
 from typing import Type
 from typing_extensions import Self
 
-NONE = 0  # Code indicating None
-KEY = 1  # Code indicating tuple
-RECORD = 2  # Code indicating record
-UNKNOWN = 3  # Code indicating unknown type
+_NONE = 0  # Code indicating None
+_KEY = 1  # Code indicating tuple
+_RECORD = 2  # Code indicating record
+_UNKNOWN = 3  # Code indicating unknown type
 
 
 class RecordMixin(ABC):
@@ -95,11 +91,13 @@ class RecordMixin(ABC):
         """
 
         # Get the list of classes in MRO
-        result = [c for c in cls.mro()
-                  if hasattr(c, "get_key")
-                  and callable(getattr(c, "get_key"))
-                  and not getattr(getattr(c, "get_key"), "__isabstractmethod__", False)
-                  ]
+        result = [
+            c
+            for c in cls.mro()
+            if hasattr(c, "get_key")
+            and callable(getattr(c, "get_key"))
+            and not getattr(getattr(c, "get_key"), "__isabstractmethod__", False)
+        ]
 
         # Make sure there is only one such class in the inheritance chain
         if len(result) == 0:
@@ -136,18 +134,18 @@ class RecordMixin(ABC):
 
         # Assign codes to input elements
         coded_inputs = [
-            (NONE, x)
+            (_NONE, x)
             if x is None
-            else (KEY, x)
+            else (_KEY, x)
             if isinstance(x, tuple) and len(x) > 0 and isinstance(x[0], type) and issubclass(x[0], cls)
-            else (RECORD, x)
+            else (_RECORD, x)
             if isinstance(x, cls)
-            else (UNKNOWN, x)
+            else (_UNKNOWN, x)
             for x in records_or_keys
         ]
 
         # Check for unknown input types
-        unknown_inputs = [x[1] for x in coded_inputs if x[0] == UNKNOWN]
+        unknown_inputs = [x[1] for x in coded_inputs if x[0] == _UNKNOWN]
         if len(unknown_inputs) > 0:
             unknown_types = [str(type(x).__name__) for x in unknown_inputs[:5]]
             unknown_types_str = ", ".join(unknown_types)
@@ -159,7 +157,7 @@ class RecordMixin(ABC):
             )
 
         # Keys without preserving position in list, excludes None
-        keys = [x[1] for x in coded_inputs if x[0] == KEY]
+        keys = [x[1] for x in coded_inputs if x[0] == _KEY]
 
         if len(keys) == 0:
             # If there are no keys, return a copy of the input list and stop further processing
@@ -172,7 +170,7 @@ class RecordMixin(ABC):
 
         # Each lookup must not exceed data source batch size
         batch_size = data_source.batch_size()
-        batches = [keys[i: i + batch_size] for i in range(0, len(keys), batch_size)]
+        batches = [keys[i : i + batch_size] for i in range(0, len(keys), batch_size)]
         records_dict = {}
         for batch_keys in batches:
             # Get unordered dict of serialized record data
@@ -182,5 +180,5 @@ class RecordMixin(ABC):
             records_dict.update({key: type_(**dict_) for key, type_, dict_ in batch_data})
 
         # Replace key by record defaulting to None, otherwise return input record or None
-        result = [records_dict.get(x[1], None) if x[0] == KEY else x[1] for x in coded_inputs]
+        result = [records_dict.get(x[1], None) if x[0] == _KEY else x[1] for x in coded_inputs]
         return result
