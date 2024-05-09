@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Any
+from typing import Any, Literal
 from typing import Dict
 from typing import Tuple
 from typing import Type
@@ -30,3 +30,9 @@ GenericRecord = Tuple[
     GenericKey, GenericData  # Tuple of (type, primary key fields)  # Record data serialized into a dictionary
 ]
 """Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data."""
+
+GenericQuery = Dict[str, Any]
+"""NoSQL query data in MongoDB format."""
+
+GenericOrder = Dict[str, Literal[1, -1]]
+"""NoSQL order data in MongoDB format."""

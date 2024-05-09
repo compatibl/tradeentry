@@ -17,7 +17,7 @@ from __future__ import annotations
 from abc import ABC
 from abc import abstractmethod
 from cl.runtime.records.class_info import ClassInfo
-from cl.runtime.records.record_annotations import GenericKey
+from cl.runtime.records.record_annotations import GenericKey, GenericQuery, GenericOrder
 from cl.runtime.records.record_annotations import GenericRecord
 from cl.runtime.settings.config import dynaconf_settings
 from dataclasses import dataclass
@@ -66,8 +66,8 @@ class DataSource(ABC):
         self,
         base_type: Type,
         match_type: Type,
-        query: Dict[str, Any] | None,
-        order: Dict[str, int] | None = None,
+        query: GenericQuery | None,
+        order: GenericOrder | None = None,
         dataset: List[str] | str | None = None,
     ) -> Iterable[GenericRecord]:
         """

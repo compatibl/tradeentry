@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from cl.runtime import DataSource
+from cl.runtime.records.record_annotations import GenericQuery, GenericOrder
 from cl.runtime.storage.data_source import GenericKey
 from cl.runtime.storage.data_source import GenericRecord
 from dataclasses import dataclass
@@ -88,8 +89,8 @@ class LocalCache(DataSource):
         self,
         base_type: Type,
         match_type: Type,
-        query: Dict[str, Any] | None,
-        order: Dict[str, int] | None = None,
+        query: GenericQuery | None,
+        order: GenericOrder | None = None,
         dataset: List[str] | str | None = None,
     ) -> Iterable[GenericRecord]:
         raise NotImplementedError()
