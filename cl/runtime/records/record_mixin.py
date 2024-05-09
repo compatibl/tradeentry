@@ -18,7 +18,7 @@ from cl.runtime.records.record_annotations import GenericKey
 from cl.runtime.records.record_annotations import GenericRecord
 from cl.runtime.rest.context import Context
 from memoization import cached
-from typing import List
+from typing import List, Tuple
 from typing import Type
 from typing_extensions import Self
 
@@ -48,12 +48,17 @@ class RecordMixin(ABC):
     """To prevent creation of __dict__ in derived types."""
 
     @abstractmethod
-    def get_key(self) -> GenericKey:
-        """Tuple of (type, primary key fields)."""
+    def get_key(self) -> Tuple:
+        """
+        Return tuple of (type, primary key fields).
+
+        Notes:
+            Implementation for MyType must narrow the returned type hint to Tuple[MyType, ...].
+        """
 
     @abstractmethod
     def pack(self) -> GenericRecord:
-        """Tuple of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data."""
+        """Return tuple of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data."""
 
     def init(self) -> None:
         """Similar to __init__ but uses previously set fields instead of parameters (not invoked by data source)."""
@@ -108,7 +113,7 @@ class RecordMixin(ABC):
     @classmethod
     def load_many(
         cls,
-        records_or_keys: List[Self | GenericKey | None],
+        records_or_keys: List[GenericRecord | GenericKey | None],
         dataset: List[str] | str | None = None,
         *,
         context: Context | None = None,
