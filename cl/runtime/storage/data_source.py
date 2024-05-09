@@ -17,6 +17,7 @@ from __future__ import annotations
 from abc import ABC
 from abc import abstractmethod
 from cl.runtime.records.class_info import ClassInfo
+from cl.runtime.records.record_annotations import PackType, KeyType
 from cl.runtime.settings.config import dynaconf_settings
 from dataclasses import dataclass
 from typing import Any
@@ -24,20 +25,7 @@ from typing import ClassVar
 from typing import Dict
 from typing import Iterable
 from typing import List
-from typing import Tuple
 from typing import Type
-
-KeyType = Tuple[
-    Type,               # First element is the record's type
-    ...                 # Remaining elements are primary key fields in the order of declaration
-]
-"""Tuple of (type, primary key fields)."""
-
-PackType = Tuple[
-    KeyType,            # Tuple of (type, primary key fields)
-    Dict[str, Any]      # Record data serialized into a dictionary
-]
-"""Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data."""
 
 
 @dataclass(slots=True, init=True, frozen=True)

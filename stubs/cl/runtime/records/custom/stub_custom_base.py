@@ -11,8 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 from typing_extensions import Self
 
+from cl.runtime.records.record_annotations import PackType, DataType
 from cl.runtime.records.record_mixin import RecordMixin
 from typing import Any
 from typing import Dict
@@ -42,7 +44,7 @@ class StubCustomBase(RecordMixin):
         self.int_field = int_field
         self.float_field = float_field
 
-    def pack(self) -> Tuple[Tuple[Type[Self], ...], Dict[str, Any]]:
+    def pack(self) -> Tuple[StubCustomBaseKey, DataType]:
         return self.get_key(), {
             "str_field": self.str_field,
             "int_field": self.int_field,

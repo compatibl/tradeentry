@@ -17,6 +17,7 @@ from abc import abstractmethod
 
 from memoization import cached
 
+from cl.runtime.records.record_annotations import KeyType, PackType
 from cl.runtime.rest.context import Context
 from typing import Any
 from typing import Dict
@@ -51,11 +52,11 @@ class RecordMixin(ABC):
     """To prevent creation of __dict__ in derived types."""
 
     @abstractmethod
-    def get_key(self) -> Tuple[Type[Self], ...]:
+    def get_key(self) -> KeyType:
         """Tuple of (type, primary key fields)."""
 
     @abstractmethod
-    def pack(self) -> Tuple[Tuple[Type[Self], ...], Dict[str, Any]]:
+    def pack(self) -> PackType:
         """Tuple of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data."""
 
     def init(self) -> None:
@@ -106,7 +107,7 @@ class RecordMixin(ABC):
     @classmethod
     def load_many(
         cls,
-        records_or_keys: List[Self | Tuple[Type[Self], ...] | None],
+        records_or_keys: List[Self | KeyType | None],
         dataset: List[str] | str | None = None,
         *,
         context: Context | None = None,

@@ -16,6 +16,7 @@ from abc import ABC
 
 import attrs
 
+from cl.runtime.records.record_annotations import PackType
 from cl.runtime.records.record_mixin import RecordMixin
 from typing import Any
 from typing import Dict
@@ -31,7 +32,7 @@ T = TypeVar("T")
 class AttrsMixin(RecordMixin, ABC):
     """Mixin methods for dataclass records."""
 
-    def pack(self) -> Tuple[Tuple[Type[Self], ...], Dict[str, Any]]:
+    def pack(self) -> PackType:
         return self.get_key(), attrs.asdict(self)  # noqa
 
 

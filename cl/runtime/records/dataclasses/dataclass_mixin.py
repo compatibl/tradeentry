@@ -13,6 +13,8 @@
 # limitations under the License.
 
 from abc import ABC
+
+from cl.runtime.records.record_annotations import PackType
 from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import asdict
 from dataclasses import dataclass
@@ -31,7 +33,7 @@ T = TypeVar("T")
 class DataclassMixin(RecordMixin, ABC):
     """Mixin methods for dataclass records."""
 
-    def pack(self) -> Tuple[Tuple[Type[Self], ...], Dict[str, Any]]:
+    def pack(self) -> PackType:
         return self.get_key(), asdict(self)
 
 
