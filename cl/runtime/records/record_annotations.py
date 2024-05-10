@@ -32,8 +32,9 @@ GenericRecord = Tuple[
 ]
 """Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data."""
 
-GenericQuery = Dict[str, Any]
+GenericQuery = Tuple[
+    Type,  # Query type and its descendents will be returned by the query. It must include all query and order fields.
+    Dict[str, Any],  # NoSQL query conditions in MongoDB format.
+    Dict[str, Literal[1, -1]],  # NoSQL query order in MongoDB format.
+]
 """NoSQL query data in MongoDB format."""
-
-GenericOrder = Dict[str, Literal[1, -1]]
-"""NoSQL order data in MongoDB format."""

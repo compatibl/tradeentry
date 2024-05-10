@@ -74,28 +74,18 @@ class RecordMixin(ABC):
 
     @classmethod
     @cached
-    def get_base(cls) -> Type:
+    def get_base_type(cls) -> Type:
         """
-        Base type determines the table where data source operations are performed.
+        Base type determines the table where this type is stored. Override if required.
 
         Notes:
-            The implementation relies on base type being the last class in MRO
-            where method `get_key` is not abstract and caches the result.
-            Override if required.
+            - The default implementation returns the last class in MRO where method `get_key` is not abstract.
+            - The result is memoized (cached) for better performance.
         """
 
-        # Last element in the list of superclasses where method `get_key` is not abstract
-        return cls.get_superclasses()[-1]
+        # The implementation must not use `get_query_types` method because it may be overridden
 
-    @classmethod
-    @cached
-    def get_superclasses(cls) -> List[Type]:
-        """
-        The list of superclasses where method `get_key` is not abstract for use in query type matching.
-        The result is cached. Override if required.
-        """
-
-        # Get the list of classes in MRO
+        # Get the list of classes in MRO that implement `get_key` method
         result = [
             c
             for c in cls.mro()
@@ -104,11 +94,40 @@ class RecordMixin(ABC):
             and not getattr(getattr(c, "get_key"), "__isabstractmethod__", False)
         ]
 
-        # Make sure there is only one such class in the inheritance chain
+        # Make sure there is at least one such class in the returned list
         if len(result) == 0:
-            raise RuntimeError(f"Class {cls.__module__}.{cls.__name__} does not implement get_key(self) method.")
-        else:
-            return result
+            # If the list is empty, the class itself does not implement `get_key` method
+            raise RuntimeError(f"Class {cls.__module__}.{cls.__name__} does not implement `get_key` method.")
+
+        # Return the last class in the list
+        return result[-1]
+
+    @classmethod
+    @cached
+    def get_query_types(cls) -> List[Type]:
+        """
+        Types that can be used to query for this type (in arbitrary order). Override if required.
+
+        Notes:
+            - The default implementation returns all classes in MRO where method `get_key` is not abstract.
+            - The result is memoized (cached) for better performance.
+        """
+
+        # Get the list of classes in MRO that implement `get_key` method
+        result = [
+            c
+            for c in cls.mro()
+            if hasattr(c, "get_key")
+            and callable(getattr(c, "get_key"))
+            and not getattr(getattr(c, "get_key"), "__isabstractmethod__", False)
+        ]
+
+        # Make sure there is at least one such class in the returned list
+        if len(result) == 0:
+            # If the list is empty, the class itself does not implement `get_key` method
+            raise RuntimeError(f"Class {cls.__module__}.{cls.__name__} does not implement `get_key` method.")
+
+        return result
 
     @classmethod
     def load_many(
@@ -171,7 +190,7 @@ class RecordMixin(ABC):
         # Get data source from the current or specified context
         context = Context.current() if context is None else context
         data_source = context.data_source()
-        base_type = cls.get_base()
+        base_type = cls.get_base_type()
 
         # Each lookup must not exceed data source batch size
         batch_size = data_source.batch_size()

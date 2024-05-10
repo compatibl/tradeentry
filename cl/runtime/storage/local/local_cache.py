@@ -14,7 +14,7 @@
 from itertools import groupby
 
 from cl.runtime import DataSource
-from cl.runtime.records.record_annotations import GenericQuery, GenericOrder
+from cl.runtime.records.record_annotations import GenericQuery
 from cl.runtime.storage.data_source import GenericKey
 from cl.runtime.storage.data_source import GenericRecord
 from dataclasses import dataclass
@@ -47,7 +47,7 @@ class LocalCache(DataSource):
         dataset_cache = self._cache.setdefault(dataset, {})
 
         # Group keys by base type
-        grouped_keys = groupby(keys, key=lambda x: x[0].get_base())
+        grouped_keys = groupby(keys, key=lambda x: x[0].get_base_type())
 
         # Process separately for each base type
         result_dict = []
@@ -76,9 +76,7 @@ class LocalCache(DataSource):
 
     def load_by_query(
         self,
-        match_type: Type,
-        query: GenericQuery | None,
-        order: GenericOrder | None = None,
+        query: GenericQuery,
         dataset: List[str] | str | None = None,
     ) -> Iterable[GenericRecord]:
         raise NotImplementedError()
@@ -92,7 +90,7 @@ class LocalCache(DataSource):
         dataset_cache = self._cache.setdefault(dataset, {})
 
         # Group records by base type
-        grouped_records = groupby(records, key=lambda record: record[0][0].get_base())
+        grouped_records = groupby(records, key=lambda record: record[0][0].get_base_type())
 
         # Process separately for each base type
         for base_type, records_for_base_type in grouped_records:

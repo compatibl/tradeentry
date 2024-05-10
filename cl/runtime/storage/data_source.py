@@ -17,7 +17,7 @@ from __future__ import annotations
 from abc import ABC
 from abc import abstractmethod
 from cl.runtime.records.class_info import ClassInfo
-from cl.runtime.records.record_annotations import GenericKey, GenericQuery, GenericOrder
+from cl.runtime.records.record_annotations import GenericKey, GenericQuery
 from cl.runtime.records.record_annotations import GenericRecord
 from cl.runtime.settings.config import dynaconf_settings
 from dataclasses import dataclass
@@ -65,24 +65,19 @@ class DataSource(ABC):
     @abstractmethod
     def load_by_query(
         self,
-        match_type: Type,
-        query: GenericQuery | None,
-        order: GenericOrder | None = None,
+        query: GenericQuery,
         dataset: List[str] | str | None = None,
     ) -> Iterable[GenericRecord]:
         """
-        Load records of match_type or its subclasses from the table associated with the base class of match_type.
-
-        Notes:
-            The base type is determined using `match_type.get_base_type()`. Override if required.
+        Load records based on the query.
 
         Returns:
             Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data.
 
         Args:
-            match_type: Query will only match objects of this type or its subclasses.
-            query: NoSQL query on fields of `match_type` class in MongoDB format, or None to load all records.
-            order: NoSQL order defined on fields of `match_type` in MongoDB format, or None if no sorting is required.
+            query: Tuple of (TYPE,CONDITIONS_DICT,ORDER_DICT) where TYPE and its descendants will be
+                returned by the query based on NoSQL query conditions and order in MongoDB format.
+                Keys in CONDITIONS_DICT and ORDER_DICT must match the fields of TYPE.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
         """
 
