@@ -18,7 +18,8 @@ from cl.runtime.records.record_annotations import GenericKey
 from cl.runtime.records.record_annotations import GenericRecord
 from cl.runtime.rest.context import Context
 from memoization import cached
-from typing import List, Tuple
+from typing import List
+from typing import Tuple
 from typing import Type
 from typing_extensions import Self
 
@@ -194,7 +195,7 @@ class RecordMixin(ABC):
 
         # Each lookup must not exceed data source batch size
         batch_size = data_source.batch_size()
-        batches = [keys[i: i + batch_size] for i in range(0, len(keys), batch_size)]
+        batches = [keys[i : i + batch_size] for i in range(0, len(keys), batch_size)]
         records_dict = {}
         for batch_keys in batches:
             # Get unordered dict of serialized record data

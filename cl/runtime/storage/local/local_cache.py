@@ -11,15 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from itertools import groupby
-
 from cl.runtime import DataSource
 from cl.runtime.records.record_annotations import GenericQuery
 from cl.runtime.storage.data_source import GenericKey
 from cl.runtime.storage.data_source import GenericRecord
 from dataclasses import dataclass
 from dataclasses import field
-from typing import TYPE_CHECKING
+from itertools import groupby
 from typing import Any
 from typing import Dict
 from typing import Iterable
@@ -52,7 +50,6 @@ class LocalCache(DataSource):
         # Process separately for each base type
         result_dict = []
         for base_type, keys_for_base_type in grouped_keys:
-
             # Try to retrieve table dictionary, insert if it does not yet exist
             table_cache = dataset_cache.setdefault(base_type, {})
 
@@ -68,7 +65,8 @@ class LocalCache(DataSource):
             )
             raise RuntimeError(
                 f"In method `load_unordered`, for the following (key_type, record_type) pairs "
-                f"record_type is not a subclass of key_type:\n{pair_reports_str}\n")
+                f"record_type is not a subclass of key_type:\n{pair_reports_str}\n"
+            )
 
         # Discard keys and return the records
         result = [v for k, v in result_dict]
@@ -94,10 +92,9 @@ class LocalCache(DataSource):
 
         # Process separately for each base type
         for base_type, records_for_base_type in grouped_records:
-    
             # Try to retrieve table dictionary using `base_type` as key, insert if it does not yet exist
             table_cache = dataset_cache.setdefault(base_type, {})
-    
+
             # Create a dict of new records using primary key fields tuple as key
             saved_records = {record[0][1:]: record for record in records_for_base_type}
 
