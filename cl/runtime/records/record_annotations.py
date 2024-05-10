@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Any
+import datetime as dt
+from typing import Any, Iterable, List, TypeVar
 from typing import Dict
 from typing import Literal
 from typing import Tuple
@@ -24,14 +25,42 @@ GenericKey = Tuple[
 ]
 """Tuple of (type, primary key fields)."""
 
-GenericData = Dict[str, Any]
-"""Serialized record data."""
+GenericValue = str | float | bool | int | dt.date | dt.time | dt.datetime
+"""Primitive value fields."""
+
+GenericField = Dict[str, "GenericField"] | List["GenericField"] | GenericValue
+"""Primitive value fields and data containers."""
+
+GenericData = Dict[str, GenericField]
+"""Serialized record data in dictionary format (other formats may be added in the future)."""
+
+GenericIdentity = str
+"""Identity string (other formats may be added in the future)."""
+
+GenericTimestamp = dt.datetime
+"""Timestamp in datetime format (time ordered, globally unique formats may be added in the future)."""
+
+GenericPack = Tuple[
+    GenericKey,  # Tuple of (type, primary key fields)
+    GenericData,  # Serialized record data in dictionary format (other formats may be added in the future)
+]
+"""Tuples of (KEY,DATA) where KEY=(type,primary key fields) and DATA contains serialized record data."""
 
 GenericRecord = Tuple[
     GenericKey,  # Tuple of (type, primary key fields)
-    GenericData,  # Record data serialized into a dictionary
+    GenericData,  # Serialized record data in dictionary format (other formats may be added in the future)
+    GenericIdentity,  # Identity data used for row level security
+    Iterable[str] | None,  # Record's dataset as a list of path tokens (empty list or None means root dataset)
+    GenericTimestamp,  # Timestamp for the time the record was written to storage
 ]
-"""Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data."""
+"""
+Tuples of (KEY, DATA, IDENTITY, DATASET, TIMESTAMP) where:
+    - KEY: A tuple of (type,primary key fields)
+    - DATA: serialized record data
+    - IDENTITY: identity data used for row level security
+    - DATASET: Record's dataset as a list of path tokens (empty list or None means root dataset)
+    - TIMESTAMP: Timestamp for the time the record was written to storage
+"""
 
 GenericQuery = Tuple[
     Type,  # Query type and its descendents will be returned by the query. It must include all query and order fields.

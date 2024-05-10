@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from abc import ABC
-from cl.runtime.records.record_annotations import GenericRecord
+from cl.runtime.records.record_annotations import GenericPack
 from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import asdict
 from dataclasses import dataclass
@@ -32,7 +32,7 @@ T = TypeVar("T")
 class DataclassMixin(RecordMixin, ABC):
     """Mixin methods for dataclass records."""
 
-    def pack(self) -> GenericRecord:
+    def pack(self) -> GenericPack:
         return self.get_key(), asdict(self)
 
 

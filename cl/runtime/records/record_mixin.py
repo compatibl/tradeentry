@@ -15,7 +15,7 @@
 from abc import ABC
 from abc import abstractmethod
 from cl.runtime.records.record_annotations import GenericKey
-from cl.runtime.records.record_annotations import GenericRecord
+from cl.runtime.records.record_annotations import GenericRecord, GenericPack
 from cl.runtime.rest.context import Context
 from memoization import cached
 from typing import List
@@ -58,7 +58,7 @@ class RecordMixin(ABC):
         """
 
     @abstractmethod
-    def pack(self) -> GenericRecord:
+    def pack(self) -> GenericPack:
         """Return tuple of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data."""
 
     def init(self) -> None:

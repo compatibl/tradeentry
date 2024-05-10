@@ -17,7 +17,7 @@ from __future__ import annotations
 from abc import ABC
 from abc import abstractmethod
 from cl.runtime.records.class_info import ClassInfo
-from cl.runtime.records.record_annotations import GenericKey
+from cl.runtime.records.record_annotations import GenericKey, GenericPack
 from cl.runtime.records.record_annotations import GenericQuery
 from cl.runtime.records.record_annotations import GenericRecord
 from cl.runtime.settings.config import dynaconf_settings
@@ -82,7 +82,7 @@ class DataSource(ABC):
     @abstractmethod
     def save_many(
         self,
-        records: Iterable[GenericRecord],
+        records: Iterable[GenericPack],
         dataset: List[str] | str | None = None,
     ) -> None:
         """
