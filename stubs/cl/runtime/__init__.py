@@ -20,7 +20,7 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_list_dict_fields import
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_list_fields import StubDataclassListFields
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_nested_fields import StubDataclassNestedFields
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_other_derived_record import StubDataclassOtherDerivedRecord
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_primitive_fields import StubDataclassPrimitiveFields
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_primitive_fields import StubDataclassPrimitiveFields
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecordKey
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_singleton import StubDataclassSingleton

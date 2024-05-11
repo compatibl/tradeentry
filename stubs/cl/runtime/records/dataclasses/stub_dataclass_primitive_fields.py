@@ -19,6 +19,9 @@ from cl.runtime.primitive.time_util import TimeUtil
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from dataclasses import dataclass
+
+from cl.runtime.storage.data_source_types import GenericKey
+from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime.records.enum.stub_int_enum import StubIntEnum
 from typing import Tuple
 from typing import Type
@@ -79,10 +82,6 @@ class StubDataclassPrimitiveFields(DataclassMixin):
     enum_field: StubIntEnum = datafield(default=StubIntEnum.ENUM_VALUE_2)
     """Stub field."""
 
-    # TODO: Avoid cyclic reference
-    # key_field: 'StubDataclassRecordKey' = datafield(default=(StubDataclassPrimitiveFields, "abc", 123))
-    # """Stub field."""
-
     base_str_field: str = datafield(default="abc")
     """Stub field."""
 
@@ -116,10 +115,7 @@ class StubDataclassPrimitiveFields(DataclassMixin):
     base_enum_field: StubIntEnum = datafield(default=StubIntEnum.ENUM_VALUE_1)
     """Stub field."""
 
-    base_str_key_field: str = datafield(default="StubDataclassRecord;abc;123", subtype="StubRecordKey")
-    """Stub field."""
-
-    base_generic_key_field: str = datafield(default="StubDataclassRecord;abc;123", subtype="GenericKey")
+    base_key_field: GenericKey = datafield(default=(StubDataclassRecord, "abc", 123))
     """Stub field."""
 
     def get_key(self) -> StubDataclassPrimitiveFieldsKey:
