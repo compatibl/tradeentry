@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.record_annotations import GenericData
+from cl.runtime.storage.data_source_types import GenericData
 from cl.runtime.records.record_mixin import RecordMixin
 from typing import Optional
 from typing import Tuple

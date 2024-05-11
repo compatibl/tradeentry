@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from cl.runtime import DataSource
-from cl.runtime.records.record_annotations import GenericQuery, GenericPack
+from cl.runtime.storage.data_source_types import GenericQuery, GenericPack
 from cl.runtime.storage.data_source import GenericKey
 from cl.runtime.storage.data_source import GenericRecord
 from dataclasses import dataclass

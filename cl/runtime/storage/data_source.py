@@ -17,9 +17,9 @@ from __future__ import annotations
 from abc import ABC
 from abc import abstractmethod
 from cl.runtime.records.class_info import ClassInfo
-from cl.runtime.records.record_annotations import GenericKey, GenericPack
-from cl.runtime.records.record_annotations import GenericQuery
-from cl.runtime.records.record_annotations import GenericRecord
+from cl.runtime.storage.data_source_types import GenericKey, GenericPack
+from cl.runtime.storage.data_source_types import GenericQuery
+from cl.runtime.storage.data_source_types import GenericRecord
 from cl.runtime.settings.config import dynaconf_settings
 from dataclasses import dataclass
 from typing import ClassVar

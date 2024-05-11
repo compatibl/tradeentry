@@ -14,7 +14,7 @@
 
 import attrs
 from abc import ABC
-from cl.runtime.records.record_annotations import GenericPack
+from cl.runtime.storage.data_source_types import GenericPack
 from cl.runtime.records.record_mixin import RecordMixin
 from typing import Any
 from typing import Dict

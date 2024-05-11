@@ -14,8 +14,8 @@
 
 from abc import ABC
 from abc import abstractmethod
-from cl.runtime.records.record_annotations import GenericKey
-from cl.runtime.records.record_annotations import GenericRecord, GenericPack
+from cl.runtime.storage.data_source_types import GenericKey
+from cl.runtime.storage.data_source_types import GenericRecord, GenericPack
 from cl.runtime.rest.context import Context
 from memoization import cached
 from typing import List
