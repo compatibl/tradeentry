@@ -20,9 +20,9 @@ def test_to_tokens():
     """Test conversion of dataset string to tokens."""
 
     assert DatasetUtil.to_tokens(None) == []
-    assert DatasetUtil.to_tokens("") == []
-    assert DatasetUtil.to_tokens("A") == ["A"]
-    assert DatasetUtil.to_tokens("A\\B") == ["A", "B"]
+    assert DatasetUtil.to_tokens("\\") == []
+    assert DatasetUtil.to_tokens("\\A") == ["A"]
+    assert DatasetUtil.to_tokens("\\A\\B") == ["A", "B"]
 
     with pytest.raises(Exception):
         assert DatasetUtil.to_tokens(" ")
@@ -33,15 +33,15 @@ def test_to_tokens():
     with pytest.raises(Exception):
         assert DatasetUtil.to_tokens(" A\\B")
     with pytest.raises(Exception):
-        assert DatasetUtil.to_tokens("A\\B ")
+        assert DatasetUtil.to_tokens("\\A\\B ")
     with pytest.raises(Exception):
-        assert DatasetUtil.to_tokens("A \\B")
+        assert DatasetUtil.to_tokens("\\A \\B")
     with pytest.raises(Exception):
-        assert DatasetUtil.to_tokens("A\\ B")
+        assert DatasetUtil.to_tokens("\\A\\ B")
     with pytest.raises(Exception):
-        DatasetUtil.to_tokens("\\A")
+        DatasetUtil.to_tokens("A")
     with pytest.raises(Exception):
-        DatasetUtil.to_tokens("A\\")
+        DatasetUtil.to_tokens("\\A\\")
     with pytest.raises(Exception):
         DatasetUtil.to_tokens("\\A\\")
     with pytest.raises(Exception):
@@ -53,15 +53,14 @@ def test_to_tokens():
 def test_combine():
     """Test method combine(...)"""
 
-    assert DatasetUtil.combine() is None
-    assert DatasetUtil.combine(None) is None
-    assert DatasetUtil.combine("") is None
-    assert DatasetUtil.combine("A") == "A"
-    assert DatasetUtil.combine("A", "B") == "A\\B"
-    assert DatasetUtil.combine(None, "A", "B") == "A\\B"
+    assert DatasetUtil.combine(None) == []
+    assert DatasetUtil.combine("\\") == []
+    assert DatasetUtil.combine("\\A") == ["A"]
+    assert DatasetUtil.combine("\\A", "\\B") == ["A", "B"]
+    assert DatasetUtil.combine(None, ["A"], ["B"]) == ["A", "B"]
 
     with pytest.raises(Exception):
-        DatasetUtil.combine("\\")
+        DatasetUtil.combine("\\\\")
     with pytest.raises(Exception):
         DatasetUtil.combine(" ")
     with pytest.raises(Exception):

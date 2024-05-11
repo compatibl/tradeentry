@@ -29,7 +29,7 @@ def test_smoke():
         record_pack = record.pack()
 
         # Test saving and loading
-        dataset = "sample"
+        dataset = ["Sample"]
         DataSource.default().save_many([record_pack], dataset)
         loaded_records = StubDataclassBase.load_many([record, key, None], dataset, context=context)
 

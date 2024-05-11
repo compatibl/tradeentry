@@ -27,6 +27,8 @@ from typing import List
 from typing import Tuple
 from typing import Type
 
+from cl.runtime.storage.dataset_util import DatasetUtil
+
 
 @dataclass(slots=True, init=True, frozen=True)
 class LocalCache(DataSource):
@@ -39,6 +41,10 @@ class LocalCache(DataSource):
         return 1000000
 
     def load_many(self, keys: Iterable[TKey], dataset: TDataset = None) -> Iterable[TRecord]:
+
+        # Validate the dataset and if necessary convert to delimited string
+        dataset = DatasetUtil.to_str(dataset)
+
         # Try to retrieve dataset dictionary, insert if it does not yet exist
         dataset_cache = self._cache.setdefault(dataset, {})
 
@@ -71,9 +77,17 @@ class LocalCache(DataSource):
         return result
 
     def load_by_query(self, query: TQuery, dataset: TDataset = None) -> Iterable[TRecord]:
+
+        # Validate the dataset and if necessary convert to delimited string
+        dataset = DatasetUtil.to_str(dataset)
+
         raise NotImplementedError()
 
     def save_many(self, packs: Iterable[TPack], dataset: TDataset = None) -> None:
+
+        # Validate the dataset and if necessary convert to delimited string
+        dataset = DatasetUtil.to_str(dataset)
+
         # Try to retrieve dataset dictionary, insert if it does not yet exist
         dataset_cache = self._cache.setdefault(dataset, {})
 
@@ -85,14 +99,18 @@ class LocalCache(DataSource):
             # Try to retrieve table dictionary using `base_type` as key, insert if it does not yet exist
             table_cache = dataset_cache.setdefault(base_type, {})
 
-            # Create a dict of new records using primary key fields tuple as key
+            # Create a dict of records for base type using primary key fields as dict key
+            # Type is excluded from dict key because it is the final type, and may vary
+            # within the table
             saved_records = {record[0][1:]: record for record in records_for_base_type}
 
-            # Update table cache, adding records and overwriting existing records with saved records
+            # Add records for base type, overwriting the existing records
             table_cache.update(saved_records)
 
     def delete_many(self, keys: Iterable[TKey], dataset: TDataset = None) -> None:
-        raise NotImplementedError()
+
+        # Validate the dataset and if necessary convert to delimited string
+        dataset = DatasetUtil.to_str(dataset)
 
     def delete_db(self) -> None:
         raise NotImplementedError()
