@@ -31,7 +31,7 @@ class NullDataSource(DataSource):
     def batch_size(self) -> int:
         raise NotImplementedError()
 
-    def load_unordered(self, keys: Iterable[TKey], dataset: TDataset = None) -> Iterable[TRecord]:
+    def load_many(self, keys: Iterable[TKey], dataset: TDataset = None) -> Iterable[TRecord]:
         raise NotImplementedError()
 
     def load_by_query(self, query: TQuery, dataset: TDataset = None) -> Iterable[TRecord]:

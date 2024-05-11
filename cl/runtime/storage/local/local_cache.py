@@ -38,7 +38,7 @@ class LocalCache(DataSource):
         """Maximum number or records the data source will return in a single call, error if exceeded."""
         return 1000000
 
-    def load_unordered(self, keys: Iterable[TKey], dataset: TDataset = None) -> Iterable[TRecord]:
+    def load_many(self, keys: Iterable[TKey], dataset: TDataset = None) -> Iterable[TRecord]:
         # Try to retrieve dataset dictionary, insert if it does not yet exist
         dataset_cache = self._cache.setdefault(dataset, {})
 
@@ -62,7 +62,7 @@ class LocalCache(DataSource):
                 [f"key_type={k[0].__name__} record_type={v[0][0].__name__}" for k, v in not_subclass_records]
             )
             raise RuntimeError(
-                f"In method `load_unordered`, for the following (key_type, record_type) pairs "
+                f"In method `load_many`, for the following (key_type, record_type) pairs "
                 f"record_type is not a subclass of key_type:\n{pair_reports_str}\n"
             )
 

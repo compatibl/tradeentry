@@ -42,7 +42,7 @@ class DataSource(ABC):
         """Maximum number of records the data source will return in a single call, error if exceeded."""
 
     @abstractmethod
-    def load_unordered(self, keys: Iterable[TKey], dataset: TDataset = None) -> Iterable[TRecord]:
+    def load_many(self, keys: Iterable[TKey], dataset: TDataset = None) -> Iterable[TRecord]:
         """
         Load records from the table associated with the base class of each key's type.
 
