@@ -59,7 +59,7 @@ class RecordMixin(ABC):
 
     @abstractmethod
     def pack(self) -> GenericPack:
-        """Return tuple of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data."""
+        """Return tuple of (KEY, DATA) where KEY=(type, primary key fields) and DATA is serialized record data."""
 
     def init(self) -> None:
         """Similar to __init__ but uses previously set fields instead of parameters (not invoked by data source)."""

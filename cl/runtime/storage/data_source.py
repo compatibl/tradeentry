@@ -53,7 +53,12 @@ class DataSource(ABC):
             The base type is determined using `key[0].get_base_type()`. Override if required.
 
         Returns:
-            Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data.
+            Tuples of (KEY, DATA, IDENTITY, DATASET, TIMESTAMP) where:
+                - KEY: A tuple of (type,primary key fields)
+                - DATA: Serialized record data in dictionary format (other formats may be added in the future)
+                - IDENTITY: Identity data used for row level security
+                - DATASET: Record's dataset as a list of path tokens (empty list or None means root dataset)
+                - TIMESTAMP: Timestamp for the time the record was written to storage
 
         Args:
             keys: Tuple of the key type followed by the primary key fields in the order of declaration.
@@ -70,7 +75,12 @@ class DataSource(ABC):
         Load records based on the query.
 
         Returns:
-            Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data.
+            Tuples of (KEY, DATA, IDENTITY, DATASET, TIMESTAMP) where:
+                - KEY: A tuple of (type,primary key fields)
+                - DATA: Serialized record data in dictionary format (other formats may be added in the future)
+                - IDENTITY: Identity data used for row level security
+                - DATASET: Record's dataset as a list of path tokens (empty list or None means root dataset)
+                - TIMESTAMP: Timestamp for the time the record was written to storage
 
         Args:
             query: Tuple of (TYPE,CONDITIONS_DICT,ORDER_DICT) where TYPE and its descendants will be
@@ -92,7 +102,7 @@ class DataSource(ABC):
             The base type is determined using `record_type.get_base_type()`. Override if required.
 
         Args:
-            records: Tuples of (KEY,DICT) where KEY=(type,primary key fields) and DICT contains serialized record data.
+            records: Tuples of (KEY, DATA) where KEY=(type, primary key fields) and DATA is serialized record data.
             dataset: List of datasets in lookup order, single dataset, or None for root dataset.
         """
 

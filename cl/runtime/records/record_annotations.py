@@ -44,7 +44,11 @@ GenericPack = Tuple[
     GenericKey,  # Tuple of (type, primary key fields)
     GenericData,  # Serialized record data in dictionary format (other formats may be added in the future)
 ]
-"""Tuples of (KEY,DATA) where KEY=(type,primary key fields) and DATA contains serialized record data."""
+"""
+Tuple of (KEY, DATA) where:
+    - KEY: A tuple of (type, primary key fields)
+    - DATA: Serialized record data in dictionary format (other formats may be added in the future)
+"""
 
 GenericRecord = Tuple[
     GenericKey,  # Tuple of (type, primary key fields)
@@ -54,10 +58,10 @@ GenericRecord = Tuple[
     GenericTimestamp,  # Timestamp for the time the record was written to storage
 ]
 """
-Tuples of (KEY, DATA, IDENTITY, DATASET, TIMESTAMP) where:
+Tuple of (KEY, DATA, IDENTITY, DATASET, TIMESTAMP) where:
     - KEY: A tuple of (type,primary key fields)
-    - DATA: serialized record data
-    - IDENTITY: identity data used for row level security
+    - DATA: Serialized record data in dictionary format (other formats may be added in the future)
+    - IDENTITY: Identity data used for row level security
     - DATASET: Record's dataset as a list of path tokens (empty list or None means root dataset)
     - TIMESTAMP: Timestamp for the time the record was written to storage
 """
