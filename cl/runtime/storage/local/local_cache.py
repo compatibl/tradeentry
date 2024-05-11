@@ -50,28 +50,32 @@ class LocalCache(DataSource):
         grouped_keys = groupby(keys, key=lambda x: x[0].get_base_type())
 
         # Process separately for each base type
-        result_dict = []
+        result_dict = {}
         for base_type, keys_for_base_type in grouped_keys:
             # Try to retrieve table dictionary, insert if it does not yet exist
             table_cache = dataset_cache.setdefault(base_type, {})
 
-            # Accumulate loaded (key, record) pairs
-            result_dict.extend((x, table_cache[x[1:]]) for x in keys_for_base_type if x[1:] in table_cache)
+            # Iterable for the retrieved pairs
+            retrieved = {x: table_cache.get(x[1:], None) for x in keys_for_base_type}
+            result_dict.update(retrieved)
 
         # Report error when record type is not a subclass of the respective key type
-        not_subclass_records = [(k, v) for k, v in result_dict if not issubclass(v[0][0], k[0])]
+        not_subclass_records = [(k, v) for k, v in result_dict.items() if not issubclass(v[0][0], k[0])]
         if len(not_subclass_records) > 0:
             not_subclass_records = not_subclass_records[:5]  # Report the first 5 errors
             pair_reports_str = "\n".join(
-                [f"key_type={k[0].__name__} record_type={v[0][0].__name__}" for k, v in not_subclass_records]
+                [
+                    f"record_type={v[0][0].__name__} key_type={k[0].__name__} key={';'.join(k[1:])} "
+                    for k, v in not_subclass_records
+                 ]
             )
             raise RuntimeError(
-                f"In method `load_many`, for the following (key_type, record_type) pairs "
-                f"record_type is not a subclass of key_type:\n{pair_reports_str}\n"
+                f"In method `load_many`, record_type is not a subclass of key_type "
+                f"for the following records:\n{pair_reports_str}\n"
             )
 
-        # Discard keys and return the records
-        result = [v for k, v in result_dict]
+        # Records in the order of provided keys, None is added to list if the record is not found
+        result = [result_dict.get(k, None) for k in keys]
         return result
 
     def load_by_query(self, query: TQuery, dataset: TDataset = None) -> Iterable[TRecord]:
