@@ -13,11 +13,14 @@
 # limitations under the License.
 
 import datetime as dt
-from typing import Any, Iterable, List, TypeVar
+from typing import Any
 from typing import Dict
+from typing import Iterable
+from typing import List
 from typing import Literal
 from typing import Tuple
 from typing import Type
+from typing import TypeVar
 
 TKey = Tuple[
     Type,  # First element is the record's type

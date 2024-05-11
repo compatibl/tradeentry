@@ -18,10 +18,9 @@ from abc import ABC
 from abc import abstractmethod
 from cl.runtime.rest.progress import Progress
 from cl.runtime.storage.data_source import DataSource
+from cl.runtime.storage.data_source_types import TDataset
 from logging import Logger
 from typing import List
-
-from cl.runtime.storage.data_source_types import TDataset
 
 
 class Context(ABC):

@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.data_source_types import TData
 from cl.runtime.records.record_mixin import RecordMixin
+from cl.runtime.storage.data_source_types import TData
 from typing import Optional
 from typing import Tuple
 from typing import Type

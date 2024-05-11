@@ -163,7 +163,7 @@ class StubHandlerMethods(DataclassMixin):
             f"enum_arg={enum_arg} data_arg={data_arg})"
         )
 
-    def handler_with_args(self, arg_1: str, arg_2: str) -> str:
+    def handler_with_two_args(self, arg_1: str, arg_2: str) -> str:
         """Stub method."""
         return arg_1 + arg_2
 

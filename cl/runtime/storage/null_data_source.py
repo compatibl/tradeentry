@@ -13,9 +13,11 @@
 # limitations under the License.
 
 from cl.runtime import DataSource
-from cl.runtime.storage.data_source_types import TQuery, TPack, TDataset
 from cl.runtime.storage.data_source import TKey
 from cl.runtime.storage.data_source import TRecord
+from cl.runtime.storage.data_source_types import TDataset
+from cl.runtime.storage.data_source_types import TPack
+from cl.runtime.storage.data_source_types import TQuery
 from dataclasses import dataclass
 from typing import Iterable
 from typing import List
@@ -29,32 +31,16 @@ class NullDataSource(DataSource):
     def batch_size(self) -> int:
         raise NotImplementedError()
 
-    def load_unordered(
-        self,
-        keys: Iterable[TKey],
-        dataset: TDataset = None,
-    ) -> Iterable[TRecord]:
+    def load_unordered(self, keys: Iterable[TKey], dataset: TDataset = None) -> Iterable[TRecord]:
         raise NotImplementedError()
 
-    def load_by_query(
-        self,
-        query: TQuery,
-        dataset: TDataset = None,
-    ) -> Iterable[TRecord]:
+    def load_by_query(self, query: TQuery, dataset: TDataset = None) -> Iterable[TRecord]:
         raise NotImplementedError()
 
-    def save_many(
-        self,
-        records: Iterable[TPack],
-        dataset: TDataset = None,
-    ) -> None:
+    def save_many(self, packs: Iterable[TPack], dataset: TDataset = None) -> None:
         raise NotImplementedError()
 
-    def delete_many(
-        self,
-        keys: Iterable[Tuple],
-        dataset: TDataset = None,
-    ) -> None:
+    def delete_many(self, keys: Iterable[TKey], dataset: TDataset = None) -> None:
         raise NotImplementedError()
 
     def delete_db(self) -> None:

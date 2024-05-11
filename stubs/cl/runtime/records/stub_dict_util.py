@@ -14,11 +14,10 @@
 
 import datetime as dt
 import pytz
+from cl.runtime.storage.data_source_types import TData
 from typing import Any
 from typing import Dict
 from uuid import UUID
-
-from cl.runtime.storage.data_source_types import TData
 
 
 class StubDictUtil:

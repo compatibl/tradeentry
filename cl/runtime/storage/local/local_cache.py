@@ -12,9 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from cl.runtime import DataSource
-from cl.runtime.storage.data_source_types import TQuery, TPack, TDataset
 from cl.runtime.storage.data_source import TKey
 from cl.runtime.storage.data_source import TRecord
+from cl.runtime.storage.data_source_types import TDataset
+from cl.runtime.storage.data_source_types import TPack
+from cl.runtime.storage.data_source_types import TQuery
 from dataclasses import dataclass
 from dataclasses import field
 from itertools import groupby
@@ -36,11 +38,7 @@ class LocalCache(DataSource):
         """Maximum number or records the data source will return in a single call, error if exceeded."""
         return 1000000
 
-    def load_unordered(
-        self,
-        keys: Iterable[TKey],
-        dataset: TDataset = None,
-    ) -> Iterable[TRecord]:
+    def load_unordered(self, keys: Iterable[TKey], dataset: TDataset = None) -> Iterable[TRecord]:
         # Try to retrieve dataset dictionary, insert if it does not yet exist
         dataset_cache = self._cache.setdefault(dataset, {})
 
@@ -72,23 +70,15 @@ class LocalCache(DataSource):
         result = [v for k, v in result_dict]
         return result
 
-    def load_by_query(
-        self,
-        query: TQuery,
-        dataset: TDataset = None,
-    ) -> Iterable[TRecord]:
+    def load_by_query(self, query: TQuery, dataset: TDataset = None) -> Iterable[TRecord]:
         raise NotImplementedError()
 
-    def save_many(
-        self,
-        records: Iterable[TPack],
-        dataset: TDataset = None,
-    ) -> None:
+    def save_many(self, packs: Iterable[TPack], dataset: TDataset = None) -> None:
         # Try to retrieve dataset dictionary, insert if it does not yet exist
         dataset_cache = self._cache.setdefault(dataset, {})
 
         # Group records by base type
-        grouped_records = groupby(records, key=lambda record: record[0][0].get_base_type())
+        grouped_records = groupby(packs, key=lambda record: record[0][0].get_base_type())
 
         # Process separately for each base type
         for base_type, records_for_base_type in grouped_records:
@@ -101,11 +91,7 @@ class LocalCache(DataSource):
             # Update table cache, adding records and overwriting existing records with saved records
             table_cache.update(saved_records)
 
-    def delete_many(
-        self,
-        keys: Iterable[Tuple],
-        dataset: TDataset = None,
-    ) -> None:
+    def delete_many(self, keys: Iterable[TKey], dataset: TDataset = None) -> None:
         raise NotImplementedError()
 
     def delete_db(self) -> None:

@@ -18,9 +18,8 @@ from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.primitive.time_util import TimeUtil
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
-from dataclasses import dataclass
-
 from cl.runtime.storage.data_source_types import TKey
+from dataclasses import dataclass
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime.records.enum.stub_int_enum import StubIntEnum
 from typing import Tuple

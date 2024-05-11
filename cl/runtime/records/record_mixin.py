@@ -14,11 +14,14 @@
 
 from abc import ABC
 from abc import abstractmethod
-from cl.runtime.storage.data_source_types import TKey, TDataset
-from cl.runtime.storage.data_source_types import TRecord, TPack
 from cl.runtime.rest.context import Context
+from cl.runtime.storage.data_source_types import TDataset
+from cl.runtime.storage.data_source_types import TKey
+from cl.runtime.storage.data_source_types import TPack
+from cl.runtime.storage.data_source_types import TRecord
 from memoization import cached
-from typing import List, Iterable
+from typing import Iterable
+from typing import List
 from typing import Tuple
 from typing import Type
 from typing_extensions import Self
@@ -186,7 +189,6 @@ class RecordMixin(ABC):
         # Get data source from the current or specified context
         context = Context.current() if context is None else context
         data_source = context.data_source()
-        base_type = cls.get_base_type()
 
         # Each lookup must not exceed data source batch size
         batch_size = data_source.batch_size()

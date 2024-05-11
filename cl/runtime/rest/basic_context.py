@@ -16,10 +16,9 @@ from cl.runtime.rest.context import Context
 from cl.runtime.rest.null_progress import NullProgress
 from cl.runtime.rest.progress import Progress
 from cl.runtime.storage.data_source import DataSource
+from cl.runtime.storage.data_source_types import TDataset
 from logging import Logger
 from logging import getLogger
-
-from cl.runtime.storage.data_source_types import TDataset
 
 
 class BasicContext(Context):

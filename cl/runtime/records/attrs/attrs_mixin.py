@@ -14,8 +14,8 @@
 
 import attrs
 from abc import ABC
-from cl.runtime.storage.data_source_types import TPack
 from cl.runtime.records.record_mixin import RecordMixin
+from cl.runtime.storage.data_source_types import TPack
 from typing import Any
 from typing import Dict
 from typing import Tuple

@@ -13,8 +13,8 @@
 # limitations under the License.
 
 from abc import ABC
-from cl.runtime.storage.data_source_types import TPack
 from cl.runtime.records.record_mixin import RecordMixin
+from cl.runtime.storage.data_source_types import TPack
 from dataclasses import asdict
 from dataclasses import dataclass
 from dataclasses import field

@@ -17,10 +17,12 @@ from __future__ import annotations
 from abc import ABC
 from abc import abstractmethod
 from cl.runtime.records.class_info import ClassInfo
-from cl.runtime.storage.data_source_types import TKey, TPack, TDataset
+from cl.runtime.settings.config import dynaconf_settings
+from cl.runtime.storage.data_source_types import TDataset
+from cl.runtime.storage.data_source_types import TKey
+from cl.runtime.storage.data_source_types import TPack
 from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.data_source_types import TRecord
-from cl.runtime.settings.config import dynaconf_settings
 from dataclasses import dataclass
 from typing import ClassVar
 from typing import Iterable
@@ -40,11 +42,7 @@ class DataSource(ABC):
         """Maximum number of records the data source will return in a single call, error if exceeded."""
 
     @abstractmethod
-    def load_unordered(
-        self,
-        keys: Iterable[TKey],
-        dataset: TDataset = None,
-    ) -> Iterable[TRecord]:
+    def load_unordered(self, keys: Iterable[TKey], dataset: TDataset = None) -> Iterable[TRecord]:
         """
         Load records from the table associated with the base class of each key's type.
 
@@ -55,16 +53,12 @@ class DataSource(ABC):
             Iterable of TRecord = Tuple[TKey, TData, TIdentity, TDataset, TStamp]
 
         Args:
-            keys: Iterable of TKey = Tuple[Type, primary key fields]
+            keys: Iterable of TKey = (type, primary key fields)
             dataset: Lookup dataset as a list of path tokens (empty list or None means root dataset)
         """
 
     @abstractmethod
-    def load_by_query(
-        self,
-        query: TQuery,
-        dataset: TDataset = None,
-    ) -> Iterable[TRecord]:
+    def load_by_query(self, query: TQuery, dataset: TDataset = None) -> Iterable[TRecord]:
         """
         Load records based on the query.
 
@@ -72,43 +66,35 @@ class DataSource(ABC):
             Iterable of TRecord = Tuple[TKey, TData, TIdentity, TDataset, TStamp]
 
         Args:
-            query: Tuple of (TYPE,CONDITIONS_DICT,ORDER_DICT) where TYPE and its descendants will be
+            query: Tuple of (TYPE, CONDITIONS_DICT, ORDER_DICT) where TYPE and its descendants will be
                 returned by the query based on NoSQL query conditions and order in MongoDB format.
                 Keys in CONDITIONS_DICT and ORDER_DICT must match the fields of TYPE.
             dataset: Lookup dataset as a list of path tokens (empty list or None means root dataset)
         """
 
     @abstractmethod
-    def save_many(
-        self,
-        records: Iterable[TPack],
-        dataset: TDataset = None,
-    ) -> None:
+    def save_many(self, packs: Iterable[TPack], dataset: TDataset = None) -> None:
         """
-        Save records to the table associated with the base class of each record's type. Overwrites existing records.
+        Save records to the table associated with the base class of each record's type.
 
         Notes:
-            The base type is determined using `record_type.get_base_type()`. Override if required.
+            The base type is determined using `pack[0][0].get_base_type()`
 
         Args:
-            records: Iterable of (TKey, TData) where TKey is (type, primary key fields) and TData is serialized data
+            packs: Iterable of (TKey, TData) where TKey is (type, primary key fields) and TData is serialized data
             dataset: Target dataset as a list of path tokens (empty list or None means root dataset)
         """
 
     @abstractmethod
-    def delete_many(
-        self,
-        keys: Iterable[TKey],
-        dataset: TDataset = None,
-    ) -> None:
+    def delete_many(self, keys: Iterable[TKey], dataset: TDataset = None) -> None:
         """
-        Delete records from the table associated with each key's base type.
+        Delete records from the table associated with the base class of each record's type.
 
         Notes:
             The base type is determined using `key[0].get_base_type()`
 
         Args:
-            keys: Tuple of the key type followed by the primary key fields in the order of declaration.
+            keys: Iterable of TKey = (type, primary key fields)
             dataset: Target dataset as a list of path tokens (empty list or None means root dataset)
         """
 
