@@ -16,7 +16,6 @@ from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
 
 
-# @index_fields("derived_field, -version")  # TODO: Refactor index_fields
 @dataclass(slots=True)
 class StubDataclassDerivedRecord(StubDataclassRecord):
     """Stub derived class."""

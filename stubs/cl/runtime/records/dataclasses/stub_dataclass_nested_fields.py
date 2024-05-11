@@ -14,7 +14,6 @@
 
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
-from cl.runtime.storage.index_util import index_fields
 from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_data import StubDataclassData
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_data import StubDataclassDerivedData
@@ -31,7 +30,6 @@ StubDataclassNestedFieldsKey = Tuple[
 ]
 
 
-# @index_fields("derived_float_field, -float_field") # TODO: index_fields
 @dataclass(init=False)
 class StubDataclassNestedFields(DataclassMixin):
     """Stub derived class."""
