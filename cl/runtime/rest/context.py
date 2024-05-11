@@ -21,6 +21,8 @@ from cl.runtime.storage.data_source import DataSource
 from logging import Logger
 from typing import List
 
+from cl.runtime.storage.data_source_types import GenericDataset
+
 
 class Context(ABC):
     """Provides logging, data source, dataset, and progress reporting."""
@@ -39,7 +41,7 @@ class Context(ABC):
         """Return the context data source or None if not set."""
 
     @abstractmethod
-    def read_dataset(self) -> List[str] | str | None:
+    def read_dataset(self) -> GenericDataset:
         """Return the context read dataset or None if not set."""
 
     @abstractmethod
@@ -56,7 +58,7 @@ class Context(ABC):
         *,
         logger: Logger | None = None,
         data_source: DataSource | None = None,
-        read_dataset: List[str] | str | None = None,
+        read_dataset: GenericDataset = None,
         write_dataset: str | None = None,
         progress: Progress | None = None,
     ) -> Context:

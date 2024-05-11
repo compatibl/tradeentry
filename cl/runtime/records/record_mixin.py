@@ -14,7 +14,7 @@
 
 from abc import ABC
 from abc import abstractmethod
-from cl.runtime.storage.data_source_types import GenericKey
+from cl.runtime.storage.data_source_types import GenericKey, GenericDataset
 from cl.runtime.storage.data_source_types import GenericRecord, GenericPack
 from cl.runtime.rest.context import Context
 from memoization import cached
@@ -134,7 +134,7 @@ class RecordMixin(ABC):
     def load_many(
         cls,
         records_or_keys: List[GenericRecord | GenericKey | None],
-        dataset: List[str] | str | None = None,
+        dataset: GenericDataset = None,
         *,
         context: Context | None = None,
     ) -> List[Self | None]:

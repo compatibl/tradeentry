@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from cl.runtime import DataSource
-from cl.runtime.storage.data_source_types import GenericQuery, GenericPack
+from cl.runtime.storage.data_source_types import GenericQuery, GenericPack, GenericDataset
 from cl.runtime.storage.data_source import GenericKey
 from cl.runtime.storage.data_source import GenericRecord
 from dataclasses import dataclass
@@ -32,28 +32,28 @@ class NullDataSource(DataSource):
     def load_unordered(
         self,
         keys: Iterable[GenericKey],
-        dataset: List[str] | str | None = None,
+        dataset: GenericDataset = None,
     ) -> Iterable[GenericRecord]:
         raise NotImplementedError()
 
     def load_by_query(
         self,
         query: GenericQuery,
-        dataset: List[str] | str | None = None,
+        dataset: GenericDataset = None,
     ) -> Iterable[GenericRecord]:
         raise NotImplementedError()
 
     def save_many(
         self,
         records: Iterable[GenericPack],
-        dataset: List[str] | str | None = None,
+        dataset: GenericDataset = None,
     ) -> None:
         raise NotImplementedError()
 
     def delete_many(
         self,
         keys: Iterable[Tuple],
-        dataset: List[str] | str | None = None,
+        dataset: GenericDataset = None,
     ) -> None:
         raise NotImplementedError()
 

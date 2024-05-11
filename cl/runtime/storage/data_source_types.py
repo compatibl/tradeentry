@@ -37,6 +37,9 @@ GenericData = Dict[str, GenericField]
 GenericIdentity = str
 """Identity string (other formats may be added in the future)."""
 
+GenericDataset = Iterable[str] | None
+"""Record's dataset as a list of path tokens (empty list or None means root dataset)."""
+
 GenericTimestamp = dt.datetime
 """Timestamp in datetime format (time ordered, globally unique formats may be added in the future)."""
 
@@ -54,7 +57,7 @@ GenericRecord = Tuple[
     GenericKey,  # Tuple of (type, primary key fields)
     GenericData,  # Serialized record data in dictionary format (other formats may be added in the future)
     GenericIdentity,  # Identity data used for row level security
-    Iterable[str] | None,  # Record's dataset as a list of path tokens (empty list or None means root dataset)
+    GenericDataset,  # Record's dataset as a list of path tokens (empty list or None means root dataset)
     GenericTimestamp,  # Timestamp for the time the record was written to storage
 ]
 """

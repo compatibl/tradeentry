@@ -17,7 +17,7 @@ from __future__ import annotations
 from abc import ABC
 from abc import abstractmethod
 from cl.runtime.records.class_info import ClassInfo
-from cl.runtime.storage.data_source_types import GenericKey, GenericPack
+from cl.runtime.storage.data_source_types import GenericKey, GenericPack, GenericDataset
 from cl.runtime.storage.data_source_types import GenericQuery
 from cl.runtime.storage.data_source_types import GenericRecord
 from cl.runtime.settings.config import dynaconf_settings
@@ -44,7 +44,7 @@ class DataSource(ABC):
     def load_unordered(
         self,
         keys: Iterable[GenericKey],
-        dataset: List[str] | str | None = None,
+        dataset: GenericDataset = None,
     ) -> Iterable[GenericRecord]:
         """
         Load records from the table associated with the base class of each key's type.
@@ -69,7 +69,7 @@ class DataSource(ABC):
     def load_by_query(
         self,
         query: GenericQuery,
-        dataset: List[str] | str | None = None,
+        dataset: GenericDataset = None,
     ) -> Iterable[GenericRecord]:
         """
         Load records based on the query.
@@ -93,7 +93,7 @@ class DataSource(ABC):
     def save_many(
         self,
         records: Iterable[GenericPack],
-        dataset: List[str] | str | None = None,
+        dataset: GenericDataset = None,
     ) -> None:
         """
         Save records to the table associated with the base class of each record's type. Overwrites existing records.
@@ -110,7 +110,7 @@ class DataSource(ABC):
     def delete_many(
         self,
         keys: Iterable[GenericKey],
-        dataset: List[str] | str | None = None,
+        dataset: GenericDataset = None,
     ) -> None:
         """
         Delete records from the table associated with each key's base type.

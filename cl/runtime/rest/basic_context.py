@@ -18,7 +18,8 @@ from cl.runtime.rest.progress import Progress
 from cl.runtime.storage.data_source import DataSource
 from logging import Logger
 from logging import getLogger
-from typing import List
+
+from cl.runtime.storage.data_source_types import GenericDataset
 
 
 class BasicContext(Context):
@@ -28,7 +29,7 @@ class BasicContext(Context):
 
     __logger: Logger
     __data_source: DataSource
-    __read_dataset: List[str] | str | None
+    __read_dataset: GenericDataset
     __write_dataset: str | None
     __progress: Progress
 
@@ -37,7 +38,7 @@ class BasicContext(Context):
         *,
         logger: Logger | None = None,
         data_source: DataSource | None = None,
-        read_dataset: List[str] | str | None = None,
+        read_dataset: GenericDataset = None,
         write_dataset: str | None = None,
         progress: Progress | None = None,
     ):
@@ -59,7 +60,7 @@ class BasicContext(Context):
             raise RuntimeError("Context data source has not been set.")
         return self.__data_source
 
-    def read_dataset(self) -> List[str] | str | None:
+    def read_dataset(self) -> GenericDataset:
         """Return the context read dataset or None if not set."""
         return self.__read_dataset
 
@@ -76,7 +77,7 @@ class BasicContext(Context):
         *,
         logger: Logger | None = None,
         data_source: DataSource | None = None,
-        read_dataset: List[str] | str | None = None,
+        read_dataset: GenericDataset = None,
         write_dataset: str | None = None,
         progress: Progress | None = None,
     ) -> Context:
