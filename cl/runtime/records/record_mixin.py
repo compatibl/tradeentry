@@ -18,7 +18,7 @@ from cl.runtime.storage.data_source_types import TKey, TDataset
 from cl.runtime.storage.data_source_types import TRecord, TPack
 from cl.runtime.rest.context import Context
 from memoization import cached
-from typing import List
+from typing import List, Iterable
 from typing import Tuple
 from typing import Type
 from typing_extensions import Self
@@ -49,17 +49,12 @@ class RecordMixin(ABC):
     """To prevent creation of __dict__ in derived types."""
 
     @abstractmethod
-    def get_key(self) -> Tuple:
-        """
-        Return tuple of (type, primary key fields).
-
-        Notes:
-            Implementation for MyType must narrow the returned type hint to Tuple[MyType, ...].
-        """
+    def get_key(self) -> Tuple[Self, ...]:
+        """Return (type(self), primary key fields), identifying all field types in returned value type hint."""
 
     @abstractmethod
     def pack(self) -> TPack:
-        """Return tuple of (KEY, DATA) where KEY=(type, primary key fields) and DATA is serialized record data."""
+        """Return (TKey, TData) where TKey is (type, primary key fields) and TData is serialized record data."""
 
     def init(self) -> None:
         """Similar to __init__ but uses previously set fields instead of parameters (not invoked by data source)."""
@@ -133,7 +128,7 @@ class RecordMixin(ABC):
     @classmethod
     def load_many(
         cls,
-        records_or_keys: List[TRecord | TKey | None],
+        records_or_keys: List[Self | TKey | None],
         dataset: TDataset = None,
         *,
         context: Context | None = None,
@@ -147,8 +142,8 @@ class RecordMixin(ABC):
             A result element is None if the record is not found or the key is None.
 
         Args:
-            records_or_keys: Each element is a record, key in tuple format, or None.
-            dataset: List of datasets in lookup order, single dataset, or None for root dataset.
+            records_or_keys: Each element is TRecord, TKey, or None.
+            dataset: Lookup dataset as a list of path tokens (empty list or None means root dataset)
             context: Optional context, if None current context will be used
         """
         # TODO: Does not yet support embedded keys

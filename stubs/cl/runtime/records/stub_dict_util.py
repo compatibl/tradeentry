@@ -18,12 +18,14 @@ from typing import Any
 from typing import Dict
 from uuid import UUID
 
+from cl.runtime.storage.data_source_types import TData
+
 
 class StubDictUtil:
     """Utilities for mock dictionaries."""
 
     @staticmethod
-    def create_primitive() -> Dict[str, Any]:
+    def create_primitive() -> TData:
         """Create a mock dictionary whose fields include all supported primitive types."""
 
         # TODO: Add bytes

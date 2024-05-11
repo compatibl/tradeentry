@@ -48,9 +48,9 @@ TPack = Tuple[
     TData,  # Serialized record data in dictionary format (other formats may be added in the future)
 ]
 """
-Tuple of (KEY, DATA) where:
-    - KEY: A tuple of (type, primary key fields)
-    - DATA: Serialized record data in dictionary format (other formats may be added in the future)
+Tuple of (TKey, TData) where:
+    - TKey: A tuple of (type, primary key fields)
+    - TData: Serialized record data in dictionary format (other formats may be added in the future)
 """
 
 TRecord = Tuple[
@@ -61,12 +61,12 @@ TRecord = Tuple[
     TStamp,  # Timestamp or time-ordered globally unique identifier
 ]
 """
-Tuple of (KEY, DATA, IDENTITY, DATASET, TIMESTAMP) where:
-    - KEY: A tuple of (type,primary key fields)
-    - DATA: Serialized record data in dictionary format (other formats may be added in the future)
-    - IDENTITY: Identity token used for row level security
-    - DATASET: Record's dataset as a list of path tokens (empty list or None means root dataset)
-    - TIMESTAMP: Timestamp for the time the record was written to storage
+Tuple of (TKey, TData, TIdentity, TDataset, TStamp) where:
+    - TKey: A tuple of (type, primary key fields)
+    - TData: Serialized record data in dictionary format (other formats may be added in the future)
+    - TIdentity: Identity token used for row level security
+    - TDataset: Record's dataset as a list of path tokens (empty list or None means root dataset)
+    - TStamp: Timestamp for the time the record was written to storage
 """
 
 TQuery = Tuple[

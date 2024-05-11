@@ -24,7 +24,6 @@ from cl.runtime.settings.config import dynaconf_settings
 from dataclasses import dataclass
 from typing import ClassVar
 from typing import Iterable
-from typing import List
 
 
 @dataclass(slots=True, init=True, frozen=True)
@@ -38,7 +37,7 @@ class DataSource(ABC):
 
     @abstractmethod
     def batch_size(self) -> int:
-        """Maximum number or records the data source will return in a single call, error if exceeded."""
+        """Maximum number of records the data source will return in a single call, error if exceeded."""
 
     @abstractmethod
     def load_unordered(
@@ -50,19 +49,14 @@ class DataSource(ABC):
         Load records from the table associated with the base class of each key's type.
 
         Notes:
-            The base type is determined using `key[0].get_base_type()`. Override if required.
+            The base type is determined using `key[0].get_base_type()`
 
         Returns:
-            Tuples of (KEY, DATA, IDENTITY, DATASET, TIMESTAMP) where:
-                - KEY: A tuple of (type,primary key fields)
-                - DATA: Serialized record data in dictionary format (other formats may be added in the future)
-                - IDENTITY: Identity token used for row level security
-                - DATASET: Record's dataset as a list of path tokens (empty list or None means root dataset)
-                - TIMESTAMP: Timestamp for the time the record was written to storage
+            Iterable of TRecord = Tuple[TKey, TData, TIdentity, TDataset, TStamp]
 
         Args:
-            keys: Tuple of the key type followed by the primary key fields in the order of declaration.
-            dataset: List of datasets in lookup order, single dataset, or None for root dataset.
+            keys: Iterable of TKey = Tuple[Type, primary key fields]
+            dataset: Lookup dataset as a list of path tokens (empty list or None means root dataset)
         """
 
     @abstractmethod
@@ -75,18 +69,13 @@ class DataSource(ABC):
         Load records based on the query.
 
         Returns:
-            Tuples of (KEY, DATA, IDENTITY, DATASET, TIMESTAMP) where:
-                - KEY: A tuple of (type,primary key fields)
-                - DATA: Serialized record data in dictionary format (other formats may be added in the future)
-                - IDENTITY: Identity token used for row level security
-                - DATASET: Record's dataset as a list of path tokens (empty list or None means root dataset)
-                - TIMESTAMP: Timestamp for the time the record was written to storage
+            Iterable of TRecord = Tuple[TKey, TData, TIdentity, TDataset, TStamp]
 
         Args:
             query: Tuple of (TYPE,CONDITIONS_DICT,ORDER_DICT) where TYPE and its descendants will be
                 returned by the query based on NoSQL query conditions and order in MongoDB format.
                 Keys in CONDITIONS_DICT and ORDER_DICT must match the fields of TYPE.
-            dataset: List of datasets in lookup order, single dataset, or None for root dataset.
+            dataset: Lookup dataset as a list of path tokens (empty list or None means root dataset)
         """
 
     @abstractmethod
@@ -102,8 +91,8 @@ class DataSource(ABC):
             The base type is determined using `record_type.get_base_type()`. Override if required.
 
         Args:
-            records: Tuples of (KEY, DATA) where KEY=(type, primary key fields) and DATA is serialized record data.
-            dataset: List of datasets in lookup order, single dataset, or None for root dataset.
+            records: Iterable of (TKey, TData) where TKey is (type, primary key fields) and TData is serialized data
+            dataset: Target dataset as a list of path tokens (empty list or None means root dataset)
         """
 
     @abstractmethod
@@ -120,7 +109,7 @@ class DataSource(ABC):
 
         Args:
             keys: Tuple of the key type followed by the primary key fields in the order of declaration.
-            dataset: List of datasets in lookup order, single dataset, or None for root dataset.
+            dataset: Target dataset as a list of path tokens (empty list or None means root dataset)
         """
 
     @abstractmethod
