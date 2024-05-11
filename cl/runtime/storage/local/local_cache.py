@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from cl.runtime import DataSource
-from cl.runtime.storage.data_source_types import GenericQuery, GenericPack, GenericDataset
-from cl.runtime.storage.data_source import GenericKey
-from cl.runtime.storage.data_source import GenericRecord
+from cl.runtime.storage.data_source_types import TQuery, TPack, TDataset
+from cl.runtime.storage.data_source import TKey
+from cl.runtime.storage.data_source import TRecord
 from dataclasses import dataclass
 from dataclasses import field
 from itertools import groupby
@@ -38,9 +38,9 @@ class LocalCache(DataSource):
 
     def load_unordered(
         self,
-        keys: Iterable[GenericKey],
-        dataset: GenericDataset = None,
-    ) -> Iterable[GenericRecord]:
+        keys: Iterable[TKey],
+        dataset: TDataset = None,
+    ) -> Iterable[TRecord]:
         # Try to retrieve dataset dictionary, insert if it does not yet exist
         dataset_cache = self._cache.setdefault(dataset, {})
 
@@ -74,15 +74,15 @@ class LocalCache(DataSource):
 
     def load_by_query(
         self,
-        query: GenericQuery,
-        dataset: GenericDataset = None,
-    ) -> Iterable[GenericRecord]:
+        query: TQuery,
+        dataset: TDataset = None,
+    ) -> Iterable[TRecord]:
         raise NotImplementedError()
 
     def save_many(
         self,
-        records: Iterable[GenericPack],
-        dataset: GenericDataset = None,
+        records: Iterable[TPack],
+        dataset: TDataset = None,
     ) -> None:
         # Try to retrieve dataset dictionary, insert if it does not yet exist
         dataset_cache = self._cache.setdefault(dataset, {})
@@ -104,7 +104,7 @@ class LocalCache(DataSource):
     def delete_many(
         self,
         keys: Iterable[Tuple],
-        dataset: GenericDataset = None,
+        dataset: TDataset = None,
     ) -> None:
         raise NotImplementedError()
 

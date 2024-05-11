@@ -14,7 +14,7 @@
 
 import attrs
 from abc import ABC
-from cl.runtime.storage.data_source_types import GenericPack
+from cl.runtime.storage.data_source_types import TPack
 from cl.runtime.records.record_mixin import RecordMixin
 from typing import Any
 from typing import Dict
@@ -30,7 +30,7 @@ T = TypeVar("T")
 class AttrsMixin(RecordMixin, ABC):
     """Mixin methods for dataclass records."""
 
-    def pack(self) -> GenericPack:
+    def pack(self) -> TPack:
         return self.get_key(), attrs.asdict(self)  # noqa
 
 

@@ -20,7 +20,7 @@ from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from dataclasses import dataclass
 
-from cl.runtime.storage.data_source_types import GenericKey
+from cl.runtime.storage.data_source_types import TKey
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime.records.enum.stub_int_enum import StubIntEnum
 from typing import Tuple
@@ -115,7 +115,7 @@ class StubDataclassPrimitiveFields(DataclassMixin):
     base_enum_field: StubIntEnum = datafield(default=StubIntEnum.ENUM_VALUE_1)
     """Stub field."""
 
-    base_key_field: GenericKey = datafield(default=(StubDataclassRecord, "abc", 123))
+    base_key_field: TKey = datafield(default=(StubDataclassRecord, "abc", 123))
     """Stub field."""
 
     def get_key(self) -> StubDataclassPrimitiveFieldsKey:

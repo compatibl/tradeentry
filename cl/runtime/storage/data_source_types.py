@@ -19,33 +19,33 @@ from typing import Literal
 from typing import Tuple
 from typing import Type
 
-GenericKey = Tuple[
+TKey = Tuple[
     Type,  # First element is the record's type
     ...,  # Remaining elements are primary key fields in the order of declaration
 ]
 """Tuple of (type, primary key fields)."""
 
-GenericValue = str | float | bool | int | dt.date | dt.time | dt.datetime
+TPrimitive = str | float | bool | int | dt.date | dt.time | dt.datetime
 """Primitive value fields."""
 
-GenericField = Dict[str, "GenericField"] | List["GenericField"] | GenericValue
+TField = Dict[str, "TField"] | List["TField"] | TPrimitive
 """Primitive value fields and data containers."""
 
-GenericData = Dict[str, GenericField]
+TData = Dict[str, TField]
 """Serialized record data in dictionary format (other formats may be added in the future)."""
 
-GenericIdentity = str
+TIdentity = str
 """Identity string (other formats may be added in the future)."""
 
-GenericDataset = Iterable[str] | None
+TDataset = Iterable[str] | None
 """Record's dataset as a list of path tokens (empty list or None means root dataset)."""
 
-GenericTimestamp = dt.datetime
-"""Timestamp in datetime format (time ordered, globally unique formats may be added in the future)."""
+TStamp = dt.datetime
+"""Timestamp or time-ordered globally unique identifier."""
 
-GenericPack = Tuple[
-    GenericKey,  # Tuple of (type, primary key fields)
-    GenericData,  # Serialized record data in dictionary format (other formats may be added in the future)
+TPack = Tuple[
+    TKey,  # Tuple of (type, primary key fields)
+    TData,  # Serialized record data in dictionary format (other formats may be added in the future)
 ]
 """
 Tuple of (KEY, DATA) where:
@@ -53,23 +53,23 @@ Tuple of (KEY, DATA) where:
     - DATA: Serialized record data in dictionary format (other formats may be added in the future)
 """
 
-GenericRecord = Tuple[
-    GenericKey,  # Tuple of (type, primary key fields)
-    GenericData,  # Serialized record data in dictionary format (other formats may be added in the future)
-    GenericIdentity,  # Identity data used for row level security
-    GenericDataset,  # Record's dataset as a list of path tokens (empty list or None means root dataset)
-    GenericTimestamp,  # Timestamp for the time the record was written to storage
+TRecord = Tuple[
+    TKey,  # Tuple of (type, primary key fields)
+    TData,  # Serialized record data in dictionary format (other formats may be added in the future)
+    TIdentity,  # Identity token used for row level security
+    TDataset,  # Record's dataset as a list of path tokens (empty list or None means root dataset)
+    TStamp,  # Timestamp or time-ordered globally unique identifier
 ]
 """
 Tuple of (KEY, DATA, IDENTITY, DATASET, TIMESTAMP) where:
     - KEY: A tuple of (type,primary key fields)
     - DATA: Serialized record data in dictionary format (other formats may be added in the future)
-    - IDENTITY: Identity data used for row level security
+    - IDENTITY: Identity token used for row level security
     - DATASET: Record's dataset as a list of path tokens (empty list or None means root dataset)
     - TIMESTAMP: Timestamp for the time the record was written to storage
 """
 
-GenericQuery = Tuple[
+TQuery = Tuple[
     Type,  # Query type and its descendents will be returned by the query. It must include all query and order fields.
     Dict[str, Any],  # NoSQL query conditions in MongoDB format.
     Dict[str, Literal[1, -1]],  # NoSQL query order in MongoDB format.

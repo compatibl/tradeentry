@@ -17,9 +17,9 @@ from __future__ import annotations
 from abc import ABC
 from abc import abstractmethod
 from cl.runtime.records.class_info import ClassInfo
-from cl.runtime.storage.data_source_types import GenericKey, GenericPack, GenericDataset
-from cl.runtime.storage.data_source_types import GenericQuery
-from cl.runtime.storage.data_source_types import GenericRecord
+from cl.runtime.storage.data_source_types import TKey, TPack, TDataset
+from cl.runtime.storage.data_source_types import TQuery
+from cl.runtime.storage.data_source_types import TRecord
 from cl.runtime.settings.config import dynaconf_settings
 from dataclasses import dataclass
 from typing import ClassVar
@@ -43,9 +43,9 @@ class DataSource(ABC):
     @abstractmethod
     def load_unordered(
         self,
-        keys: Iterable[GenericKey],
-        dataset: GenericDataset = None,
-    ) -> Iterable[GenericRecord]:
+        keys: Iterable[TKey],
+        dataset: TDataset = None,
+    ) -> Iterable[TRecord]:
         """
         Load records from the table associated with the base class of each key's type.
 
@@ -56,7 +56,7 @@ class DataSource(ABC):
             Tuples of (KEY, DATA, IDENTITY, DATASET, TIMESTAMP) where:
                 - KEY: A tuple of (type,primary key fields)
                 - DATA: Serialized record data in dictionary format (other formats may be added in the future)
-                - IDENTITY: Identity data used for row level security
+                - IDENTITY: Identity token used for row level security
                 - DATASET: Record's dataset as a list of path tokens (empty list or None means root dataset)
                 - TIMESTAMP: Timestamp for the time the record was written to storage
 
@@ -68,9 +68,9 @@ class DataSource(ABC):
     @abstractmethod
     def load_by_query(
         self,
-        query: GenericQuery,
-        dataset: GenericDataset = None,
-    ) -> Iterable[GenericRecord]:
+        query: TQuery,
+        dataset: TDataset = None,
+    ) -> Iterable[TRecord]:
         """
         Load records based on the query.
 
@@ -78,7 +78,7 @@ class DataSource(ABC):
             Tuples of (KEY, DATA, IDENTITY, DATASET, TIMESTAMP) where:
                 - KEY: A tuple of (type,primary key fields)
                 - DATA: Serialized record data in dictionary format (other formats may be added in the future)
-                - IDENTITY: Identity data used for row level security
+                - IDENTITY: Identity token used for row level security
                 - DATASET: Record's dataset as a list of path tokens (empty list or None means root dataset)
                 - TIMESTAMP: Timestamp for the time the record was written to storage
 
@@ -92,8 +92,8 @@ class DataSource(ABC):
     @abstractmethod
     def save_many(
         self,
-        records: Iterable[GenericPack],
-        dataset: GenericDataset = None,
+        records: Iterable[TPack],
+        dataset: TDataset = None,
     ) -> None:
         """
         Save records to the table associated with the base class of each record's type. Overwrites existing records.
@@ -109,8 +109,8 @@ class DataSource(ABC):
     @abstractmethod
     def delete_many(
         self,
-        keys: Iterable[GenericKey],
-        dataset: GenericDataset = None,
+        keys: Iterable[TKey],
+        dataset: TDataset = None,
     ) -> None:
         """
         Delete records from the table associated with each key's base type.

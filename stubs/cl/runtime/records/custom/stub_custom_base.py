@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.data_source_types import GenericData
+from cl.runtime.storage.data_source_types import TData
 from cl.runtime.records.record_mixin import RecordMixin
 from typing import Optional
 from typing import Tuple
@@ -40,7 +40,7 @@ class StubCustomBase(RecordMixin):
         self.int_field = int_field
         self.float_field = float_field
 
-    def pack(self) -> Tuple[StubCustomBaseKey, GenericData]:
+    def pack(self) -> Tuple[StubCustomBaseKey, TData]:
         return self.get_key(), {
             "str_field": self.str_field,
             "int_field": self.int_field,
