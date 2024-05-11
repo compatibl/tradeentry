@@ -21,30 +21,13 @@ from cl.runtime.storage.data_source_types import TDataset, TPrimitive
 
 class DatasetUtil:
     """
-    Dataset class is used for validation and transformation of delimited dataset.
+    Utility class for dataset validation and transformation.
 
-    By convention, dataset does not have leading or trailing path
-    separator. Root dataset is represented by an empty string.
-
-    Examples:
-
-    * '' - root dataset has no parents
-    * 'A' - single-token dataset for which parent is root dataset
-    * 'A\\B' - two-token dataset for which parent is dataset A
+    Dataset can be a list of tokens, a backslash-delimited string starting from backslash, or None.
     """
 
     _sep = "\\"
     _two_sep = "\\\\"
-
-    @staticmethod
-    def root() -> str | None:
-        """Root dataset is represented as empty string."""
-        return None
-
-    @staticmethod
-    def separator() -> str:
-        """Dataset separator is backslash."""
-        return DatasetUtil._sep
     
     @staticmethod
     def to_str(dataset: TDataset) -> str:
@@ -67,13 +50,13 @@ class DatasetUtil:
 
             # Concatenate and return
             dataset_str = DatasetUtil._sep + DatasetUtil._sep.join(dataset)
-            return f" in '{dataset_str}' "
+            return dataset_str
 
         else:
             raise RuntimeError(f"Dataset {dataset} is not a str, list, or None.")
 
     @staticmethod
-    def to_tokens(dataset: str | None) -> List[str]:
+    def to_tokens(dataset: TDataset) -> List[str]:
         """
         Split delimited dataset into tokens, excluding root.
         For root dataset, this method returns an empty list.
@@ -88,7 +71,7 @@ class DatasetUtil:
             dataset = unquote(dataset)
 
             # Split and remove thr first token after checking it is empty
-            dataset = dataset.split(DatasetUtil.separator())
+            dataset = dataset.split(DatasetUtil._sep)
             if len(dataset) < 2 or dataset[0] != "":
                 raise RuntimeError(f"Dataset {dataset} does not start from the separator {DatasetUtil._sep}.")
             dataset = dataset[1:]
@@ -102,42 +85,21 @@ class DatasetUtil:
         return dataset
 
     @staticmethod
-    def to_lookup_list(dataset: str | None) -> List[str]:
+    def to_lookup_list(dataset: TDataset) -> List[str]:
         """
-        Return dataset lookup list in which the first element
-        dataset value itself, followed by its parents and
-        ending with root (empty) dataset.
-
-        For root dataset, this method returns a list where
-        the only element is the empty string.
+        Each element of the returned list is a dataset in string format that has one less token than the previous
+        element of the list, starting from the original list and ending with empty list.
         """
 
-        # Create result which will be reversed at the end, and add root dataset
-        result = [DatasetUtil.root()]
+        # Convert to tokens
+        tokens = DatasetUtil.to_tokens(dataset)
 
-        # Return if argument is empty
-        if dataset is None or dataset == "":
-            return result
+        # Each element of this list has one less token, starting from the original list and ending with empty list
+        list_of_lists = [tokens[:len(tokens) - i] for i in range(len(tokens) + 1)]
 
-        # Split into tokens
-        dataset_tokens = DatasetUtil.to_tokens(dataset)
-
-        # Add incremental lookup paths each consisting of one more token than the previous one
-        lookup_path = None
-        result = [None]
-        for token in dataset_tokens:
-            if token is None or token == "":
-                raise RuntimeError(f"Dataset {dataset} has empty tokens.")
-            if lookup_path is None:
-                lookup_path = token
-            else:
-                lookup_path = f"{lookup_path}{DatasetUtil.separator()}{token}"
-            result.append(lookup_path)
-
-        # Reverse to return the list ordered from child
-        # to parent, beginning with argument and ending with
-        # root dataset
-        return list(reversed(result))
+        # Convert each list element to string format
+        result = [DatasetUtil.to_str(dataset) for dataset in list_of_lists]
+        return result
 
     @staticmethod
     def combine(*datasets: TDataset) -> TDataset | None:

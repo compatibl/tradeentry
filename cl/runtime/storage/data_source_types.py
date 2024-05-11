@@ -41,7 +41,7 @@ TIdentity = str
 """Identity string (other formats may be added in the future)."""
 
 TDataset = Iterable[str] | None
-"""Record's dataset as a list of path tokens (empty list or None means root dataset)."""
+"""Dataset as a list of tokens, a backslash-delimited string starting from backslash, or None."""
 
 TStamp = dt.datetime
 """Timestamp or time-ordered globally unique identifier."""
@@ -68,7 +68,7 @@ Tuple of (TKey, TData, TIdentity, TDataset, TStamp) where:
     - TKey: A tuple of (type, primary key fields)
     - TData: Serialized record data in dictionary format (other formats may be added in the future)
     - TIdentity: Identity token used for row level security
-    - TDataset: Record's dataset as a list of path tokens (empty list or None means root dataset)
+    - TDataset: Dataset as a list of tokens, a backslash-delimited string starting from backslash, or None.
     - TStamp: Timestamp for the time the record was written to storage
 """
 

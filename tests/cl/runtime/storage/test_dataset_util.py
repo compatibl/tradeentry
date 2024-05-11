@@ -50,11 +50,41 @@ def test_to_tokens():
         DatasetUtil.to_tokens("\\A \\B")
 
 
+def test_to_str():
+    """Test DasetUtil.to_str()."""
+
+    assert DatasetUtil.to_str(None) == "\\"
+    assert DatasetUtil.to_str([]) == "\\"
+    assert DatasetUtil.to_str(["A"]) == "\\A"
+    assert DatasetUtil.to_str(["A", "B"]) == "\\A\\B"
+
+    with pytest.raises(Exception):
+        DatasetUtil.to_str(["\\\\"])
+    with pytest.raises(Exception):
+        DatasetUtil.to_str([" "])
+    with pytest.raises(Exception):
+        DatasetUtil.to_str([" A"])
+    with pytest.raises(Exception):
+        DatasetUtil.to_str(["A "])
+    with pytest.raises(Exception):
+        DatasetUtil.to_str(["\\A", "B"])
+    with pytest.raises(Exception):
+        DatasetUtil.to_str(["A", "B\\"])
+    with pytest.raises(Exception):
+        DatasetUtil.to_str(["A", "\\B"])
+    with pytest.raises(Exception):
+        DatasetUtil.to_str(["A\\", "B"])
+
+
 def test_combine():
     """Test method combine(...)"""
 
     assert DatasetUtil.combine(None) == []
     assert DatasetUtil.combine("\\") == []
+    assert DatasetUtil.combine(None, None) == []
+    assert DatasetUtil.combine("\\", None) == []
+    assert DatasetUtil.combine(None, "\\A") == ["A"]
+    assert DatasetUtil.combine("\\A", None) == ["A"]
     assert DatasetUtil.combine("\\A") == ["A"]
     assert DatasetUtil.combine("\\A", "\\B") == ["A", "B"]
     assert DatasetUtil.combine(None, ["A"], ["B"]) == ["A", "B"]
@@ -75,6 +105,15 @@ def test_combine():
         DatasetUtil.combine("A", "\\B")
     with pytest.raises(Exception):
         DatasetUtil.combine("A\\", "B")
+
+
+def test_lookup_list():
+    """Conversion of tokens to lookup list."""
+
+    assert DatasetUtil.to_lookup_list(None) == ["\\"]
+    assert DatasetUtil.to_lookup_list("\\") == ["\\"]
+    assert DatasetUtil.to_lookup_list("\\A") == ["\\A", "\\"]
+    assert DatasetUtil.to_lookup_list("\\A\\B") == ["\\A\\B", "\\A", "\\"]
 
 
 if __name__ == "__main__":
