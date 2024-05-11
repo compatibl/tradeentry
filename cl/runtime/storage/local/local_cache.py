@@ -11,23 +11,22 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 from cl.runtime import DataSource
 from cl.runtime.storage.data_source import TKey
 from cl.runtime.storage.data_source import TRecord
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TPack
 from cl.runtime.storage.data_source_types import TQuery
+from cl.runtime.storage.dataset_util import DatasetUtil
 from dataclasses import dataclass
 from dataclasses import field
 from itertools import groupby
 from typing import Any
 from typing import Dict
 from typing import Iterable
-from typing import List
 from typing import Tuple
 from typing import Type
-
-from cl.runtime.storage.dataset_util import DatasetUtil
 
 
 @dataclass(slots=True, init=True, frozen=True)
@@ -41,7 +40,6 @@ class LocalCache(DataSource):
         return 1000000
 
     def load_many(self, keys: Iterable[TKey], dataset: TDataset = None) -> Iterable[TRecord]:
-
         # Validate the dataset and if necessary convert to delimited string
         dataset = DatasetUtil.to_str(dataset)
 
@@ -77,14 +75,12 @@ class LocalCache(DataSource):
         return result
 
     def load_by_query(self, query: TQuery, dataset: TDataset = None) -> Iterable[TRecord]:
-
         # Validate the dataset and if necessary convert to delimited string
         dataset = DatasetUtil.to_str(dataset)
 
         raise NotImplementedError()
 
     def save_many(self, packs: Iterable[TPack], dataset: TDataset = None) -> None:
-
         # Validate the dataset and if necessary convert to delimited string
         dataset = DatasetUtil.to_str(dataset)
 
@@ -108,7 +104,6 @@ class LocalCache(DataSource):
             table_cache.update(saved_records)
 
     def delete_many(self, keys: Iterable[TKey], dataset: TDataset = None) -> None:
-
         # Validate the dataset and if necessary convert to delimited string
         dataset = DatasetUtil.to_str(dataset)
 

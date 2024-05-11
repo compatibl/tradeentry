@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from cl.runtime.storage.data_source_types import TDataset
+from cl.runtime.storage.data_source_types import TPrimitive
 from typing import List
 from typing import Optional
 from urllib.parse import unquote
-
-from cl.runtime.storage.data_source_types import TDataset, TPrimitive
 
 
 class DatasetUtil:
@@ -28,7 +28,7 @@ class DatasetUtil:
 
     _sep = "\\"
     _two_sep = "\\\\"
-    
+
     @staticmethod
     def to_str(dataset: TDataset) -> str:
         """Validate the input and format it as string."""
@@ -38,13 +38,11 @@ class DatasetUtil:
         elif dataset == DatasetUtil._sep:
             return dataset  # Return argument if it is equal to separator
         elif isinstance(dataset, str):
-
             # Normalize if string
             result = DatasetUtil._normalize_str(dataset)
             return result
 
         elif isinstance(dataset, list):
-
             # Serialize and normalize tokens if list
             dataset = [DatasetUtil._normalize_token(x, dataset) for x in dataset]
 
@@ -66,7 +64,6 @@ class DatasetUtil:
             return []  # Root dataset has no tokens
 
         elif isinstance(dataset, str):
-
             # Convert URL quoted unicode characters
             dataset = unquote(dataset)
 
@@ -95,7 +92,7 @@ class DatasetUtil:
         tokens = DatasetUtil.to_tokens(dataset)
 
         # Each element of this list has one less token, starting from the original list and ending with empty list
-        list_of_lists = [tokens[:len(tokens) - i] for i in range(len(tokens) + 1)]
+        list_of_lists = [tokens[: len(tokens) - i] for i in range(len(tokens) + 1)]
 
         # Convert each list element to string format
         result = [DatasetUtil.to_str(dataset) for dataset in list_of_lists]
@@ -124,7 +121,7 @@ class DatasetUtil:
         Normalize a dataset provided in string format by converting URL quoted unicode characters.
         Validates that the dataset consists of backslash delimited tokens with leading backslash.
         """
-        
+
         if not isinstance(dataset, str):
             raise RuntimeError(f"Method DatasetUtil.normalize(str) is applied to non-string dataset {dataset}.")
 
@@ -153,12 +150,10 @@ class DatasetUtil:
 
         # Validate
         if token is None:
-
             in_dataset = DatasetUtil._in_dataset_msg(dataset)
             raise Exception(f"A dataset token{in_dataset}is None.")
 
         elif isinstance(token, str):
-
             # Convert URL quoted unicode characters
             token = unquote(token)
 
@@ -179,7 +174,6 @@ class DatasetUtil:
             return token
 
         elif isinstance(token, int):
-
             # TODO: Support the remaining primitive types and provide serialization
             token = str(token)
             return token
@@ -197,7 +191,6 @@ class DatasetUtil:
             # Single space if dataset is None or empty
             return " "
         elif is_list := isinstance(dataset, list) or isinstance(dataset, str):
-
             if is_list:
                 # Concatenate *without validation* if dataset is provided in list format
                 dataset = [str(x) for x in dataset]

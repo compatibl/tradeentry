@@ -37,7 +37,7 @@ TField = Dict[str, "TField"] | List["TField"] | TPrimitive
 TData = Dict[str, TField]
 """Serialized record data in dictionary format (other formats may be added in the future)."""
 
-TIdentity = str
+TIdentity = str | None
 """Identity string (other formats may be added in the future)."""
 
 TDataset = Iterable[str] | None
