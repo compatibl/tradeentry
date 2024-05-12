@@ -40,12 +40,8 @@ class Context(ABC):
         """Return the context data source or None if not set."""
 
     @abstractmethod
-    def read_dataset(self) -> TDataset:
-        """Return the context read dataset or None if not set."""
-
-    @abstractmethod
-    def write_dataset(self) -> str | None:
-        """Return the context write dataset or None if not set."""
+    def dataset(self) -> TDataset:
+        """Return the context dataset or None if not set."""
 
     @abstractmethod
     def progress(self) -> Progress:
@@ -57,8 +53,7 @@ class Context(ABC):
         *,
         logger: Logger | None = None,
         data_source: DataSource | None = None,
-        read_dataset: TDataset = None,
-        write_dataset: str | None = None,
+        dataset: TDataset = None,
         progress: Progress | None = None,
     ) -> Context:
         """Create a copy of self where some or all of the attributes are modified."""

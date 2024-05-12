@@ -24,12 +24,11 @@ from logging import getLogger
 class BasicContext(Context):
     """Provides logging, data source, dataset, and progress reporting."""
 
-    __slots__ = ("__logger", "__data_source", "__read_dataset", "__write_dataset", "__progress")
+    __slots__ = ("__logger", "__data_source", "__dataset", "__progress")
 
     __logger: Logger
     __data_source: DataSource
-    __read_dataset: TDataset
-    __write_dataset: str | None
+    __dataset: TDataset
     __progress: Progress
 
     def __init__(
@@ -37,16 +36,14 @@ class BasicContext(Context):
         *,
         logger: Logger | None = None,
         data_source: DataSource | None = None,
-        read_dataset: TDataset = None,
-        write_dataset: str | None = None,
+        dataset: TDataset = None,
         progress: Progress | None = None,
     ):
         """Normalize and validate inputs."""
 
         self.__logger = logger if logger is not None else getLogger(__name__)
         self.__data_source = data_source if data_source is not None else DataSource.default()
-        self.__read_dataset = read_dataset
-        self.__write_dataset = write_dataset
+        self.__dataset = dataset
         self.__progress = progress if progress is not None else NullProgress()
 
     def logger(self) -> Logger:
@@ -59,13 +56,9 @@ class BasicContext(Context):
             raise RuntimeError("Context data source has not been set.")
         return self.__data_source
 
-    def read_dataset(self) -> TDataset:
-        """Return the context read dataset or None if not set."""
-        return self.__read_dataset
-
-    def write_dataset(self) -> str | None:
-        """Return the context write dataset or None if not set."""
-        return self.__write_dataset
+    def dataset(self) -> TDataset:
+        """Return the context dataset or None if not set."""
+        return self.__dataset
 
     def progress(self) -> Progress | None:
         """Return the context progress or None if not set."""
@@ -76,16 +69,14 @@ class BasicContext(Context):
         *,
         logger: Logger | None = None,
         data_source: DataSource | None = None,
-        read_dataset: TDataset = None,
-        write_dataset: str | None = None,
+        dataset: TDataset = None,
         progress: Progress | None = None,
     ) -> Context:
         """Create a copy of self where some or all of the attributes are modified."""
         return BasicContext(
             logger=self.__logger if logger is None else logger,
             data_source=self.__data_source if data_source is None else data_source,
-            read_dataset=self.__read_dataset if read_dataset is None else read_dataset,
-            write_dataset=self.__write_dataset if write_dataset is None else write_dataset,
+            dataset=self.__dataset if dataset is None else dataset,
             progress=self.__progress if progress is None else progress,
         )
 
