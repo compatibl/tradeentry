@@ -14,9 +14,9 @@
 
 from cl.runtime import DataSource
 from cl.runtime.storage.data_source import TKey
-from cl.runtime.storage.data_source import TRecord
+from cl.runtime.storage.data_source import TLoadedRecord
 from cl.runtime.storage.data_source_types import TDataset, TIdentity
-from cl.runtime.storage.data_source_types import TPack
+from cl.runtime.storage.data_source_types import TPackedRecord
 from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.dataset_util import DatasetUtil
 from dataclasses import dataclass
@@ -45,7 +45,7 @@ class LocalCache(DataSource):
             *,
             dataset: TDataset = None,
             identities: Iterable[TIdentity] | None = None,
-    ) -> Iterable[TRecord]:
+    ) -> Iterable[TLoadedRecord]:
         # Validate the dataset and if necessary convert to delimited string
         dataset = DatasetUtil.to_str(dataset)
 
@@ -90,7 +90,7 @@ class LocalCache(DataSource):
             *,
             dataset: TDataset = None,
             identities: Iterable[TIdentity] | None = None,
-    ) -> Iterable[TRecord]:
+    ) -> Iterable[TLoadedRecord]:
         # Validate the dataset and if necessary convert to delimited string
         dataset = DatasetUtil.to_str(dataset)
 
@@ -98,7 +98,7 @@ class LocalCache(DataSource):
 
     def save_many(
             self,
-            packs: Iterable[TPack],
+            packs: Iterable[TPackedRecord],
             *,
             dataset: TDataset = None,
             identity: TIdentity = None

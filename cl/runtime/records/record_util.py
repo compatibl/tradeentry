@@ -53,7 +53,7 @@ class RecordUtil:
 
         Args:
             record_type: Type to which loaded records will be cast
-            records_or_keys: Each element is TRecord, TKey, or None
+            records_or_keys: Each element is TLoadedRecord, TKey, or None
             context: Optional context, if None current context will be used
             dataset: Lookup dataset as a list of path tokens (empty list or None means root dataset)
         """

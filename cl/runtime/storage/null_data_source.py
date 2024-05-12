@@ -14,9 +14,9 @@
 
 from cl.runtime import DataSource
 from cl.runtime.storage.data_source import TKey
-from cl.runtime.storage.data_source import TRecord
+from cl.runtime.storage.data_source import TLoadedRecord
 from cl.runtime.storage.data_source_types import TDataset, TIdentity
-from cl.runtime.storage.data_source_types import TPack
+from cl.runtime.storage.data_source_types import TPackedRecord
 from cl.runtime.storage.data_source_types import TQuery
 from dataclasses import dataclass
 from typing import Iterable
@@ -37,7 +37,7 @@ class NullDataSource(DataSource):
             *,
             dataset: TDataset = None,
             identities: Iterable[TIdentity] | None = None,
-    ) -> Iterable[TRecord]:
+    ) -> Iterable[TLoadedRecord]:
         raise NotImplementedError()
 
     def load_by_query(
@@ -46,12 +46,12 @@ class NullDataSource(DataSource):
             *,
             dataset: TDataset = None,
             identities: Iterable[TIdentity] | None = None,
-    ) -> Iterable[TRecord]:
+    ) -> Iterable[TLoadedRecord]:
         raise NotImplementedError()
 
     def save_many(
             self,
-            packs: Iterable[TPack],
+            packs: Iterable[TPackedRecord],
             *,
             dataset: TDataset = None,
             identity: TIdentity = None

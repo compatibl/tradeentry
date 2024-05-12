@@ -46,7 +46,7 @@ TDataset = Iterable[str] | None
 TStamp = dt.datetime
 """Timestamp or time-ordered globally unique identifier."""
 
-TPack = Tuple[
+TPackedRecord = Tuple[
     TKey,  # Tuple of (type, primary key fields)
     TData,  # Serialized record data in dictionary format (other formats may be added in the future)
 ]
@@ -56,7 +56,7 @@ Tuple of (TKey, TData) where:
     - TData: Serialized record data in dictionary format (other formats may be added in the future)
 """
 
-TRecord = Tuple[
+TLoadedRecord = Tuple[
     TKey,  # Tuple of (type, primary key fields)
     TData,  # Serialized record data in dictionary format (other formats may be added in the future)
     TDataset,  # Record's dataset as a list of path tokens (empty list or None means root dataset)
@@ -66,9 +66,24 @@ TRecord = Tuple[
 Tuple of (TKey, TData, TIdentity, TDataset, TStamp) where:
     - TKey: A tuple of (type, primary key fields)
     - TData: Serialized record data in dictionary format (other formats may be added in the future)
-    - TIdentity: Identity token used for row level security
     - TDataset: Dataset as a list of tokens, a backslash-delimited string starting from backslash, or None.
     - TStamp: Timestamp for the time the record was written to storage
+"""
+
+TSavedRecord = Tuple[
+    TKey,  # Tuple of (type, primary key fields)
+    TData,  # Serialized record data in dictionary format (other formats may be added in the future)
+    TDataset,  # Record's dataset as a list of path tokens (empty list or None means root dataset)
+    TStamp,  # Timestamp or time-ordered globally unique identifier
+    TIdentity,  # Timestamp or time-ordered globally unique identifier
+]
+"""
+Tuple of (TKey, TData, TIdentity, TDataset, TStamp) where:
+    - TKey: A tuple of (type, primary key fields)
+    - TData: Serialized record data in dictionary format (other formats may be added in the future)
+    - TDataset: Dataset as a list of tokens, a backslash-delimited string starting from backslash, or None.
+    - TStamp: Timestamp for the time the record was written to storage
+    - TIdentity: Identity token used for row level security
 """
 
 TQuery = Tuple[

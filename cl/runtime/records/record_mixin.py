@@ -19,8 +19,8 @@ from cl.runtime.records.record_util import RecordUtil
 from cl.runtime.rest.context import Context
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TKey
-from cl.runtime.storage.data_source_types import TPack
-from cl.runtime.storage.data_source_types import TRecord
+from cl.runtime.storage.data_source_types import TPackedRecord
+from cl.runtime.storage.data_source_types import TLoadedRecord
 from memoization import cached
 from typing import Iterable
 from typing import List
@@ -58,7 +58,7 @@ class RecordMixin(ABC):
         """Return (type(self), primary key fields), identifying all field types in returned value type hint."""
 
     @abstractmethod
-    def pack(self) -> TPack:
+    def pack(self) -> TPackedRecord:
         """Return (TKey, TData) where TKey is (type, primary key fields) and TData is serialized record data."""
 
     def init(self) -> None:
@@ -147,7 +147,7 @@ class RecordMixin(ABC):
             The result element is None if the record is not found or the key is None.
 
         Args:
-            records_or_keys: Each element is TRecord, TKey, or None
+            records_or_keys: Each element is TLoadedRecord, TKey, or None
             context: Optional context, if None current context will be used
             dataset: Lookup dataset as a list of path tokens (empty list or None means root dataset)
         """

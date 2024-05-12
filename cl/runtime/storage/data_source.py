@@ -20,9 +20,9 @@ from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.settings.config import dynaconf_settings
 from cl.runtime.storage.data_source_types import TDataset, TIdentity
 from cl.runtime.storage.data_source_types import TKey
-from cl.runtime.storage.data_source_types import TPack
+from cl.runtime.storage.data_source_types import TPackedRecord
 from cl.runtime.storage.data_source_types import TQuery
-from cl.runtime.storage.data_source_types import TRecord
+from cl.runtime.storage.data_source_types import TLoadedRecord
 from dataclasses import dataclass
 from typing import ClassVar, List
 from typing import Iterable
@@ -48,7 +48,7 @@ class DataSource(ABC):
             *,
             dataset: TDataset = None,
             identities: Iterable[TIdentity] | None = None,
-    ) -> Iterable[TRecord]:
+    ) -> Iterable[TLoadedRecord]:
         """
         Load records from the table associated with the base class of each key's type.
 
@@ -56,7 +56,7 @@ class DataSource(ABC):
             The base type is determined using `key[0].get_base_type()`
 
         Returns:
-            Iterable of TRecord = Tuple[TKey, TData, TIdentity, TDataset, TStamp]
+            Iterable of TLoadedRecord = Tuple[TKey, TData, TIdentity, TDataset, TStamp]
 
         Args:
             keys: Iterable of TKey = (type, primary key fields)
@@ -71,12 +71,12 @@ class DataSource(ABC):
             *,
             dataset: TDataset = None,
             identities: Iterable[TIdentity] | None = None,
-    ) -> Iterable[TRecord]:
+    ) -> Iterable[TLoadedRecord]:
         """
         Load records based on the query.
 
         Returns:
-            Iterable of TRecord = Tuple[TKey, TData, TIdentity, TDataset, TStamp]
+            Iterable of TLoadedRecord = Tuple[TKey, TData, TIdentity, TDataset, TStamp]
 
         Args:
             query: Tuple of (TYPE, CONDITIONS_DICT, ORDER_DICT) where TYPE and its descendants will be
@@ -89,7 +89,7 @@ class DataSource(ABC):
     @abstractmethod
     def save_many(
             self,
-            packs: Iterable[TPack],
+            packs: Iterable[TPackedRecord],
             *,
             dataset: TDataset = None,
             identity: TIdentity = None
