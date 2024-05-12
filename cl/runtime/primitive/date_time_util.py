@@ -13,56 +13,181 @@
 # limitations under the License.
 
 import datetime as dt
+import re
 from typing import Any
 from typing import Optional
 from typing import Tuple
+
+# Compile the regex pattern for datetime in ISO-8601 format yyyy-mm-ddThh:mm:ss.fffZ
+datetime_pattern = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$")
 
 
 class DateTimeUtil:
     """Util class for datetime.datetime."""
 
     @staticmethod
-    def validate(value: dt.datetime) -> None:
-        """Checks if the value is in the UTC time zone and is accurate to milliseconds."""
+    def round(value: dt.datetime) -> dt.datetime:
+        """Round  to whole milliseconds (the argument must already be in UTC timezone)."""
 
         # Check timezone
         offset = value.utcoffset()
-        if offset is not None and value.utcoffset().total_seconds() != 0:
-            raise RuntimeError(f"Datetime {value} is not in UTC timezone.")
+        if offset is None:
+            raise RuntimeError(f"Datetime {value} does not specify timezone. "
+                               f"Only UTC timezone is accepted and must be specified explicitly.")
+        elif value.utcoffset().total_seconds() != 0:
+            raise RuntimeError(f"Datetime {value} is in {value.tzname()} timezone."
+                               f"Only UTC timezone is accepted and must be specified explicitly.")
 
-        # Check whole milliseconds
-        if value.microsecond % 1000 != 0:
-            raise RuntimeError(
-                f"Datetime {value} has fractional milliseconds. " f"Only whole milliseconds are accepted."
-            )
+        fractional_milliseconds_float = 1000.0 * value.second + value.microsecond / 1000.0
+        rounded_microseconds = round(fractional_milliseconds_float)
+
+        second: int = rounded_microseconds // 1_000
+        rounded_microseconds -= second * 1_000
+        if second > 59 or second < 0:
+            raise RuntimeError(f"Invalid second {second} for datetime {value} after rounding.")
+
+        millisecond: int = rounded_microseconds
+        if millisecond > 999 or millisecond < 0:
+            raise RuntimeError(f"Invalid millisecond {millisecond} for datetime {value} after rounding.")
+
+        result = dt.datetime(value.year,  value.month, value.day, value.hour, value.minute,
+                             second,  # New value from rounding
+                             1_000 * millisecond, dt.timezone.utc  # New value from rounding
+                             )
+        return result
+
+    @staticmethod
+    def to_str(value: dt.datetime) -> str:
+        """Convert to string in ISO-8601 format rounded to milliseconds: 'yyyy-mm-ddThh:mm:ss.fffZ'"""
+
+        # Validate timezone and rounding to milliseconds
+        DateTimeUtil.validate_datetime(value)
+
+        # Already round number of milliseconds
+        millisecond = value.microsecond // 1000
+
+        # Convert to string
+        result = (f"{value.year:04}-{value.month:02}-{value.day:02}"
+                  f"T{value.hour:02}:{value.minute:02}:{value.second:02}.{millisecond:03}Z")
+        return result
+
+    @staticmethod
+    def from_str(value: str) -> dt.datetime:
+        """Convert from string in ISO-8601 format rounded to milliseconds: 'yyyy-mm-ddThh:mm:ss.fffZ'"""
+
+        # Validate string format
+        DateTimeUtil.validate_str(value)
+
+        # Convert assuming rounding to milliseconds is already done
+        datetime_without_tz: dt.datetime = dt.datetime.fromisoformat(value[:-1])
+        date_from_str = DateTimeUtil.from_fields(
+            datetime_without_tz.year,
+            datetime_without_tz.month,
+            datetime_without_tz.day,
+            datetime_without_tz.hour,
+            datetime_without_tz.minute,
+            datetime_without_tz.second,
+            millisecond=round(datetime_without_tz.microsecond/1000.0)
+        )
+        return date_from_str
+
+    @staticmethod
+    def to_fields(value: dt.datetime) -> Tuple[int, int, int, int, int, int, int]:
+        """Convert dt.datetime in UTC timezone with millisecond precision to fields."""
+
+        # Validate the datetime first, this will also confirm rounding to milliseconds
+        DateTimeUtil.validate_datetime(value)
+
+        # Already round number of milliseconds
+        millisecond = value.microsecond // 1000
+
+        # Convert assuming rounding to milliseconds has already been done
+        return value.year, value.month, value.day, value.hour, value.minute, value.second, millisecond
+
+    @staticmethod
+    def from_fields(
+        year: int,
+        month: int,
+        day: int,
+        hour: int,
+        minute: int,
+        second: int,
+        *,
+        millisecond: Optional[int] = None,
+    ) -> dt.datetime:
+        """Convert fields with millisecond precision to dt.datetime in UTC timezone."""
+
+        if millisecond is None:
+            millisecond = 0
+
+        result = dt.datetime(
+            year, month, day, hour, minute, second, microsecond=1000*millisecond, tzinfo=dt.timezone.utc
+        )
+        return result
 
     @staticmethod
     def to_iso_int(value: dt.datetime) -> int:
+        """Convert dt.datetime in UTC timezone with millisecond precision to int in yyyymmddhhmmssfff format."""
+
+        # Validate the datetime first, this will also confirm rounding to milliseconds
+        DateTimeUtil.validate_datetime(value)
+
+        # Convert assuming rounding to milliseconds has already been done
         iso_int = (
-            1000_00_00_00_00_00 * value.year
-            + 1000_00_00_00_00 * value.month
-            + 1000_00_00_00 * value.day
-            + 1000_00_00 * value.hour
-            + 1000_00 * value.minute
-            + 1000 * value.second
-            + value.microsecond // 1000
+                1000_00_00_00_00_00 * value.year
+                + 1000_00_00_00_00 * value.month
+                + 1000_00_00_00 * value.day
+                + 1000_00_00 * value.hour
+                + 1000_00 * value.minute
+                + 1000 * value.second
+                + value.microsecond // 1000
         )
 
         return iso_int
 
     @staticmethod
-    def from_iso_int(iso_int: int) -> Any:
-        (
-            year,
-            month,
-            day,
-            hour,
-            minute,
-            second,
-            millisecond,
-        ) = DateTimeUtil._to_fields_lenient(iso_int)
+    def from_iso_int(value: int) -> dt.datetime:
+        """Convert int in yyyymmddhhmmssfff format with millisecond precision to dt.datetime in UTC timezone."""
 
-        # This will also validate the date
+        if value < 10000000000000000:
+            raise RuntimeError(f"Datetime {value} is too short for 'yyyymmddhhmmssfff' format.")
+        if value > 99999999999999999:
+            raise RuntimeError(f"Datetime {value} is too long for 'yyyymmddhhmmssfff' format.")
+
+        year: int = value // 1000_00_00_00_00_00
+        value -= year * 1000_00_00_00_00_00
+        if year > 9999 or year < 1899:
+            raise RuntimeError(f"Invalid year {year} for datetime {value} in 'yyyymmddhhmmssfff' format.")
+
+        month: int = value // 1000_00_00_00_00
+        value -= month * 1000_00_00_00_00
+        if month > 12 or month < 1:
+            raise RuntimeError(f"Invalid month {month} for datetime {value} in 'yyyymmddhhmmssfff' format.")
+
+        day: int = value // 1000_00_00_00
+        value -= day * 1000_00_00_00
+        if day > 31 or day < 1:
+            raise RuntimeError(f"Invalid day {day} for datetime {value} in 'yyyymmddhhmmssfff' format.")
+
+        hour: int = value // 1000_00_00
+        value -= hour * 1000_00_00
+        if hour > 23 or hour < 0:
+            raise RuntimeError(f"Invalid hour {hour} for datetime {value} in 'yyyymmddhhmmssfff' format.")
+
+        minute: int = value // 1000_00
+        value -= minute * 1000_00
+        if minute > 59 or minute < 0:
+            raise RuntimeError(f"Invalid minute {minute} for datetime {value} in 'yyyymmddhhmmssfff' format.")
+
+        second: int = value // 1000
+        value -= second * 1000
+        if second > 59 or second < 0:
+            raise RuntimeError(f"Invalid second {second} for datetime {value} in 'yyyymmddhhmmssfff' format.")
+
+        millisecond: int = value
+        if millisecond > 999 or millisecond < 0:
+            raise RuntimeError(f"Invalid millisecond {millisecond} for datetime {value} in 'yyyymmddhhmmssfff' format.")
+
         result = dt.datetime(
             year,
             month,
@@ -76,74 +201,28 @@ class DateTimeUtil:
         return result
 
     @staticmethod
-    def to_str(value: dt.datetime) -> str:
-        result: str = value.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
-        return result
+    def validate_str(value: str) -> None:
+        """Validate that datetime string is in ISO-8601 format rounded to milliseconds: 'yyyy-mm-ddThh:mm:ss.fffZ'"""
+        if not datetime_pattern.match(value):
+            raise RuntimeError(f"Datetime string {value} must be in ISO-8601 format rounded to milliseconds "
+                               f"with trailing Z to indicate UTC timezone: 'yyyy-mm-ddThh:mm:ss.fffZ'.")
 
     @staticmethod
-    def from_str(value_str: str) -> Any:
-        if value_str.endswith("Z"):
-            raise Exception(
-                f"String {value_str} passed to dt.datetime ctor must not end with capital Z that "
-                f"indicates UTC timezone because dt.datetime is always specified in UTC, and its"
-                f"standard string representation does not include timezone (UTC is always used)."
+    def validate_datetime(value: dt.datetime) -> None:
+        """Validate that datetime object is in UTC time zone and is rounded to milliseconds."""
+
+        # Check timezone
+        offset = value.utcoffset()
+        if offset is None:
+            raise RuntimeError(f"Datetime {value} does not specify timezone. "
+                               f"Only UTC timezone is accepted and must be specified explicitly.")
+        elif value.utcoffset().total_seconds() != 0:
+            raise RuntimeError(f"Datetime {value} is in {value.tzname()} timezone."
+                               f"Only UTC timezone is accepted and must be specified explicitly.")
+
+        # Check that datetime is rounded to whole milliseconds
+        if value.microsecond % 1000 != 0:
+            raise RuntimeError(
+                f"Datetime {value} has fractional milliseconds. It must be rounded to"
+                f"whole milliseconds using 'DatetimeUtil.round' or similar method."
             )
-
-            # Convert from string in yyyy-mm-ddThh:mm:ss.fff format
-        datetime_without_tz: dt.datetime = dt.datetime.fromisoformat(value_str)
-        date_from_str = DateTimeUtil.from_fields(
-            datetime_without_tz.year,
-            datetime_without_tz.month,
-            datetime_without_tz.day,
-            datetime_without_tz.hour,
-            datetime_without_tz.minute,
-            datetime_without_tz.second,
-            millisecond=round(datetime_without_tz.microsecond / 1000.0),
-        )
-        return date_from_str
-
-    @staticmethod
-    def _to_fields_lenient(value: int) -> Tuple[int, int, int, int, int, int, int]:
-        """
-        Convert dt.datetime represented as int in yyyymmddhhmmssfff format to
-        the tuple (year, month, day, hour, minute, second, millisecond).
-
-        This method does not perform validation of its argument.
-        """
-
-        year: int = value // 1000_00_00_00_00_00
-        value -= year * 1000_00_00_00_00_00
-        month: int = value // 1000_00_00_00_00
-        value -= month * 1000_00_00_00_00
-        day: int = value // 1000_00_00_00
-        value -= day * 1000_00_00_00
-        hour: int = value // 1000_00_00
-        value -= hour * 1000_00_00
-        minute: int = value // 1000_00
-        value -= minute * 1000_00
-        second: int = value // 1000
-        value -= second * 1000
-        millisecond: int = value
-
-        return year, month, day, hour, minute, second, millisecond
-
-    @staticmethod
-    def from_fields(
-        year: int,
-        month: int,
-        day: int,
-        hour: int = 0,
-        minute: int = 0,
-        second: int = 0,
-        *,
-        millisecond: Optional[int] = None,
-    ) -> dt.datetime:
-        """Create datetime from fields in UTC timezone to millisecond precision."""
-
-        if millisecond is None:
-            millisecond = 0
-
-        result = dt.datetime(
-            year, month, day, hour, minute, second, microsecond=1000 * millisecond, tzinfo=dt.timezone.utc
-        )
-        return result
