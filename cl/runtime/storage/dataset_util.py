@@ -12,10 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import datetime as dt
+
+from cl.runtime.primitive.date_time_util import DateTimeUtil
+from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TPrimitive
 from typing import List
-from typing import Optional
 from urllib.parse import unquote
 
 
@@ -171,11 +174,13 @@ class DatasetUtil:
 
             return level
 
-        elif isinstance(level, int):
-            # TODO: Support the remaining primitive types and provide serialization
-            level = str(level)
-            return level
-
+        elif isinstance(level, dt.date):
+            # Convert to ISO-8601 format for date (yyyy-mm-dd)
+            return DateUtil.to_str(level)
+        elif isinstance(level, dt.datetime):
+            # Convert to ISO-8601 format for datetime (yyyy-mm-dd) with validation
+            # Datetime must be rounded to milliseconds and in UTC timezone
+            return DateTimeUtil.to_str(level)
         else:
             in_dataset = DatasetUtil._in_dataset_msg(dataset)
             raise Exception(f"A dataset level '{str(level)}'{in_dataset}is not one of the permitted primitive types.")

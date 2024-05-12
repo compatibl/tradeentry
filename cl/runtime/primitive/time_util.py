@@ -49,7 +49,7 @@ class TimeUtil:
 
     @staticmethod
     def from_iso_int(iso_int: int) -> Any:
-        hour, minute, second, millisecond = TimeUtil._to_fields_lenient(iso_int)
+        hour, minute, second, millisecond = TimeUtil._iso_int_to_fields(iso_int)
 
         # The resulting dt.time must not have a timezone
         result: dt.time = dt.time(hour, minute, second, 1000 * millisecond, dt.timezone.utc)
@@ -102,7 +102,7 @@ class TimeUtil:
         return result
 
     @staticmethod
-    def _to_fields_lenient(value: int) -> Tuple[int, int, int, int]:
+    def _iso_int_to_fields(value: int) -> Tuple[int, int, int, int]:
         """
         Convert Time stored as int in ISO hhmmssfff format to
         the tuple (hour, minute, second, millisecond).
