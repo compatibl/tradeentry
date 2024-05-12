@@ -16,38 +16,38 @@ import pytest
 from cl.runtime.storage.dataset_util import DatasetUtil
 
 
-def test_to_tokens():
-    """Test conversion of dataset string to tokens."""
+def test_to_levels():
+    """Test conversion of dataset string to levels."""
 
-    assert DatasetUtil.to_tokens(None) == []
-    assert DatasetUtil.to_tokens("\\") == []
-    assert DatasetUtil.to_tokens("\\A") == ["A"]
-    assert DatasetUtil.to_tokens("\\A\\B") == ["A", "B"]
+    assert DatasetUtil.to_levels(None) == []
+    assert DatasetUtil.to_levels("\\") == []
+    assert DatasetUtil.to_levels("\\A") == ["A"]
+    assert DatasetUtil.to_levels("\\A\\B") == ["A", "B"]
 
     with pytest.raises(Exception):
-        assert DatasetUtil.to_tokens(" ")
+        assert DatasetUtil.to_levels(" ")
     with pytest.raises(Exception):
-        assert DatasetUtil.to_tokens(" A")
+        assert DatasetUtil.to_levels(" A")
     with pytest.raises(Exception):
-        assert DatasetUtil.to_tokens("A ")
+        assert DatasetUtil.to_levels("A ")
     with pytest.raises(Exception):
-        assert DatasetUtil.to_tokens(" A\\B")
+        assert DatasetUtil.to_levels(" A\\B")
     with pytest.raises(Exception):
-        assert DatasetUtil.to_tokens("\\A\\B ")
+        assert DatasetUtil.to_levels("\\A\\B ")
     with pytest.raises(Exception):
-        assert DatasetUtil.to_tokens("\\A \\B")
+        assert DatasetUtil.to_levels("\\A \\B")
     with pytest.raises(Exception):
-        assert DatasetUtil.to_tokens("\\A\\ B")
+        assert DatasetUtil.to_levels("\\A\\ B")
     with pytest.raises(Exception):
-        DatasetUtil.to_tokens("A")
+        DatasetUtil.to_levels("A")
     with pytest.raises(Exception):
-        DatasetUtil.to_tokens("\\A\\")
+        DatasetUtil.to_levels("\\A\\")
     with pytest.raises(Exception):
-        DatasetUtil.to_tokens("\\A\\")
+        DatasetUtil.to_levels("\\A\\")
     with pytest.raises(Exception):
-        DatasetUtil.to_tokens("\\ A")
+        DatasetUtil.to_levels("\\ A")
     with pytest.raises(Exception):
-        DatasetUtil.to_tokens("\\A \\B")
+        DatasetUtil.to_levels("\\A \\B")
 
 
 def test_to_str():
@@ -77,7 +77,7 @@ def test_to_str():
 
 
 def test_combine():
-    """Test method combine(...)"""
+    """Test DatasetUtil.combine."""
 
     assert DatasetUtil.combine(None) == []
     assert DatasetUtil.combine("\\") == []
@@ -108,7 +108,7 @@ def test_combine():
 
 
 def test_lookup_list():
-    """Conversion of tokens to lookup list."""
+    """Test DatasetUtil.to_lookup_list."""
 
     assert DatasetUtil.to_lookup_list(None) == ["\\"]
     assert DatasetUtil.to_lookup_list("\\") == ["\\"]

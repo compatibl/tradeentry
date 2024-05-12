@@ -41,7 +41,7 @@ TIdentity = str | None
 """Identity token used for row level security."""
 
 TDataset = Iterable[str] | None
-"""Dataset as a list of tokens, a backslash-delimited string starting from backslash, or None."""
+"""Dataset as a delimited string, list of levels, or None."""
 
 TStamp = dt.datetime
 """Timestamp or time-ordered globally unique identifier."""
@@ -59,21 +59,21 @@ Tuple of (TKey, TData) where:
 TLoadedRecord = Tuple[
     TKey,  # Tuple of (type, primary key fields)
     TData,  # Serialized record data in dictionary format (other formats may be added in the future)
-    TDataset,  # Record's dataset as a list of path tokens (empty list or None means root dataset)
+    TDataset,  # Record's dataset as a delimited string, list of levels, or None
     TStamp,  # Timestamp or time-ordered globally unique identifier
 ]
 """
 Tuple of (TKey, TData, TIdentity, TDataset, TStamp) where:
     - TKey: A tuple of (type, primary key fields)
     - TData: Serialized record data in dictionary format (other formats may be added in the future)
-    - TDataset: Dataset as a list of tokens, a backslash-delimited string starting from backslash, or None.
+    - TDataset: Record's dataset as a delimited string, list of levels, or None
     - TStamp: Timestamp for the time the record was written to storage
 """
 
 TSavedRecord = Tuple[
     TKey,  # Tuple of (type, primary key fields)
     TData,  # Serialized record data in dictionary format (other formats may be added in the future)
-    TDataset,  # Record's dataset as a list of path tokens (empty list or None means root dataset)
+    TDataset,  # Record's dataset as a delimited string, list of levels, or None
     TStamp,  # Timestamp or time-ordered globally unique identifier
     TIdentity,  # Timestamp or time-ordered globally unique identifier
 ]
@@ -81,7 +81,7 @@ TSavedRecord = Tuple[
 Tuple of (TKey, TData, TIdentity, TDataset, TStamp) where:
     - TKey: A tuple of (type, primary key fields)
     - TData: Serialized record data in dictionary format (other formats may be added in the future)
-    - TDataset: Dataset as a list of tokens, a backslash-delimited string starting from backslash, or None.
+    - TDataset: Record's dataset as a delimited string, list of levels, or None
     - TStamp: Timestamp for the time the record was written to storage
     - TIdentity: Identity token used for row level security
 """

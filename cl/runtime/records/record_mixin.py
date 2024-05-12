@@ -149,6 +149,6 @@ class RecordMixin(ABC):
         Args:
             records_or_keys: Each element is TLoadedRecord, TKey, or None
             context: Optional context, if None current context will be used
-            dataset: Lookup dataset as a list of path tokens (empty list or None means root dataset)
+            dataset: Lookup dataset as a delimited string, list of levels, or None
         """
         return RecordUtil.load_many(cls, records_or_keys, context=context, dataset=dataset)

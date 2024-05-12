@@ -60,7 +60,7 @@ class DataSource(ABC):
 
         Args:
             keys: Iterable of TKey = (type, primary key fields)
-            dataset: Lookup dataset as a list of path tokens (empty list or None means root dataset)
+            dataset: Lookup dataset as a delimited string, list of levels, or None
             identities: Only the records whose identity matches one of the argument identities will be loaded
         """
 
@@ -82,7 +82,7 @@ class DataSource(ABC):
             query: Tuple of (TYPE, CONDITIONS_DICT, ORDER_DICT) where TYPE and its descendants will be
                 returned by the query based on NoSQL query conditions and order in MongoDB format.
                 Keys in CONDITIONS_DICT and ORDER_DICT must match the fields of TYPE.
-            dataset: Lookup dataset as a list of path tokens (empty list or None means root dataset)
+            dataset: Lookup dataset as a delimited string, list of levels, or None
             identities: Only the records whose identity matches one of the argument identities will be loaded
         """
 
@@ -102,7 +102,7 @@ class DataSource(ABC):
 
         Args:
             packs: Iterable of (TKey, TData) where TKey is (type, primary key fields) and TData is serialized data
-            dataset: Target dataset as a list of path tokens (empty list or None means root dataset)
+            dataset: Target dataset as a delimited string, list of levels, or None
             identity: Identity token used for row level security
         """
 
@@ -122,7 +122,7 @@ class DataSource(ABC):
 
         Args:
             keys: Iterable of TKey = (type, primary key fields)
-            dataset: Target dataset as a list of path tokens (empty list or None means root dataset)
+            dataset: Target dataset as a delimited string, list of levels, or None
             identities: Only the records whose identity matches one of the argument identities will be deleted
         """
 
