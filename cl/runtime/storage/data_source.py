@@ -61,7 +61,7 @@ class DataSource(ABC):
         Args:
             keys: Iterable of TKey = (type, primary key fields)
             dataset: Lookup dataset as a list of path tokens (empty list or None means root dataset)
-            identities: Only the records whose identity matches one of the argument identities will be returned
+            identities: Only the records whose identity matches one of the argument identities will be loaded
         """
 
     @abstractmethod
@@ -83,7 +83,7 @@ class DataSource(ABC):
                 returned by the query based on NoSQL query conditions and order in MongoDB format.
                 Keys in CONDITIONS_DICT and ORDER_DICT must match the fields of TYPE.
             dataset: Lookup dataset as a list of path tokens (empty list or None means root dataset)
-            identities: Only the records whose identity matches one of the argument identities will be returned
+            identities: Only the records whose identity matches one of the argument identities will be loaded
         """
 
     @abstractmethod
