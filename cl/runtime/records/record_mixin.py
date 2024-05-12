@@ -180,10 +180,11 @@ class RecordMixin(ABC):
             )
 
         # Keys without preserving position in list, excludes None
-        keys = [x[1] for x in coded_inputs if x[0] == _KEY]
+        keys: List[TKey] = [x[1] for x in coded_inputs if x[0] == _KEY]  # noqa
 
         if len(keys) == 0:
-            # If there are no keys, return a copy of the input list and stop further processing
+            # If there are no keys, each element is either a record or None.
+            # In this case we can return a copy of the argument list without further processing
             return list(records_or_keys)
 
         # Get data source from the current or specified context
@@ -192,11 +193,12 @@ class RecordMixin(ABC):
 
         # Each lookup must not exceed data source batch size
         batch_size = data_source.batch_size()
-        batches = [keys[i : i + batch_size] for i in range(0, len(keys), batch_size)]
+        batches = [keys[i: i + batch_size] for i in range(0, len(keys), batch_size)]
         records_dict = {}
         for batch_keys in batches:
+
             # Get unordered dict of serialized record data
-            batch_data = data_source.load_many(batch_keys, dataset)
+            batch_data = data_source.load_many(batch_keys, dataset=dataset)
 
             # Create class instances and accumulate in records_dict, key[0] is type
             records_dict.update({key: key[0](**dict_) for key, dict_ in batch_data})

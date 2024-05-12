@@ -15,7 +15,7 @@
 from cl.runtime import DataSource
 from cl.runtime.storage.data_source import TKey
 from cl.runtime.storage.data_source import TRecord
-from cl.runtime.storage.data_source_types import TDataset
+from cl.runtime.storage.data_source_types import TDataset, TIdentity
 from cl.runtime.storage.data_source_types import TPack
 from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.dataset_util import DatasetUtil
@@ -39,7 +39,13 @@ class LocalCache(DataSource):
         """Maximum number or records the data source will return in a single call, error if exceeded."""
         return 1000000
 
-    def load_many(self, keys: Iterable[TKey], dataset: TDataset = None) -> Iterable[TRecord]:
+    def load_many(
+            self,
+            keys: Iterable[TKey],
+            *,
+            dataset: TDataset = None,
+            identities: Iterable[TIdentity] | None = None,
+    ) -> Iterable[TRecord]:
         # Validate the dataset and if necessary convert to delimited string
         dataset = DatasetUtil.to_str(dataset)
 
@@ -78,13 +84,25 @@ class LocalCache(DataSource):
         result = [result_dict.get(k, None) for k in keys]
         return result
 
-    def load_by_query(self, query: TQuery, dataset: TDataset = None) -> Iterable[TRecord]:
+    def load_by_query(
+            self,
+            query: TQuery,
+            *,
+            dataset: TDataset = None,
+            identities: Iterable[TIdentity] | None = None,
+    ) -> Iterable[TRecord]:
         # Validate the dataset and if necessary convert to delimited string
         dataset = DatasetUtil.to_str(dataset)
 
         raise NotImplementedError()
 
-    def save_many(self, packs: Iterable[TPack], dataset: TDataset = None) -> None:
+    def save_many(
+            self,
+            packs: Iterable[TPack],
+            *,
+            dataset: TDataset = None,
+            identity: TIdentity = None
+    ) -> None:
         # Validate the dataset and if necessary convert to delimited string
         dataset = DatasetUtil.to_str(dataset)
 
@@ -107,7 +125,13 @@ class LocalCache(DataSource):
             # Add records for base type, overwriting the existing records
             table_cache.update(saved_records)
 
-    def delete_many(self, keys: Iterable[TKey], dataset: TDataset = None) -> None:
+    def delete_many(
+            self,
+            keys: Iterable[TKey],
+            *,
+            dataset: TDataset = None,
+            identities: Iterable[TIdentity] | None = None,
+    ) -> None:
         # Validate the dataset and if necessary convert to delimited string
         dataset = DatasetUtil.to_str(dataset)
 

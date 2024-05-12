@@ -38,7 +38,7 @@ TData = Dict[str, TField]
 """Serialized record data in dictionary format (other formats may be added in the future)."""
 
 TIdentity = str | None
-"""Identity string (other formats may be added in the future)."""
+"""Identity token used for row level security."""
 
 TDataset = Iterable[str] | None
 """Dataset as a list of tokens, a backslash-delimited string starting from backslash, or None."""
@@ -59,7 +59,6 @@ Tuple of (TKey, TData) where:
 TRecord = Tuple[
     TKey,  # Tuple of (type, primary key fields)
     TData,  # Serialized record data in dictionary format (other formats may be added in the future)
-    TIdentity,  # Identity token used for row level security
     TDataset,  # Record's dataset as a list of path tokens (empty list or None means root dataset)
     TStamp,  # Timestamp or time-ordered globally unique identifier
 ]

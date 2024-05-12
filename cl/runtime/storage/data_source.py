@@ -18,13 +18,13 @@ from abc import ABC
 from abc import abstractmethod
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.settings.config import dynaconf_settings
-from cl.runtime.storage.data_source_types import TDataset
+from cl.runtime.storage.data_source_types import TDataset, TIdentity
 from cl.runtime.storage.data_source_types import TKey
 from cl.runtime.storage.data_source_types import TPack
 from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.data_source_types import TRecord
 from dataclasses import dataclass
-from typing import ClassVar
+from typing import ClassVar, List
 from typing import Iterable
 
 
@@ -42,7 +42,13 @@ class DataSource(ABC):
         """Maximum number of records the data source will return in a single call, error if exceeded."""
 
     @abstractmethod
-    def load_many(self, keys: Iterable[TKey], dataset: TDataset = None) -> Iterable[TRecord]:
+    def load_many(
+            self,
+            keys: Iterable[TKey],
+            *,
+            dataset: TDataset = None,
+            identities: Iterable[TIdentity] | None = None,
+    ) -> Iterable[TRecord]:
         """
         Load records from the table associated with the base class of each key's type.
 
@@ -55,10 +61,17 @@ class DataSource(ABC):
         Args:
             keys: Iterable of TKey = (type, primary key fields)
             dataset: Lookup dataset as a list of path tokens (empty list or None means root dataset)
+            identities: Only the records whose identity matches one of the argument identities will be returned
         """
 
     @abstractmethod
-    def load_by_query(self, query: TQuery, dataset: TDataset = None) -> Iterable[TRecord]:
+    def load_by_query(
+            self,
+            query: TQuery,
+            *,
+            dataset: TDataset = None,
+            identities: Iterable[TIdentity] | None = None,
+    ) -> Iterable[TRecord]:
         """
         Load records based on the query.
 
@@ -70,10 +83,17 @@ class DataSource(ABC):
                 returned by the query based on NoSQL query conditions and order in MongoDB format.
                 Keys in CONDITIONS_DICT and ORDER_DICT must match the fields of TYPE.
             dataset: Lookup dataset as a list of path tokens (empty list or None means root dataset)
+            identities: Only the records whose identity matches one of the argument identities will be returned
         """
 
     @abstractmethod
-    def save_many(self, packs: Iterable[TPack], dataset: TDataset = None) -> None:
+    def save_many(
+            self,
+            packs: Iterable[TPack],
+            *,
+            dataset: TDataset = None,
+            identity: TIdentity = None
+    ) -> None:
         """
         Save records to the table associated with the base class of each record's type.
 
@@ -83,10 +103,17 @@ class DataSource(ABC):
         Args:
             packs: Iterable of (TKey, TData) where TKey is (type, primary key fields) and TData is serialized data
             dataset: Target dataset as a list of path tokens (empty list or None means root dataset)
+            identity: Identity token used for row level security
         """
 
     @abstractmethod
-    def delete_many(self, keys: Iterable[TKey], dataset: TDataset = None) -> None:
+    def delete_many(
+            self,
+            keys: Iterable[TKey],
+            *,
+            dataset: TDataset = None,
+            identities: Iterable[TIdentity] | None = None,
+    ) -> None:
         """
         Delete records from the table associated with the base class of each record's type.
 
@@ -96,6 +123,7 @@ class DataSource(ABC):
         Args:
             keys: Iterable of TKey = (type, primary key fields)
             dataset: Target dataset as a list of path tokens (empty list or None means root dataset)
+            identities: Only the records whose identity matches one of the argument identities will be deleted
         """
 
     @abstractmethod
