@@ -17,7 +17,7 @@ from typing import List, Tuple
 from zoneinfo import ZoneInfo
 
 import pytest
-from cl.runtime.primitive.date_time_util import DateTimeUtil
+from cl.runtime.primitive.datetime_util import DatetimeUtil
 
 
 def get_valid_samples() -> List[Tuple[int, str]]:
@@ -116,20 +116,20 @@ def test_to_from_str():
 
     for sample in get_valid_samples():
 
-        from_iso_int_result = DateTimeUtil.from_iso_int(sample[0])
-        from_str_result = DateTimeUtil.from_str(sample[1])
+        from_iso_int_result = DatetimeUtil.from_iso_int(sample[0])
+        from_str_result = DatetimeUtil.from_str(sample[1])
         assert from_str_result == from_iso_int_result
 
-        to_str_result = DateTimeUtil.to_str(from_iso_int_result)
+        to_str_result = DatetimeUtil.to_str(from_iso_int_result)
         assert to_str_result == sample[1]
 
     for sample in get_invalid_datetime_samples():
         with pytest.raises(Exception):
-            DateTimeUtil.to_str(sample)
+            DatetimeUtil.to_str(sample)
 
     for sample in get_invalid_string_samples():
         with pytest.raises(Exception):
-            DateTimeUtil.from_str(sample)
+            DatetimeUtil.from_str(sample)
 
 
 def test_to_from_iso_int():
@@ -137,16 +137,16 @@ def test_to_from_iso_int():
 
     for sample in get_valid_samples():
 
-        from_str = DateTimeUtil.from_str(sample[1])
-        from_iso_int = DateTimeUtil.from_iso_int(sample[0])
+        from_str = DatetimeUtil.from_str(sample[1])
+        from_iso_int = DatetimeUtil.from_iso_int(sample[0])
         assert from_iso_int == from_str
 
-        iso_int_result = DateTimeUtil.to_iso_int(from_str)
+        iso_int_result = DatetimeUtil.to_iso_int(from_str)
         assert iso_int_result == sample[0]
 
     for sample in get_invalid_iso_int_samples():
         with pytest.raises(Exception):
-            DateTimeUtil.from_iso_int(sample)
+            DatetimeUtil.from_iso_int(sample)
 
 
 def test_to_from_fields():
@@ -154,16 +154,16 @@ def test_to_from_fields():
 
     for sample in get_valid_samples():
 
-        datetime_sample = DateTimeUtil.from_iso_int(sample[0])
-        fields_format = DateTimeUtil.to_fields(datetime_sample)
+        datetime_sample = DatetimeUtil.from_iso_int(sample[0])
+        fields_format = DatetimeUtil.to_fields(datetime_sample)
 
         positional_args = fields_format[:-1]
-        datetime_format = DateTimeUtil.from_fields(*positional_args, millisecond=fields_format[-1])
+        datetime_format = DatetimeUtil.from_fields(*positional_args, millisecond=fields_format[-1])
         assert datetime_format == datetime_sample
 
     for sample in get_invalid_fields_samples():
         with pytest.raises(Exception):
-            DateTimeUtil.from_fields(sample)
+            DatetimeUtil.from_fields(sample)
 
 
 def test_round():
@@ -171,7 +171,7 @@ def test_round():
 
     for sample in get_rounding_samples():
 
-        rounded = DateTimeUtil.round(sample[0])
+        rounded = DatetimeUtil.round(sample[0])
         assert rounded == sample[1]
 
 

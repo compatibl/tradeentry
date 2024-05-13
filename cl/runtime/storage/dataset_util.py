@@ -14,7 +14,7 @@
 
 import datetime as dt
 
-from cl.runtime.primitive.date_time_util import DateTimeUtil
+from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TPrimitive
@@ -180,7 +180,7 @@ class DatasetUtil:
         elif isinstance(level, dt.datetime):
             # Convert to ISO-8601 format for datetime (yyyy-mm-dd) with validation
             # Datetime must be rounded to milliseconds and in UTC timezone
-            return DateTimeUtil.to_str(level)
+            return DatetimeUtil.to_str(level)
         else:
             in_dataset = DatasetUtil._in_dataset_msg(dataset)
             raise Exception(f"A dataset level '{str(level)}'{in_dataset}is not one of the permitted primitive types.")

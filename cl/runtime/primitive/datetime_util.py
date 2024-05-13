@@ -22,7 +22,7 @@ from typing import Tuple
 datetime_pattern = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$")
 
 
-class DateTimeUtil:
+class DatetimeUtil:
     """Util class for datetime.datetime."""
 
     @staticmethod
@@ -61,7 +61,7 @@ class DateTimeUtil:
         """Convert to string in ISO-8601 format rounded to milliseconds: 'yyyy-mm-ddThh:mm:ss.fffZ'"""
 
         # Validate timezone and rounding to milliseconds
-        DateTimeUtil.validate_datetime(value)
+        DatetimeUtil.validate_datetime(value)
 
         # Already round number of milliseconds
         millisecond = value.microsecond // 1000
@@ -76,11 +76,11 @@ class DateTimeUtil:
         """Convert from string in ISO-8601 format rounded to milliseconds: 'yyyy-mm-ddThh:mm:ss.fffZ'"""
 
         # Validate string format
-        DateTimeUtil.validate_str(value)
+        DatetimeUtil.validate_str(value)
 
         # Convert assuming rounding to milliseconds is already done
         datetime_without_tz: dt.datetime = dt.datetime.fromisoformat(value[:-1])
-        date_from_str = DateTimeUtil.from_fields(
+        date_from_str = DatetimeUtil.from_fields(
             datetime_without_tz.year,
             datetime_without_tz.month,
             datetime_without_tz.day,
@@ -96,7 +96,7 @@ class DateTimeUtil:
         """Convert dt.datetime in UTC timezone with millisecond precision to fields."""
 
         # Validate the datetime first, this will also confirm rounding to milliseconds
-        DateTimeUtil.validate_datetime(value)
+        DatetimeUtil.validate_datetime(value)
 
         # Already round number of milliseconds
         millisecond = value.microsecond // 1000
@@ -130,7 +130,7 @@ class DateTimeUtil:
         """Convert dt.datetime in UTC timezone with millisecond precision to int in yyyymmddhhmmssfff format."""
 
         # Validate the datetime first, this will also confirm rounding to milliseconds
-        DateTimeUtil.validate_datetime(value)
+        DatetimeUtil.validate_datetime(value)
 
         # Convert assuming rounding to milliseconds has already been done
         iso_int = (

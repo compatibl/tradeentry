@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import datetime as dt
-from cl.runtime.primitive.date_time_util import DateTimeUtil
+from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.primitive.time_util import TimeUtil
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
@@ -69,7 +69,7 @@ class StubDataclassPrimitiveFields(DataclassMixin):
     time_field: dt.time = datafield(default=TimeUtil.from_fields(10, 15, 30))
     """Stub field."""
 
-    date_time_field: dt.datetime = datafield(default=DateTimeUtil.from_fields(2003, 5, 1, 10, 15, 0))
+    date_time_field: dt.datetime = datafield(default=DatetimeUtil.from_fields(2003, 5, 1, 10, 15, 0))
     """Stub field."""
 
     uuid_field: UUID = datafield(default=UUID("1A" * 16))
@@ -102,7 +102,7 @@ class StubDataclassPrimitiveFields(DataclassMixin):
     base_time_field: dt.time = datafield(default=TimeUtil.from_fields(10, 15, 30))
     """Stub field."""
 
-    base_date_time_field: dt.datetime = datafield(default=DateTimeUtil.from_fields(2003, 5, 1, 10, 15, 0))
+    base_date_time_field: dt.datetime = datafield(default=DatetimeUtil.from_fields(2003, 5, 1, 10, 15, 0))
     """Stub field."""
 
     base_uuid_field: UUID = datafield(default=UUID("1A" * 16))
