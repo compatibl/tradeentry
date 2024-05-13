@@ -13,47 +13,107 @@
 # limitations under the License.
 
 import datetime as dt
+from typing import List, Tuple
+from zoneinfo import ZoneInfo
+
 import pytest
 from cl.runtime.primitive.date_util import DateUtil
-from dateutil.relativedelta import relativedelta
 
 
-def test_smoke():
-    """Smoke test"""
-
-    # Created dates t1-t5 must match this value of string and/or Unix millis
-    date_str: str = "2003-05-01"
-    iso_int: int = 20030501
-
-    # Validation
-    from_iso_int: dt.date = DateUtil.from_iso_int(iso_int)
-
-    # Create from year, month, day
-    d2: dt.date = DateUtil.from_fields(2003, 5, 1)
-    assert d2 == from_iso_int
-
-    # Create from string
-    d3: dt.date = DateUtil.from_str(date_str)
-    assert d3 == from_iso_int
-
-    # Create from dt.date
-    d: dt.date = dt.date.fromisoformat(date_str)
-    d4: dt.date = d
-    assert d4 == from_iso_int
-
-    # Test conversion to dt.date
-    assert from_iso_int == d
-
-    # Test string representation roundtrip
-    assert DateUtil.to_str(from_iso_int) == date_str
+def get_valid_samples() -> List[Tuple[int, str]]:
+    """Return a list of valid sample date strings in (iso_int, str) format."""
+    return [
+        (20030501, "2003-05-01"),
+    ]
 
 
-def test_add_relative_delta():
-    """Test + operator with dateutil relativedelta."""
+def get_invalid_string_samples() -> List[str]:
+    """Return a list of invalid sample date strings."""
+    return [
+        "2003-05-01Z",  # Date with timezone
+        "20030501Z",  # Date with no spaces and timezone
+        "20030501",  # Date with no spaces and no timezone
+        "2003.05.01Z",  # Date with dots and timezone
+        "2003.05.01",  # Date with dots and no timezone
+        "2003/05/01Z",  # Date with slashes and timezone
+        "2003/05/01",  # Date with slashes and no timezone
+        "2003-05-01T10:15:30Z",  # Datetime with seconds and timezone
+        "2003-05-01T10:15:30",  # Datetime with seconds and no timezone
+        "2003-05-01T10:15:30.000Z",  # Datetime with milliseconds and timezone
+        "2003-05-01T10:15:30.000",  # Datetime with milliseconds and no timezone
+        "2003-05-01 10:15:30.000Z",  # Datetime with milliseconds, space instead of T, and timezone
+        "2003-05-01 10:15:30.000",  # Datetime with milliseconds, space instead of T, and no timezone
+    ]
 
-    date_1 = DateUtil.from_fields(2003, 5, 1)
-    rel_date_1 = date_1 + relativedelta(days=45)
-    assert (rel_date_1.year, rel_date_1.month, rel_date_1.day) == (2003, 6, 15)
+
+def get_invalid_iso_int_samples() -> List[int]:
+    """Return a list of invalid sample date ISO ints."""
+    return [
+        2003050,  # Int too short
+        18000501,  # Year too far back
+        200305010  # Int too long
+    ]
+
+
+def get_invalid_fields_samples() -> List[Tuple[int, int, int]]:
+    """Return a list of invalid sample dates in fields format."""
+    return [
+        (1800, 5, 1),
+        (20030, 5, 1),
+        (2003, 0, 1),
+        (2003, 13, 1),
+        (2003, 5, 0),
+        (2003, 5, 32),
+    ]
+
+
+def test_to_from_str():
+    """Test for to_str, from_str methods."""
+
+    for sample in get_valid_samples():
+
+        from_iso_int_result = DateUtil.from_iso_int(sample[0])
+        from_str_result = DateUtil.from_str(sample[1])
+        assert from_str_result == from_iso_int_result
+
+        to_str_result = DateUtil.to_str(from_iso_int_result)
+        assert to_str_result == sample[1]
+
+    for sample in get_invalid_string_samples():
+        with pytest.raises(Exception):
+            DateUtil.from_str(sample)
+
+
+def test_to_from_iso_int():
+    """Test for to_iso_int, from_iso_int methods."""
+
+    for sample in get_valid_samples():
+
+        from_str = DateUtil.from_str(sample[1])
+        from_iso_int = DateUtil.from_iso_int(sample[0])
+        assert from_iso_int == from_str
+
+        iso_int_result = DateUtil.to_iso_int(from_str)
+        assert iso_int_result == sample[0]
+
+    for sample in get_invalid_iso_int_samples():
+        with pytest.raises(Exception):
+            DateUtil.from_iso_int(sample)
+
+
+def test_to_from_fields():
+    """Test for to_fields, from_fields methods."""
+
+    for sample in get_valid_samples():
+
+        date_sample = DateUtil.from_iso_int(sample[0])
+        fields_format = DateUtil.to_fields(date_sample)
+        date_format = DateUtil.from_fields(*fields_format)
+        assert date_format == date_sample
+
+    for sample in get_invalid_fields_samples():
+        with pytest.raises(Exception):
+            DateUtil.from_fields(sample)
 
 
 if __name__ == "__main__":

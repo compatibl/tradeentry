@@ -120,10 +120,10 @@ class TimeUtil:
         TimeUtil.validate_time(value)
 
         # Convert assuming rounding to milliseconds has already been done
-        iso_int = (1000_00_00 * value.hour
-                   + 1000_00 * value.minute
-                   + 1000 * value.second
-                   + value.microsecond // 1000
+        iso_int = (1000_00_00 * value.hour +
+                   1000_00 * value.minute +
+                   1000 * value.second +
+                   value.microsecond // 1000
         )
 
         return iso_int

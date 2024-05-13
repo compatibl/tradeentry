@@ -43,7 +43,7 @@ def get_invalid_datetime_samples() -> List[dt.datetime]:
 def get_invalid_string_samples() -> List[str]:
     """Return a list of invalid sample datetime strings."""
     return [
-        "2003-05-01",  # Date only wiht no timezone
+        "2003-05-01",  # Date only with no timezone
         "2003-05-01Z",  # Date only
         "2003-05-01 10:15:30.000Z",  # Space instead of T
         "2003-05-01T10:15Z",  # No seconds
@@ -55,11 +55,11 @@ def get_invalid_string_samples() -> List[str]:
 def get_invalid_iso_int_samples() -> List[int]:
     """Return a list of invalid sample datetime ISO ints."""
     return [
-        18000501,  # Year too far back
         20030501,  # Date only
         200305011015,  # No seconds
         20030501101530,  # No milliseconds
         2003050110153000,  # Int too short
+        180005011015300000,  # Year too far back
         200305011015300000  # Int too long
     ]
 

@@ -133,13 +133,13 @@ class DatetimeUtil:
 
         # Convert assuming rounding to milliseconds has already been done
         iso_int = (
-                1000_00_00_00_00_00 * value.year
-                + 1000_00_00_00_00 * value.month
-                + 1000_00_00_00 * value.day
-                + 1000_00_00 * value.hour
-                + 1000_00 * value.minute
-                + 1000 * value.second
-                + value.microsecond // 1000
+                1000_00_00_00_00_00 * value.year +
+                1000_00_00_00_00 * value.month +
+                1000_00_00_00 * value.day +
+                1000_00_00 * value.hour +
+                1000_00 * value.minute +
+                1000 * value.second +
+                value.microsecond // 1000
         )
 
         return iso_int
