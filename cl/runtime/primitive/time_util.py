@@ -13,109 +13,176 @@
 # limitations under the License.
 
 import datetime as dt
-from typing import Any
+import re
 from typing import Optional
 from typing import Tuple
 
+# Compile the regex pattern for time in ISO-8601 format hh:mm:ss.fff without timezone
+time_pattern = re.compile(r"^\d{2}:\d{2}:\d{2}\.\d{3}$")
+
 
 class TimeUtil:
-    """Util class fro datetime.time."""
+    """Utility class for dt.time."""
 
     @staticmethod
-    def validate(value: dt.time) -> None:
+    def round(value: dt.time) -> dt.time:
+        """Round to whole milliseconds (the argument must already be in UTC timezone)."""
+        
+        # Check that timezone is not set
         if value.tzinfo is not None:
-            raise Exception(f"Local time of the day {value} must have None time zone.")
+            raise RuntimeError(f"Time {value} is not accepted because it specifies timezone {value.tzname()}. "
+                               f"Time must have tzinfo=None which is the default value.")
 
-        # Check whole milliseconds
-        if value.microsecond % 1000 != 0:
-            raise RuntimeError(f"Time {value} has fractional milliseconds. " f"Only whole milliseconds are accepted.")
+        fractional_milliseconds_float = 1000.0 * value.second + value.microsecond / 1000.0
+        rounded_microseconds = round(fractional_milliseconds_float)
 
-    @staticmethod
-    def to_iso_int(value: dt.time) -> int:
-        # Round the millisecond
-        millisecond: int = round(value.microsecond / 1000.0)
+        second: int = rounded_microseconds // 1_000
+        rounded_microseconds -= second * 1_000
+        if second > 59 or second < 0:
+            raise RuntimeError(f"Invalid second {second} for datetime {value} after rounding.")
 
-        hour = value.hour
-        minute = value.minute
-        second = value.second
+        millisecond: int = rounded_microseconds
+        if millisecond > 999 or millisecond < 0:
+            raise RuntimeError(f"Invalid millisecond {millisecond} for datetime {value} after rounding.")
 
-        # If millisecond is not specified, assume 0
-        if millisecond is None:
-            millisecond = 0
-
-        # Convert to dt.time represented in hhmmssfff format
-        iso_int: int = 10_000_000 * hour + 100_000 * minute + 1000 * second + millisecond
-        return iso_int
-
-    @staticmethod
-    def from_iso_int(iso_int: int) -> Any:
-        hour, minute, second, millisecond = TimeUtil._iso_int_to_fields(iso_int)
-
-        # The resulting dt.time must not have a timezone
-        result: dt.time = dt.time(hour, minute, second, 1000 * millisecond, dt.timezone.utc)
+        result = dt.time(value.hour,
+                         value.minute,
+                         second,  # New value from rounding
+                         1_000 * millisecond,  # New value from rounding
+                         )
         return result
 
     @staticmethod
     def to_str(value: dt.time) -> str:
-        # Convert to string in ISO format without timezone, with
-        # 3 digits after decimal points for seconds, irrespective of
-        # how many digits are actually required.
-        result_to_microseconds: str = value.strftime("%H:%M:%S.%f")
-        result: str = result_to_microseconds[:-3]
+        """Convert to string in ISO-8601 format rounded to milliseconds: 'hh:mm:ss.fff'"""
+
+        # Validate timezone and rounding to milliseconds
+        TimeUtil.validate_time(value)
+
+        # Already round number of milliseconds
+        millisecond = value.microsecond // 1000
+
+        # Convert to string
+        result = f"{value.hour:02}:{value.minute:02}:{value.second:02}.{millisecond:03}"
         return result
 
     @staticmethod
-    def from_str(value_str: str) -> Any:
-        if not value_str[-1].isdigit():
-            raise Exception(f"String {value_str} passed to from_str(...) method " f"must not include timezone.")
+    def from_str(value: str) -> dt.time:
+        """Convert from string in ISO-8601 format rounded to milliseconds: 'hh:mm:ss.fff'"""
 
-        # Convert to datetime and set UTC timezone
-        if "." in value_str:
-            # Has milliseconds
-            t = dt.datetime.strptime(value_str, "%H:%M:%S.%f").time()
-        else:
-            # Does not have milliseconds
-            t = dt.datetime.strptime(value_str, "%H:%M:%S").time()
+        # Validate string format and that tzinfo is None
+        TimeUtil.validate_str(value)
 
-        # Round the result to whole milliseconds
-        rounded_microsecond: int = round(t.microsecond / 1000.0) * 1000
-        rounded_time: dt.time = dt.time(t.hour, t.minute, t.second, rounded_microsecond, dt.timezone.utc)
-        return rounded_time
+        # Convert assuming rounding to milliseconds is already done
+        time_from_str: dt.time = dt.time.fromisoformat(value)
+        result = TimeUtil.from_fields(
+            time_from_str.hour,
+            time_from_str.minute,
+            time_from_str.second,
+            millisecond=round(time_from_str.microsecond/1000.0)
+        )
+        return result
+
+    @staticmethod
+    def to_fields(value: dt.time) -> Tuple[int, int, int, int]:
+        """Convert dt.time in UTC timezone with millisecond precision to fields."""
+
+        # Validate the time first, this will also confirm rounding to milliseconds
+        TimeUtil.validate_time(value)
+
+        # Already round number of milliseconds
+        millisecond = value.microsecond // 1000
+
+        # Convert assuming rounding to milliseconds has already been done
+        return value.hour, value.minute, value.second, millisecond
 
     @staticmethod
     def from_fields(
-        hour: int = 0,
-        minute: int = 0,
-        second: int = 0,
+        hour: int,
+        minute: int,
+        second: int,
         *,
         millisecond: Optional[int] = None,
     ) -> dt.time:
-        """
-        Create dt.time from fields in UTC timezone with one millisecond precision,
-        milliseconds is a named parameter to avoid the risk of passing microseconds instead.
-        """
+        """Convert fields with millisecond precision to dt.time."""
 
         if millisecond is None:
             millisecond = 0
 
-        result = dt.time(hour, minute, second, microsecond=1000 * millisecond, tzinfo=dt.timezone.utc)
+        result = dt.time(hour, minute, second, microsecond=1000*millisecond)
         return result
 
     @staticmethod
-    def _iso_int_to_fields(value: int) -> Tuple[int, int, int, int]:
-        """
-        Convert Time stored as int in ISO hhmmssfff format to
-        the tuple (hour, minute, second, millisecond).
+    def to_iso_int(value: dt.time) -> int:
+        """Convert dt.time with millisecond precision to int in hhmmssfff format."""
 
-        This method does not perform validation of its argument.
-        """
+        # Validate the time first, this will also confirm rounding to milliseconds
+        TimeUtil.validate_time(value)
 
-        hour: int = value // 10_000_000
-        value -= hour * 10_000_000
-        minute: int = value // 100_000
-        value -= minute * 100_000
-        second: int = value // 1_000
-        value -= second * 1_000
+        # Convert assuming rounding to milliseconds has already been done
+        iso_int = (1000_00_00 * value.hour
+                   + 1000_00 * value.minute
+                   + 1000 * value.second
+                   + value.microsecond // 1000
+        )
+
+        return iso_int
+
+    @staticmethod
+    def from_iso_int(value: int) -> dt.time:
+        """Convert int in hhmmssfff format with millisecond precision to dt.time."""
+
+        if value < 100000000:
+            raise RuntimeError(f"Time {value} is too short for 'hhmmssfff' format.")
+        if value > 999999999:
+            raise RuntimeError(f"Time {value} is too long for 'hhmmssfff' format.")
+
+        hour: int = value // 1000_00_00
+        value -= hour * 1000_00_00
+        if hour > 23 or hour < 0:
+            raise RuntimeError(f"Invalid hour {hour} for time {value} in 'hhmmssfff' format.")
+
+        minute: int = value // 1000_00
+        value -= minute * 1000_00
+        if minute > 59 or minute < 0:
+            raise RuntimeError(f"Invalid minute {minute} for time {value} in 'hhmmssfff' format.")
+
+        second: int = value // 1000
+        value -= second * 1000
+        if second > 59 or second < 0:
+            raise RuntimeError(f"Invalid second {second} for time {value} in 'hhmmssfff' format.")
+
         millisecond: int = value
+        if millisecond > 999 or millisecond < 0:
+            raise RuntimeError(f"Invalid millisecond {millisecond} for time {value} in 'hhmmssfff' format.")
 
-        return hour, minute, second, millisecond
+        result = dt.time(
+            hour,
+            minute,
+            second,
+            microsecond=1000 * millisecond
+        )
+        return result
+
+    @staticmethod
+    def validate_str(value: str) -> None:
+        """Validate that time string is in ISO-8601 format rounded to milliseconds: 'hh:mm:ss.fff'"""
+        if not time_pattern.match(value):
+            raise RuntimeError(f"Time string {value} must be in ISO-8601 format rounded to milliseconds "
+                               f"without timezone: 'hh:mm:ss.fff'.")
+
+    @staticmethod
+    def validate_time(value: dt.time) -> None:
+        """Validate that time object does not have time zone and is rounded to milliseconds."""
+
+        # Check that timezone is not set
+        if value.tzinfo is not None:
+            raise RuntimeError(f"Time {value} is not accepted because it specifies timezone {value.tzname()}. "
+                               f"Time must have tzinfo=None which is the default value.")
+
+        # Check that time is rounded to whole milliseconds
+        if value.microsecond % 1000 != 0:
+            raise RuntimeError(
+                f"Time {value} has fractional milliseconds. It must be rounded to"
+                f"whole milliseconds using 'TimeUtil.round' or similar method."
+            )

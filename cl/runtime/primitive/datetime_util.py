@@ -14,7 +14,6 @@
 
 import datetime as dt
 import re
-from typing import Any
 from typing import Optional
 from typing import Tuple
 
@@ -23,11 +22,11 @@ datetime_pattern = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$")
 
 
 class DatetimeUtil:
-    """Util class for datetime.datetime."""
+    """Utility class for dt.datetime."""
 
     @staticmethod
     def round(value: dt.datetime) -> dt.datetime:
-        """Round  to whole milliseconds (the argument must already be in UTC timezone)."""
+        """Round to whole milliseconds (the argument must already be in UTC timezone)."""
 
         # Check timezone
         offset = value.utcoffset()
@@ -79,17 +78,17 @@ class DatetimeUtil:
         DatetimeUtil.validate_str(value)
 
         # Convert assuming rounding to milliseconds is already done
-        datetime_without_tz: dt.datetime = dt.datetime.fromisoformat(value[:-1])
-        date_from_str = DatetimeUtil.from_fields(
-            datetime_without_tz.year,
-            datetime_without_tz.month,
-            datetime_without_tz.day,
-            datetime_without_tz.hour,
-            datetime_without_tz.minute,
-            datetime_without_tz.second,
-            millisecond=round(datetime_without_tz.microsecond/1000.0)
+        datetime_from_str: dt.datetime = dt.datetime.fromisoformat(value[:-1])
+        result = DatetimeUtil.from_fields(
+            datetime_from_str.year,
+            datetime_from_str.month,
+            datetime_from_str.day,
+            datetime_from_str.hour,
+            datetime_from_str.minute,
+            datetime_from_str.second,
+            millisecond=round(datetime_from_str.microsecond/1000.0)
         )
-        return date_from_str
+        return result
 
     @staticmethod
     def to_fields(value: dt.datetime) -> Tuple[int, int, int, int, int, int, int]:

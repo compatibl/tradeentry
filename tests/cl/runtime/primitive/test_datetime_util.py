@@ -34,33 +34,33 @@ def get_invalid_datetime_samples() -> List[dt.datetime]:
     non_utc_timezone = ZoneInfo('America/New_York')
 
     return [
-        dt.datetime(2003, 5, 1, 10, 15, 30),  # No timezone
         dt.datetime(2003, 5, 1, 10, 15, 30, microsecond=1234, tzinfo=dt.timezone.utc),  # Not rounded
-        dt.datetime(2003, 5, 1, 10, 15, 30, tzinfo=non_utc_timezone)
+        dt.datetime(2003, 5, 1, 10, 15, 30),  # No timezone
+        dt.datetime(2003, 5, 1, 10, 15, 30, tzinfo=non_utc_timezone)  # Non-UTC timezone
     ]
 
 
 def get_invalid_string_samples() -> List[str]:
     """Return a list of invalid sample datetime strings."""
     return [
-        "2003-05-01",
-        "2003-05-01Z",
-        "2003-05-01 10:15:30.000Z",
-        "2003-05-01T10:15Z",
-        "2003-05-01T10:15:30Z",
-        "2003-05-01T10:15:30.000",
+        "2003-05-01",  # Date only wiht no timezone
+        "2003-05-01Z",  # Date only
+        "2003-05-01 10:15:30.000Z",  # Space instead of T
+        "2003-05-01T10:15Z",  # No seconds
+        "2003-05-01T10:15:30Z",  # No milliseconds
+        "2003-05-01T10:15:30.000",  # No timezone
     ]
 
 
 def get_invalid_iso_int_samples() -> List[int]:
     """Return a list of invalid sample datetime ISO ints."""
     return [
-        18000501,
-        20030501,
-        200305011015,
-        20030501101530,
-        2003050110153000,
-        200305011015300000
+        18000501,  # Year too far back
+        20030501,  # Date only
+        200305011015,  # No seconds
+        20030501101530,  # No milliseconds
+        2003050110153000,  # Int too short
+        200305011015300000  # Int too long
     ]
 
 
@@ -79,8 +79,8 @@ def get_invalid_fields_samples() -> List[Tuple[int, int, int, int, int, int, int
         (2003, 5, 1, 10, 60, 30, 500),
         (2003, 5, 1, 10, 15, -1, 500),
         (2003, 5, 1, 10, 15, 60, 500),
-        (1800, 5, 1, 10, 15, 30, -1),
-        (1800, 5, 1, 10, 15, 30, 1000),
+        (2003, 5, 1, 10, 15, 30, -1),
+        (2003, 5, 1, 10, 15, 30, 1000),
     ]
 
 
