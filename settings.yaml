@@ -2,18 +2,62 @@
 default:
 
     # Data source settings
-    data_source:
-        type: cl.runtime.LocalCache
-        filename: SampleName
-        temp_db: Temp.*
+    data_source_settings:
 
-    # Package aliases using namespace or module glob pattern
-    # - Multiple patterns and namespaces can have the same alias.
-    # - If the key contains one or more wildcard symbols it is matched as a pattern, otherwise as a namespace.
-    package_aliases:
-        cl.runtime: rt
-        stubs.cl.runtime: rt
+        # Default data source
+        default_data_source:
+            _class: cl.runtime.LocalCache       # Implementation class name (must be derived from DataSource)
+            data_source_id: SampleID            # Unique identifier
 
-    # Replace type label for UI. Does not affect REST.
-    type_labels:
-        SampleClass: SampleLabel
+        # Deletion of temporary databases (e.g. those used for caching or testing) via the API
+        # is allowed only if 'temp_id_pattern' is specified and matches data_source_id
+        temp_db_pattern: Temp.*
+
+    # SDK and REST API settings do not affect the UI directly
+    api_settings:
+
+        # Optional package aliases for the SDK and REST API, and DB in 'pattern: alias' format.
+        # Use this feature to organize types by package in large projects and to
+        # resolve conflicts when classes in different modules share the same class name.
+        # - When module does not match the glob pattern, ClassName is used without prefix
+        # - When module matches the glob pattern, alias.ClassName is used.
+        # This setting has no effect where full module is required, e.g., for the _class field.
+        package_aliases:
+            cl.runtime: rt
+            stubs.cl.runtime: rt
+
+    # UI settings affect only the user interface but not the SDK or REST API
+    ui_settings:
+
+        # Optional humanized package label in 'pattern: label' format for the UI only.
+        # Use this feature to organize types by package in large projects and to
+        # resolve conflicts when classes in different modules share the same class name.
+        # - For modules that do not match the glob pattern, no package name is used
+        # - This UI setting does not affect the SDK or REST API
+        package_labels:
+            cl.runtime: Runtime
+            stubs.cl.runtime: Runtime Stubs
+
+        # Replace humanized class name by the specified label for the UI only
+        # - When not specified, the name is humanized according to ClassName -> Class Name
+        # - This UI setting does not affect the SDK or REST API
+        type_labels:
+            SampleClass: Sample Class
+
+        # Replace humanized field name by the specified label for the UI only
+        # - When not specified, the name is humanized according to field_name -> Field Name
+        # - This UI setting does not affect the SDK or REST API
+        field_labels:
+            sample_field: Sample Field
+
+        # Replace humanized method name by the specified label for the UI only
+        # - When not specified, the name is humanized according to method_name -> Method Name
+        # - This UI setting does not affect the SDK or REST API
+        method_labels:
+            sample_method: Sample Method
+
+        # Replace humanized method name by the specified enum item (member) for the UI only
+        # - When not specified, the name is humanized according to ITEM_NAME -> Item Name
+        # - This UI setting does not affect the SDK or REST API
+        item_labels:
+            SAMPLE_ITEM: Sample Item
