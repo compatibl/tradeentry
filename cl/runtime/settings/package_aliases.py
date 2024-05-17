@@ -136,5 +136,5 @@ class PackageAliases:
 
         if PackageAliases.__default is None:
             # Load from configuration if not set
-            PackageAliases.__default = PackageAliases(dynaconf_settings.package_aliases)
+            PackageAliases.__default = PackageAliases(dynaconf_settings["api_settings"]["package_aliases"])  # TODO: Revise
         return PackageAliases.__default

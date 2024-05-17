@@ -139,6 +139,6 @@ class DataSource(ABC):
 
         if DataSource.__default is None:
             # Load from configuration if not set
-            data_source_type = ClassInfo.get_class_type(dynaconf_settings.data_source.type)
-            DataSource.__default = data_source_type(dynaconf_settings.data_source)
+            data_source_type = ClassInfo.get_class_type(dynaconf_settings["context"]["data_source"].pop("_class"))
+            DataSource.__default = data_source_type(**dynaconf_settings["context"]["data_source"])
         return DataSource.__default
