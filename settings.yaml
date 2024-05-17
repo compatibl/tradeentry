@@ -1,17 +1,22 @@
 # Settings specified under default heading apply to all environments
 default:
 
-    # Data source settings
-    data_source_settings:
+    # Default context 
+    context:
 
         # Default data source
-        default_data_source:
-            _class: cl.runtime.LocalCache       # Implementation class name (must be derived from DataSource)
-            data_source_id: SampleID            # Unique identifier
+        data_source:
+            _class: cl.runtime.LocalCache   # Data source class name
+            data_source_id: Default         # Unique identifier
+
+        dataset:
+        	- Common
+
+    data_source_settings:
 
         # Deletion of temporary databases (e.g. those used for caching or testing) via the API
         # is allowed only if 'temp_id_pattern' is specified and matches data_source_id
-        temp_db_pattern: Temp.*
+        temp_id_pattern: Temp.*
 
     # SDK and REST API settings do not affect the UI directly
     api_settings:
@@ -54,7 +59,7 @@ default:
         # - When not specified, the name is humanized according to method_name -> Method Name
         # - This UI setting does not affect the SDK or REST API
         method_labels:
-            sample_method: Sample Method
+           sample_method: Sample Method
 
         # Replace humanized method name by the specified enum item (member) for the UI only
         # - When not specified, the name is humanized according to ITEM_NAME -> Item Name
