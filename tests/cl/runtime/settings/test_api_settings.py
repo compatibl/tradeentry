@@ -12,18 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dynaconf import Dynaconf
+import pytest
+from cl.runtime.settings.api_settings import ApiSettings
 
-# Create a global settings variable that will be imported by the individual settings modules
-dynaconf_settings = Dynaconf(
-    environments=True,
-    envvar_prefix="CL",
-    env_switcher="CL_CONFIG_ENV",
-    settings_files=["settings.yaml", ".secrets.yaml"],
-)
 
-# Convert containers at all levels to dictionaries and lists
-dynaconf_settings = dynaconf_settings.as_dict()
+def test_smoke():
+    """Test UiSettings class."""
 
-# Convert root level keys to lowercase
-dynaconf_settings = {k.lower(): v for k, v in dynaconf_settings.items()}
+    api_settings = ApiSettings.default()
+
+    assert api_settings.package_aliases == {
+        'cl.runtime': 'rt',
+        'stubs.cl.runtime': 'rt',
+    }
+
+
+if __name__ == "__main__":
+    pytest.main([__file__])
