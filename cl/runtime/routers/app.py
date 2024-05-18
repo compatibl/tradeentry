@@ -15,6 +15,7 @@
 from fastapi import FastAPI
 
 from cl.runtime.routers.auth import auth_router
+from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.health import health_router
 from cl.runtime.routers.schema import schema_router
 from cl.runtime.routers.storage import storage_router
@@ -27,3 +28,4 @@ app.include_router(health_router.router, prefix="", tags=["Health Check"])
 app.include_router(auth_router.router, prefix="/auth", tags=["Authorization"])
 app.include_router(schema_router.router, prefix="/schema", tags=["Schema"])
 app.include_router(storage_router.router, prefix="/storage", tags=["Storage"])
+app.include_router(entity_router.router, prefix="/entity", tags=["Entity"])
