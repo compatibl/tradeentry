@@ -20,12 +20,6 @@ router = APIRouter()
 
 
 @router.get("/me", response_model=MeResponse)
-async def get_me(
-        user: str = Header(None, description="User identifier or identity token"),
-) -> MeResponse:
+async def get_me(user: str = Header(None, description="User identifier or identity token")) -> MeResponse:
     """Information about the current user."""
-    return MeResponse.get_me(
-        UserRequest(
-            user=user,
-        )
-    )
+    return MeResponse.get_me(UserRequest(user=user))

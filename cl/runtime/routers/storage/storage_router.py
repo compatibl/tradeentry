@@ -13,22 +13,32 @@
 # limitations under the License.
 
 from typing import List
-from fastapi import APIRouter, Header
+from fastapi import APIRouter, Header, Query
+
+from cl.runtime.routers.storage.dataset_response import DatasetResponse
+from cl.runtime.routers.storage.datasets_request import DatasetsRequest
 from cl.runtime.routers.user_request import UserRequest
 from cl.runtime.routers.storage.env_response import EnvResponse
 
 EnvsResponse = List[EnvResponse]
+DatasetsResponse = List[DatasetResponse]
 
 router = APIRouter()
 
 
-@router.get("/get_envs", response_model=EnvsResponse)  # TODO: Consider changing to /envs for consistency
-async def get_envs(
-    user: str = Header(None, description="User identifier or identity token"),
-) -> EnvsResponse:
+# TODO: Consider changing to /envs for consistency
+@router.get("/get_envs", response_model=EnvsResponse)
+async def get_envs(user: str = Header(None, description="User identifier or identity token")) -> EnvsResponse:
     """Information about the environments."""
-    return EnvResponse.get_envs(
-        UserRequest(
-            user=user,
-        )
-    )
+    return EnvResponse.get_envs(UserRequest(user=user))
+
+
+# TODO: Consider changing to /datasets for consistency
+@router.get("/get_datasets", response_model=DatasetsResponse)
+async def get_datasets(
+        type: str = Query(..., description="Class name"),  # noqa Suppress report about shadowed built-in type
+        module: str = Query(None, description="Dot-delimited module string"),
+        user: str = Header(None, description="User identifier or identity token"),
+) -> DatasetsResponse:
+    """Information about the environments."""
+    return DatasetResponse.get_datasets(DatasetsRequest(type_=type, module=module, user=user))
