@@ -13,20 +13,33 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.primitive.string_util import to_pascal_case
-from cl.runtime.primitive.string_util import to_snake_case
+from cl.runtime.primitive.string_util import StringUtil
 
 
-def test_functions():
-    """Smoke test for functions in string_util."""
+def test_to_pascal_case():
+    """Smoke test for functions in StringUtil."""
 
-    assert "AbcDef" == to_pascal_case("abc_def")
-    assert "Some2dPoint" == to_pascal_case("some2d_point")
-    assert "Great2DPicture" == to_pascal_case("great2_d_picture")
+    # Without dot delimiter
+    assert StringUtil.to_pascal_case("abc_def") == "AbcDef"
+    assert StringUtil.to_pascal_case("some2d_point") == "Some2dPoint"
+    assert StringUtil.to_pascal_case("great2_d_picture") == "Great2DPicture"
 
-    assert "abc_def" == to_snake_case("AbcDef")
-    assert "some2d_point" == to_snake_case("Some2dPoint")
-    assert "great2_d_picture" == to_snake_case("Great2DPicture")
+    # With dot delimiter
+    assert StringUtil.to_pascal_case("abc.def") == "Abc.Def"
+    assert StringUtil.to_pascal_case("abc_def.uvw_xyz") == "AbcDef.UvwXyz"
+
+
+def test_to_snake_case():
+    """Smoke test for functions in StringUtil."""
+
+    # Without dot delimiter
+    assert StringUtil.to_snake_case("AbcDef") == "abc_def"
+    assert StringUtil.to_snake_case("Some2dPoint") == "some2d_point"
+    assert StringUtil.to_snake_case("Great2DPicture") == "great2d_picture"
+
+    # With dot delimiter
+    assert StringUtil.to_snake_case("Abc.Def") == "abc.def"
+    assert StringUtil.to_snake_case("AbcDef.UvwXyz") == "abc_def.uvw_xyz"
 
 
 if __name__ == "__main__":

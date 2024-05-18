@@ -20,7 +20,7 @@ from types import ModuleType
 from typing import List
 from inflection import titleize
 from pydantic import BaseModel
-from cl.runtime.primitive.string_util import to_pascal_case
+from cl.runtime.primitive.string_util import StringUtil
 
 
 def is_record(cls):
@@ -41,7 +41,7 @@ class TypeResponse(BaseModel):
     """Type label displayed in the UI is humanized class name (may be customized in settings)."""
 
     class Config:
-        alias_generator = to_pascal_case
+        alias_generator = StringUtil.to_pascal_case
         populate_by_name = True
 
     @staticmethod
@@ -80,7 +80,7 @@ class TypeResponse(BaseModel):
         for record_type in record_types:
             type_response = TypeResponse(
                 name=record_type.__name__,
-                module=to_pascal_case(record_type.__module__),
+                module=StringUtil.to_pascal_case(record_type.__module__),
                 label=titleize(record_type.__name__),
             )
             result.append(type_response)

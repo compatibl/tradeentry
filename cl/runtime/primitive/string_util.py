@@ -16,53 +16,64 @@ import re
 from typing import List
 from typing import Pattern
 
-__first_cap_re: Pattern = re.compile("(.)([A-Z][a-z]+)")
-__all_cap_re: Pattern = re.compile("([a-z0-9])([A-Z])")
-__to_pascal_re: Pattern = re.compile("(?:^|_+)(.)")
+_first_cap_re: Pattern = re.compile("(.)([A-Z][a-z]+)")
+_all_cap_re: Pattern = re.compile("([a-z0-9])([A-Z])")
+_to_pascal_re: Pattern = re.compile("(?:^|_+)(.)")
 
 eol: str = "\n"
 """Literal string for newline."""
 
 
-def to_pascal_case(name: str) -> str:
-    """Converts strings to PascalCase also removing underscores. No spaces expected."""
-    return __to_pascal_re.sub(lambda match: f"{match.group(1).upper()}", name)
+class StringUtil:
+    """Utilities for case conversion and other operations on string."""
+    
+    @staticmethod
+    def to_pascal_case(value: str) -> str:
+        """Converts each dot-delimited token to PascalCase by replacing underscores with capital letters."""
+        input_tokens = value.split(".")
+        result_tokens = [_to_pascal_re.sub(lambda match: f"{match.group(1).upper()}", x) for x in input_tokens]
+        result = ".".join(result_tokens)
+        return result
 
+    @staticmethod
+    def to_snake_case(value: str) -> str:
+        """
+        Converts each dot-delimited token to snake_case by inserting underscore before each capital
+        letter and then changing case to lower.
+        """
+        input_tokens = value.split(".")
+        result_tokens = [_first_cap_re.sub(r"\1_\2", x).lower() for x in input_tokens]
+        result = ".".join(result_tokens)
+        return result
 
-def to_snake_case(name: str) -> str:
-    """Converts PascalCase strings to snake_case. No spaces expected."""
-    s1: str = __first_cap_re.sub(r"\1_\2", name)
-    result: str = __all_cap_re.sub(r"\1_\2", s1).lower()
-    return result
+    @staticmethod
+    def split_by_uppercase(value: str) -> List[str]:
+        """Splits input string by any uppercase char."""
+    
+        parts = re.findall("[A-Z][^A-Z]*", value)
+        if value and not parts:
+            parts = [value]
+    
+        return parts
 
+    @staticmethod
+    def list_to_label(headers: List[str]) -> List[str]:
+        """
+        Convert strings to words separated by space that start from upper case for all elements of input list.
+        """
+    
+        return [StringUtil.header_to_label(header) for header in headers]
 
-def split_by_uppercase(value: str) -> List[str]:
-    """Splits input string by any uppercase char."""
+    @staticmethod
+    def header_to_label(header: str) -> str:
+        """
+        Convert string to words separated by space that start from upper case for all elements of input list.
+        """
+        return " ".join(re.findall(r"[A-Z][^A-Z]*", StringUtil.to_pascal_case(header)))
 
-    parts = re.findall("[A-Z][^A-Z]*", value)
-    if value and not parts:
-        parts = [value]
-
-    return parts
-
-
-def list_to_label(headers: List[str]) -> List[str]:
-    """
-    Convert strings to words separated by space that start from upper case for all elements of input list.
-    """
-
-    return [header_to_label(header) for header in headers]
-
-
-def header_to_label(header: str) -> str:
-    """
-    Convert string to words separated by space that start from upper case for all elements of input list.
-    """
-    return " ".join(re.findall(r"[A-Z][^A-Z]*", to_pascal_case(header)))
-
-
-def replace_prefix(value: str, old_prefix: str, new_prefix: str) -> str:
-    """Replaces old prefix with new if it starts with it, otherwise returns as is."""
-    if value.startswith(old_prefix):
-        return new_prefix + value[len(old_prefix) :]
-    return value
+    @staticmethod
+    def replace_prefix(value: str, old_prefix: str, new_prefix: str) -> str:
+        """Replaces old prefix with new if it starts with it, otherwise returns as is."""
+        if value.startswith(old_prefix):
+            return new_prefix + value[len(old_prefix) :]
+        return value
