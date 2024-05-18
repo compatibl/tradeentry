@@ -20,4 +20,4 @@ router = APIRouter()
 
 @router.get("/me", response_model=MeResponse)
 async def get_me() -> MeResponse:
-    return MeResponse.get()
+    return MeResponse.get_me()

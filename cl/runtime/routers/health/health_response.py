@@ -23,7 +23,7 @@ class HealthResponse(BaseModel):
     """HTTP status code."""
 
     @staticmethod
-    def get() -> HealthResponse:
+    def get_health() -> HealthResponse:
         """Implements /health route."""
 
         # TODO: Replace stub status code

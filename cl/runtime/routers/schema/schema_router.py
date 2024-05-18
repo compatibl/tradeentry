@@ -14,11 +14,13 @@
 
 from typing import List
 from fastapi import APIRouter
-from cl.runtime.routers.data.type_response import TypeResponse
+from cl.runtime.routers.schema.type_response import TypeResponse
+
+TypesResponse = List[TypeResponse]
 
 router = APIRouter()
 
 
-@router.get("/types", response_model=List[TypeResponse])
-async def types_route() -> List[TypeResponse]:
-    return TypeResponse.types_route(["cl.runtime"])
+@router.get("/types", response_model=TypesResponse)
+async def get_types() -> TypesResponse:
+    return TypeResponse.get_types()

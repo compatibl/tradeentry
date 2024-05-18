@@ -39,8 +39,8 @@ class MeResponse(BaseModel):
     """Type label displayed in the UI is humanized class name (may be customized in settings)."""
 
     @staticmethod
-    def get() -> MeResponse:
-        """Stub implementation."""
+    def get_me() -> MeResponse:
+        """Implements /auth/me route."""
 
         # TODO: Consolidate first and last name into a single string full_name
 

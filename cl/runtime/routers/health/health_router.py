@@ -20,4 +20,4 @@ router = APIRouter()
 
 @router.get("/health", response_model=HealthResponse)
 async def get_health() -> HealthResponse:
-    return HealthResponse.get()
+    return HealthResponse.get_health()

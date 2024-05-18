@@ -16,6 +16,7 @@ from fastapi import FastAPI
 
 from cl.runtime.routers.auth import auth_router
 from cl.runtime.routers.health import health_router
+from cl.runtime.routers.schema import schema_router
 
 # Server
 app = FastAPI()
@@ -23,3 +24,4 @@ app = FastAPI()
 # Routers
 app.include_router(health_router.router, prefix="", tags=["Health Check"])
 app.include_router(auth_router.router, prefix="/auth", tags=["Authorization"])
+app.include_router(schema_router.router, prefix="/schema", tags=["Schema"])

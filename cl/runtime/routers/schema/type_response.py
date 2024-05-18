@@ -18,9 +18,8 @@ import inspect
 from pkgutil import walk_packages
 from types import ModuleType
 from typing import List
-from inflection import camelize, titleize
+from inflection import titleize
 from pydantic import BaseModel
-
 from cl.runtime.primitive.string_util import to_pascal_case
 
 
@@ -66,12 +65,10 @@ class TypeResponse(BaseModel):
         return result
 
     @staticmethod
-    def types_route(packages: List[str]) -> List[TypeResponse]:
-        """
-        Return TypeResponse for all classes within the specified packages that implement 'get_key' method.
-        Args:
-            packages: List of packages or root module strings in dot-delimited format, for example ['cl.runtime']
-        """
+    def get_types() -> List[TypeResponse]:
+        """Implements /schema/types route."""
+
+        packages = ["cl.runtime"]
 
         result = []
         modules = TypeResponse.get_modules(packages)
