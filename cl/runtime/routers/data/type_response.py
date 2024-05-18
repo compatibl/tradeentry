@@ -21,15 +21,12 @@ from typing import List
 from inflection import camelize, titleize
 from pydantic import BaseModel
 
+from cl.runtime.primitive.string_util import to_pascal_case
+
 
 def is_record(cls):
     """Return true if the type is a record based on the presence of 'get_key' method."""
     return inspect.isclass(cls) and hasattr(cls, 'get_key') and callable(getattr(cls, 'get_key'))
-
-
-def pascalize(value: str) -> str:
-    """Convert to PascalCase."""
-    return ".".join(camelize(token, uppercase_first_letter=True) for token in value.split("."))
 
 
 class TypeResponse(BaseModel):
@@ -45,7 +42,7 @@ class TypeResponse(BaseModel):
     """Type label displayed in the UI is humanized class name (may be customized in settings)."""
 
     class Config:
-        alias_generator = pascalize
+        alias_generator = to_pascal_case
         populate_by_name = True
 
     @staticmethod
@@ -86,7 +83,7 @@ class TypeResponse(BaseModel):
         for record_type in record_types:
             type_response = TypeResponse(
                 name=record_type.__name__,
-                module=pascalize(record_type.__module__),
+                module=to_pascal_case(record_type.__module__),
                 label=titleize(record_type.__name__),
             )
             result.append(type_response)

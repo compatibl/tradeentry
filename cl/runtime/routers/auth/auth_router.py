@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from fastapi import FastAPI
+from fastapi import APIRouter
+from cl.runtime.routers.auth.me_response import MeResponse
 
-from cl.runtime.routers.auth import auth_router
-from cl.runtime.routers.data import data_router
+router = APIRouter()
 
-app = FastAPI()
 
-app.include_router(auth_router.router, prefix="/auth", tags=["data"])
-app.include_router(data_router.router, prefix="", tags=["data"])
+@router.get("/me", response_model=MeResponse)
+async def get_me() -> MeResponse:
+    return MeResponse.get()
