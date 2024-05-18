@@ -12,14 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from fastapi import FastAPI
+from fastapi import APIRouter
+from cl.runtime.routers.health.health_response import HealthResponse
 
-from cl.runtime.routers.auth import auth_router
-from cl.runtime.routers.health import health_router
+router = APIRouter()
 
-# Server
-app = FastAPI()
 
-# Routers
-app.include_router(health_router.router, prefix="", tags=["Health Check"])
-app.include_router(auth_router.router, prefix="/auth", tags=["Authorization"])
+@router.get("/health", response_model=HealthResponse)
+async def get_health() -> HealthResponse:
+    return HealthResponse.get()

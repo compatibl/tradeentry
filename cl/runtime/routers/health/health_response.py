@@ -12,14 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from fastapi import FastAPI
+from __future__ import annotations
+from pydantic import BaseModel
 
-from cl.runtime.routers.auth import auth_router
-from cl.runtime.routers.health import health_router
 
-# Server
-app = FastAPI()
+class HealthResponse(BaseModel):
+    """Response data type for the /health route."""
 
-# Routers
-app.include_router(health_router.router, prefix="", tags=["Health Check"])
-app.include_router(auth_router.router, prefix="/auth", tags=["Authorization"])
+    status: int
+    """HTTP status code."""
+
+    @staticmethod
+    def get() -> HealthResponse:
+        """Implements /health route."""
+
+        # TODO: Replace stub status code
+
+        # Default response when running locally without authorization
+        result_dict = {
+          "status": 200,
+        }
+
+        return HealthResponse(**result_dict)
