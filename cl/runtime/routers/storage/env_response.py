@@ -16,6 +16,8 @@ from __future__ import annotations
 from typing import List
 from pydantic import BaseModel
 
+from cl.runtime.routers.user_request import UserRequest
+
 
 class EnvResponse(BaseModel):
     """Response data type for the /storage/get_envs route."""
@@ -27,7 +29,7 @@ class EnvResponse(BaseModel):
     """Name of the parent environment."""
 
     @staticmethod
-    def get_envs() -> List[EnvResponse]:
+    def get_envs(request: UserRequest) -> List[EnvResponse]:
         """Implements /storage/get_envs route."""
 
         # Default response when running locally without authorization
@@ -37,4 +39,3 @@ class EnvResponse(BaseModel):
         }
 
         return [EnvResponse(**result_dict)]
-

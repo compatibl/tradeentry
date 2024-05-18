@@ -13,7 +13,8 @@
 # limitations under the License.
 
 from typing import List
-from fastapi import APIRouter
+from fastapi import APIRouter, Header
+from cl.runtime.routers.user_request import UserRequest
 from cl.runtime.routers.storage.env_response import EnvResponse
 
 EnvsResponse = List[EnvResponse]
@@ -22,5 +23,12 @@ router = APIRouter()
 
 
 @router.get("/get_envs", response_model=EnvsResponse)  # TODO: Consider changing to /envs for consistency
-async def get_envs() -> EnvsResponse:
-    return EnvResponse.get_envs()
+async def get_envs(
+    user: str = Header(None, description="User identifier or identity token"),
+) -> EnvsResponse:
+    """Information about the environments."""
+    return EnvResponse.get_envs(
+        UserRequest(
+            user=user,
+        )
+    )

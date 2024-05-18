@@ -13,11 +13,15 @@
 # limitations under the License.
 
 import pytest
-import asyncio
 from fastapi.testclient import TestClient
 from cl.runtime.routers.app import app
 from cl.runtime.routers.storage.env_response import EnvResponse
-from cl.runtime.routers.storage.storage_router import get_envs
+from cl.runtime.routers.user_request import UserRequest
+
+requests = [
+    {},
+    {"user": "TestUser"}
+]
 
 expected_result = [
     {
@@ -27,33 +31,37 @@ expected_result = [
 ]
 
 
-def test_coroutine():
+def test_method():
     """Test coroutine for /storage/get_envs route."""
 
-    # Run the coroutine wrapper added by the FastAPI decorator and get the result
-    result = asyncio.run(get_envs())
+    for request in requests:
 
-    # Check if the result is a list
-    assert isinstance(result, list)
+        # Run the coroutine wrapper added by the FastAPI decorator and get the result
+        request_obj = UserRequest(**request)
+        result = EnvResponse.get_envs(request_obj)
 
-    # Check if each item in the result is a EnvResponse instance
-    assert all(isinstance(x, EnvResponse) for x in result)
+        # Check if the result is a list
+        assert isinstance(result, list)
 
-    # Check if each item in the result is a valid EnvResponse instance
-    assert result == [EnvResponse(**x) for x in expected_result]
+        # Check if each item in the result is a EnvResponse instance
+        assert all(isinstance(x, EnvResponse) for x in result)
+
+        # Check if each item in the result is a valid EnvResponse instance
+        assert result == [EnvResponse(**x) for x in expected_result]
 
 
 def test_api():
     """Test REST API for /storage/get_envs route."""
 
     with TestClient(app) as client:
+        for request in requests:
 
-        response = client.get("/storage/get_envs")
-        assert response.status_code == 200
-        result = response.json()
+            response = client.get("/storage/get_envs", headers=request)
+            assert response.status_code == 200
+            result = response.json()
 
-        # Check result
-        assert result == expected_result
+            # Check result
+            assert result == expected_result
 
 
 if __name__ == "__main__":

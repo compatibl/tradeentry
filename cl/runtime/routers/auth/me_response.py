@@ -13,8 +13,10 @@
 # limitations under the License.
 
 from __future__ import annotations
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel
+
+from cl.runtime.routers.user_request import UserRequest
 
 
 class MeResponse(BaseModel):
@@ -39,16 +41,19 @@ class MeResponse(BaseModel):
     """Type label displayed in the UI is humanized class name (may be customized in settings)."""
 
     @staticmethod
-    def get_me() -> MeResponse:
+    def get_me(request: UserRequest) -> MeResponse:
         """Implements /auth/me route."""
 
-        # TODO: Consolidate first and last name into a single string full_name
+        # Get user from the request or use default value if not specified
+        # TODO: Obtain default user from settings
+        user = "root" if request.user is None else request.user
 
-        # Default response when running locally without authorization
+        # Create response
+        # TODO: Consolidate first and last name into a single string full_name
         result_dict = {
-          "id": "root",
-          "username": "root",
-          "first_name": "root",
+          "id": user,
+          "username": user,
+          "first_name": user,
           "last_name": None,
           "email": None,
           "scopes": ["Read", "Write", "Execute", "Developer"]

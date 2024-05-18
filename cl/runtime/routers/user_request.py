@@ -12,23 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
-from fastapi import APIRouter, Header
-from cl.runtime.routers.user_request import UserRequest
-from cl.runtime.routers.schema.type_response import TypeResponse
-
-TypesResponse = List[TypeResponse]
-
-router = APIRouter()
+from pydantic import BaseModel
 
 
-@router.get("/types", response_model=TypesResponse)
-async def get_types(
-        user: str = Header(None, description="User identifier or identity token"),
-) -> TypesResponse:
-    """Information about the record types."""
-    return TypeResponse.get_types(
-        UserRequest(
-            user=user,
-        )
-    )
+class UserRequest(BaseModel):
+
+    user: str | None = None
+    """User identifier or identity token"""

@@ -12,12 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Header
+from cl.runtime.routers.user_request import UserRequest
 from cl.runtime.routers.health.health_response import HealthResponse
 
 router = APIRouter()
 
 
 @router.get("/health", response_model=HealthResponse)
-async def get_health() -> HealthResponse:
-    return HealthResponse.get_health()
+async def get_health(
+    user: str = Header(None, description="User identifier or identity token"),
+) -> HealthResponse:
+    """Information about system health."""
+    return HealthResponse.get_health(
+        UserRequest(
+            user=user,
+        )
+    )

@@ -12,12 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Header
+from cl.runtime.routers.user_request import UserRequest
 from cl.runtime.routers.auth.me_response import MeResponse
 
 router = APIRouter()
 
 
 @router.get("/me", response_model=MeResponse)
-async def get_me() -> MeResponse:
-    return MeResponse.get_me()
+async def get_me(
+        user: str = Header(None, description="User identifier or identity token"),
+) -> MeResponse:
+    """Information about the current user."""
+    return MeResponse.get_me(
+        UserRequest(
+            user=user,
+        )
+    )

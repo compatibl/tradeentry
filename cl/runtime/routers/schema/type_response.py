@@ -21,6 +21,7 @@ from typing import List
 from inflection import titleize
 from pydantic import BaseModel
 from cl.runtime.primitive.string_util import StringUtil
+from cl.runtime.routers.user_request import UserRequest
 
 
 def is_record(cls):
@@ -65,7 +66,7 @@ class TypeResponse(BaseModel):
         return result
 
     @staticmethod
-    def get_types() -> List[TypeResponse]:
+    def get_types(request: UserRequest) -> List[TypeResponse]:
         """Implements /schema/types route."""
 
         packages = ["cl.runtime"]
