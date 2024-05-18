@@ -12,18 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from fastapi import FastAPI
+from typing import List
+from fastapi import APIRouter
+from cl.runtime.routers.storage.env_response import EnvResponse
 
-from cl.runtime.routers.auth import auth_router
-from cl.runtime.routers.health import health_router
-from cl.runtime.routers.schema import schema_router
-from cl.runtime.routers.storage import storage_router
+EnvsResponse = List[EnvResponse]
 
-# Server
-app = FastAPI()
+router = APIRouter()
 
-# Routers
-app.include_router(health_router.router, prefix="", tags=["Health Check"])
-app.include_router(auth_router.router, prefix="/auth", tags=["Authorization"])
-app.include_router(schema_router.router, prefix="/schema", tags=["Schema"])
-app.include_router(storage_router.router, prefix="/storage", tags=["Storage"])
+
+@router.get("/get_envs", response_model=EnvsResponse)  # TODO: Consider changing to /envs for consistency
+async def get_envs() -> EnvsResponse:
+    return EnvResponse.get_envs()
