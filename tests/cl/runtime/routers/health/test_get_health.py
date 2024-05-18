@@ -16,45 +16,36 @@ import pytest
 import asyncio
 from fastapi.testclient import TestClient
 from cl.runtime.routers.app import app
-from cl.runtime.routers.schema.schema_router import get_types
-from cl.runtime.routers.schema.type_response import TypeResponse
+from cl.runtime.routers.health.health_response import HealthResponse
+from cl.runtime.routers.health.health_router import get_health
 
-expected_result = {"name": "TypeDecl", "module": "Cl.Runtime.Schema.TypeDecl", "label": "Type Decl"}
+expected_result = {"status": 200}
 
 
 def test_coroutine():
-    """Test coroutine for /schema/types route."""
+    """Test coroutine for /health route."""
 
     # Run the coroutine wrapper added by the FastAPI decorator and get the result
-    result = asyncio.run(get_types())
+    result = asyncio.run(get_health())
 
     # Check if the result is a list
-    assert isinstance(result, list)
+    assert isinstance(result, HealthResponse)
 
-    # Check if each item in the result is a TypeResponse instance
-    assert all(isinstance(x, TypeResponse) for x in result)
-
-    type_decl_item = next(x for x in result if x.name == "TypeDecl")
-    assert type_decl_item == TypeResponse(**expected_result)
+    # Check if each item in the result is a valid HealthResponse instance
+    assert result == HealthResponse(**expected_result)
 
 
 def test_api():
-    """Test REST API for /schema/types route."""
+    """Test REST API for /health route."""
 
     with TestClient(app) as client:
 
-        response = client.get("/schema/types")
+        response = client.get("/health")
         assert response.status_code == 200
         result = response.json()
 
-        # Check that the result is a list
-        assert isinstance(result, list)
-
-        # Check if each item in the result has valid data to construct TypeResponse
-        for item in result:
-            TypeResponse(**item)
-
-        # TODO: Test individual results
+        # Check result
+        assert result == expected_result
 
 
 if __name__ == "__main__":

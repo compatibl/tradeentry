@@ -16,45 +16,43 @@ import pytest
 import asyncio
 from fastapi.testclient import TestClient
 from cl.runtime.routers.app import app
-from cl.runtime.routers.schema.schema_router import get_types
-from cl.runtime.routers.schema.type_response import TypeResponse
+from cl.runtime.routers.auth.me_response import MeResponse
+from cl.runtime.routers.auth.auth_router import get_me
 
-expected_result = {"name": "TypeDecl", "module": "Cl.Runtime.Schema.TypeDecl", "label": "Type Decl"}
+expected_result = {
+    "id": "root",
+    "username": "root",
+    "first_name": "root",
+    "last_name": None,
+    "email": None,
+    "scopes": ["Read", "Write", "Execute", "Developer"]
+}
 
 
 def test_coroutine():
-    """Test coroutine for /schema/types route."""
+    """Test coroutine for /auth/me route."""
 
     # Run the coroutine wrapper added by the FastAPI decorator and get the result
-    result = asyncio.run(get_types())
+    result = asyncio.run(get_me())
 
     # Check if the result is a list
-    assert isinstance(result, list)
+    assert isinstance(result, MeResponse)
 
-    # Check if each item in the result is a TypeResponse instance
-    assert all(isinstance(x, TypeResponse) for x in result)
-
-    type_decl_item = next(x for x in result if x.name == "TypeDecl")
-    assert type_decl_item == TypeResponse(**expected_result)
+    # Check if each item in the result is a valid MeResponse instance
+    assert result == MeResponse(**expected_result)
 
 
 def test_api():
-    """Test REST API for /schema/types route."""
+    """Test REST API for /auth/me route."""
 
     with TestClient(app) as client:
 
-        response = client.get("/schema/types")
+        response = client.get("/auth/me")
         assert response.status_code == 200
         result = response.json()
 
-        # Check that the result is a list
-        assert isinstance(result, list)
-
-        # Check if each item in the result has valid data to construct TypeResponse
-        for item in result:
-            TypeResponse(**item)
-
-        # TODO: Test individual results
+        # Check result
+        assert result == expected_result
 
 
 if __name__ == "__main__":
