@@ -12,13 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
-from fastapi import APIRouter
+import pytest
+import requests
 from cl.runtime.routers.data.type_response import TypeResponse
 
-router = APIRouter()
+
+def test_get_types():
+
+    # Get response data
+    url = "http://127.0.0.1:8000/data/types"
+    response = requests.get(url)
+    assert response.status_code == 200
+    data = response.json()
+
+    # Check if the response is a list
+    assert isinstance(data, list)
+
+    # Check if each item in the list is a valid TypeResponse instance
+    for item in data:
+        TypeResponse(**item)
 
 
-@router.get("/types", response_model=List[TypeResponse])
-async def get_types() -> List[TypeResponse]:
-    return TypeResponse.get_types(["cl.runtime"])
+if __name__ == "__main__":
+    pytest.main([__file__])
