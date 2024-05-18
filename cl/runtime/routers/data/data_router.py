@@ -20,5 +20,5 @@ router = APIRouter()
 
 
 @router.get("/types", response_model=List[TypeResponse])
-async def get_types() -> List[TypeResponse]:
-    return TypeResponse.get_types(["cl.runtime"])
+async def types_route() -> List[TypeResponse]:
+    return TypeResponse.types_route(["cl.runtime"])

@@ -16,17 +16,14 @@ import pytest
 import asyncio
 from fastapi.testclient import TestClient
 from cl.runtime.routers.app import app
-from cl.runtime.routers.data.data_router import get_types
+from cl.runtime.routers.data.data_router import types_route
 from cl.runtime.routers.data.type_response import TypeResponse
-
-# Load test client
-client = TestClient(app)
 
 
 def test_types_coroutine():
 
     # Run the coroutine wrapper added by the FastAPI decorator and get the result
-    result = asyncio.run(get_types())
+    result = asyncio.run(types_route())
 
     # Check if the result is a list
     assert isinstance(result, list)
@@ -37,16 +34,18 @@ def test_types_coroutine():
 
 def test_types_api():
 
-    response = client.get("/data/types")
-    assert response.status_code == 200
-    result = response.json()
+    with TestClient(app) as client:
 
-    # Check that the result is a list
-    assert isinstance(result, list)
+        response = client.get("types")
+        assert response.status_code == 200
+        result = response.json()
 
-    # Check if each item in the result has valid data to construct TypeResponse
-    for item in result:
-        TypeResponse(**item)
+        # Check that the result is a list
+        assert isinstance(result, list)
+
+        # Check if each item in the result has valid data to construct TypeResponse
+        for item in result:
+            TypeResponse(**item)
 
 
 if __name__ == "__main__":

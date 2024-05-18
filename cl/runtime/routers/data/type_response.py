@@ -13,12 +13,13 @@
 # limitations under the License.
 
 from __future__ import annotations
-from dataclasses import dataclass
 import importlib
 import inspect
-from pkgutil import ModuleInfo, walk_packages
+from pkgutil import walk_packages
 from types import ModuleType
 from typing import List
+from inflection import camelize, titleize
+from pydantic import BaseModel
 
 
 def is_record(cls):
@@ -26,15 +27,26 @@ def is_record(cls):
     return inspect.isclass(cls) and hasattr(cls, 'get_key') and callable(getattr(cls, 'get_key'))
 
 
-@dataclass(slots=True, kw_only=True)
-class TypeResponse:
+def pascalize(value: str) -> str:
+    """Convert to PascalCase."""
+    return ".".join(camelize(token, uppercase_first_letter=True) for token in value.split("."))
+
+
+class TypeResponse(BaseModel):
     """REST API response for a single item of the list returned by the /data/types route."""
 
-    type_id: str
-    """Unique type identifier using module.ClassName or another format."""
+    name: str
+    """Class name (may be customized in settings)."""
 
-    type_label: str
-    """Type label displayed in the UI, by default ClassName but may be customized in settings."""
+    module: str
+    """Module path in dot-delimited format (may be customized in settings)."""
+
+    label: str
+    """Type label displayed in the UI is humanized class name (may be customized in settings)."""
+
+    class Config:
+        alias_generator = pascalize
+        populate_by_name = True
 
     @staticmethod
     def get_modules(packages: List[str]) -> List[ModuleType]:
@@ -57,7 +69,7 @@ class TypeResponse:
         return result
 
     @staticmethod
-    def get_types(packages: List[str]) -> List[TypeResponse]:
+    def types_route(packages: List[str]) -> List[TypeResponse]:
         """
         Return TypeResponse for all classes within the specified packages that implement 'get_key' method.
         Args:
@@ -72,9 +84,10 @@ class TypeResponse:
             for name, record_type in inspect.getmembers(module, is_record)
         ]
         for record_type in record_types:
-            class_name = record_type.__name__
-            class_path = f"{record_type.__module__}.{class_name}"
-            type_response = TypeResponse(type_id=class_path, type_label=class_name)
+            type_response = TypeResponse(
+                name=record_type.__name__,
+                module=pascalize(record_type.__module__),
+                label=titleize(record_type.__name__),
+            )
             result.append(type_response)
         return result
-

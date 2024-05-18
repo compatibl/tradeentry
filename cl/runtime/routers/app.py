@@ -17,4 +17,4 @@ from cl.runtime.routers.data import data_router
 
 app = FastAPI()
 
-app.include_router(data_router.router, prefix="/data", tags=["data"])
+app.include_router(data_router.router, prefix="", tags=["data"])
