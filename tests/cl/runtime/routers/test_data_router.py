@@ -13,23 +13,39 @@
 # limitations under the License.
 
 import pytest
-import requests
+import asyncio
+from fastapi.testclient import TestClient
+from cl.runtime.routers.app import app
+from cl.runtime.routers.data.data_router import get_types
 from cl.runtime.routers.data.type_response import TypeResponse
 
+# Load test client
+client = TestClient(app)
 
-def test_get_types():
 
-    # Get response data
-    url = "http://127.0.0.1:8000/data/types"
-    response = requests.get(url)
+def test_types_coroutine():
+
+    # Run the coroutine wrapper added by the FastAPI decorator and get the result
+    result = asyncio.run(get_types())
+
+    # Check if the result is a list
+    assert isinstance(result, list)
+
+    # Check if each item in the result is a TypeResponse instance
+    assert all(isinstance(x, TypeResponse) for x in result)
+
+
+def test_types_api():
+
+    response = client.get("/data/types")
     assert response.status_code == 200
-    data = response.json()
+    result = response.json()
 
-    # Check if the response is a list
-    assert isinstance(data, list)
+    # Check that the result is a list
+    assert isinstance(result, list)
 
-    # Check if each item in the list is a valid TypeResponse instance
-    for item in data:
+    # Check if each item in the result has valid data to construct TypeResponse
+    for item in result:
         TypeResponse(**item)
 
 
