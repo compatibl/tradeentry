@@ -15,7 +15,7 @@
 import pytest
 from fastapi.testclient import TestClient
 from cl.runtime.routers.app import app
-from cl.runtime.routers.schema.type_response import TypeResponse
+from cl.runtime.routers.schema.types_response_item import TypesResponseItem
 from cl.runtime.routers.user_request import UserRequest
 
 requests = [
@@ -33,16 +33,16 @@ def test_method():
 
         # Run the coroutine wrapper added by the FastAPI decorator and get the result
         request_obj = UserRequest(**request)
-        result = TypeResponse.get_types(request_obj)
+        result = TypesResponseItem.get_types(request_obj)
 
         # Check if the result is a list
         assert isinstance(result, list)
 
-        # Check if each item in the result is a TypeResponse instance
-        assert all(isinstance(x, TypeResponse) for x in result)
+        # Check if each item in the result is a TypesResponseItem instance
+        assert all(isinstance(x, TypesResponseItem) for x in result)
 
         type_decl_item = next(x for x in result if x.name == "TypeDecl")
-        assert type_decl_item == TypeResponse(**expected_result)
+        assert type_decl_item == TypesResponseItem(**expected_result)
 
 
 def test_api():
@@ -58,9 +58,9 @@ def test_api():
             # Check that the result is a list
             assert isinstance(result, list)
 
-            # Check if each item in the result has valid data to construct TypeResponse
+            # Check if each item in the result has valid data to construct TypesResponseItem
             for item in result:
-                TypeResponse(**item)
+                TypesResponseItem(**item)
 
             type_decl_item = next(x for x in result if x["Name"] == "TypeDecl")
             assert type_decl_item == expected_result

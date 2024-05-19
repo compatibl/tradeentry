@@ -24,13 +24,14 @@ from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.user_request import UserRequest
 
 
+# TODO: Move to a separate helper class along with the method returning all types
 def is_record(cls):
     """Return true if the type is a record based on the presence of 'get_key' method."""
     return inspect.isclass(cls) and hasattr(cls, 'get_key') and callable(getattr(cls, 'get_key'))
 
 
-class TypeResponse(BaseModel):
-    """REST API response for a single item of the list returned by the /data/types route."""
+class TypesResponseItem(BaseModel):
+    """Single item of the list returned by the /data/types route."""
 
     name: str
     """Class name (may be customized in settings)."""
@@ -66,20 +67,20 @@ class TypeResponse(BaseModel):
         return result
 
     @staticmethod
-    def get_types(request: UserRequest) -> List[TypeResponse]:
+    def get_types(request: UserRequest) -> List[TypesResponseItem]:
         """Implements /schema/types route."""
 
         packages = ["cl.runtime"]
 
         result = []
-        modules = TypeResponse.get_modules(packages)
+        modules = TypesResponseItem.get_modules(packages)
         record_types = [
             record_type
             for module in modules
             for name, record_type in inspect.getmembers(module, is_record)
         ]
         for record_type in record_types:
-            type_response = TypeResponse(
+            type_response = TypesResponseItem(
                 name=record_type.__name__,
                 module=StringUtil.to_pascal_case(record_type.__module__),
                 label=titleize(record_type.__name__),
