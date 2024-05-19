@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from cl.runtime.schema.interface_decl_key import InterfaceDeclKey
-from cl.runtime.schema.language_key import LanguageKey
+from cl.runtime.schema.language_decl_key import LanguageDeclKey
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 
 
@@ -23,5 +23,5 @@ class InterfaceImplementDecl:
     interface: InterfaceDeclKey = datafield()
     """Interface"""
 
-    language: LanguageKey = datafield()
+    language: LanguageDeclKey = datafield()
     """Programming language in which handler is implemented."""

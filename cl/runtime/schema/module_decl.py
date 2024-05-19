@@ -16,10 +16,10 @@ from abc import ABC
 from typing import List, Optional, Tuple, Type
 from cl.runtime.schema.package_key import PackageKey
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassMixin
-from cl.runtime.schema.module_key import ModuleKey
+from cl.runtime.schema.module_decl_key import ModuleDeclKey
 
 
-class Module(DataclassMixin, ABC):
+class ModuleDecl(DataclassMixin, ABC):
     """
     Defines Analyst module. Module can be represented both as the source code and precomiled dll (defined by flag
     'Compiled').
@@ -34,7 +34,7 @@ class Module(DataclassMixin, ABC):
     comment: str | None = datafield()
     """Module additional information."""
 
-    dependences: Optional[List[ModuleKey]] = datafield()
+    dependences: Optional[List[ModuleDeclKey]] = datafield()
     """Module dependences."""
 
     package: PackageKey = datafield()
@@ -43,5 +43,5 @@ class Module(DataclassMixin, ABC):
     copyright_: str | None = datafield(name='Copyright')
     """Company name used in Copyright src header."""
 
-    def get_key(self) -> ModuleKey:
+    def get_key(self) -> ModuleDeclKey:
         return type(self), self.module_name

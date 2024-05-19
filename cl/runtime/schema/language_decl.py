@@ -14,11 +14,11 @@
 
 from typing import final
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassMixin
-from cl.runtime.schema.language_key import LanguageKey
+from cl.runtime.schema.language_decl_key import LanguageDeclKey
 
 
 @final
-class Language(DataclassMixin):
+class LanguageDecl(DataclassMixin):
     """Implementation language for a handler or viewer."""
 
     language_id: str = datafield(name='LanguageID')
@@ -27,5 +27,5 @@ class Language(DataclassMixin):
     language_label: str | None = datafield()
     """Language label displayed in user interface (may not be unique)."""
 
-    def get_key(self) -> LanguageKey:
+    def get_key(self) -> LanguageDeclKey:
         return type(self), self.language_id

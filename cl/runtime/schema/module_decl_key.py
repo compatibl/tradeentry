@@ -14,4 +14,4 @@
 
 from typing import Tuple, Type
 
-ModuleKey = Tuple[Type["Module"], str]
+ModuleDeclKey = Tuple[Type["Module"], str]

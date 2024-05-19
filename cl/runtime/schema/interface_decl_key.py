@@ -13,6 +13,6 @@
 # limitations under the License.
 
 from typing import Tuple, Type
-from cl.runtime.schema.module_key import ModuleKey
+from cl.runtime.schema.module_decl_key import ModuleDeclKey
 
-InterfaceDeclKey = Tuple[Type["InterfaceDecl"], ModuleKey, str]
+InterfaceDeclKey = Tuple[Type["InterfaceDecl"], ModuleDeclKey, str]

@@ -17,13 +17,13 @@ from typing import List
 from cl.runtime.schema.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.enum_item_decl import EnumItemDecl
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassMixin
-from cl.runtime.schema.module_key import ModuleKey
+from cl.runtime.schema.module_decl_key import ModuleDeclKey
 
 
 class EnumDecl(DataclassMixin):
     """Enum declaration."""
 
-    module: ModuleKey = datafield()
+    module: ModuleDeclKey = datafield()
     """Module reference."""
 
     name: str = datafield()

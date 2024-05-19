@@ -18,7 +18,7 @@ from cl.runtime.schema.display_kind import DisplayKind
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.handler_implement_block_decl import HandlerImplementBlockDecl
 from cl.runtime.schema.interface_decl_key import InterfaceDeclKey
-from cl.runtime.schema.module_key import ModuleKey
+from cl.runtime.schema.module_decl_key import ModuleDeclKey
 from cl.runtime.schema.type_argument_decl import TypeArgumentDecl
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from cl.runtime.schema.type_element_decl import TypeElementDecl
@@ -34,7 +34,7 @@ class TypeDecl(DataclassMixin):
     names of type elements and corresponding tags coincide.
     """
 
-    module: ModuleKey = datafield()
+    module: ModuleDeclKey = datafield()
     """Module reference."""
 
     name: str = datafield()
