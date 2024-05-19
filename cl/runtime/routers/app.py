@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
 
 from cl.runtime.routers.auth import auth_router
 from cl.runtime.routers.entity import entity_router
@@ -20,8 +21,24 @@ from cl.runtime.routers.health import health_router
 from cl.runtime.routers.schema import schema_router
 from cl.runtime.routers.storage import storage_router
 
+
 # Server
 app = FastAPI()
+
+origins = [
+    "http://localhost",
+    "http://localhost:8000",
+    "http://localhost:7008",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],  # Specify allowed HTTP methods, e.g., ["GET", "POST"]
+    allow_headers=["*"],  # Specify allowed headers, e.g., ["Content-Type", "Authorization"]
+)
+
 
 # Routers
 app.include_router(health_router.router, prefix="", tags=["Health Check"])
