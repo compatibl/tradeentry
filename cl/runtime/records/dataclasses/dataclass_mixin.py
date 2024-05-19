@@ -33,7 +33,13 @@ class DataclassMixin(RecordMixin, ABC):
     """Mixin methods for dataclass records."""
 
     def pack(self) -> TPackedRecord:
-        return self.get_key(), asdict(self)
+
+        # Get data dictionary and remove keys that have None values
+        data_dict = asdict(self)
+        data_dict = {k: v for k, v in data_dict.items() if v is not None}
+
+        # Return a tuple of key and data
+        return self.get_key(), data_dict  # noqa Suppress type warning inside tuple
 
 
 def datafield(
