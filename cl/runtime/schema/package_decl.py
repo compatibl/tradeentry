@@ -12,24 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
-from dataclasses import dataclass
-from typing import Tuple
-from typing import Type
-
-PackageDeclKey = Tuple[Type["PackageDecl"], str]
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassMixin
+from cl.runtime.schema.package_decl_key import PackageDeclKey
 
 
-@dataclass
 class PackageDecl(DataclassMixin):
-    """Base class for the package declaration in schema."""
+    """Package is a list of modules and binaries which are deployed together."""
 
-    package_id: str = datafield()
+    package_name: str = datafield()
     """Unique package identifier."""
 
+    comment: str | None = datafield()
+    """Comment."""
+
+    copyright_: str | None = datafield(name='Copyright')
+    """Copyright used for given package."""
+
+    alias: str | None = datafield()
+    """Short alias used in submodule naming."""
+
     label: str | None = datafield()
-    """Readable package label used by the front end."""
+    """Label (displayed in user interface, may not be unique)."""
 
     def get_key(self) -> PackageDeclKey:
-        return type(self), self.package_id
+        return type(self), self.package_name

@@ -14,7 +14,7 @@
 
 from abc import ABC
 from typing import List, Optional, Tuple, Type
-from cl.runtime.schema.package_key import PackageKey
+from cl.runtime.schema.package_decl_key import PackageDeclKey
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassMixin
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
 
@@ -37,7 +37,7 @@ class ModuleDecl(DataclassMixin, ABC):
     dependences: Optional[List[ModuleDeclKey]] = datafield()
     """Module dependences."""
 
-    package: PackageKey = datafield()
+    package: PackageDeclKey = datafield()
     """Package reference."""
 
     copyright_: str | None = datafield(name='Copyright')
