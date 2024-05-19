@@ -18,10 +18,9 @@ from typing import Dict, Any
 
 from pydantic import BaseModel, Field
 
-from cl.runtime import TypeDecl
 from cl.runtime.routers.storage.record_request import RecordRequest
 
-RecordResponseSchema = Dict[str, TypeDecl]
+RecordResponseSchema = Dict[str, Any]
 RecordResponseData = Dict[str, Any]
 
 
