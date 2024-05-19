@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Optional
+from typing import Optional, Any
 
 from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
@@ -22,5 +22,5 @@ from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 class DictDecl:
     """Dict declaration."""
 
-    value: Optional["TypeDictElementDecl"] = datafield()  # type: ignore # noqa: F821
+    value: Optional[Any] = datafield()  # type: ignore # noqa: F821
     """Value element type."""

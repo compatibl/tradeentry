@@ -16,4 +16,4 @@
 from typing import Tuple, Type
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
 
-TypeDeclKey = Tuple[Type["TypeDecl"], ModuleDeclKey, str]
+TypeDeclKey = Tuple[Type, ModuleDeclKey, str]

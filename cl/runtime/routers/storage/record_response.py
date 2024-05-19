@@ -13,10 +13,16 @@
 # limitations under the License.
 
 from __future__ import annotations
+
+from typing import Dict, Any
+
 from pydantic import BaseModel, Field
+
+from cl.runtime import TypeDecl
 from cl.runtime.routers.storage.record_request import RecordRequest
-from cl.runtime.routers.storage.record_response_data import RecordResponseData
-from cl.runtime.routers.storage.record_response_schema import RecordResponseSchema
+
+RecordResponseSchema = Dict[str, TypeDecl]
+RecordResponseData = Dict[str, Any]
 
 
 class RecordResponse(BaseModel):
@@ -33,15 +39,32 @@ class RecordResponse(BaseModel):
         """Implements /storage/record route."""
 
         # Default response when running locally without authorization
-        result_dict = {
-            "schema":
-                {
-                    "name": "a"
+        type_decl_dict = {
+            "Cl.Runtime.Backend.Core.UiAppState": {
+                "Module": {
+                    "ModuleName": "Cl.Runtime.Backend.Core"
                 },
-            "data":
-                {
-                    "name": "b"
-                }
+                "Name": "UiAppState",
+                "DisplayKind": "Basic",
+                "Elements": [
+                    {
+                        "Value": {
+                            "Type": "String"
+                        },
+                        "Name": "User",
+                        "Optional": True
+                    },
+                ],
+                "Keys": [
+                    "User"
+                ],
+            },
         }
-        return RecordResponse(**result_dict)
+        data_dict = {
+            "_t": "UiAppState",
+            "User": "root",
+        }
+
+        # type_decl = TypeDecl(**type_decl_dict)
+        return RecordResponse(schema={"Cl.Runtime.Backend.Core.UiAppState": type_decl_dict}, data=data_dict)
 

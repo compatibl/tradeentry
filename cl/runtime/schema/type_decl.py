@@ -20,7 +20,6 @@ from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.handler_implement_block_decl import HandlerImplementBlockDecl
 from cl.runtime.schema.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
-from cl.runtime.schema.type_argument_decl import TypeArgumentDecl
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from cl.runtime.schema.type_element_decl import TypeElementDecl
 from cl.runtime.schema.type_index_decl import TypeIndexDecl
@@ -66,9 +65,6 @@ class TypeDecl(DataclassMixin):
 
     inherit: Optional[TypeDeclKey] = datafield()
     """Parent type reference."""
-
-    inherit_type_arguments: Optional[List[TypeArgumentDecl]] = datafield()
-    """Inherit Type Argument."""
 
     interfaces: Optional[List[InterfaceDeclKey]] = datafield()
     """Parent interfaces"""

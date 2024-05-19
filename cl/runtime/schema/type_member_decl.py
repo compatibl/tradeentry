@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import TYPE_CHECKING, List, Optional
+from typing import Optional
 
 from cl.runtime.schema.dict_decl import DictDecl
 from cl.runtime.schema.enum_decl_key import EnumDeclKey
@@ -21,9 +21,6 @@ from cl.runtime.schema.type_decl_key import TypeDeclKey
 from cl.runtime.schema.value_decl import ValueDecl
 from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
-
-if TYPE_CHECKING:
-    from cl.runtime.schema.type_argument_decl import TypeArgumentDecl
 
 
 @dataclass(slots=True)
@@ -51,9 +48,6 @@ class TypeMemberDecl:
     condition: Optional[TypeDeclKey] = datafield()
     """Condition element declaration."""
 
-    type_arguments: Optional[List['TypeArgumentDecl']] = datafield()
-    """Type Argument."""
-
     interface: Optional[InterfaceDeclKey] = datafield()
     """Interface element declaration."""
 
@@ -61,4 +55,4 @@ class TypeMemberDecl:
     """HandlerArgs element declaration."""
 
     dict: Optional[DictDecl] = datafield()
-    """Enumeration element declaration."""
+    """Dictionary element declaration."""
