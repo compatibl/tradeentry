@@ -12,24 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
+from typing import List, Optional
+
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
-from dataclasses import dataclass
-from typing import Tuple
-from typing import Type
-
-PackageDeclKey = Tuple[Type["PackageDecl"], str]
 
 
-@dataclass
-class PackageDecl(DataclassMixin):
-    """Base class for the package declaration in schema."""
+class EnumItemDecl:
+    """Enum item declaration."""
 
-    package_id: str = datafield()
-    """Unique package identifier."""
+    name: str = datafield()
+    """Item name."""
+
+    aliases: List[str] | None = datafield()
+    """Enum item aliases."""
 
     label: str | None = datafield()
-    """Readable package label used by the front end."""
+    """Itel label. If not specified, name is used instead."""
 
-    def get_key(self) -> PackageDeclKey:
-        return type(self), self.package_id
+    comment: str | None = datafield()
+    """Item additional information."""

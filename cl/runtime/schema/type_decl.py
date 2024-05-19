@@ -12,27 +12,111 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
-from dataclasses import dataclass
-from typing import Tuple
-from typing import Type
+from typing import List, Optional
 
-TypeDeclKey = Tuple[Type["TypeDecl"], str]
+from cl.runtime.schema.display_kind import DisplayKind
+from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
+from cl.runtime.schema.handler_implement_block_decl import HandlerImplementBlockDecl
+from cl.runtime.schema.interface_decl_key import InterfaceDeclKey
+from cl.runtime.schema.module_key import ModuleKey
+from cl.runtime.schema.type_argument_decl import TypeArgumentDecl
+from cl.runtime.schema.type_decl_key import TypeDeclKey
+from cl.runtime.schema.type_element_decl import TypeElementDecl
+from cl.runtime.schema.type_index_decl import TypeIndexDecl
+from cl.runtime.schema.type_kind import TypeKind
+from cl.runtime.schema.type_param_decl import TypeParamDecl
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassMixin
 
 
-@dataclass
 class TypeDecl(DataclassMixin):
-    """Base class of type declaration in schema."""
-
-    type_id: str = datafield()
     """
-    Unique dot-delimited type identifier. May optionally include package alias.
-    Used for table name in storage, and _type field in JSON.
+    Defines type declaration. A tag of entity type XML representation corresponds to each element of the type. The
+    names of type elements and corresponding tags coincide.
     """
 
-    label: str = datafield(optional=True)
-    """Readable type label in the front end."""
+    module: ModuleKey = datafield()
+    """Module reference."""
+
+    name: str = datafield()
+    """Type name is unique when combined with module."""
+
+    label: str = datafield()
+    """Type label."""
+
+    comment: str | None = datafield()
+    """Type comment. Contains additional information."""
+
+    shortcut: str | None = datafield()
+    """Shortcut."""
+
+    type_params: Optional[List[TypeParamDecl]] = datafield()
+    """Type Params"""
+
+    aliases: List[str] | None = datafield()
+    """Type aliases."""
+
+    kind: Optional[TypeKind] = datafield()
+    """Type kind."""
+
+    display_kind: Optional[DisplayKind] = datafield()
+    """Display kind."""
+
+    inherit: Optional[TypeDeclKey] = datafield()
+    """Parent type reference."""
+
+    inherit_type_arguments: Optional[List[TypeArgumentDecl]] = datafield()
+    """Inherit Type Argument."""
+
+    interfaces: Optional[List[InterfaceDeclKey]] = datafield()
+    """Parent interfaces"""
+
+    declare: Optional[HandlerDeclareBlockDecl] = datafield()
+    """Handler declaration block."""
+
+    implement: Optional[HandlerImplementBlockDecl] = datafield()
+    """Handler implementation block."""
+
+    elements: Optional[List[TypeElementDecl]] = datafield()
+    """Element declaration block."""
+
+    keys: List[str] | None = datafield()
+    """Array of key element names."""
+
+    indexes: Optional[List[TypeIndexDecl]] = datafield()
+    """Defines indexes for the type."""
+
+    immutable: Optional[bool] = datafield()
+    """Immutable flag."""
+
+    ui_response: Optional[bool] = datafield()
+    """Flag indicating UiResponse."""
+
+    seed: Optional[int] = datafield()
+    """Seed."""
+
+    version: str | None = datafield()
+    """Type Version"""
+
+    system: Optional[bool] = datafield()
+    """System."""
+
+    enable_cache: Optional[bool] = datafield()
+    """Enable cache flag."""
+
+    partial: Optional[bool] = datafield()
+    """It is possible to split the code over two or more source files."""
+
+    abstract: Optional[bool] = datafield()
+    """
+    Abstract flag: is a restricted type that cannot be used to create objects (to access it, it must be inherited from
+    another type).
+    """
+
+    hidden: Optional[bool] = datafield()
+    """Enable Hidden flag."""
+
+    permanent: Optional[bool] = datafield()
+    """Save records always permanently."""
 
     def get_key(self) -> TypeDeclKey:
-        return type(self), self.type_id
+        return type(self), self.module, self.name

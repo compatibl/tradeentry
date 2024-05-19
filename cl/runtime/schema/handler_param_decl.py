@@ -12,24 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
+from cl.runtime.schema.handler_variable_decl import HandlerVariableDecl
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
-from dataclasses import dataclass
-from typing import Tuple
-from typing import Type
-
-PackageDeclKey = Tuple[Type["PackageDecl"], str]
 
 
-@dataclass
-class PackageDecl(DataclassMixin):
-    """Base class for the package declaration in schema."""
+class HandlerParamDecl(HandlerVariableDecl):
+    """Handler parameter declaration."""
 
-    package_id: str = datafield()
-    """Unique package identifier."""
-
-    label: str | None = datafield()
-    """Readable package label used by the front end."""
-
-    def get_key(self) -> PackageDeclKey:
-        return type(self), self.package_id
+    name: str = datafield()
+    """Parameter name."""

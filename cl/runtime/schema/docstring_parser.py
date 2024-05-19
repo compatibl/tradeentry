@@ -167,7 +167,7 @@ def _parse_method_docstring_parameters(parameters_block: str, result: MethodDocs
         i += 1
 
 
-def parse_method_docstring(method_doc: Optional[str]) -> MethodDocstring:
+def parse_method_docstring(method_doc: str | None) -> MethodDocstring:
     """Parse method docstring and extracts comments."""
 
     result = MethodDocstring()

@@ -12,34 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
-
-from cl.runtime.schema.enum_decl_key import EnumDeclKey
-from cl.runtime.schema.enum_item_decl import EnumItemDecl
+from typing import Tuple, Type
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassMixin
-from cl.runtime.schema.module_key import ModuleKey
+from cl.runtime.schema.package_key import PackageKey
 
 
-class EnumDecl(DataclassMixin):
-    """Enum declaration."""
+class Package(DataclassMixin):
+    """Package is a list of modules and binaries which are deployed together."""
 
-    module: ModuleKey = datafield()
-    """Module reference."""
-
-    name: str = datafield()
-    """Enum name is unique when combined with module."""
-
-    aliases: List[str] | None = datafield()
-    """Enum aliases."""
-
-    label: str = datafield()
-    """Enum label."""
+    package_name: str = datafield()
+    """Unique package identifier."""
 
     comment: str | None = datafield()
-    """Enum comment."""
+    """Comment."""
+    
+    copyright_: str | None = datafield(name='Copyright')
+    """Copyright used for given package."""
 
-    items: List[EnumItemDecl] = datafield()
-    """Array of enum items."""
+    alias: str | None = datafield()
+    """Short alias used in submodule naming."""
 
-    def get_key(self) -> EnumDeclKey:
-        return type(self), self.module, self.name
+    label: str | None = datafield()
+    """Label (displayed in user interface, may not be unique)."""
+
+    def get_key(self) -> PackageKey:
+        return type(self), self.package_name
