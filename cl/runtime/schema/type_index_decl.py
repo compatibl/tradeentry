@@ -15,9 +15,11 @@
 from typing import List, Optional
 
 from cl.runtime.schema.index_decl import IndexDecl
+from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 
 
+@dataclass(slots=True)
 class TypeIndexDecl:
     """Type index declaration."""
 

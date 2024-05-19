@@ -12,14 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from dataclasses import dataclass
 
 
-@dataclass
+@dataclass(slots=True)
 class FieldDecl:
-    """Base class of type declaration in schema."""
+    """Base class of field declaration in schema."""
 
     name: str = datafield()
     """Field name in code and storage."""

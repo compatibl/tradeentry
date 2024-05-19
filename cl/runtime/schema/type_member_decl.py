@@ -19,12 +19,14 @@ from cl.runtime.schema.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from cl.runtime.schema.value_decl import ValueDecl
+from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 
 if TYPE_CHECKING:
     from cl.runtime.schema.type_argument_decl import TypeArgumentDecl
 
 
+@dataclass(slots=True)
 class TypeMemberDecl:
     """Type member declaration."""
 

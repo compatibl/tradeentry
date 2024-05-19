@@ -13,9 +13,11 @@
 # limitations under the License.
 
 from cl.runtime.schema.handler_variable_decl import HandlerVariableDecl
+from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 
 
+@dataclass(slots=True)
 class HandlerParamDecl(HandlerVariableDecl):
     """Handler parameter declaration."""
 

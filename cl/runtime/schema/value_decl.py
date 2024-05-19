@@ -14,9 +14,11 @@
 
 
 from cl.runtime.schema.primitive_type import PrimitiveType
+from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 
 
+@dataclass(slots=True)
 class ValueDecl:
     """Value or atomic element declaration."""
 

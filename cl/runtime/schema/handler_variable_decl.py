@@ -16,9 +16,11 @@ from typing import Optional
 
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from cl.runtime.schema.type_member_decl import TypeMemberDecl
+from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 
 
+@dataclass(slots=True)
 class HandlerVariableDecl(TypeMemberDecl):
     """Handler parameter or return variable declaration."""
 

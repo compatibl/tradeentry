@@ -14,4 +14,4 @@
 
 from typing import Tuple, Type
 
-LanguageDeclKey = Tuple[Type["Language"], str]
+LanguageDeclKey = Tuple[Type["LanguageDecl"], str]

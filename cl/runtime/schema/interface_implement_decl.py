@@ -14,9 +14,11 @@
 
 from cl.runtime.schema.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.language_decl_key import LanguageDeclKey
+from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 
 
+@dataclass(slots=True)
 class InterfaceImplementDecl:
     """Interface implementation data."""
 

@@ -15,9 +15,11 @@
 from typing import Optional
 
 from cl.runtime.schema.type_param_constraint_type import TypeParamConstraintType
+from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 
 
+@dataclass(slots=True)
 class TypeParamDecl:
     """Type Parametr Declration."""
 

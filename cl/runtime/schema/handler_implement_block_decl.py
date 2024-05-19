@@ -16,9 +16,11 @@ from typing import List, Optional
 
 from cl.runtime.schema.handler_implement_decl import HandlerImplementDecl
 from cl.runtime.schema.interface_implement_decl import InterfaceImplementDecl
+from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 
 
+@dataclass(slots=True)
 class HandlerImplementBlockDecl:
     """Handler implementation block in type declaration."""
 

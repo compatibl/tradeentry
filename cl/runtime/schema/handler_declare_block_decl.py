@@ -15,9 +15,11 @@
 from typing import List
 
 from cl.runtime.schema.handler_declare_decl import HandlerDeclareDecl
+from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 
 
+@dataclass(slots=True)
 class HandlerDeclareBlockDecl:
     """Handler declaration block in type declaration."""
 

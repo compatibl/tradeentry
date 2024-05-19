@@ -15,9 +15,11 @@
 from typing import Optional
 
 from cl.runtime.schema.type_member_decl import TypeMemberDecl
+from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 
 
+@dataclass(slots=True)
 class TypeDictElementDecl(TypeMemberDecl):
     """Type dict element value declaration."""
 

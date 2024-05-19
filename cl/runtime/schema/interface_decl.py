@@ -17,9 +17,11 @@ from cl.runtime.schema.handler_declare_decl import HandlerDeclareDecl
 from cl.runtime.schema.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
 from cl.runtime.schema.type_element_decl import TypeElementDecl
+from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassMixin
 
 
+@dataclass(slots=True)
 class InterfaceDecl(DataclassMixin):
     """Defines Interface declaration."""
 

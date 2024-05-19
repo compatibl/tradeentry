@@ -12,8 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 from cl.runtime.schema.type_member_decl import TypeMemberDecl
 
 
+@dataclass(slots=True)
 class TypeArgumentDecl(TypeMemberDecl):
     """Type argument declaration."""

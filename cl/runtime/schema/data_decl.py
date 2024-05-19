@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.field_decl import FieldDecl
 from cl.runtime.schema.type_decl import TypeDecl
@@ -20,7 +21,7 @@ from dataclasses import dataclass
 from typing import List
 
 
-@dataclass
+@dataclass(slots=True)
 class DataDecl(TypeDecl):
     """Declaration for serializable data with fields."""
 

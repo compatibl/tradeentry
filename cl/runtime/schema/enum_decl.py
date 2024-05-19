@@ -16,10 +16,12 @@ from typing import List
 
 from cl.runtime.schema.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.enum_item_decl import EnumItemDecl
+from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassMixin
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
 
 
+@dataclass(slots=True)
 class EnumDecl(DataclassMixin):
     """Enum declaration."""
 

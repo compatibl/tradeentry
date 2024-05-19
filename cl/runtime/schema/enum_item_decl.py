@@ -14,9 +14,11 @@
 
 from typing import List, Optional
 
+from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 
 
+@dataclass(slots=True)
 class EnumItemDecl:
     """Enum item declaration."""
 

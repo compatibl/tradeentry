@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 from typing import List, Optional
 
 from cl.runtime.schema.display_kind import DisplayKind
@@ -25,9 +26,11 @@ from cl.runtime.schema.type_element_decl import TypeElementDecl
 from cl.runtime.schema.type_index_decl import TypeIndexDecl
 from cl.runtime.schema.type_kind import TypeKind
 from cl.runtime.schema.type_param_decl import TypeParamDecl
+from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassMixin
 
 
+@dataclass(slots=True)
 class TypeDecl(DataclassMixin):
     """
     Defines type declaration. A tag of entity type XML representation corresponds to each element of the type. The

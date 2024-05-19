@@ -16,9 +16,11 @@ from typing import List, Optional
 
 from cl.runtime.schema.element_modification_type import ElementModificationType
 from cl.runtime.schema.type_member_decl import TypeMemberDecl
+from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 
 
+@dataclass(slots=True)
 class TypeElementDecl(TypeMemberDecl):
     """Type element declaration."""
 

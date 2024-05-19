@@ -13,17 +13,15 @@
 # limitations under the License.
 
 from abc import ABC
-from typing import List, Optional, Tuple, Type
 from cl.runtime.schema.package_decl_key import PackageDeclKey
+from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassMixin
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
 
 
-class ModuleDecl(DataclassMixin, ABC):
-    """
-    Defines Analyst module. Module can be represented both as the source code and precomiled dll (defined by flag
-    'Compiled').
-    """
+@dataclass(slots=True)
+class ModuleDecl(DataclassMixin):
+    """Module declaration."""
 
     module_name: str | None = datafield()
     """Unique module identifier in dot delimited format."""
@@ -33,9 +31,6 @@ class ModuleDecl(DataclassMixin, ABC):
 
     comment: str | None = datafield()
     """Module additional information."""
-
-    dependences: Optional[List[ModuleDeclKey]] = datafield()
-    """Module dependences."""
 
     package: PackageDeclKey = datafield()
     """Package reference."""
