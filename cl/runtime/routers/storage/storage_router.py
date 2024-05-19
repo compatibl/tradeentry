@@ -49,7 +49,7 @@ async def get_datasets(
 @router.get("/record", response_model=RecordResponse)
 async def get_record(
         type: str = Query(..., description="Class name"),  # noqa Suppress report about shadowed built-in type
-        key: str = Query(..., description="Primary key fields in semicolon-delimited format"),
+        key: str = Query(None, description="Primary key fields in semicolon-delimited format"),
         module: str = Query(None, description="Dot-delimited module string"),
         dataset: str = Query(None, description="Dataset string"),
         ignore_record_absence: bool = Query(

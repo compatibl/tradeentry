@@ -23,7 +23,7 @@ class RecordRequest(UserRequest):
     """Class name."""
 
     # TODO: Check if it should be made optional for singletons
-    key: str
+    key: str | None = None
     """Primary key fields in semicolon-delimited format."""
 
     module: str | None = None
