@@ -16,6 +16,7 @@ from cl.runtime.routers.user_request import UserRequest
 
 
 class ListPanelsRequest(UserRequest):
+    """Request data type for the /entity/list_panels route."""
 
     type_: str
     """Class name."""

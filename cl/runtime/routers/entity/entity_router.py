@@ -23,7 +23,7 @@ ListPanelsResponse = List[ListPanelsResponseItem]
 router = APIRouter()
 
 
-# TODO: Consider changing to /datasets for consistency
+# TODO: Consider changing to /panels for consistency
 @router.get("/list_panels", response_model=ListPanelsResponse)
 async def get_datasets(
         type: str = Query(..., description="Class name"),  # noqa Suppress report about shadowed built-in type

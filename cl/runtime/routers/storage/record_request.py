@@ -15,11 +15,21 @@
 from cl.runtime.routers.user_request import UserRequest
 
 
-class DatasetsRequest(UserRequest):
-    """Request data type for the /storage/datasets route."""
+class RecordRequest(UserRequest):
+    """Request data type for the /storage/record route."""
 
     type_: str
     """Class name."""
 
+    # TODO: Check if it should be made optional for singletons
+    key: str
+    """Primary key fields in semicolon-delimited format."""
+
     module: str | None = None
     """Dot-delimited module string."""
+
+    dataset: str | None = None
+    """Dataset string."""
+
+    ignore_record_absence: bool = False
+    """If true, empty response will be returned without error if the record is not found."""
