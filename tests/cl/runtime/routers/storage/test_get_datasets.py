@@ -19,8 +19,8 @@ from cl.runtime.routers.storage.dataset_response import DatasetResponse
 from cl.runtime.routers.storage.datasets_request import DatasetsRequest
 
 requests = [
-    {"type_": "StubClass"},
-    {"type_": "StubClass", "user": "TestUser"}
+    {"type": "StubClass"},
+    {"type": "StubClass", "user": "TestUser"}
 ]
 
 expected_result = [
@@ -58,7 +58,7 @@ def test_api():
 
             # Split request headers and query
             request_headers = {"user": request.get("user")}
-            request_params = {"type": request.get("type_"), "module": request.get("module")}
+            request_params = {"type": request.get("type"), "module": request.get("module")}
 
             # Eliminate empty keys
             request_headers = {k: v for k, v in request_headers.items() if v is not None}

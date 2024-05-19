@@ -12,13 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from pydantic import Field
 from cl.runtime.routers.user_request import UserRequest
 
 
 class ListPanelsRequest(UserRequest):
     """Request data type for the /entity/list_panels route."""
 
-    type_: str
+    type: str
     """Class name."""
 
     key: str | None = None

@@ -19,10 +19,10 @@ from cl.runtime.routers.entity.list_panels_response_item import ListPanelsRespon
 from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
 
 requests = [
-    {"type_": "StubClass"},
-    {"type_": "StubClass", "key": "abc"},
-    {"type_": "StubClass", "key": "abc", "dataset": "xyz"},
-    {"type_": "StubClass", "key": "abc", "dataset": "xyz", "user": "TestUser"}
+    {"type": "StubClass"},
+    {"type": "StubClass", "key": "abc"},
+    {"type": "StubClass", "key": "abc", "dataset": "xyz"},
+    {"type": "StubClass", "key": "abc", "dataset": "xyz", "user": "TestUser"}
 ]
 expected_result = [
     {
@@ -59,7 +59,7 @@ def test_api():
             # Split request headers and query
             request_headers = {"user": request.get("user")}
             request_params = {
-                "type": request.get("type_"),
+                "type": request.get("type"),
                 "key": request.get("key"),
                 "dataset": request.get("dataset")
             }

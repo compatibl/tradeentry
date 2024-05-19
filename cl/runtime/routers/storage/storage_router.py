@@ -43,7 +43,7 @@ async def get_datasets(
         user: str = Header(None, description="User identifier or identity token"),
 ) -> DatasetsResponse:
     """Information about the environments."""
-    return DatasetResponse.get_datasets(DatasetsRequest(type_=type, module=module, user=user))
+    return DatasetResponse.get_datasets(DatasetsRequest(type=type, module=module, user=user))
 
 
 @router.get("/record", response_model=RecordResponse)
@@ -61,6 +61,6 @@ async def get_record(
     """Schema and data for a single record specified by a key."""
     return RecordResponse.get_record(
         RecordRequest(
-            type_=type, key=key, module=module, dataset=dataset, ignore_record_absence=ignore_record_absence, user=user
+            type=type, key=key, module=module, dataset=dataset, ignore_record_absence=ignore_record_absence, user=user
         )
     )

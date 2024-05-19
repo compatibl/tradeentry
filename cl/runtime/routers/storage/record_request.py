@@ -12,13 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from pydantic import Field
 from cl.runtime.routers.user_request import UserRequest
 
 
 class RecordRequest(UserRequest):
     """Request data type for the /storage/record route."""
 
-    type_: str
+    type: str
     """Class name."""
 
     # TODO: Check if it should be made optional for singletons

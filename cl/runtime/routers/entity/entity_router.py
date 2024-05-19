@@ -32,4 +32,4 @@ async def get_datasets(
         user: str = Header(None, description="User identifier or identity token"),
 ) -> ListPanelsResponse:
     """List of panels for the specified record."""
-    return ListPanelsResponseItem.list_panels(ListPanelsRequest(type_=type, key=key, dataset=dataset, user=user))
+    return ListPanelsResponseItem.list_panels(ListPanelsRequest(type=type, key=key, dataset=dataset, user=user))
