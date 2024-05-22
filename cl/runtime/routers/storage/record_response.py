@@ -14,7 +14,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 
 from pydantic import BaseModel, Field
 
@@ -44,20 +44,232 @@ class RecordResponse(BaseModel):
                     "ModuleName": "Cl.Runtime.Backend.Core"
                 },
                 "Name": "UiAppState",
+                "Label": "Ui App State",
+                "Comment": "UiAppState.",
+                "DisplayKind": "Basic",
+                "Elements": [
+                    {
+                        "Key": {
+                            "Module": {
+                                "ModuleName": "Cl.Runtime.Backend.Core"
+                            },
+                            "Name": "User"
+                        },
+                        "Name": "User",
+                        "Comment": "A user the app state is applied for.",
+                        "Optional": True
+                    },
+                    {
+                        "Data": {
+                            "Module": {
+                                "ModuleName": "Cl.Runtime.Backend.Core"
+                            },
+                            "Name": "TabInfo"
+                        },
+                        "Name": "OpenedTabs",
+                        "Comment": "Information about opened tabs.",
+                        "Vector": True,
+                        "Optional": True
+                    },
+                    {
+                        "Value": {
+                            "Type": "Int"
+                        },
+                        "Name": "ActiveTabIndex",
+                        "Comment": "Index of active opened tab.",
+                        "Optional": True
+                    },
+                    {
+                        "Value": {
+                            "Type": "Dict"
+                        },
+                        "Name": "Versions",
+                        "Comment": "Component versions.",
+                        "Optional": True
+                    },
+                    {
+                        "Value": {
+                            "Type": "String"
+                        },
+                        "Name": "BackendVersion",
+                        "Comment": "DEPRECATED. Use versions instead.",
+                        "Optional": True
+                    },
+                    {
+                        "Value": {
+                            "Type": "String"
+                        },
+                        "Name": "ApplicationName",
+                        "Comment": "Application name.",
+                        "Optional": True
+                    },
+                    {
+                        "Value": {
+                            "Type": "Bool"
+                        },
+                        "Name": "ReadOnly",
+                        "Comment": "Flag indicating that UI is read-only.",
+                        "Optional": True
+                    },
+                    {
+                        "Enum": {
+                            "Module": {
+                                "ModuleName": "Cl.Runtime.Backend.Core"
+                            },
+                            "Name": "AppTheme"
+                        },
+                        "Name": "ApplicationTheme",
+                        "Comment": "Application theme (dark, light, etc.).",
+                        "Optional": True
+                    }
+                ],
+                "Keys": [
+                    "User"
+                ],
+                "Implement": {
+                    "Handlers": []
+                }
+            },
+            "Cl.Runtime.Backend.Core.User": {
+                "Module": {
+                    "ModuleName": "Cl.Runtime.Backend.Core"
+                },
+                "Name": "User",
+                "Label": "User",
+                "Comment": "User which is allowed to log in.",
                 "DisplayKind": "Basic",
                 "Elements": [
                     {
                         "Value": {
                             "Type": "String"
                         },
-                        "Name": "User",
-                        "Optional": True
+                        "Name": "Username"
                     },
+                    {
+                        "Value": {
+                            "Type": "String"
+                        },
+                        "Name": "FirstName",
+                        "Comment": "First name of the user."
+                    },
+                    {
+                        "Value": {
+                            "Type": "String"
+                        },
+                        "Name": "LastName",
+                        "Comment": "Last name of the user."
+                    },
+                    {
+                        "Value": {
+                            "Type": "String"
+                        },
+                        "Name": "Email",
+                        "Comment": "Email of the user.",
+                        "Optional": True
+                    }
                 ],
                 "Keys": [
-                    "User"
+                    "Username"
                 ],
+                "Implement": {
+                    "Handlers": []
+                }
             },
+            "Cl.Runtime.Backend.Core.TabInfo": {
+                "Module": {
+                    "ModuleName": "Cl.Runtime.Backend.Core"
+                },
+                "Name": "TabInfo",
+                "Label": "Tab Info",
+                "Comment": "Tab info.",
+                "Kind": "Element",
+                "DisplayKind": "Basic",
+                "Elements": [
+                    {
+                        "Data": {
+                            "Module": {
+                                "ModuleName": "Cl.Runtime.Backend.Core"
+                            },
+                            "Name": "BaseTypeInfo"
+                        },
+                        "Name": "Type",
+                        "Comment": "Type."
+                    },
+                    {
+                        "Value": {
+                            "Type": "Key"
+                        },
+                        "Name": "Key",
+                        "Comment": "Key.",
+                        "Optional": True
+                    }
+                ],
+                "Keys": None,
+                "Implement": {
+                    "Handlers": []
+                }
+            },
+            "Cl.Runtime.Backend.Core.BaseTypeInfo": {
+                "Module": {
+                    "ModuleName": "Cl.Runtime.Backend.Core"
+                },
+                "Name": "BaseTypeInfo",
+                "Label": "Base Type Info",
+                "Comment": "Base type info.",
+                "Kind": "Element",
+                "DisplayKind": "Basic",
+                "Elements": [
+                    {
+                        "Value": {
+                            "Type": "String"
+                        },
+                        "Name": "Name",
+                        "Comment": "Name of type."
+                    },
+                    {
+                        "Value": {
+                            "Type": "String"
+                        },
+                        "Name": "Module",
+                        "Comment": "Module of type."
+                    },
+                    {
+                        "Value": {
+                            "Type": "String"
+                        },
+                        "Name": "Label",
+                        "Comment": "Label of type."
+                    }
+                ],
+                "Keys": None,
+                "Implement": {
+                    "Handlers": []
+                }
+            },
+            "Cl.Runtime.Backend.Core.AppTheme": {
+                "Module": {
+                    "ModuleName": "Cl.Runtime.Backend.Core"
+                },
+                "Name": "AppTheme",
+                "Label": "App Theme",
+                "Comment": "Application theme.",
+                "Items": [
+                    {
+                        "Name": "Dark",
+                        "Label": "Dark",
+                        "Comment": "Dark theme."
+                    },
+                    {
+                        "Name": "Light",
+                        "Label": "Light",
+                        "Comment": "Light theme."
+                    }
+                ],
+                "Keys": None,
+                "Implement": {
+                    "Handlers": []
+                }
+            }
         }
         data_dict = {
             "_t": "UiAppState",
@@ -65,5 +277,4 @@ class RecordResponse(BaseModel):
         }
 
         # type_decl = TypeDecl(**type_decl_dict)
-        return RecordResponse(schema={"Cl.Runtime.Backend.Core.UiAppState": type_decl_dict}, data=data_dict)
-
+        return RecordResponse(schema=type_decl_dict, data=data_dict)
