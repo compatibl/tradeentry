@@ -14,7 +14,7 @@
 
 from __future__ import annotations
 from typing import List
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from cl.runtime.routers.user_request import UserRequest
 
@@ -22,10 +22,10 @@ from cl.runtime.routers.user_request import UserRequest
 class EnvResponse(BaseModel):
     """Response data type for the /storage/get_envs route."""
 
-    name: str
+    name: str = Field(..., alias="Name")
     """Name of the environment."""
 
-    parent: str
+    parent: str = Field(..., alias="Parent")
     """Name of the parent environment."""
 
     @staticmethod
@@ -34,8 +34,8 @@ class EnvResponse(BaseModel):
 
         # Default response when running locally without authorization
         result_dict = {
-          "name": "Dev;Runtime;V2",
-          "parent": "",  # TODO: Check if None is also accepted
+          "Name": "Dev;Runtime;V2",
+          "Parent": "",  # TODO: Check if None is also accepted
         }
 
         return [EnvResponse(**result_dict)]
