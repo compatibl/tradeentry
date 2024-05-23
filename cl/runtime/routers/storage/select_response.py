@@ -1,0 +1,51 @@
+# Copyright (C) 2023-present The Project Contributors
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+from __future__ import annotations
+
+from typing import Dict, Any, List
+
+from pydantic import BaseModel, Field
+
+from cl.runtime.routers.schema.type_request import TypeRequest
+from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
+from cl.runtime.routers.storage.select_request import SelectRequest
+
+SelectResponseSchema = Dict[str, Any]
+SelectResponseData = List[Dict[str, Any]]
+
+
+class SelectResponse(BaseModel):
+    """Response data type for the /storage/select route."""
+
+    schema_: SelectResponseSchema = Field(..., alias="schema")
+    """Schema field of the response data type for the /storage/select route."""
+
+    data: SelectResponseData
+    """Data field of the response data type for the /storage/select route."""
+
+    @staticmethod
+    def get_records(request: SelectRequest) -> SelectResponse:
+        """Implements /storage/select route."""
+
+        type_decl_dict = TypeResponseUtil.get_type(TypeRequest(name=request.type_, module=request.module, user="root"))
+        data_dict = [
+            {
+                "_t": request.type_,
+                "_key": "root",
+                "User": "root",
+            }
+        ]
+
+        return SelectResponse(schema=type_decl_dict, data=data_dict)

@@ -12,15 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
-from fastapi import APIRouter, Header, Query
+from typing import List, Dict
+
+from fastapi import APIRouter, Body, Header, Query
+from fastapi.responses import ORJSONResponse
+from starlette.requests import Request
 
 from cl.runtime.routers.storage.dataset_response import DatasetResponse
 from cl.runtime.routers.storage.datasets_request import DatasetsRequest
+from cl.runtime.routers.storage.env_response import EnvResponse
 from cl.runtime.routers.storage.record_request import RecordRequest
 from cl.runtime.routers.storage.record_response import RecordResponse
+from cl.runtime.routers.storage.select_request import SelectRequest
+from cl.runtime.routers.storage.select_response import SelectResponse
 from cl.runtime.routers.user_request import UserRequest
-from cl.runtime.routers.storage.env_response import EnvResponse
 
 EnvsResponse = List[EnvResponse]
 DatasetsResponse = List[DatasetResponse]
@@ -62,5 +67,38 @@ async def get_record(
     return RecordResponse.get_record(
         RecordRequest(
             type=type, key=key, module=module, dataset=dataset, ignore_record_absence=ignore_record_absence, user=user
+        )
+    )
+
+
+@router.post(path="/select", response_class=ORJSONResponse)
+async def storage_select(
+        request: Request,
+        type_: str = Query(..., alias='type', description="The type of records."),
+        query_dict: Dict = Body(None, description="Query dictionary."),
+        threshold: int = Query(
+            None,
+            alias="limit",
+            description="Select a specified number of records from the beginning of the list."
+        ),
+        skip: int = Query(0, description="Number of skipped records from the beginning of the list."),
+        module: str = Query(None, description="Dot-delimited module string."),
+        table_format: bool = Query(
+            False,
+            description="If true, response will be returned in the table format."
+        ),
+) -> SelectResponse:
+    """
+    Get entities by query with schema information.
+    """
+
+    return SelectResponse.get_records(
+        request=SelectRequest(
+            type_=type_,
+            query_dict=query_dict,
+            threshold=threshold,
+            skip=skip,
+            module=module,
+            table_format=table_format
         )
     )
