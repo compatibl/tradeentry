@@ -21,14 +21,32 @@ class TypeResponseUtil:
     """Response helper class for the /schema/typeV2 route."""
 
     @staticmethod
-    def get_type(request: TypeRequest) -> Dict[str, int]:
+    def get_type(request: TypeRequest) -> Dict[str, Dict]:
         """Implements /storage/get_datasets route."""
 
-        # TODO: Default response
+        # Default response
         result_dict = {
-          "name": 1,
+            f'Cl.Runtime.{request.name}': {
+                "Module": {
+                    "ModuleName": "Cl.Runtime"
+                },
+                "Name": request.name,
+                "Label": "Student",
+                "Comment": "Student record.",
+                "DisplayKind": "Basic",
+                "Elements": [
+                    {
+                        "Value": {
+                            "Type": "String"
+                        },
+                        "Name": "StudentName",
+                        "Comment": "Unique student name."
+                    }
+                ],
+                "Keys": [
+                    "StudentName"
+                ]
+            }
         }
 
         return result_dict
-
-

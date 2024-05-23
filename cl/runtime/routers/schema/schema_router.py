@@ -21,7 +21,7 @@ from cl.runtime.routers.user_request import UserRequest
 from cl.runtime.routers.schema.types_response_item import TypesResponseItem
 
 TypesResponse = List[TypesResponseItem]
-TypeResponse = Dict[str, int]
+TypeResponse = Dict[str, Dict]
 
 router = APIRouter()
 
