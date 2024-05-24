@@ -16,7 +16,7 @@ from typing import Dict, Any
 
 import pytest
 from fastapi.testclient import TestClient
-from cl.runtime.routers.app import app
+from cl.runtime.routers.server import app
 from cl.runtime.routers.auth.me_response import MeResponse, UserRequest
 
 requests = [

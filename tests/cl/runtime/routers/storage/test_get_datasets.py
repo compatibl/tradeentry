@@ -14,7 +14,7 @@
 
 import pytest
 from fastapi.testclient import TestClient
-from cl.runtime.routers.app import app
+from cl.runtime.routers.server import app
 from cl.runtime.routers.storage.dataset_response import DatasetResponse
 from cl.runtime.routers.storage.datasets_request import DatasetsRequest
 

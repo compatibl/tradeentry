@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import uvicorn
-from cl.runtime.routers.app import app
+from cl.runtime.routers.server import app
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=7008)
