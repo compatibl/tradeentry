@@ -1,0 +1,38 @@
+{
+    "module": {
+        "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_record"
+    },
+    "name": "StubDataclassRecord",
+    "label": "Stub Dataclass Record",
+    "comment": "Stub record base class.",
+    "display_kind": "Basic",
+    "elements": [
+        {
+            "value": {
+                "type": "str"
+            },
+            "name": "str_field",
+            "comment": "Stub field.",
+            "optional": false
+        },
+        {
+            "value": {
+                "type": "int"
+            },
+            "name": "int_field",
+            "comment": "Stub field.",
+            "optional": false
+        },        {
+            "value": {
+                "type": "int"
+            },
+            "name": "version",
+            "comment": "Stub version field.",
+            "optional": false
+        }
+    ],
+    "keys": [
+        "str_field",
+        "int_field"
+    ]
+}
