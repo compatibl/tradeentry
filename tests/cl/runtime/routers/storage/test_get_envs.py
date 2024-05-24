@@ -25,8 +25,8 @@ requests = [
 
 expected_result = [
     {
-        "name": "Dev;Runtime;V2",
-        "parent": "",  # TODO: Check if None is also accepted
+        "Name": "Dev;Runtime;V2",
+        "Parent": "",  # TODO: Check if None is also accepted
     }
 ]
 
