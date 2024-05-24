@@ -15,7 +15,7 @@
 import dataclasses
 import pytest
 from cl.runtime import DataSource
-from cl.runtime.rest.basic_context import BasicContext
+from cl.runtime.context.basic_context import BasicContext
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_base import StubDataclassBase
 
 

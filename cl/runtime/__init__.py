@@ -3,8 +3,8 @@ from cl.runtime.decorators.viewer_decorator import viewer
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.storage.data_source import DataSource
-from cl.runtime.rest.context import Context
-from cl.runtime.rest.basic_context import BasicContext
+from cl.runtime.context.context import Context
+from cl.runtime.context.basic_context import BasicContext
 from cl.runtime.storage.local.local_cache import LocalCache
 from cl.runtime.view.view import View
 from cl.runtime.view.record_view import RecordView

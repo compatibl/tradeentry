@@ -13,7 +13,7 @@
 # limitations under the License.
 
 
-from cl.runtime.rest.context import Context
+from cl.runtime.context.context import Context
 from cl.runtime.storage.data_source_types import TDataset, TIdentity
 from cl.runtime.storage.data_source_types import TKey
 from typing import TypeVar, Iterable

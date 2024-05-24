@@ -16,7 +16,7 @@ from abc import ABC
 from abc import abstractmethod
 
 from cl.runtime.records.record_util import RecordUtil
-from cl.runtime.rest.context import Context
+from cl.runtime.context.context import Context
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TKey
 from cl.runtime.storage.data_source_types import TPackedRecord

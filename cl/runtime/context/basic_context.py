@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.rest.context import Context
-from cl.runtime.rest.null_progress import NullProgress
-from cl.runtime.rest.progress import Progress
+from cl.runtime.context.context import Context
+from cl.runtime.context.null_progress import NullProgress
+from cl.runtime.context.progress import Progress
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.data_source_types import TDataset
 from logging import Logger

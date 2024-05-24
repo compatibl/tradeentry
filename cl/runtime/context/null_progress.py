@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.rest.progress import Progress
+from cl.runtime.context.progress import Progress
 
 
 class NullProgress(Progress):
