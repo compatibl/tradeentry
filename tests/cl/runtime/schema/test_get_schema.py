@@ -15,24 +15,92 @@
 import pytest
 import json
 import os
-from cl.runtime.schema.type_decl import TypeDecl
+import inspect
+import ast
+import dataclasses
+from typing import Any, List, Dict, Type
 
-module_names = [
-    "stub_dataclass_record",
-    "stub_dataclass_nested_fields"
+from inflection import titleize
+
+from cl.runtime.schema.type_decl import TypeDecl
+from stubs.cl.runtime import StubDataclassRecord, StubDataclassNestedFields
+
+sample_types = [
+    StubDataclassRecord,
+    StubDataclassNestedFields
 ]
+
+
+def get_field_names(cls, method_name):
+    """Get key field names from get_key method, assuming it follows the standard implementation pattern."""
+
+    # Parse the class to get its AST node
+    class_ast = ast.parse(inspect.getsource(cls))
+
+    # Find the method within the class
+    method_ast = None
+    for node in class_ast.body:
+        if isinstance(node, ast.ClassDef) and node.name == cls.__name__:
+            for method in node.body:
+                if isinstance(method, ast.FunctionDef) and method.name == method_name:
+                    method_ast = method
+                    break
+
+    if method_ast is None:
+        return []
+
+    # Extract field names from the method AST
+    field_names = []
+    for node in ast.walk(method_ast):
+        if isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name) and node.value.id == 'self':
+            field_names.append(node.attr)
+
+    return field_names
+
+
+def get_type_decl(cls: Type) -> Dict[str, Any]:
+    """Get type declaration for a class."""
+
+    elements = []
+
+    for field in dataclasses.fields(cls):
+        element = {
+            "value": {
+                "type": field.type.__name__
+            },
+            "name": field.name,
+            "comment": field.metadata.get("comment", "")
+        }
+        elements.append(element)
+
+    type_decl = {
+        "module": {
+            "module_name": cls.__module__
+        },
+        "name": cls.__name__,
+        "label": titleize(cls.__name__),
+        "comment": cls.__doc__ or "",
+        "display_kind": "Basic",
+        "elements": elements,
+        "keys": get_field_names(cls, 'get_key'),
+    }
+
+    return type_decl
 
 
 def test_method():
     """Test coroutine for /schema/typeV2 route."""
 
-    for module_name in module_names:
-        expected_result_file_path = os.path.abspath(__file__).replace(".py", f".{module_name}.expected.json")
+    for sample_type in sample_types:
+        class_module = sample_type.__module__.rsplit(".", maxsplit=1)[1]
+        expected_result_file_path = os.path.abspath(__file__).replace(".py", f".{class_module}.expected.json")
         with open(expected_result_file_path, 'r', encoding='utf-8') as file:
             expected_result = json.load(file)
 
         expected_result_obj = TypeDecl(**expected_result)
-        pass
+        result_dict = get_type_decl(sample_type)
+        result_obj = TypeDecl(**result_dict)
+        assert result_obj == expected_result_obj
 
 
 if __name__ == "__main__":

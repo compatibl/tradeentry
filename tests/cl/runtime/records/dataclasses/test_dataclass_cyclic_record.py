@@ -32,7 +32,7 @@ def test_cyclic_record():
     b_2 = StubDataclassCyclicB()
     b_2.a = StubDataclassCyclicA.create()
 
-    # Test for annotation retrospection
+    # Test for annotation introspection
     assert StubDataclassCyclicA.__annotations__ == {
         "key": "StubDataclassCyclicBKey | None",
         "b": "StubDataclassCyclicB | None",
