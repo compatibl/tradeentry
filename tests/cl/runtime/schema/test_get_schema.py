@@ -16,9 +16,10 @@ import pytest
 import json
 import os
 import inspect
+import textwrap
 import ast
 import dataclasses
-from typing import Any, List, Dict, Type
+from typing import Any, List, Dict, Type, get_type_hints
 
 from inflection import titleize
 
@@ -27,42 +28,52 @@ from stubs.cl.runtime import StubDataclassRecord, StubDataclassNestedFields
 
 sample_types = [
     StubDataclassRecord,
-    StubDataclassNestedFields
+    # StubDataclassNestedFields
 ]
 
 
-def get_field_names(cls, method_name):
-    """Get key field names from get_key method, assuming it follows the standard implementation pattern."""
+def get_key_fields(cls):  # TODO: Move to a dedicated helper class
+    """
+    Get key fields by parsing the source of 'get_key' method.
 
-    # Parse the class to get its AST node
-    class_ast = ast.parse(inspect.getsource(cls))
+    Notes:
+        This method parses the source code of 'get_key' method and returns all instance
+        fields it accesses in the order of access, for example if 'get_key' source is:
 
-    # Find the method within the class
-    method_ast = None
-    for node in class_ast.body:
-        if isinstance(node, ast.ClassDef) and node.name == cls.__name__:
-            for method in node.body:
-                if isinstance(method, ast.FunctionDef) and method.name == method_name:
-                    method_ast = method
-                    break
+        def get_key(self) -> Tuple[Type, ...]:
+            return ClassName, self.key_field_1, self.key_field_2
 
-    if method_ast is None:
-        return []
+        this method will return:
 
-    # Extract field names from the method AST
-    field_names = []
-    for node in ast.walk(method_ast):
+        ["key_field_1", "key_field_2"]
+    """
+
+    # Get source code for the 'get_key' method
+    if hasattr(cls, 'get_key'):
+        get_key_source = inspect.getsource(cls.get_key)
+    else:
+        raise RuntimeError(f"Cannot get primary key fields because {cls.__name__} does not implement 'get_key' method.")
+
+    # Because 'ast' expects the code to be correct as though it is at top level,
+    # remove excess indent from the source to make it suitable for parsing
+    get_key_source = textwrap.dedent(get_key_source)
+
+    # Extract field names from the AST of 'get_key' method
+    get_key_ast = ast.parse(get_key_source)
+    key_fields = []
+    for node in ast.walk(get_key_ast):
+        # Find every instance field of 'cls' accessed inside the source of 'get_key' method.
+        # Accumulate in list in the order they are accessed
         if isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name) and node.value.id == 'self':
-            field_names.append(node.attr)
+            key_fields.append(node.attr)
 
-    return field_names
+    return key_fields
 
 
 def get_type_decl(cls: Type) -> Dict[str, Any]:
     """Get type declaration for a class."""
 
     elements = []
-
     for field in dataclasses.fields(cls):
         element = {
             "value": {
@@ -73,6 +84,9 @@ def get_type_decl(cls: Type) -> Dict[str, Any]:
         }
         elements.append(element)
 
+    # Get key fields by parsing the source of 'get_key' method
+    key_fields = get_key_fields(cls)
+
     type_decl = {
         "module": {
             "module_name": cls.__module__
@@ -80,9 +94,13 @@ def get_type_decl(cls: Type) -> Dict[str, Any]:
         "name": cls.__name__,
         "label": titleize(cls.__name__),
         "comment": cls.__doc__ or "",
+        "kind": "Element",
         "display_kind": "Basic",
         "elements": elements,
-        "keys": get_field_names(cls, 'get_key'),
+        "keys": key_fields,
+        "implement": {
+            "handlers": []
+        }
     }
 
     return type_decl
