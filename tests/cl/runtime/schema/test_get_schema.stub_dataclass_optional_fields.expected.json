@@ -1,0 +1,69 @@
+{
+    "module": {
+        "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields"
+    },
+    "name": "StubDataclassOptionalFields",
+    "label": "Stub Dataclass Optional Fields",
+    "comment": "Stub dataclass with optional fields.",
+    "display_kind": "Basic",
+    "elements": [
+        {
+            "value": {
+                "type": "str"
+            },
+            "name": "id",
+            "comment": "Unique identifier."
+        },
+        {
+            "value": {
+                "type": "str"
+            },
+            "name": "optional_str",
+            "comment": "Optional string.",
+            "optional": true
+        },
+        {
+            "value": {
+                "type": "str"
+            },
+            "name": "required_list_of_optional_str",
+            "comment": "Required list of optional strings.",
+            "vector": true,
+			"optional_elements": true
+        },
+        {
+            "value": {
+                "type": "str"
+            },
+            "name": "optional_list_of_optional_str",
+            "comment": "Optional list of optional strings.",
+			"vector": true,
+            "optional": true,
+			"optional_elements": true
+        },
+        {
+            "data": {
+                "module": {
+                    "modulename": "stubs.cl.runtime.records.dataclasses.stub_dataclass_data"
+                },
+                "name": "StubDataclassData"
+            },
+            "name": "optional_data",
+            "comment": "Optional data.",
+			"optional": true
+        },
+        {
+            "key": {
+                "module": {
+                    "modulename": "stubs.cl.runtime.records.dataclasses.stub_dataclass_record"
+                },
+                "name": "StubDataclassRecordKey"
+            },
+            "name": "optional_key",
+            "comment": "Optional key."
+        }
+    ],
+    "keys": [
+        "id"
+    ]
+}
