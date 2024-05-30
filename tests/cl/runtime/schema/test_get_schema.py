@@ -14,6 +14,7 @@
 
 import types
 import typing
+from enum import Enum
 
 import pytest
 import json
@@ -22,8 +23,9 @@ import inspect
 import textwrap
 import ast
 import dataclasses
+import datetime as dt
 from dataclasses import dataclass, Field
-from typing import Tuple, Type, Any, List, Dict, get_type_hints
+from typing import Tuple, Literal, Type, Any, List, Dict, get_type_hints
 
 from inflection import titleize
 
@@ -39,48 +41,108 @@ class DataclassFieldType:
     def __init__(self, field: Field):
         """Create from dataclasses.Field instance."""
 
+        field_name = field.name
         field_type = field.type
         field_origin = typing.get_origin(field_type)
         field_args = typing.get_args(field_type)
 
-        # Strip optional from field_type
         # Note two possible forms of origin for optional, typing.Union and types.UnionType
-        if (field_origin is typing.Union or field_origin is types.UnionType) and type(None) in field_args:
-            # This is an optional field
+        is_union = field_origin is typing.Union or field_origin is types.UnionType
+        is_optional = is_union and type(None) in field_args
+
+        # Strip optional from field_type
+        if is_optional:
+            # Field can be None
             self.optional_field = True
             # Get type information without None
             field_type = field_args[0]
             field_origin = typing.get_origin(field_type)
             field_args = typing.get_args(field_type)
         else:
-            # This is a required field
+            # Field cannot be None
             self.optional_field = False
 
-        # Set container type or None if not a container
-        self.container_type = typing.get_origin(field_type)
-
-        # Validate that container type is one of the supported types
-        if self.container_type not in [None, tuple, list, dict]:
-            raise RuntimeError(f"Container type {self.container_type} is not a supported part of schema.")
-
-        if self.container_type is not None:
-            # Strip container information from field_type
-            self.value_type = typing.get_args(field_type)[0]
-            list_type_origin = typing.get_origin(self.value_type)
-            if (list_type_origin is typing.Union or list_type_origin is types.UnionType) and type(None) in typing.get_args(self.value_type):
-                # Values within the container can be None
-                self.optional_values = True
-                # Get type information without None
-                self.value_type = typing.get_args(self.value_type)[0]
-            else:
-                # Values within the container cannot be None
-                self.optional_values = False
+        # Strip container information from field_type to get the type of value inside the container
+        if field_origin in [list, dict]:
+            # One of the supported container types
+            self.container_type = field_origin
+            field_type = field_args[0]
+            field_origin = typing.get_origin(field_type)
+            field_args = typing.get_args(field_type)
         else:
-            self.value_type = field_type
+            # No container
+            self.container_type = None
+
+        # Strip optional again from the inner type
+        is_union = field_origin is typing.Union or field_origin is types.UnionType
+        is_optional = is_union and type(None) in field_args
+        if is_optional:
+            # Values can be None
+            self.optional_values = True
+            # Get type information without None
+            field_type = field_args[0]
+            field_origin = typing.get_origin(field_type)
+            field_args = typing.get_args(field_type)
+        else:
+            # Values cannot be None
             self.optional_values = False
 
-    value_type: Type
-    """Type of the value within the container if the field is a container, otherwise type of the field itself."""
+        # Parse the value itself
+        if field_origin is tuple:
+
+            # Key is represented as a tuple
+            self.element_kind = "key"
+
+            # Get the first argument of Tuple
+            tuple_args = typing.get_args(field_type)
+            if len(tuple_args) == 0:
+                raise RuntimeError(f"Empty tuple is provided as value for field {field_name}")
+            tuple_arg = tuple_args[0]
+
+            type_origin = typing.get_origin(tuple_arg)
+            if isinstance(type_origin, type):
+                # Extract SampleType from Type[SampleType] or Type['SampleType']
+                type_args = typing.get_args(tuple_arg)
+                if len(type_args) == 0:
+                    raise RuntimeError(f"Type without arguments is provided as value for key field {field_name}, "
+                                       f"use Type[SampleType] or Type['SampleType'] instead.")
+
+                # Get the argument of Type
+                type_arg = type_args[0]
+                if isinstance(type_arg, typing.ForwardRef):
+                    # For ForwardRef, extract the argument
+                    type_arg = type_arg.__forward_arg__
+
+            else:
+                raise RuntimeError(f"First element of key tuple for field {field_name} is not a type.")
+
+            # Assign key type
+            self.element_type = type_arg
+
+        elif field_origin is None:
+
+            # Assign element kind
+            if field_type in [str, float, bool, int, dt.date, dt.time, dt.datetime]:
+                # One of the supported primitive types
+                self.element_kind = "primitive"
+            elif issubclass(field_type, Enum):
+                # Enum
+                self.element_kind = "enum"
+            else:
+                # User-defined data or record
+                self.element_kind = "data"
+
+            # Assign element type
+            self.element_type = field_type
+
+        else:
+            raise RuntimeError(f"Complex type {field_type} is not recognized when building data source schema.")
+
+    element_kind: Literal["primitive", "key", "data", "enum"]
+    """Kind of the element within the container if the field is a container, otherwise kind of the field itself."""
+
+    element_type: Type
+    """Type of the element within the container if the field is a container, otherwise type of the field itself."""
 
     container_type: Type | None
     """Type of the container (list, dict, etc.) if the field is a container, otherwise None."""
@@ -88,7 +150,7 @@ class DataclassFieldType:
     optional_field: bool
     """Indicates if the entire field can be None."""
 
-    optional_values: bool | None
+    optional_values: bool | None = None
     """Indicates if values within the container can be None if the field is a container, otherwise None."""
 
 
