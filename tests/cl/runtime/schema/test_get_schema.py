@@ -22,13 +22,76 @@ import inspect
 import textwrap
 import ast
 import dataclasses
-from typing import Any, List, Dict, Type, get_type_hints
+from dataclasses import dataclass, Field
+from typing import Tuple, Type, Any, List, Dict, get_type_hints
 
 from inflection import titleize
 
 from cl.runtime.schema.type_decl import TypeDecl
 from stubs.cl.runtime import StubDataclassRecord, StubDataclassNestedFields
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields import StubDataclassOptionalFields
+
+
+@dataclass(slots=True, init=False)
+class DataclassFieldType:
+    """Field type of a dataclass."""
+
+    def __init__(self, field: Field):
+        """Create from dataclasses.Field instance."""
+
+        field_type = field.type
+        field_origin = typing.get_origin(field_type)
+        field_args = typing.get_args(field_type)
+
+        # Strip optional from field_type
+        # Note two possible forms of origin for optional, typing.Union and types.UnionType
+        if (field_origin is typing.Union or field_origin is types.UnionType) and type(None) in field_args:
+            # This is an optional field
+            self.optional_field = True
+            # Get type information without None
+            field_type = field_args[0]
+            field_origin = typing.get_origin(field_type)
+            field_args = typing.get_args(field_type)
+        else:
+            # This is a required field
+            self.optional_field = False
+
+        # Set container type or None if not a container
+        self.container_type = typing.get_origin(field_type)
+
+        # Validate that container type is one of the supported types
+        if self.container_type not in [None, tuple, list, dict]:
+            raise RuntimeError(f"Container type {self.container_type} is not a supported part of schema.")
+
+        if self.container_type is not None:
+            # Strip container information from field_type
+            self.value_type = typing.get_args(field_type)[0]
+            list_type_origin = typing.get_origin(self.value_type)
+            if (list_type_origin is typing.Union or list_type_origin is types.UnionType) and type(None) in typing.get_args(self.value_type):
+                # Values within the container can be None
+                self.optional_values = True
+                # Get type information without None
+                self.value_type = typing.get_args(self.value_type)[0]
+            else:
+                # Values within the container cannot be None
+                self.optional_values = False
+        else:
+            self.value_type = field_type
+            self.optional_values = False
+
+    value_type: Type
+    """Type of the value within the container if the field is a container, otherwise type of the field itself."""
+
+    container_type: Type | None
+    """Type of the container (list, dict, etc.) if the field is a container, otherwise None."""
+
+    optional_field: bool
+    """Indicates if the entire field can be None."""
+
+    optional_values: bool | None
+    """Indicates if values within the container can be None if the field is a container, otherwise None."""
+
+
 
 sample_types = [
     # StubDataclassRecord,
@@ -75,43 +138,14 @@ def get_key_fields(cls):  # TODO: Move to a dedicated helper class
     return key_fields
 
 
-def parse_field_type(field_type):
-    origin = typing.get_origin(field_type)
-    args = typing.get_args(field_type)
-
-    if (origin is typing.Union or origin is types.UnionType) and type(None) in args:
-        # This is an Optional type
-        actual_type = args[0]  # Get the type without None
-        category = 'Optional'
-    else:
-        actual_type = field_type
-        category = 'Required'
-
-    if typing.get_origin(actual_type) is list:
-        # This is a list
-        list_type = typing.get_args(actual_type)[0]
-        list_type_origin = typing.get_origin(list_type)
-        if (list_type_origin is typing.Union or list_type_origin is types.UnionType) and type(None) in typing.get_args(list_type):
-            # List of Optionals
-            list_elem_type = typing.get_args(list_type)[0]
-            list_category = 'List of Optional'
-        else:
-            # List of Required
-            list_elem_type = list_type
-            list_category = 'List of Required'
-        return f'{category} {list_category} {list_elem_type}'
-    else:
-        return f'{category} {actual_type}'
-
 def get_type_decl(cls: Type) -> Dict[str, Any]:
     """Get type declaration for a class."""
 
     elements = []
     fields = dataclasses.fields(cls)
     for field in fields:
-        field_type = field.type
-        description = parse_field_type(field_type)
-        print(f'{field.name}: {description}')
+        field_type = DataclassFieldType(field)
+        print(f'{field.name}:{field_type}')
 
         #element = {
         #    "value": {
