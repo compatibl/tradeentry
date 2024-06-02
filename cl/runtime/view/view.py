@@ -16,26 +16,16 @@ from abc import ABC
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from dataclasses import dataclass
-from typing import Tuple
-from typing import Type
-
-ViewKey = Tuple[Type["View"], Tuple[Type, ...], str]
+from cl.runtime.records.generic_key import GenericKey
+from cl.runtime.view.view_key import ViewKey
 
 
 @dataclass
 class View(DataclassMixin, ABC):
-    """
-    The data shown alongside the record in the front end.
+    """Contains data that will be visualized alongside the record specified by the 'view_for' field."""
 
-    When the record is displayed, the user interface backend
-    will run a query for the view_for field where the value
-    is primary key of the record for which the view is specified,
-    and will display each View returned by the query on a separate
-    tab or panel next to the record itself.
-    """
-
-    view_for: Tuple[Type, ...] = datafield()
-    """Primary key of the record for which the view is specified."""
+    view_for: GenericKey = datafield()
+    """Generic key of the record for which the view is specified."""
 
     view_name: str = datafield()
     """Name of the view displayed in the front end."""

@@ -16,9 +16,8 @@ from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.storage.data_source_types import TData
 from typing import Optional
 from typing import Tuple
-from typing import Type
 
-StubCustomBaseKey = Tuple[Type["StubCustomBase"], str, int]
+from stubs.cl.runtime.records.custom.stub_custom_base_key import StubCustomBaseKey
 
 
 class StubCustomBase(RecordMixin):

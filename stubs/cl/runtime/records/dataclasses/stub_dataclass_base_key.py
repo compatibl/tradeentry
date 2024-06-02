@@ -12,24 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
-from dataclasses import dataclass
+from typing import Tuple
+from typing import Type
 
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_record_key import StubDataclassRecordKey
-
-
-@dataclass(slots=True)
-class StubDataclassRecord(DataclassMixin):
-    """Stub record base class."""
-
-    str_field: str = "abc"
-    """Stub field."""
-
-    int_field: int = 123
-    """Stub field."""
-
-    version: int = 0
-    """Stub version field."""
-
-    def get_key(self) -> StubDataclassRecordKey:
-        return type(self), self.str_field, self.int_field
+StubDataclassBaseKey = Tuple[Type["StubDataclassBase"], str, int]

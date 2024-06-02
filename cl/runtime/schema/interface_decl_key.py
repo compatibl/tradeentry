@@ -15,4 +15,4 @@
 from typing import Tuple, Type
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
 
-InterfaceDeclKey = Tuple[Type, ModuleDeclKey, str]
+InterfaceDeclKey = Tuple[Type["InterfaceDecl"], ModuleDeclKey, str]

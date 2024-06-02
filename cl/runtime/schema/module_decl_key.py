@@ -15,4 +15,4 @@
 from __future__ import annotations
 from typing import Tuple, Type
 
-ModuleDeclKey = Tuple[Type, str]
+ModuleDeclKey = Tuple[Type["ModuleDecl"], str]

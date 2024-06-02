@@ -14,5 +14,5 @@
 
 from typing import Tuple, Type
 
-PackageDeclKey = Tuple[Type, str]
+PackageDeclKey = Tuple[Type["PackageDecl"], str]
 

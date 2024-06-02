@@ -18,10 +18,9 @@ from cl.runtime.decorators.handler_decorator import handler
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from logging import getLogger
+from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
 from stubs.cl.runtime.records.enum.stub_int_enum import StubIntEnum
 from typing import Any
-from typing import Tuple
-from typing import Type
 
 _logger = getLogger(__name__)
 
@@ -37,16 +36,13 @@ def print_method_info():  # TODO: Move into DebugUtil(s)
     print(f"Called {method_name}({params_output})")
 
 
-StubHandlerMethodsKey = Tuple[Type["StubHandlerMethods"], str]
-
-
-class StubHandlerMethods(DataclassMixin):
+class StubHandlers(DataclassMixin):
     """Stub record base class."""
 
     stub_id: str = datafield(default="abc")
     """Stub identifier."""
 
-    def get_key(self) -> StubHandlerMethodsKey:
+    def get_key(self) -> StubHandlersKey:
         return type(self), self.stub_id
 
     @handler

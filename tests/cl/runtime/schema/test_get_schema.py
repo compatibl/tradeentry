@@ -170,7 +170,7 @@ def get_key_fields(cls):  # TODO: Move to a dedicated helper class
         This method parses the source code of 'get_key' method and returns all instance
         fields it accesses in the order of access, for example if 'get_key' source is:
 
-        def get_key(self) -> Tuple[Type, ...]:
+        def get_key(self) -> Tuple[Type, str, int]:
             return ClassName, self.key_field_1, self.key_field_2
 
         this method will return:

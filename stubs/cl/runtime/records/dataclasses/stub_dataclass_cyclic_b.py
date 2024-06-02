@@ -18,13 +18,10 @@ from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
-from typing import Tuple
-from typing import Type
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b_key import StubDataclassCyclicBKey
 
 if TYPE_CHECKING:
     from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_a import StubDataclassCyclicA
-
-StubDataclassCyclicBKey = Tuple[Type["StubDataclassCyclicB"], str]
 
 
 @dataclass

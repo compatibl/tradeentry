@@ -13,14 +13,14 @@
 # limitations under the License.
 
 import pytest
-from stubs.cl.runtime.decorators.stub_handler_methods import StubHandlerMethods
+from stubs.cl.runtime.decorators.stub_handler_methods import StubHandlers
 
 
 def test_smoke():
     """Smoke test."""
 
     # Instance method handlers
-    obj = StubHandlerMethods()
+    obj = StubHandlers()
     obj.instance_handler_1a()
     obj.instance_handler_1b()
     obj.instance_handler_2a(param1="a")
@@ -29,20 +29,20 @@ def test_smoke():
     obj.instance_handler_3b(param1="a", param2="b")
 
     # Class method handlers
-    StubHandlerMethods.class_handler_1a()
-    StubHandlerMethods.class_handler_1b()
-    StubHandlerMethods.class_handler_2a(param1="a")
-    StubHandlerMethods.class_handler_2b(param1="a")
-    StubHandlerMethods.class_handler_3a(param1="a", param2="b")
-    StubHandlerMethods.class_handler_3b(param1="a", param2="b")
+    StubHandlers.class_handler_1a()
+    StubHandlers.class_handler_1b()
+    StubHandlers.class_handler_2a(param1="a")
+    StubHandlers.class_handler_2b(param1="a")
+    StubHandlers.class_handler_3a(param1="a", param2="b")
+    StubHandlers.class_handler_3b(param1="a", param2="b")
 
     # Static method handlers
-    StubHandlerMethods.static_handler_1a()
-    StubHandlerMethods.static_handler_1b()
-    StubHandlerMethods.static_handler_2a(param1="a")
-    StubHandlerMethods.static_handler_2b(param1="a")
-    StubHandlerMethods.static_handler_3a(param1="a", param2="b")
-    StubHandlerMethods.static_handler_3b(param1="a", param2="b")
+    StubHandlers.static_handler_1a()
+    StubHandlers.static_handler_1b()
+    StubHandlers.static_handler_2a(param1="a")
+    StubHandlers.static_handler_2b(param1="a")
+    StubHandlers.static_handler_3a(param1="a", param2="b")
+    StubHandlers.static_handler_3b(param1="a", param2="b")
 
 
 if __name__ == "__main__":

@@ -15,11 +15,7 @@
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from dataclasses import dataclass
-from typing import Optional
-from typing import Tuple
-from typing import Type
-
-StubDataclassSingletonKey = Tuple[Type["StubDataclassSingleton"]]
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_singleton_key import StubDataclassSingletonKey
 
 
 @dataclass
