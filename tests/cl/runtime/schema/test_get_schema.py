@@ -15,20 +15,15 @@
 import types
 import typing
 from enum import Enum
-
 import pytest
 import json
 import os
-import inspect
-import textwrap
-import ast
 import dataclasses
 import datetime as dt
 from dataclasses import dataclass, Field
 from typing import Tuple, Literal, Type, Any, List, Dict, get_type_hints
-
 from inflection import titleize
-
+from cl.runtime.records.schema_util import SchemaUtil
 from cl.runtime.schema.type_decl import TypeDecl
 from stubs.cl.runtime import StubDataclassRecord, StubDataclassNestedFields
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields import StubDataclassOptionalFields
@@ -162,52 +157,6 @@ class DataclassFieldType:
     """Indicates if values within the container can be None if the field is a container, otherwise None."""
 
 
-
-sample_types = [
-    # StubDataclassRecord,
-    StubDataclassOptionalFields,
-    StubDataclassNestedFields
-]
-
-
-def get_key_fields(cls):  # TODO: Move to a dedicated helper class
-    """
-    Get key fields by parsing the source of 'get_key' method.
-
-    Notes:
-        This method parses the source code of 'get_key' method and returns all instance
-        fields it accesses in the order of access, for example if 'get_key' source is:
-
-        def get_key(self) -> Tuple[Type, str, int]:
-            return ClassName, self.key_field_1, self.key_field_2
-
-        this method will return:
-
-        ["key_field_1", "key_field_2"]
-    """
-
-    # Get source code for the 'get_key' method
-    if hasattr(cls, 'get_key'):
-        get_key_source = inspect.getsource(cls.get_key)
-    else:
-        raise RuntimeError(f"Cannot get primary key fields because {cls.__name__} does not implement 'get_key' method.")
-
-    # Because 'ast' expects the code to be correct as though it is at top level,
-    # remove excess indent from the source to make it suitable for parsing
-    get_key_source = textwrap.dedent(get_key_source)
-
-    # Extract field names from the AST of 'get_key' method
-    get_key_ast = ast.parse(get_key_source)
-    key_fields = []
-    for node in ast.walk(get_key_ast):
-        # Find every instance field of 'cls' accessed inside the source of 'get_key' method.
-        # Accumulate in list in the order they are accessed
-        if isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name) and node.value.id == 'self':
-            key_fields.append(node.attr)
-
-    return key_fields
-
-
 def get_type_decl(cls: Type) -> Dict[str, Any]:
     """Get type declaration for a class."""
 
@@ -234,7 +183,7 @@ def get_type_decl(cls: Type) -> Dict[str, Any]:
         #elements.append(element)
 
     # Get key fields by parsing the source of 'get_key' method
-    key_fields = get_key_fields(cls)
+    key_fields = SchemaUtil.get_key_fields(cls)
 
     type_decl = {
         "module": {
@@ -257,6 +206,12 @@ def get_type_decl(cls: Type) -> Dict[str, Any]:
 
 def test_method():
     """Test coroutine for /schema/typeV2 route."""
+
+    sample_types = [
+        StubDataclassRecord,
+        StubDataclassOptionalFields,
+        StubDataclassNestedFields
+    ]
 
     for sample_type in sample_types:
         class_module = sample_type.__module__.rsplit(".", maxsplit=1)[1]
