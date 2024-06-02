@@ -38,11 +38,19 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields import 
 class DataclassFieldType:
     """Field type of a dataclass."""
 
-    def __init__(self, field: Field):
-        """Create from dataclasses.Field instance."""
+    def __init__(self, field: Field, field_type: Type):
+        """
+        Create from dataclasses.Field instance and resolved type.
+
+        Notes:
+            The Field object also contains the type but if it is a ForwardRef, it will not be resolved.
+
+        Args:
+            field: Dataclass field definition object
+            field_type: Field type obtained from get_type_hints where ForwardRefs are resolved
+        """
 
         field_name = field.name
-        field_type = field.type
         field_origin = typing.get_origin(field_type)
         field_args = typing.get_args(field_type)
 
@@ -203,11 +211,18 @@ def get_key_fields(cls):  # TODO: Move to a dedicated helper class
 def get_type_decl(cls: Type) -> Dict[str, Any]:
     """Get type declaration for a class."""
 
-    elements = []
+    # Information about dataclass fields including the metadata (does not resolve ForwardRefs)
     fields = dataclasses.fields(cls)
+
+    # Get type hints to resolve ForwardRefs
+    type_hints = get_type_hints(cls)
+
+    elements = []
     for field in fields:
-        field_type = DataclassFieldType(field)
-        print(f'{field.name}:{field_type}')
+
+        field_type = type_hints[field.name]
+        field_decl = DataclassFieldType(field, field_type)
+        pass
 
         #element = {
         #    "value": {
