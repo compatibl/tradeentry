@@ -14,9 +14,10 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import ClassVar, Dict
 from cl.runtime.settings.config import dynaconf_settings
+from dataclasses import dataclass
+from typing import ClassVar
+from typing import Dict
 
 
 @dataclass(slots=True)

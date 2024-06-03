@@ -76,4 +76,4 @@ class PrimitiveType(IntEnum):
     def custom_labels(cls):
         """Custom enum item labels dict."""
 
-        return {cls.DateTime: 'DateTime', cls.InstantTime: 'InstantTime'}
+        return {cls.DateTime: "DateTime", cls.InstantTime: "InstantTime"}

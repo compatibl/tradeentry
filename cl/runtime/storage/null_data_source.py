@@ -15,7 +15,8 @@
 from cl.runtime import DataSource
 from cl.runtime.storage.data_source import TKey
 from cl.runtime.storage.data_source import TLoadedRecord
-from cl.runtime.storage.data_source_types import TDataset, TIdentity
+from cl.runtime.storage.data_source_types import TDataset
+from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TPackedRecord
 from cl.runtime.storage.data_source_types import TQuery
 from dataclasses import dataclass
@@ -32,38 +33,34 @@ class NullDataSource(DataSource):
         raise NotImplementedError()
 
     def load_many(
-            self,
-            keys: Iterable[TKey],
-            *,
-            dataset: TDataset = None,
-            identities: Iterable[TIdentity] | None = None,
+        self,
+        keys: Iterable[TKey],
+        *,
+        dataset: TDataset = None,
+        identities: Iterable[TIdentity] | None = None,
     ) -> Iterable[TLoadedRecord]:
         raise NotImplementedError()
 
     def load_by_query(
-            self,
-            query: TQuery,
-            *,
-            dataset: TDataset = None,
-            identities: Iterable[TIdentity] | None = None,
+        self,
+        query: TQuery,
+        *,
+        dataset: TDataset = None,
+        identities: Iterable[TIdentity] | None = None,
     ) -> Iterable[TLoadedRecord]:
         raise NotImplementedError()
 
     def save_many(
-            self,
-            packs: Iterable[TPackedRecord],
-            *,
-            dataset: TDataset = None,
-            identity: TIdentity = None
+        self, packs: Iterable[TPackedRecord], *, dataset: TDataset = None, identity: TIdentity = None
     ) -> None:
         raise NotImplementedError()
 
     def delete_many(
-            self,
-            keys: Iterable[TKey],
-            *,
-            dataset: TDataset = None,
-            identities: Iterable[TIdentity] | None = None,
+        self,
+        keys: Iterable[TKey],
+        *,
+        dataset: TDataset = None,
+        identities: Iterable[TIdentity] | None = None,
     ) -> None:
         raise NotImplementedError()
 

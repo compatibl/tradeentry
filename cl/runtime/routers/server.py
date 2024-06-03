@@ -12,15 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from fastapi import FastAPI
-from starlette.middleware.cors import CORSMiddleware
-
 from cl.runtime.routers.auth import auth_router
 from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.health import health_router
 from cl.runtime.routers.schema import schema_router
 from cl.runtime.routers.storage import storage_router
-
+from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
 
 # Server
 app = FastAPI()

@@ -12,17 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, Any
-
 import pytest
-from fastapi.testclient import TestClient
+from cl.runtime.routers.auth.me_response import MeResponse
+from cl.runtime.routers.auth.me_response import UserRequest
 from cl.runtime.routers.server import app
-from cl.runtime.routers.auth.me_response import MeResponse, UserRequest
+from fastapi.testclient import TestClient
+from typing import Any
+from typing import Dict
 
-requests = [
-    {},
-    {"user": "TestUser"}
-]
+requests = [{}, {"user": "TestUser"}]
 
 
 def get_expected_result(request_obj: UserRequest) -> Dict[str, Any]:
@@ -38,7 +36,7 @@ def get_expected_result(request_obj: UserRequest) -> Dict[str, Any]:
         "first_name": user,
         "last_name": None,
         "email": None,
-        "scopes": ["Read", "Write", "Execute", "Developer"]
+        "scopes": ["Read", "Write", "Execute", "Developer"],
     }
 
 
@@ -46,7 +44,6 @@ def test_method():
     """Test coroutine for /auth/me route."""
 
     for request in requests:
-
         # Run the coroutine wrapper added by the FastAPI decorator and get the result
         request_obj = UserRequest(**request)
         result = MeResponse.get_me(request_obj)
@@ -61,7 +58,6 @@ def test_api():
 
     with TestClient(app) as client:
         for request in requests:
-
             response = client.get("/auth/me", headers=request)
             assert response.status_code == 200
             result = response.json()

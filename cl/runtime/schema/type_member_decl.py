@@ -12,15 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Optional
-
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.dict_decl import DictDecl
 from cl.runtime.schema.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from cl.runtime.schema.value_decl import ValueDecl
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from typing import Optional
 
 
 @dataclass(slots=True)
@@ -39,7 +38,7 @@ class TypeMemberDecl:
     data: Optional[TypeDeclKey] = datafield()
     """Data element declaration."""
 
-    key_: Optional[TypeDeclKey] = datafield(name='Key')
+    key_: Optional[TypeDeclKey] = datafield(name="Key")
     """Key element declaration."""
 
     query: Optional[TypeDeclKey] = datafield()

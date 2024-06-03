@@ -18,14 +18,16 @@ from abc import ABC
 from abc import abstractmethod
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.settings.config import dynaconf_settings
-from cl.runtime.storage.data_source_types import TDataset, TIdentity
+from cl.runtime.storage.data_source_types import TDataset
+from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TKey
+from cl.runtime.storage.data_source_types import TLoadedRecord
 from cl.runtime.storage.data_source_types import TPackedRecord
 from cl.runtime.storage.data_source_types import TQuery
-from cl.runtime.storage.data_source_types import TLoadedRecord
 from dataclasses import dataclass
-from typing import ClassVar, List
+from typing import ClassVar
 from typing import Iterable
+from typing import List
 
 
 @dataclass(slots=True, init=True, frozen=True)
@@ -43,11 +45,11 @@ class DataSource(ABC):
 
     @abstractmethod
     def load_many(
-            self,
-            keys: Iterable[TKey],
-            *,
-            dataset: TDataset = None,
-            identities: Iterable[TIdentity] | None = None,
+        self,
+        keys: Iterable[TKey],
+        *,
+        dataset: TDataset = None,
+        identities: Iterable[TIdentity] | None = None,
     ) -> Iterable[TLoadedRecord]:
         """
         Load records from the table associated with the base class of each key's type.
@@ -66,11 +68,11 @@ class DataSource(ABC):
 
     @abstractmethod
     def load_by_query(
-            self,
-            query: TQuery,
-            *,
-            dataset: TDataset = None,
-            identities: Iterable[TIdentity] | None = None,
+        self,
+        query: TQuery,
+        *,
+        dataset: TDataset = None,
+        identities: Iterable[TIdentity] | None = None,
     ) -> Iterable[TLoadedRecord]:
         """
         Load records based on the query.
@@ -88,11 +90,7 @@ class DataSource(ABC):
 
     @abstractmethod
     def save_many(
-            self,
-            packs: Iterable[TPackedRecord],
-            *,
-            dataset: TDataset = None,
-            identity: TIdentity = None
+        self, packs: Iterable[TPackedRecord], *, dataset: TDataset = None, identity: TIdentity = None
     ) -> None:
         """
         Save records to the table associated with the base class of each record's type.
@@ -108,11 +106,11 @@ class DataSource(ABC):
 
     @abstractmethod
     def delete_many(
-            self,
-            keys: Iterable[TKey],
-            *,
-            dataset: TDataset = None,
-            identities: Iterable[TIdentity] | None = None,
+        self,
+        keys: Iterable[TKey],
+        *,
+        dataset: TDataset = None,
+        identities: Iterable[TIdentity] | None = None,
     ) -> None:
         """
         Delete records from the table associated with the base class of each record's type.

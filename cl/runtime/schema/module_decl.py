@@ -13,10 +13,11 @@
 # limitations under the License.
 
 from abc import ABC
+from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from cl.runtime.schema.module_decl_key import ModuleDeclKey
 from cl.runtime.schema.package_decl_key import PackageDeclKey
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassMixin
-from cl.runtime.schema.module_decl_key import ModuleDeclKey
 
 
 @dataclass(slots=True)
@@ -35,7 +36,7 @@ class ModuleDecl(DataclassMixin):
     package: PackageDeclKey = datafield()
     """Package reference."""
 
-    copyright_: str | None = datafield(name='Copyright')
+    copyright_: str | None = datafield(name="Copyright")
     """Company name used in Copyright src header."""
 
     def get_key(self) -> ModuleDeclKey:

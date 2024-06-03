@@ -13,11 +13,11 @@
 # limitations under the License.
 
 from __future__ import annotations
-from typing import List
-from pydantic import BaseModel
 
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.user_request import UserRequest
+from pydantic import BaseModel
+from typing import List
 
 
 class DatasetResponse(BaseModel):
@@ -39,7 +39,7 @@ class DatasetResponse(BaseModel):
 
         # Default response when running locally without authorization
         result_dict = {
-          "name": None,
+            "name": None,
         }
 
         return [DatasetResponse(**result_dict)]

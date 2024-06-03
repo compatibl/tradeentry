@@ -12,12 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Optional
-
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from cl.runtime.schema.type_member_decl import TypeMemberDecl
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from typing import Optional
 
 
 @dataclass(slots=True)
@@ -27,7 +26,7 @@ class HandlerVariableDecl(TypeMemberDecl):
     vector: Optional[bool] = datafield()
     """Flag indicating variable size array (vector) container."""
 
-    object_: Optional[TypeDeclKey] = datafield(name='Object')
+    object_: Optional[TypeDeclKey] = datafield(name="Object")
     """Object element declaration."""
 
     optional: Optional[bool] = datafield()

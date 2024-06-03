@@ -14,11 +14,13 @@
 
 
 from cl.runtime.context.context import Context
-from cl.runtime.storage.data_source_types import TDataset, TIdentity
+from cl.runtime.storage.data_source_types import TDataset
+from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TKey
-from typing import TypeVar, Iterable
+from typing import Iterable
 from typing import List
 from typing import Type
+from typing import TypeVar
 
 _NONE = 0  # Code indicating None
 _KEY = 1  # Code indicating tuple
@@ -30,7 +32,7 @@ TObj = TypeVar("TObj", bound="RecordUtil")
 
 class RecordUtil:
     """Static helper class for RecordMixin."""
-    
+
     def __init__(self):
         """Prevent instance creation."""
         raise RuntimeError(f"{self.__class__.__name__} is a static helper class, no instances are necessary.")
@@ -100,10 +102,9 @@ class RecordUtil:
 
         # Each lookup must not exceed data source batch size
         batch_size = data_source.batch_size()
-        batches = [keys[i: i + batch_size] for i in range(0, len(keys), batch_size)]
+        batches = [keys[i : i + batch_size] for i in range(0, len(keys), batch_size)]
         records_dict = {}
         for batch_keys in batches:
-
             # Get unordered dict of serialized record data
             batch_data = data_source.load_many(batch_keys, dataset=dataset)
 

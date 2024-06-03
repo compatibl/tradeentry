@@ -12,9 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
-from typing import List, Optional
-
+from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.display_kind import DisplayKind
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.handler_implement_block_decl import HandlerImplementBlockDecl
@@ -26,7 +25,8 @@ from cl.runtime.schema.type_index_decl import TypeIndexDecl
 from cl.runtime.schema.type_kind import TypeKind
 from cl.runtime.schema.type_param_decl import TypeParamDecl
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassMixin
+from typing import List
+from typing import Optional
 
 
 @dataclass(slots=True)

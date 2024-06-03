@@ -13,9 +13,9 @@
 # limitations under the License.
 
 from __future__ import annotations
-from pydantic import BaseModel
 
 from cl.runtime.routers.user_request import UserRequest
+from pydantic import BaseModel
 
 
 class HealthResponse(BaseModel):
@@ -32,7 +32,7 @@ class HealthResponse(BaseModel):
 
         # Default response when running locally without authorization
         result_dict = {
-          "status": 200,
+            "status": 200,
         }
 
         return HealthResponse(**result_dict)

@@ -31,11 +31,15 @@ class DatetimeUtil:
         # Check timezone
         offset = value.utcoffset()
         if offset is None:
-            raise RuntimeError(f"Datetime {value} does not specify timezone. "
-                               f"Only UTC timezone is accepted and must be specified explicitly.")
+            raise RuntimeError(
+                f"Datetime {value} does not specify timezone. "
+                f"Only UTC timezone is accepted and must be specified explicitly."
+            )
         elif value.utcoffset().total_seconds() != 0:
-            raise RuntimeError(f"Datetime {value} is in {value.tzname()} timezone."
-                               f"Only UTC timezone is accepted and must be specified explicitly.")
+            raise RuntimeError(
+                f"Datetime {value} is in {value.tzname()} timezone."
+                f"Only UTC timezone is accepted and must be specified explicitly."
+            )
 
         fractional_milliseconds_float = 1000.0 * value.second + value.microsecond / 1000.0
         rounded_microseconds = round(fractional_milliseconds_float)
@@ -49,10 +53,16 @@ class DatetimeUtil:
         if millisecond > 999 or millisecond < 0:
             raise RuntimeError(f"Invalid millisecond {millisecond} for datetime {value} after rounding.")
 
-        result = dt.datetime(value.year,  value.month, value.day, value.hour, value.minute,
-                             second,  # New value from rounding
-                             1_000 * millisecond, dt.timezone.utc  # New value from rounding
-                             )
+        result = dt.datetime(
+            value.year,
+            value.month,
+            value.day,
+            value.hour,
+            value.minute,
+            second,  # New value from rounding
+            1_000 * millisecond,
+            dt.timezone.utc,  # New value from rounding
+        )
         return result
 
     @staticmethod
@@ -66,8 +76,10 @@ class DatetimeUtil:
         millisecond = value.microsecond // 1000
 
         # Convert to string
-        result = (f"{value.year:04}-{value.month:02}-{value.day:02}"
-                  f"T{value.hour:02}:{value.minute:02}:{value.second:02}.{millisecond:03}Z")
+        result = (
+            f"{value.year:04}-{value.month:02}-{value.day:02}"
+            f"T{value.hour:02}:{value.minute:02}:{value.second:02}.{millisecond:03}Z"
+        )
         return result
 
     @staticmethod
@@ -86,7 +98,7 @@ class DatetimeUtil:
             datetime_from_str.hour,
             datetime_from_str.minute,
             datetime_from_str.second,
-            millisecond=round(datetime_from_str.microsecond/1000.0)
+            millisecond=round(datetime_from_str.microsecond / 1000.0),
         )
         return result
 
@@ -120,7 +132,7 @@ class DatetimeUtil:
             millisecond = 0
 
         result = dt.datetime(
-            year, month, day, hour, minute, second, microsecond=1000*millisecond, tzinfo=dt.timezone.utc
+            year, month, day, hour, minute, second, microsecond=1000 * millisecond, tzinfo=dt.timezone.utc
         )
         return result
 
@@ -133,13 +145,13 @@ class DatetimeUtil:
 
         # Convert assuming rounding to milliseconds has already been done
         iso_int = (
-                1000_00_00_00_00_00 * value.year +
-                1000_00_00_00_00 * value.month +
-                1000_00_00_00 * value.day +
-                1000_00_00 * value.hour +
-                1000_00 * value.minute +
-                1000 * value.second +
-                value.microsecond // 1000
+            1000_00_00_00_00_00 * value.year
+            + 1000_00_00_00_00 * value.month
+            + 1000_00_00_00 * value.day
+            + 1000_00_00 * value.hour
+            + 1000_00 * value.minute
+            + 1000 * value.second
+            + value.microsecond // 1000
         )
 
         return iso_int
@@ -203,8 +215,10 @@ class DatetimeUtil:
     def validate_str(value: str) -> None:
         """Validate that datetime string is in ISO-8601 format rounded to milliseconds: 'yyyy-mm-ddThh:mm:ss.fffZ'"""
         if not datetime_pattern.match(value):
-            raise RuntimeError(f"Datetime string {value} must be in ISO-8601 format rounded to milliseconds "
-                               f"with trailing Z to indicate UTC timezone: 'yyyy-mm-ddThh:mm:ss.fffZ'.")
+            raise RuntimeError(
+                f"Datetime string {value} must be in ISO-8601 format rounded to milliseconds "
+                f"with trailing Z to indicate UTC timezone: 'yyyy-mm-ddThh:mm:ss.fffZ'."
+            )
 
     @staticmethod
     def validate_datetime(value: dt.datetime) -> None:
@@ -213,11 +227,15 @@ class DatetimeUtil:
         # Check timezone
         offset = value.utcoffset()
         if offset is None:
-            raise RuntimeError(f"Datetime {value} does not specify timezone. "
-                               f"Only UTC timezone is accepted and must be specified explicitly.")
+            raise RuntimeError(
+                f"Datetime {value} does not specify timezone. "
+                f"Only UTC timezone is accepted and must be specified explicitly."
+            )
         elif value.utcoffset().total_seconds() != 0:
-            raise RuntimeError(f"Datetime {value} is in {value.tzname()} timezone."
-                               f"Only UTC timezone is accepted and must be specified explicitly.")
+            raise RuntimeError(
+                f"Datetime {value} is in {value.tzname()} timezone."
+                f"Only UTC timezone is accepted and must be specified explicitly."
+            )
 
         # Check that datetime is rounded to whole milliseconds
         if value.microsecond % 1000 != 0:

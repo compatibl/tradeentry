@@ -13,6 +13,8 @@
 # limitations under the License.
 
 from __future__ import annotations
-from typing import Tuple, Type
+
+from typing import Tuple
+from typing import Type
 
 ModuleDeclKey = Tuple[Type["ModuleDecl"], str]

@@ -15,7 +15,6 @@
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from dataclasses import dataclass
 from dataclasses import field
-
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_base_key import StubDataclassBaseKey
 
 

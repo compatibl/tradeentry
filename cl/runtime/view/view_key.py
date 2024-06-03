@@ -12,9 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from cl.runtime.records.generic_key import GenericKey
 from typing import Tuple
 from typing import Type
-from cl.runtime.records.generic_key import GenericKey
 
 ViewKey = Tuple[Type["View"], GenericKey, str]
-

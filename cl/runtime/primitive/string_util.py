@@ -26,7 +26,7 @@ eol: str = "\n"
 
 class StringUtil:
     """Utilities for case conversion and other operations on string."""
-    
+
     @staticmethod
     def to_pascal_case(value: str) -> str:
         """Converts each dot-delimited token to PascalCase by replacing underscores with capital letters."""
@@ -49,11 +49,11 @@ class StringUtil:
     @staticmethod
     def split_by_uppercase(value: str) -> List[str]:
         """Splits input string by any uppercase char."""
-    
+
         parts = re.findall("[A-Z][^A-Z]*", value)
         if value and not parts:
             parts = [value]
-    
+
         return parts
 
     @staticmethod
@@ -61,7 +61,7 @@ class StringUtil:
         """
         Convert strings to words separated by space that start from upper case for all elements of input list.
         """
-    
+
         return [StringUtil.header_to_label(header) for header in headers]
 
     @staticmethod

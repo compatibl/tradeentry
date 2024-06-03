@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Optional
-
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.handler_param_decl import HandlerParamDecl
 from cl.runtime.schema.handler_type import HandlerType
 from cl.runtime.schema.handler_variable_decl import HandlerVariableDecl
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from typing import List
+from typing import Optional
 
 
 @dataclass(slots=True)
@@ -34,13 +34,13 @@ class HandlerDeclareDecl:
     comment: str | None = datafield()
     """Handler comment."""
 
-    type_: HandlerType = datafield(name='Type')
+    type_: HandlerType = datafield(name="Type")
     """Handler type."""
 
     params: Optional[List[HandlerParamDecl]] = datafield()
     """Handler parameters."""
 
-    return_: Optional[HandlerVariableDecl] = datafield(name='Return')
+    return_: Optional[HandlerVariableDecl] = datafield(name="Return")
     """Handler return value."""
 
     static: Optional[bool] = datafield()

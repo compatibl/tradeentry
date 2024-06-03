@@ -12,21 +12,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import types
-import typing
-from enum import Enum
-import pytest
-import json
-import os
 import dataclasses
 import datetime as dt
-from dataclasses import dataclass, Field
-from typing import Tuple, Literal, Type, Any, List, Dict, get_type_hints
-from inflection import titleize
+import json
+import os
+import pytest
+import types
+import typing
 from cl.runtime.records.schema_util import SchemaUtil
 from cl.runtime.schema.type_decl import TypeDecl
-from stubs.cl.runtime import StubDataclassRecord, StubDataclassNestedFields
+from dataclasses import Field
+from dataclasses import dataclass
+from enum import Enum
+from inflection import titleize
+from stubs.cl.runtime import StubDataclassNestedFields
+from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields import StubDataclassOptionalFields
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Literal
+from typing import Tuple
+from typing import Type
+from typing import get_type_hints
 
 
 @dataclass(slots=True, init=False)
@@ -92,7 +100,6 @@ class DataclassFieldType:
 
         # Parse the value itself
         if field_origin is tuple:
-
             # Key is represented as a tuple
             self.element_kind = "key"
 
@@ -107,8 +114,10 @@ class DataclassFieldType:
                 # Extract SampleType from Type[SampleType] or Type['SampleType']
                 type_args = typing.get_args(tuple_arg)
                 if len(type_args) == 0:
-                    raise RuntimeError(f"Type without arguments is provided as value for key field {field_name}, "
-                                       f"use Type[SampleType] or Type['SampleType'] instead.")
+                    raise RuntimeError(
+                        f"Type without arguments is provided as value for key field {field_name}, "
+                        f"use Type[SampleType] or Type['SampleType'] instead."
+                    )
 
                 # Get the argument of Type
                 type_arg = type_args[0]
@@ -123,7 +132,6 @@ class DataclassFieldType:
             self.element_type = type_arg
 
         elif field_origin is None:
-
             # Assign element kind
             if field_type in [str, float, bool, int, dt.date, dt.time, dt.datetime]:
                 # One of the supported primitive types
@@ -168,27 +176,24 @@ def get_type_decl(cls: Type) -> Dict[str, Any]:
 
     elements = []
     for field in fields:
-
         field_type = type_hints[field.name]
         field_decl = DataclassFieldType(field, field_type)
         pass
 
-        #element = {
+        # element = {
         #    "value": {
         #        "type": field.type.__name__
         #    },
         #    "name": field.name,
         #    "comment": field.metadata.get("comment", "")
-        #}
-        #elements.append(element)
+        # }
+        # elements.append(element)
 
     # Get key fields by parsing the source of 'get_key' method
     key_fields = SchemaUtil.get_key_fields(cls)
 
     type_decl = {
-        "module": {
-            "module_name": cls.__module__
-        },
+        "module": {"module_name": cls.__module__},
         "name": cls.__name__,
         "label": titleize(cls.__name__),
         "comment": cls.__doc__ or "",
@@ -196,9 +201,7 @@ def get_type_decl(cls: Type) -> Dict[str, Any]:
         "display_kind": "Basic",
         "elements": elements,
         "keys": key_fields,
-        "implement": {
-            "handlers": []
-        }
+        "implement": {"handlers": []},
     }
 
     return type_decl
@@ -207,16 +210,12 @@ def get_type_decl(cls: Type) -> Dict[str, Any]:
 def test_method():
     """Test coroutine for /schema/typeV2 route."""
 
-    sample_types = [
-        StubDataclassRecord,
-        StubDataclassOptionalFields,
-        StubDataclassNestedFields
-    ]
+    sample_types = [StubDataclassRecord, StubDataclassOptionalFields, StubDataclassNestedFields]
 
     for sample_type in sample_types:
         class_module = sample_type.__module__.rsplit(".", maxsplit=1)[1]
         expected_result_file_path = os.path.abspath(__file__).replace(".py", f".{class_module}.expected.json")
-        with open(expected_result_file_path, 'r', encoding='utf-8') as file:
+        with open(expected_result_file_path, "r", encoding="utf-8") as file:
             expected_result = json.load(file)
 
         expected_result_obj = TypeDecl(**expected_result)

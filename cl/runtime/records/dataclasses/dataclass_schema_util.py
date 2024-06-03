@@ -14,7 +14,8 @@
 
 from dataclasses import asdict
 from dataclasses import field
-from typing import Type, List
+from typing import List
+from typing import Type
 
 
 class DataclassSchemaUtil:

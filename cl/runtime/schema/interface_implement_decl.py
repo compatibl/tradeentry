@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.language_decl_key import LanguageDeclKey
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 
 
 @dataclass(slots=True)

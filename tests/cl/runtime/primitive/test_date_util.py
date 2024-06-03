@@ -13,11 +13,11 @@
 # limitations under the License.
 
 import datetime as dt
-from typing import List, Tuple
-from zoneinfo import ZoneInfo
-
 import pytest
 from cl.runtime.primitive.date_util import DateUtil
+from typing import List
+from typing import Tuple
+from zoneinfo import ZoneInfo
 
 
 def get_valid_samples() -> List[Tuple[int, str]]:
@@ -48,11 +48,7 @@ def get_invalid_string_samples() -> List[str]:
 
 def get_invalid_iso_int_samples() -> List[int]:
     """Return a list of invalid sample date ISO ints."""
-    return [
-        2003050,  # Int too short
-        18000501,  # Year too far back
-        200305010  # Int too long
-    ]
+    return [2003050, 18000501, 200305010]  # Int too short  # Year too far back  # Int too long
 
 
 def get_invalid_fields_samples() -> List[Tuple[int, int, int]]:
@@ -71,7 +67,6 @@ def test_to_from_str():
     """Test for to_str, from_str methods."""
 
     for sample in get_valid_samples():
-
         from_iso_int_result = DateUtil.from_iso_int(sample[0])
         from_str_result = DateUtil.from_str(sample[1])
         assert from_str_result == from_iso_int_result
@@ -88,7 +83,6 @@ def test_to_from_iso_int():
     """Test for to_iso_int, from_iso_int methods."""
 
     for sample in get_valid_samples():
-
         from_str = DateUtil.from_str(sample[1])
         from_iso_int = DateUtil.from_iso_int(sample[0])
         assert from_iso_int == from_str
@@ -105,7 +99,6 @@ def test_to_from_fields():
     """Test for to_fields, from_fields methods."""
 
     for sample in get_valid_samples():
-
         date_sample = DateUtil.from_iso_int(sample[0])
         fields_format = DateUtil.to_fields(date_sample)
         date_format = DateUtil.from_fields(*fields_format)

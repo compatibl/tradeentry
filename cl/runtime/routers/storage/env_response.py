@@ -13,10 +13,11 @@
 # limitations under the License.
 
 from __future__ import annotations
-from typing import List
-from pydantic import BaseModel, Field
 
 from cl.runtime.routers.user_request import UserRequest
+from pydantic import BaseModel
+from pydantic import Field
+from typing import List
 
 
 class EnvResponse(BaseModel):
@@ -34,8 +35,8 @@ class EnvResponse(BaseModel):
 
         # Default response when running locally without authorization
         result_dict = {
-          "Name": "Dev;Runtime;V2",
-          "Parent": "",  # TODO: Check if None is also accepted
+            "Name": "Dev;Runtime;V2",
+            "Parent": "",  # TODO: Check if None is also accepted
         }
 
         return [EnvResponse(**result_dict)]

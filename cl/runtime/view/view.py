@@ -15,9 +15,9 @@
 from abc import ABC
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
-from dataclasses import dataclass
 from cl.runtime.records.generic_key import GenericKey
 from cl.runtime.view.view_key import ViewKey
+from dataclasses import dataclass
 
 
 @dataclass

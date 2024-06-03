@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Optional
-
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.handler_implement_decl import HandlerImplementDecl
 from cl.runtime.schema.interface_implement_decl import InterfaceImplementDecl
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from typing import List
+from typing import Optional
 
 
 @dataclass(slots=True)

@@ -22,12 +22,11 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_from_derived_da
 )
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecordKey
-from typing import Tuple, List
+from typing import List
+from typing import Tuple
 from typing import Type
 
-StubDataclassOptionalFieldsKey = Tuple[
-    Type["StubDataclassOptionalFields"], str
-]
+StubDataclassOptionalFieldsKey = Tuple[Type["StubDataclassOptionalFields"], str]
 
 
 @dataclass(init=False)
@@ -86,5 +85,3 @@ class StubDataclassOptionalFields(DataclassMixin):
 
     def get_key(self) -> StubDataclassOptionalFieldsKey:
         return type(self), self.id
-
-

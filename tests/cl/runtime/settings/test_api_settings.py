@@ -22,8 +22,8 @@ def test_smoke():
     api_settings = ApiSettings.default()
 
     assert api_settings.package_aliases == {
-        'cl.runtime': 'rt',
-        'stubs.cl.runtime': 'rt',
+        "cl.runtime": "rt",
+        "stubs.cl.runtime": "rt",
     }
 
 

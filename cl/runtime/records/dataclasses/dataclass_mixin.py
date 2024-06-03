@@ -29,7 +29,6 @@ class DataclassMixin(RecordMixin, ABC):
     """Mixin methods for dataclass records."""
 
     def pack(self) -> TPackedRecord:
-
         # Get data dictionary and remove keys that have None values
         data_dict = asdict(self)
         data_dict = {k: v for k, v in data_dict.items() if v is not None}

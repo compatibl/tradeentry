@@ -13,10 +13,11 @@
 # limitations under the License.
 
 from __future__ import annotations
-from typing import List, Optional
-from pydantic import BaseModel
 
 from cl.runtime.routers.user_request import UserRequest
+from pydantic import BaseModel
+from typing import List
+from typing import Optional
 
 
 class AuthTypesResponseItem(BaseModel):
@@ -37,9 +38,9 @@ class AuthTypesResponseItem(BaseModel):
 
         results = []
         type_response = AuthTypesResponseItem(
-            id='Default',
-            name='Default',
-            type='None',
+            id="Default",
+            name="Default",
+            type="None",
         )
         results.append(type_response)
 

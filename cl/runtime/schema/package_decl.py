@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassMixin
+from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.package_decl_key import PackageDeclKey
+from dataclasses import dataclass
 
 
 @dataclass(slots=True)
@@ -27,7 +28,7 @@ class PackageDecl(DataclassMixin):
     comment: str | None = datafield()
     """Comment."""
 
-    copyright_: str | None = datafield(name='Copyright')
+    copyright_: str | None = datafield(name="Copyright")
     """Copyright used for given package."""
 
     alias: str | None = datafield()

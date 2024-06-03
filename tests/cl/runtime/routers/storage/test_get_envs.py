@@ -13,15 +13,12 @@
 # limitations under the License.
 
 import pytest
-from fastapi.testclient import TestClient
 from cl.runtime.routers.server import app
 from cl.runtime.routers.storage.env_response import EnvResponse
 from cl.runtime.routers.user_request import UserRequest
+from fastapi.testclient import TestClient
 
-requests = [
-    {},
-    {"user": "TestUser"}
-]
+requests = [{}, {"user": "TestUser"}]
 
 expected_result = [
     {
@@ -35,7 +32,6 @@ def test_method():
     """Test coroutine for /storage/get_envs route."""
 
     for request in requests:
-
         # Run the coroutine wrapper added by the FastAPI decorator and get the result
         request_obj = UserRequest(**request)
         result = EnvResponse.get_envs(request_obj)
@@ -55,7 +51,6 @@ def test_api():
 
     with TestClient(app) as client:
         for request in requests:
-
             response = client.get("/storage/get_envs", headers=request)
             assert response.status_code == 200
             result = response.json()

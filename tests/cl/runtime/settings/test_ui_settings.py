@@ -22,20 +22,20 @@ def test_smoke():
     ui_settings = UiSettings.default()
 
     assert ui_settings.package_labels == {
-        'cl.runtime': 'Runtime',
-        'stubs.cl.runtime': 'Runtime Stubs',
+        "cl.runtime": "Runtime",
+        "stubs.cl.runtime": "Runtime Stubs",
     }
     assert ui_settings.type_labels == {
-        'SampleClass': 'Sample Class Label',
+        "SampleClass": "Sample Class Label",
     }
     assert ui_settings.field_labels == {
-        'sample_field': 'Sample Field Label',
+        "sample_field": "Sample Field Label",
     }
     assert ui_settings.method_labels == {
-        'sample_method': 'Sample Method Label',
+        "sample_method": "Sample Method Label",
     }
     assert ui_settings.item_labels == {
-        'SAMPLE_ITEM': 'Sample Item Label',
+        "SAMPLE_ITEM": "Sample Item Label",
     }
 
 

@@ -13,28 +13,17 @@
 # limitations under the License.
 
 import pytest
-
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.schema.type_decl import TypeDecl
 
 type_decl_dict = {
-    "Module": {
-        "ModuleName": "Cl.Runtime.Backend.Core"
-    },
+    "Module": {"ModuleName": "Cl.Runtime.Backend.Core"},
     "Name": "UiAppState",
     "DisplayKind": "Basic",
     "Elements": [
-        {
-            "Value": {
-                "Type": "String"
-            },
-            "Name": "User",
-            "Optional": True
-        },
+        {"Value": {"Type": "String"}, "Name": "User", "Optional": True},
     ],
-    "Keys": [
-        "User"
-    ],
+    "Keys": ["User"],
 }
 
 

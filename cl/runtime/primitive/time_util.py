@@ -27,11 +27,13 @@ class TimeUtil:
     @staticmethod
     def round(value: dt.time) -> dt.time:
         """Round to whole milliseconds (the argument must already be in UTC timezone)."""
-        
+
         # Check that timezone is not set
         if value.tzinfo is not None:
-            raise RuntimeError(f"Time {value} is not accepted because it specifies timezone {value.tzname()}. "
-                               f"Time must have tzinfo=None which is the default value.")
+            raise RuntimeError(
+                f"Time {value} is not accepted because it specifies timezone {value.tzname()}. "
+                f"Time must have tzinfo=None which is the default value."
+            )
 
         fractional_milliseconds_float = 1000.0 * value.second + value.microsecond / 1000.0
         rounded_microseconds = round(fractional_milliseconds_float)
@@ -45,11 +47,12 @@ class TimeUtil:
         if millisecond > 999 or millisecond < 0:
             raise RuntimeError(f"Invalid millisecond {millisecond} for datetime {value} after rounding.")
 
-        result = dt.time(value.hour,
-                         value.minute,
-                         second,  # New value from rounding
-                         1_000 * millisecond,  # New value from rounding
-                         )
+        result = dt.time(
+            value.hour,
+            value.minute,
+            second,  # New value from rounding
+            1_000 * millisecond,  # New value from rounding
+        )
         return result
 
     @staticmethod
@@ -79,7 +82,7 @@ class TimeUtil:
             time_from_str.hour,
             time_from_str.minute,
             time_from_str.second,
-            millisecond=round(time_from_str.microsecond/1000.0)
+            millisecond=round(time_from_str.microsecond / 1000.0),
         )
         return result
 
@@ -109,7 +112,7 @@ class TimeUtil:
         if millisecond is None:
             millisecond = 0
 
-        result = dt.time(hour, minute, second, microsecond=1000*millisecond)
+        result = dt.time(hour, minute, second, microsecond=1000 * millisecond)
         return result
 
     @staticmethod
@@ -120,11 +123,7 @@ class TimeUtil:
         TimeUtil.validate_time(value)
 
         # Convert assuming rounding to milliseconds has already been done
-        iso_int = (1000_00_00 * value.hour +
-                   1000_00 * value.minute +
-                   1000 * value.second +
-                   value.microsecond // 1000
-        )
+        iso_int = 1000_00_00 * value.hour + 1000_00 * value.minute + 1000 * value.second + value.microsecond // 1000
 
         return iso_int
 
@@ -156,20 +155,17 @@ class TimeUtil:
         if millisecond > 999 or millisecond < 0:
             raise RuntimeError(f"Invalid millisecond {millisecond} for time {value} in 'hhmmssfff' format.")
 
-        result = dt.time(
-            hour,
-            minute,
-            second,
-            microsecond=1000 * millisecond
-        )
+        result = dt.time(hour, minute, second, microsecond=1000 * millisecond)
         return result
 
     @staticmethod
     def validate_str(value: str) -> None:
         """Validate that time string is in ISO-8601 format rounded to milliseconds: 'hh:mm:ss.fff'"""
         if not time_pattern.match(value):
-            raise RuntimeError(f"Time string {value} must be in ISO-8601 format rounded to milliseconds "
-                               f"without timezone: 'hh:mm:ss.fff'.")
+            raise RuntimeError(
+                f"Time string {value} must be in ISO-8601 format rounded to milliseconds "
+                f"without timezone: 'hh:mm:ss.fff'."
+            )
 
     @staticmethod
     def validate_time(value: dt.time) -> None:
@@ -177,8 +173,10 @@ class TimeUtil:
 
         # Check that timezone is not set
         if value.tzinfo is not None:
-            raise RuntimeError(f"Time {value} is not accepted because it specifies timezone {value.tzname()}. "
-                               f"Time must have tzinfo=None which is the default value.")
+            raise RuntimeError(
+                f"Time {value} is not accepted because it specifies timezone {value.tzname()}. "
+                f"Time must have tzinfo=None which is the default value."
+            )
 
         # Check that time is rounded to whole milliseconds
         if value.microsecond % 1000 != 0:

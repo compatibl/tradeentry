@@ -13,30 +13,27 @@
 # limitations under the License.
 
 import datetime as dt
-from typing import List, Tuple
-from zoneinfo import ZoneInfo
-
 import pytest
 from cl.runtime.primitive.datetime_util import DatetimeUtil
+from typing import List
+from typing import Tuple
+from zoneinfo import ZoneInfo
 
 
 def get_valid_samples() -> List[Tuple[int, str]]:
     """Return a list of valid sample date strings in (iso_int, str) format."""
-    return [
-        (20030501101530000, "2003-05-01T10:15:30.000Z"),
-        (20030501101530500, "2003-05-01T10:15:30.500Z")
-    ]
+    return [(20030501101530000, "2003-05-01T10:15:30.000Z"), (20030501101530500, "2003-05-01T10:15:30.500Z")]
 
 
 def get_invalid_datetime_samples() -> List[dt.datetime]:
     """Return a list of invalid sample datetime strings."""
 
-    non_utc_timezone = ZoneInfo('America/New_York')
+    non_utc_timezone = ZoneInfo("America/New_York")
 
     return [
         dt.datetime(2003, 5, 1, 10, 15, 30, microsecond=1234, tzinfo=dt.timezone.utc),  # Not rounded
         dt.datetime(2003, 5, 1, 10, 15, 30),  # No timezone
-        dt.datetime(2003, 5, 1, 10, 15, 30, tzinfo=non_utc_timezone)  # Non-UTC timezone
+        dt.datetime(2003, 5, 1, 10, 15, 30, tzinfo=non_utc_timezone),  # Non-UTC timezone
     ]
 
 
@@ -60,7 +57,7 @@ def get_invalid_iso_int_samples() -> List[int]:
         20030501101530,  # No milliseconds
         2003050110153000,  # Int too short
         180005011015300000,  # Year too far back
-        200305011015300000  # Int too long
+        200305011015300000,  # Int too long
     ]
 
 
@@ -115,7 +112,6 @@ def test_to_from_str():
     """Test for to_str, from_str methods."""
 
     for sample in get_valid_samples():
-
         from_iso_int_result = DatetimeUtil.from_iso_int(sample[0])
         from_str_result = DatetimeUtil.from_str(sample[1])
         assert from_str_result == from_iso_int_result
@@ -136,7 +132,6 @@ def test_to_from_iso_int():
     """Test for to_iso_int, from_iso_int methods."""
 
     for sample in get_valid_samples():
-
         from_str = DatetimeUtil.from_str(sample[1])
         from_iso_int = DatetimeUtil.from_iso_int(sample[0])
         assert from_iso_int == from_str
@@ -153,7 +148,6 @@ def test_to_from_fields():
     """Test for to_fields, from_fields methods."""
 
     for sample in get_valid_samples():
-
         datetime_sample = DatetimeUtil.from_iso_int(sample[0])
         fields_format = DatetimeUtil.to_fields(datetime_sample)
 
@@ -170,7 +164,6 @@ def test_round():
     """Test rounding to millisecond."""
 
     for sample in get_rounding_samples():
-
         rounded = DatetimeUtil.round(sample[0])
         assert rounded == sample[1]
 

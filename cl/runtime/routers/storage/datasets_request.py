@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from pydantic import Field
 from cl.runtime.routers.user_request import UserRequest
+from pydantic import Field
 
 
 class DatasetsRequest(UserRequest):

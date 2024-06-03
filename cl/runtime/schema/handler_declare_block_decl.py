@@ -12,11 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
-
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.handler_declare_decl import HandlerDeclareDecl
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from typing import List
 
 
 @dataclass(slots=True)

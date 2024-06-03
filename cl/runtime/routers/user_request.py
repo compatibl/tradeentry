@@ -16,6 +16,5 @@ from pydantic import BaseModel
 
 
 class UserRequest(BaseModel):
-
     user: str | None = None
     """User identifier or identity token"""

@@ -51,5 +51,3 @@ if __name__ == '__main__':
 
     # Create __init__.py files in subdirectories under each element of source_paths
     [add_init_files(root_path) for root_path in root_paths]
-
-

@@ -12,11 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
-from fastapi import APIRouter, Header, Query
-
-from cl.runtime.routers.entity.list_panels_response_item import ListPanelsResponseItem
 from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
+from cl.runtime.routers.entity.list_panels_response_item import ListPanelsResponseItem
+from fastapi import APIRouter
+from fastapi import Header
+from fastapi import Query
+from typing import List
 
 ListPanelsResponse = List[ListPanelsResponseItem]
 
@@ -26,10 +27,10 @@ router = APIRouter()
 # TODO: Consider changing to /panels for consistency
 @router.get("/list_panels", response_model=ListPanelsResponse)
 async def get_datasets(
-        type: str = Query(..., description="Class name"),  # noqa Suppress report about shadowed built-in type
-        key: str = Query(None, description="Primary key fields in semicolon-delimited format"),
-        dataset: str = Query(None, description="Dataset string"),
-        user: str = Header(None, description="User identifier or identity token"),
+    type: str = Query(..., description="Class name"),  # noqa Suppress report about shadowed built-in type
+    key: str = Query(None, description="Primary key fields in semicolon-delimited format"),
+    dataset: str = Query(None, description="Dataset string"),
+    user: str = Header(None, description="User identifier or identity token"),
 ) -> ListPanelsResponse:
     """List of panels for the specified record."""
     return ListPanelsResponseItem.list_panels(ListPanelsRequest(type=type, key=key, dataset=dataset, user=user))

@@ -13,14 +13,14 @@
 # limitations under the License.
 
 
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.primitive_type import PrimitiveType
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 
 
 @dataclass(slots=True)
 class ValueDecl:
     """Value or atomic element declaration."""
 
-    type_: PrimitiveType = datafield(name='Type')
+    type_: PrimitiveType = datafield(name="Type")
     """Value or atomic element type enumeration."""

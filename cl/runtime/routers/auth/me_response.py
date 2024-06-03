@@ -13,10 +13,11 @@
 # limitations under the License.
 
 from __future__ import annotations
-from typing import List, Optional
-from pydantic import BaseModel
 
 from cl.runtime.routers.user_request import UserRequest
+from pydantic import BaseModel
+from typing import List
+from typing import Optional
 
 
 class MeResponse(BaseModel):
@@ -51,12 +52,12 @@ class MeResponse(BaseModel):
         # Create response
         # TODO: Consolidate first and last name into a single string full_name
         result_dict = {
-          "id": user,
-          "username": user,
-          "first_name": user,
-          "last_name": None,
-          "email": None,
-          "scopes": ["Read", "Write", "Execute", "Developer"]
+            "id": user,
+            "username": user,
+            "first_name": user,
+            "last_name": None,
+            "email": None,
+            "scopes": ["Read", "Write", "Execute", "Developer"],
         }
 
         return MeResponse(**result_dict)

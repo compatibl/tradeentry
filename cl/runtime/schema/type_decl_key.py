@@ -13,7 +13,8 @@
 # limitations under the License.
 
 
-from typing import Tuple, Type
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
+from typing import Tuple
+from typing import Type
 
 TypeDeclKey = Tuple[Type["TypeDecl"], ModuleDeclKey, str]

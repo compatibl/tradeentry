@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
-
+from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.enum_item_decl import EnumItemDecl
-from dataclasses import dataclass
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassMixin
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
+from dataclasses import dataclass
+from typing import List
 
 
 @dataclass(slots=True)

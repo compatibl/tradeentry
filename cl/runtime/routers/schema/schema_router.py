@@ -12,13 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Dict
-from fastapi import APIRouter, Header, Query
-
 from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
-from cl.runtime.routers.user_request import UserRequest
 from cl.runtime.routers.schema.types_response_item import TypesResponseItem
+from cl.runtime.routers.user_request import UserRequest
+from fastapi import APIRouter
+from fastapi import Header
+from fastapi import Query
+from typing import Dict
+from typing import List
 
 TypesResponse = List[TypesResponseItem]
 TypeResponse = Dict[str, Dict]
@@ -34,9 +36,9 @@ async def get_types(user: str = Header(None, description="User identifier or ide
 
 @router.get("/typeV2", response_model=TypeResponse)
 async def get_type(
-        name: str = Query(..., description="Class name"),  # noqa Suppress report about shadowed built-in type
-        module: str = Query(None, description="Dot-delimited module string"),
-        user: str = Header(None, description="User identifier or identity token"),
+    name: str = Query(..., description="Class name"),  # noqa Suppress report about shadowed built-in type
+    module: str = Query(None, description="Dot-delimited module string"),
+    user: str = Header(None, description="User identifier or identity token"),
 ) -> TypeResponse:
     """Schema for the specified type and its dependencies."""
     return TypeResponseUtil.get_type(TypeRequest(name=name, module=module, user=user))

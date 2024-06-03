@@ -12,16 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassMixin
+from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.language_decl_key import LanguageDeclKey
+from dataclasses import dataclass
 
 
 @dataclass(slots=True)
 class LanguageDecl(DataclassMixin):
     """Implementation language for a handler or viewer."""
 
-    language_id: str = datafield(name='LanguageID')
+    language_id: str = datafield(name="LanguageID")
     """Language."""
 
     language_label: str | None = datafield()

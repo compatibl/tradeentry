@@ -13,12 +13,12 @@
 # limitations under the License.
 
 from __future__ import annotations
-from typing import List
-from pydantic import BaseModel
 
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
 from cl.runtime.routers.user_request import UserRequest
+from pydantic import BaseModel
+from typing import List
 
 
 class ListPanelsResponseItem(BaseModel):
@@ -36,7 +36,5 @@ class ListPanelsResponseItem(BaseModel):
         """Implements /entity/list_panels route."""
 
         # Default response when running locally without authorization
-        result_dict = {
-          "name": "Stub Panel"
-        }
+        result_dict = {"name": "Stub Panel"}
         return [ListPanelsResponseItem(**result_dict)]

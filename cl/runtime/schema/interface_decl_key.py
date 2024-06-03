@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Tuple, Type
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
+from typing import Tuple
+from typing import Type
 
 InterfaceDeclKey = Tuple[Type["InterfaceDecl"], ModuleDeclKey, str]

@@ -14,13 +14,14 @@
 
 from __future__ import annotations
 
-from typing import Dict, Any, List
-
-from pydantic import BaseModel, Field
-
 from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
 from cl.runtime.routers.storage.select_request import SelectRequest
+from pydantic import BaseModel
+from pydantic import Field
+from typing import Any
+from typing import Dict
+from typing import List
 
 SelectResponseSchema = Dict[str, Any]
 SelectResponseData = List[Dict[str, Any]]

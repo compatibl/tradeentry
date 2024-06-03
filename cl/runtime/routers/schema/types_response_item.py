@@ -13,21 +13,22 @@
 # limitations under the License.
 
 from __future__ import annotations
+
 import importlib
 import inspect
-from pkgutil import walk_packages
-from types import ModuleType
-from typing import List
-from inflection import titleize
-from pydantic import BaseModel
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.user_request import UserRequest
+from inflection import titleize
+from pkgutil import walk_packages
+from pydantic import BaseModel
+from types import ModuleType
+from typing import List
 
 
 # TODO: Move to a separate helper class along with the method returning all types
 def is_record(cls):
     """Return true if the type is a record based on the presence of 'get_key' method."""
-    return inspect.isclass(cls) and hasattr(cls, 'get_key') and callable(getattr(cls, 'get_key'))
+    return inspect.isclass(cls) and hasattr(cls, "get_key") and callable(getattr(cls, "get_key"))
 
 
 class TypesResponseItem(BaseModel):
@@ -75,9 +76,7 @@ class TypesResponseItem(BaseModel):
         result = []
         modules = TypesResponseItem.get_modules(packages)
         record_types = [
-            record_type
-            for module in modules
-            for name, record_type in inspect.getmembers(module, is_record)
+            record_type for module in modules for name, record_type in inspect.getmembers(module, is_record)
         ]
         for record_type in record_types:
             type_response = TypesResponseItem(

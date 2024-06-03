@@ -14,21 +14,17 @@
 
 import json
 import os
-
 import pytest
-from fastapi.testclient import TestClient
-from cl.runtime.routers.server import app
 from cl.runtime.routers.schema.schema_router import TypeResponse
-from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
 from cl.runtime.routers.schema.type_request import TypeRequest
+from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
+from cl.runtime.routers.server import app
+from fastapi.testclient import TestClient
 
-requests = [
-    {"name": "StubClass"},
-    {"name": "StubClass", "user": "TestUser"}
-]
+requests = [{"name": "StubClass"}, {"name": "StubClass", "user": "TestUser"}]
 
 expected_result_file_path = os.path.abspath(__file__).replace(".py", ".expected_result.json")
-with open(expected_result_file_path, 'r', encoding='utf-8') as file:
+with open(expected_result_file_path, "r", encoding="utf-8") as file:
     expected_result = json.load(file)
 
 
@@ -36,7 +32,6 @@ def test_method():
     """Test coroutine for /schema/typeV2 route."""
 
     for request in requests:
-
         # Run the coroutine wrapper added by the FastAPI decorator and get the result
         request_obj = TypeRequest(**request)
         result = TypeResponseUtil.get_type(request_obj)
@@ -50,7 +45,6 @@ def test_api():
 
     with TestClient(app) as client:
         for request in requests:
-
             # Split request headers and query
             request_headers = {"user": request.get("user")}
             request_params = {"name": request.get("name"), "module": request.get("module")}

@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Optional
-
-from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from dataclasses import dataclass
+from typing import List
+from typing import Optional
 
 
 @dataclass(slots=True)

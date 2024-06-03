@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b_key import StubDataclassCyclicBKey
 from typing import Tuple
 from typing import Type
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b_key import StubDataclassCyclicBKey
 
 StubDataclassCyclicAKey = Tuple[Type["StubDataclassCyclicA"], StubDataclassCyclicBKey]

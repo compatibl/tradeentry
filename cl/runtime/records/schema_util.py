@@ -12,10 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import ast
 import inspect
 import textwrap
-import ast
-from typing import Type, List
+from typing import List
+from typing import Type
 
 
 class SchemaUtil:
@@ -39,11 +40,12 @@ class SchemaUtil:
         """
 
         # Get source code for the 'get_key' method
-        if hasattr(record_type, 'get_key'):
+        if hasattr(record_type, "get_key"):
             get_key_source = inspect.getsource(record_type.get_key)
         else:
-            raise RuntimeError(f"Cannot get key fields because {record_type.__name__} "
-                               f"does not implement 'get_key' method.")
+            raise RuntimeError(
+                f"Cannot get key fields because {record_type.__name__} " f"does not implement 'get_key' method."
+            )
 
         # Because 'ast' expects the code to be correct as though it is at top level,
         # remove excess indent from the source to make it suitable for parsing
@@ -55,7 +57,7 @@ class SchemaUtil:
         for node in ast.walk(get_key_ast):
             # Find every instance field of 'cls' accessed inside the source of 'get_key' method.
             # Accumulate in list in the order they are accessed
-            if isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name) and node.value.id == 'self':
+            if isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name) and node.value.id == "self":
                 key_fields.append(node.attr)
 
         return key_fields

@@ -13,16 +13,16 @@
 # limitations under the License.
 
 import pytest
-from fastapi.testclient import TestClient
-from cl.runtime.routers.server import app
-from cl.runtime.routers.entity.list_panels_response_item import ListPanelsResponseItem
 from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
+from cl.runtime.routers.entity.list_panels_response_item import ListPanelsResponseItem
+from cl.runtime.routers.server import app
+from fastapi.testclient import TestClient
 
 requests = [
     {"type": "StubClass"},
     {"type": "StubClass", "key": "abc"},
     {"type": "StubClass", "key": "abc", "dataset": "xyz"},
-    {"type": "StubClass", "key": "abc", "dataset": "xyz", "user": "TestUser"}
+    {"type": "StubClass", "key": "abc", "dataset": "xyz", "user": "TestUser"},
 ]
 expected_result = [
     {
@@ -35,7 +35,6 @@ def test_method():
     """Test coroutine for /storage/get_envs route."""
 
     for request in requests:
-
         # Run the coroutine wrapper added by the FastAPI decorator and get the result
         request_obj = ListPanelsRequest(**request)
         result = ListPanelsResponseItem.list_panels(request_obj)
@@ -55,14 +54,9 @@ def test_api():
 
     with TestClient(app) as client:
         for request in requests:
-
             # Split request headers and query
             request_headers = {"user": request.get("user")}
-            request_params = {
-                "type": request.get("type"),
-                "key": request.get("key"),
-                "dataset": request.get("dataset")
-            }
+            request_params = {"type": request.get("type"), "key": request.get("key"), "dataset": request.get("dataset")}
 
             # Eliminate empty keys
             request_headers = {k: v for k, v in request_headers.items() if v is not None}

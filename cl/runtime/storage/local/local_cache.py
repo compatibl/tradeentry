@@ -15,7 +15,8 @@
 from cl.runtime import DataSource
 from cl.runtime.storage.data_source import TKey
 from cl.runtime.storage.data_source import TLoadedRecord
-from cl.runtime.storage.data_source_types import TDataset, TIdentity
+from cl.runtime.storage.data_source_types import TDataset
+from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TPackedRecord
 from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.dataset_util import DatasetUtil
@@ -40,11 +41,11 @@ class LocalCache(DataSource):
         return 1000000
 
     def load_many(
-            self,
-            keys: Iterable[TKey],
-            *,
-            dataset: TDataset = None,
-            identities: Iterable[TIdentity] | None = None,
+        self,
+        keys: Iterable[TKey],
+        *,
+        dataset: TDataset = None,
+        identities: Iterable[TIdentity] | None = None,
     ) -> Iterable[TLoadedRecord]:
         # Validate the dataset and if necessary convert to delimited string
         dataset = DatasetUtil.to_str(dataset)
@@ -73,7 +74,7 @@ class LocalCache(DataSource):
                 [
                     f"record_type={v[0][0].__name__} key_type={k[0].__name__} key={';'.join(k[1:])} "
                     for k, v in not_subclass_records
-                 ]
+                ]
             )
             raise RuntimeError(
                 f"In method `load_many`, record_type is not a subclass of key_type "
@@ -85,11 +86,11 @@ class LocalCache(DataSource):
         return result
 
     def load_by_query(
-            self,
-            query: TQuery,
-            *,
-            dataset: TDataset = None,
-            identities: Iterable[TIdentity] | None = None,
+        self,
+        query: TQuery,
+        *,
+        dataset: TDataset = None,
+        identities: Iterable[TIdentity] | None = None,
     ) -> Iterable[TLoadedRecord]:
         # Validate the dataset and if necessary convert to delimited string
         dataset = DatasetUtil.to_str(dataset)
@@ -97,11 +98,7 @@ class LocalCache(DataSource):
         raise NotImplementedError()
 
     def save_many(
-            self,
-            packs: Iterable[TPackedRecord],
-            *,
-            dataset: TDataset = None,
-            identity: TIdentity = None
+        self, packs: Iterable[TPackedRecord], *, dataset: TDataset = None, identity: TIdentity = None
     ) -> None:
         # Validate the dataset and if necessary convert to delimited string
         dataset = DatasetUtil.to_str(dataset)
@@ -126,11 +123,11 @@ class LocalCache(DataSource):
             table_cache.update(saved_records)
 
     def delete_many(
-            self,
-            keys: Iterable[TKey],
-            *,
-            dataset: TDataset = None,
-            identities: Iterable[TIdentity] | None = None,
+        self,
+        keys: Iterable[TKey],
+        *,
+        dataset: TDataset = None,
+        identities: Iterable[TIdentity] | None = None,
     ) -> None:
         # Validate the dataset and if necessary convert to delimited string
         dataset = DatasetUtil.to_str(dataset)

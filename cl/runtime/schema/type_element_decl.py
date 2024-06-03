@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Optional
-
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.element_modification_type import ElementModificationType
 from cl.runtime.schema.type_member_decl import TypeMemberDecl
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from typing import List
+from typing import Optional
 
 
 @dataclass(slots=True)
@@ -60,7 +60,7 @@ class TypeElementDecl(TypeMemberDecl):
     additive: Optional[bool] = datafield()
     """Optional flag indicating if the element is additive and that the total column can be shown in the UI."""
 
-    format_: str | None = datafield(name='Format')
+    format_: str | None = datafield(name="Format")
     """Specifies UI Format for the element."""
 
     output: Optional[bool] = datafield()

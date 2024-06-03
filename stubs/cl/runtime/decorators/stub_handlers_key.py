@@ -16,5 +16,4 @@
 from typing import Tuple
 from typing import Type
 
-
 StubHandlersKey = Tuple[Type["StubHandlers"], str]

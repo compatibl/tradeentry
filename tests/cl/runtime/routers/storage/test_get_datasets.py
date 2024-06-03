@@ -13,15 +13,12 @@
 # limitations under the License.
 
 import pytest
-from fastapi.testclient import TestClient
 from cl.runtime.routers.server import app
 from cl.runtime.routers.storage.dataset_response import DatasetResponse
 from cl.runtime.routers.storage.datasets_request import DatasetsRequest
+from fastapi.testclient import TestClient
 
-requests = [
-    {"type": "StubClass"},
-    {"type": "StubClass", "user": "TestUser"}
-]
+requests = [{"type": "StubClass"}, {"type": "StubClass", "user": "TestUser"}]
 
 expected_result = [
     {
@@ -35,7 +32,6 @@ def test_method():
     """Test coroutine for /storage/get_envs route."""
 
     for request in requests:
-
         # Run the coroutine wrapper added by the FastAPI decorator and get the result
         request_obj = DatasetsRequest(**request)
         result = DatasetResponse.get_datasets(request_obj)
@@ -55,7 +51,6 @@ def test_api():
 
     with TestClient(app) as client:
         for request in requests:
-
             # Split request headers and query
             request_headers = {"user": request.get("user")}
             request_params = {"type": request.get("type"), "module": request.get("module")}

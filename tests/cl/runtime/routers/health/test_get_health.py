@@ -13,15 +13,12 @@
 # limitations under the License.
 
 import pytest
-from fastapi.testclient import TestClient
-from cl.runtime.routers.server import app
 from cl.runtime.routers.health.health_response import HealthResponse
+from cl.runtime.routers.server import app
 from cl.runtime.routers.user_request import UserRequest
+from fastapi.testclient import TestClient
 
-requests = [
-    {},
-    {"user": "TestUser"}
-]
+requests = [{}, {"user": "TestUser"}]
 
 expected_result = {"status": 200}
 
@@ -30,7 +27,6 @@ def test_method():
     """Test coroutine for /health route."""
 
     for request in requests:
-
         # Run the coroutine wrapper added by the FastAPI decorator and get the result
         request_obj = UserRequest(**request)
         result = HealthResponse.get_health(request_obj)
@@ -47,7 +43,6 @@ def test_api():
 
     with TestClient(app) as client:
         for request in requests:
-
             response = client.get("/health", headers=request)
             assert response.status_code == 200
             result = response.json()
