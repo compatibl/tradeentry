@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from stubs.cl.runtime.decorators.stub_handler_methods import StubHandlers
+from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
 
 def test_smoke():
