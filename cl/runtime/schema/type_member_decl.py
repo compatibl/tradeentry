@@ -13,9 +13,7 @@
 # limitations under the License.
 
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
-from cl.runtime.schema.dict_decl import DictDecl
 from cl.runtime.schema.enum_decl_key import EnumDeclKey
-from cl.runtime.schema.interface_decl_key import InterfaceDeclKey
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from cl.runtime.schema.value_decl import ValueDecl
 from dataclasses import dataclass
@@ -26,11 +24,8 @@ from typing import Optional
 class TypeMemberDecl:
     """Type member declaration."""
 
-    type_param: str | None = datafield()
-    """Type Param"""
-
-    value: Optional[ValueDecl] = datafield()
-    """Value or atomic element declaration."""
+    value: Optional[ValueDecl] = datafield()  # TODO: Flatten value and other types to a single field
+    """Value or primitive element declaration."""
 
     enum: Optional[EnumDeclKey] = datafield()
     """Enumeration element declaration."""
@@ -38,7 +33,7 @@ class TypeMemberDecl:
     data: Optional[TypeDeclKey] = datafield()
     """Data element declaration."""
 
-    key_: Optional[TypeDeclKey] = datafield(name="Key")
+    key_: Optional[TypeDeclKey] = datafield(name="Key")  # TODO: Remove trailing _ automatically instead
     """Key element declaration."""
 
     query: Optional[TypeDeclKey] = datafield()
@@ -46,12 +41,3 @@ class TypeMemberDecl:
 
     condition: Optional[TypeDeclKey] = datafield()
     """Condition element declaration."""
-
-    interface: Optional[InterfaceDeclKey] = datafield()
-    """Interface element declaration."""
-
-    handler_args: Optional[TypeDeclKey] = datafield()
-    """HandlerArgs element declaration."""
-
-    dict: Optional[DictDecl] = datafield()
-    """Dictionary element declaration."""

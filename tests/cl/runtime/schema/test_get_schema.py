@@ -201,7 +201,6 @@ def get_type_decl(cls: Type) -> Dict[str, Any]:
         "display_kind": "Basic",
         "elements": elements,
         "keys": key_fields,
-        "implement": {"handlers": []},
     }
 
     return type_decl

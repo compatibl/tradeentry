@@ -25,5 +25,5 @@ class IndexDecl:
     name: str = datafield()
     """Target index element name."""
 
-    direction: Optional[IndexSortOrderEnum] = datafield()
-    """Index sort order direction. If not specified ascending sorting will be used."""
+    direction: IndexSortOrderEnum = datafield()
+    """Index sort order direction (if not specified ascending sorting will be used)."""

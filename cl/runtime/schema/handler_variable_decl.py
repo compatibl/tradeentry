@@ -23,17 +23,11 @@ from typing import Optional
 class HandlerVariableDecl(TypeMemberDecl):
     """Handler parameter or return variable declaration."""
 
-    vector: Optional[bool] = datafield()
+    vector: Optional[bool] = datafield()  # TODO: Similar change to vector in element decl
     """Flag indicating variable size array (vector) container."""
-
-    object_: Optional[TypeDeclKey] = datafield(name="Object")
-    """Object element declaration."""
 
     optional: Optional[bool] = datafield()
     """Flag indicating optional element."""
-
-    hidden: Optional[bool] = datafield()
-    """Flag indicating a hidden element. Hidden elements are visible in API but not in the UI."""
 
     label: str | None = datafield()
     """Parameter label."""

@@ -15,13 +15,15 @@
 from enum import IntEnum
 
 
-class HandlerType(IntEnum):
+class HandlerType(IntEnum):  # Consider renaming to MethodType
     """Handler type enumeration."""
 
-    Job = 0
+    Job = 0  # TODO: Consider renaming to Action or Handler if class is renamed to MethodType
     """
-    Job handler. Return type is allowed but will be discarded in case of invocation from the client. Input params are
-    allowed
+    Job handler is shown as a button
+    
+    - Return type is allowed and may trigger action in the client.
+    - Input params are allowed.
     """
 
     Process = 1
@@ -29,9 +31,6 @@ class HandlerType(IntEnum):
 
     Viewer = 2
     """Viewer handler. Return type is allowed. Input params are not allowed."""
-
-    Editor = 3
-    """Viewer Editor. Return type is allowed. Input params are not allowed."""
 
     Content = 4
     """Content handler. Return type is allowed. Input params are not allowed."""

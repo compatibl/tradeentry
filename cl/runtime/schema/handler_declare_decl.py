@@ -40,11 +40,9 @@ class HandlerDeclareDecl:
     params: Optional[List[HandlerParamDecl]] = datafield()
     """Handler parameters."""
 
-    return_: Optional[HandlerVariableDecl] = datafield(name="Return")
+    return_: Optional[HandlerVariableDecl] = datafield(name="Return")  # TODO: Remove trailing _ automatically
     """Handler return value."""
 
     static: Optional[bool] = datafield()
-    """If set as true, handler will be static, elsewise non-static."""
+    """If set as true, handler will be static, otherwise non-static."""
 
-    hidden: Optional[bool] = datafield()
-    """If flag is set, handler will be hidden in UI in user mode."""

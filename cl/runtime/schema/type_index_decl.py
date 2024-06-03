@@ -29,5 +29,3 @@ class TypeIndexDecl:
     elements: List[IndexDecl] = datafield()
     """Index elements."""
 
-    ignore_system_fields: Optional[bool] = datafield()
-    """Flag indicating if index should include system fields."""

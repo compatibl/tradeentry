@@ -17,4 +17,4 @@ from __future__ import annotations
 from typing import Tuple
 from typing import Type
 
-ModuleDeclKey = Tuple[Type["ModuleDecl"], str]
+ModuleDeclKey = Tuple[Type["ModuleDecl"], str]  # TODO: Replace by fully qualified type name

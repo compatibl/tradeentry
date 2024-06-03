@@ -25,16 +25,13 @@ from typing import List
 class EnumDecl(DataclassMixin):
     """Enum declaration."""
 
-    module: ModuleDeclKey = datafield()
+    module: ModuleDeclKey = datafield()  # TODO: Merge with name
     """Module reference."""
 
     name: str = datafield()
     """Enum name is unique when combined with module."""
 
-    aliases: List[str] | None = datafield()
-    """Enum aliases."""
-
-    label: str = datafield()
+    label: str | None = datafield()
     """Enum label."""
 
     comment: str | None = datafield()

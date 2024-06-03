@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
-from cl.runtime.schema.element_modification_type import ElementModificationType
 from cl.runtime.schema.type_member_decl import TypeMemberDecl
 from dataclasses import dataclass
 from typing import List
@@ -21,7 +20,7 @@ from typing import Optional
 
 
 @dataclass(slots=True)
-class TypeElementDecl(TypeMemberDecl):
+class TypeElementDecl(TypeMemberDecl):  # TODO: Consider renaming to TypeFieldDecl or FieldDecl
     """Type element declaration."""
 
     name: str = datafield()
@@ -33,44 +32,21 @@ class TypeElementDecl(TypeMemberDecl):
     comment: str | None = datafield()
     """Element comment. Contains addition information."""
 
-    vector: Optional[bool] = datafield()
+    vector: Optional[bool] = datafield()  # TODO: Replace by container field with enum values vector/array, dict, DF
     """Flag indicating variable size array (vector) container."""
-
-    aliases: List[str] | None = datafield()
-    """Element aliases."""
 
     optional: Optional[bool] = datafield()
     """Flag indicating optional element."""
 
-    optional_vector_element: Optional[bool] = datafield()
+    optional_vector_element: Optional[bool] = datafield()  # TODO: Rename to optional_element or optional_field
     """Flag indicating optional vector item element."""
-
-    secure: Optional[bool] = datafield()
-    """Secure flag."""
-
-    filterable: Optional[bool] = datafield()
-    """Flag indicating filterable element."""
-
-    read_only: Optional[bool] = datafield()
-    """Flag indicating readonly element."""
-
-    hidden: Optional[bool] = datafield()
-    """Flag indicating a hidden element. Hidden elements are visible in API but not in the UI."""
 
     additive: Optional[bool] = datafield()
     """Optional flag indicating if the element is additive and that the total column can be shown in the UI."""
 
-    format_: str | None = datafield(name="Format")
+    format_: str | None = datafield(name="Format")  # TODO: Use Python interpolated string format
     """Specifies UI Format for the element."""
-
-    output: Optional[bool] = datafield()
-    """Flag indicating output element. These elements will be readonly in UI and can be fulfilled by handlers."""
 
     alternate_of: str | None = datafield()
     """Link current element to AlternateOf element. In the editor these elements will be treated as a choice."""
 
-    viewer: str | None = datafield()
-    """The element will be viewed under specified tab."""
-
-    modification_type: Optional[ElementModificationType] = datafield()
-    """Element Modification Type."""

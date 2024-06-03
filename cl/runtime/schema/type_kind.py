@@ -30,8 +30,3 @@ class TypeKind(IntEnum):
     AbstractElement = 3
     """Abstract element type. Abstract element type cannot be saved in storage directly or as parent of other type."""
 
-    @classmethod
-    def custom_labels(cls):
-        """Custom enum item labels dict."""
-
-        return {cls.AbstractElement: "AbstractElement"}

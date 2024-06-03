@@ -22,7 +22,7 @@ __parameters_re: Pattern = re.compile(r"Parameters\s+----------")
 __returns_re: Pattern = re.compile(r"Returns\s+-------")
 
 
-class MethodDocstringParameter:
+class MethodDocstringParameter:  # TODO: Move to a separate directory with other helper classes
     """Represents method argument docstring."""
 
     name: str = None

@@ -22,5 +22,5 @@ from dataclasses import dataclass
 class ValueDecl:
     """Value or atomic element declaration."""
 
-    type_: PrimitiveType = datafield(name="Type")
+    type_: PrimitiveType = datafield(name="Type")  # TODO: Remove trailing _ automatically instead
     """Value or atomic element type enumeration."""

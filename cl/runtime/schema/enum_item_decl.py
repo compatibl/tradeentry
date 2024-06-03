@@ -25,11 +25,8 @@ class EnumItemDecl:
     name: str = datafield()
     """Item name."""
 
-    aliases: List[str] | None = datafield()
-    """Enum item aliases."""
-
     label: str | None = datafield()
-    """Itel label. If not specified, name is used instead."""
+    """Item label (if not specified, titleized name is used instead)."""
 
     comment: str | None = datafield()
     """Item additional information."""
