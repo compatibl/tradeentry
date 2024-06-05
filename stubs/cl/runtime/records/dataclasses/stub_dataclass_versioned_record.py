@@ -21,11 +21,11 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_versioned_record_key im
 class StubDataclassVersionedRecord(DataclassMixin):
     """Stub record base class."""
 
-    str_field: str = "abc"
+    id: str = "abc"
     """Stub field."""
 
     version: int = 0
     """Stub version field."""
 
     def get_key(self) -> StubDataclassVersionedRecordKey:
-        return type(self), self.str_field
+        return type(self), self.id

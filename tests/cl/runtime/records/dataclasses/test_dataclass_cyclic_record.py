@@ -26,18 +26,21 @@ def test_cyclic_record():
 
     # Create A outside the class
     a_2 = StubDataclassCyclicA()
-    a_2.b = StubDataclassCyclicB.create()
+    a_2.b_obj = StubDataclassCyclicB.create()
 
     # Create B outside the class
     b_2 = StubDataclassCyclicB()
-    b_2.a = StubDataclassCyclicA.create()
+    b_2.a_obj = StubDataclassCyclicA.create()
 
     # Test for annotation introspection
     assert StubDataclassCyclicA.__annotations__ == {
-        "key": "StubDataclassCyclicBKey | None",
-        "b": "StubDataclassCyclicB | None",
+        "b_key": "StubDataclassCyclicBKey | None",
+        "b_obj": "StubDataclassCyclicB | None",
     }
-    assert StubDataclassCyclicB.__annotations__ == {"id": "str | None", "a": "StubDataclassCyclicA | None"}
+    assert StubDataclassCyclicB.__annotations__ == {
+        "str_id": "str | None",
+        "a_obj": "StubDataclassCyclicA | None",
+    }
 
     # Test for keys
 

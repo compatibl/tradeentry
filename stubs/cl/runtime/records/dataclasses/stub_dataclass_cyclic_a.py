@@ -29,14 +29,14 @@ if TYPE_CHECKING:
 class StubDataclassCyclicA(DataclassMixin):
     """Stub class A with a field whose type is key for class B."""
 
-    key: StubDataclassCyclicBKey | None = datafield()
+    b_key: StubDataclassCyclicBKey | None = datafield()
     """Key for class B."""
 
-    b: StubDataclassCyclicB | None = datafield()
+    b_obj: StubDataclassCyclicB | None = datafield()
     """Key for class B."""
 
     def get_key(self) -> StubDataclassCyclicAKey:
-        return type(self), self.key
+        return type(self), self.b_key
 
     @staticmethod
     def create() -> StubDataclassCyclicA:
@@ -46,6 +46,6 @@ class StubDataclassCyclicA(DataclassMixin):
         from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB
 
         obj = StubDataclassCyclicA()
-        obj.key = StubDataclassCyclicB(id="b").get_key()
-        obj.b = StubDataclassCyclicB()
+        obj.b_key = StubDataclassCyclicB(str_id="b").get_key()
+        obj.b_obj = StubDataclassCyclicB()
         return obj

@@ -47,88 +47,85 @@ StubDataclassPrimitiveFieldsKey = Tuple[
 class StubDataclassPrimitiveFields(DataclassMixin):
     """Stub record whose elements are primitive types."""
 
-    str_field: str = datafield(default="abc")
+    key_str_field: str = datafield(default="abc")
     """Stub field."""
 
-    float_field: float = datafield(default="1.23")
+    key_float_field: float = datafield(default="1.23")
     """Stub field."""
 
-    bool_field: bool = datafield(default=True)
+    key_bool_field: bool = datafield(default=True)
     """Stub field."""
 
-    int_field: int = datafield(default=123)
+    key_int_field: int = datafield(default=123)
     """Stub field."""
 
-    long_field: int = datafield(default=9007199254740991, subtype="long")  # Rename subtype
+    key_long_field: int = datafield(default=9007199254740991, subtype="long")  # Rename subtype
     """The default is maximum safe signed int for JSON: 2^53 - 1."""
     # TODO: Define maximum safe long in Util class
 
-    date_field: dt.date = datafield(default=DateUtil.from_fields(2003, 5, 1))
+    key_date_field: dt.date = datafield(default=DateUtil.from_fields(2003, 5, 1))
     """Stub field."""
 
-    time_field: dt.time = datafield(default=TimeUtil.from_fields(10, 15, 30))
+    key_time_field: dt.time = datafield(default=TimeUtil.from_fields(10, 15, 30))
     """Stub field."""
 
-    date_time_field: dt.datetime = datafield(default=DatetimeUtil.from_fields(2003, 5, 1, 10, 15, 0))
+    key_date_time_field: dt.datetime = datafield(default=DatetimeUtil.from_fields(2003, 5, 1, 10, 15, 0))
     """Stub field."""
 
-    uuid_field: UUID = datafield(default=UUID("1A" * 16))
+    key_uuid_field: UUID = datafield(default=UUID("1A" * 16))
     """Stub field."""
 
-    bytes_field: bytes = datafield(default=bytes([100, 110, 120]))
+    key_bytes_field: bytes = datafield(default=bytes([100, 110, 120]))
     """Stub field."""
 
-    enum_field: StubIntEnum = datafield(default=StubIntEnum.ENUM_VALUE_2)
+    key_enum_field: StubIntEnum = datafield(default=StubIntEnum.ENUM_VALUE_2)
     """Stub field."""
 
-    base_str_field: str = datafield(default="abc")
+    obj_str_field: str = datafield(default="abc")
     """Stub field."""
 
-    base_float_field: float = datafield(default=1.23)
+    obj_float_field: float = datafield(default=1.23)
     """Stub field."""
 
-    base_bool_field: bool = datafield(default=True)
+    obj_bool_field: bool = datafield(default=True)
     """Stub field."""
 
-    base_int_field: int = datafield(default=123)
+    obj_int_field: int = datafield(default=123)
     """Stub field."""
 
-    base_long_field: int = datafield(default=9007199254740991, subtype="long")
+    obj_long_field: int = datafield(default=9007199254740991, subtype="long")
     """The default is maximum safe signed int for JSON: 2^53 - 1."""
 
-    base_date_field: dt.date = datafield(default=DateUtil.from_fields(2003, 5, 1))
+    obj_date_field: dt.date = datafield(default=DateUtil.from_fields(2003, 5, 1))
     """Stub field."""
 
-    base_time_field: dt.time = datafield(default=TimeUtil.from_fields(10, 15, 30))
+    obj_time_field: dt.time = datafield(default=TimeUtil.from_fields(10, 15, 30))
     """Stub field."""
 
-    base_date_time_field: dt.datetime = datafield(default=DatetimeUtil.from_fields(2003, 5, 1, 10, 15, 0))
+    obj_date_time_field: dt.datetime = datafield(default=DatetimeUtil.from_fields(2003, 5, 1, 10, 15, 0))
     """Stub field."""
 
-    base_uuid_field: UUID = datafield(default=UUID("1A" * 16))
+    obj_uuid_field: UUID = datafield(default=UUID("1A" * 16))
     """Stub field."""
 
-    base_bytes_field: bytes = datafield(default=bytes([100, 110, 120]))
+    obj_bytes_field: bytes = datafield(default=bytes([100, 110, 120]))
     """Stub field."""
 
-    base_enum_field: StubIntEnum = datafield(default=StubIntEnum.ENUM_VALUE_1)
-    """Stub field."""
-
-    base_key_field: TKey = datafield(default=(StubDataclassRecord, "abc", 123))
+    obj_enum_field: StubIntEnum = datafield(default=StubIntEnum.ENUM_VALUE_1)
     """Stub field."""
 
     def get_key(self) -> StubDataclassPrimitiveFieldsKey:
         return (
             type(self),
-            self.str_field,
-            self.float_field,
-            self.bool_field,
-            self.int_field,
-            self.long_field,
-            self.date_field,
-            self.time_field,
-            self.date_time_field,
-            self.uuid_field,
-            self.bytes_field,
-            self.enum_field,
+            self.key_str_field,
+            self.key_float_field,
+            self.key_bool_field,
+            self.key_int_field,
+            self.key_long_field,
+            self.key_date_field,
+            self.key_time_field,
+            self.key_date_time_field,
+            self.key_uuid_field,
+            self.key_bytes_field,
+            self.key_enum_field,
         )
