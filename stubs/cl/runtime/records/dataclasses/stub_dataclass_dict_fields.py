@@ -71,16 +71,16 @@ def stub_dataclass_key_dict_factory() -> Dict[str, StubDataclassRecordKey]:
 def stub_dataclass_record_dict_factory() -> Dict[str, StubDataclassRecord]:
     """Create stub values."""
     return {
-        "a": StubDataclassRecord(str_field="A", int_field=1),
-        "b": StubDataclassRecord(str_field="B", int_field=2),
+        "a": StubDataclassRecord(str_field="A"),
+        "b": StubDataclassRecord(str_field="B"),
     }
 
 
 def stub_dataclass_derived_record_dict_factory() -> Dict[str, StubDataclassDerivedRecord]:
     """Create stub values."""
     return {
-        "a": StubDataclassDerivedRecord(str_field="A", int_field=1),
-        "b": StubDataclassDerivedRecord(str_field="B", int_field=2),
+        "a": StubDataclassDerivedRecord(str_field="A"),
+        "b": StubDataclassDerivedRecord(str_field="B"),
     }
 
 

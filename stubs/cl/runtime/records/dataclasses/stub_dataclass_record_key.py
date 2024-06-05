@@ -15,4 +15,4 @@
 from typing import Tuple
 from typing import Type
 
-StubDataclassRecordKey = Tuple[Type["StubDataclassRecord"], str, int]
+StubDataclassRecordKey = Tuple[Type["StubDataclassRecord"], str]

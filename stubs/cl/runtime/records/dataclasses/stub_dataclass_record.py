@@ -24,11 +24,5 @@ class StubDataclassRecord(DataclassMixin):
     str_field: str = "abc"
     """Stub field."""
 
-    int_field: int = 123
-    """Stub field."""
-
-    version: int = 0
-    """Stub version field."""
-
     def get_key(self) -> StubDataclassRecordKey:
-        return type(self), self.str_field, self.int_field
+        return type(self), self.str_field
