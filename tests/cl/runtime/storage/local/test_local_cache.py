@@ -12,11 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import dataclasses
 import pytest
 from cl.runtime import DataSource
 from cl.runtime.context.basic_context import BasicContext
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_base import StubDataclassBase
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
 
 
 def test_smoke():
@@ -24,14 +23,14 @@ def test_smoke():
 
     with BasicContext() as context:
         # Create test record and populate with sample data
-        record = StubDataclassBase()
+        record = StubDataclassRecord()
         key = record.get_key()
         record_pack = record.pack()
 
         # Test saving and loading
         dataset = ["Sample"]
         DataSource.default().save_many([record_pack], dataset=dataset)
-        loaded_records = StubDataclassBase.load_many([record, key, None], context=context, dataset=dataset)
+        loaded_records = StubDataclassRecord.load_many([record, key, None], context=context, dataset=dataset)
 
         assert loaded_records[0] == record
         assert loaded_records[1] == record
