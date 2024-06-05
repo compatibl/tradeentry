@@ -19,7 +19,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Literal, Type
 from typing_extensions import Self
-from cl.runtime.records.dataclasses.datafield import datafield
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 
 
 @dataclass(slots=True)

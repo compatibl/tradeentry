@@ -18,9 +18,35 @@ import textwrap
 from typing import List
 from typing import Type
 
+from cl.runtime.schema.display_kind import DisplayKind
+from cl.runtime.schema.module_decl import ModuleDecl
+from cl.runtime.schema.type_decl import TypeDecl
+
 
 class SchemaUtil:
     """Helper class for generating the schema."""
+
+    @staticmethod
+    def get_type_decl(record_type: Type) -> TypeDecl:
+        """
+        Get type declaration without the data specific to the dataclass framework. Use specialized
+        helper classes for each dataclass framework to get complete type declarations.
+        """
+
+        module = ModuleDecl(module_path=record_type.__module__)
+        key_fields = SchemaUtil.get_key_fields(record_type)
+
+        elements = []
+
+        result = TypeDecl(
+            module=module.get_key(),
+            name=record_type.__name__,
+            comment=record_type.__doc__ or "",
+            display_kind=DisplayKind.Basic,
+            elements=elements,
+            keys=key_fields
+        )
+        return result
 
     @staticmethod
     def get_key_fields(record_type: Type) -> List[str]:
