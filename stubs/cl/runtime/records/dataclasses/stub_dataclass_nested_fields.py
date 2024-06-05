@@ -20,14 +20,11 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_data import Stu
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_from_derived_data import (
     StubDataclassDerivedFromDerivedData,
 )
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_nested_fields_key import StubDataclassNestedFieldsKey
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecordKey
 from typing import Tuple
 from typing import Type
-
-StubDataclassNestedFieldsKey = Tuple[
-    Type["StubDataclassNestedFields"], str, StubDataclassRecordKey, StubDataclassRecordKey
-]
 
 
 @dataclass(init=False)

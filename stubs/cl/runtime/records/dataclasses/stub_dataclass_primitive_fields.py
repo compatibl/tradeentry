@@ -21,26 +21,11 @@ from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.storage.data_source_types import TKey
 from dataclasses import dataclass
 from stubs.cl.runtime import StubDataclassRecord
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_primitive_fields_key import StubDataclassPrimitiveFieldsKey
 from stubs.cl.runtime.records.enum.stub_int_enum import StubIntEnum
 from typing import Tuple
 from typing import Type
 from uuid import UUID
-
-StubDataclassPrimitiveFieldsKey = Tuple[
-    Type["StubDataclassPrimitiveFields"],
-    str,
-    float,
-    bool,
-    int,
-    int,  # Long
-    dt.date,
-    dt.time,
-    dt.datetime,
-    UUID,
-    bytes,
-    StubIntEnum,
-    # TODO: Add Tuple when added to the class
-]
 
 
 @dataclass
