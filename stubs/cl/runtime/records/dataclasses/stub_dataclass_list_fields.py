@@ -71,16 +71,16 @@ def stub_dataclass_key_list_factory() -> List[StubDataclassRecordKey]:
 def stub_dataclass_record_list_factory() -> List[StubDataclassRecord]:
     """Create stub values."""
     return [
-        StubDataclassRecord(str_field="A"),
-        StubDataclassRecord(str_field="B"),
+        StubDataclassRecord(id="A"),
+        StubDataclassRecord(id="B"),
     ]
 
 
 def stub_dataclass_derived_record_list_factory() -> List[StubDataclassDerivedRecord]:
     """Create stub values."""
     return [
-        StubDataclassDerivedRecord(str_field="A"),
-        StubDataclassDerivedRecord(str_field="B"),
+        StubDataclassDerivedRecord(id="A"),
+        StubDataclassDerivedRecord(id="B"),
     ]
 
 

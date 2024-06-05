@@ -21,8 +21,8 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_record_key import StubD
 class StubDataclassRecord(DataclassMixin):
     """Stub record base class."""
 
-    str_field: str = "abc"
-    """Stub field."""
+    id: str = "abc"
+    """Unique identifier."""
 
     def get_key(self) -> StubDataclassRecordKey:
-        return type(self), self.str_field
+        return type(self), self.id
