@@ -15,5 +15,9 @@
 from cl.runtime.records.generic_key import GenericKey
 from typing import Tuple
 from typing import Type
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from cl.runtime.view.view import View
 
 ViewKey = Tuple[Type["View"], GenericKey, str]

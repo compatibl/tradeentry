@@ -14,5 +14,9 @@
 
 from typing import Tuple
 from typing import Type
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from stubs.cl.runtime.records.dataclasses.stub_dataclass_versioned_record import StubDataclassVersionedRecord
 
 StubDataclassVersionedRecordKey = Tuple[Type["StubDataclassVersionedRecord"], str]

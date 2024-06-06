@@ -13,10 +13,15 @@
 # limitations under the License.
 
 import datetime as dt
+
 from stubs.cl.runtime.records.enum.stub_int_enum import StubIntEnum
 from typing import Tuple
 from typing import Type
+from typing import TYPE_CHECKING
 from uuid import UUID
+
+if TYPE_CHECKING:
+    from stubs.cl.runtime import StubDataclassPrimitiveFields
 
 StubDataclassPrimitiveFieldsKey = Tuple[
     Type["StubDataclassPrimitiveFields"],

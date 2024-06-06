@@ -16,5 +16,9 @@ from __future__ import annotations
 
 from typing import Tuple
 from typing import Type
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from cl.runtime.schema.module_decl import ModuleDecl
 
 ModuleDeclKey = Tuple[Type["ModuleDecl"], str]  # TODO: Replace by fully qualified type name

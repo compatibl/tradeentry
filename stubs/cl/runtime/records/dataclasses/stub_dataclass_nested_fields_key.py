@@ -13,8 +13,11 @@
 # limitations under the License.
 
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecordKey
-from typing import Tuple
+from typing import Tuple, TYPE_CHECKING
 from typing import Type
+
+if TYPE_CHECKING:
+    from stubs.cl.runtime import StubDataclassNestedFields
 
 StubDataclassNestedFieldsKey = Tuple[
     Type["StubDataclassNestedFields"], str, StubDataclassRecordKey, StubDataclassRecordKey
