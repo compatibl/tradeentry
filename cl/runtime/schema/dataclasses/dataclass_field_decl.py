@@ -37,5 +37,24 @@ class DataclassFieldDecl(FieldDecl):
             field_type: Type of the field obtained from get_type_hints where ForwardRefs are resolved
         """
 
+        # Use base class to populate fields that do not require access to dataclasses metadata
         result = FieldDecl.create(field.name, field_type)
+
+        # Populate fields that require access to dataclasses metadata
+        metadata = dict(field.metadata)
+        if name := metadata.pop("name", None) is not None:
+            result.name = name
+        if label := metadata.pop("label", None) is not None:
+            result.label = label
+        if formatter := metadata.pop("formatter", None) is not None:
+            result.formatter = formatter
+        if subtype := metadata.pop("subtype", None) is not None:
+            if subtype == "long":
+                if result.field_type == "int":
+                    result.field_type = "long"
+                else:
+                    raise RuntimeError(f"Subtype 'long' is not valid for field type {result.field_type}")
+            else:
+                raise RuntimeError(f"Subtype {subtype} is not recognized.")
+
         return result
