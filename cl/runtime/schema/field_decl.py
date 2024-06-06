@@ -176,7 +176,13 @@ class FieldDecl:
             else:
                 raise RuntimeError(f"First element of key tuple for field {field_name} is not a type.")
 
-            # Assign key type
+            if hasattr(field_arg, "get_base_type"):
+                # Assign key type using base class
+                # TODO: Remove this code after derived key type is supported in REST
+                field_arg = field_arg.get_base_type()
+            else:
+                raise RuntimeError(f"Class {field_arg} does not have 'get_base_type' method.")
+
             result.field_type = f"{field_arg.__module__}.{field_arg.__name__}"
 
         elif field_origin is None:
