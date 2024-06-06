@@ -30,10 +30,10 @@ TKey = Tuple[
 ]
 """Tuple of (type, primary key fields)."""
 
-TPrimitive = str | float | bool | int | dt.date | dt.time | dt.datetime | UUID | bytes | Enum
+TPrimitive = str | float | bool | int | dt.date | dt.time | dt.datetime | UUID | bytes
 """Primitive value fields."""
 
-TField = Dict[str, "TField"] | List["TField"] | TPrimitive | None
+TField = Dict[str, "TField"] | List["TField"] | Enum | TPrimitive | None
 """Primitive value fields and data containers."""
 
 TData = Dict[str, TField]
