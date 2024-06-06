@@ -25,7 +25,17 @@ class DataclassFieldDecl(FieldDecl):
 
     @classmethod
     def create(cls, field: Field, field_type: Type) -> Self:
-        """Create from dataclass Field and an additional parameter for type with resolved ForwardRefs."""
+        """
+        Create from dataclass field definition and field_type obtained from get_type_hints.
+
+        Notes:
+            The Field object also contains the type but it is not resolved in case of ForwardRef.
+            For this reason, field_type obtained from get_type_hints is used as well.
+
+        Args:
+            field: Dataclass field definition
+            field_type: Type of the field obtained from get_type_hints where ForwardRefs are resolved
+        """
 
         result = FieldDecl.create(field.name, field_type)
         return result

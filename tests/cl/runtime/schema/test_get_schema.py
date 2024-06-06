@@ -51,6 +51,7 @@ def get_type_decl(cls: Type) -> Dict[str, Any]:
     for field in fields:
         field_type = type_hints[field.name]
         field_decl = DataclassFieldDecl.create(field, field_type)
+        print(field_decl)
         pass
 
         # element = {
