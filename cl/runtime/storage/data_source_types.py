@@ -13,6 +13,8 @@
 # limitations under the License.
 
 import datetime as dt
+from enum import Enum
+from uuid import UUID
 from typing import Any
 from typing import Dict
 from typing import Iterable
@@ -28,10 +30,10 @@ TKey = Tuple[
 ]
 """Tuple of (type, primary key fields)."""
 
-TPrimitive = str | float | bool | int | dt.date | dt.time | dt.datetime
+TPrimitive = str | float | bool | int | dt.date | dt.time | dt.datetime | UUID | bytes | Enum
 """Primitive value fields."""
 
-TField = Dict[str, "TField"] | List["TField"] | TPrimitive
+TField = Dict[str, "TField"] | List["TField"] | TPrimitive | None
 """Primitive value fields and data containers."""
 
 TData = Dict[str, TField]
