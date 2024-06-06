@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import datetime as dt
-import pytz
 from cl.runtime.storage.data_source_types import TData
 from typing import Any
 from typing import Dict
@@ -39,9 +38,9 @@ class StubDictUtil:
             "time_field": dt.time(11, 10, 0),
             "time_field_ms": dt.time(11, 10, 0, 123000),
             "time_field_us": dt.time(11, 10, 0, 123456),
-            "datetime_field": dt.datetime(2003, 4, 21, 11, 10, 0, tzinfo=pytz.UTC),
-            "datetime_field_ms": dt.datetime(2003, 4, 21, 11, 10, 0, 123000, tzinfo=pytz.UTC),
-            "datetime_field_us": dt.datetime(2003, 4, 21, 11, 10, 0, 123456, tzinfo=pytz.UTC),
+            "datetime_field": dt.datetime(2003, 4, 21, 11, 10, 0, tzinfo=dt.timezone.utc),
+            "datetime_field_ms": dt.datetime(2003, 4, 21, 11, 10, 0, 123000, tzinfo=dt.timezone.utc),
+            "datetime_field_us": dt.datetime(2003, 4, 21, 11, 10, 0, 123456, tzinfo=dt.timezone.utc),
             "uuid_field": UUID("1A" * 16),
         }
         return result
