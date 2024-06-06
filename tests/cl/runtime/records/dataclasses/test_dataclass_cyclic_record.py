@@ -34,12 +34,12 @@ def test_cyclic_record():
 
     # Test for annotation introspection
     assert StubDataclassCyclicA.__annotations__ == {
-        "b_key": "StubDataclassCyclicBKey | None",
-        "b_obj": "StubDataclassCyclicB | None",
+        "b_key": "StubDataclassCyclicBKey",
+        "b_obj": "StubDataclassCyclicB",
     }
     assert StubDataclassCyclicB.__annotations__ == {
-        "str_id": "str | None",
-        "a_obj": "StubDataclassCyclicA | None",
+        "str_id": "str",
+        "a_obj": "StubDataclassCyclicA",
     }
 
     # Test for keys

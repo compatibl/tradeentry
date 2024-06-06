@@ -29,10 +29,10 @@ if TYPE_CHECKING:
 class StubDataclassCyclicA(DataclassMixin):
     """Stub class A with a field whose type is key for class B."""
 
-    b_key: StubDataclassCyclicBKey | None = datafield()
+    b_key: StubDataclassCyclicBKey = datafield()
     """Key for class B."""
 
-    b_obj: StubDataclassCyclicB | None = datafield()
+    b_obj: StubDataclassCyclicB = datafield()
     """Key for class B."""
 
     def get_key(self) -> StubDataclassCyclicAKey:

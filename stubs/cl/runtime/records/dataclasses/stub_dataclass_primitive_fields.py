@@ -35,7 +35,7 @@ class StubDataclassPrimitiveFields(DataclassMixin):
     key_str_field: str = datafield(default="abc")
     """Stub field."""
 
-    key_float_field: float = datafield(default="1.23")
+    key_float_field: float = datafield(default=1.23)
     """Stub field."""
 
     key_bool_field: bool = datafield(default=True)

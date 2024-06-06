@@ -47,14 +47,16 @@ class StubDataclassNestedFields(DataclassMixin):
     """Stub field."""
 
     derived_from_derived_datafield: StubDataclassDerivedFromDerivedData = datafield(
-        default=StubDataclassDerivedFromDerivedData
+        default_factory=StubDataclassDerivedFromDerivedData
     )
     """Stub field."""
 
     polymorphic_datafield: StubDataclassData = datafield(default_factory=StubDataclassDerivedData)
     """Declared StubDataclassData but provided an instance of StubDataclassDerivedData."""
 
-    polymorphic_derived_datafield: StubDataclassDerivedData = datafield(default=StubDataclassDerivedFromDerivedData)
+    polymorphic_derived_datafield: StubDataclassDerivedData = datafield(
+        default_factory=StubDataclassDerivedFromDerivedData
+    )
     """Declared StubDataclassDerivedData but provided an instance of StubDataclassDerivedFromDerivedData."""
 
     key_field: StubDataclassRecordKey = datafield(default_factory=StubDataclassRecordKey)

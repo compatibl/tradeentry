@@ -63,8 +63,8 @@ def stub_dataclass_data_dict_factory() -> Dict[str, StubDataclassData]:
 def stub_dataclass_key_dict_factory() -> Dict[str, StubDataclassRecordKey]:
     """Create stub values."""
     return {
-        "a": (StubDataclassRecord, "A", 1),
-        "b": (StubDataclassRecord, "B", 2),
+        "a": (StubDataclassRecord, "A"),
+        "b": (StubDataclassRecord, "B"),
     }
 
 

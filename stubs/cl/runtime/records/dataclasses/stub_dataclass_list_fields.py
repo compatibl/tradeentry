@@ -63,8 +63,8 @@ def stub_dataclass_data_list_factory() -> List[StubDataclassData]:
 def stub_dataclass_key_list_factory() -> List[StubDataclassRecordKey]:
     """Create stub values."""
     return [
-        (StubDataclassRecord, "A", 0),
-        (StubDataclassRecord, "B", 1),
+        (StubDataclassRecord, "A"),
+        (StubDataclassRecord, "B"),
     ]
 
 
