@@ -13,27 +13,19 @@
 # limitations under the License.
 
 import dataclasses
-import datetime as dt
 import json
 import os
 import pytest
-import types
-import typing
 from cl.runtime.records.schema_util import SchemaUtil
 from cl.runtime.schema.dataclasses.dataclass_field_decl import DataclassFieldDecl
+from cl.runtime.schema.element_decl import ElementDecl
 from cl.runtime.schema.type_decl import TypeDecl
-from dataclasses import Field
-from dataclasses import dataclass
-from enum import Enum
 from inflection import titleize
 from stubs.cl.runtime import StubDataclassNestedFields
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields import StubDataclassOptionalFields
 from typing import Any
 from typing import Dict
-from typing import List
-from typing import Literal
-from typing import Tuple
 from typing import Type
 from typing import get_type_hints
 
@@ -51,7 +43,9 @@ def get_type_decl(cls: Type) -> Dict[str, Any]:
     for field in fields:
         field_type = type_hints[field.name]
         field_decl = DataclassFieldDecl.create(field, field_type)
+        element_decl = ElementDecl.create(field_decl)
         print(field_decl)
+        print(element_decl)
         pass
 
         # element = {

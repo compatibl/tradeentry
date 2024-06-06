@@ -42,13 +42,13 @@ class DataclassFieldDecl(FieldDecl):
 
         # Populate fields that require access to dataclasses metadata
         metadata = dict(field.metadata)
-        if name := metadata.pop("name", None) is not None:
+        if (name := metadata.pop("name", None)) is not None:
             result.name = name
-        if label := metadata.pop("label", None) is not None:
+        if (label := metadata.pop("label", None)) is not None:
             result.label = label
-        if formatter := metadata.pop("formatter", None) is not None:
+        if (formatter := metadata.pop("formatter", None)) is not None:
             result.formatter = formatter
-        if subtype := metadata.pop("subtype", None) is not None:
+        if (subtype := metadata.pop("subtype", None)) is not None:
             if subtype == "long":
                 if result.field_type == "int":
                     result.field_type = "long"
@@ -56,5 +56,9 @@ class DataclassFieldDecl(FieldDecl):
                     raise RuntimeError(f"Subtype 'long' is not valid for field type {result.field_type}")
             else:
                 raise RuntimeError(f"Subtype {subtype} is not recognized.")
+
+        # Check that no parsed fields remained in metadata
+        if len(metadata) > 0:
+            raise RuntimeError(f"Unrecognized attributes in dataclass field metadata: {metadata.keys()}")
 
         return result

@@ -12,10 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing_extensions import Self
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.member_decl import MemberDecl
 from dataclasses import dataclass
-from typing import List
+from cl.runtime.schema.enum_decl import EnumDecl
+from cl.runtime.schema.field_decl import FieldDecl
+from cl.runtime.schema.module_decl import ModuleDecl
+from cl.runtime.schema.primitive_type import PrimitiveType
+from cl.runtime.schema.value_decl import ValueDecl
+
+primitive_type_map = {
+    "str": PrimitiveType.String,
+    "float": PrimitiveType.Double,
+    "bool": PrimitiveType.Bool,
+    "int": PrimitiveType.Int,
+    "long": PrimitiveType.Long,
+    "date": PrimitiveType.Date,
+    "time": PrimitiveType.Time,
+    "datetime": PrimitiveType.DateTime,
+    "uuid": PrimitiveType.UUID,
+    "bytes": PrimitiveType.Binary,
+}
 
 
 @dataclass(slots=True, kw_only=True)
@@ -49,3 +67,46 @@ class ElementDecl(MemberDecl):  # TODO: Consider renaming to TypeFieldDecl or Fi
     alternate_of: str | None = datafield()
     """Link current element to AlternateOf element. In the editor these elements will be treated as a choice."""
 
+    @classmethod
+    def create(cls, field_decl: FieldDecl) -> Self:
+        """Create ElementDecl from FieldDecl."""
+
+        result = ElementDecl()
+        result.name = field_decl.name
+        result.label = field_decl.label
+        result.comment = field_decl.comment
+        result.optional = field_decl.optional_field
+        result.optional_vector_element = field_decl.optional_values
+        result.additive = None  # TODO: Support in metadata
+        result.format_ = field_decl.formatter
+        result.alternate_of = None  # TODO: Support in metadata
+
+        if field_decl.field_kind is "primitive":
+            # Primitive type
+            if (primitive_type := primitive_type_map.get(field_decl.field_type, None)) is None:
+                raise RuntimeError(f"Primitive field type {field_decl.field_type} is not supported.")
+            result.value = ValueDecl(type_=primitive_type)
+        else:
+            # Complex type
+            module_name, type_name = field_decl.field_type.rsplit(".", 1)
+            module_key = ModuleDecl, module_name
+
+            if field_decl.field_kind == "enum":
+                result.enum = EnumDecl, module_key, type_name
+            elif field_decl.field_kind == "key":
+                from cl.runtime.schema.type_decl import TypeDecl
+                result.key_ = TypeDecl, module_key, type_name
+            elif field_decl.field_kind == "data":
+                from cl.runtime.schema.type_decl import TypeDecl
+                result.data = TypeDecl, module_key, type_name
+            else:
+                raise RuntimeError(f"Unsupported field kind {field_decl.field_kind} for field {field_decl.name}.")
+
+        if field_decl.container_type is None:
+            result.vector = False
+        elif field_decl.container_type == "list":
+            result.vector = True
+        else:
+            raise RuntimeError(f"Unsupported container type {field_decl.container_type} for field {field_decl.name}.")
+
+        return result

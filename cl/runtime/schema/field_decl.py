@@ -73,7 +73,7 @@ class FieldDecl:
     additive: bool = False
     """Optional flag indicating if the element is additive (i.e., its sum across records has meaning)."""
 
-    format_: str | None = None
+    formatter: str | None = None
     """Format string used to display the element using Python conventions ."""
 
     alternate_of: str | None = None

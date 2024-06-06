@@ -192,7 +192,7 @@ class DatasetUtil:
         if dataset is None or dataset == "":
             # Single space if dataset is None or empty
             return " "
-        elif is_list := isinstance(dataset, list) or isinstance(dataset, str):
+        elif is_list := (isinstance(dataset, list) or isinstance(dataset, str)):
             if is_list:
                 # Concatenate *without validation* if dataset is provided in list format
                 dataset = [str(x) for x in dataset]
