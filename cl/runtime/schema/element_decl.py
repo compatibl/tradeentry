@@ -16,7 +16,6 @@ from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.member_decl import MemberDecl
 from dataclasses import dataclass
 from typing import List
-from typing import Optional
 
 
 @dataclass(slots=True, kw_only=True)
@@ -32,16 +31,16 @@ class ElementDecl(MemberDecl):  # TODO: Consider renaming to TypeFieldDecl or Fi
     comment: str | None = datafield()
     """Element comment. Contains addition information."""
 
-    vector: Optional[bool] = datafield()  # TODO: Replace by container field with enum values vector/array, dict, DF
+    vector: bool | None = datafield()  # TODO: Replace by container field with enum values vector/array, dict, DF
     """Flag indicating variable size array (vector) container."""
 
-    optional: Optional[bool] = datafield()
+    optional: bool | None = datafield()
     """Flag indicating optional element."""
 
-    optional_vector_element: Optional[bool] = datafield()  # TODO: Rename to optional_element or optional_field
+    optional_vector_element: bool | None = datafield()  # TODO: Rename to optional_element or optional_field
     """Flag indicating optional vector item element."""
 
-    additive: Optional[bool] = datafield()
+    additive: bool | None = datafield()
     """Optional flag indicating if the element is additive and that the total column can be shown in the UI."""
 
     format_: str | None = datafield(name="Format")  # TODO: Use Python interpolated string format

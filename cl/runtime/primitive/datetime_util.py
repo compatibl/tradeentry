@@ -14,7 +14,6 @@
 
 import datetime as dt
 import re
-from typing import Optional
 from typing import Tuple
 
 # Compile the regex pattern for datetime in ISO-8601 format yyyy-mm-ddThh:mm:ss.fffZ
@@ -124,7 +123,7 @@ class DatetimeUtil:
         minute: int,
         second: int,
         *,
-        millisecond: Optional[int] = None,
+        millisecond: int | None = None,
     ) -> dt.datetime:
         """Convert fields with millisecond precision to dt.datetime in UTC timezone."""
 

@@ -23,7 +23,6 @@ from cl.runtime.schema.type_index_decl import TypeIndexDecl
 from cl.runtime.schema.type_kind import TypeKind
 from dataclasses import dataclass
 from typing import List
-from typing import Optional
 
 
 @dataclass(slots=True, kw_only=True)
@@ -51,25 +50,25 @@ class TypeDecl(DataclassMixin):
     display_kind: DisplayKind = datafield()  # TODO: Make optional, treat None as Basic
     """Display kind."""
 
-    inherit: Optional[TypeDeclKey] = datafield()
+    inherit: TypeDeclKey | None = datafield()
     """Parent type reference."""
 
-    declare: Optional[HandlerDeclareBlockDecl] = datafield()  # TODO: Flatten or use block for abstract flag
+    declare: HandlerDeclareBlockDecl | None = datafield()  # TODO: Flatten or use block for abstract flag
     """Handler declaration block."""
 
-    elements: Optional[List[ElementDecl]] = datafield()  # TODO: Consider renaming to fields
+    elements: List[ElementDecl] | None = datafield()  # TODO: Consider renaming to fields
     """Element declaration block."""
 
     keys: List[str] | None = datafield()
     """Array of key element names (specify in base class only)."""
 
-    indexes: Optional[List[TypeIndexDecl]] = datafield()
+    indexes: List[TypeIndexDecl] | None = datafield()
     """Defines indexes for the type."""
 
-    immutable: Optional[bool] = datafield()
+    immutable: bool | None = datafield()
     """Immutable flag."""
 
-    permanent: Optional[bool] = datafield()
+    permanent: bool | None = datafield()
     """When the record is saved, also save it permanently."""
 
     def get_key(self) -> TypeDeclKey:

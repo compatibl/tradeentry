@@ -18,7 +18,6 @@ from cl.runtime.schema.handler_type import HandlerType
 from cl.runtime.schema.handler_variable_decl import HandlerVariableDecl
 from dataclasses import dataclass
 from typing import List
-from typing import Optional
 
 
 @dataclass(slots=True, kw_only=True)
@@ -37,12 +36,12 @@ class HandlerDeclareDecl:
     type_: HandlerType = datafield(name="Type")
     """Handler type."""
 
-    params: Optional[List[HandlerParamDecl]] = datafield()
+    params: List[HandlerParamDecl] | None = datafield()
     """Handler parameters."""
 
-    return_: Optional[HandlerVariableDecl] = datafield(name="Return")  # TODO: Remove trailing _ automatically
+    return_: HandlerVariableDecl | None = datafield(name="Return")  # TODO: Remove trailing _ automatically
     """Handler return value."""
 
-    static: Optional[bool] = datafield()
+    static: bool | None = datafield()
     """If set as true, handler will be static, otherwise non-static."""
 

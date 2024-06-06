@@ -14,7 +14,6 @@
 
 import datetime as dt
 import re
-from typing import Optional
 from typing import Tuple
 
 # Compile the regex pattern for date in ISO-8601 format yyyy-mm-dd

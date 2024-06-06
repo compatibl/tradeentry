@@ -15,7 +15,6 @@
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.index_sort_order_enum import IndexSortOrderEnum
 from dataclasses import dataclass
-from typing import Optional
 
 
 @dataclass(slots=True, kw_only=True)

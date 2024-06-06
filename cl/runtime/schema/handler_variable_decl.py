@@ -16,17 +16,16 @@ from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from cl.runtime.schema.member_decl import MemberDecl
 from dataclasses import dataclass
-from typing import Optional
 
 
 @dataclass(slots=True, kw_only=True)
 class HandlerVariableDecl(MemberDecl):
     """Handler parameter or return variable declaration."""
 
-    vector: Optional[bool] = datafield()  # TODO: Similar change to vector in element decl
+    vector: bool | None = datafield()  # TODO: Similar change to vector in element decl
     """Flag indicating variable size array (vector) container."""
 
-    optional: Optional[bool] = datafield()
+    optional: bool | None = datafield()
     """Flag indicating optional element."""
 
     label: str | None = datafield()

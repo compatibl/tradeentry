@@ -15,7 +15,6 @@
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from dataclasses import dataclass
 from typing import List
-from typing import Optional
 
 
 @dataclass(slots=True, kw_only=True)

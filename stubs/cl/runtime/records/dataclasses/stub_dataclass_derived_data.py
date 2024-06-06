@@ -15,7 +15,6 @@
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_data import StubDataclassData
-from typing import Optional
 
 
 @dataclass

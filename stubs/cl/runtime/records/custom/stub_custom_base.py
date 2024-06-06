@@ -15,20 +15,19 @@
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.storage.data_source_types import TData
 from stubs.cl.runtime.records.custom.stub_custom_base_key import StubCustomBaseKey
-from typing import Optional
 from typing import Tuple
 
 
 class StubCustomBase(RecordMixin):
     """Stub record used in tests."""
 
-    str_field: Optional[str]
+    str_field: str | None
     """First primary key attribute."""
 
-    int_field: Optional[int]
+    int_field: int | None
     """Second primary key attribute."""
 
-    float_field: Optional[float]
+    float_field: float | None
     """Float attribute of base class."""
 
     def __init__(self, *, str_field: str = "abc", int_field: int = 123, float_field: float = 4.56):

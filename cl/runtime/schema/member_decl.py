@@ -17,27 +17,26 @@ from cl.runtime.schema.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from cl.runtime.schema.value_decl import ValueDecl
 from dataclasses import dataclass
-from typing import Optional
 
 
 @dataclass(slots=True, kw_only=True)
 class MemberDecl:
     """Type member declaration."""
 
-    value: Optional[ValueDecl] = datafield()  # TODO: Flatten value and other types to a single field
+    value: ValueDecl | None = datafield()  # TODO: Flatten value and other types to a single field
     """Value or primitive element declaration."""
 
-    enum: Optional[EnumDeclKey] = datafield()
+    enum: EnumDeclKey | None = datafield()
     """Enumeration element declaration."""
 
-    data: Optional[TypeDeclKey] = datafield()
+    data: TypeDeclKey | None = datafield()
     """Data element declaration."""
 
-    key_: Optional[TypeDeclKey] = datafield(name="Key")  # TODO: Remove trailing _ automatically instead
+    key_: TypeDeclKey | None = datafield(name="Key")  # TODO: Remove trailing _ automatically instead
     """Key element declaration."""
 
-    query: Optional[TypeDeclKey] = datafield()
+    query: TypeDeclKey | None = datafield()
     """Query element declaration."""
 
-    condition: Optional[TypeDeclKey] = datafield()
+    condition: TypeDeclKey | None = datafield()
     """Condition element declaration."""

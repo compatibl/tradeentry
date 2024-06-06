@@ -14,7 +14,6 @@
 
 import re
 from typing import Dict
-from typing import Optional
 from typing import Pattern
 
 # Regexp for docstring parsing
@@ -68,7 +67,7 @@ class EnumItemDocstring:
     """ Item label. """
 
 
-def _parse_param_metadata(line: str) -> Optional[Dict[str, str]]:
+def _parse_param_metadata(line: str) -> Dict[str, str] | None:
     """Parse param line in format 'param_name : param_type[, ..]'."""
 
     param_options = line.split(",")

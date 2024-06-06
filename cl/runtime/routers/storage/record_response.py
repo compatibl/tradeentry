@@ -21,7 +21,6 @@ from pydantic import BaseModel
 from pydantic import Field
 from typing import Any
 from typing import Dict
-from typing import Optional
 
 RecordResponseSchema = Dict[str, Any]
 RecordResponseData = Dict[str, Any]
