@@ -18,7 +18,7 @@ from cl.runtime.schema.primitive_type import PrimitiveType
 from dataclasses import dataclass
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class ValueDecl:
     """Value or atomic element declaration."""
 

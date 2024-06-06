@@ -22,7 +22,7 @@ from typing_extensions import Self
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class FieldDecl:
     """Field declaration."""
 

@@ -19,7 +19,7 @@ from typing_extensions import Self
 from cl.runtime.schema.field_decl import FieldDecl
 
 
-@dataclass(slots=True, init=False)
+@dataclass(slots=True, kw_only=True, init=False)
 class DataclassFieldDecl(FieldDecl):
     """Field declaration for a dataclass type."""
 

@@ -19,7 +19,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class HandlerVariableDecl(TypeMemberDecl):
     """Handler parameter or return variable declaration."""
 

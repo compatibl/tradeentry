@@ -35,7 +35,7 @@ _glob_regex_str = r"[\*\?\[]"
 _glob_regex = re.compile(_glob_regex_str)
 
 
-@dataclass(slots=True, init=False)
+@dataclass(slots=True, kw_only=True, init=False)
 class PackageAliases:
     """
     Package aliases using namespace or module glob pattern.

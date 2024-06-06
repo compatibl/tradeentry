@@ -17,7 +17,7 @@ from cl.runtime.schema.handler_variable_decl import HandlerVariableDecl
 from dataclasses import dataclass
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class HandlerParamDecl(HandlerVariableDecl):
     """Handler parameter declaration."""
 

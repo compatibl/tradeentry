@@ -20,7 +20,7 @@ from typing import ClassVar
 from typing import Dict
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class ApiSettings:
     """REST API settings do not affect the UI."""
 

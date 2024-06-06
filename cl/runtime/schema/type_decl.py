@@ -26,7 +26,7 @@ from typing import List
 from typing import Optional
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class TypeDecl(DataclassMixin):
     """
     Defines type declaration. A tag of entity type XML representation corresponds to each element of the type. The

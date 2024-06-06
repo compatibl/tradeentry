@@ -19,7 +19,7 @@ from typing import List
 from typing import Optional
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class TypeElementDecl(TypeMemberDecl):  # TODO: Consider renaming to TypeFieldDecl or FieldDecl
     """Type element declaration."""
 

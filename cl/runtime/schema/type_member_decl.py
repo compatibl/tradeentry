@@ -20,7 +20,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class TypeMemberDecl:
     """Type member declaration."""
 

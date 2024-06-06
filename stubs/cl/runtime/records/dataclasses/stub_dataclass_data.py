@@ -16,7 +16,7 @@ from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from dataclasses import dataclass
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class StubDataclassData:
     """Stub base data type."""
 

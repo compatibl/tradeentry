@@ -21,7 +21,7 @@ from dataclasses import dataclass
 from typing import List
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class EnumDecl(DataclassMixin):
     """Enum declaration."""
 

@@ -21,7 +21,7 @@ from typing import List
 from typing import Optional
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class HandlerDeclareDecl:
     """Handler declaration data."""
 

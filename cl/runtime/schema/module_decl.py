@@ -16,7 +16,7 @@ from dataclasses import dataclass
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class ModuleDecl:
     """Specifies module path in dot-delimited format."""
 

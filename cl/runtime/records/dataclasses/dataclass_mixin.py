@@ -24,7 +24,7 @@ from typing import TypeVar
 T = TypeVar("T")
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class DataclassMixin(RecordMixin, ABC):
     """Mixin methods for dataclass records."""
 

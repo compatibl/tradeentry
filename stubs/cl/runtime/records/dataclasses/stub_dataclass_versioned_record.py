@@ -17,7 +17,7 @@ from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_versioned_record_key import StubDataclassVersionedRecordKey
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class StubDataclassVersionedRecord(DataclassMixin):
     """Stub record base class."""
 

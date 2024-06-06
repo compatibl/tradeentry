@@ -18,7 +18,7 @@ from dataclasses import dataclass
 from typing import List
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class HandlerDeclareBlockDecl:
     """Handler declaration block in type declaration."""
 
