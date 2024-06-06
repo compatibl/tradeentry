@@ -53,7 +53,7 @@ class RecordMixin(ABC):
     """To prevent creation of __dict__ in derived types."""
 
     @abstractmethod
-    def get_key(self) -> Tuple[Self, ...]:
+    def get_key(self) -> Tuple:
         """Return (type(self), primary key fields), identifying all field types in returned value type hint."""
 
     @abstractmethod
