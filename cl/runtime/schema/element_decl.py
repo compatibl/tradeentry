@@ -13,14 +13,14 @@
 # limitations under the License.
 
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
-from cl.runtime.schema.type_member_decl import TypeMemberDecl
+from cl.runtime.schema.member_decl import MemberDecl
 from dataclasses import dataclass
 from typing import List
 from typing import Optional
 
 
 @dataclass(slots=True, kw_only=True)
-class TypeElementDecl(TypeMemberDecl):  # TODO: Consider renaming to TypeFieldDecl or FieldDecl
+class ElementDecl(MemberDecl):  # TODO: Consider renaming to TypeFieldDecl or FieldDecl
     """Type element declaration."""
 
     name: str = datafield()

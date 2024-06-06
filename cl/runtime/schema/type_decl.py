@@ -18,7 +18,7 @@ from cl.runtime.schema.display_kind import DisplayKind
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
 from cl.runtime.schema.type_decl_key import TypeDeclKey
-from cl.runtime.schema.type_element_decl import TypeElementDecl
+from cl.runtime.schema.element_decl import ElementDecl
 from cl.runtime.schema.type_index_decl import TypeIndexDecl
 from cl.runtime.schema.type_kind import TypeKind
 from dataclasses import dataclass
@@ -57,7 +57,7 @@ class TypeDecl(DataclassMixin):
     declare: Optional[HandlerDeclareBlockDecl] = datafield()  # TODO: Flatten or use block for abstract flag
     """Handler declaration block."""
 
-    elements: Optional[List[TypeElementDecl]] = datafield()  # TODO: Consider renaming to fields
+    elements: Optional[List[ElementDecl]] = datafield()  # TODO: Consider renaming to fields
     """Element declaration block."""
 
     keys: List[str] | None = datafield()

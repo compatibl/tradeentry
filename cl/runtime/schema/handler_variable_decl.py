@@ -14,13 +14,13 @@
 
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.type_decl_key import TypeDeclKey
-from cl.runtime.schema.type_member_decl import TypeMemberDecl
+from cl.runtime.schema.member_decl import MemberDecl
 from dataclasses import dataclass
 from typing import Optional
 
 
 @dataclass(slots=True, kw_only=True)
-class HandlerVariableDecl(TypeMemberDecl):
+class HandlerVariableDecl(MemberDecl):
     """Handler parameter or return variable declaration."""
 
     vector: Optional[bool] = datafield()  # TODO: Similar change to vector in element decl

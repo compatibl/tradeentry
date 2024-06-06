@@ -21,7 +21,7 @@ from typing import Optional
 
 
 @dataclass(slots=True, kw_only=True)
-class TypeMemberDecl:
+class MemberDecl:
     """Type member declaration."""
 
     value: Optional[ValueDecl] = datafield()  # TODO: Flatten value and other types to a single field
