@@ -12,13 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import dataclasses
 import json
 import os
 import pytest
-from cl.runtime.records.schema_util import SchemaUtil
-from cl.runtime.schema.dataclasses.dataclass_field_decl import DataclassFieldDecl
-from cl.runtime.schema.element_decl import ElementDecl
+
+from cl.runtime.schema.dataclasses.dataclass_type_decl import DataclassTypeDecl
 from cl.runtime.schema.type_decl import TypeDecl
 from inflection import titleize
 from stubs.cl.runtime import StubDataclassNestedFields
@@ -27,38 +25,10 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields import 
 from typing import Any
 from typing import Dict
 from typing import Type
-from typing import get_type_hints
 
 
 def get_type_decl(cls: Type) -> Dict[str, Any]:
     """Get type declaration for a class."""
-
-    # Information about dataclass fields including the metadata (does not resolve ForwardRefs)
-    fields = dataclasses.fields(cls)
-
-    # Get type hints to resolve ForwardRefs
-    type_hints = get_type_hints(cls)
-
-    elements = []
-    for field in fields:
-        field_type = type_hints[field.name]
-        field_decl = DataclassFieldDecl.create(field, field_type)
-        element_decl = ElementDecl.create(field_decl)
-        print(field_decl)
-        print(element_decl)
-        pass
-
-        # element = {
-        #    "value": {
-        #        "type": field.type.__name__
-        #    },
-        #    "name": field.name,
-        #    "comment": field.metadata.get("comment", "")
-        # }
-        # elements.append(element)
-
-    # Get key fields by parsing the source of 'get_key' method
-    key_fields = SchemaUtil.get_key_fields(cls)
 
     type_decl = {
         "module": {"module_name": cls.__module__},
@@ -85,10 +55,9 @@ def test_method():
         with open(expected_result_file_path, "r", encoding="utf-8") as file:
             expected_result = json.load(file)
 
-        expected_result_obj = TypeDecl(**expected_result)
-        result_dict = get_type_decl(sample_type)
-        result_obj = TypeDecl(**result_dict)
-        # assert result_obj == expected_result_obj TODO: Restore
+        expected_result_obj = DataclassTypeDecl(**expected_result)
+        result_obj = DataclassTypeDecl.create(sample_type)
+        assert result_obj == expected_result_obj
 
 
 if __name__ == "__main__":
