@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import annotations
+
 import ast
 import inspect
 import textwrap
@@ -19,12 +21,15 @@ from dataclasses import dataclass
 from enum import Enum
 
 from inflection import titleize
-from typing import List
+from typing import List, ClassVar, Dict
 from typing import get_type_hints, Type
+
+from memoization import cached
 from typing_extensions import Self
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.display_kind import DisplayKind
+from cl.runtime.schema.field_decl import FieldDecl
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.module_decl import ModuleDecl
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
@@ -32,6 +37,11 @@ from cl.runtime.schema.type_decl_key import TypeDeclKey
 from cl.runtime.schema.element_decl import ElementDecl
 from cl.runtime.schema.type_index_decl import TypeIndexDecl
 from cl.runtime.schema.type_kind import TypeKind
+
+
+def for_type_key_maker(cls, record_type: Type, *, skip_fields: bool = False) -> str:
+    """Custom key marker for 'for_type' class method."""
+    return f"{record_type.__module__}.{record_type.__name__}.{skip_fields}"
 
 
 @dataclass(slots=True, kw_only=True)
@@ -84,12 +94,29 @@ class TypeDecl(DataclassMixin):
         return type(self), self.module, self.name
 
     @classmethod
-    def _create_partial(cls, record_type: Type) -> Self:
-        """Create partial type declaration without elements for a dataclass_transform based class."""
+    def for_key(cls, key: TypeDeclKey) -> Self:
+        """Create or return cached object for the specified type declaration key."""
+        class_path = f"{key[1][1]}.{key[2]}"  # TODO: Use parse_key method
+        return cls.for_class_path(class_path)
+
+    @classmethod
+    def for_class_path(cls, class_path: str) -> Self:
+        """Create or return cached object for the specified class path in module.ClassName format."""
+        raise NotImplementedError()
+
+    @classmethod
+    @cached(custom_key_maker=for_type_key_maker)
+    def for_type(cls, record_type: Type, *, skip_fields: bool = False) -> Self:
+        """
+        Create or return cached object for the specified record type.
+
+        Args:
+            record_type: Type of the record for which the declaration is created
+            skip_fields: Use this flag to skip fields generation when the method is invoked from a derived class
+        """
 
         if issubclass(cls, Enum):
-            raise RuntimeError(f"Cannot create TypeDecl for class {record_type.__name__}"
-                               f"because it is an enum, create EnumDecl instead.")
+            raise RuntimeError(f"Cannot create TypeDecl for class {record_type.__name__} because it is an enum.")
         if issubclass(cls, tuple):
             raise RuntimeError(f"Cannot create TypeDecl for class {record_type.__name__} because it is a tuple.")
 
@@ -122,12 +149,29 @@ class TypeDecl(DataclassMixin):
         # Get key fields by parsing the source of 'get_key' method
         result.keys = cls._get_key_fields(record_type)
 
+        # Use this flag to skip fields generation when the method is invoked from a derived class
+        if not skip_fields:
+
+            # Get type hints to resolve ForwardRefs
+            type_hints = get_type_hints(cls)
+
+            # Add an element for each type hint
+            result.elements = []
+            for field_name, field_type in type_hints.items():
+
+                # Get the rest of the data from the field itself
+                field_decl = FieldDecl.create(field_name, field_type)
+
+                # Convert to element and add
+                element_decl = ElementDecl.create(field_decl)
+                result.elements.append(element_decl)
+
         return result
 
     @classmethod
     def _get_key_fields(cls, record_type: Type) -> List[str]:
         """
-        Get key fields by parsing the source of 'get_key' method.
+        Get primary key fields by parsing the source of 'get_key' method.
 
         Notes:
             This method parses the source code of 'get_key' method and returns all instance

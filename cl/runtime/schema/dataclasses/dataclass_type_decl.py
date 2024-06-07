@@ -13,9 +13,11 @@
 # limitations under the License.
 
 import dataclasses
+
+from memoization import cached
 from typing_extensions import Self
 from cl.runtime.schema.dataclasses.dataclass_field_decl import DataclassFieldDecl
-from cl.runtime.schema.type_decl import TypeDecl
+from cl.runtime.schema.type_decl import TypeDecl, for_type_key_maker
 from cl.runtime.schema.element_decl import ElementDecl
 from dataclasses import dataclass
 from typing import get_type_hints, Type
@@ -26,36 +28,43 @@ class DataclassTypeDecl(TypeDecl):
     """Type declaration for a dataclass."""
 
     @classmethod
-    def create(cls, record_type: Type) -> Self:
-        """Create type declaration for a dataclass."""
+    @cached(custom_key_maker=for_type_key_maker)
+    def for_type(cls, record_type: Type, *, skip_fields: bool = False) -> Self:
+        """
+        Create or return cached object for the specified record type.
+
+        Args:
+            record_type: Type of the record for which the declaration is created
+            skip_fields: Use this flag to skip fields generation when the method is invoked from a derived class
+        """
 
         if not dataclasses.is_dataclass(record_type):
-            raise RuntimeError(f"Class {record_type.__name__} is not a dataclass.")
+            raise RuntimeError(f"DataclassTypeDecl used for {record_type.__name__} which is not a dataclass.")
 
-        # Create partial type declaration without elements
-        result = cls._create_partial(record_type)
+        # Populate using TypeDecl base
+        result = TypeDecl.for_type(record_type, skip_fields=True)
 
-        # Information about dataclass fields including the metadata (does not resolve ForwardRefs)
-        fields = dataclasses.fields(cls)
+        # Use this flag to skip fields generation when the method is invoked from a derived class
+        if not skip_fields:
 
-        # Get type hints to resolve ForwardRefs
-        type_hints = get_type_hints(cls)
+            # Information about dataclass fields including the metadata (does not resolve ForwardRefs)
+            fields = dataclasses.fields(cls)
 
-        # Add elements
-        result.elements = []
-        for field in fields:
+            # Get type hints to resolve ForwardRefs
+            type_hints = get_type_hints(cls)
 
-            # Get type from type hints because they resolve forward references
-            field_type = type_hints[field.name]
+            # Add elements
+            result.elements = []
+            for field in fields:
 
-            # Get the rest of the data from the field itself
-            field_decl = DataclassFieldDecl.create(field, field_type)
+                # Get type from type hints because they resolve forward references
+                field_type = type_hints[field.name]
 
-            # Convert to element and add
-            element_decl = ElementDecl.create(field_decl)
-            result.elements.append(element_decl)
+                # Get the rest of the data from the field itself
+                field_decl = DataclassFieldDecl.create(field, field_type)
 
-        # Get key fields by parsing the source of 'get_key' method
-        result.keys = DataclassTypeDecl._get_key_fields(record_type)
+                # Convert to element and add
+                element_decl = ElementDecl.create(field_decl)
+                result.elements.append(element_decl)
 
         return result
