@@ -81,7 +81,7 @@ class ElementDecl(MemberDecl):  # TODO: Consider renaming to TypeFieldDecl or Fi
         result.format_ = field_decl.formatter
         result.alternate_of = None  # TODO: Support in metadata
 
-        if field_decl.field_kind is "primitive":
+        if field_decl.field_kind == "primitive":
             # Primitive type
             if (primitive_type := primitive_type_map.get(field_decl.field_type, None)) is None:
                 raise RuntimeError(f"Primitive field type {field_decl.field_type} is not supported.")
