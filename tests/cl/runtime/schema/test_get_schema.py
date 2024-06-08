@@ -15,7 +15,6 @@
 import json
 import os
 import pytest
-
 from cl.runtime.schema.dataclasses.dataclass_type_decl import DataclassTypeDecl
 from cl.runtime.schema.type_decl import TypeDecl
 from inflection import titleize

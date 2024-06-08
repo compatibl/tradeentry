@@ -13,8 +13,8 @@
 # limitations under the License.
 
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
-from cl.runtime.schema.type_decl_key import TypeDeclKey
 from cl.runtime.schema.member_decl import MemberDecl
+from cl.runtime.schema.type_decl_key import TypeDeclKey
 from dataclasses import dataclass
 
 

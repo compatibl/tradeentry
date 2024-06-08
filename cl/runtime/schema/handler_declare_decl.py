@@ -44,4 +44,3 @@ class HandlerDeclareDecl:
 
     static: bool | None = datafield()
     """If set as true, handler will be static, otherwise non-static."""
-

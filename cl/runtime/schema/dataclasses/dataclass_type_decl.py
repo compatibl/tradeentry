@@ -13,14 +13,15 @@
 # limitations under the License.
 
 import dataclasses
-
-from memoization import cached
-from typing_extensions import Self
 from cl.runtime.schema.dataclasses.dataclass_field_decl import DataclassFieldDecl
-from cl.runtime.schema.type_decl import TypeDecl, for_type_key_maker
 from cl.runtime.schema.element_decl import ElementDecl
+from cl.runtime.schema.type_decl import TypeDecl
+from cl.runtime.schema.type_decl import for_type_key_maker
 from dataclasses import dataclass
-from typing import get_type_hints, Type
+from memoization import cached
+from typing import Type
+from typing import get_type_hints
+from typing_extensions import Self
 
 
 @dataclass(slots=True, kw_only=True)
@@ -46,7 +47,6 @@ class DataclassTypeDecl(TypeDecl):
 
         # Use this flag to skip fields generation when the method is invoked from a derived class
         if not skip_fields:
-
             # Information about dataclass fields including the metadata (does not resolve ForwardRefs)
             fields = dataclasses.fields(cls)
 
@@ -56,7 +56,6 @@ class DataclassTypeDecl(TypeDecl):
             # Add elements
             result.elements = []
             for field in fields:
-
                 # Get type from type hints because they resolve forward references
                 field_type = type_hints[field.name]
 

@@ -12,15 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing_extensions import Self
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
-from cl.runtime.schema.member_decl import MemberDecl
-from dataclasses import dataclass
 from cl.runtime.schema.enum_decl import EnumDecl
 from cl.runtime.schema.field_decl import FieldDecl
+from cl.runtime.schema.member_decl import MemberDecl
 from cl.runtime.schema.module_decl import ModuleDecl
 from cl.runtime.schema.primitive_type import PrimitiveType
 from cl.runtime.schema.value_decl import ValueDecl
+from dataclasses import dataclass
+from typing_extensions import Self
 
 primitive_type_map = {
     "str": PrimitiveType.String,
@@ -95,9 +95,11 @@ class ElementDecl(MemberDecl):  # TODO: Consider renaming to TypeFieldDecl or Fi
                 result.enum = EnumDecl, module_key, type_name
             elif field_decl.field_kind == "key":
                 from cl.runtime.schema.type_decl import TypeDecl
+
                 result.key_ = TypeDecl, module_key, type_name
             elif field_decl.field_kind == "data":
                 from cl.runtime.schema.type_decl import TypeDecl
+
                 result.data = TypeDecl, module_key, type_name
             else:
                 raise RuntimeError(f"Unsupported field kind {field_decl.field_kind} for field {field_decl.name}.")

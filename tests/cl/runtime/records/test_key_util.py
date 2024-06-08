@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import pytest
-
 from cl.runtime.records.key_util import KeyUtil
 from cl.runtime.schema.module_decl import ModuleDecl
 from cl.runtime.schema.type_decl import TypeDecl

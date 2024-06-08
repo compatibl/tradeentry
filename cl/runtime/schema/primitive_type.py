@@ -71,4 +71,3 @@ class PrimitiveType(IntEnum):
 
     Dict = 17
     """Dict value."""
-

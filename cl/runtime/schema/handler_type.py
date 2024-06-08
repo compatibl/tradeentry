@@ -21,7 +21,7 @@ class HandlerType(IntEnum):  # Consider renaming to MethodType
     Job = 0  # TODO: Consider renaming to Action or Handler if class is renamed to MethodType
     """
     Job handler is shown as a button
-    
+
     - Return type is allowed and may trigger action in the client.
     - Input params are allowed.
     """

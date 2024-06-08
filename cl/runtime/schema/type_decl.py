@@ -17,26 +17,27 @@ from __future__ import annotations
 import ast
 import inspect
 import textwrap
-from dataclasses import dataclass
-from enum import Enum
-
-from inflection import titleize
-from typing import List, ClassVar, Dict
-from typing import get_type_hints, Type
-
-from memoization import cached
-from typing_extensions import Self
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.display_kind import DisplayKind
+from cl.runtime.schema.element_decl import ElementDecl
 from cl.runtime.schema.field_decl import FieldDecl
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.module_decl import ModuleDecl
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
 from cl.runtime.schema.type_decl_key import TypeDeclKey
-from cl.runtime.schema.element_decl import ElementDecl
 from cl.runtime.schema.type_index_decl import TypeIndexDecl
 from cl.runtime.schema.type_kind import TypeKind
+from dataclasses import dataclass
+from enum import Enum
+from inflection import titleize
+from memoization import cached
+from typing import ClassVar
+from typing import Dict
+from typing import List
+from typing import Type
+from typing import get_type_hints
+from typing_extensions import Self
 
 
 def for_type_key_maker(cls, record_type: Type, *, skip_fields: bool = False) -> str:
@@ -129,8 +130,8 @@ class TypeDecl(DataclassMixin):
         result.comment = record_type.__doc__ or ""  # TODO: Revise
 
         # Set type kind by detecting the presence of 'get_key' method to indicate a record vs. an element
-        is_record = hasattr(record_type, 'get_key')
-        is_abstract = hasattr(record_type, '__abstractmethods__') and bool(record_type.__abstractmethods__)
+        is_record = hasattr(record_type, "get_key")
+        is_abstract = hasattr(record_type, "__abstractmethods__") and bool(record_type.__abstractmethods__)
         if is_record:
             result.kind = TypeKind.Abstract if is_abstract else None
         else:
@@ -151,14 +152,12 @@ class TypeDecl(DataclassMixin):
 
         # Use this flag to skip fields generation when the method is invoked from a derived class
         if not skip_fields:
-
             # Get type hints to resolve ForwardRefs
             type_hints = get_type_hints(cls)
 
             # Add an element for each type hint
             result.elements = []
             for field_name, field_type in type_hints.items():
-
                 # Get the rest of the data from the field itself
                 field_decl = FieldDecl.create(field_name, field_type)
 

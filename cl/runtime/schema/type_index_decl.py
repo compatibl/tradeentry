@@ -27,4 +27,3 @@ class TypeIndexDecl:
 
     elements: List[IndexDecl] = datafield()
     """Index elements."""
-

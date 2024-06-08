@@ -14,9 +14,9 @@
 
 
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
+from typing import TYPE_CHECKING
 from typing import Tuple
 from typing import Type
-from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from cl.runtime.schema.type_decl import TypeDecl

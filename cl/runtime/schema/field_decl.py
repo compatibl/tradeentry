@@ -12,33 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import datetime as dt
 import types
 import typing
-import datetime as dt
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from dataclasses import dataclass
 from enum import Enum
-from typing import Literal, Type
-from uuid import UUID
+from typing import Literal
+from typing import Type
 from typing_extensions import Self
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from uuid import UUID
 
-primitive_types = [
-    str,
-    float,
-    bool,
-    int,
-    dt.date,
-    dt.time,
-    dt.datetime,
-    UUID,
-    bytes
-]
+primitive_types = [str, float, bool, int, dt.date, dt.time, dt.datetime, UUID, bytes]
 """List of primitive types."""
 
-primitive_modules = [
-    "builtins",
-    "uuid"
-]
+primitive_modules = ["builtins", "uuid"]
 """List of modules for primitive types."""
 
 
@@ -78,7 +66,7 @@ class FieldDecl:
 
     alternate_of: str | None = None
     """This field is an alternate of the specified field, of which only one can be specified."""
-    
+
     @classmethod
     def create(cls, field_name: str, field_type: Type) -> Self:
         """
@@ -88,7 +76,7 @@ class FieldDecl:
             field_name: Name of the field
             field_type: Type of the field obtained from get_type_hints where ForwardRefs are resolved
         """
-        
+
         result = cls()
         result.name = field_name
 
@@ -102,7 +90,6 @@ class FieldDecl:
 
         # Strip optional from field_type
         if is_optional:
-
             # Indicate that field can be None
             result.optional_field = True
 
@@ -116,7 +103,6 @@ class FieldDecl:
 
         # Check for one of the supported container types
         if field_origin in [list, dict]:
-
             if field_origin.__module__ == "builtins":
                 result.container_type = field_origin.__name__
             else:
@@ -134,7 +120,6 @@ class FieldDecl:
         is_union = field_origin is typing.Union or field_origin is types.UnionType
         is_optional = is_union and type(None) in field_args
         if is_optional:
-
             # Indicate that values can be None
             result.optional_values = True
 
@@ -148,7 +133,6 @@ class FieldDecl:
 
         # Parse the value itself
         if field_origin is tuple:
-
             # Indicate that field is a key
             result.field_kind = "key"
 
@@ -186,7 +170,6 @@ class FieldDecl:
             result.field_type = f"{field_arg.__module__}.{field_arg.__name__}"
 
         elif field_origin is None:
-
             # Assign element kind
             if field_type in primitive_types:
                 # Indicate that field is one of the supported primitive types

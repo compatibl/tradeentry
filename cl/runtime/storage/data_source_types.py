@@ -14,7 +14,6 @@
 
 import datetime as dt
 from enum import Enum
-from uuid import UUID
 from typing import Any
 from typing import Dict
 from typing import Iterable
@@ -23,6 +22,7 @@ from typing import Literal
 from typing import Tuple
 from typing import Type
 from typing import TypeVar
+from uuid import UUID
 
 TKey = Tuple[
     Type,  # First element is the record's type

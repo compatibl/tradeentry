@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass, Field
-from typing import Type
-
-from typing_extensions import Self
 from cl.runtime.schema.field_decl import FieldDecl
+from dataclasses import Field
+from dataclasses import dataclass
+from typing import Type
+from typing_extensions import Self
 
 
 @dataclass(slots=True, kw_only=True, init=False)

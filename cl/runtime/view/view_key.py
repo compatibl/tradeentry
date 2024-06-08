@@ -13,9 +13,9 @@
 # limitations under the License.
 
 from cl.runtime.records.generic_key import GenericKey
+from typing import TYPE_CHECKING
 from typing import Tuple
 from typing import Type
-from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from cl.runtime.view.view import View

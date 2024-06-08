@@ -13,7 +13,8 @@
 # limitations under the License.
 
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecordKey
-from typing import Tuple, TYPE_CHECKING
+from typing import TYPE_CHECKING
+from typing import Tuple
 from typing import Type
 
 if TYPE_CHECKING:

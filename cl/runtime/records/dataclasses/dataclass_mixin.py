@@ -18,7 +18,8 @@ from cl.runtime.storage.data_source_types import TPackedRecord
 from dataclasses import asdict
 from dataclasses import dataclass
 from dataclasses import field
-from typing import Any, Callable
+from typing import Any
+from typing import Callable
 from typing import TypeVar
 
 TDefault = TypeVar("TDefault")
