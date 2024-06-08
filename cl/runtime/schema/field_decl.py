@@ -23,6 +23,8 @@ from typing import Type
 from typing_extensions import Self
 from uuid import UUID
 
+from cl.runtime.schema.field_kind import FieldKind
+
 primitive_types = [str, float, bool, int, dt.date, dt.time, dt.datetime, UUID, bytes]
 """List of primitive types."""
 
@@ -43,7 +45,7 @@ class FieldDecl:
     comment: str | None = datafield()
     """Field comment."""
 
-    field_kind: Literal["primitive", "enum", "key", "data"] = datafield()
+    field_kind: FieldKind = datafield()
     """Kind of the element within the container if the field is a container, otherwise kind of the field itself."""
 
     field_type: str = datafield()
