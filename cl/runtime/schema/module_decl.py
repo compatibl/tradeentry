@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
-from cl.runtime.schema.module_decl_key import ModuleDeclKey
+from cl.runtime.schema.module_decl_key import ModuleDeclKey, ModuleDeclTable
 from dataclasses import dataclass
 
 
@@ -25,4 +25,4 @@ class ModuleDecl(DataclassMixin):
     """Module path in dot-delimited format."""
 
     def get_key(self) -> ModuleDeclKey:
-        return type(self), self.module_path
+        return ModuleDeclTable, self.module_path

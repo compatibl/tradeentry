@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
-from typing import TYPE_CHECKING
-from typing import Tuple
+from typing import Tuple, final
 from typing import Type
 
-if TYPE_CHECKING:
-    from cl.runtime.schema.module_decl import ModuleDecl
 
-ModuleDeclKey = Tuple[Type["ModuleDecl"], str]
+@final
+class ModuleDeclTable:
+    pass
+
+
+ModuleDeclKey = Tuple[Type[ModuleDeclTable], str]

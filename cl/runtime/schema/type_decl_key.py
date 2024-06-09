@@ -13,12 +13,14 @@
 # limitations under the License.
 
 
-from cl.runtime.schema.module_decl_key import ModuleDeclKey
-from typing import TYPE_CHECKING
-from typing import Tuple
+from typing import Tuple, final
 from typing import Type
+from cl.runtime.schema.module_decl_key import ModuleDeclKey
 
-if TYPE_CHECKING:
-    from cl.runtime.schema.type_decl import TypeDecl
 
-TypeDeclKey = Tuple[Type["TypeDecl"], ModuleDeclKey, str]
+@final
+class TypeDeclTable:
+    pass
+
+
+TypeDeclKey = Tuple[Type[TypeDeclTable], ModuleDeclKey, str]

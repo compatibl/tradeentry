@@ -25,7 +25,7 @@ from cl.runtime.schema.field_decl import FieldDecl
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.module_decl import ModuleDecl
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
-from cl.runtime.schema.type_decl_key import TypeDeclKey
+from cl.runtime.schema.type_decl_key import TypeDeclKey, TypeDeclTable
 from cl.runtime.schema.type_index_decl import TypeIndexDecl
 from cl.runtime.schema.type_kind import TypeKind
 from dataclasses import dataclass
@@ -92,7 +92,7 @@ class TypeDecl(DataclassMixin):
     """When the record is saved, also save it permanently."""
 
     def get_key(self) -> TypeDeclKey:
-        return type(self), self.module, self.name
+        return TypeDeclTable, self.module, self.name
 
     @classmethod
     def for_key(cls, key: TypeDeclKey) -> Self:
