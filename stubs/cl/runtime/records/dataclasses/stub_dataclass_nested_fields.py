@@ -20,7 +20,8 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_data import Stu
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_from_derived_data import (
     StubDataclassDerivedFromDerivedData,
 )
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_nested_fields_key import StubDataclassNestedFieldsKey
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_nested_fields_key import StubDataclassNestedFieldsKey, \
+    StubDataclassNestedFieldsTable
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecordKey
 from typing import Tuple
@@ -66,4 +67,4 @@ class StubDataclassNestedFields(DataclassMixin):
     """Stub field with key type initialized to record type instance."""
 
     def get_key(self) -> StubDataclassNestedFieldsKey:
-        return type(self), self.primitive, self.embedded_1, self.embedded_2
+        return StubDataclassNestedFieldsTable, self.primitive, self.embedded_1, self.embedded_2

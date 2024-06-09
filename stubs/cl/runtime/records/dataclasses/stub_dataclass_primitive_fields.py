@@ -21,7 +21,8 @@ from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.storage.data_source_types import TKey
 from dataclasses import dataclass
 from stubs.cl.runtime import StubDataclassRecord
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_primitive_fields_key import StubDataclassPrimitiveFieldsKey
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_primitive_fields_key import StubDataclassPrimitiveFieldsKey, \
+    StubDataclassPrimitiveFieldsTable
 from stubs.cl.runtime.records.enum.stub_int_enum import StubIntEnum
 from typing import Tuple
 from typing import Type
@@ -101,7 +102,7 @@ class StubDataclassPrimitiveFields(DataclassMixin):
 
     def get_key(self) -> StubDataclassPrimitiveFieldsKey:
         return (
-            type(self),
+            StubDataclassPrimitiveFieldsTable,
             self.key_str_field,
             self.key_float_field,
             self.key_bool_field,

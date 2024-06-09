@@ -14,7 +14,9 @@
 
 import pytest
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_a import StubDataclassCyclicA
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_a_key import StubDataclassCyclicATable
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b_key import StubDataclassCyclicBTable
 
 
 def test_cyclic_record():
@@ -45,9 +47,9 @@ def test_cyclic_record():
     # Test for keys
 
     assert b_1.get_base_type() == StubDataclassCyclicB
-    assert b_1.get_key() == (StubDataclassCyclicB, "a")
+    assert b_1.get_key() == (StubDataclassCyclicBTable, "a")
     assert a_1.get_base_type() == StubDataclassCyclicA
-    assert a_1.get_key() == (StubDataclassCyclicA, (StubDataclassCyclicB, "b"))
+    assert a_1.get_key() == (StubDataclassCyclicATable, (StubDataclassCyclicBTable, "b"))
     pass
 
 

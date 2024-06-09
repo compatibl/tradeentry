@@ -12,11 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import TYPE_CHECKING
+from typing import final
 from typing import Tuple
 from typing import Type
 
-if TYPE_CHECKING:
-    from stubs.cl.runtime import StubDataclassCyclicB
 
-StubDataclassCyclicBKey = Tuple[Type["StubDataclassCyclicB"], str]
+@final
+class StubDataclassCyclicBTable:
+    pass
+
+
+StubDataclassCyclicBKey = Tuple[Type[StubDataclassCyclicBTable], str]

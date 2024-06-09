@@ -15,7 +15,8 @@
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from dataclasses import dataclass
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_singleton_key import StubDataclassSingletonKey
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_singleton_key import StubDataclassSingletonKey, \
+    StubDataclassSingletonTable
 
 
 @dataclass
@@ -26,4 +27,4 @@ class StubDataclassSingleton(DataclassMixin):
     """Stub field."""
 
     def get_key(self) -> StubDataclassSingletonKey:
-        return (type(self),)
+        return (StubDataclassSingletonTable,)

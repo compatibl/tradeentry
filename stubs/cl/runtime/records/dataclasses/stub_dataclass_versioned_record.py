@@ -14,7 +14,8 @@
 
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from dataclasses import dataclass
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_versioned_record_key import StubDataclassVersionedRecordKey
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_versioned_record_key import StubDataclassVersionedRecordKey, \
+    StubDataclassVersionedRecordTable
 
 
 @dataclass(slots=True, kw_only=True)
@@ -28,4 +29,4 @@ class StubDataclassVersionedRecord(DataclassMixin):
     """Stub version field."""
 
     def get_key(self) -> StubDataclassVersionedRecordKey:
-        return type(self), self.id
+        return StubDataclassVersionedRecordTable, self.id

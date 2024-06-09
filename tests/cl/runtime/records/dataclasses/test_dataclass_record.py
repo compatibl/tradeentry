@@ -17,6 +17,7 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_dict_fields import Stub
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_list_fields import StubDataclassListFields
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_primitive_fields import StubDataclassPrimitiveFields
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_record_key import StubDataclassRecordTable
 
 
 def test_smoke():
@@ -27,7 +28,7 @@ def test_smoke():
 
     # Test primary key
     key = record.get_key()
-    assert key == (StubDataclassRecord, "abc")
+    assert key == (StubDataclassRecordTable, "abc")
 
     # Test roundtrip serialization
     packed_key, packed_dict = record.pack()

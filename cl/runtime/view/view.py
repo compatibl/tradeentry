@@ -16,7 +16,7 @@ from abc import ABC
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.records.generic_key import GenericKey
-from cl.runtime.view.view_key import ViewKey
+from cl.runtime.view.view_key import ViewKey, ViewTable
 from dataclasses import dataclass
 
 
@@ -32,4 +32,4 @@ class View(DataclassMixin, ABC):
 
     def get_key(self) -> ViewKey:
         """Return primary key of this instance in semicolon-delimited string format."""
-        return type(self), self.view_for, self.view_name
+        return ViewTable, self.view_for, self.view_name

@@ -13,11 +13,14 @@
 # limitations under the License.
 
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
-from typing import TYPE_CHECKING
+from typing import final
 from typing import Tuple
 from typing import Type
 
-if TYPE_CHECKING:
-    from cl.runtime.schema.enum_decl import EnumDecl
 
-EnumDeclKey = Tuple[Type["EnumDecl"], ModuleDeclKey, str]
+@final
+class EnumDeclTable:
+    pass
+
+
+EnumDeclKey = Tuple[Type[EnumDeclTable], ModuleDeclKey, str]

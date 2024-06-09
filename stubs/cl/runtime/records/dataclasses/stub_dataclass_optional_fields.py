@@ -20,7 +20,8 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_data import Stu
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_from_derived_data import (
     StubDataclassDerivedFromDerivedData,
 )
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields_key import StubDataclassOptionalFieldsKey
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields_key import StubDataclassOptionalFieldsKey, \
+    StubDataclassOptionalFieldsTable
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecordKey
 from typing import List
@@ -83,4 +84,4 @@ class StubDataclassOptionalFields(DataclassMixin):
     """Optional list of optional record."""
 
     def get_key(self) -> StubDataclassOptionalFieldsKey:
-        return type(self), self.id
+        return StubDataclassOptionalFieldsTable, self.id

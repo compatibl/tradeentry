@@ -12,11 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import TYPE_CHECKING
+from typing import final
 from typing import Tuple
 from typing import Type
 
-if TYPE_CHECKING:
-    from stubs.cl.runtime.records.dataclasses.stub_dataclass_versioned_record import StubDataclassVersionedRecord
 
-StubDataclassVersionedRecordKey = Tuple[Type["StubDataclassVersionedRecord"], str]
+@final
+class StubDataclassVersionedRecordTable:
+    pass
+
+
+StubDataclassVersionedRecordKey = Tuple[Type[StubDataclassVersionedRecordTable], str]

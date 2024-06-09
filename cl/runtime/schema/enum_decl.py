@@ -14,7 +14,7 @@
 
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
-from cl.runtime.schema.enum_decl_key import EnumDeclKey
+from cl.runtime.schema.enum_decl_key import EnumDeclKey, EnumDeclTable
 from cl.runtime.schema.enum_item_decl import EnumItemDecl
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
 from dataclasses import dataclass
@@ -41,4 +41,4 @@ class EnumDecl(DataclassMixin):
     """Array of enum items."""
 
     def get_key(self) -> EnumDeclKey:
-        return type(self), self.module, self.name
+        return EnumDeclTable, self.module, self.name

@@ -107,7 +107,7 @@ class LocalCache(DataSource):
         dataset_cache = self._cache.setdefault(dataset, {})
 
         # Group records by base type
-        grouped_records = groupby(packs, key=lambda record: record[0][0].get_base_type())
+        grouped_records = groupby(packs, key=lambda record: record[0][0])
 
         # Process separately for each base type
         for base_type, records_for_base_type in grouped_records:
