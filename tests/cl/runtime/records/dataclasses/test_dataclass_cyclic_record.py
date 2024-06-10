@@ -46,9 +46,7 @@ def test_cyclic_record():
 
     # Test for keys
 
-    assert b_1.get_base_type() == StubDataclassCyclicB
     assert b_1.get_key() == (StubDataclassCyclicBTable, "a")
-    assert a_1.get_base_type() == StubDataclassCyclicA
     assert a_1.get_key() == (StubDataclassCyclicATable, (StubDataclassCyclicBTable, "b"))
     pass
 

@@ -25,19 +25,24 @@ from typing import TypeVar
 from uuid import UUID
 
 TKey = Tuple[
-    Type,  # First element is the record's type
-    ...,  # Remaining elements are primary key fields in the order of declaration
+    Type,  # First element is the table type
+    ...,  # Remaining elements are primary key fields of TPrimitive type in the order of declaration
 ]
-"""Tuple of (type, primary key fields)."""
+"""Tuple in (table_type, primary_key_1, primary_key_2, ...) format."""
 
+# TODO: Add type as a primitive value
 TPrimitive = str | float | bool | int | dt.date | dt.time | dt.datetime | UUID | bytes
-"""Primitive value fields."""
+"""Supported primitive value types in serialized data."""
 
-TField = Dict[str, "TField"] | List["TField"] | Enum | TPrimitive | None
-"""Primitive value fields and data containers."""
+# TODO: Remove Enum
+TField = Dict[str, "TField"] | List["TField"] | TKey | TPrimitive | Enum | None
+"""Supported field types in serialized data."""
 
-TData = Dict[str, TField]
-"""Serialized record data in dictionary format (other formats may be added in the future)."""
+TData = Tuple[
+    Type,  # Class holding the data after deserialization
+    Dict[str, TField],  # Serialized record data in dictionary format (other formats may be added in the future)
+]
+"""Serialized data in dictionary format (other formats may be added in the future)."""
 
 TIdentity = str | None
 """Identity token used for row level security."""
@@ -45,43 +50,48 @@ TIdentity = str | None
 TDataset = Iterable[str] | None
 """Dataset as a delimited string, list of levels, or None."""
 
-TStamp = dt.datetime
-"""Timestamp or time-ordered globally unique identifier."""
+TStamp = dt.datetime | UUID
+"""Timestamp or time-ordered globally unique identifier in UUID7 format."""  # TODO: Confirm UUID format to use
 
 TPackedRecord = Tuple[
-    TKey,  # Tuple of (type, primary key fields)
+    TKey,  # Tuple in (table_type, primary_key_1, primary_key_2, ...) format
     TData,  # Serialized record data in dictionary format (other formats may be added in the future)
 ]
 """
-Tuple of (TKey, TData) where:
-    - TKey: A tuple of (type, primary key fields)
+Tuple of (Type, TKey, TData) where:
+    - Type: Class to which the record is deserialized
+    - TKey: Tuple in (table_type, primary_key_1, primary_key_2, ...) format
     - TData: Serialized record data in dictionary format (other formats may be added in the future)
 """
 
 TLoadedRecord = Tuple[
-    TKey,  # Tuple of (type, primary key fields)
+    Type,  # Class to which the record is deserialized
+    TKey,  # Tuple in (table_type, primary_key_1, primary_key_2, ...) format
     TData,  # Serialized record data in dictionary format (other formats may be added in the future)
     TDataset,  # Record's dataset as a delimited string, list of levels, or None
     TStamp,  # Timestamp or time-ordered globally unique identifier
 ]
 """
-Tuple of (TKey, TData, TIdentity, TDataset, TStamp) where:
-    - TKey: A tuple of (type, primary key fields)
+Tuple of (Type, TKey, TData, TIdentity, TDataset, TStamp) where:
+    - Type: Class to which the record is deserialized
+    - TKey: Tuple in (table_type, primary_key_1, primary_key_2, ...) format
     - TData: Serialized record data in dictionary format (other formats may be added in the future)
     - TDataset: Record's dataset as a delimited string, list of levels, or None
     - TStamp: Timestamp for the time the record was written to storage
 """
 
 TSavedRecord = Tuple[
-    TKey,  # Tuple of (type, primary key fields)
+    Type,  # Class to which the record is deserialized
+    TKey,  # Tuple in (table_type, primary_key_1, primary_key_2, ...) format
     TData,  # Serialized record data in dictionary format (other formats may be added in the future)
     TDataset,  # Record's dataset as a delimited string, list of levels, or None
     TStamp,  # Timestamp or time-ordered globally unique identifier
-    TIdentity,  # Timestamp or time-ordered globally unique identifier
+    TIdentity,  # Identity token used for row level security.
 ]
 """
-Tuple of (TKey, TData, TIdentity, TDataset, TStamp) where:
-    - TKey: A tuple of (type, primary key fields)
+Tuple of (Type, TKey, TData, TIdentity, TDataset, TStamp) where:
+    - Type: Class to which the record is deserialized
+    - TKey: Tuple in (table_type, primary_key_1, primary_key_2, ...) format
     - TData: Serialized record data in dictionary format (other formats may be added in the future)
     - TDataset: Record's dataset as a delimited string, list of levels, or None
     - TStamp: Timestamp for the time the record was written to storage

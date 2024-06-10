@@ -52,16 +52,13 @@ class DataSource(ABC):
         identities: Iterable[TIdentity] | None = None,
     ) -> Iterable[TLoadedRecord]:
         """
-        Load records from the table associated with the base class of each key's type.
-
-        Notes:
-            The base type is determined using `key[0].get_base_type()`
+        Load records using a list of keys where each key specifies the table and primary key fields.
 
         Returns:
             Iterable of TLoadedRecord = Tuple[TKey, TData, TIdentity, TDataset, TStamp]
 
         Args:
-            keys: Iterable of TKey = (type, primary key fields)
+            keys: Iterable of keys in (table_type, primary_key_1, primary_key_2, ...) format
             dataset: Lookup dataset as a delimited string, list of levels, or None
             identities: Only the records whose identity matches one of the argument identities will be loaded
         """
@@ -93,13 +90,12 @@ class DataSource(ABC):
         self, packs: Iterable[TPackedRecord], *, dataset: TDataset = None, identity: TIdentity = None
     ) -> None:
         """
-        Save records to the table associated with the base class of each record's type.
-
-        Notes:
-            The base type is determined using `pack[0][0].get_base_type()`
+        Save records in (TKey, TData) format where
+            - TKey is (table_type, primary_key_1, primary_key_2, ...)
+            - TData is serialized data
 
         Args:
-            packs: Iterable of (TKey, TData) where TKey is (type, primary key fields) and TData is serialized data
+            packs: Iterable of (TKey, TData)
             dataset: Target dataset as a delimited string, list of levels, or None
             identity: Identity token used for row level security
         """
@@ -113,13 +109,10 @@ class DataSource(ABC):
         identities: Iterable[TIdentity] | None = None,
     ) -> None:
         """
-        Delete records from the table associated with the base class of each record's type.
-
-        Notes:
-            The base type is determined using `key[0].get_base_type()`
+        Delete records using a list of keys where each key specifies the table and primary key fields.
 
         Args:
-            keys: Iterable of TKey = (type, primary key fields)
+            keys: Iterable of keys in (table_type, primary_key_1, primary_key_2, ...) format
             dataset: Target dataset as a delimited string, list of levels, or None
             identities: Only the records whose identity matches one of the argument identities will be deleted
         """

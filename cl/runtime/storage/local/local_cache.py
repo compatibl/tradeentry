@@ -54,7 +54,7 @@ class LocalCache(DataSource):
         dataset_cache = self._cache.setdefault(dataset, {})
 
         # Group keys by base type
-        grouped_keys = groupby(keys, key=lambda x: x[0].get_base_type())
+        grouped_keys = groupby(keys, key=lambda x: x[0])
 
         # Process separately for each base type
         result_dict = {}

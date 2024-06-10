@@ -74,36 +74,6 @@ class RecordMixin(ABC):
 
     @classmethod
     @cached
-    def get_base_type(cls) -> Type:
-        """
-        Base type determines the table where this type is stored. Override if required.
-
-        Notes:
-            - The default implementation returns the last class in MRO where method `get_key` is not abstract.
-            - The result is memoized (cached) for better performance.
-        """
-
-        # The implementation must not use `get_query_types` method because it may be overridden
-
-        # Get the list of classes in MRO that implement `get_key` method
-        result = [
-            c
-            for c in cls.mro()
-            if hasattr(c, "get_key")
-            and callable(getattr(c, "get_key"))
-            and not getattr(getattr(c, "get_key"), "__isabstractmethod__", False)
-        ]
-
-        # Make sure there is at least one such class in the returned list
-        if len(result) == 0:
-            # If the list is empty, the class itself does not implement `get_key` method
-            raise RuntimeError(f"Class {cls.__module__}.{cls.__name__} does not implement `get_key` method.")
-
-        # Return the last class in the list
-        return result[-1]
-
-    @classmethod
-    @cached
     def get_query_types(cls) -> List[Type]:
         """
         Types that can be used to query for this type (in arbitrary order). Override if required.
