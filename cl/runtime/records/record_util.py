@@ -23,8 +23,7 @@ from typing import Type
 from typing import TypeVar
 
 _NONE = 0  # Code indicating None
-_KEY = 1  # Code indicating tuple
-_RECORD = 2  # Code indicating record
+_KEY = 1  # Code indicating a key in tuple format
 _UNKNOWN = 3  # Code indicating unknown type
 
 TObj = TypeVar("TObj", bound="RecordUtil")
@@ -47,7 +46,6 @@ class RecordUtil:
     ) -> List[TObj | None]:
         """
         Load serialized records from a single table using a list of keys.
-        If records are passed instead of keys, they are returned without data source lookup.
 
         Returns:
             Iterable of records with the same length and in the same order as the list of keys.
@@ -55,7 +53,7 @@ class RecordUtil:
 
         Args:
             record_type: Type to which loaded records will be cast
-            records_or_keys: Each element is TLoadedRecord, TKey, or None
+            keys: List where each element is a key or None
             context: Optional context, if None current context will be used
             dataset: Lookup dataset as a delimited string, list of levels, or None
         """
@@ -69,9 +67,7 @@ class RecordUtil:
             (_NONE, x)
             if x is None
             else (_KEY, x)
-            if isinstance(x, tuple) and len(x) > 0 and isinstance(x[0], type) and issubclass(x[0], record_type)
-            else (_RECORD, x)
-            if isinstance(x, record_type)
+            if isinstance(x, tuple) and len(x) > 0 and isinstance(x[0], type)
             else (_UNKNOWN, x)
             for x in records_or_keys
         ]
@@ -82,9 +78,8 @@ class RecordUtil:
             unknown_types = [str(type(x).__name__) for x in unknown_inputs[:5]]
             unknown_types_str = ", ".join(unknown_types)
             raise RuntimeError(
-                f"Elements of `records_or_keys` param in `load_many` can be objects of "
-                f"class {record_type.__name__} or its subclass, tuple where the first element "
-                f"is the type of this class or its subclass, or None. The following "
+                f"Elements of `records_or_keys` param in `load_many` can be keys in "
+                f"tuple format where the first element is a type or None. The following "
                 f"parameter types are not accepted by this method: {unknown_types_str}"
             )
 
@@ -92,8 +87,9 @@ class RecordUtil:
         keys: List[TKey] = [x[1] for x in coded_inputs if x[0] == _KEY]  # noqa
 
         if len(keys) == 0:
-            # If there are no keys, each element is either a record or None.
-            # In this case we can return a copy of the argument list without further processing
+            # If there are no keys, each element is None.
+            # In this case we can return a list of None of
+            # the same size without further processing
             return list(records_or_keys)
 
         # Get data source from the current or specified context
