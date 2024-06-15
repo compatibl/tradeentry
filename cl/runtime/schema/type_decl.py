@@ -116,9 +116,9 @@ class TypeDecl(DataclassMixin):
             skip_fields: Use this flag to skip fields generation when the method is invoked from a derived class
         """
 
-        if issubclass(cls, Enum):
+        if issubclass(record_type, Enum):
             raise RuntimeError(f"Cannot create TypeDecl for class {record_type.__name__} because it is an enum.")
-        if issubclass(cls, tuple):
+        if issubclass(record_type, tuple):
             raise RuntimeError(f"Cannot create TypeDecl for class {record_type.__name__} because it is a tuple.")
 
         # Create instance of the final type
@@ -153,7 +153,7 @@ class TypeDecl(DataclassMixin):
         # Use this flag to skip fields generation when the method is invoked from a derived class
         if not skip_fields:
             # Get type hints to resolve ForwardRefs
-            type_hints = get_type_hints(cls)
+            type_hints = get_type_hints(record_type)
 
             # Add an element for each type hint
             result.elements = []
@@ -200,7 +200,7 @@ class TypeDecl(DataclassMixin):
         get_key_ast = ast.parse(get_key_source)
         key_fields = []
         for node in ast.walk(get_key_ast):
-            # Find every instance field of 'cls' accessed inside the source of 'get_key' method.
+            # Find every instance field of accessed inside the source of 'get_key' method.
             # Accumulate in list in the order they are accessed
             if isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name) and node.value.id == "self":
                 key_fields.append(node.attr)
