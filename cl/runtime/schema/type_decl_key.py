@@ -12,17 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import annotations
 from typing import final
 from typing import Tuple
 from typing import Type
 
 from cl.runtime.records.table_mixin import TableMixin
-from cl.runtime.schema.module_decl_key import ModuleDeclKey
+from cl.runtime.schema.module_decl_key import ModuleDeclKey, ModuleDeclTable
 
 
 @final
 class TypeDeclTable(TableMixin):
-    pass
+    """Table settings class."""
+
+    @classmethod
+    def create_key(cls, *, module: ModuleDeclKey | str, name: str) -> TypeDeclKey:
+        if isinstance(module, tuple):
+            return TypeDeclTable, module, name
+        elif isinstance(module, str):
+            return TypeDeclTable, ModuleDeclTable.create_key(module), name
+        else:
+            raise RuntimeError(f"Module {module} is neither a tuple nor a string.")
 
 
 TypeDeclKey = Tuple[Type[TypeDeclTable], ModuleDeclKey, str]

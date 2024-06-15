@@ -26,7 +26,7 @@ from cl.runtime.schema.element_decl import ElementDecl
 from cl.runtime.schema.field_decl import FieldDecl
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.module_decl import ModuleDecl
-from cl.runtime.schema.module_decl_key import ModuleDeclKey
+from cl.runtime.schema.module_decl_key import ModuleDeclKey, ModuleDeclTable
 from cl.runtime.schema.type_decl_key import TypeDeclKey, TypeDeclTable
 from cl.runtime.schema.type_index_decl import TypeIndexDecl
 from cl.runtime.schema.type_kind import TypeKind
@@ -126,7 +126,7 @@ class TypeDecl(DataclassMixin):
         # Create instance of the final type
         result = cls()
 
-        result.module = ModuleDecl, record_type.__module__
+        result.module = ModuleDeclTable.create_key(module_name=record_type.__module__)
         result.name = record_type.__name__
         result.label = titleize(result.name)  # TODO: Add override from settings
         result.comment = record_type.__doc__ or ""  # TODO: Revise
@@ -145,9 +145,9 @@ class TypeDecl(DataclassMixin):
         # Set parent class as the first class in MRO that is not self and does not have Mixin suffix
         for parent_type in record_type.__mro__:
             if parent_type is not record_type and not parent_type.__name__.endswith("Mixin"):
-                parent_type_module = ModuleDecl, parent_type.__module__
+                parent_type_module = ModuleDeclTable.create_key(module_name=parent_type.__module__)
                 parent_type_name = parent_type.__name__
-                result.inherit = TypeDecl, parent_type_module, parent_type_name
+                # TODO: result.inherit = TypeDeclTable.create_key(module=parent_type_module, name=parent_type_name)
 
         # Get key fields by parsing the source of 'get_key' method
         result.keys = KeyUtil.get_key_fields(record_type)

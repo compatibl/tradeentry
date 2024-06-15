@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import annotations
 from typing import final
 from typing import Tuple
 from typing import Type
@@ -20,7 +21,11 @@ from cl.runtime.records.table_mixin import TableMixin
 
 @final
 class ModuleDeclTable(TableMixin):
-    pass
+    """Table settings class."""
+
+    @classmethod
+    def create_key(cls, *, module_name: str) -> ModuleDeclKey:
+        return ModuleDeclTable, module_name
 
 
 ModuleDeclKey = Tuple[Type[ModuleDeclTable], str]

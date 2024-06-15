@@ -24,9 +24,14 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields import 
 
 def clean_dict(d):
     if isinstance(d, dict):
+        # TODO: Determine if False should be omitted as well
         return {k: clean_dict(v) for k, v in d.items() if v not in [None, False]}
     elif isinstance(d, list):
-        return [clean_dict(i) for i in d if i not in [None, False]]
+        # TODO: Determine if False should be omitted as well
+        return [clean_dict(v) for v in d if v not in [None, False]]
+    elif isinstance(d, tuple):
+        # Key
+        return {k: v for k, v in zip(d[0].get_key_fields(), d[1:])}
     else:
         return d
 
@@ -38,12 +43,21 @@ def test_method():
 
     for sample_type in sample_types:
         class_module = sample_type.__module__.rsplit(".", maxsplit=1)[1]
+        received_result_file_path = os.path.abspath(__file__).replace(".py", f".{class_module}.received.json")
         expected_result_file_path = os.path.abspath(__file__).replace(".py", f".{class_module}.expected.json")
-        with open(expected_result_file_path, "r", encoding="utf-8") as file:
-            expected_result_dict = json.load(file)
 
         result_obj = DataclassTypeDecl.for_type(sample_type)
         result_dict = clean_dict(dataclasses.asdict(result_obj))
+
+        # Save the dictionary to a file
+        with open(received_result_file_path, 'w') as received_result_file:
+            json.dump(result_dict, received_result_file, indent=4)
+
+        # Load expected result from a file
+        with open(expected_result_file_path, "r", encoding="utf-8") as expected_result_file:
+            expected_result_dict = json.load(expected_result_file)
+
+        # Compare
         assert result_dict == expected_result_dict
         pass
 
