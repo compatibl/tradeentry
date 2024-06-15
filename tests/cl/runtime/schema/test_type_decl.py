@@ -51,8 +51,8 @@ def test_init():
     module_name_from_obj = result.module["module_name"]  # TODO: Currently maps to dictionary rather than tuple
     assert module_name_from_obj == module_name_from_dict
 
-    dict_from_obj = result.pack()[1]
-    assert dict_from_obj == type_decl_dict_snake_case
+    key, (record_type, record_dict) = result.pack()
+    assert record_dict == type_decl_dict_snake_case
 
 
 if __name__ == "__main__":
