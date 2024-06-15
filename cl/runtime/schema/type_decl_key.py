@@ -20,7 +20,10 @@ from cl.runtime.schema.module_decl_key import ModuleDeclKey
 
 @final
 class TypeDeclTable:
-    pass
+    """Table settings."""
+
+    key_fields = ["module", "name"]
+    """Primary key fields of the table."""
 
 
 TypeDeclKey = Tuple[Type[TypeDeclTable], ModuleDeclKey, str]

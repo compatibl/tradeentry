@@ -12,12 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Tuple
+from typing import Tuple, Dict
 from typing import Type
+from cl.runtime.storage.data_source_types import TKey, TPrimitive
 
 
 class KeyUtil:
     """Utilities for working with keys."""
+
+    @classmethod
+    def to_dict(cls, key: TKey) -> Dict[str, TKey | TPrimitive]:
+        """Convert key to dictionary using key_fields from its table type."""
+
+        # Get key fields from the table type
+        key_fields = key[0].key_fields  # noqa
+
+        # Convert to dictionary, recursively calling to_dict on key elements of a composite key
+        return {k: cls.to_dict(v) if isinstance(v, tuple) else v for k, v in zip(key_fields, key[1:])}
+
 
     @staticmethod
     def parse_key(key_type: Type, key: Tuple) -> Tuple:

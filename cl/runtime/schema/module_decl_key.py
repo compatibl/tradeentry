@@ -19,7 +19,10 @@ from typing import Type
 
 @final
 class ModuleDeclTable:
-    pass
+    """Table settings."""
+
+    key_fields = ["module_name"]
+    """Primary key fields of the table."""
 
 
 ModuleDeclKey = Tuple[Type[ModuleDeclTable], str]
