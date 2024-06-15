@@ -11,28 +11,12 @@
             "value": {
                 "type": "str"
             },
-            "name": "str_field",
-            "comment": "Stub field.",
-            "optional": false
-        },
-        {
-            "value": {
-                "type": "int"
-            },
-            "name": "int_field",
-            "comment": "Stub field.",
-            "optional": false
-        },        {
-            "value": {
-                "type": "int"
-            },
-            "name": "version",
-            "comment": "Stub version field.",
+            "name": "id",
+            "comment": "Unique identifier.",
             "optional": false
         }
     ],
     "keys": [
-        "str_field",
-        "int_field"
+        "id"
     ]
 }
