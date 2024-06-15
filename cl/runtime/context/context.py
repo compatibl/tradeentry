@@ -20,7 +20,6 @@ from cl.runtime.context.progress import Progress
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.data_source_types import TDataset
 from logging import Logger
-from typing import List
 
 
 class Context(ABC):

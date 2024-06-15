@@ -15,14 +15,12 @@
 from typing import final
 from typing import Tuple
 from typing import Type
+from cl.runtime.records.table_mixin import TableMixin
 
 
 @final
-class ModuleDeclTable:
-    """Table settings."""
-
-    key_fields = ["module_name"]
-    """Primary key fields of the table."""
+class ModuleDeclTable(TableMixin):
+    pass
 
 
 ModuleDeclKey = Tuple[Type[ModuleDeclTable], str]

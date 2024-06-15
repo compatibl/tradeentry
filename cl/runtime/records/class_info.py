@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import attrs
 import sys
 from abc import ABC
 from importlib import import_module

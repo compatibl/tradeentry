@@ -14,6 +14,7 @@
 
 import pytest
 from cl.runtime.records.key_util import KeyUtil
+from cl.runtime.schema.module_decl import ModuleDecl
 from cl.runtime.schema.module_decl_key import ModuleDeclTable
 from cl.runtime.schema.type_decl import TypeDecl
 from cl.runtime.schema.type_decl_key import TypeDeclKey, TypeDeclTable
@@ -37,6 +38,13 @@ def test_parse_key():
 
     # TODO: Add check
     pass
+
+
+def test_get_key_fields():
+    """Test KeyUtil.get_key_fields method."""
+
+    assert KeyUtil.get_key_fields(TypeDecl) == ["module", "name"]
+    assert KeyUtil.get_key_fields(ModuleDecl) == ["module_name"]
 
 
 if __name__ == "__main__":

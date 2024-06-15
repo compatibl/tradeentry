@@ -12,30 +12,75 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Tuple, Dict
+import ast
+import inspect
+import textwrap
+from typing import Tuple, Dict, List, Any
 from typing import Type
-from cl.runtime.storage.data_source_types import TKey, TPrimitive
 
 
 class KeyUtil:
     """Utilities for working with keys."""
 
     @classmethod
-    def to_dict(cls, key: TKey) -> Dict[str, TKey | TPrimitive]:
+    def to_dict(cls, key: Tuple) -> Dict[str, Any]:
         """Convert key to dictionary using key_fields from its table type."""
 
         # Get key fields from the table type
-        key_fields = key[0].key_fields  # noqa
+        key_fields = key[0].get_key_fields()
 
         # Convert to dictionary, recursively calling to_dict on key elements of a composite key
         return {k: cls.to_dict(v) if isinstance(v, tuple) else v for k, v in zip(key_fields, key[1:])}
 
-
-    @staticmethod
-    def parse_key(key_type: Type, key: Tuple) -> Tuple:
+    @classmethod
+    def parse_key(cls, key_type: Type, key: Tuple) -> Tuple:  # TODO: Check if this method is used
         """Parse key of 'key_type' into a tuple, validating types and flattening composite key contents."""
 
         # TODO: Support composite types
         record_type = key[0]  # TODO: Check against key type
         result = key[1:]
         return result
+
+    @classmethod
+    def get_key_fields(cls, record_type: Type) -> List[str]:
+        """
+        Get primary key fields by parsing the source of 'get_key' method of 'record_type'.
+
+        Notes:
+            This method parses the source code of 'get_key' method of 'record_type' and returns all
+            instance fields it accesses in the order of access, for example if 'get_key' source is:
+
+            def get_key(self) -> ClassKey:
+                return ClassTable, self.key_field_1, self.key_field_2
+
+            this method will return:
+
+            ["key_field_1", "key_field_2"]
+
+        Args:
+            record_type: Class where 'get_key' method is implemented
+        """
+
+        # Get source code for the 'get_key' method
+        if hasattr(record_type, "get_key"):
+            get_key_source = inspect.getsource(record_type.get_key)
+        else:
+            raise RuntimeError(
+                f"Cannot get key fields because record type {record_type.__name__} "
+                f"does not implement 'get_key' method."
+            )
+
+        # Because 'ast' expects the code to be correct as though it is at top level,
+        # remove excess indent from the source to make it suitable for parsing
+        get_key_source = textwrap.dedent(get_key_source)
+
+        # Extract field names from the AST of 'get_key' method
+        get_key_ast = ast.parse(get_key_source)
+        key_fields = []
+        for node in ast.walk(get_key_ast):
+            # Find every instance field of accessed inside the source of 'get_key' method.
+            # Accumulate in list in the order they are accessed
+            if isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name) and node.value.id == "self":
+                key_fields.append(node.attr)
+
+        return key_fields

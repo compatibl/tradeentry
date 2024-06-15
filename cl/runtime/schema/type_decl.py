@@ -17,6 +17,8 @@ from __future__ import annotations
 import ast
 import inspect
 import textwrap
+
+from cl.runtime import KeyUtil
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from cl.runtime.schema.display_kind import DisplayKind
@@ -148,7 +150,7 @@ class TypeDecl(DataclassMixin):
                 result.inherit = TypeDecl, parent_type_module, parent_type_name
 
         # Get key fields by parsing the source of 'get_key' method
-        result.keys = cls._get_key_fields(record_type)
+        result.keys = KeyUtil.get_key_fields(record_type)
 
         # Use this flag to skip fields generation when the method is invoked from a derived class
         if not skip_fields:
@@ -166,43 +168,3 @@ class TypeDecl(DataclassMixin):
                 result.elements.append(element_decl)
 
         return result
-
-    @classmethod
-    def _get_key_fields(cls, record_type: Type) -> List[str]:
-        """
-        Get primary key fields by parsing the source of 'get_key' method.
-
-        Notes:
-            This method parses the source code of 'get_key' method and returns all instance
-            fields it accesses in the order of access, for example if 'get_key' source is:
-
-            def get_key(self) -> ClassKey:
-                return ClassTable, self.key_field_1, self.key_field_2
-
-            this method will return:
-
-            ["key_field_1", "key_field_2"]
-        """
-
-        # Get source code for the 'get_key' method
-        if hasattr(record_type, "get_key"):
-            get_key_source = inspect.getsource(record_type.get_key)
-        else:
-            raise RuntimeError(
-                f"Cannot get key fields because {record_type.__name__} " f"does not implement 'get_key' method."
-            )
-
-        # Because 'ast' expects the code to be correct as though it is at top level,
-        # remove excess indent from the source to make it suitable for parsing
-        get_key_source = textwrap.dedent(get_key_source)
-
-        # Extract field names from the AST of 'get_key' method
-        get_key_ast = ast.parse(get_key_source)
-        key_fields = []
-        for node in ast.walk(get_key_ast):
-            # Find every instance field of accessed inside the source of 'get_key' method.
-            # Accumulate in list in the order they are accessed
-            if isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name) and node.value.id == "self":
-                key_fields.append(node.attr)
-
-        return key_fields
