@@ -33,8 +33,7 @@ def test_smoke():
         loaded_records = StubDataclassRecord.load_many([key, None], context=context, dataset=dataset)
 
         assert loaded_records[0] == record
-        assert loaded_records[1] == record
-        assert loaded_records[2] is None
+        assert loaded_records[1] is None
 
 
 if __name__ == "__main__":

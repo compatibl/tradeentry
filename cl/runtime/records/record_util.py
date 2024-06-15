@@ -14,7 +14,7 @@
 
 
 from cl.runtime.context.context import Context
-from cl.runtime.storage.data_source_types import TDataset
+from cl.runtime.storage.data_source_types import TDataset, TLoadedRecord
 from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TKey
 from typing import Iterable
@@ -101,11 +101,12 @@ class RecordUtil:
         batches = [keys[i : i + batch_size] for i in range(0, len(keys), batch_size)]
         records_dict = {}
         for batch_keys in batches:
-            # Get unordered dict of serialized record data
-            batch_data = data_source.load_many(batch_keys, dataset=dataset)
 
-            # Create class instances and accumulate in records_dict, key[0] is type
-            records_dict.update({key: key[0](**dict_) for key, dict_ in batch_data})
+            # Get unordered dict of record data serialized as (record_type, serialized_data) tuple
+            record_tuples: Iterable[TLoadedRecord] = data_source.load_many(batch_keys, dataset=dataset)
+
+            # Create class instances and accumulate in records_dict
+            records_dict.update({key: data[0](**data[1]) for key, data, dataset, stamp in record_tuples})
 
         # Replace key by record defaulting to None, otherwise return input record or None
         result = [records_dict.get(x[1], None) if x[0] == _KEY else x[1] for x in coded_inputs]
