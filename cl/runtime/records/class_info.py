@@ -44,7 +44,7 @@ class ClassInfo(ABC):
         """Split dot-delimited class path into module path and class name.
 
         Returns:
-            Tuple of module_path, class_name
+            Tuple of module_name, class_name
         """
         result = class_path.rsplit(".", 1)
         return result[0], result[1]
@@ -62,10 +62,10 @@ class ClassInfo(ABC):
             class_path: String in module.ClassName format.
         """
 
-        module_path, class_name = ClassInfo.split_class_path(class_path)
+        module_name, class_name = ClassInfo.split_class_path(class_path)
 
         # Check that the module exists and is fully initialized
-        module = sys.modules.get(module_path)
+        module = sys.modules.get(module_name)
         module_spec = getattr(module, "__spec__", None) if module is not None else None
         module_initializing = getattr(module_spec, "_initializing", False) if module_spec is not None else None
         module_imported = module_initializing is False  # To ensure it is not another value evaluating to False
@@ -73,16 +73,16 @@ class ClassInfo(ABC):
         # Import dynamically if not already imported, report error if not found
         if not module_imported:
             try:
-                module = import_module(module_path)
+                module = import_module(module_name)
             except ModuleNotFoundError:
-                raise RuntimeError(f"Module {module_path} is not found when loading class {class_name}.")
+                raise RuntimeError(f"Module {module_name} is not found when loading class {class_name}.")
 
         # Get class from module, report error if not found
         try:
             result = getattr(module, class_name)
             return result
         except AttributeError:
-            raise RuntimeError(f"Module {module_path} does not contain top-level class {class_name}.")
+            raise RuntimeError(f"Module {module_name} does not contain top-level class {class_name}.")
 
     @staticmethod
     @cached(custom_key_maker=lambda record_type: f"{record_type.__module__}.{record_type.__name__}")

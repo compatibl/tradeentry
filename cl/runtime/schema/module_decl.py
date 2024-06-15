@@ -21,8 +21,8 @@ from dataclasses import dataclass
 class ModuleDecl(DataclassMixin):
     """Specifies module path in dot-delimited format."""
 
-    module_path: str
-    """Module path in dot-delimited format."""
+    module_name: str
+    """Module name in dot-delimited format."""
 
     def get_key(self) -> ModuleDeclKey:
-        return ModuleDeclTable, self.module_path
+        return ModuleDeclTable, self.module_name
