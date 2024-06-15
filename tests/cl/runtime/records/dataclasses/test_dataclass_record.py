@@ -31,13 +31,14 @@ def test_smoke():
     assert key == (StubDataclassRecordTable, "abc")
 
     # Test roundtrip serialization
-    packed_key, packed_dict = record.pack()
+    packed_key, (packed_type, packed_dict) = record.pack()
     assert packed_key == key
 
     record_clone = StubDataclassRecord(**packed_dict)
-    clone_key, clone_dict = record_clone.pack()
+    clone_key, (clone_type, clone_dict) = record_clone.pack()
     assert len(packed_dict) == 1
     assert clone_key == key
+    assert clone_type == packed_type
     assert clone_dict == packed_dict
     assert record_clone == record
 

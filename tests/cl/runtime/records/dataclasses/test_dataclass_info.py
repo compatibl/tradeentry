@@ -137,15 +137,16 @@ def test_to_from_dict():
         # Create a stub type instance with default field values
         record = stub_type()
         key = record.get_key()
-        packed_key, packed_dict = record.pack()
+        packed_key, (packed_type, packed_dict) = record.pack()
         assert packed_key == key
 
         # Restore from dict
         record_clone = stub_type(**packed_dict)  # noqa
-        clone_key, clone_dict = record_clone.pack()
+        clone_key, (clone_type, clone_dict) = record_clone.pack()
 
         # Compare
         assert clone_key == key
+        assert clone_type == packed_type
         assert clone_dict == packed_dict
         assert record_clone == record
 

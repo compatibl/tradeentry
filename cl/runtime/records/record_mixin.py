@@ -58,7 +58,7 @@ class RecordMixin(ABC):
 
     @abstractmethod
     def pack(self) -> TPackedRecord:
-        """Return (TKey, TData) where TKey is (type, primary key fields) and TData is serialized record data."""
+        """Return TPackedRecord = (TKey, TData)."""
 
     def init(self) -> None:
         """Similar to __init__ but uses previously set fields instead of parameters (not invoked by data source)."""

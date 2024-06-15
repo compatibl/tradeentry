@@ -35,8 +35,8 @@ class DataclassMixin(RecordMixin, ABC):
         data_dict = asdict(self)
         data_dict = {k: v for k, v in data_dict.items() if v is not None}
 
-        # Return a tuple of key and data
-        return self.get_key(), data_dict  # noqa Suppress type warning inside tuple
+        # Return a tuple of key and (record_type, serialized_data)
+        return self.get_key(), (type(self), data_dict)
 
 
 def datafield(

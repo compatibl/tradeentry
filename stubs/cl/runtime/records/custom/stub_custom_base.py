@@ -38,11 +38,14 @@ class StubCustomBase(RecordMixin):
         self.float_field = float_field
 
     def pack(self) -> Tuple[StubCustomBaseKey, TData]:
-        return self.get_key(), {
-            "str_field": self.str_field,
-            "int_field": self.int_field,
-            "float_field": self.float_field,
-        }
+        return self.get_key(), (
+            StubCustomBase,
+            {
+                "str_field": self.str_field,
+                "int_field": self.int_field,
+                "float_field": self.float_field,
+            },
+        )
 
     def get_key(self) -> StubCustomBaseKey:
         return StubCustomBaseTable, self.str_field, self.int_field

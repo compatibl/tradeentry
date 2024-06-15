@@ -31,7 +31,12 @@ class AttrsMixin(RecordMixin, ABC):
     """Mixin methods for dataclass records."""
 
     def pack(self) -> TPackedRecord:
-        return self.get_key(), attrs.asdict(self)  # noqa
+        # Get data dictionary and remove keys that have None values
+        data_dict = attrs.asdict(self)  # noqa
+        data_dict = {k: v for k, v in data_dict.items() if v is not None}
+
+        # Return a tuple of key and (record_type, serialized_data)
+        return self.get_key(), (type(self), data_dict)
 
 
 def attrs_field(
