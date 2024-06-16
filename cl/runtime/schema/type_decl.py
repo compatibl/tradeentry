@@ -43,15 +43,13 @@ DisplayKindLiteral = Literal["Basic", "Singleton", "Dashboard"]
 
 def for_type_key_maker(cls, record_type: Type, *, skip_fields: bool = False) -> str:
     """Custom key marker for 'for_type' class method."""
+    # TODO: Replace by lambda if skip_fields parameter is removed
     return f"{record_type.__module__}.{record_type.__name__}.{skip_fields}"
 
 
 @dataclass(slots=True, kw_only=True)
 class TypeDecl(DataclassMixin):
-    """
-    Defines type declaration. A tag of entity type XML representation corresponds to each element of the type. The
-    names of type elements and corresponding tags coincide.
-    """
+    """Provides information about a class, its fields, and its methods."""
 
     module: ModuleDeclKey = datafield()  # TODO: Merge with name to always use full name
     """Module reference."""
