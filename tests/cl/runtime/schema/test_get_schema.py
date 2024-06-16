@@ -43,7 +43,7 @@ def clean_dict(d):
 def test_method():
     """Test coroutine for /schema/typeV2 route."""
 
-    sample_types = [StubDataclassNestedFields]
+    sample_types = [StubDataclassRecord, StubDataclassNestedFields, StubDataclassOptionalFields]
 
     for sample_type in sample_types:
         class_module = sample_type.__module__.rsplit(".", maxsplit=1)[1]
