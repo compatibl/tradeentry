@@ -12,15 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import Literal
 
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
-from cl.runtime.schema.primitive_type import PrimitiveType
 from dataclasses import dataclass
+
+PrimitiveTypeName = Literal["str", "float", "bool", "int", "dt.date", "dt.time", "dt.datetime", "uuid.UUID", "bytes"]
 
 
 @dataclass(slots=True, kw_only=True)
 class ValueDecl:
     """Value or atomic element declaration."""
 
-    type_: PrimitiveType = datafield(name="Type")  # TODO: Remove trailing _ automatically instead
-    """Value or atomic element type enumeration."""
+    type_: PrimitiveTypeName = datafield()
+    """Primitive type name."""

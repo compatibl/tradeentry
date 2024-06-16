@@ -17,22 +17,21 @@ from cl.runtime.schema.enum_decl import EnumDecl
 from cl.runtime.schema.field_decl import FieldDecl
 from cl.runtime.schema.member_decl import MemberDecl
 from cl.runtime.schema.module_decl import ModuleDecl
-from cl.runtime.schema.primitive_type import PrimitiveType
 from cl.runtime.schema.value_decl import ValueDecl
 from dataclasses import dataclass
 from typing_extensions import Self
 
 primitive_type_map = {
-    "str": PrimitiveType.String,
-    "float": PrimitiveType.Double,
-    "bool": PrimitiveType.Bool,
-    "int": PrimitiveType.Int,
-    "long": PrimitiveType.Long,
-    "date": PrimitiveType.Date,
-    "time": PrimitiveType.Time,
-    "datetime": PrimitiveType.DateTime,
-    "uuid": PrimitiveType.UUID,
-    "bytes": PrimitiveType.Binary,
+    "str": "str",
+    "float": "double",
+    "bool": "bool",
+    "int": "int",
+    "long": "long",
+    "date": "date",
+    "time": "time",
+    "datetime": "datetime",
+    "uuid": "uuid",
+    "bytes": "binary",
 }
 
 
