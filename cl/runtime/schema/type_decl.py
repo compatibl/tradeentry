@@ -21,11 +21,9 @@ from itertools import tee
 from cl.runtime import KeyUtil
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
-from cl.runtime.schema.display_kind import DisplayKind
 from cl.runtime.schema.element_decl import ElementDecl
 from cl.runtime.schema.field_decl import FieldDecl
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
-from cl.runtime.schema.module_decl import ModuleDecl
 from cl.runtime.schema.module_decl_key import ModuleDeclKey, ModuleDeclTable
 from cl.runtime.schema.type_decl_key import TypeDeclKey, TypeDeclTable
 from cl.runtime.schema.type_index_decl import TypeIndexDecl
@@ -34,12 +32,13 @@ from dataclasses import dataclass
 from enum import Enum
 from inflection import titleize
 from memoization import cached
-from typing import ClassVar
-from typing import Dict
+from typing import Dict, Literal
 from typing import List
 from typing import Type
 from typing import get_type_hints
 from typing_extensions import Self
+
+DisplayKindLiteral = Literal["Basic", "Singleton", "Dashboard"]
 
 
 def for_type_key_maker(cls, record_type: Type, *, skip_fields: bool = False) -> str:
@@ -69,7 +68,7 @@ class TypeDecl(DataclassMixin):
     kind: TypeKind | None = datafield()
     """Type kind."""
 
-    display_kind: DisplayKind = datafield()  # TODO: Make optional, treat None as Basic
+    display_kind: DisplayKindLiteral = datafield()  # TODO: Make optional, treat None as Basic
     """Display kind."""
 
     inherit: TypeDeclKey | None = datafield()
@@ -140,7 +139,7 @@ class TypeDecl(DataclassMixin):
             result.kind = TypeKind.AbstractElement if is_abstract else TypeKind.Element
 
         # Set display kind
-        result.display_kind = DisplayKind.Basic  # TODO: Add the ability to set display_kind
+        result.display_kind = "Basic"  # TODO: Remove Basic after display_kind is made optional
 
         # Set parent class as the first class in MRO that is not self and does not have Mixin suffix
         for parent_type in record_type.__mro__:

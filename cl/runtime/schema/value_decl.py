@@ -17,12 +17,12 @@ from typing import Literal
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from dataclasses import dataclass
 
-PrimitiveTypeName = Literal["str", "float", "bool", "int", "dt.date", "dt.time", "dt.datetime", "uuid.UUID", "bytes"]
+PrimitiveTypeLiteral = Literal["str", "float", "bool", "int", "dt.date", "dt.time", "dt.datetime", "uuid.UUID", "bytes"]
 
 
 @dataclass(slots=True, kw_only=True)
 class ValueDecl:
     """Value or atomic element declaration."""
 
-    type_: PrimitiveTypeName = datafield()
+    type_: PrimitiveTypeLiteral = datafield()
     """Primitive type name."""
