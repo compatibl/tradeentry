@@ -17,7 +17,8 @@ import json
 import os
 import pytest
 from cl.runtime.schema.dataclasses.dataclass_type_decl import DataclassTypeDecl
-from stubs.cl.runtime import StubDataclassNestedFields
+from cl.runtime.schema.type_decl import TypeDecl
+from stubs.cl.runtime import StubDataclassNestedFields, StubCustomBase
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields import StubDataclassOptionalFields
 

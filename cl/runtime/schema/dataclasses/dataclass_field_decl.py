@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import inspect
 
 from cl.runtime.schema.field_decl import FieldDecl
 from dataclasses import Field
@@ -24,7 +25,7 @@ class DataclassFieldDecl(FieldDecl):
     """Field declaration for a dataclass type."""
 
     @classmethod
-    def create(cls, field: Field, field_type: Type) -> Self:
+    def create(cls, record_type: Type, field: Field, field_type: Type, field_comment: str) -> Self:
         """
         Create from dataclass field definition and field_type obtained from get_type_hints.
 
@@ -33,12 +34,14 @@ class DataclassFieldDecl(FieldDecl):
             For this reason, field_type obtained from get_type_hints is used as well.
 
         Args:
+            record_type: Type of the record for which the field is defined
             field: Dataclass field definition
             field_type: Type of the field obtained from get_type_hints where ForwardRefs are resolved
+            field_comment: Field comment (docstring), currently requires source parsing due Python limitations
         """
 
         # Use base class to populate fields that do not require access to dataclasses metadata
-        result = FieldDecl.create(field.name, field_type)
+        result = FieldDecl.create(record_type, field.name, field_type, field_comment)
 
         # Populate fields that require access to dataclasses metadata
         metadata = dict(field.metadata)

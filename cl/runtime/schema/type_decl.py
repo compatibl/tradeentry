@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import ast
 import inspect
-import textwrap
+from itertools import tee
 
 from cl.runtime import KeyUtil
 from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
@@ -129,7 +129,7 @@ class TypeDecl(DataclassMixin):
         result.module = ModuleDeclTable.create_key(module_name=record_type.__module__)
         result.name = record_type.__name__
         result.label = titleize(result.name)  # TODO: Add override from settings
-        result.comment = record_type.__doc__ or ""  # TODO: Revise
+        result.comment = record_type.__doc__
 
         # Set type kind by detecting the presence of 'get_key' method to indicate a record vs. an element
         is_record = hasattr(record_type, "get_key")
@@ -157,14 +157,54 @@ class TypeDecl(DataclassMixin):
             # Get type hints to resolve ForwardRefs
             type_hints = get_type_hints(record_type)
 
+            # Dictionary of member comments (docstrings), currently requires source parsing due Python limitations
+            member_comments = cls.get_member_comments(record_type)
+
             # Add an element for each type hint
             result.elements = []
             for field_name, field_type in type_hints.items():
+
+                # Field comment (docstring)
+                field_comment = member_comments.get(field_name, None)
+
                 # Get the rest of the data from the field itself
-                field_decl = FieldDecl.create(field_name, field_type)
+                field_decl = FieldDecl.create(record_type, field_name, field_type, field_comment)
 
                 # Convert to element and add
                 element_decl = ElementDecl.create(field_decl)
                 result.elements.append(element_decl)
 
         return result
+
+    @classmethod
+    @cached
+    def get_member_comments(cls, record_type: type) -> Dict[str, str]:
+        """Extract class member comments."""
+
+        comments = dict()
+        ast_tree = ast.parse(inspect.getsource(record_type))
+
+        for i, j in cls.by_pair(ast.iter_child_nodes(ast_tree.body[0])):
+            if isinstance(i, ast.AnnAssign):
+                target_node = i.target
+            elif isinstance(i, ast.Assign):
+                target_node = i.targets[0]
+            else:
+                continue
+
+            if not isinstance(target_node, ast.Name):
+                continue
+
+            name: str = target_node.id
+            # TODO: ast.Str is replaced by ast.Constant in Python 3.8, update
+            if isinstance(j, ast.Expr) and isinstance(j.value, ast.Str):
+                comments[name] = inspect.cleandoc(j.value.s)
+
+        return comments
+
+    @classmethod
+    def by_pair(cls, iterable):
+        """s -> (s0,s1), (s1,s2), (s2, s3), ..."""
+        a, b = tee(iterable)
+        next(b, None)
+        return zip(a, b)

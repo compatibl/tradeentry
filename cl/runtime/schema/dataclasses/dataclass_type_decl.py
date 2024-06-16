@@ -53,14 +53,20 @@ class DataclassTypeDecl(TypeDecl):
             # Get type hints to resolve ForwardRefs
             type_hints = get_type_hints(record_type)
 
+            # Dictionary of member comments (docstrings), currently requires source parsing due Python limitations
+            member_comments = cls.get_member_comments(record_type)
+
             # Add elements
             result.elements = []
             for field in fields:
                 # Get type from type hints because they resolve forward references
                 field_type = type_hints[field.name]
 
+                # Field comment (docstring)
+                field_comment = member_comments.get(field.name, None)
+
                 # Get the rest of the data from the field itself
-                field_decl = DataclassFieldDecl.create(field, field_type)
+                field_decl = DataclassFieldDecl.create(record_type, field, field_type, field_comment)
 
                 # Convert to element and add
                 element_decl = ElementDecl.create(field_decl)

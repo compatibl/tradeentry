@@ -70,17 +70,20 @@ class FieldDecl:
     """This field is an alternate of the specified field, of which only one can be specified."""
 
     @classmethod
-    def create(cls, field_name: str, field_type: Type) -> Self:
+    def create(cls, record_type: Type, field_name: str, field_type: Type, field_comment: str) -> Self:
         """
         Create from field name and type.
 
         Args:
+            record_type: Type of the record for which the field is defined
             field_name: Name of the field
             field_type: Type of the field obtained from get_type_hints where ForwardRefs are resolved
+            field_comment: Field comment (docstring), currently requires source parsing due Python limitations
         """
 
         result = cls()
         result.name = field_name
+        result.comment = field_comment
 
         # Get origin and args of the field type
         field_origin = typing.get_origin(field_type)
