@@ -32,7 +32,10 @@ def clean_dict(d):
         return [clean_dict(v) for v in d if v not in [None, False]]
     elif isinstance(d, tuple):
         # Key
-        return {k.removesuffix("_"): v for k, v in zip(d[0].get_key_fields(), d[1:])}
+        table_type = d[0]
+        key_field_names = table_type.get_key_fields()
+        key_field_values = [clean_dict(v) for v in d[1:]]
+        return {k.removesuffix("_"): v for k, v in zip(key_field_names, key_field_values)}
     else:
         return d
 
@@ -40,7 +43,7 @@ def clean_dict(d):
 def test_method():
     """Test coroutine for /schema/typeV2 route."""
 
-    sample_types = [StubDataclassRecord] # , StubDataclassOptionalFields, StubDataclassNestedFields]
+    sample_types = [StubDataclassNestedFields]
 
     for sample_type in sample_types:
         class_module = sample_type.__module__.rsplit(".", maxsplit=1)[1]

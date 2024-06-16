@@ -30,7 +30,7 @@ class TypeDeclTable(TableMixin):
         if isinstance(module, tuple):
             return TypeDeclTable, module, name
         elif isinstance(module, str):
-            return TypeDeclTable, ModuleDeclTable.create_key(module), name
+            return TypeDeclTable, ModuleDeclTable.create_key(module_name=module), name
         else:
             raise RuntimeError(f"Module {module} is neither a tuple nor a string.")
 

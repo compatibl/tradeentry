@@ -165,7 +165,17 @@ class FieldDecl:
             else:
                 raise RuntimeError(f"First element of key tuple for field {field_name} is not a type.")
 
-            result.field_type = f"{field_arg.__module__}.{field_arg.__name__}"
+            if field_arg.__module__.endswith("_key"):
+                module_name = field_arg.__module__.removesuffix("_key")
+            else:
+                raise RuntimeError(f"The module of table class {field_arg.__module__} does not have the suffix _key.")
+
+            if field_arg.__name__.endswith("Table"):
+                type_name = field_arg.__name__.removesuffix("Table")
+            else:
+                raise RuntimeError(f"The name of table class {field_arg.__name__} does not have the suffix Table.")
+
+            result.field_type = f"{module_name}.{type_name}"
 
         elif field_origin is None:
             # Assign element kind
