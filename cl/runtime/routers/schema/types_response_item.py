@@ -71,7 +71,7 @@ class TypesResponseItem(BaseModel):
     def get_types(request: UserRequest) -> List[TypesResponseItem]:
         """Implements /schema/types route."""
 
-        packages = ["cl.runtime"]
+        packages = ["cl.runtime", "stubs.cl.runtime"]
 
         result = []
         modules = TypesResponseItem.get_modules(packages)
