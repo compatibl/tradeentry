@@ -25,13 +25,13 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields import 
 def clean_dict(d):
     if isinstance(d, dict):
         # TODO: Determine if False should be omitted as well
-        return {k: clean_dict(v) for k, v in d.items() if v not in [None, False]}
+        return {k.removesuffix("_"): clean_dict(v) for k, v in d.items() if v not in [None, False]}
     elif isinstance(d, list):
         # TODO: Determine if False should be omitted as well
         return [clean_dict(v) for v in d if v not in [None, False]]
     elif isinstance(d, tuple):
         # Key
-        return {k: v for k, v in zip(d[0].get_key_fields(), d[1:])}
+        return {k.removesuffix("_"): v for k, v in zip(d[0].get_key_fields(), d[1:])}
     else:
         return d
 
