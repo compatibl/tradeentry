@@ -14,21 +14,13 @@
 
 from __future__ import annotations
 
-import importlib
 import inspect
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.user_request import UserRequest
 from inflection import titleize
-from pkgutil import walk_packages
 from pydantic import BaseModel
-from types import ModuleType
 from typing import List
-
-
-# TODO: Move to a separate helper class along with the method returning all types
-def is_record(cls):
-    """Return true if the type is a record based on the presence of 'get_key' method."""
-    return inspect.isclass(cls) and hasattr(cls, "get_key") and callable(getattr(cls, "get_key"))
+from cl.runtime.schema.schema import Schema
 
 
 class TypesResponseItem(BaseModel):
@@ -48,41 +40,18 @@ class TypesResponseItem(BaseModel):
         populate_by_name = True
 
     @staticmethod
-    def get_modules(packages: List[str]) -> List[ModuleType]:
-        """
-        Get a list of ModuleType objects for submodules at all levels of the specified packages or root modules.
-        Args:
-            packages: List of packages or root module strings in dot-delimited format, for example ['cl.runtime']
-        """
-        result = []
-        for package in packages:
-            # Import root module of the package
-            root_module = importlib.import_module(package)
-            result.append(root_module)  # Add the root module itself
-            # Get module info for all submodules, note the trailing period added as per walk_packages documentation
-            for module_info in walk_packages(root_module.__path__, root_module.__name__ + "."):
-                module_name = module_info.name
-                # Import the submodule using its full name
-                submodule = importlib.import_module(module_name)
-                result.append(submodule)
-        return result
-
-    @staticmethod
     def get_types(request: UserRequest) -> List[TypesResponseItem]:
         """Implements /schema/types route."""
 
-        packages = ["cl.runtime", "stubs.cl.runtime"]
+        # Get a dictionary of types indexed by short name
+        type_dict = Schema.get_type_dict()
 
-        result = []
-        modules = TypesResponseItem.get_modules(packages)
-        record_types = [
-            record_type for module in modules for name, record_type in inspect.getmembers(module, is_record)
-        ]
-        for record_type in record_types:
-            type_response = TypesResponseItem(
+        result = [
+            TypesResponseItem(
                 name=record_type.__name__,
                 module=StringUtil.to_pascal_case(record_type.__module__),
                 label=titleize(record_type.__name__),
             )
-            result.append(type_response)
+            for record_type in type_dict.values()
+        ]
         return result
