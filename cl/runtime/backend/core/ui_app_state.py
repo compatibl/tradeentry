@@ -6,55 +6,48 @@
 
 from typing import List, Optional
 
+from cl.runtime.context.context import Context
 from cl.runtime.backend.core.app_theme import AppTheme
 from cl.runtime.backend.core.tab_info import TabInfo
-from cl.runtime.backend.core.ui_app_state_key import UiAppStateKey
-from cl.runtime.backend.core.user_key import UserKey
-from cl.runtime.storage.attrs import data_class, data_field
-from cl.runtime.storage.context import Context
+from cl.runtime.backend.core.ui_app_state_key import UiAppStateKey, UiAppStateTable
+from cl.runtime.backend.core.user_key import UserKey, UserTable
+from dataclasses import dataclass
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassMixin
 
 
-@data_class
-class UiAppState(UiAppStateKey):
+@dataclass(slots=True, kw_only=True)
+class UiAppState(DataclassMixin):
     """UiAppState."""
 
-    opened_tabs: Optional[List[TabInfo]] = data_field()
+    user: UserKey = datafield()
+    """A user the app state is applied for."""
+
+    opened_tabs: Optional[List[TabInfo]] = datafield()
     """Information about opened tabs."""
 
-    active_tab_index: Optional[int] = data_field()
+    active_tab_index: Optional[int] = datafield()
     """Index of active opened tab."""
 
-    versions: Optional[dict] = data_field()
+    versions: Optional[dict] = datafield()
     """Component versions."""
 
-    backend_version: Optional[str] = data_field()
+    backend_version: Optional[str] = datafield()
     """DEPRECATED. Use versions instead."""
 
-    application_name: Optional[str] = data_field()
+    application_name: Optional[str] = datafield()
     """Application name."""
 
-    read_only: Optional[bool] = data_field()
+    read_only: Optional[bool] = datafield()
     """Flag indicating that UI is read-only."""
 
-    application_theme: Optional[AppTheme] = data_field()
+    application_theme: AppTheme | None = datafield()
     """Application theme (dark, light, etc.)."""
 
+    def get_key(self) -> UiAppStateKey:
+        return UiAppStateTable, self.user
+
     @staticmethod
-    def get_current_user_app_theme() -> AppTheme:
+    def get_current_user_app_theme() -> AppTheme | None:
         """Get current user app theme."""
-        username = Context.current().user
-        current_app_state: UiAppState = Context.current().load_one(
-            key=UiAppStateKey(user=UserKey(username=username)),
-            ignore_not_found=True,
-        )
-        if current_app_state is not None and current_app_state.application_theme is not None:
-            return current_app_state.application_theme
+        return "Light"  # TODO: Use settings
 
-        default_app_state: UiAppState = Context.current().load_one(
-            key=UiAppStateKey(user=None),
-            ignore_not_found=True,
-        )
-        if default_app_state is not None and default_app_state.application_theme is not None:
-            return default_app_state.application_theme
-
-        return AppTheme.Light

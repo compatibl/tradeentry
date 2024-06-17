@@ -4,19 +4,19 @@
 # or distributed only in compliance with the terms of a written commercial
 # license from CompatibL and with the inclusion of this copyright notice.
 
-from cl.runtime.storage.attrs import data_class, data_field
-from cl.runtime.storage.data import Data
+from dataclasses import dataclass
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 
 
-@data_class
-class BaseTypeInfo(Data):
+@dataclass(slots=True, kw_only=True)
+class BaseTypeInfo:
     """Base type info."""
 
-    name: str = data_field()
+    name: str = datafield()
     """Name of type."""
 
-    module: str = data_field()
+    module: str = datafield()
     """Module of type."""
 
-    label: str = data_field()
+    label: str = datafield()
     """Label of type."""

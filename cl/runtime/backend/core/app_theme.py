@@ -4,14 +4,7 @@
 # or distributed only in compliance with the terms of a written commercial
 # license from CompatibL and with the inclusion of this copyright notice.
 
-from enum import IntEnum
+from typing import Literal
 
+AppTheme = Literal["Dark", "Light"]
 
-class AppTheme(IntEnum):
-    """Application theme."""
-
-    Dark = 0
-    """Dark theme."""
-
-    Light = 1
-    """Light theme."""

@@ -4,20 +4,18 @@
 # or distributed only in compliance with the terms of a written commercial
 # license from CompatibL and with the inclusion of this copyright notice.
 
-from typing import Optional
-
 from cl.runtime.backend.core.base_type_info import BaseTypeInfo
-from cl.runtime.storage.attrs import data_class, data_field
-from cl.runtime.storage.data import Data
-from cl.runtime.storage.key import Key
+from dataclasses import dataclass
+from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from cl.runtime.records.generic_key import GenericKey
 
 
-@data_class
-class TabInfo(Data):
+@dataclass(slots=True, kw_only=True)
+class TabInfo:
     """Tab info."""
 
-    type_: BaseTypeInfo = data_field(name='Type')
+    type_: BaseTypeInfo = datafield()
     """Type."""
 
-    key: Optional[Key] = data_field()
+    key: GenericKey | None = datafield()
     """Key."""

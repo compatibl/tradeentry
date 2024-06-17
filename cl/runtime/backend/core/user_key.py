@@ -4,12 +4,21 @@
 # or distributed only in compliance with the terms of a written commercial
 # license from CompatibL and with the inclusion of this copyright notice.
 
-from cl.runtime.storage.attrs import data_class, data_field
-from cl.runtime.storage.key import Key
+from __future__ import annotations
+from typing import final
+from typing import Tuple
+from typing import Type
+from cl.runtime.records.table_mixin import TableMixin
 
 
-@data_class
-class UserKey(Key):
-    """Key for WhitelistedUser class"""
+@final
+class UserTable(TableMixin):
+    """Table settings class."""
 
-    username: str = data_field()
+    @classmethod
+    def create_key(cls, *, username: str) -> UserKey:
+        return UserTable, username
+
+
+UserKey = Tuple[Type[UserTable], str]
+

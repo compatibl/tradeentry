@@ -27,8 +27,9 @@ class TypeDeclTable(TableMixin):
 
     @classmethod
     def create_key(cls, *, module: ModuleDeclKey | str, name: str) -> TypeDeclKey:
+        # TODO: Review if handling different parameter types is necessary
         if isinstance(module, tuple):
-            return TypeDeclTable, module, name
+            return TypeDeclTable, module, name  # noqa
         elif isinstance(module, str):
             return TypeDeclTable, ModuleDeclTable.create_key(module_name=module), name
         else:
