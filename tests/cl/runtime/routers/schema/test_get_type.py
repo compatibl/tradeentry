@@ -21,7 +21,7 @@ from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
 from cl.runtime.routers.server import app
 from fastapi.testclient import TestClient
 
-requests = [{"name": "StubClass"}, {"name": "StubClass", "user": "TestUser"}]
+requests = [{"name": "UiAppState"}, {"name": "UiAppState", "user": "TestUser"}]
 
 expected_result_file_path = os.path.abspath(__file__).replace(".py", ".expected.json")
 with open(expected_result_file_path, "r", encoding="utf-8") as file:

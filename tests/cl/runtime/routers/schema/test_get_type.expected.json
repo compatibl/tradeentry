@@ -1,5 +1,5 @@
 {
-    "Cl.Runtime.Backend.Core.StubClass": {
+    "Cl.Runtime.Backend.Core.UiAppState": {
         "Module": {
             "ModuleName": "Cl.Runtime.Backend.Core"
         },
