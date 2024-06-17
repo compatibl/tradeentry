@@ -1,9 +1,9 @@
 {
-    "Cl.Runtime.Backend.Core.UiAppState": {
+    "Cl.Runtime.Backend.Core.UiAppState.UiAppState": {
         "Module": {
-            "ModuleName": "Cl.Runtime.Backend.Core"
+            "ModuleName": "Cl.Runtime.Backend.Core.UiAppState"
         },
-        "Name": "StubClass",
+        "Name": "UiAppState",
         "Label": "Ui App State",
         "Comment": "UiAppState.",
         "DisplayKind": "Basic",
@@ -11,18 +11,17 @@
             {
                 "Key": {
                     "Module": {
-                        "ModuleName": "Cl.Runtime.Backend.Core"
+                        "ModuleName": "Cl.Runtime.Backend.Core.User"
                     },
                     "Name": "User"
                 },
                 "Name": "User",
-                "Comment": "A user the app state is applied for.",
-                "Optional": true
+                "Comment": "A user the app state is applied for."
             },
             {
                 "Data": {
                     "Module": {
-                        "ModuleName": "Cl.Runtime.Backend.Core"
+                        "ModuleName": "Cl.Runtime.Backend.Core.TabInfo"
                     },
                     "Name": "TabInfo"
                 },
@@ -37,14 +36,6 @@
                 },
                 "Name": "ActiveTabIndex",
                 "Comment": "Index of active opened tab.",
-                "Optional": true
-            },
-            {
-                "Value": {
-                    "Type": "Dict"
-                },
-                "Name": "Versions",
-                "Comment": "Component versions.",
                 "Optional": true
             },
             {
@@ -72,11 +63,8 @@
                 "Optional": true
             },
             {
-                "Enum": {
-                    "Module": {
-                        "ModuleName": "Cl.Runtime.Backend.Core"
-                    },
-                    "Name": "AppTheme"
+                "Value": {
+                    "Type": "String"
                 },
                 "Name": "ApplicationTheme",
                 "Comment": "Application theme (dark, light, etc.).",
@@ -85,15 +73,11 @@
         ],
         "Keys": [
             "User"
-        ],
-        "Implement": {
-            "Handlers": [
-            ]
-        }
+        ]
     },
-    "Cl.Runtime.Backend.Core.User": {
+    "Cl.Runtime.Backend.Core.User.User": {
         "Module": {
-            "ModuleName": "Cl.Runtime.Backend.Core"
+            "ModuleName": "Cl.Runtime.Backend.Core.User"
         },
         "Name": "User",
         "Label": "User",
@@ -131,15 +115,11 @@
         ],
         "Keys": [
             "Username"
-        ],
-        "Implement": {
-            "Handlers": [
-            ]
-        }
+        ]
     },
-    "Cl.Runtime.Backend.Core.TabInfo": {
+    "Cl.Runtime.Backend.Core.TabInfo.TabInfo": {
         "Module": {
-            "ModuleName": "Cl.Runtime.Backend.Core"
+            "ModuleName": "Cl.Runtime.Backend.Core.TabInfo"
         },
         "Name": "TabInfo",
         "Label": "Tab Info",
@@ -150,7 +130,7 @@
             {
                 "Data": {
                     "Module": {
-                        "ModuleName": "Cl.Runtime.Backend.Core"
+                        "ModuleName": "Cl.Runtime.Backend.Core.BaseTypeInfo"
                     },
                     "Name": "BaseTypeInfo"
                 },
@@ -166,15 +146,11 @@
                 "Optional": true
             }
         ],
-        "Keys": null,
-        "Implement": {
-            "Handlers": [
-            ]
-        }
+        "Keys": null
     },
-    "Cl.Runtime.Backend.Core.BaseTypeInfo": {
+    "Cl.Runtime.Backend.Core.BaseTypeInfo.BaseTypeInfo": {
         "Module": {
-            "ModuleName": "Cl.Runtime.Backend.Core"
+            "ModuleName": "Cl.Runtime.Backend.Core.BaseTypeInfo"
         },
         "Name": "BaseTypeInfo",
         "Label": "Base Type Info",
@@ -204,10 +180,6 @@
                 "Comment": "Label of type."
             }
         ],
-        "Keys": null,
-        "Implement": {
-            "Handlers": [
-            ]
-        }
+        "Keys": null
     }
 }

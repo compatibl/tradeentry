@@ -23,16 +23,16 @@ from dataclasses import dataclass
 from typing_extensions import Self
 
 primitive_type_map = {
-    "str": "str",
-    "float": "double",
-    "bool": "bool",
-    "int": "int",
-    "long": "long",
-    "date": "date",
-    "time": "time",
-    "datetime": "datetime",
-    "uuid": "uuid",
-    "bytes": "binary",
+    "str": "String",
+    "float": "Double",
+    "bool": "Bool",
+    "int": "Int",
+    "long": "Long",
+    "date": "Date",
+    "time": "Time",
+    "datetime": "DateTime",
+    "uuid": "UUID",  # TODO: Check for support in ElementDecl
+    "bytes": "Binary",
 }
 
 
