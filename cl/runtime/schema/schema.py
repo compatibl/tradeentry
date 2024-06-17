@@ -20,7 +20,7 @@ from collections import Counter
 from pkgutil import walk_packages
 from types import ModuleType
 
-from cl.runtime.schema.type_decl import TypeDecl
+from cl.runtime.schema.type_decl import TypeDecl, pascalize
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from memoization import cached
 from typing import Dict, List, Iterable
@@ -154,7 +154,12 @@ class Schema:
         """
         type_decl_obj = TypeDecl.for_type(record_type)
         type_decl_list = [type_decl_obj]
-        result = {type_decl.name: type_decl.to_type_decl_dict() for type_decl in type_decl_list}
+
+        # TODO: Move pascalize to a helper class
+        result = {
+            pascalize(f"{type_decl.module[1]}.{type_decl.name}"): type_decl.to_type_decl_dict()
+            for type_decl in type_decl_list
+        }
         return result
 
     @classmethod
