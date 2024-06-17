@@ -6,11 +6,10 @@
 
 from typing import List, Optional
 
-from cl.runtime.context.context import Context
 from cl.runtime.backend.core.app_theme import AppTheme
 from cl.runtime.backend.core.tab_info import TabInfo
 from cl.runtime.backend.core.ui_app_state_key import UiAppStateKey, UiAppStateTable
-from cl.runtime.backend.core.user_key import UserKey, UserTable
+from cl.runtime.backend.core.user_key import UserKey
 from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassMixin
 
@@ -22,22 +21,19 @@ class UiAppState(DataclassMixin):
     user: UserKey = datafield()
     """A user the app state is applied for."""
 
-    opened_tabs: Optional[List[TabInfo]] = datafield()
+    opened_tabs: List[TabInfo] | None = datafield()
     """Information about opened tabs."""
 
-    active_tab_index: Optional[int] = datafield()
+    active_tab_index: int | None = datafield()
     """Index of active opened tab."""
 
-    versions: Optional[dict] = datafield()
-    """Component versions."""
-
-    backend_version: Optional[str] = datafield()
+    backend_version: str | None = datafield()
     """DEPRECATED. Use versions instead."""
 
-    application_name: Optional[str] = datafield()
+    application_name: str | None = datafield()
     """Application name."""
 
-    read_only: Optional[bool] = datafield()
+    read_only: bool | None = datafield()
     """Flag indicating that UI is read-only."""
 
     application_theme: AppTheme | None = datafield()
