@@ -13,6 +13,8 @@
 # limitations under the License.
 
 import pytest
+
+from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.schema.type_decl import TypeDecl
 
@@ -40,7 +42,7 @@ def to_snake_case(data):
 
 
 def test_init():
-    """Test TypeDecl __init__ method."""
+    """Test TypeDecl.__init__ method."""
 
     type_decl_dict_snake_case = to_snake_case(type_decl_dict)
     result = TypeDecl(**type_decl_dict_snake_case)
@@ -54,6 +56,13 @@ def test_init():
     key, (record_type, record_dict) = result.pack()
     assert record_dict == type_decl_dict_snake_case
 
+
+def test_to_type_decl_dict():
+    """Test TypeDecl.to_type_decl_dict method."""
+
+    type_decl = TypeDecl.for_type(UiAppState)
+    type_decl_dict = type_decl.to_type_decl_dict()
+    pass
 
 if __name__ == "__main__":
     pytest.main([__file__])

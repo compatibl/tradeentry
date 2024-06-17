@@ -28,17 +28,37 @@ from cl.runtime.schema.module_decl_key import ModuleDeclKey, ModuleDeclTable
 from cl.runtime.schema.type_decl_key import TypeDeclKey, TypeDeclTable
 from cl.runtime.schema.type_index_decl import TypeIndexDecl
 from cl.runtime.schema.type_kind import TypeKind
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from enum import Enum
 from inflection import titleize
 from memoization import cached
-from typing import Dict, Literal
+from typing import Dict, Literal, Any
 from typing import List
 from typing import Type
 from typing import get_type_hints
 from typing_extensions import Self
 
 DisplayKindLiteral = Literal["Basic", "Singleton", "Dashboard"]
+
+
+def to_type_decl_dict(node: Dict[str, Any] | List[Dict[str, Any]]) -> Dict[str, Any] | List[Dict[str, Any]]:
+    """Recursively apply type declaration dictionary conventions to the input."""
+
+    if isinstance(node, dict):
+        # For type declarations only, skip nodes that have the value of None or False
+        # Remove suffix _ from field names if present
+        return {k.removesuffix("_"): to_type_decl_dict(v) for k, v in node.items() if v not in [None, False]}
+    elif isinstance(node, list):
+        # For type declarations only, skip nodes that have the value of None or False
+        return [to_type_decl_dict(v) for v in node if v not in [None, False]]
+    elif isinstance(node, tuple):
+        # The first element of key node tuple is type, the remaining elements are primary key fields
+        # Remove suffix _ from field names if present
+        key_field_names = node[0].get_key_fields()
+        key_field_values = [to_type_decl_dict(v) for v in node[1:]]
+        return {k.removesuffix("_"): v for k, v in zip(key_field_names, key_field_values)}
+    else:
+        return node
 
 
 def for_type_key_maker(cls, record_type: Type, *, skip_fields: bool = False) -> str:
@@ -92,6 +112,16 @@ class TypeDecl(DataclassMixin):
 
     def get_key(self) -> TypeDeclKey:
         return TypeDeclTable, self.module, self.name
+
+    def to_type_decl_dict(self) -> Dict[str, Any]:
+        """Convert to dictionary using type declaration conventions."""
+
+        # Convert to standard dictionary format
+        standard_dict = asdict(self)
+
+        # Apply type declaration dictionary conventions
+        result = to_type_decl_dict(standard_dict)
+        return result
 
     @classmethod
     def for_key(cls, key: TypeDeclKey) -> Self:

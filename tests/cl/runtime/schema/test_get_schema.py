@@ -23,23 +23,6 @@ from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields import StubDataclassOptionalFields
 
 
-def clean_dict(d):
-    if isinstance(d, dict):
-        # TODO: Determine if False should be omitted as well
-        return {k.removesuffix("_"): clean_dict(v) for k, v in d.items() if v not in [None, False]}
-    elif isinstance(d, list):
-        # TODO: Determine if False should be omitted as well
-        return [clean_dict(v) for v in d if v not in [None, False]]
-    elif isinstance(d, tuple):
-        # Key
-        table_type = d[0]
-        key_field_names = table_type.get_key_fields()
-        key_field_values = [clean_dict(v) for v in d[1:]]
-        return {k.removesuffix("_"): v for k, v in zip(key_field_names, key_field_values)}
-    else:
-        return d
-
-
 def test_method():
     """Test coroutine for /schema/typeV2 route."""
 
