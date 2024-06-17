@@ -14,6 +14,8 @@
 
 import pytest
 from cl.runtime.schema.schema import Schema
+from cl.runtime.schema.type_decl import TypeDecl
+from stubs.cl.runtime import StubDataclassRecord
 
 
 def test_get_types():
@@ -23,6 +25,22 @@ def test_get_types():
     assert "TypeDecl" in type_dict
     assert "StubDataclassRecord" in type_dict
     assert "RecordMixin" not in type_dict
+
+
+def test_get_type_by_short_name():
+    """Test Schema.get_type_by_short_name() method."""
+
+    assert Schema.get_type_by_short_name("TypeDecl") is TypeDecl
+    assert Schema.get_type_by_short_name("StubDataclassRecord") is StubDataclassRecord
+
+
+def test_get_type_by_class_path():
+    """Test Schema.get_type_by_class_path() method."""
+
+    assert Schema.get_type_by_class_path("cl.runtime.schema.type_decl.TypeDecl") is TypeDecl
+    assert Schema.get_type_by_class_path(
+        "stubs.cl.runtime.records.dataclasses.stub_dataclass_record.StubDataclassRecord"
+    ) is StubDataclassRecord
 
 
 if __name__ == "__main__":

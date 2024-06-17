@@ -19,9 +19,10 @@ import inspect
 from collections import Counter
 from pkgutil import walk_packages
 from types import ModuleType
+
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from memoization import cached
-from typing import Dict, List
+from typing import Dict, List, Iterable
 from typing import Type
 from typing_extensions import Self
 
@@ -44,8 +45,56 @@ class Schema:
 
     @classmethod
     @cached
+    def get_types(cls) -> Iterable[Type]:
+        """Get all types found in the list of packages specified in settings."""
+        return cls.get_type_dict().values()
+
+    @classmethod
+    @cached
+    def get_type_by_short_name(cls, short_name: str) -> Type:
+        """Get type from short name (class name with optional package alias)."""
+
+        # Get dictionary of types indexed by alias
+        type_dict_by_short_name = cls.get_type_dict()
+
+        # TODO: Update to support short name with namespace prefix
+        record_type = type_dict_by_short_name.get(short_name, None)
+        if record_type is None:
+            raise RuntimeError(f"Record class with short name {short_name} is not found "
+                               f"in the list of packages specified in settings.")
+        return record_type
+
+    @classmethod
+    @cached
+    def get_type_by_class_path(cls, class_path: str) -> Type:
+        """Get type from full class path in module.ClassName format."""
+
+        # Get dictionary of types indexed by alias
+        type_dict_by_class_path = cls.get_type_dict_by_class_path()
+
+        # TODO: Update to support short name with namespace prefix
+        record_type = type_dict_by_class_path.get(class_path, None)
+        if record_type is None:
+            raise RuntimeError(f"Record class with class path {class_path} is not found "
+                               f"in the list of packages specified in settings.")
+        return record_type
+
+    @classmethod
+    @cached
+    def get_type_dict_by_class_path(cls) -> Dict[str, Type]:
+        """Get a dictionary of types using full class path in module.ClassName format as key."""
+
+        # Get record types from the dictionary of types by short name
+        record_types = cls.get_type_dict().values()
+
+        # Create the dictionary of types by class path
+        result = {f"{record_type.__module__}.{record_type.__name__}": record_type for record_type in record_types}
+        return result
+
+    @classmethod
+    @cached
     def get_type_dict(cls) -> Dict[str, Type]:
-        """Get a dictionary of types by class name with optional namespace alias."""
+        """Get a dictionary of types using short name (class name with optional package alias) as key."""
 
         # TODO: Load from config file
         packages = ["cl.runtime", "stubs.cl.runtime"]
@@ -87,12 +136,14 @@ class Schema:
         return cls.for_class_path(class_path)
 
     @classmethod
-    def for_class_path(cls, class_path: str) -> Self:
+    def for_class_path(cls, class_path: str) -> Dict[str, Dict]:
         """Create or return cached object for the specified class path in module.ClassName format."""
-        raise NotImplementedError()
+
+        record_type = cls.get_type_by_class_path(class_path)
+        return cls.for_type(record_type)
 
     @classmethod
-    @cached(custom_key_maker=lambda cls, record_type: f"{record_type.__module__}.{record_type.__name__}")
+    @cached
     def for_type(cls, record_type: Type) -> Dict[str, Dict]:
         """
         Declarations for the specified type and all dependencies, returned as a dictionary.
