@@ -36,7 +36,7 @@ class UiAppState(DataclassMixin):
     read_only: bool | None = datafield()
     """Flag indicating that UI is read-only."""
 
-    application_theme: AppTheme | None = datafield()
+    application_theme: str | None = datafield()  # TODO: Replace by AppTheme
     """Application theme (dark, light, etc.)."""
 
     def get_key(self) -> UiAppStateKey:
