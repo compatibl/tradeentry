@@ -23,7 +23,7 @@ from fastapi.testclient import TestClient
 
 requests = [{"name": "StubClass"}, {"name": "StubClass", "user": "TestUser"}]
 
-expected_result_file_path = os.path.abspath(__file__).replace(".py", ".expected_result.json")
+expected_result_file_path = os.path.abspath(__file__).replace(".py", ".expected.json")
 with open(expected_result_file_path, "r", encoding="utf-8") as file:
     expected_result = json.load(file)
 
@@ -34,10 +34,14 @@ def test_method():
     for request in requests:
         # Run the coroutine wrapper added by the FastAPI decorator and get the result
         request_obj = TypeRequest(**request)
-        result = TypeResponseUtil.get_type(request_obj)
+        result_dict = TypeResponseUtil.get_type(request_obj)
+
+        received_result_file_path = os.path.abspath(__file__).replace(".py", ".received.json")
+        with open(received_result_file_path, 'w') as received_result_file:
+            json.dump(result_dict, received_result_file, indent=4)
 
         # Check result
-        assert result == expected_result
+        assert result_dict == expected_result
 
 
 def test_api():
