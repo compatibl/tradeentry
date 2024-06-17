@@ -30,7 +30,7 @@ from cl.runtime.schema.type_index_decl import TypeIndexDecl
 from cl.runtime.schema.type_kind import TypeKind
 from dataclasses import dataclass, asdict
 from enum import Enum
-from inflection import titleize
+from inflection import titleize, camelize
 from memoization import cached
 from typing import Dict, Literal, Any
 from typing import List
@@ -41,13 +41,23 @@ from typing_extensions import Self
 DisplayKindLiteral = Literal["Basic", "Singleton", "Dashboard"]
 
 
-def to_type_decl_dict(node: Dict[str, Any] | List[Dict[str, Any]]) -> Dict[str, Any] | List[Dict[str, Any]]:
+def pascalize(s: str) -> str:
+    """Split into dot-delimited tokens, pascalize each token, then concatenate."""
+    tokens = s.split(".")
+    tokens = [camelize(token, uppercase_first_letter=True) for token in tokens]
+    result = ".".join(tokens)
+    return result
+
+
+def to_type_decl_dict(node: Dict[str, Any] | List[Dict[str, Any]] | str) -> Dict[str, Any] | List[Dict[str, Any]] | str:
     """Recursively apply type declaration dictionary conventions to the input."""
 
     if isinstance(node, dict):
         # For type declarations only, skip nodes that have the value of None or False
         # Remove suffix _ from field names if present
-        return {k.removesuffix("_"): to_type_decl_dict(v) for k, v in node.items() if v not in [None, False]}
+        # pascalized_values = {k: (pascalize(v) if k in ['module_name', 'name'] else v) for k, v in node.items()}
+        result = {pascalize(k.removesuffix("_")): to_type_decl_dict(v) for k, v in node.items() if v not in [None, False]}
+        return result
     elif isinstance(node, list):
         # For type declarations only, skip nodes that have the value of None or False
         return [to_type_decl_dict(v) for v in node if v not in [None, False]]
@@ -56,7 +66,9 @@ def to_type_decl_dict(node: Dict[str, Any] | List[Dict[str, Any]]) -> Dict[str, 
         # Remove suffix _ from field names if present
         key_field_names = node[0].get_key_fields()
         key_field_values = [to_type_decl_dict(v) for v in node[1:]]
-        return {k.removesuffix("_"): v for k, v in zip(key_field_names, key_field_values)}
+        return {pascalize(k.removesuffix("_")): v for k, v in zip(key_field_names, key_field_values)}
+    elif isinstance(node, str):
+        return pascalize(node)
     else:
         return node
 

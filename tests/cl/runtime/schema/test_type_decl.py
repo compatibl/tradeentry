@@ -17,6 +17,7 @@ import pytest
 from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.schema.type_decl import TypeDecl
+from stubs.cl.runtime import StubDataclassRecord
 
 type_decl_dict = {
     "Module": {"ModuleName": "Cl.Runtime.Backend.Core"},
@@ -60,9 +61,13 @@ def test_init():
 def test_to_type_decl_dict():
     """Test TypeDecl.to_type_decl_dict method."""
 
-    type_decl = TypeDecl.for_type(UiAppState)
-    type_decl_dict = type_decl.to_type_decl_dict()
-    pass
+    record_types = [UiAppState, StubDataclassRecord]
+
+    for record_type in record_types:
+        type_decl = TypeDecl.for_type(UiAppState)
+        type_decl_dict = type_decl.to_type_decl_dict()
+        pass
+
 
 if __name__ == "__main__":
     pytest.main([__file__])
