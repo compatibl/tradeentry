@@ -1,183 +1,183 @@
 {
-    "module": {
-        "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields"
+    "Module": {
+        "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassOptionalFields"
     },
-    "name": "StubDataclassOptionalFields",
-    "label": "Stub Dataclass Optional Fields",
-    "comment": "Stub derived class.",
-    "display_kind": "Basic",
-    "elements": [
+    "Name": "StubDataclassOptionalFields",
+    "Label": "Stub Dataclass Optional Fields",
+    "Comment": "Stub derived class.",
+    "DisplayKind": "Basic",
+    "Elements": [
         {
-            "value": {
-                "type": "str"
+            "Value": {
+                "Type": "String"
             },
-            "name": "id",
-            "comment": "Unique identifier."
+            "Name": "Id",
+            "Comment": "Unique identifier."
         },
         {
-            "value": {
-                "type": "str"
+            "Value": {
+                "Type": "String"
             },
-            "name": "optional_str",
-            "comment": "Optional string.",
-            "optional": true
+            "Name": "OptionalStr",
+            "Comment": "Optional string.",
+            "Optional": true
         },
         {
-            "value": {
-                "type": "str"
+            "Value": {
+                "Type": "String"
             },
-            "name": "required_list_of_optional_str",
-            "comment": "Required list of optional strings.",
-            "vector": true,
-            "optional_vector_element": true
+            "Name": "RequiredListOfOptionalStr",
+            "Comment": "Required list of optional strings.",
+            "Vector": true,
+            "OptionalVectorElement": true
         },
         {
-            "value": {
-                "type": "str"
+            "Value": {
+                "Type": "String"
             },
-            "name": "optional_list_of_optional_str",
-            "comment": "Optional list of optional strings.",
-            "vector": true,
-            "optional": true,
-            "optional_vector_element": true
+            "Name": "OptionalListOfOptionalStr",
+            "Comment": "Optional list of optional strings.",
+            "Vector": true,
+            "Optional": true,
+            "OptionalVectorElement": true
         },
         {
-            "value": {
-                "type": "double"
+            "Value": {
+                "Type": "Double"
             },
-            "name": "optional_float",
-            "comment": "Optional float.",
-            "optional": true
+            "Name": "OptionalFloat",
+            "Comment": "Optional float.",
+            "Optional": true
         },
         {
-            "value": {
-                "type": "double"
+            "Value": {
+                "Type": "Double"
             },
-            "name": "required_list_of_optional_float",
-            "comment": "Required list of optional floats.",
-            "vector": true,
-            "optional_vector_element": true
+            "Name": "RequiredListOfOptionalFloat",
+            "Comment": "Required list of optional floats.",
+            "Vector": true,
+            "OptionalVectorElement": true
         },
         {
-            "value": {
-                "type": "double"
+            "Value": {
+                "Type": "Double"
             },
-            "name": "optional_list_of_optional_float",
-            "comment": "Optional list of optional floats.",
-            "vector": true,
-            "optional": true,
-            "optional_vector_element": true
+            "Name": "OptionalListOfOptionalFloat",
+            "Comment": "Optional list of optional floats.",
+            "Vector": true,
+            "Optional": true,
+            "OptionalVectorElement": true
         },
         {
-            "data": {
-                "module": {
-                    "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_data"
+            "Data": {
+                "Module": {
+                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassData"
                 },
-                "name": "StubDataclassData"
+                "Name": "StubDataclassData"
             },
-            "name": "optional_data",
-            "comment": "Optional data.",
-            "optional": true
+            "Name": "OptionalData",
+            "Comment": "Optional data.",
+            "Optional": true
         },
         {
-            "data": {
-                "module": {
-                    "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_data"
+            "Data": {
+                "Module": {
+                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassData"
                 },
-                "name": "StubDataclassData"
+                "Name": "StubDataclassData"
             },
-            "name": "required_list_of_optional_data",
-            "comment": "Required list of optional data.",
-            "vector": true,
-            "optional_vector_element": true
+            "Name": "RequiredListOfOptionalData",
+            "Comment": "Required list of optional data.",
+            "Vector": true,
+            "OptionalVectorElement": true
         },
         {
-            "data": {
-                "module": {
-                    "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_data"
+            "Data": {
+                "Module": {
+                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassData"
                 },
-                "name": "StubDataclassData"
+                "Name": "StubDataclassData"
             },
-            "name": "optional_list_of_optional_data",
-            "comment": "Optional list of optional data.",
-            "vector": true,
-            "optional": true,
-            "optional_vector_element": true
+            "Name": "OptionalListOfOptionalData",
+            "Comment": "Optional list of optional data.",
+            "Vector": true,
+            "Optional": true,
+            "OptionalVectorElement": true
         },
         {
-            "key": {
-                "module": {
-                    "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_record"
+            "Key": {
+                "Module": {
+                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassRecord"
                 },
-                "name": "StubDataclassRecord"
+                "Name": "StubDataclassRecord"
             },
-            "name": "optional_key",
-            "comment": "Optional key.",
-            "optional": true
+            "Name": "OptionalKey",
+            "Comment": "Optional key.",
+            "Optional": true
         },
         {
-            "key": {
-                "module": {
-                    "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_record"
+            "Key": {
+                "Module": {
+                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassRecord"
                 },
-                "name": "StubDataclassRecord"
+                "Name": "StubDataclassRecord"
             },
-            "name": "required_list_of_optional_key",
-            "comment": "Required list of optional key.",
-            "vector": true,
-            "optional_vector_element": true
+            "Name": "RequiredListOfOptionalKey",
+            "Comment": "Required list of optional key.",
+            "Vector": true,
+            "OptionalVectorElement": true
         },
         {
-            "key": {
-                "module": {
-                    "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_record"
+            "Key": {
+                "Module": {
+                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassRecord"
                 },
-                "name": "StubDataclassRecord"
+                "Name": "StubDataclassRecord"
             },
-            "name": "optional_list_of_optional_key",
-            "comment": "Optional list of optional key.",
-            "vector": true,
-            "optional": true,
-            "optional_vector_element": true
+            "Name": "OptionalListOfOptionalKey",
+            "Comment": "Optional list of optional key.",
+            "Vector": true,
+            "Optional": true,
+            "OptionalVectorElement": true
         },
         {
-            "data": {
-                "module": {
-                    "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_record"
+            "Data": {
+                "Module": {
+                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassRecord"
                 },
-                "name": "StubDataclassRecord"
+                "Name": "StubDataclassRecord"
             },
-            "name": "optional_record",
-            "comment": "Optional record.",
-            "optional": true
+            "Name": "OptionalRecord",
+            "Comment": "Optional record.",
+            "Optional": true
         },
         {
-            "data": {
-                "module": {
-                    "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_record"
+            "Data": {
+                "Module": {
+                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassRecord"
                 },
-                "name": "StubDataclassRecord"
+                "Name": "StubDataclassRecord"
             },
-            "name": "required_list_of_optional_record",
-            "comment": "Required list of optional record.",
-            "vector": true,
-            "optional_vector_element": true
+            "Name": "RequiredListOfOptionalRecord",
+            "Comment": "Required list of optional record.",
+            "Vector": true,
+            "OptionalVectorElement": true
         },
         {
-            "data": {
-                "module": {
-                    "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_record"
+            "Data": {
+                "Module": {
+                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassRecord"
                 },
-                "name": "StubDataclassRecord"
+                "Name": "StubDataclassRecord"
             },
-            "name": "optional_list_of_optional_record",
-            "comment": "Optional list of optional record.",
-            "vector": true,
-            "optional": true,
-            "optional_vector_element": true
+            "Name": "OptionalListOfOptionalRecord",
+            "Comment": "Optional list of optional record.",
+            "Vector": true,
+            "Optional": true,
+            "OptionalVectorElement": true
         }
     ],
-    "keys": [
-        "id"
+    "Keys": [
+        "Id"
     ]
 }

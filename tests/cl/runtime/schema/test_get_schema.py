@@ -34,7 +34,7 @@ def test_method():
         expected_result_file_path = os.path.abspath(__file__).replace(".py", f".{class_module}.expected.json")
 
         result_obj = DataclassTypeDecl.for_type(sample_type)
-        result_dict = clean_dict(dataclasses.asdict(result_obj))
+        result_dict = result_obj.to_type_decl_dict()
 
         # Save the dictionary to a file
         with open(received_result_file_path, 'w') as received_result_file:

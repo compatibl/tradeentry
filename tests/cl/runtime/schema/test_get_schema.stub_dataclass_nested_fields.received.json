@@ -1,113 +1,113 @@
 {
-    "module": {
-        "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_nested_fields"
+    "Module": {
+        "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassNestedFields"
     },
-    "name": "StubDataclassNestedFields",
-    "label": "Stub Dataclass Nested Fields",
-    "comment": "Stub derived class.",
-    "display_kind": "Basic",
-    "elements": [
+    "Name": "StubDataclassNestedFields",
+    "Label": "Stub Dataclass Nested Fields",
+    "Comment": "Stub derived class.",
+    "DisplayKind": "Basic",
+    "Elements": [
         {
-            "value": {
-                "type": "str"
+            "Value": {
+                "Type": "String"
             },
-            "name": "primitive",
-            "comment": "String key element."
+            "Name": "Primitive",
+            "Comment": "String key element."
         },
         {
-            "key": {
-                "module": {
-                    "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_record"
+            "Key": {
+                "Module": {
+                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassRecord"
                 },
-                "name": "StubDataclassRecord"
+                "Name": "StubDataclassRecord"
             },
-            "name": "embedded_1",
-            "comment": "Embedded key 1."
+            "Name": "Embedded1",
+            "Comment": "Embedded key 1."
         },
         {
-            "key": {
-                "module": {
-                    "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_record"
+            "Key": {
+                "Module": {
+                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassRecord"
                 },
-                "name": "StubDataclassRecord"
+                "Name": "StubDataclassRecord"
             },
-            "name": "embedded_2",
-            "comment": "Embedded key 2."
+            "Name": "Embedded2",
+            "Comment": "Embedded key 2."
         },
         {
-            "data": {
-                "module": {
-                    "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_data"
+            "Data": {
+                "Module": {
+                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassData"
                 },
-                "name": "StubDataclassData"
+                "Name": "StubDataclassData"
             },
-            "name": "base_datafield",
-            "comment": "Stub field."
+            "Name": "BaseDatafield",
+            "Comment": "Stub field."
         },
         {
-            "data": {
-                "module": {
-                    "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_data"
+            "Data": {
+                "Module": {
+                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassDerivedData"
                 },
-                "name": "StubDataclassDerivedData"
+                "Name": "StubDataclassDerivedData"
             },
-            "name": "derived_datafield",
-            "comment": "Stub field."
+            "Name": "DerivedDatafield",
+            "Comment": "Stub field."
         },
         {
-            "data": {
-                "module": {
-                    "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_from_derived_data"
+            "Data": {
+                "Module": {
+                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassDerivedFromDerivedData"
                 },
-                "name": "StubDataclassDerivedFromDerivedData"
+                "Name": "StubDataclassDerivedFromDerivedData"
             },
-            "name": "derived_from_derived_datafield",
-            "comment": "Stub field."
+            "Name": "DerivedFromDerivedDatafield",
+            "Comment": "Stub field."
         },
         {
-            "data": {
-                "module": {
-                    "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_data"
+            "Data": {
+                "Module": {
+                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassData"
                 },
-                "name": "StubDataclassData"
+                "Name": "StubDataclassData"
             },
-            "name": "polymorphic_datafield",
-            "comment": "Declared StubDataclassData but provided an instance of StubDataclassDerivedData."
+            "Name": "PolymorphicDatafield",
+            "Comment": "Declared StubDataclassData but provided an instance of StubDataclassDerivedData."
         },
         {
-            "data": {
-                "module": {
-                    "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_data"
+            "Data": {
+                "Module": {
+                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassDerivedData"
                 },
-                "name": "StubDataclassDerivedData"
+                "Name": "StubDataclassDerivedData"
             },
-            "name": "polymorphic_derived_datafield",
-            "comment": "Declared StubDataclassDerivedData but provided an instance of StubDataclassDerivedFromDerivedData."
+            "Name": "PolymorphicDerivedDatafield",
+            "Comment": "Declared StubDataclassDerivedData but provided an instance of StubDataclassDerivedFromDerivedData."
         },
         {
-            "key": {
-                "module": {
-                    "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_record"
+            "Key": {
+                "Module": {
+                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassRecord"
                 },
-                "name": "StubDataclassRecord"
+                "Name": "StubDataclassRecord"
             },
-            "name": "key_field",
-            "comment": "Stub field."
+            "Name": "KeyField",
+            "Comment": "Stub field."
         },
         {
-            "key": {
-                "module": {
-                    "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_record"
+            "Key": {
+                "Module": {
+                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassRecord"
                 },
-                "name": "StubDataclassRecord"
+                "Name": "StubDataclassRecord"
             },
-            "name": "record_as_key_field",
-            "comment": "Stub field with key type initialized to record type instance."
+            "Name": "RecordAsKeyField",
+            "Comment": "Stub field with key type initialized to record type instance."
         }
     ],
-    "keys": [
-        "primitive",
-        "embedded_1",
-        "embedded_2"
+    "Keys": [
+        "Primitive",
+        "Embedded1",
+        "Embedded2"
     ]
 }

@@ -1,21 +1,21 @@
 {
-    "module": {
-        "module_name": "stubs.cl.runtime.records.dataclasses.stub_dataclass_record"
+    "Module": {
+        "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassRecord"
     },
-    "name": "StubDataclassRecord",
-    "label": "Stub Dataclass Record",
-    "comment": "Stub record base class.",
-    "display_kind": "Basic",
-    "elements": [
+    "Name": "StubDataclassRecord",
+    "Label": "Stub Dataclass Record",
+    "Comment": "Stub record base class.",
+    "DisplayKind": "Basic",
+    "Elements": [
         {
-            "value": {
-                "type": "str"
+            "Value": {
+                "Type": "String"
             },
-            "name": "id",
-            "comment": "Unique identifier."
+            "Name": "Id",
+            "Comment": "Unique identifier."
         }
     ],
-    "keys": [
-        "id"
+    "Keys": [
+        "Id"
     ]
 }
