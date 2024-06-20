@@ -32,7 +32,7 @@ from dataclasses import dataclass, asdict
 from enum import Enum
 from inflection import titleize, camelize
 from memoization import cached
-from typing import Dict, Literal, Any
+from typing import Dict, Literal, Any, Set
 from typing import List
 from typing import Type
 from typing import get_type_hints
@@ -73,10 +73,10 @@ def to_type_decl_dict(node: Dict[str, Any] | List[Dict[str, Any]] | str) -> Dict
         return node
 
 
-def for_type_key_maker(cls, record_type: Type, *, skip_fields: bool = False) -> str:
+def for_type_key_maker(cls, record_type: Type, *, dependencies: Set[Type] | None = None, skip_fields: bool = False) -> str:
     """Custom key marker for 'for_type' class method."""
     # TODO: Replace by lambda if skip_fields parameter is removed
-    return f"{record_type.__module__}.{record_type.__name__}.{skip_fields}"
+    return f"{record_type.__module__}.{record_type.__name__}.{dependencies.__hash__}{skip_fields}"
 
 
 @dataclass(slots=True, kw_only=True)
@@ -148,12 +148,13 @@ class TypeDecl(DataclassMixin):
 
     @classmethod
     @cached(custom_key_maker=for_type_key_maker)
-    def for_type(cls, record_type: Type, *, skip_fields: bool = False) -> Self:
+    def for_type(cls, record_type: Type, *, dependencies: Set[Type] | None = None, skip_fields: bool = False) -> Self:
         """
         Create or return cached object for the specified record type.
 
         Args:
             record_type: Type of the record for which the declaration is created
+            dependencies: Set of types used in field or methods of the specified type, populated only if not None
             skip_fields: Use this flag to skip fields generation when the method is invoked from a derived class
         """
 
@@ -184,6 +185,7 @@ class TypeDecl(DataclassMixin):
         # Set parent class as the first class in MRO that is not self and does not have Mixin suffix
         for parent_type in record_type.__mro__:
             if parent_type is not record_type and not parent_type.__name__.endswith("Mixin"):
+                # TODO: Add to dependencies
                 parent_type_module = ModuleDeclTable.create_key(module_name=parent_type.__module__)
                 parent_type_name = parent_type.__name__
                 # TODO: result.inherit = TypeDeclTable.create_key(module=parent_type_module, name=parent_type_name)
@@ -207,7 +209,7 @@ class TypeDecl(DataclassMixin):
                 field_comment = member_comments.get(field_name, None)
 
                 # Get the rest of the data from the field itself
-                field_decl = FieldDecl.create(record_type, field_name, field_type, field_comment)
+                field_decl = FieldDecl.create(record_type, field_name, field_type, field_comment, dependencies=dependencies)
 
                 # Convert to element and add
                 element_decl = ElementDecl.create(field_decl)

@@ -70,7 +70,9 @@ class FieldDecl:
     """This field is an alternate of the specified field, of which only one can be specified."""
 
     @classmethod
-    def create(cls, record_type: Type, field_name: str, field_type: Type, field_comment: str) -> Self:
+    def create(cls, record_type: Type, field_name: str, field_type: Type, field_comment: str,
+               *,
+               dependencies: typing.Set[Type] | None = None) -> Self:
         """
         Create from field name and type.
 
@@ -79,7 +81,10 @@ class FieldDecl:
             field_name: Name of the field
             field_type: Type of the field obtained from get_type_hints where ForwardRefs are resolved
             field_comment: Field comment (docstring), currently requires source parsing due Python limitations
+            dependencies: Set of types used in field or methods of the specified type, populated only if not None
         """
+
+        from cl.runtime.schema.schema import Schema  # TODO: Avoid circlular dependency
 
         result = cls()
         result.name = field_name
@@ -175,7 +180,10 @@ class FieldDecl:
             else:
                 raise RuntimeError(f"The name of table class {field_arg.__name__} does not have the suffix Table.")
 
-            result.field_type = f"{module_name}.{type_name}"
+            field_class_path = f"{module_name}.{type_name}"
+            if dependencies is not None:
+                dependencies.add(Schema.get_type_by_class_path(field_class_path))
+            result.field_type = field_class_path
 
         elif field_origin is None:
             # Assign element kind
@@ -192,7 +200,10 @@ class FieldDecl:
             if field_type.__module__ in primitive_modules:
                 result.field_type = field_type.__name__
             else:
-                result.field_type = f"{field_type.__module__}.{field_type.__name__}"
+                field_class_path = f"{field_type.__module__}.{field_type.__name__}"
+                if dependencies is not None:
+                    dependencies.add(Schema.get_type_by_class_path(field_class_path))
+                result.field_type = field_class_path
 
         else:
             raise RuntimeError(f"Complex type {field_type} is not recognized when building data source schema.")

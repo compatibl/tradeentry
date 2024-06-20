@@ -15,7 +15,6 @@
 import json
 import os
 import pytest
-from cl.runtime.routers.schema.schema_router import TypeResponse
 from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
 from cl.runtime.routers.server import app

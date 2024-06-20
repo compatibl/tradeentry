@@ -152,8 +152,16 @@ class Schema:
         Args:
             record_type: Type of the record for which the schema is created.
         """
-        type_decl_obj = TypeDecl.for_type(record_type)
-        type_decl_list = [type_decl_obj]
+        dependencies = set()
+        type_decl_obj = TypeDecl.for_type(record_type, dependencies=dependencies)
+        old_size = 0
+        new_size = 1
+        while new_size > old_size:
+            old_size = len(dependencies)
+            for dependency_type in dependencies:
+                TypeDecl.for_type(dependency_type, dependencies=dependencies)
+            new_size = len(dependencies)
+        type_decl_list = [type_decl_obj] + list(dependencies)
 
         # TODO: Move pascalize to a helper class
         result = {

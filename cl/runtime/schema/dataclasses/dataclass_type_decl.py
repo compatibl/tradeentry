@@ -19,7 +19,7 @@ from cl.runtime.schema.type_decl import TypeDecl
 from cl.runtime.schema.type_decl import for_type_key_maker
 from dataclasses import dataclass
 from memoization import cached
-from typing import Type
+from typing import Type, Set
 from typing import get_type_hints
 from typing_extensions import Self
 
@@ -30,12 +30,13 @@ class DataclassTypeDecl(TypeDecl):
 
     @classmethod
     @cached(custom_key_maker=for_type_key_maker)
-    def for_type(cls, record_type: Type, *, skip_fields: bool = False) -> Self:
+    def for_type(cls, record_type: Type, *, dependencies: Set[Type] | None = None, skip_fields: bool = False) -> Self:
         """
         Create or return cached object for the specified record type.
 
         Args:
             record_type: Type of the record for which the declaration is created
+            dependencies: Set of types used in field or methods of the specified type, populated only if not None
             skip_fields: Use this flag to skip fields generation when the method is invoked from a derived class
         """
 
@@ -43,7 +44,7 @@ class DataclassTypeDecl(TypeDecl):
             raise RuntimeError(f"DataclassTypeDecl used for {record_type.__name__} which is not a dataclass.")
 
         # Populate using TypeDecl base
-        result = TypeDecl.for_type(record_type, skip_fields=True)
+        result = TypeDecl.for_type(record_type, dependencies=dependencies, skip_fields=True)
 
         # Use this flag to skip fields generation when the method is invoked from a derived class
         if not skip_fields:
