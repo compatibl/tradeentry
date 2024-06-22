@@ -12,25 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from enum import IntEnum
+from typing import Literal
 
-
-class HandlerType(IntEnum):  # Consider renaming to MethodType
-    """Handler type enumeration."""
-
-    Job = 0  # TODO: Consider renaming to Action or Handler if class is renamed to MethodType
-    """
-    Job handler is shown as a button
-
-    - Return type is allowed and may trigger action in the client.
-    - Input params are allowed.
-    """
-
-    Process = 1
-    """Process handler. Return type is not allowed. Input params are allowed"""
-
-    Viewer = 2
-    """Viewer handler. Return type is allowed. Input params are not allowed."""
-
-    Content = 4
-    """Content handler. Return type is allowed. Input params are not allowed."""
+# TODO: Refactor
+HandlerType = Literal[
+    "job",  # Job handler is shown as a button, return type must be None, params are allowed
+    "process",  # Process handler, return type is not allowed, params are allowed
+    "viewer",  # Viewer, return type is allowed, params are allowed
+    "content"  # # Viewer, return type is allowed, params not allowed
+]
+"""Handler type."""

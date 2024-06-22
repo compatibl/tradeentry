@@ -27,7 +27,6 @@ from cl.runtime.schema.field_decl import FieldDecl
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.module_decl_key import ModuleDeclKey, ModuleDeclTable
 from cl.runtime.schema.type_decl_key import TypeDeclKey, TypeDeclTable
-from cl.runtime.schema.type_index_decl import TypeIndexDecl
 from cl.runtime.schema.type_kind import TypeKind
 from dataclasses import dataclass, asdict
 from enum import Enum
@@ -114,7 +113,8 @@ class TypeDecl(DataclassMixin):
     keys: List[str] | None = datafield()
     """Array of key element names (specify in base class only)."""
 
-    indexes: List[TypeIndexDecl] | None = datafield()
+    # TODO: Consider moving to Table class
+    # indexes: List[TypeIndexDecl] | None = datafield()
     """Defines indexes for the type."""
 
     immutable: bool | None = datafield()

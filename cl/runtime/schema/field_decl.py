@@ -187,6 +187,12 @@ class FieldDecl:
                 dependencies.add(ClassInfo.get_class_type(field_class_path))
             result.field_type = field_class_path
 
+        elif field_origin is Literal:
+
+            # List of literal strings
+            result.field_kind = "primitive"
+            result.field_type = str.__name__
+
         elif field_origin is None:
             # Assign element kind
             if field_type in primitive_types:
