@@ -28,7 +28,7 @@ from typing import Tuple
 from typing import Type
 
 
-@dataclass(init=False)
+@dataclass(slots=True, kw_only=True)
 class StubDataclassNestedFields(DataclassMixin):
     """Stub derived class."""
 

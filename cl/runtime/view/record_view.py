@@ -19,7 +19,7 @@ from typing import final
 
 
 @final
-@dataclass
+@dataclass(slots=True, kw_only=True)
 class RecordView(View):
     """View that displays another record specified via its primary key."""
 

@@ -30,7 +30,7 @@ from typing import Iterable
 from typing import List
 
 
-@dataclass(slots=True, kw_only=True, init=True, frozen=True)
+@dataclass(slots=True, kw_only=True, frozen=True)
 class DataSource(ABC):
     """Abstract base class for polymorphic data storage with dataset isolation."""
 

@@ -84,7 +84,7 @@ def stub_dataclass_derived_record_list_factory() -> List[StubDataclassDerivedRec
     ]
 
 
-@dataclass
+@dataclass(slots=True, kw_only=True)
 class StubDataclassListFields(StubDataclassRecord):
     str_list: List[str] = datafield(default_factory=stub_dataclass_str_list_factory)
     """Stub field."""

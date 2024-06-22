@@ -20,7 +20,7 @@ from typing import final
 
 
 @final
-@dataclass
+@dataclass(slots=True, kw_only=True)
 class RecordListView(View):
     """View that displays a list of record specified via their primary keys."""
 

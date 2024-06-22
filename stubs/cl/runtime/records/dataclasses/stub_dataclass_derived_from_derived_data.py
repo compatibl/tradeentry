@@ -17,7 +17,7 @@ from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_data import StubDataclassDerivedData
 
 
-@dataclass
+@dataclass(slots=True, kw_only=True)
 class StubDataclassDerivedFromDerivedData(StubDataclassDerivedData):
     """Two levels in inheritance hierarchy away from StubDataclassData."""
 

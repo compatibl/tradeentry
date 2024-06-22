@@ -30,7 +30,7 @@ from typing import Tuple
 from typing import Type
 
 
-@dataclass(slots=True, kw_only=True, init=True, frozen=True)
+@dataclass(slots=True, kw_only=True, frozen=True)
 class LocalCache(DataSource):
     """Data source based on in-memory cache using Python dict."""
 

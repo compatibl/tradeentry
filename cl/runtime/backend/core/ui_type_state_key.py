@@ -12,7 +12,8 @@ from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassM
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 
 
-@dataclass
+# TODO: Legacy key format, update
+@dataclass(slots=True, kw_only=True)
 class UiTypeStateKey(DataclassMixin):
     """Defines some default settings for a type."""
 

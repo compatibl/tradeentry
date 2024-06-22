@@ -89,7 +89,7 @@ def stub_dataclass_derived_record_dict_list_factory() -> List[Dict[str, StubData
     ]
 
 
-@dataclass
+@dataclass(slots=True, kw_only=True)
 class StubDataclassDictListFields(StubDataclassRecord):
     """Stub record whose elements are dictionaries."""
 

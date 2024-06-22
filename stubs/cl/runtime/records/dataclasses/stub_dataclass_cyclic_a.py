@@ -26,7 +26,7 @@ if TYPE_CHECKING:
     from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB
 
 
-@dataclass
+@dataclass(slots=True, kw_only=True)
 class StubDataclassCyclicA(DataclassMixin):
     """Stub class A with a field whose type is key for class B."""
 

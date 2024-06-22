@@ -25,7 +25,7 @@ from typing import List
 from typing import Tuple
 
 
-@dataclass(slots=True, kw_only=True, init=True, frozen=True)
+@dataclass(slots=True, kw_only=True, frozen=True)
 class NullDataSource(DataSource):
     """Null data source discards the data written into it, and returns no data."""
 

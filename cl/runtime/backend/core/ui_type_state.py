@@ -11,7 +11,7 @@ from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 
 
 @final
-@dataclass
+@dataclass(slots=True, kw_only=True)
 class UiTypeState(UiTypeStateKey):
     """Defines ui settings for a type."""
 

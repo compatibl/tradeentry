@@ -17,7 +17,7 @@ from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_data import StubDataclassData
 
 
-@dataclass
+@dataclass(slots=True, kw_only=True)
 class StubDataclassDerivedData(StubDataclassData):
     """Stub derived data type."""
 

@@ -20,7 +20,7 @@ from typing import Type
 from typing_extensions import Self
 
 
-@dataclass(slots=True, kw_only=True, init=False)
+@dataclass(slots=True, kw_only=True)
 class DataclassFieldDecl(FieldDecl):
     """Field declaration for a dataclass type."""
 

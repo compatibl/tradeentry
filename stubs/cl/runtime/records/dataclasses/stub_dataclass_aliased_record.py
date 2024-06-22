@@ -17,7 +17,7 @@ from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from dataclasses import dataclass
 
 
-@dataclass
+@dataclass(slots=True, kw_only=True)
 class StubDataclassAliasedRecord(DataclassMixin):  # TODO: Specify alias
     """Stub record class with typename alias."""
 

@@ -20,7 +20,7 @@ from cl.runtime.view.view_key import ViewKey, ViewTable
 from dataclasses import dataclass
 
 
-@dataclass
+@dataclass(slots=True, kw_only=True)
 class View(DataclassMixin, ABC):
     """Contains data that will be visualized alongside the record specified by the 'view_for' field."""
 

@@ -29,7 +29,7 @@ from typing import Type
 from uuid import UUID
 
 
-@dataclass
+@dataclass(slots=True, kw_only=True)
 class StubDataclassPrimitiveFields(DataclassMixin):
     """Stub record whose elements are primitive types."""
 
