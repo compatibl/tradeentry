@@ -27,7 +27,7 @@ T = TypeVar("T")
 
 
 @attrs.define
-class AttrsMixin(RecordMixin, ABC):
+class AttrsRecordMixin(RecordMixin, ABC):
     """Mixin methods for dataclass records."""
 
     def pack(self) -> TPackedRecord:

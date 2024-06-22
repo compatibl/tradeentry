@@ -15,8 +15,8 @@
 import datetime as dt
 import inspect
 from cl.runtime.decorators.handler_decorator import handler
-from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
+from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield
 from logging import getLogger
 from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey, StubHandlersTable
 from stubs.cl.runtime.records.enum.stub_int_enum import StubIntEnum
@@ -36,7 +36,7 @@ def print_method_info():  # TODO: Move into DebugUtil(s)
     print(f"Called {method_name}({params_output})")
 
 
-class StubHandlers(DataclassMixin):
+class StubHandlers(DataclassRecordMixin):
     """Stub record base class."""
 
     stub_id: str = datafield(default="abc")

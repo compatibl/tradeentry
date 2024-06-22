@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
+from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
 from cl.runtime.schema.module_decl_key import ModuleDeclKey, ModuleDeclTable
 from dataclasses import dataclass
 
 
 @dataclass(slots=True, kw_only=True)
-class ModuleDecl(DataclassMixin):
+class ModuleDecl(DataclassRecordMixin):
     """Specifies module path in dot-delimited format."""
 
     module_name: str

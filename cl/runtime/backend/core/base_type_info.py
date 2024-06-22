@@ -5,7 +5,7 @@
 # license from CompatibL and with the inclusion of this copyright notice.
 
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield
 
 
 @dataclass(slots=True, kw_only=True)

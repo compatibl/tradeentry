@@ -14,8 +14,8 @@
 
 from __future__ import annotations
 
-from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
+from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield
 from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_a_key import StubDataclassCyclicAKey, \
     StubDataclassCyclicATable
@@ -27,7 +27,7 @@ if TYPE_CHECKING:
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataclassCyclicA(DataclassMixin):
+class StubDataclassCyclicA(DataclassRecordMixin):
     """Stub class A with a field whose type is key for class B."""
 
     b_key: StubDataclassCyclicBKey = datafield()

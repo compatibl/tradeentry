@@ -20,8 +20,8 @@ import inspect
 from itertools import tee
 
 from cl.runtime import KeyUtil
-from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
+from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield
 from cl.runtime.schema.element_decl import ElementDecl
 from cl.runtime.schema.field_decl import FieldDecl
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
@@ -80,7 +80,7 @@ def for_type_key_maker(cls, record_type: Type, *, dependencies: Set[Type] | None
 
 
 @dataclass(slots=True, kw_only=True)
-class TypeDecl(DataclassMixin):
+class TypeDecl(DataclassRecordMixin):
     """Provides information about a class, its fields, and its methods."""
 
     module: ModuleDeclKey = datafield()  # TODO: Merge with name to always use full name

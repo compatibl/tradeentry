@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
+from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
 from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record_key import StubDataclassRecordKey, \
     StubDataclassRecordTable
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataclassRecord(DataclassMixin):
+class StubDataclassRecord(DataclassRecordMixin):
     """Stub record base class."""
 
     id: str = "abc"

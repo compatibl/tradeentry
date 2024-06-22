@@ -13,15 +13,15 @@
 # limitations under the License.
 
 from abc import ABC
-from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
+from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield
 from cl.runtime.records.generic_key import GenericKey
 from cl.runtime.view.view_key import ViewKey, ViewTable
 from dataclasses import dataclass
 
 
 @dataclass(slots=True, kw_only=True)
-class View(DataclassMixin, ABC):
+class View(DataclassRecordMixin, ABC):
     """Contains data that will be visualized alongside the record specified by the 'view_for' field."""
 
     view_for: GenericKey = datafield()

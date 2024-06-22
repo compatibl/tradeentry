@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
+from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield
 from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_data import StubDataclassData
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_data import StubDataclassDerivedData
@@ -31,7 +31,7 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_record_key import StubD
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataclassNestedFields(DataclassMixin):
+class StubDataclassNestedFields(DataclassRecordMixin):
     """Stub derived class."""
 
     primitive: str = datafield(default="abc")

@@ -7,11 +7,11 @@
 from dataclasses import dataclass
 
 from cl.runtime.backend.core.user_key import UserKey, UserTable
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassMixin
+from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield, DataclassRecordMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class User(DataclassMixin):
+class User(DataclassRecordMixin):
     """User which is allowed to log in."""
 
     username: str = datafield()

@@ -6,7 +6,7 @@
 
 from cl.runtime.backend.core.base_type_info import BaseTypeInfo
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield
 from cl.runtime.records.generic_key import GenericKey
 
 

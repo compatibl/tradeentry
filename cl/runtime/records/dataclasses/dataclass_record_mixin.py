@@ -27,7 +27,7 @@ TDefaultFactory = Callable[[], TDefault]
 
 
 @dataclass(slots=True, kw_only=True)
-class DataclassMixin(RecordMixin, ABC):
+class DataclassRecordMixin(RecordMixin, ABC):
     """Mixin methods for dataclass records."""
 
     def pack(self) -> TPackedRecord:

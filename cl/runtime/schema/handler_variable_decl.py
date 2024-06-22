@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield
 from cl.runtime.schema.member_decl import MemberDecl
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from dataclasses import dataclass

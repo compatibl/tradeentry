@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses.dataclass_mixin import DataclassMixin
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
+from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield
 from cl.runtime.schema.enum_decl_key import EnumDeclKey, EnumDeclTable
 from cl.runtime.schema.enum_item_decl import EnumItemDecl
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
@@ -22,7 +22,7 @@ from typing import List
 
 
 @dataclass(slots=True, kw_only=True)
-class EnumDecl(DataclassMixin):
+class EnumDecl(DataclassRecordMixin):
     """Enum declaration."""
 
     module: ModuleDeclKey = datafield()  # TODO: Merge with name

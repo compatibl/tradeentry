@@ -8,13 +8,13 @@ from dataclasses import dataclass
 from typing import Tuple
 
 from cl.runtime.backend.core.user_key import UserKey
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield, DataclassMixin
+from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield, DataclassRecordMixin
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 
 
 # TODO: Legacy key format, update
 @dataclass(slots=True, kw_only=True)
-class UiTypeStateKey(DataclassMixin):
+class UiTypeStateKey(DataclassRecordMixin):
     """Defines some default settings for a type."""
 
     type_: TypeDeclKey = datafield()

@@ -7,7 +7,7 @@
 from dataclasses import dataclass
 from typing import List, Optional, final
 from cl.runtime.backend.core.ui_type_state_key import UiTypeStateKey
-from cl.runtime.records.dataclasses.dataclass_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield
 
 
 @final
