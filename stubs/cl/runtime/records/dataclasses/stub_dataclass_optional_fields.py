@@ -29,14 +29,14 @@ from typing import Tuple
 from typing import Type
 
 
-@dataclass(init=False)
+@dataclass(slots=True, kw_only=True)
 class StubDataclassOptionalFields(DataclassMixin):
     """Stub derived class."""
 
     id: str = datafield(default="abc")
     """Unique identifier."""
 
-    optional_str: str | None = datafield()
+    optional_str: str | None = datafield(default="xyz")
     """Optional string."""
 
     required_list_of_optional_str: List[str | None] = datafield()
@@ -45,7 +45,7 @@ class StubDataclassOptionalFields(DataclassMixin):
     optional_list_of_optional_str: List[str | None] | None = datafield()
     """Optional list of optional strings."""
 
-    optional_float: float | None = datafield()
+    optional_float: float | None = datafield(default=1.23)
     """Optional float."""
 
     required_list_of_optional_float: List[float | None] = datafield()
