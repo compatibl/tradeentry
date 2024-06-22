@@ -16,10 +16,11 @@ from cl.runtime.records.generic_key import GenericKey
 from typing import final
 from typing import Tuple
 from typing import Type
+from cl.runtime import TableMixin
 
 
 @final
-class ViewTable:
+class ViewTable(TableMixin):
     pass
 
 

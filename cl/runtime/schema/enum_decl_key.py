@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from cl.runtime import TableMixin
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
 from typing import final
 from typing import Tuple
@@ -19,7 +20,7 @@ from typing import Type
 
 
 @final
-class EnumDeclTable:
+class EnumDeclTable(TableMixin):
     pass
 
 

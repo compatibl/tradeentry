@@ -16,10 +16,11 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDatac
 from typing import final
 from typing import Tuple
 from typing import Type
+from cl.runtime import TableMixin
 
 
 @final
-class StubDataclassNestedFieldsTable:
+class StubDataclassNestedFieldsTable(TableMixin):
     pass
 
 

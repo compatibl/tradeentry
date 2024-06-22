@@ -15,10 +15,11 @@
 from typing import final
 from typing import Tuple
 from typing import Type
+from cl.runtime import TableMixin
 
 
 @final
-class StubDataclassSingletonTable:
+class StubDataclassSingletonTable(TableMixin):
     pass
 
 

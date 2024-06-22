@@ -18,10 +18,11 @@ from typing import final
 from typing import Tuple
 from typing import Type
 from uuid import UUID
+from cl.runtime import TableMixin
 
 
 @final
-class StubDataclassPrimitiveFieldsTable:
+class StubDataclassPrimitiveFieldsTable(TableMixin):
     pass
 
 

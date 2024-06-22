@@ -16,10 +16,11 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b_key import Stu
 from typing import final
 from typing import Tuple
 from typing import Type
+from cl.runtime import TableMixin
 
 
 @final
-class StubDataclassCyclicATable:
+class StubDataclassCyclicATable(TableMixin):
     pass
 
 
