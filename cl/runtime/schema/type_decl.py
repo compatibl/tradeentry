@@ -50,7 +50,7 @@ def pascalize(s: str) -> str:
 
 
 def to_type_decl_dict(node: Dict[str, Any] | List[Dict[str, Any]] | str) -> Dict[str, Any] | List[Dict[str, Any]] | str:
-    """Recursively apply type declaration dictionary conventions to the input."""
+    """Recursively apply type declaration dictionary conventions to the argument dictionary."""
 
     if isinstance(node, dict):
         # For type declarations only, skip nodes that have the value of None or False
