@@ -12,20 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from enum import IntEnum
+from typing import Literal
 
-
-class TypeKind(IntEnum):
-    """Type kind enumeration."""
-
-    Final = 0
-    """Final type. No types can inherit from final type."""
-
-    Abstract = 1
-    """Abstract type. Abstract type can only be saved in storage as parent of another type."""
-
-    Element = 2
-    """Element type. Element type cannot be saved in storage directly or as parent of other type."""
-
-    AbstractElement = 3
-    """Abstract element type. Abstract element type cannot be saved in storage directly or as parent of other type."""
+# TODO: Refactor and split
+TypeKind = Literal["final", "abstract", "element", "abstract_element"]
+"""Specifies type attributes."""

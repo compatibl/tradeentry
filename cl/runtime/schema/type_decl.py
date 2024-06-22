@@ -176,9 +176,9 @@ class TypeDecl(DataclassMixin):
         is_record = hasattr(record_type, "get_key")
         is_abstract = hasattr(record_type, "__abstractmethods__") and bool(record_type.__abstractmethods__)
         if is_record:
-            result.kind = TypeKind.Abstract if is_abstract else None
+            result.kind = "abstract" if is_abstract else None
         else:
-            result.kind = TypeKind.AbstractElement if is_abstract else TypeKind.Element
+            result.kind = "abstract_element" if is_abstract else "element"
 
         # Set display kind
         result.display_kind = "Basic"  # TODO: Remove Basic after display_kind is made optional
