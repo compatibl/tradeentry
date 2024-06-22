@@ -75,48 +75,6 @@
             "User"
         ]
     },
-    "Cl.Runtime.Backend.Core.User.User": {
-        "Module": {
-            "ModuleName": "Cl.Runtime.Backend.Core.User"
-        },
-        "Name": "User",
-        "Label": "User",
-        "Comment": "User which is allowed to log in.",
-        "DisplayKind": "Basic",
-        "Elements": [
-            {
-                "Value": {
-                    "Type": "String"
-                },
-                "Name": "Username"
-            },
-            {
-                "Value": {
-                    "Type": "String"
-                },
-                "Name": "FirstName",
-                "Comment": "First name of the user."
-            },
-            {
-                "Value": {
-                    "Type": "String"
-                },
-                "Name": "LastName",
-                "Comment": "Last name of the user."
-            },
-            {
-                "Value": {
-                    "Type": "String"
-                },
-                "Name": "Email",
-                "Comment": "Email of the user.",
-                "Optional": true
-            }
-        ],
-        "Keys": [
-            "Username"
-        ]
-    },
     "Cl.Runtime.Backend.Core.TabInfo.TabInfo": {
         "Module": {
             "ModuleName": "Cl.Runtime.Backend.Core.TabInfo"
@@ -147,6 +105,49 @@
             }
         ],
         "Keys": null
+    },
+    "Cl.Runtime.Backend.Core.User.User": {
+        "Module": {
+            "ModuleName": "Cl.Runtime.Backend.Core.User"
+        },
+        "Name": "User",
+        "Label": "User",
+        "Comment": "User which is allowed to log in.",
+        "DisplayKind": "Basic",
+        "Elements": [
+            {
+                "Value": {
+                    "Type": "String"
+                },
+                "Name": "Username",
+                "Comment": "Unique user identifier."
+            },
+            {
+                "Value": {
+                    "Type": "String"
+                },
+                "Name": "FirstName",
+                "Comment": "First name of the user."
+            },
+            {
+                "Value": {
+                    "Type": "String"
+                },
+                "Name": "LastName",
+                "Comment": "Last name of the user."
+            },
+            {
+                "Value": {
+                    "Type": "String"
+                },
+                "Name": "Email",
+                "Comment": "Email of the user.",
+                "Optional": true
+            }
+        ],
+        "Keys": [
+            "Username"
+        ]
     },
     "Cl.Runtime.Backend.Core.BaseTypeInfo.BaseTypeInfo": {
         "Module": {

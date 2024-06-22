@@ -15,6 +15,8 @@
 import datetime as dt
 import types
 import typing
+
+from cl.runtime import ClassInfo
 from cl.runtime.records.dataclasses.dataclass_mixin import datafield
 from dataclasses import dataclass
 from enum import Enum
@@ -182,7 +184,7 @@ class FieldDecl:
 
             field_class_path = f"{module_name}.{type_name}"
             if dependencies is not None:
-                dependencies.add(Schema.get_type_by_class_path(field_class_path))
+                dependencies.add(ClassInfo.get_class_type(field_class_path))
             result.field_type = field_class_path
 
         elif field_origin is None:
@@ -198,12 +200,25 @@ class FieldDecl:
                 result.field_kind = "data"
 
             if field_type.__module__ in primitive_modules:
+
+                # Primitive type, specify type name
                 result.field_type = field_type.__name__
             else:
+
+                # Complex type, specify full class path
                 field_class_path = f"{field_type.__module__}.{field_type.__name__}"
-                if dependencies is not None:
-                    dependencies.add(Schema.get_type_by_class_path(field_class_path))
                 result.field_type = field_class_path
+
+                field_type_obj = ClassInfo.get_class_type(field_class_path)
+
+                from cl.runtime.schema.type_decl import TypeDecl
+                TypeDecl.for_type(field_type_obj)
+
+                # Add to dependencies
+                if dependencies is not None:
+                    dependencies.add(field_type_obj)
+
+                # Add to Schema
 
         else:
             raise RuntimeError(f"Complex type {field_type} is not recognized when building data source schema.")

@@ -42,7 +42,7 @@ class KeyUtil:
         return result
 
     @classmethod
-    def get_key_fields(cls, record_type: Type) -> List[str]:
+    def get_key_fields(cls, record_type: Type) -> List[str] | None:
         """
         Get primary key fields by parsing the source of 'get_key' method of 'record_type'.
 
@@ -65,10 +65,12 @@ class KeyUtil:
         if hasattr(record_type, "get_key"):
             get_key_source = inspect.getsource(record_type.get_key)
         else:
-            raise RuntimeError(
-                f"Cannot get key fields because record type {record_type.__name__} "
-                f"does not implement 'get_key' method."
-            )
+            # TODO: Determine if a flag is needed for element types to prevent keys lookup
+            return None
+            #raise RuntimeError(
+            #    f"Cannot get key fields because record type {record_type.__name__} "
+            #    f"does not implement 'get_key' method."
+            #)
 
         # Because 'ast' expects the code to be correct as though it is at top level,
         # remove excess indent from the source to make it suitable for parsing

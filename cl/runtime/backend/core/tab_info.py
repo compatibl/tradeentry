@@ -17,5 +17,5 @@ class TabInfo:
     type_: BaseTypeInfo = datafield()
     """Type."""
 
-    key: GenericKey | None = datafield()
+    # key: GenericKey | None = datafield()  # TODO: Add generic key support
     """Key."""

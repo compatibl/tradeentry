@@ -20,6 +20,7 @@ from collections import Counter
 from pkgutil import walk_packages
 from types import ModuleType
 
+from cl.runtime import ClassInfo
 from cl.runtime.schema.type_decl import TypeDecl, pascalize
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from memoization import cached
@@ -44,6 +45,12 @@ class Schema:
     Provide declarations for the specified type and all dependencies.
     """
 
+    _type_dict: Dict[str, Type] = None
+    """Dictionary of types indexed by short name (class name with optional package alias)."""
+
+    _type_dict_by_class_path: Dict[str, Type] = None
+    """Dictionary of types using full class path in module.ClassName format as key."""
+
     @classmethod
     @cached
     def get_types(cls) -> Iterable[Type]:
@@ -66,69 +73,61 @@ class Schema:
         return record_type
 
     @classmethod
-    @cached
-    def get_type_by_class_path(cls, class_path: str) -> Type:
-        """Get type from full class path in module.ClassName format."""
+    def get_type_dict(cls) -> Dict[str, Type]:
+        """Get dictionary of types indexed by short name (class name with optional package alias)."""
 
-        # Get dictionary of types indexed by alias
-        type_dict_by_class_path = cls.get_type_dict_by_class_path()
+        # TODO: Support multithreading for updates to _type_dict
+        if cls._type_dict is None:
 
-        # TODO: Update to support short name with namespace prefix
-        record_type = type_dict_by_class_path.get(class_path, None)
-        if record_type is None:
-            raise RuntimeError(f"Record class with class path {class_path} is not found "
-                               f"in the list of packages specified in settings.")
-        return record_type
+            # TODO: Lock access during initialization
+
+            # TODO: Load from config file
+            packages = ["cl.runtime", "stubs.cl.runtime"]
+
+            # Get modules for the specified packages
+            modules = cls._get_modules(packages)
+
+            # Get record types by iterating over modules
+            record_types = set(
+                record_type for module in modules for name, record_type in inspect.getmembers(module, is_record)
+            )
+
+            # Ensure names are unique
+            # TODO: Support namespace aliases to resolve conflicts
+            record_names = [record_type.__name__ for record_type in record_types]
+            record_paths = [f"{record_type.__module__}.{record_type.__name__}" for record_type in record_types]
+
+            # Check that there are no repeated names, report errors if there are
+            if len(set(record_names)) != len(record_names):
+                # Count the occurrences of each name in the list
+                record_name_counts = Counter(record_names)
+
+                # Find names that are repeated more than once
+                repeated_names = [record_name for record_name, count in record_name_counts.items() if count > 1]
+
+                # Report repeated names
+                package_names_str = ", ".join(packages)
+                repeated_names_str = ", ".join(repeated_names)
+                raise RuntimeError(f"The following class names in the list of packages {package_names_str} "
+                                   f"are repeated more than once: {repeated_names_str}")
+
+            # Assign to class variables
+            cls._type_dict = dict(zip(record_names, record_types))
+            cls._type_dict_by_class_path = dict(zip(record_paths, record_types))
+
+        return cls._type_dict
 
     @classmethod
-    @cached
     def get_type_dict_by_class_path(cls) -> Dict[str, Type]:
         """Get a dictionary of types using full class path in module.ClassName format as key."""
 
-        # Get record types from the dictionary of types by short name
-        record_types = cls.get_type_dict().values()
+        # TODO: Support multithreading for updates to _type_dict_by_class_path
+        if cls._type_dict_by_class_path is None:
 
-        # Create the dictionary of types by class path
-        result = {f"{record_type.__module__}.{record_type.__name__}": record_type for record_type in record_types}
-        return result
+            # This also initializes _type_dict_by_class_path
+            cls.get_type_dict()
 
-    @classmethod
-    @cached
-    def get_type_dict(cls) -> Dict[str, Type]:
-        """Get a dictionary of types using short name (class name with optional package alias) as key."""
-
-        # TODO: Load from config file
-        packages = ["cl.runtime", "stubs.cl.runtime"]
-
-        # Get modules for the specified packages
-        modules = cls._get_modules(packages)
-
-        # Get record types by iterating over modules
-        record_types = set(
-            record_type for module in modules for name, record_type in inspect.getmembers(module, is_record)
-        )
-
-        # Ensure names are unique
-        # TODO: Support namespace aliases to resolve conflicts
-        record_names = [record_type.__name__ for record_type in record_types]
-
-        # Check that there are no repeated names, report errors if there are
-        if len(set(record_names)) != len(record_names):
-            # Count the occurrences of each name in the list
-            record_name_counts = Counter(record_names)
-
-            # Find names that are repeated more than once
-            repeated_names = [record_name for record_name, count in record_name_counts.items() if count > 1]
-
-            # Report repeated names
-            package_names_str = ", ".join(packages)
-            repeated_names_str = ", ".join(repeated_names)
-            raise RuntimeError(f"The following class names in the list of packages {package_names_str} "
-                               f"are repeated more than once: {repeated_names_str}")
-
-        # Create result dict
-        result = dict(zip(record_names, record_types))
-        return result
+        return cls._type_dict_by_class_path
 
     @classmethod
     def for_key(cls, key: TypeDeclKey) -> Self:
@@ -140,7 +139,7 @@ class Schema:
     def for_class_path(cls, class_path: str) -> Dict[str, Dict]:
         """Create or return cached object for the specified class path in module.ClassName format."""
 
-        record_type = cls.get_type_by_class_path(class_path)
+        record_type = ClassInfo.get_class_type(class_path)
         return cls.for_type(record_type)
 
     @classmethod
@@ -153,15 +152,11 @@ class Schema:
             record_type: Type of the record for which the schema is created.
         """
         dependencies = set()
+
+        # Get or create type declaration the argument class
         type_decl_obj = TypeDecl.for_type(record_type, dependencies=dependencies)
-        old_size = 0
-        new_size = 1
-        while new_size > old_size:
-            old_size = len(dependencies)
-            for dependency_type in dependencies:
-                TypeDecl.for_type(dependency_type, dependencies=dependencies)
-            new_size = len(dependencies)
-        type_decl_list = [type_decl_obj] + list(dependencies)
+        Schema._add_type_to_type_dict(record_type)
+        type_decl_list = [type_decl_obj] + [TypeDecl.for_type(dependency_type) for dependency_type in dependencies]
 
         # TODO: Move pascalize to a helper class
         result = {
@@ -190,3 +185,15 @@ class Schema:
                 submodule = importlib.import_module(module_name)
                 result.append(submodule)
         return result
+
+    @classmethod
+    def _add_type_to_type_dict(cls, record_type: Type):
+        """Add type to the record dictionary (used for dynamically loaded type that are not specified in config)."""
+
+        type_entry = cls._type_dict.get(record_type.__name__, None)
+        if type_entry is None:
+            cls._type_dict[record_type.__name__] = record_type
+            cls._type_dict_by_class_path[f"{record_type.__module__}.{record_type.__name__}"] = record_type
+        elif type_entry != record_type:
+            raise RuntimeError(f"Class '{record_type.__name__}' is present in more than one module: "
+                               f"'{type_entry.__module__}' and '{record_type.__module__}'.")
