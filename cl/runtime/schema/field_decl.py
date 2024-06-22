@@ -89,7 +89,7 @@ class FieldDecl:
         from cl.runtime.schema.schema import Schema  # TODO: Avoid circlular dependency
 
         result = cls()
-        result.name = field_name
+        result.name = field_name.removesuffix("_")
         result.comment = field_comment
 
         # Get origin and args of the field type

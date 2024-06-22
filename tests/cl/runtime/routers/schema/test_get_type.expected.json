@@ -75,6 +75,39 @@
             "User"
         ]
     },
+    "Cl.Runtime.Backend.Core.BaseTypeInfo.BaseTypeInfo": {
+        "Module": {
+            "ModuleName": "Cl.Runtime.Backend.Core.BaseTypeInfo"
+        },
+        "Name": "BaseTypeInfo",
+        "Label": "Base Type Info",
+        "Comment": "Base type info.",
+        "Kind": "Element",
+        "DisplayKind": "Basic",
+        "Elements": [
+            {
+                "Value": {
+                    "Type": "String"
+                },
+                "Name": "Name",
+                "Comment": "Name of type."
+            },
+            {
+                "Value": {
+                    "Type": "String"
+                },
+                "Name": "Module",
+                "Comment": "Module of type."
+            },
+            {
+                "Value": {
+                    "Type": "String"
+                },
+                "Name": "Label",
+                "Comment": "Label of type."
+            }
+        ]
+    },
     "Cl.Runtime.Backend.Core.TabInfo.TabInfo": {
         "Module": {
             "ModuleName": "Cl.Runtime.Backend.Core.TabInfo"
@@ -94,17 +127,8 @@
                 },
                 "Name": "Type",
                 "Comment": "Type."
-            },
-            {
-                "Value": {
-                    "Type": "Key"
-                },
-                "Name": "Key",
-                "Comment": "Key.",
-                "Optional": true
             }
-        ],
-        "Keys": null
+        ]
     },
     "Cl.Runtime.Backend.Core.User.User": {
         "Module": {
@@ -148,39 +172,5 @@
         "Keys": [
             "Username"
         ]
-    },
-    "Cl.Runtime.Backend.Core.BaseTypeInfo.BaseTypeInfo": {
-        "Module": {
-            "ModuleName": "Cl.Runtime.Backend.Core.BaseTypeInfo"
-        },
-        "Name": "BaseTypeInfo",
-        "Label": "Base Type Info",
-        "Comment": "Base type info.",
-        "Kind": "Element",
-        "DisplayKind": "Basic",
-        "Elements": [
-            {
-                "Value": {
-                    "Type": "String"
-                },
-                "Name": "Name",
-                "Comment": "Name of type."
-            },
-            {
-                "Value": {
-                    "Type": "String"
-                },
-                "Name": "Module",
-                "Comment": "Module of type."
-            },
-            {
-                "Value": {
-                    "Type": "String"
-                },
-                "Name": "Label",
-                "Comment": "Label of type."
-            }
-        ],
-        "Keys": null
     }
 }
