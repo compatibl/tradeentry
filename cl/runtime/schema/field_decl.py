@@ -212,7 +212,7 @@ class FieldDecl:
                 field_type_obj = ClassInfo.get_class_type(field_class_path)
 
                 from cl.runtime.schema.type_decl import TypeDecl
-                TypeDecl.for_type(field_type_obj)
+                TypeDecl.for_type(field_type_obj, dependencies=dependencies)
 
                 # Add to dependencies
                 if dependencies is not None:

@@ -156,6 +156,8 @@ class Schema:
         # Get or create type declaration the argument class
         type_decl_obj = TypeDecl.for_type(record_type, dependencies=dependencies)
         Schema._add_type_to_type_dict(record_type)
+
+        # TODO: Reverse the list of dependencies
         type_decl_list = [type_decl_obj] + [TypeDecl.for_type(dependency_type) for dependency_type in dependencies]
 
         # TODO: Move pascalize to a helper class

@@ -31,4 +31,3 @@ class TypeResponseUtil:
         record_type = Schema.get_type_by_short_name(request.name)
         result = Schema.for_type(record_type)
         return result
-

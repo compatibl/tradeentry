@@ -15,6 +15,7 @@
 from __future__ import annotations
 
 import ast
+import dataclasses
 import inspect
 from itertools import tee
 
@@ -184,11 +185,16 @@ class TypeDecl(DataclassMixin):
 
         # Set parent class as the first class in MRO that is not self and does not have Mixin suffix
         for parent_type in record_type.__mro__:
-            if parent_type is not record_type and not parent_type.__name__.endswith("Mixin"):
-                # TODO: Add to dependencies
-                parent_type_module = ModuleDeclTable.create_key(module_name=parent_type.__module__)
-                parent_type_name = parent_type.__name__
-                # TODO: result.inherit = TypeDeclTable.create_key(module=parent_type_module, name=parent_type_name)
+            # TODO: Refactor to make it work not only for dataclasses
+            if (parent_type is not record_type and not parent_type.__name__.endswith("Mixin")
+                    and dataclasses.is_dataclass(parent_type)):
+
+                parent_type_decl = cls.for_type(parent_type, dependencies=dependencies)
+                result.inherit = parent_type_decl.get_key()
+
+                # Add to dependencies
+                if dependencies is not None:
+                    dependencies.add(parent_type)
 
         # Get key fields by parsing the source of 'get_key' method
         result.keys = KeyUtil.get_key_fields(record_type)
