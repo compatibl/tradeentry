@@ -20,6 +20,7 @@ from typing import Tuple
 from typing import Type
 from typing_extensions import Self
 from cl.runtime.context.context import Context
+from cl.runtime.records.data_mixin import DataMixin
 from cl.runtime.records.record_util import RecordUtil
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TKey
@@ -31,7 +32,7 @@ _RECORD = 2  # Code indicating record
 _UNKNOWN = 3  # Code indicating unknown type
 
 
-class RecordMixin(ABC):
+class RecordMixin(DataMixin):
     """
     Optional mixin class for database records providing static type checkers with method signatures.
 

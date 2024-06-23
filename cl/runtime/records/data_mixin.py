@@ -12,17 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses.dataclass_data_mixin import DataclassDataMixin
-from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield
-from dataclasses import dataclass
+from abc import ABC
+from abc import abstractmethod
+from typing import Dict
+
+from cl.runtime.storage.data_source_types import TField
 
 
-@dataclass(slots=True, kw_only=True)
-class StubDataclassData(DataclassDataMixin):
-    """Stub base data type."""
+class DataMixin(ABC):
+    """
+    Optional mixin class for data fields, use RecordMixin for records.
 
-    str_field: str = datafield(default="abc")
-    """Stub field."""
+    Notes:
+        - The use of this class is optional. The code must not rely on inheritance from this class.
+    """
 
-    int_field: int = datafield(default=123)
-    """Stub field."""
+    @abstractmethod
+    def to_dict(self) -> Dict[str, TField]:
+        """Return TData for the contents."""
+        # TODO: Determine if it should be consolidated with pack and if from_dict should be added
+

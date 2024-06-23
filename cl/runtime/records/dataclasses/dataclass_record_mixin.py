@@ -13,13 +13,12 @@
 # limitations under the License.
 
 from abc import ABC
+import dataclasses
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.runtime.storage.data_source_types import TPackedRecord
-from dataclasses import asdict
+from cl.runtime.storage.data_source_types import TPackedRecord, TField
 from dataclasses import dataclass
 from dataclasses import field
-from typing import Any
-from typing import Callable
+from typing import Callable, Dict
 from typing import TypeVar
 
 TDefault = TypeVar("TDefault")
@@ -30,9 +29,13 @@ TDefaultFactory = Callable[[], TDefault]
 class DataclassRecordMixin(RecordMixin, ABC):
     """Mixin methods for dataclass records."""
 
+    def to_dict(self) -> Dict[str, TField]:
+        """Return TData for the contents."""
+        return dataclasses.asdict(self)  # noqa
+
     def pack(self) -> TPackedRecord:
         # Get data dictionary and remove keys that have None values
-        data_dict = asdict(self)
+        data_dict = dataclasses.asdict(self)
         data_dict = {k: v for k, v in data_dict.items() if v is not None}
 
         # Return a tuple of key and (record_type, serialized_data)

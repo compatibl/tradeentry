@@ -29,14 +29,14 @@ from typing import Type
 from typing_extensions import Self
 
 
-def is_record(record_type):
+def is_data_or_record(data_type):
     """Return true if the type is a record based on the presence of 'get_key' method."""
     return (
-            inspect.isclass(record_type) and
-            hasattr(record_type, "get_key") and
-            callable(getattr(record_type, "get_key")) and
-            not inspect.isabstract(record_type) and
-            not record_type.__name__.endswith("Mixin")
+            inspect.isclass(data_type) and
+            hasattr(data_type, "to_dict") and
+            callable(getattr(data_type, "to_dict")) and
+            not inspect.isabstract(data_type) and
+            not data_type.__name__.endswith("Mixin")
     )
 
 
@@ -89,7 +89,7 @@ class Schema:
 
             # Get record types by iterating over modules
             record_types = set(
-                record_type for module in modules for name, record_type in inspect.getmembers(module, is_record)
+                record_type for module in modules for name, record_type in inspect.getmembers(module, is_data_or_record)
             )
 
             # Ensure names are unique

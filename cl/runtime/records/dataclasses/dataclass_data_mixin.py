@@ -12,17 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses.dataclass_data_mixin import DataclassDataMixin
-from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield
+import dataclasses
+from typing import Dict
+
+from cl.runtime.records.data_mixin import DataMixin
+from cl.runtime.storage.data_source_types import TField
 from dataclasses import dataclass
 
 
+# TODO: Consolidate in the same module with other dataclass mixins
 @dataclass(slots=True, kw_only=True)
-class StubDataclassData(DataclassDataMixin):
-    """Stub base data type."""
+class DataclassDataMixin(DataMixin):
+    """Mixin methods for dataclass records."""
 
-    str_field: str = datafield(default="abc")
-    """Stub field."""
-
-    int_field: int = datafield(default=123)
-    """Stub field."""
+    def to_dict(self) -> Dict[str, TField]:
+        """Return TData for the contents."""
+        return dataclasses.asdict(self)  # noqa
