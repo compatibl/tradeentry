@@ -48,9 +48,6 @@ class Schema:
     _type_dict: Dict[str, Type] = None
     """Dictionary of types indexed by short name (class name with optional package alias)."""
 
-    _type_dict_by_class_path: Dict[str, Type] = None
-    """Dictionary of types using full class path in module.ClassName format as key."""
-
     @classmethod
     @cached
     def get_types(cls) -> Iterable[Type]:
@@ -113,21 +110,8 @@ class Schema:
 
             # Assign to class variables
             cls._type_dict = dict(zip(record_names, record_types))
-            cls._type_dict_by_class_path = dict(zip(record_paths, record_types))
 
         return cls._type_dict
-
-    @classmethod
-    def get_type_dict_by_class_path(cls) -> Dict[str, Type]:
-        """Get a dictionary of types using full class path in module.ClassName format as key."""
-
-        # TODO: Support multithreading for updates to _type_dict_by_class_path
-        if cls._type_dict_by_class_path is None:
-
-            # This also initializes _type_dict_by_class_path
-            cls.get_type_dict()
-
-        return cls._type_dict_by_class_path
 
     @classmethod
     def for_key(cls, key: TypeDeclKey) -> Self:
