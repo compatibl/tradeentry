@@ -155,7 +155,6 @@ class Schema:
 
         # Get or create type declaration the argument class
         type_decl_obj = TypeDecl.for_type(record_type, dependencies=dependencies)
-        Schema._add_type_to_type_dict(record_type)
 
         # TODO: Reverse the list of dependencies
         type_decl_list = [type_decl_obj] + [TypeDecl.for_type(dependency_type) for dependency_type in dependencies]
@@ -188,14 +187,3 @@ class Schema:
                 result.append(submodule)
         return result
 
-    @classmethod
-    def _add_type_to_type_dict(cls, record_type: Type):
-        """Add type to the record dictionary (used for dynamically loaded type that are not specified in config)."""
-
-        type_entry = cls._type_dict.get(record_type.__name__, None)
-        if type_entry is None:
-            cls._type_dict[record_type.__name__] = record_type
-            cls._type_dict_by_class_path[f"{record_type.__module__}.{record_type.__name__}"] = record_type
-        elif type_entry != record_type:
-            raise RuntimeError(f"Class '{record_type.__name__}' is present in more than one module: "
-                               f"'{type_entry.__module__}' and '{record_type.__module__}'.")
