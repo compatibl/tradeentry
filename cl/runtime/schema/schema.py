@@ -146,7 +146,11 @@ class Schema:
         # Get or create type declaration the argument class
         type_decl_obj = TypeDecl.for_type(record_type, dependencies=dependencies)
 
-        # TODO: Reverse the list of dependencies
+        # Sort the list of dependencies
+        # TODO: Use short name with alias
+        dependencies = sorted(dependencies, key=lambda x: x.__name__)
+
+        # Requested type is always first
         type_decl_list = [type_decl_obj] + [TypeDecl.for_type(dependency_type) for dependency_type in dependencies]
 
         # TODO: Move pascalize to a helper class

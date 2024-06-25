@@ -75,28 +75,6 @@
             "User"
         ]
     },
-    "Cl.Runtime.Backend.Core.TabInfo.TabInfo": {
-        "Module": {
-            "ModuleName": "Cl.Runtime.Backend.Core.TabInfo"
-        },
-        "Name": "TabInfo",
-        "Label": "Tab Info",
-        "Comment": "Tab info.",
-        "Kind": "Element",
-        "DisplayKind": "Basic",
-        "Elements": [
-            {
-                "Data": {
-                    "Module": {
-                        "ModuleName": "Cl.Runtime.Backend.Core.BaseTypeInfo"
-                    },
-                    "Name": "BaseTypeInfo"
-                },
-                "Name": "Type",
-                "Comment": "Type."
-            }
-        ]
-    },
     "Cl.Runtime.Backend.Core.BaseTypeInfo.BaseTypeInfo": {
         "Module": {
             "ModuleName": "Cl.Runtime.Backend.Core.BaseTypeInfo"
@@ -127,6 +105,28 @@
                 },
                 "Name": "Label",
                 "Comment": "Label of type."
+            }
+        ]
+    },
+    "Cl.Runtime.Backend.Core.TabInfo.TabInfo": {
+        "Module": {
+            "ModuleName": "Cl.Runtime.Backend.Core.TabInfo"
+        },
+        "Name": "TabInfo",
+        "Label": "Tab Info",
+        "Comment": "Tab info.",
+        "Kind": "Element",
+        "DisplayKind": "Basic",
+        "Elements": [
+            {
+                "Data": {
+                    "Module": {
+                        "ModuleName": "Cl.Runtime.Backend.Core.BaseTypeInfo"
+                    },
+                    "Name": "BaseTypeInfo"
+                },
+                "Name": "Type",
+                "Comment": "Type."
             }
         ]
     },
