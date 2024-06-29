@@ -13,11 +13,12 @@
 # limitations under the License.
 
 import pytest
+
+from stubs.cl.runtime import StubDataclassRecordKey
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_dict_fields import StubDataclassDictFields
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_list_fields import StubDataclassListFields
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_primitive_fields import StubDataclassPrimitiveFields
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_record_key import StubDataclassRecordTable
 
 
 def test_smoke():
@@ -28,7 +29,7 @@ def test_smoke():
 
     # Test primary key
     key = record.get_key()
-    assert key == (StubDataclassRecordTable, "abc")
+    assert key == StubDataclassRecordKey(id="abc")
 
     # Test roundtrip serialization
     packed_key, (packed_type, packed_dict) = record.pack()

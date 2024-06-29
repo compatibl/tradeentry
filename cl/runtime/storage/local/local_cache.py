@@ -53,21 +53,22 @@ class LocalCache(DataSource):
         # Try to retrieve dataset dictionary, insert if it does not yet exist
         dataset_cache = self._cache.setdefault(dataset, {})
 
-        # Group keys by table type
-        keys_grouped_by_table_type = groupby(keys, key=lambda x: x[0])
+        # Group keys by key type
+        keys_grouped_by_key_type = groupby(keys, key=lambda x: type(x))
 
         # Process separately for each base type
         result_dict = {}
-        for table_type, keys_for_table_type in keys_grouped_by_table_type:
+        for key_type, keys_for_key_type in keys_grouped_by_key_type:
             # Try to retrieve table dictionary, insert if it does not yet exist
-            table_cache = dataset_cache.setdefault(table_type, {})
+            table_cache = dataset_cache.setdefault(key_type, {})
 
             # Iterable for the retrieved pairs
-            retrieved = {key: table_cache[key] for key in keys_for_table_type if key in table_cache}
+            key_tuples = [key.get_key_tuple() for key in keys_for_key_type]
+            retrieved = {key_tuple: table_cache[key_tuple] for key_tuple in key_tuples if key_tuple in table_cache}
             result_dict.update(retrieved)
 
         # Records in the order of provided keys, or None for records that are not found
-        result = [(k, result_dict[k], dataset, None) if k in result_dict else None for k in keys]
+        result = [(k, result_dict[k.get_key_tuple()], dataset, None) if k.get_key_tuple() in result_dict else None for k in keys]
         return result
 
     def load_by_query(
@@ -92,7 +93,7 @@ class LocalCache(DataSource):
         dataset_cache = self._cache.setdefault(dataset, {})
 
         # Group records by base type
-        packs_grouped_by_table_type = groupby(packs, key=lambda record: record[0][0])
+        packs_grouped_by_table_type = groupby(packs, key=lambda record: type(record[0]))
 
         # Process separately for each base type
         for table_type, packs_for_table_type in packs_grouped_by_table_type:
@@ -100,7 +101,7 @@ class LocalCache(DataSource):
             table_cache = dataset_cache.setdefault(table_type, {})
 
             # Create a dict of (key, data)
-            saved_records = {pack[0]: pack[1] for pack in packs_for_table_type}
+            saved_records = {pack[0].get_key_tuple(): pack[1] for pack in packs_for_table_type}
 
             # Add records for base type, overwriting the existing records
             table_cache.update(saved_records)

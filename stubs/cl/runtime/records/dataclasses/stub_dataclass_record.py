@@ -14,16 +14,12 @@
 
 from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
 from dataclasses import dataclass
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_record_key import StubDataclassRecordKey, \
-    StubDataclassRecordTable
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_record_key import StubDataclassRecordKey
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataclassRecord(DataclassRecordMixin):
+class StubDataclassRecord(StubDataclassRecordKey, DataclassRecordMixin):
     """Stub record base class."""
 
-    id: str = "abc"
-    """Unique identifier."""
-
     def get_key(self) -> StubDataclassRecordKey:
-        return StubDataclassRecordTable, self.id
+        return StubDataclassRecordKey(id=self.id)

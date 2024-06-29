@@ -12,16 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import final
-from typing import Tuple
-from typing import Type
+from dataclasses import dataclass
+from typing import List, Tuple
 
-from cl.runtime import TableMixin
-
-
-@final
-class StubDataclassRecordTable(TableMixin):
-    pass
+from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin, DataclassKeysMixin
 
 
-StubDataclassRecordKey = Tuple[Type[StubDataclassRecordTable], str]
+@dataclass(slots=True, kw_only=True)
+class StubDataclassRecordKey(DataclassKeyMixin):
+    """Stub record base class."""
+
+    id: str = "abc"
+    """Unique identifier."""
+
+    def get_key_tuple(self) -> Tuple:
+        return (self.id,)
+
+
+@dataclass(slots=True, kw_only=True)
+class StubDataclassRecordKeys(DataclassKeysMixin):
+    """Stub record base class."""
+
+    id: List[str] = datafield(default_factory=lambda: ["abc"] * 3)
+    """Unique identifier."""

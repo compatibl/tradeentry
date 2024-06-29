@@ -24,10 +24,6 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_nested_fields_key impor
     StubDataclassNestedFieldsTable
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecordKey
-from typing import Tuple
-from typing import Type
-
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_record_key import StubDataclassRecordTable
 
 
 @dataclass(slots=True, kw_only=True)
@@ -37,10 +33,10 @@ class StubDataclassNestedFields(DataclassRecordMixin):
     primitive: str = datafield(default="abc")
     """String key element."""
 
-    embedded_1: StubDataclassRecordKey = datafield(default=(StubDataclassRecordTable, "def"))
+    embedded_1: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecordKey(id="def"))
     """Embedded key 1."""
 
-    embedded_2: StubDataclassRecordKey = datafield(default=(StubDataclassRecordTable, "xyz"))
+    embedded_2: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecordKey(id="xyz"))
     """Embedded key 2."""
 
     base_datafield: StubDataclassData = datafield(default_factory=StubDataclassData)
@@ -62,7 +58,7 @@ class StubDataclassNestedFields(DataclassRecordMixin):
     )
     """Declared StubDataclassDerivedData but provided an instance of StubDataclassDerivedFromDerivedData."""
 
-    key_field: StubDataclassRecordKey = datafield(default=(StubDataclassRecordTable, "uvw"))
+    key_field: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecordKey(id="uvw"))
     """Stub field."""
 
     record_as_key_field: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecord())
