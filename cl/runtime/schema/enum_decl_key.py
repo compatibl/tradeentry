@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from typing import Tuple
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
@@ -27,3 +28,6 @@ class EnumDeclKey(DataclassKeyMixin):
 
     name: str = datafield()
     """Enum name is unique when combined with module."""
+
+    def get_generic_key(self) -> Tuple:
+        return EnumDeclKey, self.module.get_generic_key(), self.name

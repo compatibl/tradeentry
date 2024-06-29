@@ -14,6 +14,7 @@
 
 import datetime as dt
 from dataclasses import dataclass
+from typing import Tuple
 
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.primitive.datetime_util import DatetimeUtil
@@ -61,3 +62,20 @@ class StubDataclassPrimitiveFieldsKey(DataclassKeyMixin):
 
     key_enum_field: StubIntEnum = datafield(default=StubIntEnum.ENUM_VALUE_2)
     """Stub field."""
+
+    def get_generic_key(self) -> Tuple:
+        return (StubDataclassPrimitiveFieldsKey,
+                self.key_float_field,
+                self.key_bool_field,
+                self.key_int_field,
+                self.key_long_field,
+                self.key_date_field,
+                self.key_time_field,
+                self.key_date_time_field,
+                self.key_uuid_field,
+                self.key_bytes_field,
+                self.key_enum_field,
+                )
+
+
+

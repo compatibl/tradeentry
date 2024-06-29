@@ -13,9 +13,13 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from typing import Tuple
 from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
 
 
 @dataclass(slots=True)
 class StubDataclassSingletonKey(DataclassKeyMixin):
     """Singleton record has no key fields."""
+
+    def get_generic_key(self) -> Tuple:
+        return (StubDataclassSingletonKey,)

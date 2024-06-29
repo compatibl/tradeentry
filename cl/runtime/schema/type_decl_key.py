@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from typing import Tuple
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
@@ -27,4 +28,7 @@ class TypeDeclKey(DataclassKeyMixin):
 
     name: str = datafield()
     """Type name is unique when combined with module."""
+
+    def get_generic_key(self) -> Tuple:
+        return TypeDeclKey, self.module.get_generic_key(), self.name
 

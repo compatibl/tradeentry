@@ -5,6 +5,7 @@
 # license from CompatibL and with the inclusion of this copyright notice.
 
 from dataclasses import dataclass
+from typing import Tuple
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
 from cl.runtime.backend.core.user_key import UserKey
@@ -20,3 +21,6 @@ class UiTypeStateKey(DataclassKeyMixin):
 
     user: UserKey | None = datafield()
     """A user the app state is applied for."""
+
+    def get_generic_key(self) -> Tuple:
+        return UiTypeStateKey, self.type_, self.user

@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from typing import Tuple
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b_key import StubDataclassCyclicBKey
@@ -24,3 +25,6 @@ class StubDataclassCyclicAKey(DataclassKeyMixin):
 
     b_key: StubDataclassCyclicBKey = datafield()
     """Key for class B."""
+
+    def get_generic_key(self) -> Tuple:
+        return StubDataclassCyclicAKey, self.b_key

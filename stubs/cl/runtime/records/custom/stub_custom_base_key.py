@@ -11,7 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import Dict
+
+from typing import Dict, Tuple
 
 from cl.runtime.records.key_mixin import KeyMixin
 from cl.runtime.storage.data_source_types import TField
@@ -38,3 +39,5 @@ class StubCustomBaseKey(KeyMixin):
                 "int_field": self.int_field,
             }
 
+    def get_generic_key(self) -> Tuple:
+        return StubCustomBaseKey, self.str_field, self.int_field

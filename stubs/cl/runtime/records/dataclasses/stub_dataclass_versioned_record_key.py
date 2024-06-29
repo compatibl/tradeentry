@@ -13,6 +13,8 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from typing import Tuple
+
 from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
 
 
@@ -22,3 +24,6 @@ class StubDataclassVersionedRecordKey(DataclassKeyMixin):
 
     id: str = "abc"
     """Stub field."""
+
+    def get_generic_key(self) -> Tuple:
+        return StubDataclassVersionedRecordKey, self.id

@@ -33,7 +33,7 @@ class KeyUtil:
             instance fields it accesses in the order of access, for example if 'get_key' source is:
 
             def get_key(self) -> ClassKey:
-                return ClassTable, self.key_field_1, self.key_field_2
+                return ClassKey(self.key_field_1, self.key_field_2)
 
             this method will return:
 

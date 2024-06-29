@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from typing import Tuple
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
 
@@ -22,3 +23,6 @@ class StubDataclassAliasedRecordKey(DataclassKeyMixin):  # TODO: Specify alias a
     """Stub record class with typename alias."""
 
     id: str = datafield()
+
+    def get_generic_key(self) -> Tuple:
+        return StubDataclassAliasedRecordKey, self.id

@@ -26,8 +26,8 @@ class StubDataclassRecordKey(DataclassKeyMixin):
     id: str = "abc"
     """Unique identifier."""
 
-    def get_key_tuple(self) -> Tuple:
-        return (self.id,)
+    def get_generic_key(self) -> Tuple:
+        return StubDataclassRecordKey, self.id
 
 
 @dataclass(slots=True)
@@ -36,3 +36,6 @@ class StubDataclassRecordKeys(DataclassKeysMixin):
 
     id: List[str] = datafield(default_factory=lambda: ["abc"] * 3)
     """Unique identifier."""
+
+    def get_generic_keys(self) -> Tuple:
+        return StubDataclassRecordKey, self.id

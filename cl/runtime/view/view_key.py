@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from typing import Tuple
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
 from cl.runtime.records.generic_key import GenericKey
@@ -22,8 +23,12 @@ from cl.runtime.records.generic_key import GenericKey
 class ViewKey(DataclassKeyMixin):
     """Contains data that will be visualized alongside the record specified by the 'view_for' field."""
 
-    view_for: GenericKey = datafield()
+    view_for: Tuple = datafield()
     """Generic key of the record for which the view is specified."""
 
     view_name: str = datafield()
     """Name of the view displayed in the front end."""
+
+    def get_generic_key(self) -> Tuple:
+        return ViewKey, self.view_for, self.view_name
+

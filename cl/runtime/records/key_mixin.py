@@ -12,16 +12,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from abc import ABC, abstractmethod
+from typing import Tuple
 
-class KeyMixin:
+
+class KeyMixin(ABC):
     """Optional mixin class for a primary key object."""
 
     __slots__ = ()
     """To prevent creation of __dict__ in derived types."""
 
+    @abstractmethod
+    def get_generic_key(self) -> Tuple:
+        """Return a tuple of key type and key fields."""
 
-class KeysMixin:
+    def __hash__(self):
+        """Calculate hash based on key type and values, must not change key fields after hashing."""
+        return hash(self.get_generic_key())
+
+
+class KeysMixin(ABC):
     """Optional mixin class for an iterable of primary key objects."""
 
     __slots__ = ()
     """To prevent creation of __dict__ in derived types."""
+
+    @abstractmethod
+    def get_generic_keys(self) -> Tuple:
+        """Return a tuple of key type and lists of key fields."""

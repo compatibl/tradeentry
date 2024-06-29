@@ -5,6 +5,7 @@
 # license from CompatibL and with the inclusion of this copyright notice.
 
 from dataclasses import dataclass
+from typing import Tuple
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
 
@@ -15,3 +16,6 @@ class UserKey(DataclassKeyMixin):
 
     username: str = datafield()
     """Unique user identifier."""
+
+    def get_generic_key(self) -> Tuple:
+        return UserKey, self.username
