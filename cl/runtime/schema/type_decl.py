@@ -186,7 +186,7 @@ class TypeDecl(DataclassRecordMixin):
         # Set parent class as the first class in MRO that is not self and does not have Mixin suffix
         for parent_type in record_type.__mro__:
             # TODO: Refactor to make it work not only for dataclasses
-            if (parent_type is not record_type and not parent_type.__name__.endswith("Mixin")
+            if (parent_type is not record_type and not parent_type.__name__.endswith("Mixin") and not parent_type.__name__.endswith("Key")
                     and dataclasses.is_dataclass(parent_type)):
 
                 parent_type_decl = cls.for_type(parent_type, dependencies=dependencies)
@@ -228,7 +228,13 @@ class TypeDecl(DataclassRecordMixin):
     def get_member_comments(cls, record_type: type) -> Dict[str, str]:
         """Extract class member comments."""
 
-        comments = dict()
+        # Include comments from key class fields for base
+        # TODO: Revise approach to key fields
+        if len(record_type.__mro__) > 1 and record_type.__mro__[1].__name__.endswith("Key"):
+            comments = cls.get_member_comments(record_type.__mro__[1])
+        else:
+            comments = dict()
+
         ast_tree = ast.parse(inspect.getsource(record_type))
 
         for i, j in cls.by_pair(ast.iter_child_nodes(ast_tree.body[0])):

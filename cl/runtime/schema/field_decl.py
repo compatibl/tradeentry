@@ -201,6 +201,9 @@ class FieldDecl:
             elif issubclass(field_type, Enum):
                 # Indicate that field is an enum
                 result.field_kind = "enum"
+            elif field_type.__name__.endswith("Key"):
+                # Indicate that field is a key
+                result.field_kind = "key"
             else:
                 # Indicate that field is a user-defined data or record
                 result.field_kind = "data"
@@ -213,8 +216,17 @@ class FieldDecl:
 
                 # Complex type, specify full class path
                 field_class_path = f"{field_type.__module__}.{field_type.__name__}"
-                result.field_type = field_class_path
 
+                # For keys, remove suffix
+                if result.field_kind == "key":
+                    if field_class_path.endswith("Key"):
+                        field_class_module = field_type.__module__.removesuffix("_key")
+                        field_class_name = field_type.__name__.removesuffix("Key")
+                        field_class_path = f"{field_class_module}.{field_class_name}"
+                    else:
+                        raise RuntimeError("Field has TypeKind=key but class name does not end in 'Key'.")
+
+                result.field_type = field_class_path
                 field_type_obj = ClassInfo.get_class_type(field_class_path)
 
                 from cl.runtime.schema.type_decl import TypeDecl

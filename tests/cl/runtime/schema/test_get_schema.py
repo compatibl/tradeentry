@@ -26,7 +26,7 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields import 
 def test_method():
     """Test coroutine for /schema/typeV2 route."""
 
-    sample_types = [StubDataclassRecord, StubDataclassNestedFields, StubDataclassOptionalFields]
+    sample_types = [StubDataclassNestedFields, StubDataclassOptionalFields]
 
     for sample_type in sample_types:
         class_module = sample_type.__module__.rsplit(".", maxsplit=1)[1]

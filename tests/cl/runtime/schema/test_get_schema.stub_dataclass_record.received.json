@@ -6,18 +6,13 @@
     "Label": "Stub Dataclass Record",
     "Comment": "Stub record base class.",
     "DisplayKind": "Basic",
-    "Inherit": {
-        "Module": {
-            "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassRecordKey"
-        },
-        "Name": "StubDataclassRecordKey"
-    },
     "Elements": [
         {
             "Value": {
                 "Type": "String"
             },
-            "Name": "Id"
+            "Name": "Id",
+            "Comment": "Unique identifier."
         }
     ],
     "Keys": [
