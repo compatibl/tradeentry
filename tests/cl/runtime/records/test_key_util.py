@@ -15,29 +15,7 @@
 import pytest
 from cl.runtime.records.key_util import KeyUtil
 from cl.runtime.schema.module_decl import ModuleDecl
-from cl.runtime.schema.module_decl_key import ModuleDeclTable
 from cl.runtime.schema.type_decl import TypeDecl
-from cl.runtime.schema.type_decl_key import TypeDeclKey, TypeDeclTable
-
-
-def test_to_dict():
-    """Test KeyUtil.to_dict method."""
-
-    key = TypeDeclTable, (ModuleDeclTable, "class_module"), "ClassName"
-    result = KeyUtil.to_dict(key)  # TODO: Fix type error
-    assert result == {"module": {"module_name": "class_module"}, "name": "ClassName"}
-
-
-def test_parse_key():
-    """Test KeyUtil.parse_key method."""
-
-    key = TypeDeclTable, (ModuleDeclTable, "module"), "ClassName"
-    result = KeyUtil.parse_key(TypeDeclKey, key)
-
-    _, (_, x), y = key
-
-    # TODO: Add check
-    pass
 
 
 def test_get_key_fields():

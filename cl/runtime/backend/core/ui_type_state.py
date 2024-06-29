@@ -8,11 +8,12 @@ from dataclasses import dataclass
 from typing import List, Optional, final
 from cl.runtime.backend.core.ui_type_state_key import UiTypeStateKey
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
 
 
 @final
 @dataclass(slots=True, kw_only=True)
-class UiTypeState(UiTypeStateKey):
+class UiTypeState(UiTypeStateKey, DataclassRecordMixin):
     """Defines ui settings for a type."""
 
     read_only: Optional[bool] = datafield()
@@ -26,3 +27,7 @@ class UiTypeState(UiTypeStateKey):
 
     pinned_handlers: Optional[List[str]] = datafield()
     """List of names of the handlers pinned for the type"""
+
+    def get_key(self) -> UiTypeStateKey:
+        return UiTypeStateKey(self.type_, self.user)
+

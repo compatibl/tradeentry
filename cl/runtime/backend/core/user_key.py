@@ -4,21 +4,14 @@
 # or distributed only in compliance with the terms of a written commercial
 # license from CompatibL and with the inclusion of this copyright notice.
 
-from __future__ import annotations
-from typing import final
-from typing import Tuple
-from typing import Type
-from cl.runtime.records.table_mixin import TableMixin
+from dataclasses import dataclass
+from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
 
 
-@final
-class UserTable(TableMixin):
-    """Table settings class."""
+@dataclass(slots=True)
+class UserKey(DataclassKeyMixin):
+    """User which is allowed to log in."""
 
-    @classmethod
-    def create_key(cls, *, username: str) -> UserKey:
-        return UserTable, username
-
-
-UserKey = Tuple[Type[UserTable], str]
-
+    username: str = datafield()
+    """Unique user identifier."""

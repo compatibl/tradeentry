@@ -14,22 +14,15 @@
 
 from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.schema.enum_decl_key import EnumDeclKey, EnumDeclTable
+from cl.runtime.schema.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.enum_item_decl import EnumItemDecl
-from cl.runtime.schema.module_decl_key import ModuleDeclKey
 from dataclasses import dataclass
 from typing import List
 
 
 @dataclass(slots=True, kw_only=True)
-class EnumDecl(DataclassRecordMixin):
+class EnumDecl(EnumDeclKey, DataclassRecordMixin):
     """Enum declaration."""
-
-    module: ModuleDeclKey = datafield()  # TODO: Merge with name
-    """Module reference."""
-
-    name: str = datafield()
-    """Enum name is unique when combined with module."""
 
     label: str | None = datafield()
     """Enum label."""
@@ -41,4 +34,5 @@ class EnumDecl(DataclassRecordMixin):
     """Array of enum items."""
 
     def get_key(self) -> EnumDeclKey:
-        return EnumDeclTable, self.module, self.name
+        return EnumDeclKey(self.module, self.name)
+

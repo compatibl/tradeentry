@@ -19,7 +19,7 @@ from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin, DataclassKeysMixin
 
 
-@dataclass(slots=True, kw_only=True)
+@dataclass(slots=True)
 class StubDataclassRecordKey(DataclassKeyMixin):
     """Stub record base class."""
 
@@ -30,7 +30,7 @@ class StubDataclassRecordKey(DataclassKeyMixin):
         return (self.id,)
 
 
-@dataclass(slots=True, kw_only=True)
+@dataclass(slots=True)
 class StubDataclassRecordKeys(DataclassKeysMixin):
     """Stub record base class."""
 

@@ -8,7 +8,7 @@ from typing import List, Optional
 
 from cl.runtime.backend.core.app_theme import AppTheme
 from cl.runtime.backend.core.tab_info import TabInfo
-from cl.runtime.backend.core.ui_app_state_key import UiAppStateKey, UiAppStateTable
+from cl.runtime.backend.core.ui_app_state_key import UiAppStateKey
 from cl.runtime.backend.core.user_key import UserKey
 from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
@@ -16,11 +16,8 @@ from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecor
 
 
 @dataclass(slots=True, kw_only=True)
-class UiAppState(DataclassRecordMixin):
+class UiAppState(UiAppStateKey, DataclassRecordMixin):
     """UiAppState."""
-
-    user: UserKey = datafield()
-    """A user the app state is applied for."""
 
     opened_tabs: List[TabInfo] | None = datafield()
     """Information about opened tabs."""
@@ -41,7 +38,7 @@ class UiAppState(DataclassRecordMixin):
     """Application theme (dark, light, etc.)."""
 
     def get_key(self) -> UiAppStateKey:
-        return UiAppStateTable, self.user
+        return UiAppStateKey(self.user)
 
     @staticmethod
     def get_current_user_app_theme() -> AppTheme | None:

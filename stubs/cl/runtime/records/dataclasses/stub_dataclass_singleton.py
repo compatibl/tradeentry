@@ -15,16 +15,15 @@
 from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from dataclasses import dataclass
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_singleton_key import StubDataclassSingletonKey, \
-    StubDataclassSingletonTable
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_singleton_key import StubDataclassSingletonKey
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataclassSingleton(DataclassRecordMixin):
+class StubDataclassSingleton(StubDataclassSingletonKey, DataclassRecordMixin):
     """Singleton record has no key fields."""
 
     str_field: str = datafield(default="abc")
     """Stub field."""
 
     def get_key(self) -> StubDataclassSingletonKey:
-        return (StubDataclassSingletonTable,)
+        return StubDataclassSingletonKey()

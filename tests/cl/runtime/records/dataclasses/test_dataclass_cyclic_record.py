@@ -14,9 +14,9 @@
 
 import pytest
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_a import StubDataclassCyclicA
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_a_key import StubDataclassCyclicATable
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_a_key import StubDataclassCyclicAKey
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b_key import StubDataclassCyclicBTable
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b_key import StubDataclassCyclicBKey
 
 
 def test_cyclic_record():
@@ -35,19 +35,23 @@ def test_cyclic_record():
     b_2.a_obj = StubDataclassCyclicA.create()
 
     # Test for annotation introspection
+    assert StubDataclassCyclicAKey.__annotations__ == {
+        "b_key": StubDataclassCyclicBKey,
+    }
     assert StubDataclassCyclicA.__annotations__ == {
-        "b_key": "StubDataclassCyclicBKey",
         "b_obj": "StubDataclassCyclicB",
     }
+    assert StubDataclassCyclicBKey.__annotations__ == {
+        "str_id": str,
+    }
     assert StubDataclassCyclicB.__annotations__ == {
-        "str_id": "str",
         "a_obj": "StubDataclassCyclicA",
     }
 
     # Test for keys
 
-    assert b_1.get_key() == (StubDataclassCyclicBTable, "a")
-    assert a_1.get_key() == (StubDataclassCyclicATable, (StubDataclassCyclicBTable, "b"))
+    assert b_1.get_key() == StubDataclassCyclicBKey("a")
+    assert a_1.get_key() == StubDataclassCyclicAKey(StubDataclassCyclicBKey("b"))
     pass
 
 

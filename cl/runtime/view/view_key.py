@@ -12,16 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
+from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
 from cl.runtime.records.generic_key import GenericKey
-from typing import final
-from typing import Tuple
-from typing import Type
-from cl.runtime import TableMixin
 
 
-@final
-class ViewTable(TableMixin):
-    pass
+@dataclass(slots=True)
+class ViewKey(DataclassKeyMixin):
+    """Contains data that will be visualized alongside the record specified by the 'view_for' field."""
 
+    view_for: GenericKey = datafield()
+    """Generic key of the record for which the view is specified."""
 
-ViewKey = Tuple[Type[ViewTable], GenericKey, str]
+    view_name: str = datafield()
+    """Name of the view displayed in the front end."""

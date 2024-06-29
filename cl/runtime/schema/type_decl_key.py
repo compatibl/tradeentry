@@ -12,28 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-from typing import final
-from typing import Tuple
-from typing import Type
-
-from cl.runtime.records.table_mixin import TableMixin
-from cl.runtime.schema.module_decl_key import ModuleDeclKey, ModuleDeclTable
+from dataclasses import dataclass
+from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
+from cl.runtime.schema.module_decl_key import ModuleDeclKey
 
 
-@final
-class TypeDeclTable(TableMixin):
-    """Table settings class."""
+@dataclass(slots=True)
+class TypeDeclKey(DataclassKeyMixin):
+    """Provides information about a class, its fields, and its methods."""
 
-    @classmethod
-    def create_key(cls, *, module: ModuleDeclKey | str, name: str) -> TypeDeclKey:
-        # TODO: Review if handling different parameter types is necessary
-        if isinstance(module, tuple):
-            return TypeDeclTable, module, name  # noqa
-        elif isinstance(module, str):
-            return TypeDeclTable, ModuleDeclTable.create_key(module_name=module), name
-        else:
-            raise RuntimeError(f"Module {module} is neither a tuple nor a string.")
+    module: ModuleDeclKey = datafield()  # TODO: Merge with name to always use full name
+    """Module reference."""
 
+    name: str = datafield()
+    """Type name is unique when combined with module."""
 
-TypeDeclKey = Tuple[Type[TypeDeclTable], ModuleDeclKey, str]

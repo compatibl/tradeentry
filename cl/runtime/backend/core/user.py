@@ -6,17 +6,14 @@
 
 from dataclasses import dataclass
 
-from cl.runtime.backend.core.user_key import UserKey, UserTable
+from cl.runtime.backend.core.user_key import UserKey
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class User(DataclassRecordMixin):
+class User(UserKey, DataclassRecordMixin):
     """User which is allowed to log in."""
-
-    username: str = datafield()
-    """Unique user identifier."""
 
     first_name: str = datafield()
     """First name of the user."""
@@ -28,4 +25,4 @@ class User(DataclassRecordMixin):
     """Email of the user."""
 
     def get_key(self) -> UserKey:
-        return UserTable, self.username
+        return UserKey(self.username)

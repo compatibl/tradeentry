@@ -11,15 +11,30 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import Dict
 
-from typing import final
-from typing import Tuple
-from typing import Type
-from cl.runtime import TableMixin
-
-@final
-class StubCustomBaseTable(TableMixin):
-    pass
+from cl.runtime.records.key_mixin import KeyMixin
+from cl.runtime.storage.data_source_types import TField
 
 
-StubCustomBaseKey = Tuple[Type[StubCustomBaseTable], str, int]
+class StubCustomBaseKey(KeyMixin):
+    """Stub record used in tests."""
+
+    str_field: str | None
+    """First primary key attribute."""
+
+    int_field: int | None
+    """Second primary key attribute."""
+
+    def __init__(self, str_field: str = "abc", int_field: int = 123):
+        """Initialize instance attributes."""
+
+        self.str_field = str_field
+        self.int_field = int_field
+
+    def to_dict(self) -> Dict[str, TField]:
+        return {
+                "str_field": self.str_field,
+                "int_field": self.int_field,
+            }
+

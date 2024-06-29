@@ -122,7 +122,7 @@ class Schema:
     @classmethod
     def for_key(cls, key: TypeDeclKey) -> Self:
         """Create or return cached object for the specified type declaration key."""
-        class_path = f"{key[1][1]}.{key[2]}"  # TODO: Use parse_key method
+        class_path = f"{key.module.module_name}.{key.name}"
         return cls.for_class_path(class_path)
 
     @classmethod
@@ -155,7 +155,7 @@ class Schema:
 
         # TODO: Move pascalize to a helper class
         result = {
-            pascalize(f"{type_decl.module[1]}.{type_decl.name}"): type_decl.to_type_decl_dict()
+            pascalize(f"{type_decl.module.module_name}.{type_decl.name}"): type_decl.to_type_decl_dict()
             for type_decl in type_decl_list
         }
         return result

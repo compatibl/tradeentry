@@ -17,9 +17,7 @@ from __future__ import annotations
 from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from dataclasses import dataclass
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_a_key import StubDataclassCyclicAKey, \
-    StubDataclassCyclicATable
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b_key import StubDataclassCyclicBKey
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_a_key import StubDataclassCyclicAKey
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -27,17 +25,14 @@ if TYPE_CHECKING:
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataclassCyclicA(DataclassRecordMixin):
+class StubDataclassCyclicA(StubDataclassCyclicAKey, DataclassRecordMixin):
     """Stub class A with a field whose type is key for class B."""
-
-    b_key: StubDataclassCyclicBKey = datafield()
-    """Key for class B."""
 
     b_obj: StubDataclassCyclicB = datafield()
     """Key for class B."""
 
     def get_key(self) -> StubDataclassCyclicAKey:
-        return StubDataclassCyclicATable, self.b_key
+        return StubDataclassCyclicAKey(self.b_key)
 
     @staticmethod
     def create() -> StubDataclassCyclicA:

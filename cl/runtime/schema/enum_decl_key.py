@@ -12,16 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime import TableMixin
+from dataclasses import dataclass
+from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
-from typing import final
-from typing import Tuple
-from typing import Type
 
 
-@final
-class EnumDeclTable(TableMixin):
-    pass
+@dataclass(slots=True)
+class EnumDeclKey(DataclassKeyMixin):
+    """Enum declaration."""
 
+    module: ModuleDeclKey = datafield()  # TODO: Merge with name
+    """Module reference."""
 
-EnumDeclKey = Tuple[Type[EnumDeclTable], ModuleDeclKey, str]
+    name: str = datafield()
+    """Enum name is unique when combined with module."""

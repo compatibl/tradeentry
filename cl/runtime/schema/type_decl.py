@@ -25,8 +25,8 @@ from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.schema.element_decl import ElementDecl
 from cl.runtime.schema.field_decl import FieldDecl
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
-from cl.runtime.schema.module_decl_key import ModuleDeclKey, ModuleDeclTable
-from cl.runtime.schema.type_decl_key import TypeDeclKey, TypeDeclTable
+from cl.runtime.schema.module_decl_key import ModuleDeclKey
+from cl.runtime.schema.type_decl_key import TypeDeclKey
 from cl.runtime.schema.type_kind import TypeKind
 from dataclasses import dataclass, asdict
 from enum import Enum
@@ -80,14 +80,8 @@ def for_type_key_maker(cls, record_type: Type, *, dependencies: Set[Type] | None
 
 
 @dataclass(slots=True, kw_only=True)
-class TypeDecl(DataclassRecordMixin):
+class TypeDecl(TypeDeclKey, DataclassRecordMixin):
     """Provides information about a class, its fields, and its methods."""
-
-    module: ModuleDeclKey = datafield()  # TODO: Merge with name to always use full name
-    """Module reference."""
-
-    name: str = datafield()
-    """Type name is unique when combined with module."""
 
     label: str | None = datafield()
     """Type label."""
@@ -124,7 +118,7 @@ class TypeDecl(DataclassRecordMixin):
     """When the record is saved, also save it permanently."""
 
     def get_key(self) -> TypeDeclKey:
-        return TypeDeclTable, self.module, self.name
+        return TypeDeclKey(self.module, self.name)
 
     def to_type_decl_dict(self) -> Dict[str, Any]:
         """Convert to dictionary using type declaration conventions."""
@@ -139,7 +133,7 @@ class TypeDecl(DataclassRecordMixin):
     @classmethod
     def for_key(cls, key: TypeDeclKey) -> Self:
         """Create or return cached object for the specified type declaration key."""
-        class_path = f"{key[1][1]}.{key[2]}"  # TODO: Use parse_key method
+        class_path = f"{key.module.module_name}.{key.name}"
         return cls.for_class_path(class_path)
 
     @classmethod
@@ -167,7 +161,7 @@ class TypeDecl(DataclassRecordMixin):
         # Create instance of the final type
         result = cls()
 
-        result.module = ModuleDeclTable.create_key(module_name=record_type.__module__)
+        result.module = ModuleDeclKey(module_name=record_type.__module__)
         result.name = record_type.__name__
         result.label = titleize(result.name)  # TODO: Add override from settings
         result.comment = record_type.__doc__

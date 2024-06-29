@@ -2,7 +2,6 @@ from cl.runtime.decorators.handler_decorator import handler
 from cl.runtime.decorators.viewer_decorator import viewer
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.records.key_util import KeyUtil
-from cl.runtime.records.table_mixin import TableMixin
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.context.context import Context

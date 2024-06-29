@@ -14,22 +14,14 @@
 
 from abc import ABC
 from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
-from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.records.generic_key import GenericKey
-from cl.runtime.view.view_key import ViewKey, ViewTable
+from cl.runtime.view.view_key import ViewKey
 from dataclasses import dataclass
 
 
 @dataclass(slots=True, kw_only=True)
-class View(DataclassRecordMixin, ABC):
+class View(ViewKey, DataclassRecordMixin, ABC):
     """Contains data that will be visualized alongside the record specified by the 'view_for' field."""
-
-    view_for: GenericKey = datafield()
-    """Generic key of the record for which the view is specified."""
-
-    view_name: str = datafield()
-    """Name of the view displayed in the front end."""
 
     def get_key(self) -> ViewKey:
         """Return primary key of this instance in semicolon-delimited string format."""
-        return ViewTable, self.view_for, self.view_name
+        return ViewKey(self.view_for, self.view_name)

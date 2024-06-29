@@ -16,25 +16,15 @@ from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecor
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_data import StubDataclassData
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_data import StubDataclassDerivedData
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_from_derived_data import (
-    StubDataclassDerivedFromDerivedData,
-)
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields_key import StubDataclassOptionalFieldsKey, \
-    StubDataclassOptionalFieldsTable
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields_key import StubDataclassOptionalFieldsKey
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecordKey
 from typing import List
-from typing import Tuple
-from typing import Type
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataclassOptionalFields(DataclassRecordMixin):
+class StubDataclassOptionalFields(StubDataclassOptionalFieldsKey, DataclassRecordMixin):
     """Stub derived class."""
-
-    id: str = datafield(default="abc")
-    """Unique identifier."""
 
     optional_str: str | None = datafield(default="xyz")
     """Optional string."""

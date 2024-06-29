@@ -14,18 +14,12 @@
 
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.storage.data_source_types import TData, TField
-from stubs.cl.runtime.records.custom.stub_custom_base_key import StubCustomBaseKey, StubCustomBaseTable
+from stubs.cl.runtime.records.custom.stub_custom_base_key import StubCustomBaseKey
 from typing import Tuple, Dict
 
 
-class StubCustomBase(RecordMixin):
+class StubCustomBase(StubCustomBaseKey, RecordMixin):
     """Stub record used in tests."""
-
-    str_field: str | None
-    """First primary key attribute."""
-
-    int_field: int | None
-    """Second primary key attribute."""
 
     float_field: float | None
     """Float attribute of base class."""
@@ -33,8 +27,9 @@ class StubCustomBase(RecordMixin):
     def __init__(self, *, str_field: str = "abc", int_field: int = 123, float_field: float = 4.56):
         """Initialize instance attributes."""
 
-        self.str_field = str_field
-        self.int_field = int_field
+        RecordMixin.__init__(self)
+        StubCustomBaseKey.__init__(self, str_field=str_field, int_field=int_field)
+
         self.float_field = float_field
 
     def to_dict(self) -> Dict[str, TField]:
@@ -48,4 +43,4 @@ class StubCustomBase(RecordMixin):
         return self.get_key(), (StubCustomBase, self.to_dict())  # TODO: Use Table, not Base
 
     def get_key(self) -> StubCustomBaseKey:
-        return StubCustomBaseTable, self.str_field, self.int_field
+        return StubCustomBaseKey(self.str_field, self.int_field)

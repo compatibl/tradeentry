@@ -12,19 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
+from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecordKey
-from typing import final
-from typing import Tuple
-from typing import Type
-from cl.runtime import TableMixin
 
 
-@final
-class StubDataclassNestedFieldsTable(TableMixin):
-    pass
+@dataclass(slots=True)
+class StubDataclassNestedFieldsKey(DataclassKeyMixin):
+    """Stub derived class."""
 
+    primitive: str = datafield(default="abc")
+    """String key element."""
 
-StubDataclassNestedFieldsKey = Tuple[
-    Type[StubDataclassNestedFieldsTable], str, StubDataclassRecordKey, StubDataclassRecordKey
-]
+    embedded_1: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecordKey("def"))
+    """Embedded key 1."""
 
+    embedded_2: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecordKey("xyz"))
+    """Embedded key 2."""

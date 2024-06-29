@@ -14,7 +14,7 @@
 
 import pytest
 from stubs.cl.runtime.records.custom.stub_custom_base import StubCustomBase
-from stubs.cl.runtime.records.custom.stub_custom_base_key import StubCustomBaseTable
+from stubs.cl.runtime.records.custom.stub_custom_base_key import StubCustomBaseKey
 
 
 def test_smoke():
@@ -25,15 +25,18 @@ def test_smoke():
 
     # Test type and key
     key = record.get_key()
-    assert key == (StubCustomBaseTable, "abc", 123)
+    assert key.str_field == "abc"
+    assert key.int_field == 123
 
     # Test roundtrip serialization
     packed_key, (record_type, packed_dict) = record.pack()
-    assert packed_key == key
+    assert packed_key.str_field == key.str_field
+    assert packed_key.int_field == key.int_field
 
     record_clone = StubCustomBase(**packed_dict)
     clone_key, (clone_type, clone_dict) = record_clone.pack()
-    assert clone_key == key
+    assert clone_key.str_field == key.str_field
+    assert clone_key.int_field == key.int_field
     assert record_type == clone_type
     assert len(clone_dict) == 3
     assert clone_dict == packed_dict

@@ -12,15 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import final
-from typing import Tuple
-from typing import Type
-from cl.runtime import TableMixin
+from dataclasses import dataclass
+from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
 
 
-@final
-class StubHandlersTable(TableMixin):
-    pass
+@dataclass(slots=True)
+class StubHandlersKey(DataclassKeyMixin):
+    """Stub record base class."""
 
-
-StubHandlersKey = Tuple[Type[StubHandlersTable], str]
+    stub_id: str = datafield(default="abc")
+    """Stub identifier."""

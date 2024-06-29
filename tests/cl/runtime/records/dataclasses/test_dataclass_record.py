@@ -29,7 +29,7 @@ def test_smoke():
 
     # Test primary key
     key = record.get_key()
-    assert key == StubDataclassRecordKey(id="abc")
+    assert key == StubDataclassRecordKey("abc")
 
     # Test roundtrip serialization
     packed_key, (packed_type, packed_dict) = record.pack()

@@ -13,11 +13,11 @@
 # limitations under the License.
 
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.schema.enum_decl_key import EnumDeclTable
+from cl.runtime.schema.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.field_decl import FieldDecl
 from cl.runtime.schema.member_decl import MemberDecl
-from cl.runtime.schema.module_decl_key import ModuleDeclTable
-from cl.runtime.schema.type_decl_key import TypeDeclTable
+from cl.runtime.schema.module_decl_key import ModuleDeclKey
+from cl.runtime.schema.type_decl_key import TypeDeclKey
 from cl.runtime.schema.value_decl import ValueDecl
 from dataclasses import dataclass
 from typing_extensions import Self
@@ -91,12 +91,14 @@ class ElementDecl(MemberDecl):  # TODO: Consider renaming to TypeFieldDecl or Fi
             module_name, type_name = field_decl.field_type.rsplit(".", 1)
 
             if field_decl.field_kind == "enum":
-                module_key = ModuleDeclTable.create_key(module_name=module_name)
-                result.enum = EnumDeclTable, module_key, type_name  # TODO: Use .create_key
+                module_key = ModuleDeclKey(module_name=module_name)
+                result.enum = EnumDeclKey(module=module_key, name=type_name)
             elif field_decl.field_kind == "key":
-                result.key_ = TypeDeclTable.create_key(module=module_name, name=type_name)
+                module_key = ModuleDeclKey(module_name=module_name)
+                result.key_ = TypeDeclKey(module=module_key, name=type_name)
             elif field_decl.field_kind == "data":
-                result.data = TypeDeclTable.create_key(module=module_name, name=type_name)
+                module_key = ModuleDeclKey(module_name=module_name)
+                result.data = TypeDeclKey(module=module_key, name=type_name)
             else:
                 raise RuntimeError(f"Unsupported field kind {field_decl.field_kind} for field {field_decl.name}.")
 

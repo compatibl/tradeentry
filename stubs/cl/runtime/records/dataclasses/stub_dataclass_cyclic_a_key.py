@@ -12,16 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
+from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b_key import StubDataclassCyclicBKey
-from typing import final
-from typing import Tuple
-from typing import Type
-from cl.runtime import TableMixin
 
 
-@final
-class StubDataclassCyclicATable(TableMixin):
-    pass
+@dataclass(slots=True)
+class StubDataclassCyclicAKey(DataclassKeyMixin):
+    """Stub class A with a field whose type is key for class B."""
 
-
-StubDataclassCyclicAKey = Tuple[Type[StubDataclassCyclicATable], StubDataclassCyclicBKey]
+    b_key: StubDataclassCyclicBKey = datafield()
+    """Key for class B."""

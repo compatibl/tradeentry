@@ -4,27 +4,15 @@
 # or distributed only in compliance with the terms of a written commercial
 # license from CompatibL and with the inclusion of this copyright notice.
 
-from __future__ import annotations
-from typing import final
-from typing import Tuple
-from typing import Type
-from cl.runtime.backend.core.user_key import UserTable, UserKey
-from cl.runtime.records.table_mixin import TableMixin
+from dataclasses import dataclass
+from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
+from cl.runtime.backend.core.user_key import UserKey
 
 
-@final
-class UiAppStateTable(TableMixin):
-    """Table settings class."""
+@dataclass(slots=True)
+class UiAppStateKey(DataclassKeyMixin):
+    """UiAppState."""
 
-    @classmethod
-    def create_key(cls, *, user: UserKey | str) -> UiAppStateKey:
-        # TODO: Review if handling different parameter types is necessary
-        if isinstance(user, tuple):
-            return UiAppStateTable, user  # noqa
-        elif isinstance(user, str):
-            return UiAppStateTable, UserTable.create_key(username=user)
-        else:
-            raise RuntimeError(f"User key {user} is neither a tuple nor a string.")
-
-
-UiAppStateKey = Tuple[Type[UiAppStateTable], UserKey]
+    user: UserKey = datafield()
+    """A user the app state is applied for."""

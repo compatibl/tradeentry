@@ -20,24 +20,14 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_data import Stu
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_from_derived_data import (
     StubDataclassDerivedFromDerivedData,
 )
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_nested_fields_key import StubDataclassNestedFieldsKey, \
-    StubDataclassNestedFieldsTable
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_nested_fields_key import StubDataclassNestedFieldsKey
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecordKey
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataclassNestedFields(DataclassRecordMixin):
+class StubDataclassNestedFields(StubDataclassNestedFieldsKey, DataclassRecordMixin):
     """Stub derived class."""
-
-    primitive: str = datafield(default="abc")
-    """String key element."""
-
-    embedded_1: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecordKey(id="def"))
-    """Embedded key 1."""
-
-    embedded_2: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecordKey(id="xyz"))
-    """Embedded key 2."""
 
     base_datafield: StubDataclassData = datafield(default_factory=StubDataclassData)
     """Stub field."""
@@ -58,11 +48,11 @@ class StubDataclassNestedFields(DataclassRecordMixin):
     )
     """Declared StubDataclassDerivedData but provided an instance of StubDataclassDerivedFromDerivedData."""
 
-    key_field: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecordKey(id="uvw"))
+    key_field: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecordKey("uvw"))
     """Stub field."""
 
     record_as_key_field: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecord())
     """Stub field with key type initialized to record type instance."""
 
     def get_key(self) -> StubDataclassNestedFieldsKey:
-        return StubDataclassNestedFieldsTable, self.primitive, self.embedded_1, self.embedded_2
+        return StubDataclassNestedFieldsKey(self.primitive, self.embedded_1, self.embedded_2)

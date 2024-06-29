@@ -12,15 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import final
-from typing import Tuple
-from typing import Type
-from cl.runtime import TableMixin
+from dataclasses import dataclass
+from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
 
 
-@final
-class StubDataclassVersionedRecordTable(TableMixin):
-    pass
+@dataclass(slots=True)
+class StubDataclassVersionedRecordKey(DataclassKeyMixin):
+    """Stub record base class."""
 
-
-StubDataclassVersionedRecordKey = Tuple[Type[StubDataclassVersionedRecordTable], str]
+    id: str = "abc"
+    """Stub field."""

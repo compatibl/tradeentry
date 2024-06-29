@@ -22,25 +22,7 @@ from typing import Type
 class KeyUtil:
     """Utilities for working with keys."""
 
-    @classmethod
-    def to_dict(cls, key: Tuple) -> Dict[str, Any]:
-        """Convert key to dictionary using key_fields from its table type."""
-
-        # Get key fields from the table type
-        key_fields = key[0].get_key_fields()
-
-        # Convert to dictionary, recursively calling to_dict on key elements of a composite key
-        return {k: cls.to_dict(v) if isinstance(v, tuple) else v for k, v in zip(key_fields, key[1:])}
-
-    @classmethod
-    def parse_key(cls, key_type: Type, key: Tuple) -> Tuple:  # TODO: Check if this method is used
-        """Parse key of 'key_type' into a tuple, validating types and flattening composite key contents."""
-
-        # TODO: Support composite types
-        record_type = key[0]  # TODO: Check against key type
-        result = key[1:]
-        return result
-
+    # TODO: Extract from key class instead
     @classmethod
     def get_key_fields(cls, record_type: Type) -> List[str] | None:
         """
