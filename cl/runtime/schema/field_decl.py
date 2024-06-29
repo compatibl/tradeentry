@@ -17,7 +17,7 @@ import types
 import typing
 
 from cl.runtime import ClassInfo
-from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from dataclasses import dataclass
 from enum import Enum
 from typing import Literal

@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
-from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.schema.enum_decl_key import EnumDeclKey, EnumDeclTable
 from cl.runtime.schema.enum_item_decl import EnumItemDecl
 from cl.runtime.schema.module_decl_key import ModuleDeclKey

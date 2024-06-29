@@ -14,7 +14,7 @@
 
 from typing import Literal
 
-from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from dataclasses import dataclass
 
 PrimitiveTypeLiteral = Literal["str", "float", "bool", "int", "dt.date", "dt.time", "dt.datetime", "uuid.UUID", "bytes"]

@@ -21,7 +21,7 @@ from itertools import tee
 
 from cl.runtime import KeyUtil
 from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
-from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.schema.element_decl import ElementDecl
 from cl.runtime.schema.field_decl import FieldDecl
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl

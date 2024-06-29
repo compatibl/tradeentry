@@ -11,7 +11,8 @@ from cl.runtime.backend.core.tab_info import TabInfo
 from cl.runtime.backend.core.ui_app_state_key import UiAppStateKey, UiAppStateTable
 from cl.runtime.backend.core.user_key import UserKey
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield, DataclassRecordMixin
+from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
 
 
 @dataclass(slots=True, kw_only=True)

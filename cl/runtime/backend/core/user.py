@@ -7,7 +7,8 @@
 from dataclasses import dataclass
 
 from cl.runtime.backend.core.user_key import UserKey, UserTable
-from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield, DataclassRecordMixin
+from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
 
 
 @dataclass(slots=True, kw_only=True)

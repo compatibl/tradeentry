@@ -8,7 +8,8 @@ from dataclasses import dataclass
 from typing import Tuple
 
 from cl.runtime.backend.core.user_key import UserKey
-from cl.runtime.records.dataclasses.dataclass_record_mixin import datafield, DataclassRecordMixin
+from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 
 
