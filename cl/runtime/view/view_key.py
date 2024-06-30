@@ -16,7 +16,6 @@ from dataclasses import dataclass
 from typing import Tuple
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
-from cl.runtime.records.generic_key import GenericKey
 
 
 @dataclass(slots=True)
