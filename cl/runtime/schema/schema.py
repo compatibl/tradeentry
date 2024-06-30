@@ -17,6 +17,7 @@ from __future__ import annotations
 import importlib
 import inspect
 from collections import Counter
+from enum import Enum
 from pkgutil import walk_packages
 from types import ModuleType
 
@@ -149,6 +150,9 @@ class Schema:
         # Sort the list of dependencies
         # TODO: Use short name with alias
         dependencies = sorted(dependencies, key=lambda x: x.__name__)
+
+        # TODO: Restore after Enum decl generation is supported
+        dependencies = [dependency_type for dependency_type in dependencies if not issubclass(dependency_type, Enum)]
 
         # Requested type is always first
         type_decl_list = [type_decl_obj] + [TypeDecl.for_type(dependency_type) for dependency_type in dependencies]

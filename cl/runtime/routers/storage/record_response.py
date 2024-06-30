@@ -14,7 +14,7 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict
+import dataclasses
 
 import inflection
 
@@ -25,8 +25,10 @@ from cl.runtime.routers.storage.record_request import RecordRequest
 from pydantic import BaseModel
 from pydantic import Field
 from typing import Any
+from typing import List
 from typing import Dict
 
+from cl.runtime.schema.field_decl import primitive_types  # TODO: Move definition to a separate module
 from cl.runtime.schema.schema import Schema
 from cl.runtime.schema.type_decl import pascalize
 
@@ -34,23 +36,58 @@ RecordResponseSchema = Dict[str, Any]
 RecordResponseData = Dict[str, Any]
 
 
-def to_record_dict(node: Dict[str, Any] | List[Dict[str, Any]] | str) -> Dict[str, Any] | List[Dict[str, Any]] | str:
+def to_record_dict(node):  # TODO: Apply type hints
+    """Recursively apply record dictionary conventions to the argument dictionary."""
+
+    node_type = type(node)
+    if node_type in primitive_types:
+        # Primitive type, serialize as string
+        # TODO: Apply custom formatting
+        result = str(node)
+        return result
+    elif node_type is list:
+        # TODO: !!! Generally should not skip nodes that have the value of None
+        return [to_record_dict(v) for v in node if v is not None]
+    elif node_type is tuple:
+        # TODO: Support short alias
+        # Generic key, remove Key suffix from key type to obtain table name
+        table = node[0].__name__.removesuffix("Key")
+        result = ";".join([table] + node[1:])
+        return result
+    elif node_type.__name__.endswith("Key"):
+        # Key type, use semicolon-delimited serialization
+        # TODO: Do not use a method from dataclasses
+        node_dict = dataclasses.asdict(node)
+        result = ";".join(node_dict.keys())
+        return result
+    elif hasattr(node, "get_key"):
+        # Data or record
+        # TODO: Do not use a method from dataclasses
+        node_dict = dataclasses.asdict(node)
+        node_dict = {k: getattr(node, k) for k in node_dict.keys()}
+        result = {k: to_record_dict(v) for k, v in node_dict.items() if v is not None}
+        return result
+    else:
+        return node
+
+
+def to_legacy_dict(node: Dict[str, Any] | List[Dict[str, Any]] | str) -> Dict[str, Any] | List[Dict[str, Any]] | str:
     """Recursively apply record dictionary conventions to the argument dictionary."""
 
     if isinstance(node, dict):
         # Skip nodes that have the value of None
         # Remove suffix _ from field names if present
-        result = {pascalize(k.removesuffix("_")): to_record_dict(v) for k, v in node.items() if v is not None}
+        result = {pascalize(k.removesuffix("_")): to_legacy_dict(v) for k, v in node.items() if v is not None}
         return result
     elif isinstance(node, list):
         # Skip nodes that have the value of None
-        return [to_record_dict(v) for v in node if v is not None]
+        return [to_legacy_dict(v) for v in node if v is not None]
     elif isinstance(node, tuple):
-        # The first element of key node tuple is type, the remaining elements are primary key fields
-        # Remove suffix _ from field names if present
-        key_field_names = node[0].get_key_fields()
-        key_field_values = [to_record_dict(v) for v in node[1:]]
-        return {pascalize(k.removesuffix("_")): v for k, v in zip(key_field_names, key_field_values)}
+        # TODO: Support short alias
+        # Generic key, remove Key suffix from key type to obtain table name
+        table = node[0].__name__.removesuffix("Key")
+        result = ";".join([table] + node[1:])
+        return result
     else:
         return node
 
@@ -87,11 +124,11 @@ class RecordResponse(BaseModel):
         record = record_type()
 
         # Convert to standard dictionary format
-        # TODO: Do not use dataclass method
-        standard_record_dict = asdict(record)
+        # TODO: Optimize speed using dacite or similar library
+        record_dict = to_record_dict(record)
 
-        # Apply type declaration dictionary conventions
-        record_dict = to_record_dict(standard_record_dict)
+        # Apply legacy dict conventions
+        record_dict_in_legacy_format = to_legacy_dict(record_dict)
 
-        # type_decl = TypeDecl(**type_decl_dict)
-        return RecordResponse(schema=type_decl_dict, data=record_dict)
+        # TODO: Update to return record_dict after legacy dict format is removed
+        return RecordResponse(schema=type_decl_dict, data=record_dict_in_legacy_format)
