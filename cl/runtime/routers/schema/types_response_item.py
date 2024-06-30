@@ -52,6 +52,6 @@ class TypesResponseItem(BaseModel):
                 module=StringUtil.to_pascal_case(record_type.__module__),
                 label=titleize(record_type.__name__),
             )
-            for record_type in type_dict.values()
+            for record_type in type_dict.values() if hasattr(record_type, "get_key")
         ]
         return result
