@@ -193,14 +193,15 @@ class FieldDecl:
                 result.field_type = field_class_path
                 field_type_obj = ClassInfo.get_class_type(field_class_path)
 
-                # TODO: Do we need this if we are processing dependencies?
-                # TODO: Should a list of dependencies be added to TypeDecl object directly
-                if issubclass(field_type_obj, Enum):
-                    from cl.runtime.schema.enum_decl import EnumDecl
-                    # TODO: Restore call when implemented EnumDecl.for_type(field_type_obj, dependencies=dependencies)
-                else:
-                    from cl.runtime.schema.type_decl import TypeDecl
-                    TypeDecl.for_type(field_type_obj, dependencies=dependencies)
+                if dependencies is not None and field_type_obj is not record_type and field_type_obj not in dependencies:
+                    # TODO: Do we need this if we are processing dependencies?
+                    # TODO: Should a list of dependencies be added to TypeDecl object directly
+                    if issubclass(field_type_obj, Enum):
+                        from cl.runtime.schema.enum_decl import EnumDecl
+                        # TODO: Restore call when implemented EnumDecl.for_type(field_type_obj, dependencies=dependencies)
+                    else:
+                        from cl.runtime.schema.type_decl import TypeDecl
+                        TypeDecl.for_type(field_type_obj, dependencies=dependencies)
 
                 # Add to dependencies
                 if dependencies is not None:
