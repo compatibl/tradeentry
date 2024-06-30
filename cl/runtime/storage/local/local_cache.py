@@ -63,12 +63,12 @@ class LocalCache(DataSource):
             table_cache = dataset_cache.setdefault(key_type, {})
 
             # Iterable for the retrieved pairs
-            key_tuples = [key.get_key_tuple() for key in keys_for_key_type]
+            key_tuples = [key.get_generic_key() for key in keys_for_key_type]
             retrieved = {key_tuple: table_cache[key_tuple] for key_tuple in key_tuples if key_tuple in table_cache}
             result_dict.update(retrieved)
 
         # Records in the order of provided keys, or None for records that are not found
-        result = [(k, result_dict[k.get_key_tuple()], dataset, None) if k.get_key_tuple() in result_dict else None for k in keys]
+        result = [(k, result_dict[k.get_generic_key()], dataset, None) if k.get_generic_key() in result_dict else None for k in keys]
         return result
 
     def load_by_query(
@@ -101,7 +101,7 @@ class LocalCache(DataSource):
             table_cache = dataset_cache.setdefault(table_type, {})
 
             # Create a dict of (key, data)
-            saved_records = {pack[0].get_key_tuple(): pack[1] for pack in packs_for_table_type}
+            saved_records = {pack[0].get_generic_key(): pack[1] for pack in packs_for_table_type}
 
             # Add records for base type, overwriting the existing records
             table_cache.update(saved_records)

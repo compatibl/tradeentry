@@ -106,8 +106,8 @@ class RecordUtil:
             record_tuples: Iterable[TLoadedRecord] = data_source.load_many(batch_keys, dataset=dataset)
 
             # Create class instances and accumulate in records_dict
-            records_dict.update({key.get_key_tuple(): data[0](**data[1]) for key, data, dataset, stamp in record_tuples})
+            records_dict.update({key.get_generic_key(): data[0](**data[1]) for key, data, dataset, stamp in record_tuples})
 
         # Replace key by record defaulting to None, otherwise return input record or None
-        result = [records_dict.get(x[1].get_key_tuple(), None) if x[0] == _KEY else x[1] for x in coded_inputs]
+        result = [records_dict.get(x[1].get_generic_key(), None) if x[0] == _KEY else x[1] for x in coded_inputs]
         return result

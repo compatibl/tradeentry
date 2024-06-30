@@ -26,10 +26,6 @@ class KeyMixin(ABC):
     def get_generic_key(self) -> Tuple:
         """Return a tuple of key type and key fields."""
 
-    def __hash__(self):
-        """Calculate hash based on key type and values, must not change key fields after hashing."""
-        return hash(self.get_generic_key())
-
 
 class KeysMixin(ABC):
     """Optional mixin class for an iterable of primary key objects."""
