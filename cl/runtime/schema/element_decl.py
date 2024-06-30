@@ -31,7 +31,7 @@ primitive_type_map = {
     "date": "Date",
     "time": "Time",
     "datetime": "DateTime",
-    "uuid": "UUID",  # TODO: Check for support in ElementDecl
+    "UUID": "UUID",  # TODO: Check for support in ElementDecl
     "bytes": "Binary",
 }
 

@@ -30,7 +30,7 @@ from cl.runtime.schema.field_kind import FieldKind
 primitive_types = [str, float, bool, int, dt.date, dt.time, dt.datetime, UUID, bytes]
 """List of primitive types."""
 
-primitive_modules = ["builtins", "uuid"]
+primitive_modules = ["builtins", "datetime", "uuid"]
 """List of modules for primitive types."""
 
 
@@ -144,56 +144,20 @@ class FieldDecl:
             result.optional_values = False
 
         # Parse the value itself
-        if field_origin is tuple:
-            # Indicate that field is a key
-            result.field_kind = "key"
-
-            # Get the first argument of Tuple
-            if len(field_args) == 0:
-                raise RuntimeError(f"Empty tuple is provided as value for field {field_name}")
-            field_arg = field_args[0]
-
-            # One level deeper
-            field_origin = typing.get_origin(field_arg)
-            if isinstance(field_origin, type):
-                # Extract SampleType from Type[SampleType] or Type['SampleType']
-                field_args = typing.get_args(field_arg)
-                if len(field_args) == 0:
-                    raise RuntimeError(
-                        f"Type without arguments is provided as value for key field {field_name}, "
-                        f"use Type[SampleType] or Type['SampleType'] instead."
-                    )
-
-                # Get the argument of Type
-                field_arg = field_args[0]
-                if isinstance(field_arg, typing.ForwardRef):
-                    # For ForwardRef, extract the argument
-                    field_arg = field_arg.__forward_arg__
-            else:
-                raise RuntimeError(f"First element of key tuple for field {field_name} is not a type.")
-
-            if field_arg.__module__.endswith("_key"):
-                module_name = field_arg.__module__.removesuffix("_key")
-            else:
-                raise RuntimeError(f"The module of table class {field_arg.__module__} does not have the suffix _key.")
-
-            if field_arg.__name__.endswith("Table"):
-                type_name = field_arg.__name__.removesuffix("Table")
-            else:
-                raise RuntimeError(f"The name of table class {field_arg.__name__} does not have the suffix Table.")
-
-            field_class_path = f"{module_name}.{type_name}"
-            if dependencies is not None:
-                dependencies.add(ClassInfo.get_class_type(field_class_path))
-            result.field_type = field_class_path
-
-        elif field_origin is Literal:
+        if field_origin is Literal:
 
             # List of literal strings
             result.field_kind = "primitive"
             result.field_type = str.__name__
 
+        elif field_origin is tuple:
+
+            # Generic key
+            result.field_kind = "primitive"
+            result.field_type = "key"
+
         elif field_origin is None:
+
             # Assign element kind
             if field_type in primitive_types:
                 # Indicate that field is one of the supported primitive types
@@ -229,8 +193,14 @@ class FieldDecl:
                 result.field_type = field_class_path
                 field_type_obj = ClassInfo.get_class_type(field_class_path)
 
-                from cl.runtime.schema.type_decl import TypeDecl
-                TypeDecl.for_type(field_type_obj, dependencies=dependencies)
+                # TODO: Do we need this if we are processing dependencies?
+                # TODO: Should a list of dependencies be added to TypeDecl object directly
+                if issubclass(field_type_obj, Enum):
+                    from cl.runtime.schema.enum_decl import EnumDecl
+                    # TODO: Restore call when implemented EnumDecl.for_type(field_type_obj, dependencies=dependencies)
+                else:
+                    from cl.runtime.schema.type_decl import TypeDecl
+                    TypeDecl.for_type(field_type_obj, dependencies=dependencies)
 
                 # Add to dependencies
                 if dependencies is not None:

@@ -18,7 +18,8 @@ import os
 import pytest
 from cl.runtime.schema.dataclasses.dataclass_type_decl import DataclassTypeDecl
 from cl.runtime.schema.type_decl import TypeDecl
-from stubs.cl.runtime import StubDataclassNestedFields, StubCustomBase
+from stubs.cl.runtime import StubDataclassNestedFields, StubCustomBase, StubDataclassListFields, \
+    StubDataclassPrimitiveFields
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields import StubDataclassOptionalFields
 
@@ -26,7 +27,13 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields import 
 def test_method():
     """Test coroutine for /schema/typeV2 route."""
 
-    sample_types = [StubDataclassNestedFields, StubDataclassOptionalFields]
+    sample_types = [
+        StubDataclassRecord,
+        StubDataclassPrimitiveFields,
+        StubDataclassListFields,
+        StubDataclassNestedFields,
+        StubDataclassOptionalFields
+    ]
 
     for sample_type in sample_types:
         class_module = sample_type.__module__.rsplit(".", maxsplit=1)[1]
