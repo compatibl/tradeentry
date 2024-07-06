@@ -1,3 +1,4 @@
+from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields import StubDataclassOptionalFields
 from stubs.cl.runtime.records.enum.stub_int_enum import StubIntEnum
 from stubs.cl.runtime.records.enum.stub_relabeled_int_enum import StubRelabeledIntEnum
 from stubs.cl.runtime.records.stub_dict_util import StubDictUtil

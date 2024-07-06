@@ -13,29 +13,17 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from typing import List, Tuple
-
+from typing import List, Tuple, Type, Iterator
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin, DataclassKeysMixin
+from cl.runtime.records.key_mixin import KeyMixin
 
 
-@dataclass(slots=True)
-class StubDataclassRecordKey(DataclassKeyMixin):
+@dataclass(slots=True)  # TODO: Use kw_only=True for keys as well
+class StubDataclassRecordKey(KeyMixin):
     """Stub record base class."""
 
     id: str = "abc"
     """Unique identifier."""
 
-    def get_generic_key(self) -> Tuple:
-        return StubDataclassRecordKey, self.id
-
-
-@dataclass(slots=True)
-class StubDataclassRecordKeys(DataclassKeysMixin):
-    """Stub record base class."""
-
-    id: List[str] = datafield(default_factory=lambda: ["abc"] * 3)
-    """Unique identifier."""
-
-    def get_generic_keys(self) -> Tuple:
-        return StubDataclassRecordKey, self.id
+    def get_key_type(self) -> Type:
+        return StubDataclassRecordKey

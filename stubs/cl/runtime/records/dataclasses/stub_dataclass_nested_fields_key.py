@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from typing import Tuple
+from typing import Tuple, Type
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecordKey
@@ -32,9 +32,6 @@ class StubDataclassNestedFieldsKey(DataclassKeyMixin):
     embedded_2: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecordKey("xyz"))
     """Embedded key 2."""
 
-    def get_generic_key(self) -> Tuple:
-        return (StubDataclassNestedFieldsKey,
-                self.primitive,
-                self.embedded_1.get_generic_key(),
-                self.embedded_2.get_generic_key(),
-                )
+    def get_key_type(self) -> Type:
+        return StubDataclassNestedFieldsKey
+

@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from typing import Tuple
+from typing import Tuple, Type
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
 
@@ -25,5 +25,5 @@ class StubDataclassOptionalFieldsKey(DataclassKeyMixin):
     id: str = datafield(default="abc")
     """Unique identifier."""
 
-    def get_generic_key(self) -> Tuple:
-        return StubDataclassOptionalFieldsKey, self.id
+    def get_key_type(self) -> Type:
+        return StubDataclassOptionalFieldsKey
