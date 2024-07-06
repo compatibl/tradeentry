@@ -13,6 +13,9 @@
 # limitations under the License.
 
 from enum import Enum
+from typing import Type
+
+from bidict import bidict
 
 
 class MissingType:
@@ -24,6 +27,33 @@ missing = MissingType()
 
 primitive_type_names = ["NoneType", "str", "float", "int", "bool", "date", "time", "datetime", "bytes", "UUID"]
 """Detect primitive type by checking if class name is in this list."""
+
+# TODO: Move to a dedicated class
+short_names = bidict()
+"""
+Bidirectional dictionary with type as key and short name as value.
+Short name is class name except when alias is specified.
+"""
+
+
+def get_short_name_by_type(type_: Type) -> str:
+    """
+    Look up short name from type, save class name for subsequent reverse lookup if key is not found.
+    Short name is class name except when alias is specified.
+    """
+    return short_names.setdefault(type_, type_.__name__)
+
+
+def get_type_by_short_name(short_name: str) -> Type:
+    """
+    Look up type by short name, error if not found.
+    Short name is class name except when alias is specified.
+    """
+    type_ = short_names.inv.get(short_name, None)
+    if type_ is None:
+        raise RuntimeError(f"Type not found for short name '{short_name}'. "
+                           f"Ensure packages for previously recorded data are specified in settings.")
+    return type_
 
 
 # TODO: Add checks for to_node, from_node implementation for custom override of default serializer
@@ -37,10 +67,13 @@ class SlotsSerializer:
             # Do nothing for None or primitive types
             return data
         elif hasattr(data, "__slots__"):
-            # Slots class, return a dictionary of serialized values
-            result = {k: self.serialize(getattr(data, k)) for k in data.__slots__}
-            # Add type to the result
-            result["_type"] = data.__class__
+            # Slots class, serialize as dictionary
+            # Serialize short name as the first key
+            result = {"_type": get_short_name_by_type(data.__class__)}
+            # Serialize slot values in the order of declaration
+            values_dict = {k: getattr(data, k) for k in data.__slots__}
+            # Add values to the result except those that are None
+            result.update({k: self.serialize(v) for k, v in values_dict.items() if v is not None})
             return result
         elif isinstance(data, dict):
             # Dictionary, return with serialized values
@@ -60,8 +93,8 @@ class SlotsSerializer:
                 # Serialize each element of the iterable
                 return [self.serialize(item) for item in data]
         elif isinstance(data, Enum):
-            # Enum, serialize as name
-            return {"_enum": type(data), "_name": data.name}
+            # Serialize enum as a dict using enum class short name and item name (rather than item value)
+            return {"_enum": get_short_name_by_type(type(data)), "_name": data.name}
         else:
             raise RuntimeError(f"Cannot deserialize data of type '{type(data)}'.")
 
@@ -73,13 +106,15 @@ class SlotsSerializer:
             return data
         elif isinstance(data, dict):
             # Determine if the dictionary is a serialized dataclass or a dictionary
-            if (deserialized_type := data.get("_type", None)) is not None:
+            if (short_name := data.get("_type", None)) is not None:
                 # If _type is specified, create an instance of _type after deserializing fields recursively
+                deserialized_type = get_type_by_short_name(short_name)  # noqa
                 deserialized_fields = {k: self.deserialize(v) for k, v in data.items() if k != "_type"}
                 result = deserialized_type(**deserialized_fields)  # noqa
                 return result
-            elif (deserialized_enum := data.get("_enum", None)) is not None:
+            elif (short_name := data.get("_enum", None)) is not None:
                 # If _enum is specified, create an instance of _enum using _name
+                deserialized_enum = get_type_by_short_name(short_name) # noqa
                 result = deserialized_enum[data["_name"]] # noqa
                 return result
             else:
