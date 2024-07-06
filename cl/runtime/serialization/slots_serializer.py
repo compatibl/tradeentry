@@ -68,12 +68,10 @@ class SlotsSerializer:
             return data
         elif hasattr(data, "__slots__"):
             # Slots class, serialize as dictionary
-            # Serialize short name as the first key
-            result = {"_type": get_short_name_by_type(data.__class__)}
-            # Serialize slot values in the order of declaration
-            values_dict = {k: getattr(data, k) for k in data.__slots__}
-            # Add values to the result except those that are None
-            result.update({k: self.serialize(v) for k, v in values_dict.items() if v is not None})
+            # Serialize slot values in the order of declaration except those that are None
+            result = {k: self.serialize(v) for k in data.__slots__ if (v := getattr(data, k)) is not None}
+            # Add type to the record
+            result["_type"] = get_short_name_by_type(data.__class__)
             return result
         elif isinstance(data, dict):
             # Dictionary, return with serialized values
