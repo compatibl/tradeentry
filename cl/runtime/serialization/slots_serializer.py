@@ -48,7 +48,7 @@ class SlotsSerializer:
         elif hasattr(data, "__slots__"):
             # Slots class, serialize as dictionary
             # Serialize slot values in the order of declaration except those that are None
-            result = {k: self.serialize(v) for k in data.__slots__ if (v := getattr(data, k)) is not None}
+            result = {k: v if v.__class__.__name__ in primitive_type_names else self.serialize(v) for k in data.__slots__ if (v := getattr(data, k)) is not None}
             # To find short name, use 'in' which is faster than 'get' when most types do not have aliases
             short_name = alias_dict[type_] if (type_ := data.__class__) in alias_dict else type_.__name__
             # Cache type for subsequent reverse lookup
@@ -58,7 +58,7 @@ class SlotsSerializer:
             return result
         elif isinstance(data, dict):
             # Dictionary, return with serialized values
-            result = {k: self.serialize(v) for k, v in data.items()}
+            result = {k: v if v.__class__.__name__ in primitive_type_names else self.serialize(v) for k, v in data.items()}
             return result
         elif hasattr(data, '__iter__'):
             # Get the first item without iterating over the entire sequence
@@ -72,7 +72,7 @@ class SlotsSerializer:
                 return data
             else:
                 # Serialize each element of the iterable
-                return [self.serialize(item) for item in data]
+                return [v if v.__class__.__name__ in primitive_type_names else self.serialize(v) for v in data]
         elif isinstance(data, Enum):
             # Serialize enum as a dict using enum class short name and item name (rather than item value)
             # To find short name, use 'in' which is faster than 'get' when most types do not have aliases
