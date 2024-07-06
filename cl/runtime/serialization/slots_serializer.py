@@ -97,7 +97,7 @@ class SlotsSerializer:
                 if deserialized_type is None:
                     raise RuntimeError(f"Class not found for name or alias '{short_name}' during deserialization. "
                                        f"Ensure all serialized classes are included in package import settings.")
-                deserialized_fields = {k: self.deserialize(v) for k, v in data.items() if k != "_type"}
+                deserialized_fields = {k: v if v.__class__.__name__ in primitive_type_names else self.deserialize(v) for k, v in data.items() if k != "_type"}
                 result = deserialized_type(**deserialized_fields)  # noqa
                 return result
             elif (short_name := data.get("_enum", None)) is not None:
@@ -110,7 +110,7 @@ class SlotsSerializer:
                 return result
             else:
                 # Otherwise return a dictionary with recursively deserialized values
-                result = {k: self.deserialize(v) for k, v in data.items()}
+                result = {k: v if v.__class__.__name__ in primitive_type_names else self.deserialize(v) for k, v in data.items()}
                 return result
         elif hasattr(data, '__iter__'):
             # Get the first item without iterating over the entire sequence
@@ -124,6 +124,6 @@ class SlotsSerializer:
                 return data
             else:
                 # Deserialize each element of the iterable
-                return [self.deserialize(item) for item in data]
+                return [v if v.__class__.__name__ in primitive_type_names else self.deserialize(v) for v in data]
         else:
             raise RuntimeError(f"Cannot deserialize data of type '{type(data)}'.")
