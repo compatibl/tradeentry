@@ -55,4 +55,4 @@ class StubDataclassNestedFields(StubDataclassNestedFieldsKey, DataclassRecordMix
     """Stub field with key type initialized to record type instance."""
 
     def get_key(self) -> StubDataclassNestedFieldsKey:
-        return StubDataclassNestedFieldsKey(self.primitive, self.embedded_1, self.embedded_2)
+        return StubDataclassNestedFieldsKey(primitive=self.primitive, embedded_1=self.embedded_1, embedded_2=self.embedded_2)

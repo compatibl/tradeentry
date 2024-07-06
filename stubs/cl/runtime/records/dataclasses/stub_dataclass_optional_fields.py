@@ -74,4 +74,4 @@ class StubDataclassOptionalFields(StubDataclassOptionalFieldsKey, DataclassRecor
     """Optional list of optional record."""
 
     def get_key(self) -> StubDataclassOptionalFieldsKey:
-        return StubDataclassOptionalFieldsTable, self.id
+        return StubDataclassOptionalFieldsKey(id=self.id)

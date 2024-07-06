@@ -32,7 +32,7 @@ class StubDataclassCyclicA(StubDataclassCyclicAKey, DataclassRecordMixin):
     """Key for class B."""
 
     def get_key(self) -> StubDataclassCyclicAKey:
-        return StubDataclassCyclicAKey(self.b_key)
+        return StubDataclassCyclicAKey(b_key=self.b_key)
 
     @staticmethod
     def create() -> StubDataclassCyclicA:

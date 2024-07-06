@@ -25,4 +25,4 @@ class StubDataclassAliasedRecord(StubDataclassAliasedRecordKey, DataclassRecordM
     a: int = datafield()
 
     def get_key(self) -> StubDataclassAliasedRecordKey:
-        return StubDataclassAliasedRecordKey(self.id)
+        return StubDataclassAliasedRecordKey(id=self.id)

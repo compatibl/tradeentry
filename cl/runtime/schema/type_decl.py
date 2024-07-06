@@ -118,7 +118,7 @@ class TypeDecl(TypeDeclKey, DataclassRecordMixin):
     """When the record is saved, also save it permanently."""
 
     def get_key(self) -> TypeDeclKey:
-        return TypeDeclKey(self.module, self.name)
+        return TypeDeclKey(module=self.module, name=self.name)
 
     def to_type_decl_dict(self) -> Dict[str, Any]:
         """Convert to dictionary using type declaration conventions."""

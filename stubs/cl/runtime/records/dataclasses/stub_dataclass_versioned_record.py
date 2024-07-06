@@ -25,4 +25,4 @@ class StubDataclassVersionedRecord(StubDataclassVersionedRecordKey, DataclassRec
     """Stub version field."""
 
     def get_key(self) -> StubDataclassVersionedRecordKey:
-        return StubDataclassVersionedRecordKey(self.id)
+        return StubDataclassVersionedRecordKey(id=self.id)

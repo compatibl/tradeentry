@@ -22,5 +22,5 @@ class ModuleDecl(ModuleDeclKey, DataclassRecordMixin):
     """Specifies module path in dot-delimited format."""
 
     def get_key(self) -> ModuleDeclKey:
-        return ModuleDeclKey(self.module_name)
+        return ModuleDeclKey(module_name=self.module_name)
 

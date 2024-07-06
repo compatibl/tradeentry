@@ -43,7 +43,7 @@ class StubHandlers(StubHandlersKey, DataclassRecordMixin):
     """Stub record base class."""
 
     def get_key(self) -> StubHandlersKey:
-        return StubHandlersKey(self.stub_id)
+        return StubHandlersKey(stub_id=self.stub_id)
 
     @handler
     def instance_handler_1a(self) -> None:

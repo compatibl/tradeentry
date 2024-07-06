@@ -63,15 +63,15 @@ class StubDataclassPrimitiveFields(StubDataclassPrimitiveFieldsKey, DataclassRec
 
     def get_key(self) -> StubDataclassPrimitiveFieldsKey:
         return StubDataclassPrimitiveFieldsKey(
-            self.key_str_field,
-            self.key_float_field,
-            self.key_bool_field,
-            self.key_int_field,
-            self.key_long_field,
-            self.key_date_field,
-            self.key_time_field,
-            self.key_date_time_field,
-            self.key_uuid_field,
-            self.key_bytes_field,
-            self.key_enum_field,
+            key_str_field=self.key_str_field,
+            key_float_field=self.key_float_field,
+            key_bool_field=self.key_bool_field,
+            key_int_field=self.key_int_field,
+            key_long_field=self.key_long_field,
+            key_date_field=self.key_date_field,
+            key_time_field=self.key_time_field,
+            key_date_time_field=self.key_date_time_field,
+            key_uuid_field=self.key_uuid_field,
+            key_bytes_field=self.key_bytes_field,
+            key_enum_field=self.key_enum_field,
         )
