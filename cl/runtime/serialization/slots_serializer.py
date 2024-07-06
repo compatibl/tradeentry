@@ -13,9 +13,7 @@
 # limitations under the License.
 
 from enum import Enum
-from typing import Type
-
-from bidict import bidict
+from typing import Type, Dict
 
 
 class MissingType:
@@ -28,32 +26,13 @@ missing = MissingType()
 primitive_type_names = ["NoneType", "str", "float", "int", "bool", "date", "time", "datetime", "bytes", "UUID"]
 """Detect primitive type by checking if class name is in this list."""
 
-# TODO: Move to a dedicated class
-short_names = bidict()
-"""
-Bidirectional dictionary with type as key and short name as value.
-Short name is class name except when alias is specified.
-"""
+# TODO: Initialize from settings
+alias_dict: Dict[Type, str] = dict()
+"""Dictionary of class name aliases using type as key (includes classes and enums with aliases only)."""
 
-
-def get_short_name_by_type(type_: Type) -> str:
-    """
-    Look up short name from type, save class name for subsequent reverse lookup if key is not found.
-    Short name is class name except when alias is specified.
-    """
-    return short_names.setdefault(type_, type_.__name__)
-
-
-def get_type_by_short_name(short_name: str) -> Type:
-    """
-    Look up type by short name, error if not found.
-    Short name is class name except when alias is specified.
-    """
-    type_ = short_names.inv.get(short_name, None)
-    if type_ is None:
-        raise RuntimeError(f"Type not found for short name '{short_name}'. "
-                           f"Ensure packages for previously recorded data are specified in settings.")
-    return type_
+# TODO: Initialize from settings
+type_dict: Dict[str, Type] = dict()
+"""Dictionary of types using class name or alias as key (includes all classes and enums)."""
 
 
 # TODO: Add checks for to_node, from_node implementation for custom override of default serializer
@@ -70,8 +49,12 @@ class SlotsSerializer:
             # Slots class, serialize as dictionary
             # Serialize slot values in the order of declaration except those that are None
             result = {k: self.serialize(v) for k in data.__slots__ if (v := getattr(data, k)) is not None}
-            # Add type to the record
-            result["_type"] = get_short_name_by_type(data.__class__)
+            # To find short name, use 'in' which is faster than 'get' when most types do not have aliases
+            short_name = alias_dict[type_] if (type_ := data.__class__) in alias_dict else type_.__name__
+            # Cache type for subsequent reverse lookup
+            type_dict[short_name] = type_
+            # Add to result
+            result["_type"] = short_name
             return result
         elif isinstance(data, dict):
             # Dictionary, return with serialized values
@@ -92,7 +75,11 @@ class SlotsSerializer:
                 return [self.serialize(item) for item in data]
         elif isinstance(data, Enum):
             # Serialize enum as a dict using enum class short name and item name (rather than item value)
-            return {"_enum": get_short_name_by_type(type(data)), "_name": data.name}
+            # To find short name, use 'in' which is faster than 'get' when most types do not have aliases
+            short_name = alias_dict[type_] if (type_ := type(data)) in alias_dict else type_.__name__
+            # Cache type for subsequent reverse lookup
+            type_dict[short_name] = type_
+            return {"_enum": short_name, "_name": data.name}
         else:
             raise RuntimeError(f"Cannot deserialize data of type '{type(data)}'.")
 
@@ -106,14 +93,20 @@ class SlotsSerializer:
             # Determine if the dictionary is a serialized dataclass or a dictionary
             if (short_name := data.get("_type", None)) is not None:
                 # If _type is specified, create an instance of _type after deserializing fields recursively
-                deserialized_type = get_type_by_short_name(short_name)  # noqa
+                deserialized_type = type_dict.get(short_name, None)  # noqa
+                if deserialized_type is None:
+                    raise RuntimeError(f"Class not found for name or alias '{short_name}' during deserialization. "
+                                       f"Ensure all serialized classes are included in package import settings.")
                 deserialized_fields = {k: self.deserialize(v) for k, v in data.items() if k != "_type"}
                 result = deserialized_type(**deserialized_fields)  # noqa
                 return result
             elif (short_name := data.get("_enum", None)) is not None:
                 # If _enum is specified, create an instance of _enum using _name
-                deserialized_enum = get_type_by_short_name(short_name) # noqa
-                result = deserialized_enum[data["_name"]] # noqa
+                deserialized_type = type_dict.get(short_name, None)  # noqa
+                if deserialized_type is None:
+                    raise RuntimeError(f"Enum not found for name or alias '{short_name}' during deserialization. "
+                                       f"Ensure all serialized enums are included in package import settings.")
+                result = deserialized_type[data["_name"]] # noqa
                 return result
             else:
                 # Otherwise return a dictionary with recursively deserialized values
