@@ -42,10 +42,7 @@ class SlotsSerializer:
     def serialize(self, data):
         """Serialize to dictionary containing primitive types, dictionaries, or iterables."""
 
-        if data.__class__.__name__ in primitive_type_names:
-            # Do nothing for None or primitive types
-            return data
-        elif hasattr(data, "__slots__"):
+        if hasattr(data, "__slots__"):
             # Slots class, serialize as dictionary
             # Serialize slot values in the order of declaration except those that are None
             result = {k: v if v.__class__.__name__ in primitive_type_names else self.serialize(v) for k in data.__slots__ if (v := getattr(data, k)) is not None}
@@ -86,10 +83,7 @@ class SlotsSerializer:
     def deserialize(self, data):
         """Deserialize from dictionary containing primitive types, dictionaries, or iterables."""
 
-        if data.__class__.__name__ in primitive_type_names:
-            # Do nothing for None or primitive types
-            return data
-        elif isinstance(data, dict):
+        if isinstance(data, dict):
             # Determine if the dictionary is a serialized dataclass or a dictionary
             if (short_name := data.get("_type", None)) is not None:
                 # If _type is specified, create an instance of _type after deserializing fields recursively
