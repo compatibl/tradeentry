@@ -98,8 +98,7 @@ class ClassInfo(ABC):
             f"{c.__module__}.{c.__name__}"
             for c in record_type.mro()
             if hasattr(c, "get_key")
-            and callable(getattr(c, "get_key"))
-            and not getattr(getattr(c, "get_key"), "__isabstractmethod__", False)
+            and not c.__name__.endswith("Mixin")
         ]
 
         # Make sure there is only one such class in the inheritance chain
