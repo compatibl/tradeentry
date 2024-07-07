@@ -22,53 +22,19 @@ from cl.runtime.storage.data_source_types import TIdentity
 from memoization import cached
 from typing import Iterable
 from typing import List
-from typing import Tuple
 from typing import Type
 from typing_extensions import Self
 
-_NONE = 0  # Code indicating None
-_KEY = 1  # Code indicating tuple
-_RECORD = 2  # Code indicating record
-_UNKNOWN = 3  # Code indicating unknown type
 
-
-class RecordMixin(KeyMixin):
-    """
-    Optional mixin class for database records providing static type checkers with method signatures.
-
-    Those methods that raise an exception must be overridden in derived types or by a decorator.
-    They are not made abstract to avoid errors from static type checkers.
-
-    The use of this class is optional. The code must not rely on inheritance from this class.
-
-    Records may implement handlers and/or viewers:
-
-    - Handlers are methods that can be invoked from the UI
-    - Viewers are methods whose return value is displayed in the UI
-    - Both may be instance, class or static methods, and may have parameters
-    """
+class RecordMixin(KeyMixin, ABC):
+    """Optional mixin class for a record, code must not rely on inheritance from this class."""
 
     __slots__ = ()
     """To prevent creation of __dict__ in derived types."""
 
+    @abstractmethod
     def get_key(self) -> KeyProtocol:
-        """Key for the current record (provide custom implementation for improved performance)."""
-        # TODO: Support composite keys
-        key_type = self.get_key_type()
-        key_kwargs = {k: getattr(self, k) for k in key_type.__slots__}  # noqa
-        return key_type(**key_kwargs)
-
-    def init(self) -> None:
-        """Similar to __init__ but uses previously set fields instead of parameters (not invoked by data source)."""
-
-        # Do nothing by default
-        pass
-
-    def validate(self) -> None:
-        """Validate previously set fields (invoked by data source before saving and after loading)."""
-
-        # Do nothing by default
-        pass
+        """Return a new key object whose fields populated from self, do not implement to return self."""
 
     @classmethod
     @cached

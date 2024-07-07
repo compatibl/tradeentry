@@ -18,11 +18,11 @@ from typing import Type
 
 
 class KeyMixin(ABC):
-    """Optional mixin class for a primary key object."""
+    """Optional mixin class for a primary key object, code must not rely on inheritance from this class."""
 
     __slots__ = ()
     """To prevent creation of __dict__ in derived types."""
 
     # TODO: @abstractmethod
     def get_key_type(self) -> Type:
-        """Return key type."""
+        """Return key type even when called from a record, implement using literal type rather than type(self)."""
