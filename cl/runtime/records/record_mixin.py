@@ -15,14 +15,16 @@
 from abc import ABC
 from abc import abstractmethod
 from memoization import cached
-from typing import List
+from typing import List, Iterable
 from typing import Tuple
 from typing import Type
 from typing_extensions import Self
 from cl.runtime.context.context import Context
 from cl.runtime.records.data_mixin import DataMixin
+from cl.runtime.records.key_mixin import KeyMixin
+from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.record_util import RecordUtil
-from cl.runtime.storage.data_source_types import TDataset
+from cl.runtime.storage.data_source_types import TDataset, TIdentity
 from cl.runtime.storage.data_source_types import TKey
 from cl.runtime.storage.data_source_types import TPackedRecord
 
@@ -32,7 +34,7 @@ _RECORD = 2  # Code indicating record
 _UNKNOWN = 3  # Code indicating unknown type
 
 
-class RecordMixin(DataMixin):
+class RecordMixin(KeyMixin):
     """
     Optional mixin class for database records providing static type checkers with method signatures.
 
@@ -51,13 +53,12 @@ class RecordMixin(DataMixin):
     __slots__ = ()
     """To prevent creation of __dict__ in derived types."""
 
-    @abstractmethod
-    def get_key(self) -> Tuple:
-        """Return (type(self), primary key fields), identifying all field types in returned value type hint."""
-
-    @abstractmethod
-    def pack(self) -> TPackedRecord:
-        """Return TPackedRecord = (TKey, TData)."""
+    def get_key(self) -> KeyProtocol:
+        """Key for the current record (provide custom implementation for improved performance)."""
+        # TODO: Support composite keys
+        key_type = self.get_key_type()
+        key_kwargs = {k: getattr(self, k) for k in key_type.__slots__}  # noqa
+        return key_type(**key_kwargs)
 
     def init(self) -> None:
         """Similar to __init__ but uses previously set fields instead of parameters (not invoked by data source)."""
@@ -100,23 +101,26 @@ class RecordMixin(DataMixin):
 
     @classmethod
     def load_many(
-        cls: Self,
-        records_or_keys: List[Self | TKey | None],
+        cls,
+        records_or_keys: Iterable[KeyProtocol | None] | None,
         *,
         context: Context | None = None,
         dataset: TDataset = None,
-    ) -> List[Self | None]:
+        identities: Iterable[TIdentity] | None = None,
+    ) -> Iterable[Self | None] | None:
         """
-        Load serialized records from a single table using a list of keys.
-        If records are passed instead of keys, they are returned without data source lookup.
-
-        Returns:
-            Iterable of records with the same length and in the same order as the list of keys.
-            The result element is None if the record is not found or the key is None.
+        Load a single record using a key. If record is passed instead of a key, it is returned without DB lookup.
 
         Args:
-            records_or_keys: Each element is TLoadedRecord, TKey, or None
+            records_or_keys: Iterable of records or keys (records are returned without DB lookup).
             context: Optional context, if None current context will be used
             dataset: Lookup dataset as a delimited string, list of levels, or None
+            identities: Only the records whose identity matches one of the argument identities will be loaded
         """
-        return RecordUtil.load_many(cls, records_or_keys, context=context, dataset=dataset)
+
+        # Get data source from the current or specified context
+        context = Context.current() if context is None else context
+        data_source = context.data_source()
+        result = data_source.load_many(records_or_keys, dataset=dataset, identities=identities)
+        return result
+

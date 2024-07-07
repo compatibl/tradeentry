@@ -17,6 +17,7 @@ from __future__ import annotations
 from abc import ABC
 from abc import abstractmethod
 from cl.runtime.records.class_info import ClassInfo
+from cl.runtime.records.protocols import KeyProtocol, RecordProtocol
 from cl.runtime.settings.config import dynaconf_settings
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
@@ -25,7 +26,7 @@ from cl.runtime.storage.data_source_types import TLoadedRecord
 from cl.runtime.storage.data_source_types import TPackedRecord
 from cl.runtime.storage.data_source_types import TQuery
 from dataclasses import dataclass
-from typing import ClassVar
+from typing import ClassVar, Dict, Any
 from typing import Iterable
 from typing import List
 
@@ -44,21 +45,35 @@ class DataSource(ABC):
         """Maximum number of records the data source will return in a single call, error if exceeded."""
 
     @abstractmethod
-    def load_many(
+    def load_one(
         self,
-        keys: Iterable[TKey],
+        record_or_key: KeyProtocol | None,
         *,
         dataset: TDataset = None,
         identities: Iterable[TIdentity] | None = None,
-    ) -> Iterable[TLoadedRecord]:
+    ) -> RecordProtocol | None:
         """
-        Load records using a list of keys where each key specifies the table and primary key fields.
-
-        Returns:
-            Iterable of TLoadedRecord = Tuple[TKey, TData, TIdentity, TDataset, TStamp]
+        Load a single record using a key. If record is passed instead of a key, it is returned without DB lookup.
 
         Args:
-            keys: Iterable of keys in (table_type, primary_key_1, primary_key_2, ...) format
+            record_or_key: Record or key (records is returned without DB lookup)
+            dataset: Lookup dataset as a delimited string, list of levels, or None
+            identities: Only the records whose identity matches one of the argument identities will be loaded
+        """
+
+    @abstractmethod
+    def load_many(
+        self,
+        records_or_keys: Iterable[KeyProtocol | None] | None,
+        *,
+        dataset: TDataset = None,
+        identities: Iterable[TIdentity] | None = None,
+    ) -> Iterable[RecordProtocol | None] | None:
+        """
+        Load records using a list of records or keys (records are returned without DB lookup).
+
+        Args:
+            records_or_keys: Iterable of records or keys (records are returned without DB lookup).
             dataset: Lookup dataset as a delimited string, list of levels, or None
             identities: Only the records whose identity matches one of the argument identities will be loaded
         """
@@ -86,16 +101,35 @@ class DataSource(ABC):
         """
 
     @abstractmethod
-    def save_many(
-        self, packs: Iterable[TPackedRecord], *, dataset: TDataset = None, identity: TIdentity = None
+    def save_one(
+        self,
+        record: RecordProtocol | None,
+        *,
+        dataset: TDataset = None,
+        identity: TIdentity = None
     ) -> None:
         """
-        Save records in (TKey, TData) format where
-            - TKey is (table_type, primary_key_1, primary_key_2, ...)
-            - TData is serialized data
+        Save records to storage.
 
         Args:
-            packs: Iterable of (TKey, TData)
+            record: Record or None.
+            dataset: Target dataset as a delimited string, list of levels, or None
+            identity: Identity token used for row level security
+        """
+
+    @abstractmethod
+    def save_many(
+        self,
+        records: Iterable[RecordProtocol],
+        *,
+        dataset: TDataset = None,
+        identity: TIdentity = None
+    ) -> None:
+        """
+        Save records to storage.
+
+        Args:
+            records: Iterable of records.
             dataset: Target dataset as a delimited string, list of levels, or None
             identity: Identity token used for row level security
         """
@@ -103,16 +137,16 @@ class DataSource(ABC):
     @abstractmethod
     def delete_many(
         self,
-        keys: Iterable[TKey],
+        keys: Iterable[KeyProtocol] | None,
         *,
         dataset: TDataset = None,
         identities: Iterable[TIdentity] | None = None,
     ) -> None:
         """
-        Delete records using a list of keys where each key specifies the table and primary key fields.
+        Delete records using an iterable of keys.
 
         Args:
-            keys: Iterable of keys in (table_type, primary_key_1, primary_key_2, ...) format
+            keys: Iterable of keys.
             dataset: Target dataset as a delimited string, list of levels, or None
             identities: Only the records whose identity matches one of the argument identities will be deleted
         """

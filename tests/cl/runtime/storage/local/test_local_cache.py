@@ -25,15 +25,15 @@ def test_smoke():
         # Create test record and populate with sample data
         record = StubDataclassRecord()
         key = record.get_key()
-        record_pack = record.pack()
 
         # Test saving and loading
         dataset = ["Sample"]
-        DataSource.default().save_many([record_pack], dataset=dataset)
-        loaded_records = StubDataclassRecord.load_many([key, None], context=context, dataset=dataset)
+        DataSource.default().save_many([record], dataset=dataset)
+        loaded_records = StubDataclassRecord.load_many([record, key, None], context=context, dataset=dataset)
 
         assert loaded_records[0] == record
-        assert loaded_records[1] is None
+        assert loaded_records[1] == record
+        assert loaded_records[2] is None
 
 
 if __name__ == "__main__":

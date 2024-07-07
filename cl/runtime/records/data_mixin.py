@@ -28,7 +28,7 @@ class DataMixin(ABC):
     """
 
     @abstractmethod
-    def to_dict(self) -> Dict[str, TField]:
+    def to_dict(self) -> Dict[str, TField]:  # TODO: Revise syntax to use as an override for serializer
         """Return TData for the contents."""
         # TODO: Determine if it should be consolidated with pack and if from_dict should be added
 

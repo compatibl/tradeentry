@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from abc import ABC, abstractmethod
-from typing import Tuple
+from typing import Type
 
 
 class KeyMixin(ABC):
@@ -22,17 +22,6 @@ class KeyMixin(ABC):
     __slots__ = ()
     """To prevent creation of __dict__ in derived types."""
 
-    @abstractmethod
-    def get_generic_key(self) -> Tuple:
-        """Return a tuple of key type and key fields."""
-
-
-class KeysMixin(ABC):
-    """Optional mixin class for an iterable of primary key objects."""
-
-    __slots__ = ()
-    """To prevent creation of __dict__ in derived types."""
-
-    @abstractmethod
-    def get_generic_keys(self) -> Tuple:
-        """Return a tuple of key type and lists of key fields."""
+    # TODO: @abstractmethod
+    def get_key_type(self) -> Type:
+        """Return key type."""

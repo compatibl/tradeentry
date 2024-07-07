@@ -14,14 +14,10 @@
 
 from abc import ABC
 from dataclasses import dataclass
-from cl.runtime.records.key_mixin import KeyMixin, KeysMixin
+from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True)
 class DataclassKeyMixin(KeyMixin, ABC):
     """Optional mixin class for a primary key object using dataclasses."""
 
-
-@dataclass(slots=True)
-class DataclassKeysMixin(KeysMixin, ABC):
-    """Optional mixin class for an iterable of primary key objects using dataclasses."""

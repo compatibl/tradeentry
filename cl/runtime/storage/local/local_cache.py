@@ -13,21 +13,25 @@
 # limitations under the License.
 
 from cl.runtime import DataSource
+from cl.runtime.records.protocols import KeyProtocol, RecordProtocol
+from cl.runtime.serialization.slots_key_serializer import SlotsKeySerializer
+from cl.runtime.serialization.slots_serializer import SlotsSerializer
 from cl.runtime.storage.data_source import TKey
 from cl.runtime.storage.data_source import TLoadedRecord
 from cl.runtime.storage.data_source_types import TDataset, TData
 from cl.runtime.storage.data_source_types import TIdentity
-from cl.runtime.storage.data_source_types import TPackedRecord
 from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.dataset_util import DatasetUtil
 from dataclasses import dataclass
 from dataclasses import field
 from itertools import groupby
-from typing import Any
-from typing import Dict
+from typing import Dict, cast
 from typing import Iterable
-from typing import Tuple
 from typing import Type
+
+# TODO: Revise and consider making fields of the data source
+data_serializer = SlotsSerializer()
+key_serializer = SlotsKeySerializer()
 
 
 @dataclass(slots=True, kw_only=True, frozen=True)
@@ -40,35 +44,54 @@ class LocalCache(DataSource):
         """Maximum number or records the data source will return in a single call, error if exceeded."""
         return 1000000
 
-    def load_many(
+    def load_one(
         self,
-        keys: Iterable[TKey],
+        record_or_key: KeyProtocol | None,
         *,
         dataset: TDataset = None,
         identities: Iterable[TIdentity] | None = None,
-    ) -> Iterable[TLoadedRecord]:
-        # Validate the dataset and if necessary convert to delimited string
-        dataset = DatasetUtil.to_str(dataset)
+    ) -> RecordProtocol | None:
 
-        # Try to retrieve dataset dictionary, insert if it does not yet exist
-        dataset_cache = self._cache.setdefault(dataset, {})
+        if record_or_key is None or getattr(record_or_key, "get_key", None) is not None:
+            # Record or None, return without lookup
+            return cast(RecordProtocol, record_or_key)
 
-        # Group keys by key type
-        keys_grouped_by_key_type = groupby(keys, key=lambda x: type(x))
+        elif getattr(record_or_key, "get_key_type"):
 
-        # Process separately for each base type
-        result_dict = {}
-        for key_type, keys_for_key_type in keys_grouped_by_key_type:
-            # Try to retrieve table dictionary, insert if it does not yet exist
-            table_cache = dataset_cache.setdefault(key_type, {})
+            # Key, look up the record in cache
+            key_type = record_or_key.get_key_type()
+            serialized_key = key_serializer.serialize_key(record_or_key)
 
-            # Iterable for the retrieved pairs
-            key_tuples = [key.get_generic_key() for key in keys_for_key_type]
-            retrieved = {key_tuple: table_cache[key_tuple] for key_tuple in key_tuples if key_tuple in table_cache}
-            result_dict.update(retrieved)
+            # Validate the dataset and if necessary convert to delimited string
+            dataset = DatasetUtil.to_str(dataset)
 
-        # Records in the order of provided keys, or None for records that are not found
-        result = [(k, result_dict[k.get_generic_key()], dataset, None) if k.get_generic_key() in result_dict else None for k in keys]
+            # Try to retrieve dataset dictionary, insert if it does not yet exist
+            dataset_cache = self._cache.setdefault(dataset, {})
+
+            # Try to retrieve table dictionary, return None if not found
+            if (table_cache := dataset_cache.setdefault(key_type, None)) is None:
+                return None
+
+            # Look up the record, return None if not found
+            if (serialized_record := table_cache[serialized_key]) is None:
+                return None
+
+            # Deserialize and return
+            record = data_serializer.deserialize(serialized_record)
+            return record
+
+        else:
+            raise RuntimeError(f"Type {record_or_key.__class__.__name__} is not a record or key.")
+
+    def load_many(
+        self,
+        records_or_keys: Iterable[KeyProtocol | None] | None,
+        *,
+        dataset: TDataset = None,
+        identities: Iterable[TIdentity] | None = None,
+    ) -> Iterable[RecordProtocol | None] | None:
+        # TODO: Review performance compared to a custom implementation for load_many
+        result = [self.load_one(x) for x in records_or_keys]
         return result
 
     def load_by_query(
@@ -83,32 +106,47 @@ class LocalCache(DataSource):
 
         raise NotImplementedError()
 
-    def save_many(
-        self, packs: Iterable[TPackedRecord], *, dataset: TDataset = None, identity: TIdentity = None
+    def save_one(
+        self,
+        record: RecordProtocol | None,
+        *,
+        dataset: TDataset = None,
+        identity: TIdentity = None
     ) -> None:
+        # If record is None, do nothing
+        if record is None:
+            return
+
         # Validate the dataset and if necessary convert to delimited string
         dataset = DatasetUtil.to_str(dataset)
 
         # Try to retrieve dataset dictionary, insert if it does not yet exist
         dataset_cache = self._cache.setdefault(dataset, {})
 
-        # Group records by base type
-        packs_grouped_by_table_type = groupby(packs, key=lambda record: type(record[0]))
+        # Try to retrieve table dictionary using `key_type` as key, insert if it does not yet exist
+        key_type = record.get_key_type()
+        table_cache = dataset_cache.setdefault(key_type, {})
 
-        # Process separately for each base type
-        for table_type, packs_for_table_type in packs_grouped_by_table_type:
-            # Try to retrieve table dictionary using `table_type` as key, insert if it does not yet exist
-            table_cache = dataset_cache.setdefault(table_type, {})
+        # Serialize both key and record
+        serialized_key = key_serializer.serialize_key(record)
+        serialized_record = data_serializer.serialize(record)
 
-            # Create a dict of (key, data)
-            saved_records = {pack[0].get_generic_key(): pack[1] for pack in packs_for_table_type}
+        # Add record to cache, overwriting an existing record if present
+        table_cache[serialized_key] = serialized_record
 
-            # Add records for base type, overwriting the existing records
-            table_cache.update(saved_records)
+    def save_many(
+        self,
+        records: Iterable[RecordProtocol],
+        *,
+        dataset: TDataset = None,
+        identity: TIdentity = None
+    ) -> None:
+        # TODO: Review performance compared to a custom implementation for load_many
+        result = [self.save_one(x) for x in records]
 
     def delete_many(
         self,
-        keys: Iterable[TKey],
+        keys: Iterable[KeyProtocol] | None,
         *,
         dataset: TDataset = None,
         identities: Iterable[TIdentity] | None = None,

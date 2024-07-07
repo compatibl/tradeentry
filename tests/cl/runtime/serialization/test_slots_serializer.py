@@ -16,10 +16,10 @@ import pytest
 from cl.runtime.serialization.slots_serializer import SlotsSerializer
 from stubs.cl.runtime import StubDataclassNestedFields, StubDataclassListFields, StubDataclassPrimitiveFields
 from stubs.cl.runtime import StubDataclassRecord
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields import StubDataclassOptionalFields
+from stubs.cl.runtime import StubDataclassOptionalFields
 
 
-def test_dataclass_serialization():
+def test_smoke():
     """Test coroutine for /schema/typeV2 route."""
 
     sample_types = [
