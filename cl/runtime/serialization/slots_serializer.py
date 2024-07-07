@@ -12,9 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 from enum import Enum
 from typing import Dict
 from typing import Type
+from inflection import camelize
 
 
 class MissingType:
@@ -37,8 +39,12 @@ type_dict: Dict[str, Type] = dict()
 
 
 # TODO: Add checks for to_node, from_node implementation for custom override of default serializer
+@dataclass(slots=True, kw_only=True)
 class SlotsSerializer:
     """Serialization for slots-based classes (including dataclasses with slots=True)."""
+
+    pascalize_keys: bool = False
+    """If true, pascalize keys during serialization."""
 
     def serialize(self, data):
         """Serialize to dictionary containing primitive types, dictionaries, or iterables."""
@@ -47,7 +53,7 @@ class SlotsSerializer:
             # Slots class, serialize as dictionary
             # Serialize slot values in the order of declaration except those that are None
             result = {
-                k: v if v.__class__.__name__ in primitive_type_names else self.serialize(v)
+                k if not self.pascalize_keys else camelize(k, uppercase_first_letter=True): v if v.__class__.__name__ in primitive_type_names else self.serialize(v)
                 for k in data.__slots__
                 if (v := getattr(data, k)) is not None
             }
@@ -89,6 +95,9 @@ class SlotsSerializer:
 
     def deserialize(self, data):
         """Deserialize from dictionary containing primitive types, dictionaries, or iterables."""
+
+        if self.pascalize_keys:
+            raise RuntimeError("Cannot deserialize if pascalize_keys=True.")
 
         if isinstance(data, dict):
             # Determine if the dictionary is a serialized dataclass or a dictionary
