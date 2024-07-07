@@ -19,6 +19,8 @@ from cl.runtime import ClassInfo
 from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
 from cl.runtime.routers.storage.select_request import SelectRequest
+from cl.runtime.serialization.slots_key_serializer import SlotsKeySerializer
+from cl.runtime.serialization.slots_serializer import SlotsSerializer
 from cl.runtime.storage.data_source_types import TPrimitive
 from pydantic import BaseModel
 from pydantic import Field
@@ -30,17 +32,6 @@ from typing import Type
 
 SelectResponseSchema = Dict[str, Any]
 SelectResponseData = List[Dict[str, Any]]
-
-
-def serialize_key(key: Tuple[Type, ...] | TPrimitive) -> str:
-    """Serialize key in tuple format."""
-    if isinstance(key, tuple):
-        # if key[0] is not type:  # TODO: Verify why the check does not work as expected
-        # TODO: Check for table type
-        # raise RuntimeError(f"First element {key[0]} of {key} is not a type.")
-        return ";".join([serialize_key(key_token) for key_token in key[1:]])
-    else:
-        return key
 
 
 class SelectResponse(BaseModel):
@@ -63,20 +54,18 @@ class SelectResponse(BaseModel):
         record_class = request.type_
         record_type = ClassInfo.get_class_type(f"{record_module}.{record_class}")
 
-        # TODO: Load from storage instead of creating
-        record = record_type()
-        keys = [record.get_key()]
+        records = [record_type() for i in range(10)]  # TODO: Load from storage instead of creating
+
+        # TODO: Refactor the code below
 
         # Convert to semicolon-delimited primary key fields, omitting the first token (table)
-        serialized_keys = [serialize_key(key) for key in keys]
+        data_serializer = SlotsSerializer(pascalize_keys=True)
+        key_serializer = SlotsKeySerializer()
+        serialized_keys_and_records = [(key_serializer.serialize_key(x), data_serializer.serialize(x)) for x in records]
 
-        response_dicts = [
-            {
-                "_t": request.type_,
-                "_key": serialized_key,
-                "User": "root",  # TODO: Replace hardcoded value
-            }
-            for serialized_key in serialized_keys
-        ]
+        # Add _t and _key fields
+        [record.update({"_t": request.type_, "_key": key, "User": "root"}) for key, record in serialized_keys_and_records]
+        [record.pop("_type") for key, record in serialized_keys_and_records]
+        serialized_records = tuple(record for key, record in serialized_keys_and_records)
 
-        return SelectResponse(schema=type_decl_dict, data=response_dicts)
+        return SelectResponse(schema=type_decl_dict, data=serialized_records).dict(by_alias=True)
