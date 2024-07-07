@@ -47,6 +47,8 @@ class Schema:
     Provide declarations for the specified type and all dependencies.
     """
 
+    _type_dict_by_short_name: Dict[str, Type] = None
+
     @classmethod
     @cached
     def get_types(cls) -> Iterable[Type]:
@@ -59,7 +61,13 @@ class Schema:
         return cls.get_type_dict().values()
 
     @classmethod
-    @cached
+    def add_types_to_dict_by_short_name(cls, types: Iterable[Type]) -> None:
+        """Add types to the dictionary by short name (class name with optional package alias)."""
+
+        types_dict = {x.__name__: x for x in types}
+        cls._type_dict_by_short_name.update(types_dict)
+
+    @classmethod
     def get_type_by_short_name(cls, short_name: str) -> Type:
         """Get type from short name (class name with optional package alias)."""
 
@@ -76,7 +84,6 @@ class Schema:
         return record_type
 
     @classmethod
-    @cached
     def get_type_dict(cls) -> Dict[str, Type]:
         """
         Get dictionary of types indexed by short name (class name with optional package alias).
@@ -85,45 +92,48 @@ class Schema:
             The result is returned in the alphabetical order of module.ClassName.
         """
 
-        # TODO: Load from config file
-        packages = ["cl.runtime", "stubs.cl.runtime"]
+        if cls._type_dict_by_short_name is None:
 
-        # Get modules for the specified packages
-        modules = cls._get_modules(packages)
+            # TODO: Load from config file
+            packages = ["cl.runtime", "stubs.cl.runtime"]
 
-        # Get record types by iterating over modules
-        record_types = set(
-            record_type for module in modules for name, record_type in inspect.getmembers(module, is_key_or_record)
-        )
+            # Get modules for the specified packages
+            modules = cls._get_modules(packages)
 
-        # Ensure names are unique
-        # TODO: Support namespace aliases to resolve conflicts
-        record_names = [record_type.__name__ for record_type in record_types]
-        record_paths = [f"{record_type.__module__}.{record_type.__name__}" for record_type in record_types]
-
-        # Check that there are no repeated names, report errors if there are
-        if len(set(record_names)) != len(record_names):
-            # Count the occurrences of each name in the list
-            record_name_counts = Counter(record_names)
-
-            # Find names that are repeated more than once
-            repeated_names = [record_name for record_name, count in record_name_counts.items() if count > 1]
-
-            # Report repeated names
-            package_names_str = ", ".join(packages)
-            repeated_names_str = ", ".join(repeated_names)
-            raise RuntimeError(
-                f"The following class names in the list of packages {package_names_str} "
-                f"are repeated more than once: {repeated_names_str}"
+            # Get record types by iterating over modules
+            record_types = set(
+                record_type for module in modules for name, record_type in inspect.getmembers(module, is_key_or_record)
             )
 
-        # Create dictionary
-        result = dict(zip(record_names, record_types))
+            # Ensure names are unique
+            # TODO: Support namespace aliases to resolve conflicts
+            record_names = [record_type.__name__ for record_type in record_types]
+            record_paths = [f"{record_type.__module__}.{record_type.__name__}" for record_type in record_types]
 
-        # Sort alphabetically by module_shortname.ClassName
-        # TODO: Support module_shortname
-        result = {key: result[key] for key in sorted(result)}
-        return result
+            # Check that there are no repeated names, report errors if there are
+            if len(set(record_names)) != len(record_names):
+                # Count the occurrences of each name in the list
+                record_name_counts = Counter(record_names)
+
+                # Find names that are repeated more than once
+                repeated_names = [record_name for record_name, count in record_name_counts.items() if count > 1]
+
+                # Report repeated names
+                package_names_str = ", ".join(packages)
+                repeated_names_str = ", ".join(repeated_names)
+                raise RuntimeError(
+                    f"The following class names in the list of packages {package_names_str} "
+                    f"are repeated more than once: {repeated_names_str}"
+                )
+
+            # Create dictionary
+            result = dict(zip(record_names, record_types))
+
+            # Sort alphabetically by module_shortname.ClassName
+            # TODO: Support module_shortname
+            cls._type_dict_by_short_name = {key: result[key] for key in sorted(result)}
+
+        return cls._type_dict_by_short_name
 
     @classmethod
     def for_key(cls, key: TypeDeclKey) -> Self:
@@ -155,6 +165,9 @@ class Schema:
         # Sort the list of dependencies
         # TODO: Use short name with alias
         dependencies = sorted(dependencies, key=lambda x: x.__name__)
+
+        # Add to the dict by type name
+        cls.add_types_to_dict_by_short_name(dependencies)
 
         # TODO: Restore after Enum decl generation is supported
         dependencies = [dependency_type for dependency_type in dependencies if not issubclass(dependency_type, Enum)]
