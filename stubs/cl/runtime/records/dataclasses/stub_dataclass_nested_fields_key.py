@@ -27,10 +27,10 @@ class StubDataclassNestedFieldsKey(KeyMixin):
     primitive: str = "abc"
     """String key element."""
 
-    embedded_1: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecordKey("def"))
+    embedded_1: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecordKey(id="def"))
     """Embedded key 1."""
 
-    embedded_2: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecordKey("xyz"))
+    embedded_2: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecordKey(id="xyz"))
     """Embedded key 2."""
 
     def get_key_type(self) -> Type:

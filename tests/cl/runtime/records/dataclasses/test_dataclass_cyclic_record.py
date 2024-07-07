@@ -50,8 +50,8 @@ def test_cyclic_record():
 
     # Test for keys
 
-    assert b_1.get_key() == StubDataclassCyclicBKey("a")
-    assert a_1.get_key() == StubDataclassCyclicAKey(StubDataclassCyclicBKey("b"))
+    assert b_1.get_key() == StubDataclassCyclicBKey(str_id="a")
+    assert a_1.get_key() == StubDataclassCyclicAKey(b_key=StubDataclassCyclicBKey(str_id="b"))
     pass
 
 

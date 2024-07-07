@@ -48,7 +48,7 @@ class StubDataclassNestedFields(StubDataclassNestedFieldsKey, RecordMixin):
     )
     """Declared StubDataclassDerivedData but provided an instance of StubDataclassDerivedFromDerivedData."""
 
-    key_field: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecordKey("uvw"))
+    key_field: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecordKey(id="uvw"))
     """Stub field."""
 
     record_as_key_field: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecord())

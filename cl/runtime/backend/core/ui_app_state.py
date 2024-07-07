@@ -38,7 +38,7 @@ class UiAppState(UiAppStateKey, RecordMixin):
     """Application theme (dark, light, etc.)."""
 
     def get_key(self) -> UiAppStateKey:
-        return UiAppStateKey(self.user)
+        return UiAppStateKey(user=self.user)
 
     @staticmethod
     def get_current_user_app_theme() -> AppTheme | None:

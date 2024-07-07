@@ -28,7 +28,7 @@ def test_smoke():
 
     # Test primary key
     key = record.get_key()
-    assert key == StubDataclassRecordKey("abc")
+    assert key == StubDataclassRecordKey(id="abc")
 
 
 def test_with_primitive_fields():
