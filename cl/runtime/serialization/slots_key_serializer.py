@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from enum import Enum
+from typing import Tuple
 
 primitive_type_names = ["NoneType", "str", "float", "int", "bool", "date", "time", "datetime", "bytes", "UUID"]
 """Detect primitive type by checking if class name is in this list."""
@@ -23,14 +24,16 @@ class SlotsKeySerializer:
     """Serialize key."""
 
     def serialize_key(self, data):
-        """Serialize key."""
+        """Serialize key to string, flattening for composite keys."""
 
         key_slots = data.get_key_type().__slots__
-        return tuple(
-            v
+        result = ";".join(
+            str(v)  # TODO: Apply rules depending on the specific primitive type
             if (v := getattr(data, k)).__class__.__name__ in primitive_type_names
             else v.name
             if isinstance(v, Enum)
             else self.serialize_key(v)
             for k in key_slots
         )
+        return result
+
