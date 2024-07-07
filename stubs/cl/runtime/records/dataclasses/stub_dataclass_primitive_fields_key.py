@@ -25,7 +25,7 @@ from typing import Type
 from uuid import UUID
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class StubDataclassPrimitiveFieldsKey(KeyMixin):
     """Stub record whose elements are primitive types."""
 

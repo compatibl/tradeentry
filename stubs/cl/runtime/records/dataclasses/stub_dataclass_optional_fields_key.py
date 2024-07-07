@@ -19,7 +19,7 @@ from typing import Tuple
 from typing import Type
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class StubDataclassOptionalFieldsKey(KeyMixin):
     """Stub derived class."""
 

@@ -21,7 +21,7 @@ from typing import Tuple
 from typing import Type
 
 
-@dataclass(slots=True)  # TODO: Use kw_only=True for keys as well
+@dataclass(slots=True, kw_only=True)
 class StubDataclassRecordKey(KeyMixin):
     """Stub record base class."""
 

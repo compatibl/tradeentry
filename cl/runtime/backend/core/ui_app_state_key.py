@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from typing import Tuple
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class UiAppStateKey(KeyMixin):
     """UiAppState."""
 

@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from typing import Tuple
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class UserKey(KeyMixin):
     """User which is allowed to log in."""
 

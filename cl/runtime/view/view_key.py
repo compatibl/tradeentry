@@ -18,7 +18,7 @@ from dataclasses import dataclass
 from typing import Tuple
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class ViewKey(KeyMixin):
     """Contains data that will be visualized alongside the record specified by the 'view_for' field."""
 

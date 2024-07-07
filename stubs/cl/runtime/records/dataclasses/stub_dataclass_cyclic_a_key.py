@@ -19,7 +19,7 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b_key import Stu
 from typing import Tuple
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class StubDataclassCyclicAKey(KeyMixin):
     """Stub class A with a field whose type is key for class B."""
 

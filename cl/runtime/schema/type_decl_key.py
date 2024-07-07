@@ -19,7 +19,7 @@ from dataclasses import dataclass
 from typing import Tuple
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class TypeDeclKey(KeyMixin):
     """Provides information about a class, its fields, and its methods."""
 

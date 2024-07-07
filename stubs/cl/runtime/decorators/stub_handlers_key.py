@@ -18,7 +18,7 @@ from dataclasses import dataclass
 from typing import Tuple
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class StubHandlersKey(KeyMixin):
     """Stub record base class."""
 
