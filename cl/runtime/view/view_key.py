@@ -13,13 +13,13 @@
 # limitations under the License.
 
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
+from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
 from typing import Tuple
 
 
 @dataclass(slots=True)
-class ViewKey(DataclassKeyMixin):
+class ViewKey(KeyMixin):
     """Contains data that will be visualized alongside the record specified by the 'view_for' field."""
 
     view_for: Tuple = datafield()

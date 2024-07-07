@@ -13,14 +13,14 @@
 # limitations under the License.
 
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
+from cl.runtime.records.key_mixin import KeyMixin
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
 from dataclasses import dataclass
 from typing import Tuple
 
 
 @dataclass(slots=True)
-class TypeDeclKey(DataclassKeyMixin):
+class TypeDeclKey(KeyMixin):
     """Provides information about a class, its fields, and its methods."""
 
     module: ModuleDeclKey = datafield()  # TODO: Merge with name to always use full name

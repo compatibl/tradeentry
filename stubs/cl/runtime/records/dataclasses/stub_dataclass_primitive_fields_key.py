@@ -17,7 +17,7 @@ from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.time_util import TimeUtil
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
+from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
 from stubs.cl.runtime.records.enum.stub_int_enum import StubIntEnum
 from typing import Tuple
@@ -26,7 +26,7 @@ from uuid import UUID
 
 
 @dataclass(slots=True)
-class StubDataclassPrimitiveFieldsKey(DataclassKeyMixin):
+class StubDataclassPrimitiveFieldsKey(KeyMixin):
     """Stub record whose elements are primitive types."""
 
     key_str_field: str = datafield(default="abc")

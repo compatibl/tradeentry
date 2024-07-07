@@ -13,14 +13,14 @@
 # limitations under the License.
 
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
+from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b_key import StubDataclassCyclicBKey
 from typing import Tuple
 
 
 @dataclass(slots=True)
-class StubDataclassCyclicAKey(DataclassKeyMixin):
+class StubDataclassCyclicAKey(KeyMixin):
     """Stub class A with a field whose type is key for class B."""
 
     b_key: StubDataclassCyclicBKey = datafield()

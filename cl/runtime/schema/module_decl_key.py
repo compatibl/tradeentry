@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
+from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
 from typing import Tuple
 
 
 @dataclass(slots=True)
-class ModuleDeclKey(DataclassKeyMixin):
+class ModuleDeclKey(KeyMixin):
     """Specifies module path in dot-delimited format."""
 
     module_name: str

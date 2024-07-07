@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
+from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecordKey
 from typing import Tuple
@@ -21,7 +21,7 @@ from typing import Type
 
 
 @dataclass(slots=True)
-class StubDataclassNestedFieldsKey(DataclassKeyMixin):
+class StubDataclassNestedFieldsKey(KeyMixin):
     """Stub derived class."""
 
     primitive: str = datafield(default="abc")

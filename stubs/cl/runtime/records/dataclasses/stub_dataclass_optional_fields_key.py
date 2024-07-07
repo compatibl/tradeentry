@@ -13,14 +13,14 @@
 # limitations under the License.
 
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
+from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
 from typing import Tuple
 from typing import Type
 
 
 @dataclass(slots=True)
-class StubDataclassOptionalFieldsKey(DataclassKeyMixin):
+class StubDataclassOptionalFieldsKey(KeyMixin):
     """Stub derived class."""
 
     id: str = datafield(default="abc")

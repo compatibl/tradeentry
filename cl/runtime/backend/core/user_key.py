@@ -5,13 +5,13 @@
 # license from CompatibL and with the inclusion of this copyright notice.
 
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
+from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
 from typing import Tuple
 
 
 @dataclass(slots=True)
-class UserKey(DataclassKeyMixin):
+class UserKey(KeyMixin):
     """User which is allowed to log in."""
 
     username: str = datafield()

@@ -13,13 +13,13 @@
 # limitations under the License.
 
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
+from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
 from typing import Tuple
 
 
 @dataclass(slots=True)
-class StubHandlersKey(DataclassKeyMixin):
+class StubHandlersKey(KeyMixin):
     """Stub record base class."""
 
     stub_id: str = datafield(default="abc")

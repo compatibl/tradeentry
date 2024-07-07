@@ -6,14 +6,14 @@
 
 from cl.runtime.backend.core.user_key import UserKey
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
+from cl.runtime.records.key_mixin import KeyMixin
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from dataclasses import dataclass
 from typing import Tuple
 
 
 @dataclass(slots=True)
-class UiTypeStateKey(DataclassKeyMixin):
+class UiTypeStateKey(KeyMixin):
     """Defines some default settings for a type."""
 
     type_: TypeDeclKey = datafield()
