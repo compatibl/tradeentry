@@ -33,39 +33,3 @@ class DataclassDataMixin(DataMixin):
     def to_dict(self) -> Dict[str, TField]:
         """Return TData for the contents."""
         return dataclasses.asdict(self)  # noqa
-
-
-def datafield(
-    *,
-    default: TDefault | None = None,
-    default_factory: TDefaultFactory | None = None,
-    name: str | None = None,  # TODO: Review use when trailing _ is removed automatically
-    label: str | None = None,
-    subtype: str | None = None,
-    formatter: str | None = None,
-) -> TDefault:
-    """Field in dataclass with additional parameters to define runtime-specific metadata.
-
-    Args:
-        default: Default value (None if not specified)
-        default_factory: Factory to generate a new instance for default value (for container types)
-        name: Override field name in REST (label will be titleized version of this parameter)
-        label: Override titleized name in UI
-        subtype: Override field type, the only permitted value is `long` for int field type
-        formatter: Standard formatter name (without curly brackets) or raw Python format string (in curly brackets)
-    """
-    metadata = {
-        "name": name,
-        "label": label,
-        "subtype": subtype,
-        "formatter": formatter,  # TODO: switch to formatter in other places as format causes Python warnings
-    }
-    if default_factory is None:
-        return field(default=default, metadata=metadata)
-    elif default is None:
-        return field(default_factory=default_factory, metadata=metadata)
-    else:
-        raise RuntimeError(
-            f"Params default={default} and default_factory={default_factory} "
-            f"are mutually exclusive but both are specified."
-        )

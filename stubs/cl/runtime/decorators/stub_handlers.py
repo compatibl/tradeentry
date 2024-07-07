@@ -15,8 +15,8 @@
 import datetime as dt
 import inspect
 from cl.runtime.decorators.handler_decorator import handler
-from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
+from cl.runtime.records.dataclasses_util import datafield
+from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
 from logging import getLogger
 from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
@@ -38,7 +38,7 @@ def print_method_info():  # TODO: Move into DebugUtil(s)
 
 
 @dataclass(slots=True, kw_only=True)
-class StubHandlers(StubHandlersKey, DataclassRecordMixin):
+class StubHandlers(StubHandlersKey, RecordMixin):
     """Stub record base class."""
 
     def get_key(self) -> StubHandlersKey:

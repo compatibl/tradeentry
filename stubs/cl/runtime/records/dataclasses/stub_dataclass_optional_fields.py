@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
+from cl.runtime.records.dataclasses_util import datafield
+from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_data import StubDataclassData
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields_key import StubDataclassOptionalFieldsKey
@@ -23,7 +23,7 @@ from typing import List
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataclassOptionalFields(StubDataclassOptionalFieldsKey, DataclassRecordMixin):
+class StubDataclassOptionalFields(StubDataclassOptionalFieldsKey, RecordMixin):
     """Stub derived class."""
 
     optional_str: str | None = datafield(default="xyz")

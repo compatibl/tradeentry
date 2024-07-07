@@ -5,13 +5,13 @@
 # license from CompatibL and with the inclusion of this copyright notice.
 
 from cl.runtime.backend.core.user_key import UserKey
-from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
+from cl.runtime.records.dataclasses_util import datafield
+from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
 
 
 @dataclass(slots=True, kw_only=True)
-class User(UserKey, DataclassRecordMixin):
+class User(UserKey, RecordMixin):
     """User which is allowed to log in."""
 
     first_name: str = datafield()

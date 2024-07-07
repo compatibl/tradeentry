@@ -18,8 +18,8 @@ import ast
 import dataclasses
 import inspect
 from cl.runtime import KeyUtil
-from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
+from cl.runtime.records.dataclasses_util import datafield
+from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.schema.element_decl import ElementDecl
 from cl.runtime.schema.field_decl import FieldDecl
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
@@ -88,7 +88,7 @@ def for_type_key_maker(
 
 
 @dataclass(slots=True, kw_only=True)
-class TypeDecl(TypeDeclKey, DataclassRecordMixin):
+class TypeDecl(TypeDeclKey, RecordMixin):
     """Provides information about a class, its fields, and its methods."""
 
     label: str | None = datafield()

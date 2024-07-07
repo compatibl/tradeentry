@@ -5,8 +5,8 @@
 # license from CompatibL and with the inclusion of this copyright notice.
 
 from cl.runtime.backend.core.ui_type_state_key import UiTypeStateKey
-from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
+from cl.runtime.records.dataclasses_util import datafield
+from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
 from typing import List
 from typing import Optional
@@ -15,7 +15,7 @@ from typing import final
 
 @final
 @dataclass(slots=True, kw_only=True)
-class UiTypeState(UiTypeStateKey, DataclassRecordMixin):
+class UiTypeState(UiTypeStateKey, RecordMixin):
     """Defines ui settings for a type."""
 
     read_only: Optional[bool] = datafield()

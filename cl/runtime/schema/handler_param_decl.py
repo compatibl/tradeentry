@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from cl.runtime.records.dataclasses_util import datafield
 from cl.runtime.schema.handler_variable_decl import HandlerVariableDecl
 from dataclasses import dataclass
 

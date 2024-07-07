@@ -12,13 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses.dataclass_data_mixin import DataclassDataMixin
-from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from cl.runtime.records.dataclasses_util import datafield
 from dataclasses import dataclass
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataclassData(DataclassDataMixin):
+class StubDataclassData:
     """Stub base data type."""
 
     str_field: str = datafield(default="abc")

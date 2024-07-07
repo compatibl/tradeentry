@@ -8,15 +8,15 @@ from cl.runtime.backend.core.app_theme import AppTheme
 from cl.runtime.backend.core.tab_info import TabInfo
 from cl.runtime.backend.core.ui_app_state_key import UiAppStateKey
 from cl.runtime.backend.core.user_key import UserKey
-from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
+from cl.runtime.records.dataclasses_util import datafield
+from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
 from typing import List
 from typing import Optional
 
 
 @dataclass(slots=True, kw_only=True)
-class UiAppState(UiAppStateKey, DataclassRecordMixin):
+class UiAppState(UiAppStateKey, RecordMixin):
     """UiAppState."""
 
     opened_tabs: List[TabInfo] | None = datafield()

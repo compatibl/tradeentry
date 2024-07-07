@@ -14,19 +14,25 @@
 
 from abc import ABC
 from abc import abstractmethod
-from cl.runtime.storage.data_source_types import TField
-from typing import Dict
+from typing_extensions import Self
+from typing import Any
 
 
 class DataMixin(ABC):
     """
-    Optional mixin class for data fields, use RecordMixin for records.
+    Declares abstract methods that provide serialization and deserialization to classes that
+    do not have __slots__ or do not store data in fields.
 
     Notes:
-        - The use of this class is optional. The code must not rely on inheritance from this class.
+        The use of this class is optional. The code must not rely on inheritance from this class.
     """
 
     @abstractmethod
-    def to_dict(self) -> Dict[str, TField]:  # TODO: Revise syntax to use as an override for serializer
-        """Return TData for the contents."""
-        # TODO: Determine if it should be consolidated with pack and if from_dict should be added
+    def serialize_data(self, serializer) -> Any:  # TODO: Specify type hint for SerializerProtocol
+        """Serialize self, calling the specified serializer for fields that do not implement serialize_data."""
+        # TODO: Consider renaming to pack and unpack (for key as well, to avoid name clashes)
+
+    @classmethod
+    @abstractmethod
+    def deserialize_data(cls, data: Any, serializer) -> Self: # TODO: Specify type hint for SerializerProtocol
+        """Deserialize data, calling the specified serializer for fields that do not implement deserialize_data."""

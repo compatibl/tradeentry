@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
+from cl.runtime.records.dataclasses_util import datafield
+from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_aliased_record_key import StubDataclassAliasedRecordKey
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataclassAliasedRecord(StubDataclassAliasedRecordKey, DataclassRecordMixin):  # TODO: Specify alias
+class StubDataclassAliasedRecord(StubDataclassAliasedRecordKey, RecordMixin):  # TODO: Specify alias
     """Stub record class with typename alias."""
 
     a: int = datafield()

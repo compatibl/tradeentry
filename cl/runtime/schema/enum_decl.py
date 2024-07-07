@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
-from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
+from cl.runtime.records.dataclasses_util import datafield
+from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.schema.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.enum_item_decl import EnumItemDecl
 from dataclasses import dataclass
@@ -21,7 +21,7 @@ from typing import List
 
 
 @dataclass(slots=True, kw_only=True)
-class EnumDecl(EnumDeclKey, DataclassRecordMixin):
+class EnumDecl(EnumDeclKey, RecordMixin):
     """Enum declaration."""
 
     label: str | None = datafield()

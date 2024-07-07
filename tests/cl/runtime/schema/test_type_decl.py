@@ -41,22 +41,6 @@ def to_snake_case(data):
         return data
 
 
-def test_init():
-    """Test TypeDecl.__init__ method."""
-
-    type_decl_dict_snake_case = to_snake_case(type_decl_dict)
-    result = TypeDecl(**type_decl_dict_snake_case)
-
-    assert result.name == type_decl_dict["Name"]
-
-    module_name_from_dict = type_decl_dict["Module"]["ModuleName"]
-    module_name_from_obj = result.module["module_name"]  # TODO: Currently maps to dictionary rather than tuple
-    assert module_name_from_obj == module_name_from_dict
-
-    key, (record_type, record_dict) = result.pack()
-    assert record_dict == type_decl_dict_snake_case
-
-
 def test_to_type_decl_dict():
     """Test TypeDecl.to_type_decl_dict method."""
 
