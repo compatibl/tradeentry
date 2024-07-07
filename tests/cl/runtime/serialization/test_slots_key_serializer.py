@@ -13,11 +13,12 @@
 # limitations under the License.
 
 import pytest
-
 from cl.runtime.serialization.slots_key_serializer import SlotsKeySerializer
-from stubs.cl.runtime import StubDataclassNestedFields, StubDataclassListFields, StubDataclassPrimitiveFields
-from stubs.cl.runtime import StubDataclassRecord
+from stubs.cl.runtime import StubDataclassListFields
+from stubs.cl.runtime import StubDataclassNestedFields
 from stubs.cl.runtime import StubDataclassOptionalFields
+from stubs.cl.runtime import StubDataclassPrimitiveFields
+from stubs.cl.runtime import StubDataclassRecord
 
 
 def test_smoke():
@@ -28,13 +29,12 @@ def test_smoke():
         StubDataclassPrimitiveFields,
         StubDataclassListFields,
         StubDataclassNestedFields,
-        StubDataclassOptionalFields
+        StubDataclassOptionalFields,
     ]
 
     key_serializer = SlotsKeySerializer()
 
     for sample_type in sample_types:
-
         obj_1 = sample_type()
         serialized_1 = key_serializer.serialize_key(obj_1)
         serialized_2 = key_serializer.serialize_key(obj_1.get_key())

@@ -13,15 +13,15 @@
 # limitations under the License.
 
 import datetime as dt
-from dataclasses import dataclass
-from typing import Tuple, Type
-
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.time_util import TimeUtil
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
+from dataclasses import dataclass
 from stubs.cl.runtime.records.enum.stub_int_enum import StubIntEnum
+from typing import Tuple
+from typing import Type
 from uuid import UUID
 
 
@@ -65,6 +65,3 @@ class StubDataclassPrimitiveFieldsKey(DataclassKeyMixin):
 
     def get_key_type(self) -> Type:
         return StubDataclassPrimitiveFieldsKey
-
-
-

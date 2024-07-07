@@ -13,21 +13,24 @@
 # limitations under the License.
 
 from cl.runtime import DataSource
-from cl.runtime.records.protocols import KeyProtocol, RecordProtocol
+from cl.runtime.records.protocols import KeyProtocol
+from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.serialization.slots_key_serializer import SlotsKeySerializer
 from cl.runtime.serialization.slots_serializer import SlotsSerializer
 from cl.runtime.storage.data_source import TKey
 from cl.runtime.storage.data_source import TLoadedRecord
-from cl.runtime.storage.data_source_types import TDataset, TData
+from cl.runtime.storage.data_source_types import TData
+from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.dataset_util import DatasetUtil
 from dataclasses import dataclass
 from dataclasses import field
 from itertools import groupby
-from typing import Dict, cast
+from typing import Dict
 from typing import Iterable
 from typing import Type
+from typing import cast
 
 # TODO: Revise and consider making fields of the data source
 data_serializer = SlotsSerializer()
@@ -51,13 +54,11 @@ class LocalCache(DataSource):
         dataset: TDataset = None,
         identities: Iterable[TIdentity] | None = None,
     ) -> RecordProtocol | None:
-
         if record_or_key is None or getattr(record_or_key, "get_key", None) is not None:
             # Record or None, return without lookup
             return cast(RecordProtocol, record_or_key)
 
         elif getattr(record_or_key, "get_key_type"):
-
             # Key, look up the record in cache
             key_type = record_or_key.get_key_type()
             serialized_key = key_serializer.serialize_key(record_or_key)
@@ -106,13 +107,7 @@ class LocalCache(DataSource):
 
         raise NotImplementedError()
 
-    def save_one(
-        self,
-        record: RecordProtocol | None,
-        *,
-        dataset: TDataset = None,
-        identity: TIdentity = None
-    ) -> None:
+    def save_one(self, record: RecordProtocol | None, *, dataset: TDataset = None, identity: TIdentity = None) -> None:
         # If record is None, do nothing
         if record is None:
             return
@@ -135,14 +130,10 @@ class LocalCache(DataSource):
         table_cache[serialized_key] = serialized_record
 
     def save_many(
-        self,
-        records: Iterable[RecordProtocol],
-        *,
-        dataset: TDataset = None,
-        identity: TIdentity = None
+        self, records: Iterable[RecordProtocol], *, dataset: TDataset = None, identity: TIdentity = None
     ) -> None:
-        # TODO: Review performance compared to a custom implementation for load_many
-        result = [self.save_one(x) for x in records]
+        # TODO: Review performance compared to a custom implementation for save_many
+        [self.save_one(x) for x in records]
 
     def delete_many(
         self,

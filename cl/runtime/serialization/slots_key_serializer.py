@@ -26,5 +26,11 @@ class SlotsKeySerializer:
         """Serialize key."""
 
         key_slots = data.get_key_type().__slots__
-        return tuple(v if (v := getattr(data, k)).__class__.__name__ in primitive_type_names else v.name if isinstance(v, Enum) else self.serialize_key(v) for k in key_slots)
-
+        return tuple(
+            v
+            if (v := getattr(data, k)).__class__.__name__ in primitive_type_names
+            else v.name
+            if isinstance(v, Enum)
+            else self.serialize_key(v)
+            for k in key_slots
+        )

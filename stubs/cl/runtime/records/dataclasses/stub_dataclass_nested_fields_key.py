@@ -12,11 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
-from typing import Tuple, Type
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
+from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecordKey
+from typing import Tuple
+from typing import Type
 
 
 @dataclass(slots=True)
@@ -34,4 +35,3 @@ class StubDataclassNestedFieldsKey(DataclassKeyMixin):
 
     def get_key_type(self) -> Type:
         return StubDataclassNestedFieldsKey
-

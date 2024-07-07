@@ -17,7 +17,8 @@ from __future__ import annotations
 from abc import ABC
 from abc import abstractmethod
 from cl.runtime.records.class_info import ClassInfo
-from cl.runtime.records.protocols import KeyProtocol, RecordProtocol
+from cl.runtime.records.protocols import KeyProtocol
+from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.settings.config import dynaconf_settings
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
@@ -26,7 +27,9 @@ from cl.runtime.storage.data_source_types import TLoadedRecord
 from cl.runtime.storage.data_source_types import TPackedRecord
 from cl.runtime.storage.data_source_types import TQuery
 from dataclasses import dataclass
-from typing import ClassVar, Dict, Any
+from typing import Any
+from typing import ClassVar
+from typing import Dict
 from typing import Iterable
 from typing import List
 
@@ -101,13 +104,7 @@ class DataSource(ABC):
         """
 
     @abstractmethod
-    def save_one(
-        self,
-        record: RecordProtocol | None,
-        *,
-        dataset: TDataset = None,
-        identity: TIdentity = None
-    ) -> None:
+    def save_one(self, record: RecordProtocol | None, *, dataset: TDataset = None, identity: TIdentity = None) -> None:
         """
         Save records to storage.
 
@@ -119,11 +116,7 @@ class DataSource(ABC):
 
     @abstractmethod
     def save_many(
-        self,
-        records: Iterable[RecordProtocol],
-        *,
-        dataset: TDataset = None,
-        identity: TIdentity = None
+        self, records: Iterable[RecordProtocol], *, dataset: TDataset = None, identity: TIdentity = None
     ) -> None:
         """
         Save records to storage.

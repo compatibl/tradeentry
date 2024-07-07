@@ -4,15 +4,15 @@
 # or distributed only in compliance with the terms of a written commercial
 # license from CompatibL and with the inclusion of this copyright notice.
 
-from typing import List, Optional
-
 from cl.runtime.backend.core.app_theme import AppTheme
 from cl.runtime.backend.core.tab_info import TabInfo
 from cl.runtime.backend.core.ui_app_state_key import UiAppStateKey
 from cl.runtime.backend.core.user_key import UserKey
-from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
+from dataclasses import dataclass
+from typing import List
+from typing import Optional
 
 
 @dataclass(slots=True, kw_only=True)
@@ -44,4 +44,3 @@ class UiAppState(UiAppStateKey, DataclassRecordMixin):
     def get_current_user_app_theme() -> AppTheme | None:
         """Get current user app theme."""
         return "Light"  # TODO: Use settings
-

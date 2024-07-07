@@ -12,10 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
-from typing import List, Tuple, Type, Iterator
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.records.key_mixin import KeyMixin
+from dataclasses import dataclass
+from typing import Iterator
+from typing import List
+from typing import Tuple
+from typing import Type
 
 
 @dataclass(slots=True)  # TODO: Use kw_only=True for keys as well

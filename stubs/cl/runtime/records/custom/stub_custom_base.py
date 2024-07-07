@@ -13,9 +13,11 @@
 # limitations under the License.
 
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.runtime.storage.data_source_types import TData, TField
+from cl.runtime.storage.data_source_types import TData
+from cl.runtime.storage.data_source_types import TField
 from stubs.cl.runtime.records.custom.stub_custom_base_key import StubCustomBaseKey
-from typing import Tuple, Dict
+from typing import Dict
+from typing import Tuple
 
 
 class StubCustomBase(StubCustomBaseKey, RecordMixin):
@@ -34,10 +36,10 @@ class StubCustomBase(StubCustomBaseKey, RecordMixin):
 
     def to_dict(self) -> Dict[str, TField]:
         return {
-                "str_field": self.str_field,
-                "int_field": self.int_field,
-                "float_field": self.float_field,
-            }
+            "str_field": self.str_field,
+            "int_field": self.int_field,
+            "float_field": self.float_field,
+        }
 
     def pack(self) -> Tuple[StubCustomBaseKey, TData]:
         return self.get_key(), (StubCustomBase, self.to_dict())  # TODO: Use Table, not Base

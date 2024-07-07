@@ -18,8 +18,10 @@ import os
 import pytest
 from cl.runtime.schema.dataclasses.dataclass_type_decl import DataclassTypeDecl
 from cl.runtime.schema.type_decl import TypeDecl
-from stubs.cl.runtime import StubDataclassNestedFields, StubCustomBase, StubDataclassListFields, \
-    StubDataclassPrimitiveFields
+from stubs.cl.runtime import StubCustomBase
+from stubs.cl.runtime import StubDataclassListFields
+from stubs.cl.runtime import StubDataclassNestedFields
+from stubs.cl.runtime import StubDataclassPrimitiveFields
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields import StubDataclassOptionalFields
 
@@ -32,7 +34,7 @@ def test_method():
         StubDataclassPrimitiveFields,
         StubDataclassListFields,
         StubDataclassNestedFields,
-        StubDataclassOptionalFields
+        StubDataclassOptionalFields,
     ]
 
     for sample_type in sample_types:
@@ -44,7 +46,7 @@ def test_method():
         result_dict = result_obj.to_type_decl_dict()
 
         # Save the dictionary to a file
-        with open(received_result_file_path, 'w') as received_result_file:
+        with open(received_result_file_path, "w") as received_result_file:
             json.dump(result_dict, received_result_file, indent=4)
 
         # Load expected result from a file

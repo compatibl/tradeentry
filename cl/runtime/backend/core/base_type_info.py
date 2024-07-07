@@ -4,8 +4,8 @@
 # or distributed only in compliance with the terms of a written commercial
 # license from CompatibL and with the inclusion of this copyright notice.
 
-from dataclasses import dataclass
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from dataclasses import dataclass
 
 
 @dataclass(slots=True, kw_only=True)

@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import pytest
-
 from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.schema.type_decl import TypeDecl

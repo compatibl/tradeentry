@@ -13,11 +13,10 @@
 # limitations under the License.
 
 from abc import ABC
-from dataclasses import dataclass
 from cl.runtime.records.key_mixin import KeyMixin
+from dataclasses import dataclass
 
 
 @dataclass(slots=True)
 class DataclassKeyMixin(KeyMixin, ABC):
     """Optional mixin class for a primary key object using dataclasses."""
-

@@ -17,23 +17,27 @@ from __future__ import annotations
 import ast
 import dataclasses
 import inspect
-from itertools import tee
-
 from cl.runtime import KeyUtil
-from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
 from cl.runtime.schema.element_decl import ElementDecl
 from cl.runtime.schema.field_decl import FieldDecl
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from cl.runtime.schema.type_kind import TypeKind
-from dataclasses import dataclass, asdict
+from dataclasses import asdict
+from dataclasses import dataclass
 from enum import Enum
-from inflection import titleize, camelize
+from inflection import camelize
+from inflection import titleize
+from itertools import tee
 from memoization import cached
-from typing import Dict, Literal, Any, Set
+from typing import Any
+from typing import Dict
 from typing import List
+from typing import Literal
+from typing import Set
 from typing import Type
 from typing import get_type_hints
 from typing_extensions import Self
@@ -56,7 +60,9 @@ def to_type_decl_dict(node: Dict[str, Any] | List[Dict[str, Any]] | str) -> Dict
         # For type declarations only, skip nodes that have the value of None or False
         # Remove suffix _ from field names if present
         # pascalized_values = {k: (pascalize(v) if k in ['module_name', 'name'] else v) for k, v in node.items()}
-        result = {pascalize(k.removesuffix("_")): to_type_decl_dict(v) for k, v in node.items() if v not in [None, False]}
+        result = {
+            pascalize(k.removesuffix("_")): to_type_decl_dict(v) for k, v in node.items() if v not in [None, False]
+        }
         return result
     elif isinstance(node, list):
         # For type declarations only, skip nodes that have the value of None or False
@@ -73,7 +79,9 @@ def to_type_decl_dict(node: Dict[str, Any] | List[Dict[str, Any]] | str) -> Dict
         return node
 
 
-def for_type_key_maker(cls, record_type: Type, *, dependencies: Set[Type] | None = None, skip_fields: bool = False) -> str:
+def for_type_key_maker(
+    cls, record_type: Type, *, dependencies: Set[Type] | None = None, skip_fields: bool = False
+) -> str:
     """Custom key marker for 'for_type' class method."""
     # TODO: Replace by lambda if skip_fields parameter is removed
     return f"{record_type.__module__}.{record_type.__name__}.{dependencies.__hash__}{skip_fields}"
@@ -180,9 +188,12 @@ class TypeDecl(TypeDeclKey, DataclassRecordMixin):
         # Set parent class as the first class in MRO that is not self and does not have Mixin suffix
         for parent_type in record_type.__mro__:
             # TODO: Refactor to make it work not only for dataclasses
-            if (parent_type is not record_type and not parent_type.__name__.endswith("Mixin") and not parent_type.__name__.endswith("Key")
-                    and dataclasses.is_dataclass(parent_type)):
-
+            if (
+                parent_type is not record_type
+                and not parent_type.__name__.endswith("Mixin")
+                and not parent_type.__name__.endswith("Key")
+                and dataclasses.is_dataclass(parent_type)
+            ):
                 parent_type_decl = cls.for_type(parent_type, dependencies=dependencies)
                 result.inherit = parent_type_decl.get_key()
 
@@ -191,7 +202,7 @@ class TypeDecl(TypeDeclKey, DataclassRecordMixin):
                     dependencies.add(parent_type)
 
         # Get key fields by parsing the source of 'get_key' method
-        result.keys = KeyUtil.get_key_fields(record_type)
+        result.keys = KeyUtil.get_key_fields(record_type)  # TODO: Use slots of key type when present?
 
         # Use this flag to skip fields generation when the method is invoked from a derived class
         if not skip_fields:
@@ -204,12 +215,13 @@ class TypeDecl(TypeDeclKey, DataclassRecordMixin):
             # Add an element for each type hint
             result.elements = []
             for field_name, field_type in type_hints.items():
-
                 # Field comment (docstring)
                 field_comment = member_comments.get(field_name, None)
 
                 # Get the rest of the data from the field itself
-                field_decl = FieldDecl.create(record_type, field_name, field_type, field_comment, dependencies=dependencies)
+                field_decl = FieldDecl.create(
+                    record_type, field_name, field_type, field_comment, dependencies=dependencies
+                )
 
                 # Convert to element and add
                 element_decl = ElementDecl.create(field_decl)

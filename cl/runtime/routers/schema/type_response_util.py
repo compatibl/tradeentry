@@ -15,9 +15,8 @@
 from __future__ import annotations
 
 from cl.runtime.routers.schema.type_request import TypeRequest
-from typing import Dict
-
 from cl.runtime.schema.schema import Schema
+from typing import Dict
 
 
 class TypeResponseUtil:

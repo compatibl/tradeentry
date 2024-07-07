@@ -15,22 +15,19 @@
 from __future__ import annotations
 
 import dataclasses
-
 import inflection
-
 from cl.runtime import ClassInfo
 from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
 from cl.runtime.routers.storage.record_request import RecordRequest
-from pydantic import BaseModel
-from pydantic import Field
-from typing import Any
-from typing import List
-from typing import Dict
-
 from cl.runtime.schema.field_decl import primitive_types  # TODO: Move definition to a separate module
 from cl.runtime.schema.schema import Schema
 from cl.runtime.schema.type_decl import pascalize
+from pydantic import BaseModel
+from pydantic import Field
+from typing import Any
+from typing import Dict
+from typing import List
 
 RecordResponseSchema = Dict[str, Any]
 RecordResponseData = Dict[str, Any]

@@ -36,7 +36,7 @@ def test_method():
         result_dict = TypeResponseUtil.get_type(request_obj)
 
         received_result_file_path = os.path.abspath(__file__).replace(".py", ".received.json")
-        with open(received_result_file_path, 'w') as received_result_file:
+        with open(received_result_file_path, "w") as received_result_file:
             json.dump(result_dict, received_result_file, indent=4)
 
         # Check result

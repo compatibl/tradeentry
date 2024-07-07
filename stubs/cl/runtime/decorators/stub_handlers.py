@@ -14,11 +14,10 @@
 
 import datetime as dt
 import inspect
-from dataclasses import dataclass
-
 from cl.runtime.decorators.handler_decorator import handler
-from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
+from dataclasses import dataclass
 from logging import getLogger
 from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
 from stubs.cl.runtime.records.enum.stub_int_enum import StubIntEnum

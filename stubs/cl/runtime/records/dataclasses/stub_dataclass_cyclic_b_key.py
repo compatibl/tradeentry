@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
-from typing import Tuple
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
+from dataclasses import dataclass
+from typing import Tuple
 
 
 @dataclass(slots=True)

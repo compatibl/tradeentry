@@ -7,4 +7,3 @@
 from typing import Literal
 
 AppTheme = Literal["Dark", "Light"]
-

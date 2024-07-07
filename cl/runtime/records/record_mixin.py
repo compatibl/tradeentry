@@ -14,19 +14,21 @@
 
 from abc import ABC
 from abc import abstractmethod
-from memoization import cached
-from typing import List, Iterable
-from typing import Tuple
-from typing import Type
-from typing_extensions import Self
 from cl.runtime.context.context import Context
 from cl.runtime.records.data_mixin import DataMixin
 from cl.runtime.records.key_mixin import KeyMixin
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.record_util import RecordUtil
-from cl.runtime.storage.data_source_types import TDataset, TIdentity
+from cl.runtime.storage.data_source_types import TDataset
+from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TKey
 from cl.runtime.storage.data_source_types import TPackedRecord
+from memoization import cached
+from typing import Iterable
+from typing import List
+from typing import Tuple
+from typing import Type
+from typing_extensions import Self
 
 _NONE = 0  # Code indicating None
 _KEY = 1  # Code indicating tuple
@@ -123,4 +125,3 @@ class RecordMixin(KeyMixin):
         data_source = context.data_source()
         result = data_source.load_many(records_or_keys, dataset=dataset, identities=identities)
         return result
-

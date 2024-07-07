@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, Tuple
-
 from cl.runtime.records.key_mixin import KeyMixin
 from cl.runtime.storage.data_source_types import TField
+from typing import Dict
+from typing import Tuple
 
 
 class StubCustomBaseKey(KeyMixin):
@@ -35,9 +35,9 @@ class StubCustomBaseKey(KeyMixin):
 
     def to_dict(self) -> Dict[str, TField]:
         return {
-                "str_field": self.str_field,
-                "int_field": self.int_field,
-            }
+            "str_field": self.str_field,
+            "int_field": self.int_field,
+        }
 
     def get_generic_key(self) -> Tuple:
         return StubCustomBaseKey, self.str_field, self.int_field

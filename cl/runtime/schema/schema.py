@@ -16,16 +16,18 @@ from __future__ import annotations
 
 import importlib
 import inspect
+from cl.runtime import ClassInfo
+from cl.runtime.schema.type_decl import TypeDecl
+from cl.runtime.schema.type_decl import pascalize
+from cl.runtime.schema.type_decl_key import TypeDeclKey
 from collections import Counter
 from enum import Enum
+from memoization import cached
 from pkgutil import walk_packages
 from types import ModuleType
-
-from cl.runtime import ClassInfo
-from cl.runtime.schema.type_decl import TypeDecl, pascalize
-from cl.runtime.schema.type_decl_key import TypeDeclKey
-from memoization import cached
-from typing import Dict, List, Iterable
+from typing import Dict
+from typing import Iterable
+from typing import List
 from typing import Type
 from typing_extensions import Self
 
@@ -33,11 +35,11 @@ from typing_extensions import Self
 def is_data_or_record(data_type):
     """Return true if the type is a record based on the presence of 'get_key' method."""
     return (
-            inspect.isclass(data_type) and
-            hasattr(data_type, "to_dict") and
-            callable(getattr(data_type, "to_dict")) and
-            not inspect.isabstract(data_type) and
-            not data_type.__name__.endswith("Mixin")
+        inspect.isclass(data_type)
+        and hasattr(data_type, "to_dict")
+        and callable(getattr(data_type, "to_dict"))
+        and not inspect.isabstract(data_type)
+        and not data_type.__name__.endswith("Mixin")
     )
 
 
@@ -68,8 +70,10 @@ class Schema:
         # TODO: Update to support short name with namespace prefix
         record_type = type_dict_by_short_name.get(short_name, None)
         if record_type is None:
-            raise RuntimeError(f"Record class with short name {short_name} is not found "
-                               f"in the list of packages specified in settings.")
+            raise RuntimeError(
+                f"Record class with short name {short_name} is not found "
+                f"in the list of packages specified in settings."
+            )
         return record_type
 
     @classmethod
@@ -109,8 +113,10 @@ class Schema:
             # Report repeated names
             package_names_str = ", ".join(packages)
             repeated_names_str = ", ".join(repeated_names)
-            raise RuntimeError(f"The following class names in the list of packages {package_names_str} "
-                               f"are repeated more than once: {repeated_names_str}")
+            raise RuntimeError(
+                f"The following class names in the list of packages {package_names_str} "
+                f"are repeated more than once: {repeated_names_str}"
+            )
 
         # Create dictionary
         result = dict(zip(record_names, record_types))

@@ -12,7 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Protocol, Any, Type
+from typing import Any
+from typing import Protocol
+from typing import Type
 
 
 def is_record(type_or_obj: Any) -> bool:

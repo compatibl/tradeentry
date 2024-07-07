@@ -4,10 +4,10 @@
 # or distributed only in compliance with the terms of a written commercial
 # license from CompatibL and with the inclusion of this copyright notice.
 
-from dataclasses import dataclass
-from typing import Tuple
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.records.dataclasses.dataclass_key_mixin import DataclassKeyMixin
+from dataclasses import dataclass
+from typing import Tuple
 
 
 @dataclass(slots=True)

@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
 from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_data import StubDataclassData
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_data import StubDataclassDerivedData
@@ -55,4 +55,6 @@ class StubDataclassNestedFields(StubDataclassNestedFieldsKey, DataclassRecordMix
     """Stub field with key type initialized to record type instance."""
 
     def get_key(self) -> StubDataclassNestedFieldsKey:
-        return StubDataclassNestedFieldsKey(primitive=self.primitive, embedded_1=self.embedded_1, embedded_2=self.embedded_2)
+        return StubDataclassNestedFieldsKey(
+            primitive=self.primitive, embedded_1=self.embedded_1, embedded_2=self.embedded_2
+        )

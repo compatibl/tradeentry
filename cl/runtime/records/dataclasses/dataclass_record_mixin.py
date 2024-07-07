@@ -12,10 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
 import dataclasses
+from abc import ABC
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.runtime.storage.data_source_types import TPackedRecord, TField
+from cl.runtime.storage.data_source_types import TField
+from cl.runtime.storage.data_source_types import TPackedRecord
 from dataclasses import dataclass
 from typing import Dict
 

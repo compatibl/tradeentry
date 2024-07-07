@@ -14,9 +14,11 @@
 
 import pytest
 from cl.runtime.serialization.slots_serializer import SlotsSerializer
-from stubs.cl.runtime import StubDataclassNestedFields, StubDataclassListFields, StubDataclassPrimitiveFields
-from stubs.cl.runtime import StubDataclassRecord
+from stubs.cl.runtime import StubDataclassListFields
+from stubs.cl.runtime import StubDataclassNestedFields
 from stubs.cl.runtime import StubDataclassOptionalFields
+from stubs.cl.runtime import StubDataclassPrimitiveFields
+from stubs.cl.runtime import StubDataclassRecord
 
 
 def test_smoke():
@@ -27,13 +29,12 @@ def test_smoke():
         StubDataclassPrimitiveFields,
         StubDataclassListFields,
         StubDataclassNestedFields,
-        StubDataclassOptionalFields
+        StubDataclassOptionalFields,
     ]
 
     serializer = SlotsSerializer()
 
     for sample_type in sample_types:
-
         obj_1 = sample_type()
         serialized_1 = serializer.serialize(obj_1)
         obj_2 = serializer.deserialize(serialized_1)

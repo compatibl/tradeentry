@@ -23,4 +23,3 @@ class ModuleDecl(ModuleDeclKey, DataclassRecordMixin):
 
     def get_key(self) -> ModuleDeclKey:
         return ModuleDeclKey(module_name=self.module_name)
-

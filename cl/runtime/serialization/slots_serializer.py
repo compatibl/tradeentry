@@ -13,7 +13,8 @@
 # limitations under the License.
 
 from enum import Enum
-from typing import Type, Dict
+from typing import Dict
+from typing import Type
 
 
 class MissingType:
@@ -45,7 +46,11 @@ class SlotsSerializer:
         if hasattr(data, "__slots__"):
             # Slots class, serialize as dictionary
             # Serialize slot values in the order of declaration except those that are None
-            result = {k: v if v.__class__.__name__ in primitive_type_names else self.serialize(v) for k in data.__slots__ if (v := getattr(data, k)) is not None}
+            result = {
+                k: v if v.__class__.__name__ in primitive_type_names else self.serialize(v)
+                for k in data.__slots__
+                if (v := getattr(data, k)) is not None
+            }
             # To find short name, use 'in' which is faster than 'get' when most types do not have aliases
             short_name = alias_dict[type_] if (type_ := data.__class__) in alias_dict else type_.__name__
             # Cache type for subsequent reverse lookup
@@ -55,9 +60,11 @@ class SlotsSerializer:
             return result
         elif isinstance(data, dict):
             # Dictionary, return with serialized values
-            result = {k: v if v.__class__.__name__ in primitive_type_names else self.serialize(v) for k, v in data.items()}
+            result = {
+                k: v if v.__class__.__name__ in primitive_type_names else self.serialize(v) for k, v in data.items()
+            }
             return result
-        elif hasattr(data, '__iter__'):
+        elif hasattr(data, "__iter__"):
             # Get the first item without iterating over the entire sequence
             first_item = next(iter(data), missing)
             if first_item == missing:
@@ -89,24 +96,35 @@ class SlotsSerializer:
                 # If _type is specified, create an instance of _type after deserializing fields recursively
                 deserialized_type = type_dict.get(short_name, None)  # noqa
                 if deserialized_type is None:
-                    raise RuntimeError(f"Class not found for name or alias '{short_name}' during deserialization. "
-                                       f"Ensure all serialized classes are included in package import settings.")
-                deserialized_fields = {k: v if v.__class__.__name__ in primitive_type_names else self.deserialize(v) for k, v in data.items() if k != "_type"}
+                    raise RuntimeError(
+                        f"Class not found for name or alias '{short_name}' during deserialization. "
+                        f"Ensure all serialized classes are included in package import settings."
+                    )
+                deserialized_fields = {
+                    k: v if v.__class__.__name__ in primitive_type_names else self.deserialize(v)
+                    for k, v in data.items()
+                    if k != "_type"
+                }
                 result = deserialized_type(**deserialized_fields)  # noqa
                 return result
             elif (short_name := data.get("_enum", None)) is not None:
                 # If _enum is specified, create an instance of _enum using _name
                 deserialized_type = type_dict.get(short_name, None)  # noqa
                 if deserialized_type is None:
-                    raise RuntimeError(f"Enum not found for name or alias '{short_name}' during deserialization. "
-                                       f"Ensure all serialized enums are included in package import settings.")
-                result = deserialized_type[data["_name"]] # noqa
+                    raise RuntimeError(
+                        f"Enum not found for name or alias '{short_name}' during deserialization. "
+                        f"Ensure all serialized enums are included in package import settings."
+                    )
+                result = deserialized_type[data["_name"]]  # noqa
                 return result
             else:
                 # Otherwise return a dictionary with recursively deserialized values
-                result = {k: v if v.__class__.__name__ in primitive_type_names else self.deserialize(v) for k, v in data.items()}
+                result = {
+                    k: v if v.__class__.__name__ in primitive_type_names else self.deserialize(v)
+                    for k, v in data.items()
+                }
                 return result
-        elif hasattr(data, '__iter__'):
+        elif hasattr(data, "__iter__"):
             # Get the first item without iterating over the entire sequence
             first_item = next(iter(data), missing)
             if first_item == missing:

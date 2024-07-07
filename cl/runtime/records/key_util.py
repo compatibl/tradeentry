@@ -15,7 +15,10 @@
 import ast
 import inspect
 import textwrap
-from typing import Tuple, Dict, List, Any
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Tuple
 from typing import Type
 
 
@@ -49,10 +52,10 @@ class KeyUtil:
         else:
             # TODO: Determine if a flag is needed for element types to prevent keys lookup
             return None
-            #raise RuntimeError(
+            # raise RuntimeError(
             #    f"Cannot get key fields because record type {record_type.__name__} "
             #    f"does not implement 'get_key' method."
-            #)
+            # )
 
         # Because 'ast' expects the code to be correct as though it is at top level,
         # remove excess indent from the source to make it suitable for parsing

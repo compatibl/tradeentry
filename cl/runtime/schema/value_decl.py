@@ -12,10 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Literal
-
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from dataclasses import dataclass
+from typing import Literal
 
 PrimitiveTypeLiteral = Literal["str", "float", "bool", "int", "dt.date", "dt.time", "dt.datetime", "uuid.UUID", "bytes"]
 

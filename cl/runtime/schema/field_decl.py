@@ -15,17 +15,15 @@
 import datetime as dt
 import types
 import typing
-
 from cl.runtime import ClassInfo
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from cl.runtime.schema.field_kind import FieldKind
 from dataclasses import dataclass
 from enum import Enum
 from typing import Literal
 from typing import Type
 from typing_extensions import Self
 from uuid import UUID
-
-from cl.runtime.schema.field_kind import FieldKind
 
 primitive_types = [str, float, bool, int, dt.date, dt.time, dt.datetime, UUID, bytes]
 """List of primitive types."""
@@ -72,9 +70,15 @@ class FieldDecl:
     """This field is an alternate of the specified field, of which only one can be specified."""
 
     @classmethod
-    def create(cls, record_type: Type, field_name: str, field_type: Type, field_comment: str,
-               *,
-               dependencies: typing.Set[Type] | None = None) -> Self:
+    def create(
+        cls,
+        record_type: Type,
+        field_name: str,
+        field_type: Type,
+        field_comment: str,
+        *,
+        dependencies: typing.Set[Type] | None = None,
+    ) -> Self:
         """
         Create from field name and type.
 
@@ -145,19 +149,16 @@ class FieldDecl:
 
         # Parse the value itself
         if field_origin is Literal:
-
             # List of literal strings
             result.field_kind = "primitive"
             result.field_type = str.__name__
 
         elif field_origin is tuple:
-
             # Generic key
             result.field_kind = "primitive"
             result.field_type = "key"
 
         elif field_origin is None:
-
             # Assign element kind
             if field_type in primitive_types:
                 # Indicate that field is one of the supported primitive types
@@ -173,11 +174,9 @@ class FieldDecl:
                 result.field_kind = "data"
 
             if field_type.__module__ in primitive_modules:
-
                 # Primitive type, specify type name
                 result.field_type = field_type.__name__
             else:
-
                 # Complex type, specify full class path
                 field_class_path = f"{field_type.__module__}.{field_type.__name__}"
 
@@ -193,14 +192,20 @@ class FieldDecl:
                 result.field_type = field_class_path
                 field_type_obj = ClassInfo.get_class_type(field_class_path)
 
-                if dependencies is not None and field_type_obj is not record_type and field_type_obj not in dependencies:
+                if (
+                    dependencies is not None
+                    and field_type_obj is not record_type
+                    and field_type_obj not in dependencies
+                ):
                     # TODO: Do we need this if we are processing dependencies?
                     # TODO: Should a list of dependencies be added to TypeDecl object directly
                     if issubclass(field_type_obj, Enum):
                         from cl.runtime.schema.enum_decl import EnumDecl
+
                         # TODO: Restore call when implemented EnumDecl.for_type(field_type_obj, dependencies=dependencies)
                     else:
                         from cl.runtime.schema.type_decl import TypeDecl
+
                         TypeDecl.for_type(field_type_obj, dependencies=dependencies)
 
                 # Add to dependencies

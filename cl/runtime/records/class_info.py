@@ -97,8 +97,7 @@ class ClassInfo(ABC):
         fully_qualified_names = [
             f"{c.__module__}.{c.__name__}"
             for c in record_type.mro()
-            if hasattr(c, "get_key")
-            and not c.__name__.endswith("Mixin")
+            if hasattr(c, "get_key") and not c.__name__.endswith("Mixin")
         ]
 
         # Make sure there is only one such class in the inheritance chain

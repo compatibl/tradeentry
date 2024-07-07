@@ -19,7 +19,8 @@ from cl.runtime.schema.type_decl import TypeDecl
 from cl.runtime.schema.type_decl import for_type_key_maker
 from dataclasses import dataclass
 from memoization import cached
-from typing import Type, Set
+from typing import Set
+from typing import Type
 from typing import get_type_hints
 from typing_extensions import Self
 

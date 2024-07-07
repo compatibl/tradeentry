@@ -15,18 +15,18 @@
 from __future__ import annotations
 
 import inflection
-
 from cl.runtime import ClassInfo
 from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
 from cl.runtime.routers.storage.select_request import SelectRequest
+from cl.runtime.storage.data_source_types import TPrimitive
 from pydantic import BaseModel
 from pydantic import Field
-from typing import Any, Tuple, Type
+from typing import Any
 from typing import Dict
 from typing import List
-
-from cl.runtime.storage.data_source_types import TPrimitive
+from typing import Tuple
+from typing import Type
 
 SelectResponseSchema = Dict[str, Any]
 SelectResponseData = List[Dict[str, Any]]
@@ -36,8 +36,8 @@ def serialize_key(key: Tuple[Type, ...] | TPrimitive) -> str:
     """Serialize key in tuple format."""
     if isinstance(key, tuple):
         # if key[0] is not type:  # TODO: Verify why the check does not work as expected
-            # TODO: Check for table type
-            # raise RuntimeError(f"First element {key[0]} of {key} is not a type.")
+        # TODO: Check for table type
+        # raise RuntimeError(f"First element {key[0]} of {key} is not a type.")
         return ";".join([serialize_key(key_token) for key_token in key[1:]])
     else:
         return key

@@ -13,11 +13,12 @@
 # limitations under the License.
 
 import dataclasses
-from typing import Dict, Callable
-from dataclasses import field
 from cl.runtime.records.data_mixin import DataMixin
 from cl.runtime.storage.data_source_types import TField
 from dataclasses import dataclass
+from dataclasses import field
+from typing import Callable
+from typing import Dict
 from typing import TypeVar
 
 TDefault = TypeVar("TDefault")

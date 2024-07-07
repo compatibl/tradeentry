@@ -17,10 +17,10 @@ from __future__ import annotations
 import inspect
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.user_request import UserRequest
+from cl.runtime.schema.schema import Schema
 from inflection import titleize
 from pydantic import BaseModel
 from typing import List
-from cl.runtime.schema.schema import Schema
 
 
 class TypesResponseItem(BaseModel):
@@ -52,6 +52,7 @@ class TypesResponseItem(BaseModel):
                 module=StringUtil.to_pascal_case(record_type.__module__),
                 label=titleize(record_type.__name__),
             )
-            for record_type in type_dict.values() if hasattr(record_type, "get_key")
+            for record_type in type_dict.values()
+            if hasattr(record_type, "get_key")
         ]
         return result

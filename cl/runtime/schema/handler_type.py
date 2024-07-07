@@ -19,6 +19,6 @@ HandlerType = Literal[
     "job",  # Job handler is shown as a button, return type must be None, params are allowed
     "process",  # Process handler, return type is not allowed, params are allowed
     "viewer",  # Viewer, return type is allowed, params are allowed
-    "content"  # # Viewer, return type is allowed, params not allowed
+    "content",  # # Viewer, return type is allowed, params not allowed
 ]
 """Handler type."""

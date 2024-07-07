@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
+from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
 from cl.runtime.schema.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.enum_item_decl import EnumItemDecl
 from dataclasses import dataclass
@@ -35,4 +35,3 @@ class EnumDecl(EnumDeclKey, DataclassRecordMixin):
 
     def get_key(self) -> EnumDeclKey:
         return EnumDeclKey(module=self.module, name=self.name)
-

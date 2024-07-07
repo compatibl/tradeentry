@@ -4,11 +4,13 @@
 # or distributed only in compliance with the terms of a written commercial
 # license from CompatibL and with the inclusion of this copyright notice.
 
-from dataclasses import dataclass
-from typing import List, Optional, final
 from cl.runtime.backend.core.ui_type_state_key import UiTypeStateKey
 from cl.runtime.records.dataclasses.dataclass_data_mixin import datafield
 from cl.runtime.records.dataclasses.dataclass_record_mixin import DataclassRecordMixin
+from dataclasses import dataclass
+from typing import List
+from typing import Optional
+from typing import final
 
 
 @final
@@ -30,4 +32,3 @@ class UiTypeState(UiTypeStateKey, DataclassRecordMixin):
 
     def get_key(self) -> UiTypeStateKey:
         return UiTypeStateKey(self.type_, self.user)
-
