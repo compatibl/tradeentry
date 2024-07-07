@@ -23,6 +23,6 @@ class KeyMixin(ABC):
     __slots__ = ()
     """To prevent creation of __dict__ in derived types."""
 
-    # TODO: @abstractmethod
+    @abstractmethod
     def get_key_type(self) -> Type:
         """Return key type even when called from a record, implement using literal type rather than type(self)."""
