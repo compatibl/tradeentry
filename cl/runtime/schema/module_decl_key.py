@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from cl.runtime.records.dataclasses_util import datafield
 from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
 from typing import Tuple
@@ -21,7 +22,7 @@ from typing import Tuple
 class ModuleDeclKey(KeyMixin):
     """Specifies module path in dot-delimited format."""
 
-    module_name: str
+    module_name: str = datafield()
     """Module name in dot-delimited format."""
 
     def get_generic_key(self) -> Tuple:
