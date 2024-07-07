@@ -20,7 +20,7 @@ class User(UserKey, RecordMixin):
     last_name: str = datafield()
     """Last name of the user."""
 
-    email: str | None = datafield(default=None)
+    email: str | None = None
     """Email of the user."""
 
     def get_key(self) -> UserKey:

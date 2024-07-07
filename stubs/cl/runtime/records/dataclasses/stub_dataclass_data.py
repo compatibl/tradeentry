@@ -20,8 +20,8 @@ from dataclasses import dataclass
 class StubDataclassData:
     """Stub base data type."""
 
-    str_field: str = datafield(default="abc")
+    str_field: str = "abc"
     """Stub field."""
 
-    int_field: int = datafield(default=123)
+    int_field: int = 123
     """Stub field."""

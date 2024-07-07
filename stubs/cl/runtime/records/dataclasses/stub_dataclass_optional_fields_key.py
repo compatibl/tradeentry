@@ -23,7 +23,7 @@ from typing import Type
 class StubDataclassOptionalFieldsKey(KeyMixin):
     """Stub derived class."""
 
-    id: str = datafield(default="abc")
+    id: str = "abc"
     """Unique identifier."""
 
     def get_key_type(self) -> Type:

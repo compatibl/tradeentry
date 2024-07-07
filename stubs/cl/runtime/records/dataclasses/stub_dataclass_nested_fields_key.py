@@ -24,7 +24,7 @@ from typing import Type
 class StubDataclassNestedFieldsKey(KeyMixin):
     """Stub derived class."""
 
-    primitive: str = datafield(default="abc")
+    primitive: str = "abc"
     """String key element."""
 
     embedded_1: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecordKey("def"))

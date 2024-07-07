@@ -28,37 +28,37 @@ from uuid import UUID
 class StubDataclassPrimitiveFields(StubDataclassPrimitiveFieldsKey, RecordMixin):
     """Stub record whose elements are primitive types."""
 
-    obj_str_field: str = datafield(default="abc")
+    obj_str_field: str = "abc"
     """Stub field."""
 
-    obj_float_field: float = datafield(default=1.23)
+    obj_float_field: float = 1.23
     """Stub field."""
 
-    obj_bool_field: bool = datafield(default=True)
+    obj_bool_field: bool = True
     """Stub field."""
 
-    obj_int_field: int = datafield(default=123)
+    obj_int_field: int = 123
     """Stub field."""
 
     obj_long_field: int = datafield(default=9007199254740991, subtype="long")
     """The default is maximum safe signed int for JSON: 2^53 - 1."""
 
-    obj_date_field: dt.date = datafield(default=DateUtil.from_fields(2003, 5, 1))
+    obj_date_field: dt.date = DateUtil.from_fields(2003, 5, 1)
     """Stub field."""
 
-    obj_time_field: dt.time = datafield(default=TimeUtil.from_fields(10, 15, 30))
+    obj_time_field: dt.time = TimeUtil.from_fields(10, 15, 30)
     """Stub field."""
 
-    obj_date_time_field: dt.datetime = datafield(default=DatetimeUtil.from_fields(2003, 5, 1, 10, 15, 0))
+    obj_date_time_field: dt.datetime = DatetimeUtil.from_fields(2003, 5, 1, 10, 15, 0)
     """Stub field."""
 
-    obj_uuid_field: UUID = datafield(default=UUID("1A" * 16))
+    obj_uuid_field: UUID = UUID("1A" * 16)
     """Stub field."""
 
-    obj_bytes_field: bytes = datafield(default=bytes([100, 110, 120]))
+    obj_bytes_field: bytes = bytes([100, 110, 120])
     """Stub field."""
 
-    obj_enum_field: StubIntEnum = datafield(default=StubIntEnum.ENUM_VALUE_1)
+    obj_enum_field: StubIntEnum = StubIntEnum.ENUM_VALUE_1
     """Stub field."""
 
     def get_key(self) -> StubDataclassPrimitiveFieldsKey:

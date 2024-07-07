@@ -21,5 +21,5 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDatac
 class StubDataclassOtherDerivedRecord(StubDataclassRecord):
     """Another type derived from StubDataclassRecord."""
 
-    other_derived: str = datafield(default="other_derived")
+    other_derived: str = "other_derived"
     """Stub field for other derived class."""

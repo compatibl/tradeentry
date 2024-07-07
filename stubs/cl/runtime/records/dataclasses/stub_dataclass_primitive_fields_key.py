@@ -29,38 +29,38 @@ from uuid import UUID
 class StubDataclassPrimitiveFieldsKey(KeyMixin):
     """Stub record whose elements are primitive types."""
 
-    key_str_field: str = datafield(default="abc")
+    key_str_field: str = "abc"
     """Stub field."""
 
-    key_float_field: float = datafield(default=1.23)
+    key_float_field: float = 1.23
     """Stub field."""
 
-    key_bool_field: bool = datafield(default=True)
+    key_bool_field: bool = True
     """Stub field."""
 
-    key_int_field: int = datafield(default=123)
+    key_int_field: int = 123
     """Stub field."""
 
-    key_long_field: int = datafield(default=9007199254740991, subtype="long")  # Rename subtype
+    key_long_field: int = datafield(default=9007199254740991, subtype="long")  # TODO: Rename subtype?
     """The default is maximum safe signed int for JSON: 2^53 - 1."""
     # TODO: Define maximum safe long in Util class
 
-    key_date_field: dt.date = datafield(default=DateUtil.from_fields(2003, 5, 1))
+    key_date_field: dt.date = DateUtil.from_fields(2003, 5, 1)
     """Stub field."""
 
-    key_time_field: dt.time = datafield(default=TimeUtil.from_fields(10, 15, 30))
+    key_time_field: dt.time = TimeUtil.from_fields(10, 15, 30)
     """Stub field."""
 
-    key_date_time_field: dt.datetime = datafield(default=DatetimeUtil.from_fields(2003, 5, 1, 10, 15, 0))
+    key_date_time_field: dt.datetime = DatetimeUtil.from_fields(2003, 5, 1, 10, 15, 0)
     """Stub field."""
 
-    key_uuid_field: UUID = datafield(default=UUID("1A" * 16))
+    key_uuid_field: UUID = UUID("1A" * 16)
     """Stub field."""
 
-    key_bytes_field: bytes = datafield(default=bytes([100, 110, 120]))
+    key_bytes_field: bytes = bytes([100, 110, 120])
     """Stub field."""
 
-    key_enum_field: StubIntEnum = datafield(default=StubIntEnum.ENUM_VALUE_2)
+    key_enum_field: StubIntEnum = StubIntEnum.ENUM_VALUE_2
     """Stub field."""
 
     def get_key_type(self) -> Type:

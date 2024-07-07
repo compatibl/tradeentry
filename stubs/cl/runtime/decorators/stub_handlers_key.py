@@ -22,7 +22,7 @@ from typing import Tuple
 class StubHandlersKey(KeyMixin):
     """Stub record base class."""
 
-    stub_id: str = datafield(default="abc")
+    stub_id: str = "abc"
     """Stub identifier."""
 
     def get_generic_key(self) -> Tuple:

@@ -26,7 +26,7 @@ from typing import List
 class StubDataclassOptionalFields(StubDataclassOptionalFieldsKey, RecordMixin):
     """Stub derived class."""
 
-    optional_str: str | None = datafield(default="xyz")
+    optional_str: str | None = "xyz"
     """Optional string."""
 
     required_list_of_optional_str: List[str | None] = datafield()
@@ -35,7 +35,7 @@ class StubDataclassOptionalFields(StubDataclassOptionalFieldsKey, RecordMixin):
     optional_list_of_optional_str: List[str | None] | None = datafield()
     """Optional list of optional strings."""
 
-    optional_float: float | None = datafield(default=1.23)
+    optional_float: float | None = 1.23
     """Optional float."""
 
     required_list_of_optional_float: List[float | None] = datafield()
