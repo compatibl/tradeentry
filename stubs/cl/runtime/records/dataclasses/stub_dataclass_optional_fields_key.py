@@ -15,7 +15,6 @@
 from cl.runtime.records.dataclasses_util import datafield
 from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
-from typing import Tuple
 from typing import Type
 
 

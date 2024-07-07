@@ -15,18 +15,18 @@
 from cl.runtime.records.dataclasses_util import datafield
 from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
-from typing import Tuple
+from typing import Type
 
 
 @dataclass(slots=True, kw_only=True)
 class ViewKey(KeyMixin):
     """Contains data that will be visualized alongside the record specified by the 'view_for' field."""
 
-    view_for: Tuple = datafield()
+    # TODO: !!! Restore when GenericKey is added view_for: GenericKey = datafield()
     """Generic key of the record for which the view is specified."""
 
     view_name: str = datafield()
     """Name of the view displayed in the front end."""
 
-    def get_generic_key(self) -> Tuple:
-        return ViewKey, self.view_for, self.view_name
+    def get_key_type(self) -> Type:
+        return ViewKey

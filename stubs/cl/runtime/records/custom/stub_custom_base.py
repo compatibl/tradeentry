@@ -17,7 +17,7 @@ from cl.runtime.storage.data_source_types import TData
 from cl.runtime.storage.data_source_types import TField
 from stubs.cl.runtime.records.custom.stub_custom_base_key import StubCustomBaseKey
 from typing import Dict
-from typing import Tuple
+from typing import Type
 
 
 class StubCustomBase(StubCustomBaseKey, RecordMixin):

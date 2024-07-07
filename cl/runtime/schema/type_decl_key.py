@@ -16,7 +16,7 @@ from cl.runtime.records.dataclasses_util import datafield
 from cl.runtime.records.key_mixin import KeyMixin
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
 from dataclasses import dataclass
-from typing import Tuple
+from typing import Type
 
 
 @dataclass(slots=True, kw_only=True)
@@ -29,5 +29,5 @@ class TypeDeclKey(KeyMixin):
     name: str = datafield()
     """Type name is unique when combined with module."""
 
-    def get_generic_key(self) -> Tuple:
-        return TypeDeclKey, self.module.get_generic_key(), self.name
+    def get_key_type(self) -> Type:
+        return TypeDeclKey

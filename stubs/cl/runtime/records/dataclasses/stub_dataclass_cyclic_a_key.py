@@ -16,7 +16,7 @@ from cl.runtime.records.dataclasses_util import datafield
 from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b_key import StubDataclassCyclicBKey
-from typing import Tuple
+from typing import Type
 
 
 @dataclass(slots=True, kw_only=True)
@@ -26,5 +26,5 @@ class StubDataclassCyclicAKey(KeyMixin):
     b_key: StubDataclassCyclicBKey = datafield()
     """Key for class B."""
 
-    def get_generic_key(self) -> Tuple:
-        return StubDataclassCyclicAKey, self.b_key
+    def get_key_type(self) -> Type:
+        return StubDataclassCyclicAKey

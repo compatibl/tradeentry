@@ -15,7 +15,7 @@
 from cl.runtime.records.dataclasses_util import datafield
 from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
-from typing import Tuple
+from typing import Type
 
 
 @dataclass(slots=True, kw_only=True)
@@ -24,5 +24,5 @@ class StubDataclassAliasedRecordKey(KeyMixin):  # TODO: Specify alias and add de
 
     id: str = datafield()
 
-    def get_generic_key(self) -> Tuple:
-        return StubDataclassAliasedRecordKey, self.id
+    def get_key_type(self) -> Type:
+        return StubDataclassAliasedRecordKey

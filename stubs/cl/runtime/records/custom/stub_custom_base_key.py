@@ -15,7 +15,7 @@
 from cl.runtime.records.key_mixin import KeyMixin
 from cl.runtime.storage.data_source_types import TField
 from typing import Dict
-from typing import Tuple
+from typing import Type
 
 
 class StubCustomBaseKey(KeyMixin):
@@ -39,5 +39,5 @@ class StubCustomBaseKey(KeyMixin):
             "int_field": self.int_field,
         }
 
-    def get_generic_key(self) -> Tuple:
-        return StubCustomBaseKey, self.str_field, self.int_field
+    def get_key_type(self) -> Type:
+        return StubCustomBaseKey

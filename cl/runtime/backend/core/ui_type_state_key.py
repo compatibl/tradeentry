@@ -9,7 +9,7 @@ from cl.runtime.records.dataclasses_util import datafield
 from cl.runtime.records.key_mixin import KeyMixin
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from dataclasses import dataclass
-from typing import Tuple
+from typing import Type
 
 
 @dataclass(slots=True, kw_only=True)
@@ -22,5 +22,5 @@ class UiTypeStateKey(KeyMixin):
     user: UserKey | None = datafield()
     """A user the app state is applied for."""
 
-    def get_generic_key(self) -> Tuple:
-        return UiTypeStateKey, self.type_, self.user
+    def get_key_type(self) -> Type:
+        return UiTypeStateKey

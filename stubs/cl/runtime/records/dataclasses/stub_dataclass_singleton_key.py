@@ -14,12 +14,12 @@
 
 from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
-from typing import Tuple
+from typing import Type
 
 
 @dataclass(slots=True, kw_only=True)
 class StubDataclassSingletonKey(KeyMixin):
     """Singleton record has no key fields."""
 
-    def get_generic_key(self) -> Tuple:
-        return (StubDataclassSingletonKey,)
+    def get_key_type(self) -> Type:
+        return StubDataclassSingletonKey

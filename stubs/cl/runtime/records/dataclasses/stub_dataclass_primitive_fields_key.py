@@ -20,7 +20,6 @@ from cl.runtime.records.dataclasses_util import datafield
 from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
 from stubs.cl.runtime.records.enum.stub_int_enum import StubIntEnum
-from typing import Tuple
 from typing import Type
 from uuid import UUID
 

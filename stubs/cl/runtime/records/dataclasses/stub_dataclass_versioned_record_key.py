@@ -14,7 +14,7 @@
 
 from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
-from typing import Tuple
+from typing import Type
 
 
 @dataclass(slots=True, kw_only=True)
@@ -24,5 +24,5 @@ class StubDataclassVersionedRecordKey(KeyMixin):
     id: str = "abc"
     """Stub field."""
 
-    def get_generic_key(self) -> Tuple:
-        return StubDataclassVersionedRecordKey, self.id
+    def get_key_type(self) -> Type:
+        return StubDataclassVersionedRecordKey

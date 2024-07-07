@@ -15,7 +15,7 @@
 from cl.runtime.records.dataclasses_util import datafield
 from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
-from typing import Tuple
+from typing import Type
 
 
 @dataclass(slots=True, kw_only=True)
@@ -25,5 +25,5 @@ class ModuleDeclKey(KeyMixin):
     module_name: str = datafield()
     """Module name in dot-delimited format."""
 
-    def get_generic_key(self) -> Tuple:
-        return ModuleDeclKey, self.module_name
+    def get_key_type(self) -> Type:
+        return ModuleDeclKey

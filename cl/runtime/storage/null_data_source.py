@@ -21,8 +21,6 @@ from cl.runtime.storage.data_source_types import TPackedRecord
 from cl.runtime.storage.data_source_types import TQuery
 from dataclasses import dataclass
 from typing import Iterable
-from typing import List
-from typing import Tuple
 
 
 @dataclass(slots=True, kw_only=True, frozen=True)

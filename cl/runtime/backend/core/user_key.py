@@ -7,7 +7,7 @@
 from cl.runtime.records.dataclasses_util import datafield
 from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
-from typing import Tuple
+from typing import Type
 
 
 @dataclass(slots=True, kw_only=True)
@@ -17,5 +17,5 @@ class UserKey(KeyMixin):
     username: str = datafield()
     """Unique user identifier."""
 
-    def get_generic_key(self) -> Tuple:
-        return UserKey, self.username
+    def get_key_type(self) -> Type:
+        return UserKey
