@@ -31,6 +31,10 @@ def test_smoke():
 
     # Create test dictionary and serialize
     dict_data = StubDictUtil.create_primitive()
+
+    # Remove bytes field because it is not supported by orjson
+    del dict_data["bytes"]
+
     json_bytes = orjson.dumps(dict_data, option=options)
     deserialized_data = orjson.loads(json_bytes)
     # TODO: Implement taking into account that deserialized JSON includes some types as strings
