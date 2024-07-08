@@ -22,9 +22,6 @@ from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.settings.config import dynaconf_settings
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
-from cl.runtime.storage.data_source_types import TKey
-from cl.runtime.storage.data_source_types import TLoadedRecord
-from cl.runtime.storage.data_source_types import TPackedRecord
 from cl.runtime.storage.data_source_types import TQuery
 from dataclasses import dataclass
 from typing import Any
@@ -88,12 +85,9 @@ class DataSource(ABC):
         *,
         dataset: TDataset = None,
         identities: Iterable[TIdentity] | None = None,
-    ) -> Iterable[TLoadedRecord]:
+    ) -> Iterable[RecordProtocol]:
         """
         Load records based on the query.
-
-        Returns:
-            Iterable of TLoadedRecord = Tuple[TKey, TData, TIdentity, TDataset, TStamp]
 
         Args:
             query: Tuple of (TYPE, CONDITIONS_DICT, ORDER_DICT) where TYPE and its descendants will be

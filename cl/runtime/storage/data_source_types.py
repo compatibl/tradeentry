@@ -23,25 +23,14 @@ from typing import Literal
 from typing import Tuple
 from typing import Type
 
-TKey = Tuple[
-    Type,  # First element is the table type
-    ...,  # Remaining elements are primary key fields of TPrimitive type in the order of declaration
-]
-"""Tuple in (table_type, primary_key_1, primary_key_2, ...) format."""
-
-# TODO: Add type as a primitive value
 TPrimitive = str | float | bool | int | dt.date | dt.time | dt.datetime | uuid.UUID | bytes
-"""Supported primitive value types in serialized data."""
+"""Supported primitive value types for serialized data in dictionary format."""
 
-# TODO: Remove Enum
-TField = Dict[str, "TField"] | List["TField"] | TKey | TPrimitive | Enum | None
-"""Supported field types in serialized data."""
+TField = Dict[str, "TField"] | List["TField"] | TPrimitive | Enum | None
+"""Supported field types for serialized data in dictionary format."""
 
-TData = Tuple[
-    Type,  # Class holding the data after deserialization
-    Dict[str, TField],  # Serialized record data in dictionary format (other formats may be added in the future)
-]
-"""Serialized data in dictionary format (other formats may be added in the future)."""
+TData = Dict[str, TField]
+"""Serialized data in dictionary format."""
 
 TIdentity = str | None
 """Identity token used for row level security."""
@@ -51,46 +40,6 @@ TDataset = Iterable[str] | None
 
 TStamp = dt.datetime | uuid.UUID | None
 """Timestamp or time-ordered globally unique identifier in UUID7 format."""  # TODO: Confirm UUID format to use
-
-TPackedRecord = Tuple[
-    TKey,  # Tuple in (table_type, primary_key_1, primary_key_2, ...) format
-    TData,  # Tuple in (record_type, serialized_data) format
-]
-"""
-Tuple of (Type, TKey, TData) where:
-    - TKey: Tuple in (table_type, primary_key_1, primary_key_2, ...) format
-    - TData: Tuple in (record_type, serialized_data) format
-"""
-
-TLoadedRecord = Tuple[
-    TKey,  # Tuple in (table_type, primary_key_1, primary_key_2, ...) format
-    TData,  # Tuple in (record_type, serialized_data) format
-    TDataset,  # Record's dataset as a delimited string, list of levels, or None
-    TStamp,  # Timestamp or time-ordered globally unique identifier
-]
-"""
-Tuple of (TKey, TData, TIdentity, TDataset, TStamp) where:
-    - TKey: Tuple in (table_type, primary_key_1, primary_key_2, ...) format
-    - TData: Tuple in (record_type, serialized_data) format
-    - TDataset: Record's dataset as a delimited string, list of levels, or None
-    - TStamp: Timestamp for the time the record was written to storage
-"""
-
-TSavedRecord = Tuple[
-    TKey,  # Tuple in (table_type, primary_key_1, primary_key_2, ...) format
-    TData,  # Tuple in (record_type, serialized_data) format
-    TDataset,  # Record's dataset as a delimited string, list of levels, or None
-    TStamp,  # Timestamp or time-ordered globally unique identifier
-    TIdentity,  # Identity token used for row level security.
-]
-"""
-Tuple of (Type, TKey, TData, TIdentity, TDataset, TStamp) where:
-    - TKey: Tuple in (table_type, primary_key_1, primary_key_2, ...) format
-    - TData: Tuple in (record_type, serialized_data) format
-    - TDataset: Record's dataset as a delimited string, list of levels, or None
-    - TStamp: Timestamp for the time the record was written to storage
-    - TIdentity: Identity token used for row level security
-"""
 
 TQuery = Tuple[
     Type,  # Query type and its descendents will be returned by the query. It must include all query and order fields.

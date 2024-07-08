@@ -17,8 +17,6 @@ from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.serialization.slots_key_serializer import SlotsKeySerializer
 from cl.runtime.serialization.slots_serializer import SlotsSerializer
-from cl.runtime.storage.data_source import TKey
-from cl.runtime.storage.data_source import TLoadedRecord
 from cl.runtime.storage.data_source_types import TData
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
@@ -41,7 +39,7 @@ key_serializer = SlotsKeySerializer()
 class LocalCache(DataSource):
     """Data source based on in-memory cache using Python dict."""
 
-    _cache: Dict[str, Dict[Type, Dict[TKey, TData]]] = field(default_factory=dict)
+    _cache: Dict[str, Dict[Type, Dict[str, TData]]] = field(default_factory=dict)
 
     def batch_size(self) -> int:
         """Maximum number or records the data source will return in a single call, error if exceeded."""
@@ -101,7 +99,7 @@ class LocalCache(DataSource):
         *,
         dataset: TDataset = None,
         identities: Iterable[TIdentity] | None = None,
-    ) -> Iterable[TLoadedRecord]:
+    ) -> Iterable[RecordProtocol]:
         # Validate the dataset and if necessary convert to delimited string
         dataset = DatasetUtil.to_str(dataset)
 
