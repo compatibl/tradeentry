@@ -40,7 +40,7 @@ type_dict: Dict[str, Type] = dict()
 
 # TODO: Add checks for to_node, from_node implementation for custom override of default serializer
 @dataclass(slots=True, kw_only=True)
-class SlotsSerializer:
+class SlotsDataSerializer:
     """Serialization for slots-based classes (including dataclasses with slots=True)."""
 
     pascalize_keys: bool = False
