@@ -111,17 +111,3 @@ class ClassInfo(ABC):
         result = [name.split(".")[-1] for name in fully_qualified_names]
 
         return result
-
-    @staticmethod
-    def _deserialize(class_type: Type, data: Dict[str, Any]) -> Any:  # TODO: Deprecated?
-        """Create an instance of cls from dictionary containing other dictionaries, lists and primitive types."""
-
-        if isinstance(data, dict):
-            field_types = get_type_hints(class_type)
-            return class_type(
-                **{k: ClassInfo._deserialize(field_types[k], v) for k, v in data.items() if k != "_class"}
-            )
-        elif isinstance(data, list):
-            return [ClassInfo._deserialize(class_type.__args__[0], item) for item in data]
-        else:
-            return data
