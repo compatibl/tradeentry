@@ -26,7 +26,6 @@ class StubDictUtil:
     def create_primitive() -> TData:
         """Create a mock dictionary whose fields include all supported primitive types."""
 
-        # TODO: Add bytes
         result = {
             "str_field": "abc",
             "float_field": 123.456,
@@ -42,5 +41,6 @@ class StubDictUtil:
             "datetime_field_ms": dt.datetime(2003, 4, 21, 11, 10, 0, 123000, tzinfo=dt.timezone.utc),
             "datetime_field_us": dt.datetime(2003, 4, 21, 11, 10, 0, 123456, tzinfo=dt.timezone.utc),
             "uuid_field": UUID("1A" * 16),
+            "bytes": b'abc'
         }
         return result
