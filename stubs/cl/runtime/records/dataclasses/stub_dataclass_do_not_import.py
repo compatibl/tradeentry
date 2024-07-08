@@ -11,11 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from dataclasses import dataclass
 
 
 # Do not import this module. Its purpose is testing dynamic import.
 
-
+@dataclass(slots=True, kw_only=True)
 class StubDataclassDoNotImport:
     """This class is for checking dynamic import. It must not be included in import statements."""
 

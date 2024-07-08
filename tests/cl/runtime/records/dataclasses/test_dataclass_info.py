@@ -23,7 +23,6 @@ from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassDictFields
 from stubs.cl.runtime import StubDataclassDictListFields
-from stubs.cl.runtime import StubDataclassDoNotImport
 from stubs.cl.runtime import StubDataclassListDictFields
 from stubs.cl.runtime import StubDataclassListFields
 from stubs.cl.runtime import StubDataclassNestedFields
@@ -109,35 +108,6 @@ def test_get_inheritance_chain():
     # Call one more time and confirm that method results are cached
     assert ClassInfo.get_inheritance_chain(StubDataclassRecord) == [base_class]
     assert ClassInfo.get_inheritance_chain.cache_info().hits > 0
-
-
-def test_to_from_dict():
-    """Test dictionary serialization roundtrip."""
-
-    # List of types for which serialization will be tested
-    # TODO: Support remaining classes
-    stub_types = [
-        # StubDataclassCyclicA,
-        # StubDataclassCyclicB,
-        StubDataclassRecord,
-        # StubDataclassDerivedFromDerivedRecord,
-        # StubDataclassDerivedRecord,
-        # StubDataclassDictFields,
-        # StubDataclassDictListFields,
-        # StubDataclassDoNotImport,
-        # StubDataclassListDictFields,
-        # StubDataclassListFields,
-        # StubDataclassNestedFields,
-        # StubDataclassOtherDerivedRecord,
-        # StubDataclassPrimitiveFields,
-        # StubDataclassSingleton,
-    ]
-
-    for stub_type in stub_types:
-        # Create a stub type instance with default field values
-        record = stub_type()
-        key = record.get_key()
-
 
 if __name__ == "__main__":
     pytest.main([__file__])

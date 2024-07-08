@@ -14,7 +14,9 @@
 
 import pytest
 from cl.runtime.serialization.slots_serializer import SlotsSerializer
-from stubs.cl.runtime import StubDataclassListFields
+from stubs.cl.runtime import StubDataclassListFields, StubDataclassDerivedRecord, StubDataclassDerivedFromDerivedRecord, \
+    StubDataclassOtherDerivedRecord, StubDataclassDictFields, StubDataclassDictListFields, \
+    StubDataclassListDictFields, StubDataclassSingleton
 from stubs.cl.runtime import StubDataclassNestedFields
 from stubs.cl.runtime import StubDataclassOptionalFields
 from stubs.cl.runtime import StubDataclassPrimitiveFields
@@ -26,10 +28,20 @@ def test_smoke():
 
     sample_types = [
         StubDataclassRecord,
-        StubDataclassPrimitiveFields,
-        StubDataclassListFields,
         StubDataclassNestedFields,
+        StubDataclassDerivedRecord,
+        StubDataclassDerivedFromDerivedRecord,
+        StubDataclassOtherDerivedRecord,
+        StubDataclassListFields,
         StubDataclassOptionalFields,
+        StubDataclassDictFields,
+        StubDataclassDictListFields,
+        StubDataclassListDictFields,
+        StubDataclassPrimitiveFields,
+        StubDataclassSingleton,
+        # TODO: Support serialization of classes with cyclic references
+        # StubDataclassCyclicA,
+        # StubDataclassCyclicB,
     ]
 
     serializer = SlotsSerializer()

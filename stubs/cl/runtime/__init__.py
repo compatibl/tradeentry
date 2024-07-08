@@ -16,7 +16,6 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_from_derived_re
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_dict_fields import StubDataclassDictFields
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_dict_list_fields import StubDataclassDictListFields
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_do_not_import import StubDataclassDoNotImport
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_list_dict_fields import StubDataclassListDictFields
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_list_fields import StubDataclassListFields
 from stubs.cl.runtime.records.dataclasses.stub_dataclass_nested_fields import StubDataclassNestedFields
