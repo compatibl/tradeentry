@@ -12,8 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import itertools
+from pymongo import MongoClient
+from pymongo.database import Database
+
 from cl.runtime import DataSource
-from cl.runtime.records.protocols import KeyProtocol
+from cl.runtime.records.dataclasses_util import datafield
+from cl.runtime.records.protocols import KeyProtocol, InitProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.serialization.slots_key_serializer import SlotsKeySerializer
 from cl.runtime.serialization.slots_data_serializer import SlotsDataSerializer
@@ -36,10 +41,28 @@ key_serializer = SlotsKeySerializer()
 
 
 @dataclass(slots=True, kw_only=True, frozen=True)
-class LocalCache(DataSource):
-    """Data source based on in-memory cache using Python dict."""
+class BasicMongoDataSource(DataSource):
+    """MongoDB data source without datasets."""
 
-    _cache: Dict[str, Dict[Type, Dict[str, TData]]] = field(default_factory=dict)
+    db_name: str = datafield()
+    """Database name must be unique for each DB client."""
+
+    client_uri: str = "mongodb://localhost:27017/"
+    """MongoDB client URI, defaults to mongodb://localhost:27017/"""
+
+    _client: MongoClient = None
+    """MongoDB client."""
+
+    _db: Database = None
+    """MongoDB database."""
+
+    def __post_init__(self) -> None:
+        """Initialize private attributes."""
+
+        # TODO: Implement dispose logic
+        # Use setattr to initialize attributes in a frozen object
+        object.__setattr__(self, '_client', MongoClient(self.client_uri))
+        object.__setattr__(self, '_db', self._client[self.db_name])
 
     def batch_size(self) -> int:
         """Maximum number or records the data source will return in a single call, error if exceeded."""
@@ -57,27 +80,27 @@ class LocalCache(DataSource):
             return cast(RecordProtocol, record_or_key)
 
         elif getattr(record_or_key, "get_key_type"):
-            # Key, look up the record in cache
+
+            # Confirm dataset and identities are None
+            if dataset is not None:
+                raise RuntimeError("BasicMongo data source type does not support datasets.")
+            if identities is not None:
+                raise RuntimeError("BasicMongo data source type does not support row-level security.")
+
+            # Key, get collection name from key type by removing Key suffix if present
             key_type = record_or_key.get_key_type()
+            collection_name = key_type.__name__.removesuffix("Key")  # TODO: Support aliases
+            collection = self._db[collection_name]
+
             serialized_key = key_serializer.serialize_key(record_or_key)
-
-            # Validate the dataset and if necessary convert to delimited string
-            dataset = DatasetUtil.to_str(dataset)
-
-            # Try to retrieve dataset dictionary, insert if it does not yet exist
-            dataset_cache = self._cache.setdefault(dataset, {})
-
-            # Try to retrieve table dictionary, return None if not found
-            if (table_cache := dataset_cache.setdefault(key_type, None)) is None:
+            serialized_record = collection.find_one({"_key": serialized_key})
+            if serialized_record is not None:
+                del serialized_record["_id"]
+                del serialized_record["_key"]
+                result = data_serializer.deserialize(serialized_record)
+                return result
+            else:
                 return None
-
-            # Look up the record, return None if not found
-            if (serialized_record := table_cache[serialized_key]) is None:
-                return None
-
-            # Deserialize and return
-            record = data_serializer.deserialize(serialized_record)
-            return record
 
         else:
             raise RuntimeError(f"Type {record_or_key.__class__.__name__} is not a record or key.")
@@ -115,22 +138,23 @@ class LocalCache(DataSource):
         if record is None:
             return
 
-        # Validate the dataset and if necessary convert to delimited string
-        dataset = DatasetUtil.to_str(dataset)
+        # Confirm dataset and identities are None
+        if dataset is not None:
+            raise RuntimeError("BasicMongo data source type does not support datasets.")
+        if identity is not None:
+            raise RuntimeError("BasicMongo data source type does not support row-level security.")
 
-        # Try to retrieve dataset dictionary, insert if it does not yet exist
-        dataset_cache = self._cache.setdefault(dataset, {})
-
-        # Try to retrieve table dictionary using `key_type` as key, insert if it does not yet exist
+        # Get collection name from key type by removing Key suffix if present
         key_type = record.get_key_type()
-        table_cache = dataset_cache.setdefault(key_type, {})
+        collection_name = key_type.__name__.removesuffix("Key")  # TODO: Support aliases
+        collection = self._db[collection_name]
 
-        # Serialize both key and record
+        # Serialize record data and key
         serialized_key = key_serializer.serialize_key(record)
         serialized_record = data_serializer.serialize(record)
 
-        # Add record to cache, overwriting an existing record if present
-        table_cache[serialized_key] = serialized_record
+        # Use update_one with upsert=True to insert if not present or update if present
+        collection.update_one({"_key": serialized_key}, {"$set": serialized_record}, upsert=True)
 
     def save_many(
             self,
@@ -139,8 +163,23 @@ class LocalCache(DataSource):
             dataset: TDataset = None,
             identity: TIdentity = None,
     ) -> None:
-        # TODO: Review performance compared to a custom implementation for save_many
-        [self.save_one(x) for x in records]
+
+        # TODO: Temporary, replace by independent implementation
+        [self.save_one(x, dataset=dataset, identity=identity) for x in records]
+        return
+
+        # Convert to (key_type, serialized_key, serialized_record) triples
+        serialized_data = [
+            (x.get_key_type(), key_serializer.serialize_key(x), data_serializer.serialize(x))
+            for x in records
+        ]
+
+        # Group by key_type
+        grouped_data = groupby(serialized_data, key=lambda x: x[0])
+
+        # Process separately for each base type
+        for key_type, data_for_key_type in grouped_data:
+            pass
 
     def delete_many(
         self,
