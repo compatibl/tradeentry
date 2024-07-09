@@ -98,12 +98,13 @@ class DataSource(ABC):
         """
 
     @abstractmethod
-    def save_one(self,
-                 record: RecordProtocol | None,
-                 *,
-                 dataset: TDataset = None,
-                 identity: TIdentity = None,
-                 ) -> None:
+    def save_one(
+        self,
+        record: RecordProtocol | None,
+        *,
+        dataset: TDataset = None,
+        identity: TIdentity = None,
+    ) -> None:
         """
         Save records to storage.
 
@@ -115,11 +116,11 @@ class DataSource(ABC):
 
     @abstractmethod
     def save_many(
-            self,
-            records: Iterable[RecordProtocol],
-            *,
-            dataset: TDataset = None,
-            identity: TIdentity = None,
+        self,
+        records: Iterable[RecordProtocol],
+        *,
+        dataset: TDataset = None,
+        identity: TIdentity = None,
     ) -> None:
         """
         Save records to storage.

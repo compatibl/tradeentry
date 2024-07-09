@@ -15,8 +15,8 @@
 from cl.runtime import DataSource
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
-from cl.runtime.serialization.slots_key_serializer import SlotsKeySerializer
 from cl.runtime.serialization.slots_data_serializer import SlotsDataSerializer
+from cl.runtime.serialization.slots_key_serializer import SlotsKeySerializer
 from cl.runtime.storage.data_source_types import TData
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
@@ -105,12 +105,13 @@ class LocalCache(DataSource):
 
         raise NotImplementedError()
 
-    def save_one(self,
-                 record: RecordProtocol | None,
-                 *,
-                 dataset: TDataset = None,
-                 identity: TIdentity = None,
-                 ) -> None:
+    def save_one(
+        self,
+        record: RecordProtocol | None,
+        *,
+        dataset: TDataset = None,
+        identity: TIdentity = None,
+    ) -> None:
         # If record is None, do nothing
         if record is None:
             return
@@ -133,11 +134,11 @@ class LocalCache(DataSource):
         table_cache[serialized_key] = serialized_record
 
     def save_many(
-            self,
-            records: Iterable[RecordProtocol],
-            *,
-            dataset: TDataset = None,
-            identity: TIdentity = None,
+        self,
+        records: Iterable[RecordProtocol],
+        *,
+        dataset: TDataset = None,
+        identity: TIdentity = None,
     ) -> None:
         # TODO: Review performance compared to a custom implementation for save_many
         [self.save_one(x) for x in records]

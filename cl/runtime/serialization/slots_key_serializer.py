@@ -36,4 +36,3 @@ class SlotsKeySerializer:
             for k in key_slots
         )
         return result
-

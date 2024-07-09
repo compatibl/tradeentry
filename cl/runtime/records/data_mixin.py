@@ -14,8 +14,8 @@
 
 from abc import ABC
 from abc import abstractmethod
-from typing_extensions import Self
 from typing import Any
+from typing_extensions import Self
 
 
 class DataMixin(ABC):
@@ -34,5 +34,5 @@ class DataMixin(ABC):
 
     @classmethod
     @abstractmethod
-    def deserialize_data(cls, data: Any, serializer) -> Self: # TODO: Specify type hint for SerializerProtocol
+    def deserialize_data(cls, data: Any, serializer) -> Self:  # TODO: Specify type hint for SerializerProtocol
         """Deserialize data, calling the specified serializer for fields that do not implement deserialize_data."""

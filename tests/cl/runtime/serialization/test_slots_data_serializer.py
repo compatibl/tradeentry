@@ -14,13 +14,18 @@
 
 import pytest
 from cl.runtime.serialization.slots_data_serializer import SlotsDataSerializer
-from stubs.cl.runtime import StubDataclassListFields, StubDataclassDerivedRecord, StubDataclassDerivedFromDerivedRecord, \
-    StubDataclassOtherDerivedRecord, StubDataclassDictFields, StubDataclassDictListFields, \
-    StubDataclassListDictFields, StubDataclassSingleton
+from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
+from stubs.cl.runtime import StubDataclassDerivedRecord
+from stubs.cl.runtime import StubDataclassDictFields
+from stubs.cl.runtime import StubDataclassDictListFields
+from stubs.cl.runtime import StubDataclassListDictFields
+from stubs.cl.runtime import StubDataclassListFields
 from stubs.cl.runtime import StubDataclassNestedFields
 from stubs.cl.runtime import StubDataclassOptionalFields
+from stubs.cl.runtime import StubDataclassOtherDerivedRecord
 from stubs.cl.runtime import StubDataclassPrimitiveFields
 from stubs.cl.runtime import StubDataclassRecord
+from stubs.cl.runtime import StubDataclassSingleton
 
 
 def test_smoke():

@@ -14,9 +14,9 @@
 
 from dataclasses import dataclass
 from enum import Enum
+from inflection import camelize
 from typing import Dict
 from typing import Type
-from inflection import camelize
 
 
 class MissingType:
@@ -53,7 +53,11 @@ class SlotsDataSerializer:
             # Slots class, serialize as dictionary
             # Serialize slot values in the order of declaration except those that are None
             result = {
-                k if not self.pascalize_keys else camelize(k, uppercase_first_letter=True): v if v.__class__.__name__ in primitive_type_names else self.serialize(v)
+                k
+                if not self.pascalize_keys
+                else camelize(k, uppercase_first_letter=True): v
+                if v.__class__.__name__ in primitive_type_names
+                else self.serialize(v)
                 for k in data.__slots__
                 if (v := getattr(data, k)) is not None
             }

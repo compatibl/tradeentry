@@ -13,15 +13,13 @@
 # limitations under the License.
 
 import itertools
-from pymongo import MongoClient
-from pymongo.database import Database
-
 from cl.runtime import DataSource
 from cl.runtime.records.dataclasses_util import datafield
-from cl.runtime.records.protocols import KeyProtocol, InitProtocol
+from cl.runtime.records.protocols import InitProtocol
+from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
-from cl.runtime.serialization.slots_key_serializer import SlotsKeySerializer
 from cl.runtime.serialization.slots_data_serializer import SlotsDataSerializer
+from cl.runtime.serialization.slots_key_serializer import SlotsKeySerializer
 from cl.runtime.storage.data_source_types import TData
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
@@ -30,6 +28,8 @@ from cl.runtime.storage.dataset_util import DatasetUtil
 from dataclasses import dataclass
 from dataclasses import field
 from itertools import groupby
+from pymongo import MongoClient
+from pymongo.database import Database
 from typing import Dict
 from typing import Iterable
 from typing import Type
@@ -61,8 +61,8 @@ class BasicMongoDataSource(DataSource):
 
         # TODO: Implement dispose logic
         # Use setattr to initialize attributes in a frozen object
-        object.__setattr__(self, '_client', MongoClient(self.client_uri))
-        object.__setattr__(self, '_db', self._client[self.db_name])
+        object.__setattr__(self, "_client", MongoClient(self.client_uri))
+        object.__setattr__(self, "_db", self._client[self.db_name])
 
     def batch_size(self) -> int:
         """Maximum number or records the data source will return in a single call, error if exceeded."""
@@ -80,7 +80,6 @@ class BasicMongoDataSource(DataSource):
             return cast(RecordProtocol, record_or_key)
 
         elif getattr(record_or_key, "get_key_type"):
-
             # Confirm dataset and identities are None
             if dataset is not None:
                 raise RuntimeError("BasicMongo data source type does not support datasets.")
@@ -128,12 +127,13 @@ class BasicMongoDataSource(DataSource):
 
         raise NotImplementedError()
 
-    def save_one(self,
-                 record: RecordProtocol | None,
-                 *,
-                 dataset: TDataset = None,
-                 identity: TIdentity = None,
-                 ) -> None:
+    def save_one(
+        self,
+        record: RecordProtocol | None,
+        *,
+        dataset: TDataset = None,
+        identity: TIdentity = None,
+    ) -> None:
         # If record is None, do nothing
         if record is None:
             return
@@ -157,21 +157,19 @@ class BasicMongoDataSource(DataSource):
         collection.update_one({"_key": serialized_key}, {"$set": serialized_record}, upsert=True)
 
     def save_many(
-            self,
-            records: Iterable[RecordProtocol],
-            *,
-            dataset: TDataset = None,
-            identity: TIdentity = None,
+        self,
+        records: Iterable[RecordProtocol],
+        *,
+        dataset: TDataset = None,
+        identity: TIdentity = None,
     ) -> None:
-
         # TODO: Temporary, replace by independent implementation
         [self.save_one(x, dataset=dataset, identity=identity) for x in records]
         return
 
         # Convert to (key_type, serialized_key, serialized_record) triples
         serialized_data = [
-            (x.get_key_type(), key_serializer.serialize_key(x), data_serializer.serialize(x))
-            for x in records
+            (x.get_key_type(), key_serializer.serialize_key(x), data_serializer.serialize(x)) for x in records
         ]
 
         # Group by key_type

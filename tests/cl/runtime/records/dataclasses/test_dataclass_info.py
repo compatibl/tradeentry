@@ -109,5 +109,6 @@ def test_get_inheritance_chain():
     assert ClassInfo.get_inheritance_chain(StubDataclassRecord) == [base_class]
     assert ClassInfo.get_inheritance_chain.cache_info().hits > 0
 
+
 if __name__ == "__main__":
     pytest.main([__file__])

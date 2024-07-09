@@ -13,8 +13,8 @@
 # limitations under the License.
 from dataclasses import dataclass
 
-
 # Do not import this module. Its purpose is testing dynamic import.
+
 
 @dataclass(slots=True, kw_only=True)
 class StubDataclassDoNotImport:

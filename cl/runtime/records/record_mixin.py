@@ -18,9 +18,11 @@ from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
 from memoization import cached
-from typing import Iterable, TypeVar, Generic
+from typing import Generic
+from typing import Iterable
 from typing import List
 from typing import Type
+from typing import TypeVar
 from typing_extensions import Self
 
 TKey = TypeVar("TKey", bound=KeyProtocol)

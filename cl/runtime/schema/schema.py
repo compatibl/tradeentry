@@ -93,7 +93,6 @@ class Schema:
         """
 
         if cls._type_dict_by_short_name is None:
-
             # TODO: Load from config file
             packages = ["cl.runtime", "stubs.cl.runtime"]
 

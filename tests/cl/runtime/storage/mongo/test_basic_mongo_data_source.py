@@ -23,7 +23,6 @@ def test_smoke():
     """Smoke test."""
 
     with BasicContext() as context:
-
         data_source = BasicMongoDataSource(data_source_id="default", db_name="Dev;Runtime;V2")
 
         # Create test record and populate with sample data
