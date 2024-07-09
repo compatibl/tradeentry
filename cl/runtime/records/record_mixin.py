@@ -12,21 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
 from abc import abstractmethod
 from cl.runtime.context.context import Context
-from cl.runtime.records.key_mixin import KeyMixin
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
 from memoization import cached
-from typing import Iterable
+from typing import Iterable, TypeVar, Generic
 from typing import List
 from typing import Type
 from typing_extensions import Self
 
+TKey = TypeVar("TKey", bound=KeyProtocol)
 
-class RecordMixin(KeyMixin, ABC):
+
+class RecordMixin(Generic[TKey]):
     """Optional mixin class for a record, code must not rely on inheritance from this class."""
 
     __slots__ = ()
@@ -66,14 +66,14 @@ class RecordMixin(KeyMixin, ABC):
     @classmethod
     def load_many(
         cls,
-        records_or_keys: Iterable[KeyProtocol | None] | None,
+        records_or_keys: Iterable[Self | TKey | None] | None,
         *,
         context: Context | None = None,
         dataset: TDataset = None,
         identities: Iterable[TIdentity] | None = None,
     ) -> Iterable[Self | None] | None:
         """
-        Load a single record using a key. If record is passed instead of a key, it is returned without DB lookup.
+        Load records using an iterable of keys. A record passed instead of a key is returned without DB lookup.
 
         Args:
             records_or_keys: Iterable of records or keys (records are returned without DB lookup).
