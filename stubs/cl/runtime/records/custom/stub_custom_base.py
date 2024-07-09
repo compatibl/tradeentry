@@ -20,7 +20,7 @@ from typing import Dict
 from typing import Type
 
 
-class StubCustomBase(StubCustomBaseKey, RecordMixin):
+class StubCustomBase(StubCustomBaseKey, RecordMixin[StubCustomBaseKey]):
     """Stub record used in tests."""
 
     float_field: float | None

@@ -21,7 +21,7 @@ from typing import List
 
 
 @dataclass(slots=True, kw_only=True)
-class EnumDecl(EnumDeclKey, RecordMixin):
+class EnumDecl(EnumDeclKey, RecordMixin[EnumDeclKey]):
     """Enum declaration."""
 
     label: str | None = datafield()

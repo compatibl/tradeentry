@@ -23,7 +23,7 @@ from typing import List
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataclassOptionalFields(StubDataclassOptionalFieldsKey, RecordMixin):
+class StubDataclassOptionalFields(StubDataclassOptionalFieldsKey, RecordMixin[StubDataclassOptionalFieldsKey]):
     """Stub derived class."""
 
     optional_str: str | None = "xyz"

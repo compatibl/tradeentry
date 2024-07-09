@@ -38,7 +38,7 @@ def print_method_info():  # TODO: Move into DebugUtil(s)
 
 
 @dataclass(slots=True, kw_only=True)
-class StubHandlers(StubHandlersKey, RecordMixin):
+class StubHandlers(StubHandlersKey, RecordMixin[StubHandlersKey]):
     """Stub record base class."""
 
     def get_key(self) -> StubHandlersKey:

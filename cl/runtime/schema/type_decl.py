@@ -88,7 +88,7 @@ def for_type_key_maker(
 
 
 @dataclass(slots=True, kw_only=True)
-class TypeDecl(TypeDeclKey, RecordMixin):
+class TypeDecl(TypeDeclKey, RecordMixin[TypeDeclKey]):
     """Provides information about a class, its fields, and its methods."""
 
     label: str | None = datafield()

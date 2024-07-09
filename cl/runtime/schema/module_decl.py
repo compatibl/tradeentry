@@ -18,7 +18,7 @@ from dataclasses import dataclass
 
 
 @dataclass(slots=True, kw_only=True)
-class ModuleDecl(ModuleDeclKey, RecordMixin):
+class ModuleDecl(ModuleDeclKey, RecordMixin[ModuleDeclKey]):
     """Specifies module path in dot-delimited format."""
 
     def get_key(self) -> ModuleDeclKey:

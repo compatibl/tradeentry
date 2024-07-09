@@ -16,7 +16,7 @@ from typing import Optional
 
 
 @dataclass(slots=True, kw_only=True)
-class UiAppState(UiAppStateKey, RecordMixin):
+class UiAppState(UiAppStateKey, RecordMixin[UiAppStateKey]):
     """UiAppState."""
 
     opened_tabs: List[TabInfo] | None = datafield()

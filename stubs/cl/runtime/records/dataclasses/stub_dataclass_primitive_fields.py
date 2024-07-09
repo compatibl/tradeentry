@@ -25,7 +25,7 @@ from uuid import UUID
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataclassPrimitiveFields(StubDataclassPrimitiveFieldsKey, RecordMixin):
+class StubDataclassPrimitiveFields(StubDataclassPrimitiveFieldsKey, RecordMixin[StubDataclassPrimitiveFieldsKey]):
     """Stub record whose elements are primitive types."""
 
     obj_str_field: str = "abc"

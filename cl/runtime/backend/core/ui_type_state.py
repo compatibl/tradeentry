@@ -15,7 +15,7 @@ from typing import final
 
 @final
 @dataclass(slots=True, kw_only=True)
-class UiTypeState(UiTypeStateKey, RecordMixin):
+class UiTypeState(UiTypeStateKey, RecordMixin[UiTypeStateKey]):
     """Defines ui settings for a type."""
 
     read_only: Optional[bool] = datafield()

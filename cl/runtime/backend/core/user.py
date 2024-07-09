@@ -11,7 +11,7 @@ from dataclasses import dataclass
 
 
 @dataclass(slots=True, kw_only=True)
-class User(UserKey, RecordMixin):
+class User(UserKey, RecordMixin[UserKey]):
     """User which is allowed to log in."""
 
     first_name: str = datafield()

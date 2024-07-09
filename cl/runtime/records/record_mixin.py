@@ -27,7 +27,10 @@ TKey = TypeVar("TKey", bound=KeyProtocol)
 
 
 class RecordMixin(Generic[TKey]):
-    """Optional mixin class for a record, code must not rely on inheritance from this class."""
+    """
+    Optional mixin class for a record parameterized by its key, code must not rely on inheritance from this class.
+    Using MyRecord(MyKey, RecordMixin[MyKey]) syntax provides additional methods to the record class.
+    """
 
     __slots__ = ()
     """To prevent creation of __dict__ in derived types."""

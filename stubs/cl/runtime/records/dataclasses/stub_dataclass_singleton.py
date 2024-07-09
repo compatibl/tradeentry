@@ -19,7 +19,7 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_singleton_key import St
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataclassSingleton(StubDataclassSingletonKey, RecordMixin):
+class StubDataclassSingleton(StubDataclassSingletonKey, RecordMixin[StubDataclassSingletonKey]):
     """Singleton record has no key fields."""
 
     str_field: str = "abc"

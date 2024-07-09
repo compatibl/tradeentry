@@ -25,7 +25,7 @@ if TYPE_CHECKING:
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataclassCyclicA(StubDataclassCyclicAKey, RecordMixin):
+class StubDataclassCyclicA(StubDataclassCyclicAKey, RecordMixin[StubDataclassCyclicAKey]):
     """Stub class A with a field whose type is key for class B."""
 
     b_obj: StubDataclassCyclicB = datafield()

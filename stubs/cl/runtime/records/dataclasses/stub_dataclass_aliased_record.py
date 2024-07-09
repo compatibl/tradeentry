@@ -19,7 +19,7 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_aliased_record_key impo
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataclassAliasedRecord(StubDataclassAliasedRecordKey, RecordMixin):  # TODO: Specify alias
+class StubDataclassAliasedRecord(StubDataclassAliasedRecordKey, RecordMixin[StubDataclassAliasedRecordKey]):  # TODO: Specify alias
     """Stub record class with typename alias."""
 
     a: int = datafield()

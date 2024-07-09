@@ -26,7 +26,7 @@ from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDatac
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataclassNestedFields(StubDataclassNestedFieldsKey, RecordMixin):
+class StubDataclassNestedFields(StubDataclassNestedFieldsKey, RecordMixin[StubDataclassNestedFieldsKey]):
     """Stub derived class."""
 
     base_datafield: StubDataclassData = datafield(default_factory=StubDataclassData)
