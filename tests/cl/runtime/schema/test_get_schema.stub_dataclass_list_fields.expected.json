@@ -1,6 +1,6 @@
 {
     "Module": {
-        "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassListFields"
+        "ModuleName": "Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassListFields"
     },
     "Name": "StubDataclassListFields",
     "Label": "Stub Dataclass List Fields",
@@ -8,7 +8,7 @@
     "DisplayKind": "Basic",
     "Inherit": {
         "Module": {
-            "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassRecord"
+            "ModuleName": "Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord"
         },
         "Name": "StubDataclassRecord"
     },
@@ -46,7 +46,7 @@
         {
             "Data": {
                 "Module": {
-                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassData"
+                    "ModuleName": "Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData"
                 },
                 "Name": "StubDataclassData"
             },
@@ -57,7 +57,7 @@
         {
             "Key": {
                 "Module": {
-                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassRecord"
+                    "ModuleName": "Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord"
                 },
                 "Name": "StubDataclassRecord"
             },
@@ -68,7 +68,7 @@
         {
             "Data": {
                 "Module": {
-                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassRecord"
+                    "ModuleName": "Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord"
                 },
                 "Name": "StubDataclassRecord"
             },
@@ -79,7 +79,7 @@
         {
             "Data": {
                 "Module": {
-                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassDerivedRecord"
+                    "ModuleName": "Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassDerivedRecord"
                 },
                 "Name": "StubDataclassDerivedRecord"
             },

@@ -16,7 +16,7 @@ import pytest
 from cl.runtime import DataSource
 from cl.runtime.context.basic_context import BasicContext
 from cl.runtime.storage.mongo.basic_mongo_data_source import BasicMongoDataSource
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecord
 
 
 def test_smoke():

@@ -17,11 +17,11 @@ from __future__ import annotations
 from cl.runtime.records.dataclasses_util import datafield
 from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_a_key import StubDataclassCyclicAKey
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_cyclic_a_key import StubDataclassCyclicAKey
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB
+    from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB
 
 
 @dataclass(slots=True, kw_only=True)
@@ -39,7 +39,7 @@ class StubDataclassCyclicA(StubDataclassCyclicAKey, RecordMixin[StubDataclassCyc
         """Create an instance of this class populated with sample data."""
 
         # Import inside function to avoid cyclic reference error
-        from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB
+        from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB
 
         obj = StubDataclassCyclicA()
         obj.b_key = StubDataclassCyclicB(str_id="b").get_key()

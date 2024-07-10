@@ -16,10 +16,10 @@ import datetime as dt
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.records.dataclasses_util import datafield
 from dataclasses import dataclass
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_data import StubDataclassData
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecord
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_record import StubDataclassRecordKey
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_data import StubDataclassData
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecord
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecordKey
 from typing import List
 
 

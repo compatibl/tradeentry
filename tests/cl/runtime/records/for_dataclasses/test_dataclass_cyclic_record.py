@@ -13,10 +13,10 @@
 # limitations under the License.
 
 import pytest
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_a import StubDataclassCyclicA
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_a_key import StubDataclassCyclicAKey
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_cyclic_b_key import StubDataclassCyclicBKey
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_cyclic_a import StubDataclassCyclicA
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_cyclic_a_key import StubDataclassCyclicAKey
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_cyclic_b_key import StubDataclassCyclicBKey
 
 
 def test_cyclic_record():

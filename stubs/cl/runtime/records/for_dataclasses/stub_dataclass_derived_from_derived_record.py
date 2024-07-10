@@ -14,7 +14,7 @@
 
 from cl.runtime.records.dataclasses_util import datafield
 from dataclasses import dataclass
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
 
 
 @dataclass(slots=True, kw_only=True)

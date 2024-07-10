@@ -40,7 +40,7 @@ def test_get_type_by_class_path():
 
     assert ClassInfo.get_class_type("cl.runtime.schema.type_decl.TypeDecl") is TypeDecl
     assert (
-        ClassInfo.get_class_type("stubs.cl.runtime.records.dataclasses.stub_dataclass_record.StubDataclassRecord")
+        ClassInfo.get_class_type("stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record.StubDataclassRecord")
         is StubDataclassRecord
     )
 

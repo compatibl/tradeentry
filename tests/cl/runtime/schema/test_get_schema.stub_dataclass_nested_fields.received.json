@@ -1,6 +1,6 @@
 {
     "Module": {
-        "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassNestedFields"
+        "ModuleName": "Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassNestedFields"
     },
     "Name": "StubDataclassNestedFields",
     "Label": "Stub Dataclass Nested Fields",
@@ -17,7 +17,7 @@
         {
             "Key": {
                 "Module": {
-                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassRecord"
+                    "ModuleName": "Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord"
                 },
                 "Name": "StubDataclassRecord"
             },
@@ -27,7 +27,7 @@
         {
             "Key": {
                 "Module": {
-                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassRecord"
+                    "ModuleName": "Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord"
                 },
                 "Name": "StubDataclassRecord"
             },
@@ -37,7 +37,7 @@
         {
             "Data": {
                 "Module": {
-                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassData"
+                    "ModuleName": "Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData"
                 },
                 "Name": "StubDataclassData"
             },
@@ -47,7 +47,7 @@
         {
             "Data": {
                 "Module": {
-                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassDerivedData"
+                    "ModuleName": "Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassDerivedData"
                 },
                 "Name": "StubDataclassDerivedData"
             },
@@ -57,7 +57,7 @@
         {
             "Data": {
                 "Module": {
-                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassDerivedFromDerivedData"
+                    "ModuleName": "Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassDerivedFromDerivedData"
                 },
                 "Name": "StubDataclassDerivedFromDerivedData"
             },
@@ -67,7 +67,7 @@
         {
             "Data": {
                 "Module": {
-                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassData"
+                    "ModuleName": "Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData"
                 },
                 "Name": "StubDataclassData"
             },
@@ -77,7 +77,7 @@
         {
             "Data": {
                 "Module": {
-                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassDerivedData"
+                    "ModuleName": "Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassDerivedData"
                 },
                 "Name": "StubDataclassDerivedData"
             },
@@ -87,7 +87,7 @@
         {
             "Key": {
                 "Module": {
-                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassRecord"
+                    "ModuleName": "Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord"
                 },
                 "Name": "StubDataclassRecord"
             },
@@ -97,7 +97,7 @@
         {
             "Key": {
                 "Module": {
-                    "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassRecord"
+                    "ModuleName": "Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord"
                 },
                 "Name": "StubDataclassRecord"
             },

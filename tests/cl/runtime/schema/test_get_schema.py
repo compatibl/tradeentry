@@ -16,14 +16,14 @@ import dataclasses
 import json
 import os
 import pytest
-from cl.runtime.schema.dataclasses.dataclass_type_decl import DataclassTypeDecl
+from cl.runtime.schema.for_dataclasses.dataclass_type_decl import DataclassTypeDecl
 from cl.runtime.schema.type_decl import TypeDecl
 from stubs.cl.runtime import StubCustomBase
 from stubs.cl.runtime import StubDataclassListFields
 from stubs.cl.runtime import StubDataclassNestedFields
 from stubs.cl.runtime import StubDataclassPrimitiveFields
 from stubs.cl.runtime import StubDataclassRecord
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_optional_fields import StubDataclassOptionalFields
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_optional_fields import StubDataclassOptionalFields
 
 
 def test_method():

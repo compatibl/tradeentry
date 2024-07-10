@@ -15,7 +15,7 @@
 from cl.runtime.records.dataclasses_util import datafield
 from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_aliased_record_key import StubDataclassAliasedRecordKey
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_aliased_record_key import StubDataclassAliasedRecordKey
 
 
 @dataclass(slots=True, kw_only=True)

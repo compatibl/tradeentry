@@ -14,7 +14,7 @@
 
 from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_record_key import StubDataclassRecordKey
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record_key import StubDataclassRecordKey
 
 
 @dataclass(slots=True, kw_only=True)

@@ -19,7 +19,7 @@ from cl.runtime.primitive.time_util import TimeUtil
 from cl.runtime.records.dataclasses_util import datafield
 from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
-from stubs.cl.runtime.records.dataclasses.stub_dataclass_primitive_fields_key import StubDataclassPrimitiveFieldsKey
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_primitive_fields_key import StubDataclassPrimitiveFieldsKey
 from stubs.cl.runtime.records.enum.stub_int_enum import StubIntEnum
 from uuid import UUID
 

@@ -1,6 +1,6 @@
 {
     "Module": {
-        "ModuleName": "Stubs.Cl.Runtime.Records.Dataclasses.StubDataclassRecord"
+        "ModuleName": "Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord"
     },
     "Name": "StubDataclassRecord",
     "Label": "Stub Dataclass Record",
