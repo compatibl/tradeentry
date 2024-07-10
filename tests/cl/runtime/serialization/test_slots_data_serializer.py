@@ -53,9 +53,9 @@ def test_smoke():
 
     for sample_type in sample_types:
         obj_1 = sample_type()
-        serialized_1 = serializer.serialize(obj_1)
-        obj_2 = serializer.deserialize(serialized_1)
-        serialized_2 = serializer.serialize(obj_2)
+        serialized_1 = serializer.serialize_data(obj_1)
+        obj_2 = serializer.deserialize_data(serialized_1)
+        serialized_2 = serializer.serialize_data(obj_2)
 
         assert obj_1 == obj_2
         assert serialized_1 == serialized_2

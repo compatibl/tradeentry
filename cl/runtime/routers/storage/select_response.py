@@ -61,7 +61,7 @@ class SelectResponse(BaseModel):
         # Convert to semicolon-delimited primary key fields, omitting the first token (table)
         data_serializer = DictDataSerializer(pascalize_keys=True)
         key_serializer = StringKeySerializer()
-        serialized_keys_and_records = [(key_serializer.serialize_key(x), data_serializer.serialize(x)) for x in records]
+        serialized_keys_and_records = [(key_serializer.serialize_key(x), data_serializer.serialize_data(x)) for x in records]
 
         # Add _t and _key fields
         [

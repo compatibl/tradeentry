@@ -76,7 +76,7 @@ class LocalCache(DataSource):
                 return None
 
             # Deserialize and return
-            record = data_serializer.deserialize(serialized_record)
+            record = data_serializer.deserialize_data(serialized_record)
             return record
 
         else:
@@ -128,7 +128,7 @@ class LocalCache(DataSource):
 
         # Serialize both key and record
         serialized_key = key_serializer.serialize_key(record)
-        serialized_record = data_serializer.serialize(record)
+        serialized_record = data_serializer.serialize_data(record)
 
         # Add record to cache, overwriting an existing record if present
         table_cache[serialized_key] = serialized_record

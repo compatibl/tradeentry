@@ -18,6 +18,9 @@ from inflection import camelize
 from typing import Dict
 from typing import Type
 
+from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.storage.data_source_types import TDataDict
+
 
 class MissingType:
     """Type representing a missing value."""
@@ -46,7 +49,7 @@ class DictDataSerializer:
     pascalize_keys: bool = False
     """If true, pascalize keys during serialization."""
 
-    def serialize(self, data):
+    def serialize_data(self, data):  # TODO: Check if None should be supported
         """Serialize to dictionary containing primitive types, dictionaries, or iterables."""
 
         if hasattr(data, "__slots__"):
@@ -57,7 +60,7 @@ class DictDataSerializer:
                 if not self.pascalize_keys
                 else camelize(k, uppercase_first_letter=True): v
                 if v.__class__.__name__ in primitive_type_names
-                else self.serialize(v)
+                else self.serialize_data(v)
                 for k in data.__slots__
                 if (v := getattr(data, k)) is not None
             }
@@ -71,7 +74,7 @@ class DictDataSerializer:
         elif isinstance(data, dict):
             # Dictionary, return with serialized values
             result = {
-                k: v if v.__class__.__name__ in primitive_type_names else self.serialize(v) for k, v in data.items()
+                k: v if v.__class__.__name__ in primitive_type_names else self.serialize_data(v) for k, v in data.items()
             }
             return result
         elif hasattr(data, "__iter__"):
@@ -86,7 +89,7 @@ class DictDataSerializer:
                 return data
             else:
                 # Serialize each element of the iterable
-                return [v if v.__class__.__name__ in primitive_type_names else self.serialize(v) for v in data]
+                return [v if v.__class__.__name__ in primitive_type_names else self.serialize_data(v) for v in data]
         elif isinstance(data, Enum):
             # Serialize enum as a dict using enum class short name and item name (rather than item value)
             # To find short name, use 'in' which is faster than 'get' when most types do not have aliases
@@ -97,7 +100,7 @@ class DictDataSerializer:
         else:
             raise RuntimeError(f"Cannot deserialize data of type '{type(data)}'.")
 
-    def deserialize(self, data):
+    def deserialize_data(self, data: TDataDict):  # TODO: Check if None should be supported
         """Deserialize from dictionary containing primitive types, dictionaries, or iterables."""
 
         if self.pascalize_keys:
@@ -114,7 +117,7 @@ class DictDataSerializer:
                         f"Ensure all serialized classes are included in package import settings."
                     )
                 deserialized_fields = {
-                    k: v if v.__class__.__name__ in primitive_type_names else self.deserialize(v)
+                    k: v if v.__class__.__name__ in primitive_type_names else self.deserialize_data(v)
                     for k, v in data.items()
                     if k != "_type"
                 }
@@ -133,7 +136,7 @@ class DictDataSerializer:
             else:
                 # Otherwise return a dictionary with recursively deserialized values
                 result = {
-                    k: v if v.__class__.__name__ in primitive_type_names else self.deserialize(v)
+                    k: v if v.__class__.__name__ in primitive_type_names else self.deserialize_data(v)
                     for k, v in data.items()
                 }
                 return result
@@ -149,6 +152,6 @@ class DictDataSerializer:
                 return data
             else:
                 # Deserialize each element of the iterable
-                return [v if v.__class__.__name__ in primitive_type_names else self.deserialize(v) for v in data]
+                return [v if v.__class__.__name__ in primitive_type_names else self.deserialize_data(v) for v in data]
         else:
             raise RuntimeError(f"Cannot deserialize data of type '{type(data)}'.")

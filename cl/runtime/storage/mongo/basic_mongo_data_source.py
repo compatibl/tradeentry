@@ -96,7 +96,7 @@ class BasicMongoDataSource(DataSource):
             if serialized_record is not None:
                 del serialized_record["_id"]
                 del serialized_record["_key"]
-                result = data_serializer.deserialize(serialized_record)
+                result = data_serializer.deserialize_data(serialized_record)
                 return result
             else:
                 return None
@@ -151,7 +151,7 @@ class BasicMongoDataSource(DataSource):
 
         # Serialize record data and key
         serialized_key = key_serializer.serialize_key(record)
-        serialized_record = data_serializer.serialize(record)
+        serialized_record = data_serializer.serialize_data(record)
 
         # Use update_one with upsert=True to insert if not present or update if present
         collection.update_one({"_key": serialized_key}, {"$set": serialized_record}, upsert=True)
@@ -169,7 +169,7 @@ class BasicMongoDataSource(DataSource):
 
         # Convert to (key_type, serialized_key, serialized_record) triples
         serialized_data = [
-            (x.get_key_type(), key_serializer.serialize_key(x), data_serializer.serialize(x)) for x in records
+            (x.get_key_type(), key_serializer.serialize_key(x), data_serializer.serialize_data(x)) for x in records
         ]
 
         # Group by key_type
