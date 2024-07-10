@@ -32,7 +32,10 @@ TDataField = Dict[str, "TDataField"] | List["TDataField"] | TPrimitive | Enum | 
 TDataDict = Dict[str, TDataField]
 """Serialized data in dictionary format."""
 
-TKeyDict = TPrimitive | Dict[str, Any]
+TKeyField = Dict[str, "TKeyField"] | TPrimitive | Enum
+"""Supported field types for serialized key in dictionary format."""
+
+TKeyDict = Dict[str, TKeyField]
 """Serialized key in dictionary format."""
 
 TIdentity = str | None
