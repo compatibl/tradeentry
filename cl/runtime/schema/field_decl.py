@@ -16,7 +16,7 @@ import datetime as dt
 import types
 import typing
 from cl.runtime import ClassInfo
-from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import field, missing
 from cl.runtime.schema.field_kind import FieldKind
 from dataclasses import dataclass
 from enum import Enum
@@ -36,19 +36,19 @@ primitive_modules = ["builtins", "datetime", "uuid"]
 class FieldDecl:
     """Field declaration."""
 
-    name: str = field()
+    name: str = missing()
     """Field name."""
 
-    label: str | None = field()
+    label: str | None = missing()
     """Field label (if not specified, titleized name is used instead)."""
 
-    comment: str | None = field()
+    comment: str | None = missing()
     """Field comment."""
 
-    field_kind: FieldKind = field()
+    field_kind: FieldKind = missing()
     """Kind of the element within the container if the field is a container, otherwise kind of the field itself."""
 
-    field_type: str = field()
+    field_type: str = missing()
     """Field type name for builtins and uuid modules and module.ClassName for all other types."""
 
     container_type: str | None = None

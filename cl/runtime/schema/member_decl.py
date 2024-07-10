@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import field, missing
 from cl.runtime.schema.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from cl.runtime.schema.value_decl import ValueDecl
@@ -23,20 +23,20 @@ from dataclasses import dataclass
 class MemberDecl:
     """Type member declaration."""
 
-    value: ValueDecl | None = field()  # TODO: Flatten value and other types to a single field
+    value: ValueDecl | None = missing()  # TODO: Flatten value and other types to a single field
     """Value or primitive element declaration."""
 
-    enum: EnumDeclKey | None = field()
+    enum: EnumDeclKey | None = missing()
     """Enumeration element declaration."""
 
-    data: TypeDeclKey | None = field()
+    data: TypeDeclKey | None = missing()
     """Data element declaration."""
 
     key_: TypeDeclKey | None = field(name="Key")  # TODO: Remove trailing _ automatically instead
     """Key element declaration."""
 
-    query: TypeDeclKey | None = field()
+    query: TypeDeclKey | None = missing()
     """Query element declaration."""
 
-    condition: TypeDeclKey | None = field()
+    condition: TypeDeclKey | None = missing()
     """Condition element declaration."""

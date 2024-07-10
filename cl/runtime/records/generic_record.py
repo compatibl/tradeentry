@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from cl.runtime import RecordMixin
-from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import field, missing
 from cl.runtime.records.generic_key import GenericKey
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.storage.data_source_types import TDataDict
@@ -26,13 +26,13 @@ from typing import Type
 class GenericRecord(RecordMixin[KeyProtocol]):
     """Generic record can represent any record type."""
 
-    key_type: Type = field()
+    key_type: Type = missing()
     """Key type."""
 
-    key_fields: Iterable[str] = field()
+    key_fields: Iterable[str] = missing()
     """Names of primary key fields."""
 
-    data_dict: TDataDict = field()
+    data_dict: TDataDict = missing()
     """Dictionary of data fields (including the primary key fields) in the order of declaration."""
 
     def get_key(self) -> KeyProtocol:

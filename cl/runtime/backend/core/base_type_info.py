@@ -4,7 +4,7 @@
 # or distributed only in compliance with the terms of a written commercial
 # license from CompatibL and with the inclusion of this copyright notice.
 
-from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import field, missing
 from dataclasses import dataclass
 
 
@@ -12,11 +12,11 @@ from dataclasses import dataclass
 class BaseTypeInfo:
     """Base type info."""
 
-    name: str = field()
+    name: str = missing()
     """Name of type."""
 
-    module: str = field()
+    module: str = missing()
     """Module of type."""
 
-    label: str = field()
+    label: str = missing()
     """Label of type."""

@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import datetime as dt
-from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import field, missing
 from dataclasses import dataclass
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_data import StubDataclassData
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord

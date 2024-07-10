@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import field, missing
 from dataclasses import dataclass
 from typing import List
 
@@ -21,11 +21,11 @@ from typing import List
 class EnumItemDecl:
     """Enum item declaration."""
 
-    name: str = field()
+    name: str = missing()
     """Item name."""
 
-    label: str | None = field()
+    label: str | None = missing()
     """Item label (if not specified, titleized name is used instead)."""
 
-    comment: str | None = field()
+    comment: str | None = missing()
     """Item additional information."""

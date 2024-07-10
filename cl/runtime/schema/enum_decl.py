@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import field, missing
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.schema.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.enum_item_decl import EnumItemDecl
@@ -24,13 +24,13 @@ from typing import List
 class EnumDecl(EnumDeclKey, RecordMixin[EnumDeclKey]):
     """Enum declaration."""
 
-    label: str | None = field()
+    label: str | None = missing()
     """Enum label."""
 
-    comment: str | None = field()
+    comment: str | None = missing()
     """Enum comment."""
 
-    items: List[EnumItemDecl] = field()
+    items: List[EnumItemDecl] = missing()
     """Array of enum items."""
 
     def get_key(self) -> EnumDeclKey:

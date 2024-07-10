@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import field, missing
 from cl.runtime.schema.handler_variable_decl import HandlerVariableDecl
 from dataclasses import dataclass
 
@@ -21,5 +21,5 @@ from dataclasses import dataclass
 class HandlerParamDecl(HandlerVariableDecl):
     """Handler parameter declaration."""
 
-    name: str = field()
+    name: str = missing()
     """Parameter name."""

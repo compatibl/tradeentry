@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import field, missing
 from cl.runtime.view.view import View
 from dataclasses import dataclass
 from typing import final
@@ -23,5 +23,5 @@ from typing import final
 class RecordView(View):
     """View that displays another record specified via its primary key."""
 
-    view_of: str = field()
+    view_of: str = missing()
     """Primary key of the displayed record."""

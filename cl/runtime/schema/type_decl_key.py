@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import field, missing
 from cl.runtime.records.key_mixin import KeyMixin
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
 from dataclasses import dataclass
@@ -23,10 +23,10 @@ from typing import Type
 class TypeDeclKey(KeyMixin):
     """Provides information about a class, its fields, and its methods."""
 
-    module: ModuleDeclKey = field()  # TODO: Merge with name to always use full name
+    module: ModuleDeclKey = missing()  # TODO: Merge with name to always use full name
     """Module reference."""
 
-    name: str = field()
+    name: str = missing()
     """Type name is unique when combined with module."""
 
     def get_key_type(self) -> Type:

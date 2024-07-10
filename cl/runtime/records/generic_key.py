@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import field, missing
 from cl.runtime.records.key_mixin import KeyMixin
 from cl.runtime.storage.data_source_types import TKeyDict
 from dataclasses import dataclass
@@ -23,10 +23,10 @@ from typing import Type
 class GenericKey(KeyMixin):
     """Generic key can be substituted for any key type other than itself."""
 
-    key_type: Type = field()
+    key_type: Type = missing()
     """Key type."""
 
-    key_dict: TKeyDict = field()
+    key_dict: TKeyDict = missing()
     """Dictionary of key fields in the order of declaration."""
 
     def get_key_type(self) -> Type:

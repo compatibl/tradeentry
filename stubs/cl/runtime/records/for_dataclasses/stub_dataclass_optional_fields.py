@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import field, missing
 from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_data import StubDataclassData
@@ -29,48 +29,48 @@ class StubDataclassOptionalFields(StubDataclassOptionalFieldsKey, RecordMixin[St
     optional_str: str | None = "xyz"
     """Optional string."""
 
-    required_list_of_optional_str: List[str | None] = field()
+    required_list_of_optional_str: List[str | None] = missing()
     """Required list of optional strings."""
 
-    optional_list_of_optional_str: List[str | None] | None = field()
+    optional_list_of_optional_str: List[str | None] | None = missing()
     """Optional list of optional strings."""
 
     optional_float: float | None = 1.23
     """Optional float."""
 
-    required_list_of_optional_float: List[float | None] = field()
+    required_list_of_optional_float: List[float | None] = missing()
     """Required list of optional floats."""
 
-    optional_list_of_optional_float: List[float | None] | None = field()
+    optional_list_of_optional_float: List[float | None] | None = missing()
     """Optional list of optional floats."""
 
     # TODO: Add a complete set of optional primitive field types and lists
 
-    optional_data: StubDataclassData | None = field()
+    optional_data: StubDataclassData | None = missing()
     """Optional data."""
 
-    required_list_of_optional_data: List[StubDataclassData | None] = field()
+    required_list_of_optional_data: List[StubDataclassData | None] = missing()
     """Required list of optional data."""
 
-    optional_list_of_optional_data: List[StubDataclassData | None] | None = field()
+    optional_list_of_optional_data: List[StubDataclassData | None] | None = missing()
     """Optional list of optional data."""
 
-    optional_key: StubDataclassRecordKey | None = field()
+    optional_key: StubDataclassRecordKey | None = missing()
     """Optional key."""
 
-    required_list_of_optional_key: List[StubDataclassRecordKey | None] = field()
+    required_list_of_optional_key: List[StubDataclassRecordKey | None] = missing()
     """Required list of optional key."""
 
-    optional_list_of_optional_key: List[StubDataclassRecordKey | None] | None = field()
+    optional_list_of_optional_key: List[StubDataclassRecordKey | None] | None = missing()
     """Optional list of optional key."""
 
-    optional_record: StubDataclassRecord | None = field()
+    optional_record: StubDataclassRecord | None = missing()
     """Optional record."""
 
-    required_list_of_optional_record: List[StubDataclassRecord | None] = field()
+    required_list_of_optional_record: List[StubDataclassRecord | None] = missing()
     """Required list of optional record."""
 
-    optional_list_of_optional_record: List[StubDataclassRecord | None] | None = field()
+    optional_list_of_optional_record: List[StubDataclassRecord | None] | None = missing()
     """Optional list of optional record."""
 
     def get_key(self) -> StubDataclassOptionalFieldsKey:

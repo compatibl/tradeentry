@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import field, missing
 from cl.runtime.schema.index_sort_order_enum import IndexSortOrderEnum
 from dataclasses import dataclass
 
@@ -21,8 +21,8 @@ from dataclasses import dataclass
 class IndexDecl:
     """Index declaration."""
 
-    name: str = field()
+    name: str = missing()
     """Target index element name."""
 
-    direction: IndexSortOrderEnum = field()
+    direction: IndexSortOrderEnum = missing()
     """Index sort order direction (if not specified ascending sorting will be used)."""

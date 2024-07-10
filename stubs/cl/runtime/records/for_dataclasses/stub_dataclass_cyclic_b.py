@@ -14,7 +14,7 @@
 
 from __future__ import annotations
 
-from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import field, missing
 from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_cyclic_b_key import StubDataclassCyclicBKey
@@ -28,7 +28,7 @@ if TYPE_CHECKING:
 class StubDataclassCyclicB(StubDataclassCyclicBKey, RecordMixin[StubDataclassCyclicBKey]):
     """Stub class A with a field whose type is key for class B."""
 
-    a_obj: StubDataclassCyclicA = field()
+    a_obj: StubDataclassCyclicA = missing()
     """Key for class A."""
 
     def get_key(self) -> StubDataclassCyclicBKey:

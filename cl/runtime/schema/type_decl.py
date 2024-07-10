@@ -18,7 +18,7 @@ import ast
 import dataclasses
 import inspect
 from cl.runtime import KeyUtil
-from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import field, missing
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.schema.element_decl import ElementDecl
 from cl.runtime.schema.field_decl import FieldDecl
@@ -91,38 +91,38 @@ def for_type_key_maker(
 class TypeDecl(TypeDeclKey, RecordMixin[TypeDeclKey]):
     """Provides information about a class, its fields, and its methods."""
 
-    label: str | None = field()
+    label: str | None = missing()
     """Type label."""
 
-    comment: str | None = field()
+    comment: str | None = missing()
     """Type comment. Contains additional information."""
 
-    kind: TypeKind | None = field()
+    kind: TypeKind | None = missing()
     """Type kind."""
 
-    display_kind: DisplayKindLiteral = field()  # TODO: Make optional, treat None as Basic
+    display_kind: DisplayKindLiteral = missing()  # TODO: Make optional, treat None as Basic
     """Display kind."""
 
-    inherit: TypeDeclKey | None = field()
+    inherit: TypeDeclKey | None = missing()
     """Parent type reference."""
 
-    declare: HandlerDeclareBlockDecl | None = field()  # TODO: Flatten or use block for abstract flag
+    declare: HandlerDeclareBlockDecl | None = missing()  # TODO: Flatten or use block for abstract flag
     """Handler declaration block."""
 
-    elements: List[ElementDecl] | None = field()  # TODO: Consider renaming to fields
+    elements: List[ElementDecl] | None = missing()  # TODO: Consider renaming to fields
     """Element declaration block."""
 
-    keys: List[str] | None = field()
+    keys: List[str] | None = missing()
     """Array of key element names (specify in base class only)."""
 
     # TODO: Consider moving to Table class
-    # indexes: List[TypeIndexDecl] | None = field()
+    # indexes: List[TypeIndexDecl] | None = missing()
     """Defines indexes for the type."""
 
-    immutable: bool | None = field()
+    immutable: bool | None = missing()
     """Immutable flag."""
 
-    permanent: bool | None = field()
+    permanent: bool | None = missing()
     """When the record is saved, also save it permanently."""
 
     def get_key(self) -> TypeDeclKey:
