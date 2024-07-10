@@ -14,20 +14,21 @@
 
 from cl.runtime.records.dataclasses_util import datafield
 from cl.runtime.records.key_mixin import KeyMixin
-from cl.runtime.records.protocols import KeyProtocol
+from cl.runtime.storage.data_source_types import TKeyDict
 from dataclasses import dataclass
 from typing import Type
 
 
 @dataclass(slots=True, kw_only=True)
-class ViewKey(KeyMixin):
-    """Contains data that will be visualized alongside the record specified by the 'view_for' field."""
+class GenericKey(KeyMixin):
+    """Generic key can be substituted for any key type other than itself."""
 
-    view_for: KeyProtocol = datafield()
-    """Generic key of the record for which the view is specified."""
+    key_type: Type = datafield()
+    """Key type."""
 
-    view_name: str = datafield()
-    """Name of the view displayed in the front end."""
+    key_dict: TKeyDict = datafield()
+    """Dictionary of key fields in the order of declaration."""
 
     def get_key_type(self) -> Type:
-        return ViewKey
+        """Return key type even when called from a record, implement using literal type rather than type(self)."""
+        return self.key_type

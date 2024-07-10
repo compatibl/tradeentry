@@ -32,6 +32,9 @@ TField = Dict[str, "TField"] | List["TField"] | TPrimitive | Enum | None
 TData = Dict[str, TField]
 """Serialized data in dictionary format."""
 
+TKeyDict = TPrimitive | Dict[str, Any]
+"""Serialized key in dictionary format."""
+
 TIdentity = str | None
 """Identity token used for row level security."""
 
