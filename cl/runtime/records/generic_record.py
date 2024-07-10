@@ -16,7 +16,7 @@ from cl.runtime import RecordMixin
 from cl.runtime.records.dataclasses_util import datafield
 from cl.runtime.records.generic_key import GenericKey
 from cl.runtime.records.protocols import KeyProtocol
-from cl.runtime.storage.data_source_types import TData
+from cl.runtime.storage.data_source_types import TDataDict
 from dataclasses import dataclass
 from typing import Iterable
 from typing import Type
@@ -32,7 +32,7 @@ class GenericRecord(RecordMixin[KeyProtocol]):
     key_fields: Iterable[str] = datafield()
     """Names of primary key fields."""
 
-    data_dict: TData = datafield()
+    data_dict: TDataDict = datafield()
     """Dictionary of data fields (including the primary key fields) in the order of declaration."""
 
     def get_key(self) -> KeyProtocol:

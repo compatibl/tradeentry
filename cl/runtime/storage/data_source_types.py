@@ -29,7 +29,7 @@ TPrimitive = str | float | bool | int | dt.date | dt.time | dt.datetime | uuid.U
 TField = Dict[str, "TField"] | List["TField"] | TPrimitive | Enum | None
 """Supported field types for serialized data in dictionary format."""
 
-TData = Dict[str, TField]
+TDataDict = Dict[str, TField]
 """Serialized data in dictionary format."""
 
 TKeyDict = TPrimitive | Dict[str, Any]

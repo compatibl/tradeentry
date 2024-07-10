@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import datetime as dt
-from cl.runtime.storage.data_source_types import TData
+from cl.runtime.storage.data_source_types import TDataDict
 from typing import Any
 from typing import Dict
 from uuid import UUID
@@ -23,7 +23,7 @@ class StubDictUtil:
     """Utilities for mock dictionaries."""
 
     @staticmethod
-    def create_primitive() -> TData:
+    def create_primitive() -> TDataDict:
         """Create a mock dictionary whose fields include all supported primitive types."""
 
         result = {
