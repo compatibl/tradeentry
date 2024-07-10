@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from cl.runtime.records.key_mixin import KeyMixin
-from cl.runtime.storage.data_source_types import TField
+from cl.runtime.storage.data_source_types import TDataField
 from typing import Dict
 from typing import Type
 
@@ -33,7 +33,7 @@ class StubCustomBaseKey(KeyMixin):
         self.str_field = str_field
         self.int_field = int_field
 
-    def to_dict(self) -> Dict[str, TField]:
+    def to_dict(self) -> Dict[str, TDataField]:
         return {
             "str_field": self.str_field,
             "int_field": self.int_field,

@@ -14,7 +14,7 @@
 
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.storage.data_source_types import TDataDict
-from cl.runtime.storage.data_source_types import TField
+from cl.runtime.storage.data_source_types import TDataField
 from stubs.cl.runtime.records.custom.stub_custom_base_key import StubCustomBaseKey
 from typing import Dict
 from typing import Type
@@ -34,7 +34,7 @@ class StubCustomBase(StubCustomBaseKey, RecordMixin[StubCustomBaseKey]):
 
         self.float_field = float_field
 
-    def to_dict(self) -> Dict[str, TField]:
+    def to_dict(self) -> Dict[str, TDataField]:
         return {
             "str_field": self.str_field,
             "int_field": self.int_field,

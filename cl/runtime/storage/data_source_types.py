@@ -26,10 +26,10 @@ from typing import Type
 TPrimitive = str | float | bool | int | dt.date | dt.time | dt.datetime | uuid.UUID | bytes
 """Supported primitive value types for serialized data in dictionary format."""
 
-TField = Dict[str, "TField"] | List["TField"] | TPrimitive | Enum | None
+TDataField = Dict[str, "TDataField"] | List["TDataField"] | TPrimitive | Enum | None
 """Supported field types for serialized data in dictionary format."""
 
-TDataDict = Dict[str, TField]
+TDataDict = Dict[str, TDataField]
 """Serialized data in dictionary format."""
 
 TKeyDict = TPrimitive | Dict[str, Any]
