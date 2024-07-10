@@ -14,7 +14,7 @@
 
 from __future__ import annotations
 
-from cl.runtime.records.dataclasses_util import datafield
+from cl.runtime.records.dataclasses_extensions import datafield
 from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_cyclic_b_key import StubDataclassCyclicBKey

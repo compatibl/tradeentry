@@ -5,7 +5,7 @@
 # license from CompatibL and with the inclusion of this copyright notice.
 
 from cl.runtime.backend.core.base_type_info import BaseTypeInfo
-from cl.runtime.records.dataclasses_util import datafield
+from cl.runtime.records.dataclasses_extensions import datafield
 from dataclasses import dataclass
 from typing import Tuple
 

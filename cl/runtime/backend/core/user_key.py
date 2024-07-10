@@ -4,7 +4,7 @@
 # or distributed only in compliance with the terms of a written commercial
 # license from CompatibL and with the inclusion of this copyright notice.
 
-from cl.runtime.records.dataclasses_util import datafield
+from cl.runtime.records.dataclasses_extensions import datafield
 from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
 from typing import Type

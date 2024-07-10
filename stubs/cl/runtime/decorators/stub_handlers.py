@@ -15,7 +15,7 @@
 import datetime as dt
 import inspect
 from cl.runtime.decorators.handler_decorator import handler
-from cl.runtime.records.dataclasses_util import datafield
+from cl.runtime.records.dataclasses_extensions import datafield
 from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
 from logging import getLogger

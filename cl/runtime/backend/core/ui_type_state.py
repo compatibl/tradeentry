@@ -5,7 +5,7 @@
 # license from CompatibL and with the inclusion of this copyright notice.
 
 from cl.runtime.backend.core.ui_type_state_key import UiTypeStateKey
-from cl.runtime.records.dataclasses_util import datafield
+from cl.runtime.records.dataclasses_extensions import datafield
 from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
 from typing import List

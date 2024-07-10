@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_util import datafield
+from cl.runtime.records.dataclasses_extensions import datafield
 from cl.runtime.records.key_mixin import KeyMixin
 from cl.runtime.storage.data_source_types import TKeyDict
 from dataclasses import dataclass
