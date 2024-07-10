@@ -20,7 +20,7 @@ primitive_type_names = ["NoneType", "str", "float", "int", "bool", "date", "time
 
 
 # TODO: Add checks for to_node, from_node implementation for custom override of default serializer
-class SlotsKeySerializer:
+class StringKeySerializer:
     """Serialize key."""
 
     def serialize_key(self, data):

@@ -15,8 +15,8 @@
 from cl.runtime import DataSource
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
-from cl.runtime.serialization.slots_data_serializer import SlotsDataSerializer
-from cl.runtime.serialization.slots_key_serializer import SlotsKeySerializer
+from cl.runtime.serialization.dict_data_serializer import DictDataSerializer
+from cl.runtime.serialization.string_key_serializer import StringKeySerializer
 from cl.runtime.storage.data_source_types import TDataDict
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
@@ -31,8 +31,8 @@ from typing import Type
 from typing import cast
 
 # TODO: Revise and consider making fields of the data source
-data_serializer = SlotsDataSerializer()
-key_serializer = SlotsKeySerializer()
+data_serializer = DictDataSerializer()
+key_serializer = StringKeySerializer()
 
 
 @dataclass(slots=True, kw_only=True, frozen=True)

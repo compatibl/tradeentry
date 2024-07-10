@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.serialization.slots_data_serializer import SlotsDataSerializer
+from cl.runtime.serialization.dict_data_serializer import DictDataSerializer
 from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassDictFields
@@ -49,7 +49,7 @@ def test_smoke():
         # StubDataclassCyclicB,
     ]
 
-    serializer = SlotsDataSerializer()
+    serializer = DictDataSerializer()
 
     for sample_type in sample_types:
         obj_1 = sample_type()

@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.serialization.slots_key_serializer import SlotsKeySerializer
+from cl.runtime.serialization.string_key_serializer import StringKeySerializer
 from stubs.cl.runtime import StubDataclassListFields
 from stubs.cl.runtime import StubDataclassNestedFields
 from stubs.cl.runtime import StubDataclassOptionalFields
@@ -32,7 +32,7 @@ def test_smoke():
         StubDataclassOptionalFields,
     ]
 
-    key_serializer = SlotsKeySerializer()
+    key_serializer = StringKeySerializer()
 
     for sample_type in sample_types:
         obj_1 = sample_type()

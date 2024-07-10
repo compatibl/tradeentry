@@ -19,8 +19,8 @@ from cl.runtime import ClassInfo
 from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
 from cl.runtime.routers.storage.select_request import SelectRequest
-from cl.runtime.serialization.slots_data_serializer import SlotsDataSerializer
-from cl.runtime.serialization.slots_key_serializer import SlotsKeySerializer
+from cl.runtime.serialization.dict_data_serializer import DictDataSerializer
+from cl.runtime.serialization.string_key_serializer import StringKeySerializer
 from cl.runtime.storage.data_source_types import TPrimitive
 from pydantic import BaseModel
 from pydantic import Field
@@ -59,8 +59,8 @@ class SelectResponse(BaseModel):
         # TODO: Refactor the code below
 
         # Convert to semicolon-delimited primary key fields, omitting the first token (table)
-        data_serializer = SlotsDataSerializer(pascalize_keys=True)
-        key_serializer = SlotsKeySerializer()
+        data_serializer = DictDataSerializer(pascalize_keys=True)
+        key_serializer = StringKeySerializer()
         serialized_keys_and_records = [(key_serializer.serialize_key(x), data_serializer.serialize(x)) for x in records]
 
         # Add _t and _key fields
