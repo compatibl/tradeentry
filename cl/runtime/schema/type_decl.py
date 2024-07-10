@@ -18,7 +18,8 @@ import ast
 import dataclasses
 import inspect
 from cl.runtime import KeyUtil
-from cl.runtime.records.dataclasses_extensions import field, missing
+from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.schema.element_decl import ElementDecl
 from cl.runtime.schema.field_decl import FieldDecl

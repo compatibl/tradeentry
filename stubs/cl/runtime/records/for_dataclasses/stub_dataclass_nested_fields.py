@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import field, missing
+from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_data import StubDataclassData
@@ -43,9 +44,7 @@ class StubDataclassNestedFields(StubDataclassNestedFieldsKey, RecordMixin[StubDa
     polymorphic_field: StubDataclassData = field(default_factory=StubDataclassDerivedData)
     """Declared StubDataclassData but provided an instance of StubDataclassDerivedData."""
 
-    polymorphic_derived_field: StubDataclassDerivedData = field(
-        default_factory=StubDataclassDerivedFromDerivedData
-    )
+    polymorphic_derived_field: StubDataclassDerivedData = field(default_factory=StubDataclassDerivedFromDerivedData)
     """Declared StubDataclassDerivedData but provided an instance of StubDataclassDerivedFromDerivedData."""
 
     key_field: StubDataclassRecordKey = field(default_factory=lambda: StubDataclassRecordKey(id="uvw"))

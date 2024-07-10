@@ -12,14 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.storage.data_source_types import TDataDict
 from dataclasses import dataclass
 from enum import Enum
 from inflection import camelize
 from typing import Dict
 from typing import Type
-
-from cl.runtime.records.protocols import RecordProtocol
-from cl.runtime.storage.data_source_types import TDataDict
 
 
 class MissingType:
@@ -74,7 +73,8 @@ class DictDataSerializer:
         elif isinstance(data, dict):
             # Dictionary, return with serialized values
             result = {
-                k: v if v.__class__.__name__ in primitive_type_names else self.serialize_data(v) for k, v in data.items()
+                k: v if v.__class__.__name__ in primitive_type_names else self.serialize_data(v)
+                for k, v in data.items()
             }
             return result
         elif hasattr(data, "__iter__"):

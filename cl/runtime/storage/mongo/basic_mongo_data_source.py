@@ -14,7 +14,8 @@
 
 import itertools
 from cl.runtime import DataSource
-from cl.runtime.records.dataclasses_extensions import field, missing
+from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import InitProtocol
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol

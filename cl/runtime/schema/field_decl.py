@@ -16,7 +16,8 @@ import datetime as dt
 import types
 import typing
 from cl.runtime import ClassInfo
-from cl.runtime.records.dataclasses_extensions import field, missing
+from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.schema.field_kind import FieldKind
 from dataclasses import dataclass
 from enum import Enum

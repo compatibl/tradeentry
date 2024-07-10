@@ -13,8 +13,8 @@
 # limitations under the License.
 
 import dataclasses
-from cl.runtime.schema.for_dataclasses.dataclass_field_decl import DataclassFieldDecl
 from cl.runtime.schema.element_decl import ElementDecl
+from cl.runtime.schema.for_dataclasses.dataclass_field_decl import DataclassFieldDecl
 from cl.runtime.schema.type_decl import TypeDecl
 from cl.runtime.schema.type_decl import for_type_key_maker
 from dataclasses import dataclass

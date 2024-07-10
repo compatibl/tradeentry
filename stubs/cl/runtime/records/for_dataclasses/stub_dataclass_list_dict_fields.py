@@ -13,13 +13,16 @@
 # limitations under the License.
 
 import datetime as dt
-from cl.runtime.records.dataclasses_extensions import field, missing
+from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import missing
 from dataclasses import dataclass
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_data import StubDataclassData
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_list_fields import stub_dataclass_data_list_factory
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_list_fields import stub_dataclass_date_list_factory
-from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_list_fields import stub_dataclass_derived_record_list_factory
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_list_fields import (
+    stub_dataclass_derived_record_list_factory,
+)
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_list_fields import stub_dataclass_float_list_factory
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_list_fields import stub_dataclass_key_list_factory
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_list_fields import stub_dataclass_record_list_factory
