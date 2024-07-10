@@ -41,7 +41,7 @@
                 },
                 "Name": "StubDataclassData"
             },
-            "Name": "BaseDatafield",
+            "Name": "BaseField",
             "Comment": "Stub field."
         },
         {
@@ -51,7 +51,7 @@
                 },
                 "Name": "StubDataclassDerivedData"
             },
-            "Name": "DerivedDatafield",
+            "Name": "DerivedField",
             "Comment": "Stub field."
         },
         {
@@ -61,7 +61,7 @@
                 },
                 "Name": "StubDataclassDerivedFromDerivedData"
             },
-            "Name": "DerivedFromDerivedDatafield",
+            "Name": "DerivedFromDerivedField",
             "Comment": "Stub field."
         },
         {
@@ -71,7 +71,7 @@
                 },
                 "Name": "StubDataclassData"
             },
-            "Name": "PolymorphicDatafield",
+            "Name": "PolymorphicField",
             "Comment": "Declared StubDataclassData but provided an instance of StubDataclassDerivedData."
         },
         {
@@ -81,7 +81,7 @@
                 },
                 "Name": "StubDataclassDerivedData"
             },
-            "Name": "PolymorphicDerivedDatafield",
+            "Name": "PolymorphicDerivedField",
             "Comment": "Declared StubDataclassDerivedData but provided an instance of StubDataclassDerivedFromDerivedData."
         },
         {

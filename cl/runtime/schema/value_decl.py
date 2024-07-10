@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import datafield
+from cl.runtime.records.dataclasses_extensions import field
 from dataclasses import dataclass
 from typing import Literal
 
@@ -23,5 +23,5 @@ PrimitiveTypeLiteral = Literal["str", "float", "bool", "int", "dt.date", "dt.tim
 class ValueDecl:
     """Value or atomic element declaration."""
 
-    type_: PrimitiveTypeLiteral = datafield()
+    type_: PrimitiveTypeLiteral = field()
     """Primitive type name."""

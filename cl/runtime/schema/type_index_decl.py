@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import datafield
+from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.schema.index_decl import IndexDecl
 from dataclasses import dataclass
 from typing import List
@@ -22,8 +22,8 @@ from typing import List
 class TypeIndexDecl:
     """Type index declaration."""
 
-    name: str | None = datafield()
+    name: str | None = field()
     """Index name."""
 
-    elements: List[IndexDecl] = datafield()
+    elements: List[IndexDecl] = field()
     """Index elements."""

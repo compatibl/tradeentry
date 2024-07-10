@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import datafield
+from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.schema.handler_param_decl import HandlerParamDecl
 from cl.runtime.schema.handler_type import HandlerType
 from cl.runtime.schema.handler_variable_decl import HandlerVariableDecl
@@ -24,23 +24,23 @@ from typing import List
 class HandlerDeclareDecl:
     """Handler declaration data."""
 
-    name: str = datafield()
+    name: str = field()
     """Handler name."""
 
-    label: str | None = datafield()
+    label: str | None = field()
     """Handler label."""
 
-    comment: str | None = datafield()
+    comment: str | None = field()
     """Handler comment."""
 
-    type_: HandlerType = datafield(name="Type")
+    type_: HandlerType = field(name="Type")
     """Handler type."""
 
-    params: List[HandlerParamDecl] | None = datafield()
+    params: List[HandlerParamDecl] | None = field()
     """Handler parameters."""
 
-    return_: HandlerVariableDecl | None = datafield(name="Return")  # TODO: Remove trailing _ automatically
+    return_: HandlerVariableDecl | None = field(name="Return")  # TODO: Remove trailing _ automatically
     """Handler return value."""
 
-    static: bool | None = datafield()
+    static: bool | None = field()
     """If set as true, handler will be static, otherwise non-static."""

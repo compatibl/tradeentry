@@ -14,7 +14,7 @@
 
 import datetime as dt
 from cl.runtime.primitive.date_util import DateUtil
-from cl.runtime.records.dataclasses_extensions import datafield
+from cl.runtime.records.dataclasses_extensions import field
 from dataclasses import dataclass
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_data import StubDataclassData
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
@@ -88,25 +88,25 @@ def stub_dataclass_derived_record_list_factory() -> List[StubDataclassDerivedRec
 class StubDataclassListFields(StubDataclassRecord):
     """Stub record whose elements are lists."""
 
-    str_list: List[str] = datafield(default_factory=stub_dataclass_str_list_factory)
+    str_list: List[str] = field(default_factory=stub_dataclass_str_list_factory)
     """Stub field."""
 
-    float_list: List[float] = datafield(default_factory=stub_dataclass_float_list_factory)
+    float_list: List[float] = field(default_factory=stub_dataclass_float_list_factory)
     """Stub field."""
 
-    date_list: List[dt.date] = datafield(default_factory=stub_dataclass_date_list_factory)
+    date_list: List[dt.date] = field(default_factory=stub_dataclass_date_list_factory)
     """Stub field."""
 
-    data_list: List[StubDataclassData] = datafield(default_factory=stub_dataclass_data_list_factory)
+    data_list: List[StubDataclassData] = field(default_factory=stub_dataclass_data_list_factory)
     """Stub field."""
 
-    key_list: List[StubDataclassRecordKey] = datafield(default_factory=stub_dataclass_key_list_factory)
+    key_list: List[StubDataclassRecordKey] = field(default_factory=stub_dataclass_key_list_factory)
     """Stub field."""
 
-    record_list: List[StubDataclassRecord] = datafield(default_factory=stub_dataclass_record_list_factory)
+    record_list: List[StubDataclassRecord] = field(default_factory=stub_dataclass_record_list_factory)
     """Stub field."""
 
-    derived_record_list: List[StubDataclassDerivedRecord] = datafield(
+    derived_record_list: List[StubDataclassDerivedRecord] = field(
         default_factory=stub_dataclass_derived_record_list_factory
     )
     """Stub field."""

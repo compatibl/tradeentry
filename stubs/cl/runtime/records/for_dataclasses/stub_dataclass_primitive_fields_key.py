@@ -16,7 +16,7 @@ import datetime as dt
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.time_util import TimeUtil
-from cl.runtime.records.dataclasses_extensions import datafield
+from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
 from stubs.cl.runtime.records.enum.stub_int_enum import StubIntEnum
@@ -40,7 +40,7 @@ class StubDataclassPrimitiveFieldsKey(KeyMixin):
     key_int_field: int = 123
     """Stub field."""
 
-    key_long_field: int = datafield(default=9007199254740991, subtype="long")  # TODO: Rename subtype?
+    key_long_field: int = field(default=9007199254740991, subtype="long")  # TODO: Rename subtype?
     """The default is maximum safe signed int for JSON: 2^53 - 1."""
     # TODO: Define maximum safe long in Util class
 

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import datafield
+from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecordKey
@@ -26,10 +26,10 @@ class StubDataclassNestedFieldsKey(KeyMixin):
     primitive: str = "abc"
     """String key element."""
 
-    embedded_1: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecordKey(id="def"))
+    embedded_1: StubDataclassRecordKey = field(default_factory=lambda: StubDataclassRecordKey(id="def"))
     """Embedded key 1."""
 
-    embedded_2: StubDataclassRecordKey = datafield(default_factory=lambda: StubDataclassRecordKey(id="xyz"))
+    embedded_2: StubDataclassRecordKey = field(default_factory=lambda: StubDataclassRecordKey(id="xyz"))
     """Embedded key 2."""
 
     def get_key_type(self) -> Type:

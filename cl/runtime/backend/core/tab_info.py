@@ -5,7 +5,7 @@
 # license from CompatibL and with the inclusion of this copyright notice.
 
 from cl.runtime.backend.core.base_type_info import BaseTypeInfo
-from cl.runtime.records.dataclasses_extensions import datafield
+from cl.runtime.records.dataclasses_extensions import field
 from dataclasses import dataclass
 from typing import Tuple
 
@@ -14,8 +14,8 @@ from typing import Tuple
 class TabInfo:
     """Tab info."""
 
-    type_: BaseTypeInfo = datafield()
+    type_: BaseTypeInfo = field()
     """Type."""
 
-    # key: Tuple | None = datafield()  # TODO: Add generic key support
+    # key: Tuple | None = field()  # TODO: Add generic key support
     """Key."""

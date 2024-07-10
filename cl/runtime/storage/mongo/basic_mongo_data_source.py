@@ -14,7 +14,7 @@
 
 import itertools
 from cl.runtime import DataSource
-from cl.runtime.records.dataclasses_extensions import datafield
+from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.protocols import InitProtocol
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
@@ -44,7 +44,7 @@ key_serializer = StringKeySerializer()
 class BasicMongoDataSource(DataSource):
     """MongoDB data source without datasets."""
 
-    db_name: str = datafield()
+    db_name: str = field()
     """Database name must be unique for each DB client."""
 
     client_uri: str = "mongodb://localhost:27017/"

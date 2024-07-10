@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import datafield
+from cl.runtime.records.dataclasses_extensions import field
 from dataclasses import dataclass
 from typing import List
 
@@ -21,11 +21,11 @@ from typing import List
 class EnumItemDecl:
     """Enum item declaration."""
 
-    name: str = datafield()
+    name: str = field()
     """Item name."""
 
-    label: str | None = datafield()
+    label: str | None = field()
     """Item label (if not specified, titleized name is used instead)."""
 
-    comment: str | None = datafield()
+    comment: str | None = field()
     """Item additional information."""

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import field
+import dataclasses
 from typing import Callable
 from typing import TypeVar
 
@@ -20,7 +20,7 @@ TDefault = TypeVar("TDefault")
 TDefaultFactory = Callable[[], TDefault]
 
 
-def datafield(
+def field(
     *,
     default: TDefault | None = None,
     default_factory: TDefaultFactory | None = None,
@@ -46,9 +46,9 @@ def datafield(
         "formatter": formatter,  # TODO: switch to formatter in other places as format causes Python warnings
     }
     if default_factory is None:
-        return field(default=default, metadata=metadata)
+        return dataclasses.field(default=default, metadata=metadata)
     elif default is None:
-        return field(default_factory=default_factory, metadata=metadata)
+        return dataclasses.field(default_factory=default_factory, metadata=metadata)
     else:
         raise RuntimeError(
             f"Params default={default} and default_factory={default_factory} "

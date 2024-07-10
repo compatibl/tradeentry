@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import datafield
+from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.key_mixin import KeyMixin
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
 from dataclasses import dataclass
@@ -23,10 +23,10 @@ from typing import Type
 class EnumDeclKey(KeyMixin):
     """Enum declaration."""
 
-    module: ModuleDeclKey = datafield()  # TODO: Merge with name
+    module: ModuleDeclKey = field()  # TODO: Merge with name
     """Module reference."""
 
-    name: str = datafield()
+    name: str = field()
     """Enum name is unique when combined with module."""
 
     def get_key_type(self) -> Type:

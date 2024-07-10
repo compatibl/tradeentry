@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import datafield
+from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.key_mixin import KeyMixin
 from cl.runtime.records.protocols import KeyProtocol
 from dataclasses import dataclass
@@ -23,10 +23,10 @@ from typing import Type
 class ViewKey(KeyMixin):
     """Contains data that will be visualized alongside the record specified by the 'view_for' field."""
 
-    view_for: KeyProtocol = datafield()
+    view_for: KeyProtocol = field()
     """Generic key of the record for which the view is specified."""
 
-    view_name: str = datafield()
+    view_name: str = field()
     """Name of the view displayed in the front end."""
 
     def get_key_type(self) -> Type:

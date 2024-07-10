@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import datafield
+from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.key_mixin import KeyMixin
 from dataclasses import dataclass
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_cyclic_b_key import StubDataclassCyclicBKey
@@ -23,7 +23,7 @@ from typing import Type
 class StubDataclassCyclicAKey(KeyMixin):
     """Stub class A with a field whose type is key for class B."""
 
-    b_key: StubDataclassCyclicBKey = datafield()
+    b_key: StubDataclassCyclicBKey = field()
     """Key for class B."""
 
     def get_key_type(self) -> Type:

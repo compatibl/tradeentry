@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import datafield
+from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.schema.member_decl import MemberDecl
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from dataclasses import dataclass
@@ -22,14 +22,14 @@ from dataclasses import dataclass
 class HandlerVariableDecl(MemberDecl):
     """Handler parameter or return variable declaration."""
 
-    vector: bool | None = datafield()  # TODO: Similar change to vector in element decl
+    vector: bool | None = field()  # TODO: Similar change to vector in element decl
     """Flag indicating variable size array (vector) container."""
 
-    optional: bool | None = datafield()
+    optional: bool | None = field()
     """Flag indicating optional element."""
 
-    label: str | None = datafield()
+    label: str | None = field()
     """Parameter label."""
 
-    comment: str | None = datafield()
+    comment: str | None = field()
     """Parameter comment. Contains addition information about handler parameter."""

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import datafield
+from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.view.view import View
 from dataclasses import dataclass
 from typing import List
@@ -24,5 +24,5 @@ from typing import final
 class RecordListView(View):
     """View that displays a list of record specified via their primary keys."""
 
-    view_of: List[str] = datafield()
+    view_of: List[str] = field()
     """Primary keys of the displayed records."""

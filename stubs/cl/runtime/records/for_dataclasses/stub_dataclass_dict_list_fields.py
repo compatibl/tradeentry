@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import datetime as dt
-from cl.runtime.records.dataclasses_extensions import datafield
+from cl.runtime.records.dataclasses_extensions import field
 from dataclasses import dataclass
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_data import StubDataclassData
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
@@ -93,18 +93,18 @@ def stub_dataclass_derived_record_dict_list_factory() -> List[Dict[str, StubData
 class StubDataclassDictListFields(StubDataclassRecord):
     """Stub record whose elements are dictionaries."""
 
-    float_dict_list: List[Dict[str, float]] = datafield(default_factory=stub_dataclass_float_dict_list_factory)
+    float_dict_list: List[Dict[str, float]] = field(default_factory=stub_dataclass_float_dict_list_factory)
     """Stub field."""
 
-    date_dict_list: List[Dict[str, dt.date]] = datafield(default_factory=stub_dataclass_date_dict_list_factory)
+    date_dict_list: List[Dict[str, dt.date]] = field(default_factory=stub_dataclass_date_dict_list_factory)
     """Stub field."""
 
-    record_dict_list: List[Dict[str, StubDataclassRecord]] = datafield(
+    record_dict_list: List[Dict[str, StubDataclassRecord]] = field(
         default_factory=stub_dataclass_record_dict_list_factory
     )
     """Stub field."""
 
-    derived_record_dict_list: List[Dict[str, StubDataclassDerivedRecord]] = datafield(
+    derived_record_dict_list: List[Dict[str, StubDataclassDerivedRecord]] = field(
         default_factory=stub_dataclass_derived_record_dict_factory
     )
     """Stub field."""

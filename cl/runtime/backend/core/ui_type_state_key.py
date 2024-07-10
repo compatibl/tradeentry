@@ -5,7 +5,7 @@
 # license from CompatibL and with the inclusion of this copyright notice.
 
 from cl.runtime.backend.core.user_key import UserKey
-from cl.runtime.records.dataclasses_extensions import datafield
+from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.key_mixin import KeyMixin
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from dataclasses import dataclass
@@ -16,10 +16,10 @@ from typing import Type
 class UiTypeStateKey(KeyMixin):
     """Defines some default settings for a type."""
 
-    type_: TypeDeclKey = datafield()
+    type_: TypeDeclKey = field()
     """Type reference."""
 
-    user: UserKey | None = datafield()
+    user: UserKey | None = field()
     """A user the app state is applied for."""
 
     def get_key_type(self) -> Type:

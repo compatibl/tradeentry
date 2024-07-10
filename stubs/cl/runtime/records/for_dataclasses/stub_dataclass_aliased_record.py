@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import datafield
+from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_aliased_record_key import StubDataclassAliasedRecordKey
@@ -24,7 +24,7 @@ class StubDataclassAliasedRecord(
 ):  # TODO: Specify alias
     """Stub record class with typename alias."""
 
-    a: int = datafield()
+    a: int = field()
 
     def get_key(self) -> StubDataclassAliasedRecordKey:
         return StubDataclassAliasedRecordKey(id=self.id)

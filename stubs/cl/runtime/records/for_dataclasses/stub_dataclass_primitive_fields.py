@@ -16,7 +16,7 @@ import datetime as dt
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.time_util import TimeUtil
-from cl.runtime.records.dataclasses_extensions import datafield
+from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_primitive_fields_key import StubDataclassPrimitiveFieldsKey
@@ -40,7 +40,7 @@ class StubDataclassPrimitiveFields(StubDataclassPrimitiveFieldsKey, RecordMixin[
     obj_int_field: int = 123
     """Stub field."""
 
-    obj_long_field: int = datafield(default=9007199254740991, subtype="long")
+    obj_long_field: int = field(default=9007199254740991, subtype="long")
     """The default is maximum safe signed int for JSON: 2^53 - 1."""
 
     obj_date_field: dt.date = DateUtil.from_fields(2003, 5, 1)

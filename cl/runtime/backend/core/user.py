@@ -5,7 +5,7 @@
 # license from CompatibL and with the inclusion of this copyright notice.
 
 from cl.runtime.backend.core.user_key import UserKey
-from cl.runtime.records.dataclasses_extensions import datafield
+from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
 
@@ -14,10 +14,10 @@ from dataclasses import dataclass
 class User(UserKey, RecordMixin[UserKey]):
     """User which is allowed to log in."""
 
-    first_name: str = datafield()
+    first_name: str = field()
     """First name of the user."""
 
-    last_name: str = datafield()
+    last_name: str = field()
     """Last name of the user."""
 
     email: str | None = None

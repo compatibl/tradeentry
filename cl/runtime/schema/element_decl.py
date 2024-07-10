@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import datafield
+from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.schema.enum_decl_key import EnumDeclKey
 from cl.runtime.schema.field_decl import FieldDecl
 from cl.runtime.schema.member_decl import MemberDecl
@@ -40,31 +40,31 @@ primitive_type_map = {
 class ElementDecl(MemberDecl):  # TODO: Consider renaming to TypeFieldDecl or FieldDecl
     """Type element declaration."""
 
-    name: str = datafield()
+    name: str = field()
     """Element name."""
 
-    label: str | None = datafield()
+    label: str | None = field()
     """Element label. If not specified, name is used instead."""
 
-    comment: str | None = datafield()
+    comment: str | None = field()
     """Element comment. Contains addition information."""
 
-    vector: bool | None = datafield()  # TODO: Replace by container field with enum values vector/array, dict, DF
+    vector: bool | None = field()  # TODO: Replace by container field with enum values vector/array, dict, DF
     """Flag indicating variable size array (vector) container."""
 
-    optional: bool | None = datafield()
+    optional: bool | None = field()
     """Flag indicating optional element."""
 
-    optional_vector_element: bool | None = datafield()  # TODO: Rename to optional_element or optional_field
+    optional_vector_element: bool | None = field()  # TODO: Rename to optional_element or optional_field
     """Flag indicating optional vector item element."""
 
-    additive: bool | None = datafield()
+    additive: bool | None = field()
     """Optional flag indicating if the element is additive and that the total column can be shown in the UI."""
 
-    format_: str | None = datafield(name="Format")  # TODO: Use Python interpolated string format
+    format_: str | None = field(name="Format")  # TODO: Use Python interpolated string format
     """Specifies UI Format for the element."""
 
-    alternate_of: str | None = datafield()
+    alternate_of: str | None = field()
     """Link current element to AlternateOf element. In the editor these elements will be treated as a choice."""
 
     @classmethod
