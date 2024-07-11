@@ -14,7 +14,7 @@
 
 import pytest
 from cl.runtime import DataSource
-from cl.runtime.context.basic_context import BasicContext
+from cl.runtime.context.context import Context
 from cl.runtime.storage.mongo.basic_mongo_data_source import BasicMongoDataSource
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecord
 
@@ -22,7 +22,7 @@ from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubD
 def test_smoke():
     """Smoke test."""
 
-    with BasicContext() as context:
+    with Context() as context:
         data_source = BasicMongoDataSource(data_source_id="default", db_name="Dev;Runtime;V2")
 
         # Create test record and populate with sample data

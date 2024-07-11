@@ -14,14 +14,14 @@
 
 import pytest
 from cl.runtime import DataSource
-from cl.runtime.context.basic_context import BasicContext
+from cl.runtime.context.context import Context
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecord
 
 
 def test_smoke():
     """Smoke test."""
 
-    with BasicContext() as context:
+    with Context() as context:
         # Create test record and populate with sample data
         record = StubDataclassRecord()
         key = record.get_key()
