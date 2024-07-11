@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.context.protocols import ContextProtocol
+from __future__ import annotations
 from cl.runtime.context.null_progress import NullProgress
 from cl.runtime.context.progress import Progress
 from cl.runtime.storage.data_source import DataSource
@@ -71,7 +71,7 @@ class Context:
         data_source: DataSource | None = None,
         dataset: TDataset = None,
         progress: Progress | None = None,
-    ) -> ContextProtocol:
+    ) -> Context:
         """Create a copy of self where some or all of the attributes are modified."""
         return Context(
             logger=self.__logger if logger is None else logger,
