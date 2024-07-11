@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from abc import abstractmethod
-from cl.runtime.context.context import Context
+from cl.runtime.context.protocols import ContextProtocol
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
@@ -73,7 +73,7 @@ class RecordMixin(Generic[TKey]):
         cls,
         records_or_keys: Iterable[Self | TKey | None] | None,
         *,
-        context: Context | None = None,
+        context: ContextProtocol | None = None,
         dataset: TDataset = None,
         identities: Iterable[TIdentity] | None = None,
     ) -> Iterable[Self | None] | None:
@@ -88,7 +88,7 @@ class RecordMixin(Generic[TKey]):
         """
 
         # Get data source from the current or specified context
-        context = Context.current() if context is None else context
+        context = ContextProtocol.current() if context is None else context
         data_source = context.data_source()
         result = data_source.load_many(records_or_keys, dataset=dataset, identities=identities)
         return result
