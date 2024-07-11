@@ -13,72 +13,40 @@
 # limitations under the License.
 
 from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import ClassVar
+
 from cl.runtime.context.null_progress import NullProgress
 from cl.runtime.context.progress import Progress
+from cl.runtime.context.protocols import ProgressProtocol
+from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.data_source_types import TDataset
 from logging import Logger
-from logging import getLogger
+
+from cl.runtime.storage.protocols import DataSourceProtocol
 
 
+@dataclass(slots=True, kw_only=True, frozen=True)
 class Context:
-    """Provides logging, data source, dataset, and progress reporting."""
+    """Protocol implemented by context objects providing logging, data source, dataset, and progress reporting."""
 
-    __slots__ = ("__logger", "__data_source", "__dataset", "__progress")
+    current: ClassVar[Context] = None
+    """Return current context, error message if not set."""
 
-    __logger: Logger
-    __data_source: DataSource
-    __dataset: TDataset
-    __progress: Progress
+    logger: Logger | None = None  # TODO: Specify default logger
+    """Return the logger provided by the context."""
 
-    def __init__(
-        self,
-        *,
-        logger: Logger | None = None,
-        data_source: DataSource | None = None,
-        dataset: TDataset = None,
-        progress: Progress | None = None,
-    ):
-        """Normalize and validate inputs."""
+    # TODO: Review handling of defaults
+    data_source: DataSourceProtocol | None = field(default_factory=lambda: DataSource.default())
+    """Return the default data source of the context or None if not set."""
 
-        self.__logger = logger if logger is not None else getLogger(__name__)
-        self.__data_source = data_source if data_source is not None else DataSource.default()
-        self.__dataset = dataset
-        self.__progress = progress if progress is not None else NullProgress()
+    dataset: TDataset = None
+    """Return the default dataset of the context or None if not set."""
 
-    def logger(self) -> Logger:
-        """Return the context logger."""
-        return self.__logger
-
-    def data_source(self) -> DataSource | None:
-        """Return the context data source or None if not set."""
-        if self.__data_source is None:
-            raise RuntimeError("Context data source has not been set.")
-        return self.__data_source
-
-    def dataset(self) -> TDataset:
-        """Return the context dataset or None if not set."""
-        return self.__dataset
-
-    def progress(self) -> Progress | None:
-        """Return the context progress or None if not set."""
-        return self.__progress
-
-    def with_params(
-        self,
-        *,
-        logger: Logger | None = None,
-        data_source: DataSource | None = None,
-        dataset: TDataset = None,
-        progress: Progress | None = None,
-    ) -> Context:
-        """Create a copy of self where some or all of the attributes are modified."""
-        return Context(
-            logger=self.__logger if logger is None else logger,
-            data_source=self.__data_source if data_source is None else data_source,
-            dataset=self.__dataset if dataset is None else dataset,
-            progress=self.__progress if progress is None else progress,
-        )
+    progress: ProgressProtocol = NullProgress()
+    """Return the progress reporting interface of the context or None if not set."""
 
     def __enter__(self):
         """Supports `with` operator for resource disposal."""
@@ -89,8 +57,8 @@ class Context:
         """Supports `with` operator for resource disposal."""
 
         # TODO: Support resource disposal for the data source
-        if self.__data_source is not None:
-            # self.__data_source.disconnect()
+        if self.data_source is not None:
+            # TODO: Finalize approach to disposal self.data_source.disconnect()
             pass
 
         # Return False to propagate exception to the caller

@@ -88,7 +88,6 @@ class RecordMixin(Generic[TKey]):
         """
 
         # Get data source from the current or specified context
-        context = ContextProtocol.current() if context is None else context
-        data_source = context.data_source()
-        result = data_source.load_many(records_or_keys, dataset=dataset, identities=identities)
+        context = ContextProtocol.current if context is None else context
+        result = context.data_source.load_many(records_or_keys, dataset=dataset, identities=identities)
         return result

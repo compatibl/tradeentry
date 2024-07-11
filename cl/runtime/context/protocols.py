@@ -13,9 +13,8 @@
 # limitations under the License.
 
 from __future__ import annotations
-from typing import Protocol
-from cl.runtime.context.progress import Progress
-from cl.runtime.storage.data_source import DataSource
+
+from typing import Protocol, ClassVar
 from cl.runtime.storage.data_source_types import TDataset
 from logging import Logger
 
@@ -29,28 +28,17 @@ class ProgressProtocol(Protocol):
 class ContextProtocol(Protocol):
     """Protocol implemented by context objects providing logging, data source, dataset, and progress reporting."""
 
-    @classmethod
-    def current(cls) -> ContextProtocol:
-        """Return current context, error message if not set."""
+    current: ClassVar[ContextProtocol]
+    """Return current context, error message if not set."""
 
-    def logger(self) -> Logger:
-        """Return the logger provided by the context."""
+    logger: Logger
+    """Return the logger provided by the context."""
 
-    def data_source(self) -> DataSourceProtocol | None:
-        """Return the default data source of the context or None if not set."""
+    data_source: DataSourceProtocol | None
+    """Return the default data source of the context or None if not set."""
 
-    def dataset(self) -> TDataset:
-        """Return the default dataset of the context or None if not set."""
+    dataset: TDataset
+    """Return the default dataset of the context or None if not set."""
 
-    def progress(self) -> ProgressProtocol | None:
-        """Return the progress reporting interface of the context or None if not set."""
-
-    def with_params(
-        self,
-        *,
-        logger: Logger | None = None,
-        data_source: DataSource | None = None,
-        dataset: TDataset = None,
-        progress: Progress | None = None,
-    ) -> ContextProtocol:
-        """Create a copy of self where some or all of the attributes are modified."""
+    progress: ProgressProtocol | None
+    """Return the progress reporting interface of the context or None if not set."""
