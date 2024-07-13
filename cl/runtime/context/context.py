@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 from typing import ClassVar, List
 
@@ -26,34 +24,54 @@ from logging import Logger
 
 from cl.runtime.storage.protocols import DataSourceProtocol
 
+# Use in case progress is not specified
+null_progress = NullProgress()
+
+
+def current_or_default_logger() -> Logger:
+    """Return logger of the current context or None if current progress is not set."""
+    # TODO: Specify default logger
+    return context.logger if (context := Context.current()) is not None else None
+
+
+def current_or_default_data_source() -> DataSourceProtocol:
+    """Return data source of the current context or the default data source if current progress is not set."""
+    return context.data_source if (context := Context.current()) is not None else DataSource.default()
+
+
+def current_or_default_dataset() -> TDataset:
+    """Return dataset of the current context or None if current progress is not set."""
+    return context.dataset if (context := Context.current()) is not None else None
+
+
+def current_or_default_progress() -> ProgressProtocol:
+    """Return progress API of the current context or NullProgress if current progress is not set."""
+    return context.progress if (context := Context.current()) is not None else null_progress
+
 
 @dataclass(slots=True, kw_only=True, frozen=True)
 class Context:
     """Protocol implemented by context objects providing logging, data source, dataset, and progress reporting."""
 
-    __context_stack: ClassVar[List[Context]] = []  # TODO: Set using ContextVars
-    """Return current context, error message if not set."""
+    __context_stack: ClassVar[List['Context']] = []  # TODO: Set using ContextVars
+    """New current context is pushed to the context stach inside the 'with Context(...)' clause."""
 
-    logger: Logger | None = None  # TODO: Specify default logger
+    logger: Logger | None = field(default_factory=lambda: current_or_default_logger())
     """Return the logger provided by the context."""
 
-    # TODO: Review handling of defaults
-    data_source: DataSourceProtocol | None = field(default_factory=lambda: DataSource.default())
+    data_source: DataSourceProtocol | None = field(default_factory=lambda: current_or_default_data_source())
     """Return the default data source of the context or None if not set."""
 
-    dataset: TDataset = None
-    """Return the default dataset of the context or None if not set."""
+    dataset: TDataset = field(default_factory=lambda: current_or_default_dataset())
+    """Default dataset of the context, set to None if not specified"""
 
-    progress: ProgressProtocol = NullProgress()
-    """Return the progress reporting interface of the context or None if not set."""
+    progress: ProgressProtocol = field(default_factory=lambda: current_or_default_progress())
+    """Progress reporting interface of the context, set to NullProgress if not specified."""
 
     @classmethod
     def current(cls):
-        """Return the current context, error message if not set."""
-        if len(cls.__context_stack) > 0:
-            return cls.__context_stack[-1]
-        else:
-            raise RuntimeError("Current context is not set outside 'with Context(...)' clause.")
+        """Return the current context or None if not set."""
+        return cls.__context_stack[-1] if len(cls.__context_stack) > 0 else None
 
     def __enter__(self):
         """Supports `with` operator for resource disposal."""
