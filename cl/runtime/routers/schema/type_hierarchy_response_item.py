@@ -14,22 +14,20 @@
 
 from __future__ import annotations
 
+import inspect
 from cl.runtime.primitive.string_util import StringUtil
-from cl.runtime.routers.user_request import UserRequest
+from cl.runtime.routers.schema.type_hierarchy_request import TypeHierarchyRequest
 from cl.runtime.schema.schema import Schema
 from inflection import titleize
 from pydantic import BaseModel
 from typing import List
 
 
-class TypesResponseItem(BaseModel):
-    """Single item of the list returned by the /data/types route."""
+class TypeHierarchyResponseItem(BaseModel):
+    """Single item of the list returned by the /schema/type-hierarchy route."""
 
     name: str
     """Class name (may be customized in settings)."""
-
-    module: str
-    """Module path in dot-delimited format (may be customized in settings)."""
 
     label: str
     """Type label displayed in the UI is humanized class name (may be customized in settings)."""
@@ -39,21 +37,21 @@ class TypesResponseItem(BaseModel):
         populate_by_name = True
 
     @staticmethod
-    def get_types(request: UserRequest) -> List[TypesResponseItem]:
-        """Implements /schema/types route."""
+    def get_types(request: TypeHierarchyRequest) -> List[TypeHierarchyResponseItem]:
+        """Implements /schema/type-hierarchy route."""
 
-        # TODO: Check why UserRequest is not used in this method
+        base_type_name = request.name
 
-        # Get a dictionary of types indexed by short name
-        type_dict = Schema.get_type_dict()
+        # Getting type's successor names
+        base_type = Schema.get_type_by_short_name(base_type_name)
+        # TODO: Modify the method for removing types to also cover non-abstract Mixins
+        successor_types = [t for t in base_type.__subclasses__() if not inspect.isabstract(t)]
+        all_type_names = list(set([s_type.__name__ for s_type in successor_types]))
+        if not inspect.isabstract(base_type):
+            all_type_names.append(base_type_name)
 
         result = [
-            TypesResponseItem(
-                name=record_type.__name__,
-                module=StringUtil.to_pascal_case(record_type.__module__),
-                label=titleize(record_type.__name__),
-            )
-            for record_type in type_dict.values()
-            if hasattr(record_type, "get_key")
+            TypeHierarchyResponseItem(name=type_name, label=titleize(type_name))
+            for type_name in all_type_names
         ]
         return result

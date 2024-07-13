@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from cl.runtime.routers.schema.type_hierarchy_response_item import TypeHierarchyResponseItem
+from cl.runtime.routers.schema.type_hierarchy_request import TypeHierarchyRequest
 from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
 from cl.runtime.routers.schema.types_response_item import TypesResponseItem
@@ -19,11 +21,13 @@ from cl.runtime.routers.user_request import UserRequest
 from fastapi import APIRouter
 from fastapi import Header
 from fastapi import Query
-from typing import Dict
-from typing import List
+from starlette.requests import Request
+from typing import Dict, List
 
+# TODO: Prefix type aliases with T
 TypesResponse = List[TypesResponseItem]
 TypeResponse = Dict[str, Dict]
+TypeHierarchyResponse = List[TypeHierarchyResponseItem]
 
 router = APIRouter()
 
@@ -42,3 +46,15 @@ async def get_type(
 ) -> TypeResponse:
     """Schema for the specified type and its dependencies."""
     return TypeResponseUtil.get_type(TypeRequest(name=name, module=module, user=user))
+
+
+@router.get("/type-hierarchy", response_model=TypeHierarchyResponse)
+async def get_type_hierarchy(
+    request: Request,
+    name: str = Query(..., description="Class name"),  # noqa Suppress report about shadowed built-in type
+    return_ancestors: bool = Query(
+        False, description="If true, type ancestors will be returned with the specified type."
+    ),
+) -> TypeHierarchyResponse:
+    """Return type class hierarchy."""
+    return TypeHierarchyResponseItem.get_types(TypeHierarchyRequest(name=name, return_ancestors=return_ancestors))
