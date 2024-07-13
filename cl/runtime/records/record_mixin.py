@@ -75,7 +75,7 @@ class RecordMixin(Generic[TKey]):
         *,
         context: ContextProtocol | None = None,
         dataset: TDataset = None,
-        identities: Iterable[TIdentity] | None = None,
+        identity: TIdentity | None = None,
     ) -> Iterable[Self | None] | None:
         """
         Load records using an iterable of keys. A record passed instead of a key is returned without DB lookup.
@@ -84,10 +84,10 @@ class RecordMixin(Generic[TKey]):
             records_or_keys: Iterable of records or keys (records are returned without DB lookup).
             context: Optional context, if None current context will be used
             dataset: Lookup dataset as a delimited string, list of levels, or None
-            identities: Only the records whose identity matches one of the argument identities will be loaded
+            identity: Identity token for row level access
         """
 
         # Get data source from the current or specified context
         context = ContextProtocol.current if context is None else context
-        result = context.data_source.load_many(records_or_keys, dataset=dataset, identities=identities)
+        result = context.data_source.load_many(records_or_keys, dataset=dataset, identity=identity)
         return result

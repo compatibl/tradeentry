@@ -47,7 +47,7 @@ class DataSource(ABC):
         record_or_key: KeyProtocol | None,
         *,
         dataset: TDataset = None,
-        identities: Iterable[TIdentity] | None = None,
+        identity: TIdentity | None = None,
     ) -> RecordProtocol | None:
         """
         Load a single record using a key. If record is passed instead of a key, it is returned without DB lookup.
@@ -55,7 +55,7 @@ class DataSource(ABC):
         Args:
             record_or_key: Record or key (records are returned without DB lookup)
             dataset: Lookup dataset as a delimited string, list of levels, or None
-            identities: Only the records whose identity matches one of the argument identities will be loaded
+            identity: Identity token for row level access
         """
 
     @abstractmethod
@@ -64,7 +64,7 @@ class DataSource(ABC):
         records_or_keys: Iterable[KeyProtocol | None] | None,
         *,
         dataset: TDataset = None,
-        identities: Iterable[TIdentity] | None = None,
+        identity: TIdentity | None = None,
     ) -> Iterable[RecordProtocol | None] | None:
         """
         Load records using a list of records or keys (records are returned without DB lookup).
@@ -72,7 +72,7 @@ class DataSource(ABC):
         Args:
             records_or_keys: Iterable of records or keys (records are returned without DB lookup).
             dataset: Lookup dataset as a delimited string, list of levels, or None
-            identities: Only the records whose identity matches one of the argument identities will be loaded
+            identity: Identity token for row level access
         """
 
     @abstractmethod
@@ -81,7 +81,7 @@ class DataSource(ABC):
         query: TQuery,
         *,
         dataset: TDataset = None,
-        identities: Iterable[TIdentity] | None = None,
+        identity: TIdentity | None = None,
     ) -> Iterable[RecordProtocol]:
         """
         Load records based on the query.
@@ -91,7 +91,7 @@ class DataSource(ABC):
                 returned by the query based on NoSQL query conditions and order in MongoDB format.
                 Keys in CONDITIONS_DICT and ORDER_DICT must match the fields of TYPE.
             dataset: Lookup dataset as a delimited string, list of levels, or None
-            identities: Only the records whose identity matches one of the argument identities will be loaded
+            identity: Identity token for row level access
         """
 
     @abstractmethod
@@ -108,7 +108,7 @@ class DataSource(ABC):
         Args:
             record: Record or None.
             dataset: Target dataset as a delimited string, list of levels, or None
-            identity: Identity token used for row level security
+            identity: Identity token for row level access
         """
 
     @abstractmethod
@@ -125,7 +125,7 @@ class DataSource(ABC):
         Args:
             records: Iterable of records.
             dataset: Target dataset as a delimited string, list of levels, or None
-            identity: Identity token used for row level security
+            identity: Identity token for row level access
         """
 
     @abstractmethod
@@ -134,7 +134,7 @@ class DataSource(ABC):
         keys: Iterable[KeyProtocol] | None,
         *,
         dataset: TDataset = None,
-        identities: Iterable[TIdentity] | None = None,
+        identity: TIdentity | None = None,
     ) -> None:
         """
         Delete records using an iterable of keys.
@@ -142,7 +142,7 @@ class DataSource(ABC):
         Args:
             keys: Iterable of keys.
             dataset: Target dataset as a delimited string, list of levels, or None
-            identities: Only the records whose identity matches one of the argument identities will be deleted
+            identity: Identity token for row level access
         """
 
     @abstractmethod

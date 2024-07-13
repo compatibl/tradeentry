@@ -74,17 +74,17 @@ class BasicMongoDataSource(DataSource):
         record_or_key: KeyProtocol | None,
         *,
         dataset: TDataset = None,
-        identities: Iterable[TIdentity] | None = None,
+        identity: TIdentity | None = None,
     ) -> RecordProtocol | None:
         if record_or_key is None or getattr(record_or_key, "get_key", None) is not None:
             # Record or None, return without lookup
             return cast(RecordProtocol, record_or_key)
 
         elif getattr(record_or_key, "get_key_type"):
-            # Confirm dataset and identities are None
+            # Confirm dataset and identity are both None
             if dataset is not None:
                 raise RuntimeError("BasicMongo data source type does not support datasets.")
-            if identities is not None:
+            if identity is not None:
                 raise RuntimeError("BasicMongo data source type does not support row-level security.")
 
             # Key, get collection name from key type by removing Key suffix if present
@@ -110,7 +110,7 @@ class BasicMongoDataSource(DataSource):
         records_or_keys: Iterable[KeyProtocol | None] | None,
         *,
         dataset: TDataset = None,
-        identities: Iterable[TIdentity] | None = None,
+        identity: TIdentity | None = None,
     ) -> Iterable[RecordProtocol | None] | None:
         # TODO: Review performance compared to a custom implementation for load_many
         result = [self.load_one(x) for x in records_or_keys]
@@ -121,7 +121,7 @@ class BasicMongoDataSource(DataSource):
         query: TQuery,
         *,
         dataset: TDataset = None,
-        identities: Iterable[TIdentity] | None = None,
+        identity: TIdentity | None = None,
     ) -> Iterable[RecordProtocol]:
         # Validate the dataset and if necessary convert to delimited string
         dataset = DatasetUtil.to_str(dataset)
@@ -139,7 +139,7 @@ class BasicMongoDataSource(DataSource):
         if record is None:
             return
 
-        # Confirm dataset and identities are None
+        # Confirm dataset and identity are both None
         if dataset is not None:
             raise RuntimeError("BasicMongo data source type does not support datasets.")
         if identity is not None:
@@ -185,7 +185,7 @@ class BasicMongoDataSource(DataSource):
         keys: Iterable[KeyProtocol] | None,
         *,
         dataset: TDataset = None,
-        identities: Iterable[TIdentity] | None = None,
+        identity: TIdentity | None = None,
     ) -> None:
         # Validate the dataset and if necessary convert to delimited string
         dataset = DatasetUtil.to_str(dataset)

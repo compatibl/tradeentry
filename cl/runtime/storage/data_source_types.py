@@ -39,7 +39,7 @@ TKeyDict = Dict[str, TKeyField]
 """Serialized key in dictionary format."""
 
 TIdentity = str | None
-"""Identity token used for row level security."""
+"""Identity token for row level access."""
 
 TDataset = Iterable[str] | None
 """Dataset as a delimited string, list of levels, or None."""

@@ -50,7 +50,7 @@ class LocalCache(DataSource):
         record_or_key: KeyProtocol | None,
         *,
         dataset: TDataset = None,
-        identities: Iterable[TIdentity] | None = None,
+        identity: TIdentity | None = None,
     ) -> RecordProtocol | None:
         if record_or_key is None or getattr(record_or_key, "get_key", None) is not None:
             # Record or None, return without lookup
@@ -87,7 +87,7 @@ class LocalCache(DataSource):
         records_or_keys: Iterable[KeyProtocol | None] | None,
         *,
         dataset: TDataset = None,
-        identities: Iterable[TIdentity] | None = None,
+        identity: TIdentity | None = None,
     ) -> Iterable[RecordProtocol | None] | None:
         # TODO: Review performance compared to a custom implementation for load_many
         result = [self.load_one(x) for x in records_or_keys]
@@ -98,7 +98,7 @@ class LocalCache(DataSource):
         query: TQuery,
         *,
         dataset: TDataset = None,
-        identities: Iterable[TIdentity] | None = None,
+        identity: TIdentity | None = None,
     ) -> Iterable[RecordProtocol]:
         # Validate the dataset and if necessary convert to delimited string
         dataset = DatasetUtil.to_str(dataset)
@@ -148,7 +148,7 @@ class LocalCache(DataSource):
         keys: Iterable[KeyProtocol] | None,
         *,
         dataset: TDataset = None,
-        identities: Iterable[TIdentity] | None = None,
+        identity: TIdentity | None = None,
     ) -> None:
         # Validate the dataset and if necessary convert to delimited string
         dataset = DatasetUtil.to_str(dataset)
