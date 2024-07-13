@@ -22,7 +22,7 @@ from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubD
 def test_smoke():
     """Smoke test."""
 
-    with Context() as context:
+    with Context():
         data_source = BasicMongoDataSource(data_source_id="default", db_name="Dev;Runtime;V2")
 
         # Create test record and populate with sample data

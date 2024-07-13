@@ -15,10 +15,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import ClassVar
+from typing import ClassVar, List
 
 from cl.runtime.context.null_progress import NullProgress
-from cl.runtime.context.progress import Progress
 from cl.runtime.context.protocols import ProgressProtocol
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.storage.data_source import DataSource
@@ -32,7 +31,7 @@ from cl.runtime.storage.protocols import DataSourceProtocol
 class Context:
     """Protocol implemented by context objects providing logging, data source, dataset, and progress reporting."""
 
-    current: ClassVar[Context] = None
+    __context_stack: ClassVar[List[Context]] = []  # TODO: Set using ContextVars
     """Return current context, error message if not set."""
 
     logger: Logger | None = None  # TODO: Specify default logger
@@ -48,13 +47,32 @@ class Context:
     progress: ProgressProtocol = NullProgress()
     """Return the progress reporting interface of the context or None if not set."""
 
+    @classmethod
+    def current(cls):
+        """Return the current context, error message if not set."""
+        if len(cls.__context_stack) > 0:
+            return cls.__context_stack[-1]
+        else:
+            raise RuntimeError("Current context is not set outside 'with Context(...)' clause.")
+
     def __enter__(self):
         """Supports `with` operator for resource disposal."""
 
+        # Set current context on entering 'with Context(...)' clause
+        self.__context_stack.append(self)
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Supports `with` operator for resource disposal."""
+
+        # Restore the previous current context on exiting from 'with Context(...)' clause
+        if len(self.__context_stack) > 0:
+            current_context = self.__context_stack.pop()
+        else:
+            raise RuntimeError("Current context must not be cleared inside 'with Context(...)' clause.")
+
+        if current_context is not self:
+            raise RuntimeError("Current context must only be modified by 'with Context(...)' clause.")
 
         # TODO: Support resource disposal for the data source
         if self.data_source is not None:
