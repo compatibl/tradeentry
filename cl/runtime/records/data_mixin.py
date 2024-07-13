@@ -17,6 +17,8 @@ from abc import abstractmethod
 from typing import Any
 from typing_extensions import Self
 
+from cl.runtime.serialization.protocols import DataSerializerProtocol
+
 
 class DataMixin(ABC):
     """
@@ -28,11 +30,11 @@ class DataMixin(ABC):
     """
 
     @abstractmethod
-    def serialize_data(self, serializer) -> Any:  # TODO: Specify type hint for SerializerProtocol
+    def serialize_data(self, serializer: DataSerializerProtocol) -> Any:
         """Serialize self, calling the specified serializer for fields that do not implement serialize_data."""
         # TODO: Consider renaming to pack and unpack (for key as well, to avoid name clashes)
 
     @classmethod
     @abstractmethod
-    def deserialize_data(cls, data: Any, serializer) -> Self:  # TODO: Specify type hint for SerializerProtocol
+    def deserialize_data(cls, data: Any, serializer: DataSerializerProtocol) -> Self:
         """Deserialize data, calling the specified serializer for fields that do not implement deserialize_data."""
