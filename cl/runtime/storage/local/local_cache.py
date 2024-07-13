@@ -41,10 +41,6 @@ class LocalCache(DataSource):
 
     _cache: Dict[str, Dict[Type, Dict[str, TDataDict]]] = field(default_factory=dict)
 
-    def batch_size(self) -> int:
-        """Maximum number or records the data source will return in a single call, error if exceeded."""
-        return 1000000
-
     def load_one(
         self,
         record_or_key: KeyProtocol | None,

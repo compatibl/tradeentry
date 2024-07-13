@@ -38,10 +38,6 @@ class DataSource(ABC):
     """Unique data source identifier."""
 
     @abstractmethod
-    def batch_size(self) -> int:
-        """Maximum number of records the data source will return in a single call, error if exceeded."""
-
-    @abstractmethod
     def load_one(
         self,
         record_or_key: KeyProtocol | None,
