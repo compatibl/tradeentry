@@ -19,8 +19,8 @@ from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import InitProtocol
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
-from cl.runtime.serialization.dict_data_serializer import DictDataSerializer
-from cl.runtime.serialization.string_key_serializer import StringKeySerializer
+from cl.runtime.serialization.dict_serializer import DictSerializer
+from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.storage.data_source_types import TDataDict
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
@@ -37,8 +37,8 @@ from typing import Type
 from typing import cast
 
 # TODO: Revise and consider making fields of the data source
-data_serializer = DictDataSerializer()
-key_serializer = StringKeySerializer()
+data_serializer = DictSerializer()
+key_serializer = StringSerializer()
 
 
 @dataclass(slots=True, kw_only=True, frozen=True)
