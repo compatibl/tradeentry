@@ -22,7 +22,7 @@ class DatasetSerializerProtocol(Protocol):
     """Protocol for dataset serialization, deserialization is not required."""
 
     def serialize_dataset(self, dataset: TDataset) -> Any:
-        """Serialize dataset (result type depends on the serializer)."""
+        """Serialize dataset to backslash-delimited string (empty string for None), flattening composite datasets."""
 
 
 class KeySerializerProtocol(Protocol):

@@ -13,15 +13,43 @@
 # limitations under the License.
 
 from enum import Enum
-from typing import Tuple
+from typing import Any
+
+from cl.runtime.storage.data_source_types import TDataset
 
 primitive_type_names = ["NoneType", "str", "float", "int", "bool", "date", "time", "datetime", "bytes", "UUID"]
 """Detect primitive type by checking if class name is in this list."""
 
 
+def dataset_token_error(token: Any) -> None:
+    """Raise an error for an invalid dataset token."""
+
+
+
 # TODO: Add checks for to_node, from_node implementation for custom override of default serializer
 class StringSerializer:
-    """Serialize key."""
+    """Serialize dataset and key to string, flattening hierarchical structure."""
+
+    def serialize_dataset(self, dataset: TDataset) -> Any:
+        """Serialize dataset to backslash-delimited string (empty string for None), flattening composite datasets."""
+
+        if dataset is None:
+            return ""
+        elif dataset.__class__.__name__ in primitive_type_names:
+            if isinstance(dataset, str):
+                if dataset.startswith("\\") or dataset.endswith("\\"):
+                    raise RuntimeError(f"Dataset or dataset token '{dataset}' must not begin or end with backslash.")
+                if dataset.startswith(" ") or dataset.endswith(" "):
+                    raise RuntimeError(f"Dataset or dataset token '{dataset}' must not begin or end with whitespace.")
+            # TODO: Apply rules depending on the specific primitive type
+            return str(dataset)
+        elif isinstance(dataset, Enum):
+            return dataset.name
+        elif getattr(dataset, "__iter__", None) is not None:
+            return "\\".join(self.serialize_dataset(token) for token in dataset)
+        else:
+            raise RuntimeError(f"Invalid dataset or its token {dataset}. Valid token types are None, "
+                               f"primitive types, enum or their iterables.")
 
     def serialize_key(self, data):
         """Serialize key to string, flattening for composite keys."""

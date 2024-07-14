@@ -28,7 +28,7 @@ from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassSingleton
 
 
-def test_smoke():
+def test_data_serialization():
     """Test coroutine for /schema/typeV2 route."""
 
     sample_types = [
