@@ -12,15 +12,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.sql.sqlite_schema_manager import _collect_all_classes_in_hierarchy
-from stubs.cl.runtime import StubDataclassRecordKey
+
+from cl.runtime.schema.schema import Schema
+from stubs.cl.runtime import StubDataclassRecordKey, StubDataclassRecord, StubDataclassDerivedRecord, \
+    StubDataclassDerivedFromDerivedRecord, StubDataclassDictFields, StubDataclassListDictFields, \
+    StubDataclassDictListFields, StubDataclassListFields, StubDataclassOtherDerivedRecord
 
 
-def test_collect_all_types_in_hierarchy():
+# TODO (Roman): move to Schema tests
+def test_get_subtypes_in_hierarchy():
 
-    all_classes = _collect_all_classes_in_hierarchy(StubDataclassRecordKey)
-    list_classes = list(all_classes)
+    types_in_hierarchy = Schema.get_subtypes_in_hierarchy(StubDataclassRecordKey)
+
+    expected_types = {
+        StubDataclassRecord,
+        StubDataclassDerivedRecord,
+        StubDataclassDerivedFromDerivedRecord,
+        StubDataclassDictFields,
+        StubDataclassDictListFields,
+        StubDataclassListDictFields,
+        StubDataclassListFields,
+        StubDataclassOtherDerivedRecord
+    }
+
+    assert len(types_in_hierarchy) == len(expected_types)
+    assert set(types_in_hierarchy) == expected_types
 
 
 if __name__ == '__main__':
-    test_collect_all_types_in_hierarchy()
+    test_get_subtypes_in_hierarchy()

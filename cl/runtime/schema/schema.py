@@ -20,7 +20,7 @@ from cl.runtime import ClassInfo
 from cl.runtime.schema.type_decl import TypeDecl
 from cl.runtime.schema.type_decl import pascalize
 from cl.runtime.schema.type_decl_key import TypeDeclKey
-from collections import Counter
+from collections import Counter, defaultdict
 from enum import Enum
 from memoization import cached
 from pkgutil import walk_packages
@@ -205,4 +205,29 @@ class Schema:
 
         # Sort the result by module path
         result = sorted(result, key=lambda module: module.__name__)
+        return result
+
+    @classmethod
+    @cached
+    def get_subtypes_in_hierarchy(cls, record_type: Type) -> List[Type]:
+        subtypes = defaultdict(list)
+
+        for type_ in cls.get_types():
+            try:
+                i = type_.__mro__.index(record_type)
+            except ValueError:
+                continue
+
+            # skip start type
+            if i == 0:
+                continue
+
+            subtypes[i].append(type_)
+
+        result = []
+
+        # order by place in hierarchy. more derived in the end.
+        for k, v in sorted(subtypes.items(), key=lambda item: item[0]):
+            result.extend(v)
+
         return result
