@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+import pytest
 
 from cl.runtime.schema.schema import Schema
 from stubs.cl.runtime import StubDataclassRecordKey, StubDataclassRecord, StubDataclassDerivedRecord, \
@@ -32,12 +32,32 @@ def test_get_subtypes_in_hierarchy():
         StubDataclassDictListFields,
         StubDataclassListDictFields,
         StubDataclassListFields,
-        StubDataclassOtherDerivedRecord
+        StubDataclassOtherDerivedRecord,
     }
 
     assert len(types_in_hierarchy) == len(expected_types)
     assert set(types_in_hierarchy) == expected_types
 
 
+# TODO (Roman): move to Schema tests
+def test_get_key_class():
+
+    test_subtypes = (
+        StubDataclassRecord,
+        StubDataclassDerivedRecord,
+        StubDataclassDerivedFromDerivedRecord,
+        StubDataclassDictFields,
+        StubDataclassDictListFields,
+        StubDataclassListDictFields,
+        StubDataclassListFields,
+        StubDataclassOtherDerivedRecord,
+    )
+
+    expected_key_type = StubDataclassRecordKey
+
+    for type_ in test_subtypes:
+        assert Schema.get_key_class(type_) == expected_key_type
+
+
 if __name__ == '__main__':
-    test_get_subtypes_in_hierarchy()
+    pytest.main([__file__])

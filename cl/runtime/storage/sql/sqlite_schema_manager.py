@@ -13,28 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from typing import Type, Dict, Iterable, cast
-
-from cl.runtime.records.protocols import KeyProtocol, is_key, RecordProtocol
-
-
-def get_key_class(type_: Type) -> Type[KeyProtocol]:
-    """Get key class for given type."""
-
-    for type_ in type_.__mro__:
-        if is_key(type_):
-            return cast(KeyProtocol, type_)
-
-    raise RuntimeError(f'Not found key class for type {type_}.')
-
-
-def _collect_all_classes_in_hierarchy(type_: Type[KeyProtocol]) -> Iterable[RecordProtocol]:
-    """Collect all subtypes for given key class."""
-
-    for subclass in type_.__subclasses__():
-        subclass = cast(RecordProtocol, subclass)
-        yield from _collect_all_classes_in_hierarchy(subclass)
-        yield subclass
+from typing import Type
 
 
 def _resolve_columns_for_type(type_: Type):

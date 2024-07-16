@@ -17,6 +17,7 @@ from __future__ import annotations
 import importlib
 import inspect
 from cl.runtime import ClassInfo
+from cl.runtime.records.protocols import KeyProtocol, is_key
 from cl.runtime.schema.type_decl import TypeDecl
 from cl.runtime.schema.type_decl import pascalize
 from cl.runtime.schema.type_decl_key import TypeDeclKey
@@ -25,7 +26,7 @@ from enum import Enum
 from memoization import cached
 from pkgutil import walk_packages
 from types import ModuleType
-from typing import Dict
+from typing import Dict, cast
 from typing import Iterable
 from typing import List
 from typing import Type
@@ -231,3 +232,14 @@ class Schema:
             result.extend(v)
 
         return result
+
+    @staticmethod
+    @cached
+    def get_key_class(type_: Type) -> Type[KeyProtocol]:
+        """Get key class for given type."""
+
+        for type_ in type_.__mro__:
+            if is_key(type_):
+                return cast(KeyProtocol, type_)
+
+        raise RuntimeError(f'Not found key class for type {type_}.')
