@@ -13,11 +13,45 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from typing import Type
+from typing import Type, List, Tuple, Dict
+
+from inflection import camelize
+
+from cl.runtime.schema.schema import Schema
 
 
-def _resolve_columns_for_type(type_: Type):
+def get_type_fields(type_: Type) -> Dict[str, Type]:
+    """Return field name and type of annotation based type declaration."""
+    return type_.__annotations__
+
+
+def resolve_columns_for_type(type_: Type) -> List[str]:
     """Collect all types in hierarchy and check type conflicts for fields with the same name."""
+
+    key_type = Schema.get_key_type(type_)
+    types_in_hierarchy = Schema.get_types_in_hierarchy(key_type)
+
+    # {field_name: (subclass_name, field_type)}
+    all_fields: Dict[str, Tuple[str, Type]] = {}
+
+    for type_ in types_in_hierarchy:
+
+        fields = get_type_fields(type_).items()
+        for field_name, field_type in fields:
+            existing_field = all_fields.get(field_name)
+
+            if existing_field is not None:
+                # check if fields with the same name have compatible type
+                if not issubclass(field_type, existing_field[1]):
+                    raise TypeError(
+                        f'Field {field_name}: {field_type} of class {type_.__name__} conflicts with the same field '
+                        f'{field_name}: {existing_field[1]} in base class {existing_field[0]}'
+                    )
+            else:
+                all_fields[field_name] = (type_.__name__, field_type)
+
+    columns = [f'{class_name}.{camelize(field_name)}' for field_name, (class_name, _) in all_fields.items()]
+    return columns
 
 
 def create_table_for_type(type_: Type) -> None:

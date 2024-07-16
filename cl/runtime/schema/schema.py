@@ -17,7 +17,7 @@ from __future__ import annotations
 import importlib
 import inspect
 from cl.runtime import ClassInfo
-from cl.runtime.records.protocols import KeyProtocol, is_key
+from cl.runtime.records.protocols import KeyProtocol, is_key, RecordProtocol
 from cl.runtime.schema.type_decl import TypeDecl
 from cl.runtime.schema.type_decl import pascalize
 from cl.runtime.schema.type_decl_key import TypeDeclKey
@@ -210,7 +210,7 @@ class Schema:
 
     @classmethod
     @cached
-    def get_subtypes_in_hierarchy(cls, record_type: Type) -> List[Type]:
+    def get_types_in_hierarchy(cls, record_type: Type) -> List[Type]:
         subtypes = defaultdict(list)
 
         for type_ in cls.get_types():
@@ -235,9 +235,10 @@ class Schema:
 
     @staticmethod
     @cached
-    def get_key_class(type_: Type) -> Type[KeyProtocol]:
+    def get_key_type(type_: Type) -> Type[KeyProtocol]:
         """Get key class for given type."""
 
+        # TODO (Roman): maybe make get_key_type method of KeyProtocol static and remove this implementation
         for type_ in type_.__mro__:
             if is_key(type_):
                 return cast(KeyProtocol, type_)
