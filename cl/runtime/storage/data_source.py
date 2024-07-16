@@ -32,6 +32,7 @@ from typing import Iterable
 class DataSource(ABC):
     """Abstract base class for polymorphic data storage with dataset isolation."""
 
+    # TODO: Do not store here, instead get from settings once during the initial Context construction
     __default: ClassVar[DataSource | None] = None
 
     data_source_id: str

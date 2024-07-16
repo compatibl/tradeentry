@@ -21,12 +21,7 @@ primitive_type_names = ["NoneType", "str", "float", "int", "bool", "date", "time
 """Detect primitive type by checking if class name is in this list."""
 
 
-def dataset_token_error(token: Any) -> None:
-    """Raise an error for an invalid dataset token."""
-
-
-
-# TODO: Add checks for to_node, from_node implementation for custom override of default serializer
+# TODO: Add checks for custom override of default serializer inside the class
 class StringSerializer:
     """Serialize dataset and key to string, flattening hierarchical structure."""
 
