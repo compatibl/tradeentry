@@ -211,36 +211,58 @@ class Schema:
     @classmethod
     @cached
     def get_types_in_hierarchy(cls, record_type: Type) -> List[Type]:
-        subtypes = defaultdict(list)
+        """
+        Find all record types in hierarchy for given record_type.
+        Include all base and child classes ordered by hierarchy.
+        """
+
+        get_key_type = getattr(record_type, 'get_key_type', None)
+
+        if get_key_type is None:
+            raise RuntimeError(f'Type {record_type} is not record type.')
+
+        # get key type
+        # TODO (Roman): review get_key_type method of KeyProtocol. maybe it can be staticmethod or classmethod?
+        key_type = get_key_type(None)
+
+        # container to collect types
+        types_ = defaultdict(list)
 
         for type_ in cls.get_types():
+
+            if type_ == record_type:
+                # skip start type
+                continue
+
+            type_get_key_type = getattr(type_, 'get_key_type', None)
+            if type_get_key_type is None:
+                # skip non-record types
+                continue
+
             try:
-                i = type_.__mro__.index(record_type)
+                type_key_type = type_get_key_type(None)
+            except AttributeError:
+                # skip types whose key type unavailable from type
+                continue
+
+            if key_type != type_key_type:
+                # skip types of another key type
+                continue
+
+            # try to resolve hierarchy
+            try:
+                i = type_.__mro__.index(key_type)
             except ValueError:
-                continue
+                # if key_type is not in mro default i = 1
+                i = 1
 
-            # skip start type
-            if i == 0:
-                continue
+            types_[i].append(type_)
 
-            subtypes[i].append(type_)
-
-        result = []
+        # final list of types in hierarchy
+        result: List[Type] = []
 
         # order by place in hierarchy. more derived in the end.
-        for k, v in sorted(subtypes.items(), key=lambda item: item[0]):
+        for k, v in sorted(types_.items(), key=lambda item: item[0]):
             result.extend(v)
 
         return result
-
-    @staticmethod
-    @cached
-    def get_key_type(type_: Type) -> Type[KeyProtocol]:
-        """Get key class for given type."""
-
-        # TODO (Roman): maybe make get_key_type method of KeyProtocol static and remove this implementation
-        for type_ in type_.__mro__:
-            if is_key(type_):
-                return cast(KeyProtocol, type_)
-
-        raise RuntimeError(f'Not found key class for type {type_}.')

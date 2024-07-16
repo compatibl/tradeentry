@@ -28,8 +28,7 @@ def get_type_fields(type_: Type) -> Dict[str, Type]:
 def resolve_columns_for_type(type_: Type) -> List[str]:
     """Collect all types in hierarchy and check type conflicts for fields with the same name."""
 
-    key_type = Schema.get_key_type(type_)
-    types_in_hierarchy = Schema.get_types_in_hierarchy(key_type)
+    types_in_hierarchy = Schema.get_types_in_hierarchy(type_)
 
     # {field_name: (subclass_name, field_type)}
     all_fields: Dict[str, Tuple[str, Type]] = {}
