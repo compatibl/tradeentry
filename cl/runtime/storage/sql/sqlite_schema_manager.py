@@ -30,8 +30,19 @@ def resolve_columns_for_type(type_: Type) -> List[str]:
 
     types_in_hierarchy = Schema.get_types_in_hierarchy(type_)
 
+    get_key_type = getattr(type_, 'get_key_type', None)
+    if get_key_type is None:
+        raise RuntimeError(f'Type {type_} is not record type.')
+
+    # get key attributes
+    key_type = get_key_type(type_)
+    key_fields_class_name: str = key_type.__name__.removesuffix("Key")
+    key_fields = get_type_fields(key_type)
+
     # {field_name: (subclass_name, field_type)}
-    all_fields: Dict[str, Tuple[str, Type]] = {}
+    all_fields: Dict[str, Tuple[str, Type]] = {
+        key_field_name: (key_fields_class_name, key_field_type) for key_field_name, key_field_type in key_fields.items()
+    }
 
     for type_ in types_in_hierarchy:
 
@@ -49,7 +60,11 @@ def resolve_columns_for_type(type_: Type) -> List[str]:
             else:
                 all_fields[field_name] = (type_.__name__, field_type)
 
-    columns = [f'{class_name}.{camelize(field_name)}' for field_name, (class_name, _) in all_fields.items()]
+    columns = [
+        f'{class_name}.{camelize(field_name, uppercase_first_letter=True)}' for field_name, (class_name, _) in
+        all_fields.items()
+    ]
+
     return columns
 
 

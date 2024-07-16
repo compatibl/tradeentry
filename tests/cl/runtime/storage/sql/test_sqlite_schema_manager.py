@@ -14,6 +14,7 @@
 import pytest
 
 from cl.runtime.schema.schema import Schema
+from cl.runtime.storage.sql.sqlite_schema_manager import resolve_columns_for_type
 from stubs.cl.runtime import StubDataclassRecordKey, StubDataclassRecord, StubDataclassDerivedRecord, \
     StubDataclassDerivedFromDerivedRecord, StubDataclassDictFields, StubDataclassListDictFields, \
     StubDataclassDictListFields, StubDataclassListFields, StubDataclassOtherDerivedRecord
@@ -22,7 +23,7 @@ from stubs.cl.runtime import StubDataclassRecordKey, StubDataclassRecord, StubDa
 # TODO (Roman): move to Schema tests
 def test_get_subtypes_in_hierarchy():
 
-    types_in_hierarchy = Schema.get_subtypes_in_hierarchy(StubDataclassRecordKey)
+    types_in_hierarchy = Schema.get_types_in_hierarchy(StubDataclassRecordKey)
 
     expected_types = {
         StubDataclassRecord,
@@ -56,7 +57,44 @@ def test_get_key_class():
     expected_key_type = StubDataclassRecordKey
 
     for type_ in test_subtypes:
-        assert Schema.get_key_class(type_) == expected_key_type
+        assert type_.get_key_type(None) == expected_key_type # noqa
+
+
+def test_resolve_columns_for_type():
+
+    test_type = StubDataclassDerivedFromDerivedRecord
+
+    expected_columns = [
+        'StubDataclassRecord.Id',
+        'StubDataclassDerivedRecord.DerivedField',
+        'StubDataclassDictFields.StrDict',
+        'StubDataclassDictFields.FloatDict',
+        'StubDataclassDictFields.DateDict',
+        'StubDataclassDictFields.DataDict',
+        'StubDataclassDictFields.KeyDict',
+        'StubDataclassDictFields.RecordDict',
+        'StubDataclassDictFields.DerivedRecordDict',
+        'StubDataclassDictListFields.FloatDictList',
+        'StubDataclassDictListFields.DateDictList',
+        'StubDataclassDictListFields.RecordDictList',
+        'StubDataclassDictListFields.DerivedRecordDictList',
+        'StubDataclassListDictFields.FloatListDict',
+        'StubDataclassListDictFields.DateListDict',
+        'StubDataclassListDictFields.RecordListDict',
+        'StubDataclassListDictFields.DerivedRecordListDict',
+        'StubDataclassListFields.StrList',
+        'StubDataclassListFields.FloatList',
+        'StubDataclassListFields.DateList',
+        'StubDataclassListFields.DataList',
+        'StubDataclassListFields.KeyList',
+        'StubDataclassListFields.RecordList',
+        'StubDataclassListFields.DerivedRecordList',
+        'StubDataclassOtherDerivedRecord.OtherDerived',
+    ]
+
+    resolved_columns = resolve_columns_for_type(test_type)
+
+    assert expected_columns == resolved_columns
 
 
 if __name__ == '__main__':
