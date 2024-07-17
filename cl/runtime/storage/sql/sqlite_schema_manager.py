@@ -20,60 +20,11 @@ from inflection import camelize
 from cl.runtime.schema.schema import Schema
 
 
-def get_type_fields(type_: Type) -> Dict[str, Type]:
-    """Return field name and type of annotation based type declaration."""
-    return type_.__annotations__
-
-
-def resolve_columns_for_type(type_: Type) -> List[str]:
-    """Collect all types in hierarchy and check type conflicts for fields with the same name."""
-
-    types_in_hierarchy = Schema.get_types_in_hierarchy(type_)
-
-    get_key_type = getattr(type_, 'get_key_type', None)
-    if get_key_type is None:
-        raise RuntimeError(f'Type {type_} is not record type.')
-
-    # get key attributes
-    key_type = get_key_type(type_)
-    key_fields_class_name: str = key_type.__name__.removesuffix("Key")
-    key_fields = get_type_fields(key_type)
-
-    # {field_name: (subclass_name, field_type)}
-    all_fields: Dict[str, Tuple[str, Type]] = {
-        key_field_name: (key_fields_class_name, key_field_type) for key_field_name, key_field_type in key_fields.items()
-    }
-
-    for type_ in types_in_hierarchy:
-
-        fields = get_type_fields(type_).items()
-        for field_name, field_type in fields:
-            existing_field = all_fields.get(field_name)
-
-            if existing_field is not None:
-                # check if fields with the same name have compatible type
-                if not issubclass(field_type, existing_field[1]):
-                    raise TypeError(
-                        f'Field {field_name}: {field_type} of class {type_.__name__} conflicts with the same field '
-                        f'{field_name}: {existing_field[1]} in base class {existing_field[0]}'
-                    )
-            else:
-                all_fields[field_name] = (type_.__name__, field_type)
-
-    columns = [
-        f'{class_name}.{camelize(field_name, uppercase_first_letter=True)}' for field_name, (class_name, _) in
-        all_fields.items()
-    ]
-
-    return columns
-
-
-def create_table_for_type(type_: Type) -> None:
-    """Create mile wide table for given type including columns for all parent and child types."""
-
-
 @dataclass(slots=True, kw_only=True)
-class SqlSchemaManager:
+class SqliteSchemaManager:
+
+    pascalize_column_names: bool = False
+    add_class_to_column_names: bool = True
 
     def create_table(self, record_type: Type) -> None:
         """
@@ -84,3 +35,51 @@ class SqlSchemaManager:
         """
         if hasattr(record_type, "__slots__"):
             pass
+
+    def _get_type_fields(self, type_: Type) -> Dict[str, Type]:
+        """Return field name and type of annotation based type declaration."""
+        return type_.__annotations__
+
+    def _resolve_columns_for_type(self, type_: Type) -> List[str]:
+        """Collect all types in hierarchy and check type conflicts for fields with the same name."""
+
+        types_in_hierarchy = Schema.get_types_in_hierarchy(type_)
+
+        get_key_type = getattr(type_, 'get_key_type', None)
+        if get_key_type is None:
+            raise RuntimeError(f'Type {type_} is not record type.')
+
+        # get key attributes
+        key_type = get_key_type(type_)
+        key_fields_class_name: str = key_type.__name__.removesuffix("Key")
+        key_fields = self._get_type_fields(key_type)
+
+        # {field_name: (subclass_name, field_type)}
+        all_fields: Dict[str, Tuple[str, Type]] = {
+            key_field_name: (key_fields_class_name, key_field_type) for key_field_name, key_field_type in
+            key_fields.items()
+        }
+
+        for type_ in types_in_hierarchy:
+
+            fields = self._get_type_fields(type_).items()
+            for field_name, field_type in fields:
+                existing_field = all_fields.get(field_name)
+
+                if existing_field is not None:
+                    # check if fields with the same name have compatible type
+                    if not issubclass(field_type, existing_field[1]):
+                        raise TypeError(
+                            f'Field {field_name}: {field_type} of class {type_.__name__} conflicts with the same field '
+                            f'{field_name}: {existing_field[1]} in base class {existing_field[0]}'
+                        )
+                else:
+                    all_fields[field_name] = (type_.__name__, field_type)
+
+        columns = [
+            (f'{class_name}.' if self.add_class_to_column_names else '') +
+            (camelize(field_name, uppercase_first_letter=True) if not self.pascalize_column_names else field_name)
+            for field_name, (class_name, _) in all_fields.items()
+        ]
+
+        return columns

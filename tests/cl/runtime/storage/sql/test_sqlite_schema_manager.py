@@ -14,7 +14,7 @@
 import pytest
 
 from cl.runtime.schema.schema import Schema
-from cl.runtime.storage.sql.sqlite_schema_manager import resolve_columns_for_type
+from cl.runtime.storage.sql.sqlite_schema_manager import SqliteSchemaManager
 from stubs.cl.runtime import StubDataclassRecordKey, StubDataclassRecord, StubDataclassDerivedRecord, \
     StubDataclassDerivedFromDerivedRecord, StubDataclassDictFields, StubDataclassListDictFields, \
     StubDataclassDictListFields, StubDataclassListFields, StubDataclassOtherDerivedRecord
@@ -92,7 +92,7 @@ def test_resolve_columns_for_type():
         'StubDataclassOtherDerivedRecord.OtherDerived',
     ]
 
-    resolved_columns = resolve_columns_for_type(test_type)
+    resolved_columns = SqliteSchemaManager()._resolve_columns_for_type(test_type)
 
     assert expected_columns == resolved_columns
 
