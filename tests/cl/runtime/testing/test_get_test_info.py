@@ -12,8 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import inspect
 import pytest
+import unittest
+import inspect
 
 
 def get_test_info():
@@ -28,16 +29,43 @@ def get_test_info():
     return None, None, None
 
 
-def test_stub_function():
+def inner_function():
+
     module_name, class_name, test_name = get_test_info()
     print(f"Module: {module_name}, Class: {class_name}, Test: {test_name}")
 
 
+def test_stub_function():
+    module_name, class_name, test_name = get_test_info()
+    print(f"Module: {module_name}, Class: {class_name}, Test: {test_name}")
+
+    # Test calling 'get_test_info' from an inner function
+    inner_function()
+
+
 class TestStubClass:
     def test_stub_method(self):
+
         module_name, class_name, test_name = get_test_info()
         print(f"Module: {module_name}, Class: {class_name}, Test: {test_name}")
+
+        # Test calling 'get_test_info' from an inner function
+        inner_function()
+
+
+class TestUnitTest(unittest.TestCase):
+
+    def test_unittest_method(self):
+
+        module_name, class_name, test_name = get_test_info()
+        print(f"Module: {module_name}, Class: {class_name}, Test: {test_name}")
+
+        # Test calling 'get_test_info' from an inner function
+        inner_function()
 
 
 if __name__ == "__main__":
     pytest.main([__file__])
+
+    # Run unittest tests
+    unittest.main()
