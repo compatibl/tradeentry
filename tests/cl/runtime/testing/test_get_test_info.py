@@ -21,23 +21,25 @@ def get_test_info():
     stack = inspect.stack()
     for frame_info in stack:
         if frame_info.function.startswith('test_'):
-            module_name = frame_info.frame.f_globals['__name__']
+            frame_globals = frame_info.frame.f_globals
+            module_name = frame_globals['__name__']
+            module_file = frame_globals['__file__']
             test_name = frame_info.function
             cls_instance = frame_info.frame.f_locals.get('self', None)
             class_name = cls_instance.__class__.__name__ if cls_instance else None
-            return module_name, class_name, test_name
-    return None, None, None
+            return module_file, module_name, class_name, test_name
+    return None, None, None, None
 
 
 def inner_function():
 
-    module_name, class_name, test_name = get_test_info()
-    print(f"Module: {module_name}, Class: {class_name}, Test: {test_name}")
+    file_name, module_name, class_name, test_name = get_test_info()
+    print(f"File: {file_name} Module: {module_name}, Class: {class_name}, Test: {test_name}")
 
 
 def test_stub_function():
-    module_name, class_name, test_name = get_test_info()
-    print(f"Module: {module_name}, Class: {class_name}, Test: {test_name}")
+    file_name, module_name, class_name, test_name = get_test_info()
+    print(f"File: {file_name} Module: {module_name}, Class: {class_name}, Test: {test_name}")
 
     # Test calling 'get_test_info' from an inner function
     inner_function()
@@ -46,8 +48,8 @@ def test_stub_function():
 class TestStubClass:
     def test_stub_method(self):
 
-        module_name, class_name, test_name = get_test_info()
-        print(f"Module: {module_name}, Class: {class_name}, Test: {test_name}")
+        file_name, module_name, class_name, test_name = get_test_info()
+        print(f"File: {file_name} Module: {module_name}, Class: {class_name}, Test: {test_name}")
 
         # Test calling 'get_test_info' from an inner function
         inner_function()
@@ -57,8 +59,8 @@ class TestUnitTest(unittest.TestCase):
 
     def test_unittest_method(self):
 
-        module_name, class_name, test_name = get_test_info()
-        print(f"Module: {module_name}, Class: {class_name}, Test: {test_name}")
+        file_name, module_name, class_name, test_name = get_test_info()
+        print(f"File: {file_name} Module: {module_name}, Class: {class_name}, Test: {test_name}")
 
         # Test calling 'get_test_info' from an inner function
         inner_function()
