@@ -11,6 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import sqlite3
+
 import pytest
 
 from cl.runtime.schema.schema import Schema
@@ -95,6 +97,20 @@ def test_resolve_columns_for_type():
     resolved_columns = SqliteSchemaManager()._resolve_columns_for_type(test_type)
 
     assert expected_columns == resolved_columns
+
+
+def create_table():
+    connection = sqlite3.connect('test_sqlite_db.sqlite')
+
+    with connection as connection:
+        sqlite_schema_manager = SqliteSchemaManager(sqlite_connection=connection)
+
+        existing_tables = sqlite_schema_manager.existing_tables()
+        assert existing_tables == []
+        sqlite_schema_manager.create_table(StubDataclassRecord)
+
+        existing_tables = sqlite_schema_manager.existing_tables()
+        assert existing_tables == [StubDataclassRecord.__name__]
 
 
 if __name__ == '__main__':

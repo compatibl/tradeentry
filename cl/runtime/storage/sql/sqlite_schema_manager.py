@@ -11,9 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-from dataclasses import dataclass
-from typing import Type, List, Tuple, Dict
+import sqlite3
+from dataclasses import dataclass, field
+from typing import Type, List, Tuple, Dict, Any, Iterable
 
 from inflection import camelize
 
@@ -23,18 +23,57 @@ from cl.runtime.schema.schema import Schema
 @dataclass(slots=True, kw_only=True)
 class SqliteSchemaManager:
 
+    sqlite_connection: sqlite3.Connection = None
     pascalize_column_names: bool = False
     add_class_to_column_names: bool = True
 
-    def create_table(self, record_type: Type) -> None:
+    def create_table(self, type_: Type, if_not_exists: bool = True) -> None:
         """
         Create sqlite table for given type.
 
         Don`t need to specify column types because sqlite supports dynamic typing.
         Mile wide table contains columns for all subtypes.
         """
-        if hasattr(record_type, "__slots__"):
-            pass
+
+        if_not_exists_part: str = ' IF NOT EXISTS' if if_not_exists else ''
+
+        # get table name for type
+        table_name: str = self.table_name_for_type(type_)
+
+        # resolve columns and join to statement part
+        columns: str = '"' + '", "'.join(self._resolve_columns_for_type(type_)) + '"'
+
+        # construct final create table statement
+        create_table_statement: str = f'CREATE TABLE{if_not_exists_part} {table_name} ({columns});'
+
+        # execute create table statement
+        cursor = self.sqlite_connection.cursor()
+        cursor.execute(create_table_statement)
+        self.sqlite_connection.commit()
+
+    def table_name_for_type(self, type_: Type) -> str:
+        """Return table name for the given type."""
+        key_type = self._get_key_type(type_)
+
+        # return table name as key type name without 'Key' suffix
+        return key_type.__name__.removesuffix('Key')
+
+    def existing_tables(self) -> List[str]:
+        """Return existing tables in db."""
+        cursor = self.sqlite_connection.cursor()
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+
+        # cursor.fetchall() returns [(name,), ...]
+        return [table_name for select_res in cursor.fetchall() for table_name in select_res]
+
+    def _get_key_type(self, type_: Type) -> Type:
+        """Get key type for the given type."""
+        get_key_type = getattr(type_, 'get_key_type', None)
+        if get_key_type is None:
+            raise RuntimeError(f'Type {type_} is not record type.')
+
+        # get key attributes
+        return get_key_type(None)
 
     def _get_type_fields(self, type_: Type) -> Dict[str, Type]:
         """Return field name and type of annotation based type declaration."""
@@ -44,13 +83,9 @@ class SqliteSchemaManager:
         """Collect all types in hierarchy and check type conflicts for fields with the same name."""
 
         types_in_hierarchy = Schema.get_types_in_hierarchy(type_)
-
-        get_key_type = getattr(type_, 'get_key_type', None)
-        if get_key_type is None:
-            raise RuntimeError(f'Type {type_} is not record type.')
+        key_type = self._get_key_type(type_)
 
         # get key attributes
-        key_type = get_key_type(type_)
         key_fields_class_name: str = key_type.__name__.removesuffix("Key")
         key_fields = self._get_type_fields(key_type)
 
