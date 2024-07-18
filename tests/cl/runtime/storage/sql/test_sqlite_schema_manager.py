@@ -67,6 +67,8 @@ def test_resolve_columns_for_type():
     test_type = StubDataclassDerivedFromDerivedRecord
 
     expected_columns = [
+        '_key',
+        '_type',
         'StubDataclassRecord.Id',
         'StubDataclassDerivedRecord.DerivedField',
         'StubDataclassDictFields.StrDict',
@@ -99,7 +101,7 @@ def test_resolve_columns_for_type():
     assert expected_columns == resolved_columns
 
 
-def create_table():
+def test_create_table():
     connection = sqlite3.connect('test_sqlite_db.sqlite')
 
     with connection as connection:
@@ -107,10 +109,15 @@ def create_table():
 
         existing_tables = sqlite_schema_manager.existing_tables()
         assert existing_tables == []
+
         sqlite_schema_manager.create_table(StubDataclassRecord)
 
         existing_tables = sqlite_schema_manager.existing_tables()
         assert existing_tables == [StubDataclassRecord.__name__]
+
+        sqlite_schema_manager.delete_table_by_name(StubDataclassRecord.__name__)
+        existing_tables = sqlite_schema_manager.existing_tables()
+        assert existing_tables == []
 
 
 if __name__ == '__main__':

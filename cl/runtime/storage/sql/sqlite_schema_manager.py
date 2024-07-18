@@ -51,6 +51,13 @@ class SqliteSchemaManager:
         cursor.execute(create_table_statement)
         self.sqlite_connection.commit()
 
+    def delete_table_by_name(self, name: str, if_exists: bool = True) -> None:
+        """Delete table in db."""
+        cursor = self.sqlite_connection.cursor()
+        if_exists_part: str = ' IF EXISTS' if if_exists else ''
+        cursor.execute(f"DROP TABLE {if_exists_part} '{name}';")
+        self.sqlite_connection.commit()
+
     def table_name_for_type(self, type_: Type) -> str:
         """Return table name for the given type."""
         key_type = self._get_key_type(type_)
@@ -111,8 +118,10 @@ class SqliteSchemaManager:
                 else:
                     all_fields[field_name] = (type_.__name__, field_type)
 
-        columns = [
-            (f'{class_name}.' if self.add_class_to_column_names else '') +
+        columns = ['_key', '_type']
+
+        columns += [
+            (f'{class_name}.' if self.add_class_to_column_names and class_name is not None else '') +
             (camelize(field_name, uppercase_first_letter=True) if not self.pascalize_column_names else field_name)
             for field_name, (class_name, _) in all_fields.items()
         ]
