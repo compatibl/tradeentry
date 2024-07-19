@@ -33,16 +33,16 @@ def test_data_serialization():
     sample_types = [
         StubDataclassRecord,
         StubDataclassNestedFields,
-        # StubDataclassDerivedRecord,
-        # StubDataclassDerivedFromDerivedRecord,
-        # StubDataclassOtherDerivedRecord,
-        # StubDataclassListFields,
-        # StubDataclassOptionalFields,
-        # StubDataclassDictFields,
-        # StubDataclassDictListFields,
-        # StubDataclassListDictFields,
-        # StubDataclassPrimitiveFields,
-        # StubDataclassSingleton,
+        StubDataclassDerivedRecord,
+        StubDataclassDerivedFromDerivedRecord,
+        StubDataclassOtherDerivedRecord,
+        StubDataclassListFields,
+        StubDataclassOptionalFields,
+        StubDataclassDictFields,
+        StubDataclassDictListFields,
+        StubDataclassListDictFields,
+        StubDataclassPrimitiveFields,
+        StubDataclassSingleton,
     ]
 
     serializer = FlatDictSerializer()

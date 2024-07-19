@@ -18,6 +18,7 @@ from dataclasses import dataclass
 from enum import Enum
 from inflection import camelize
 from typing import Dict, Tuple, cast
+from typing import Dict, List
 from typing import Type
 
 
@@ -28,8 +29,6 @@ class MissingType:
 missing = MissingType()
 """Represents missing value distinct from None."""
 
-primitive_type_names = ["NoneType", "str", "float", "int", "bool", "date", "time", "datetime", "bytes", "UUID"]
-"""Detect primitive type by checking if class name is in this list."""
 
 # TODO: Initialize from settings
 alias_dict: Dict[Type, str] = dict()
@@ -89,6 +88,9 @@ class DictSerializer:
     pascalize_keys: bool = False
     """If true, pascalize keys during serialization."""
 
+    primitive_type_names = ["NoneType", "str", "float", "int", "bool", "date", "time", "datetime", "bytes", "UUID"]
+    """Detect primitive type by checking if class name is in this list."""
+    
     def serialize_data(self, data):  # TODO: Check if None should be supported
         """Serialize to dictionary containing primitive types, dictionaries, or iterables."""
 
@@ -102,7 +104,7 @@ class DictSerializer:
                 k
                 if not self.pascalize_keys
                 else camelize(k, uppercase_first_letter=True): v
-                if v.__class__.__name__ in primitive_type_names
+                if v.__class__.__name__ in self.primitive_type_names
                 else self.serialize_data(v)
                 for k in all_slots
                 if (v := getattr(data, k)) is not None
@@ -117,7 +119,7 @@ class DictSerializer:
         elif isinstance(data, dict):
             # Dictionary, return with serialized values
             result = {
-                k: v if v.__class__.__name__ in primitive_type_names else self.serialize_data(v)
+                k: v if v.__class__.__name__ in self.primitive_type_names else self.serialize_data(v)
                 for k, v in data.items()
             }
             return result
@@ -127,13 +129,13 @@ class DictSerializer:
             if first_item == missing:
                 # Empty iterable, return None
                 return None
-            elif first_item is not None and first_item.__class__.__name__ in primitive_type_names:
+            elif first_item is not None and first_item.__class__.__name__ in self.primitive_type_names:
                 # Performance optimization to skip deserialization for arrays of primitive types
                 # based on the type of first item (assumes that all remaining items are also primitive)
                 return data
             else:
                 # Serialize each element of the iterable
-                return [v if v.__class__.__name__ in primitive_type_names else self.serialize_data(v) for v in data]
+                return [v if v.__class__.__name__ in self.primitive_type_names else self.serialize_data(v) for v in data]
         elif isinstance(data, Enum):
             # Serialize enum as a dict using enum class short name and item name (rather than item value)
             # To find short name, use 'in' which is faster than 'get' when most types do not have aliases
@@ -142,7 +144,7 @@ class DictSerializer:
             type_dict[short_name] = type_
             return {"_enum": short_name, "_name": data.name}
         else:
-            raise RuntimeError(f"Cannot deserialize data of type '{type(data)}'.")
+            raise RuntimeError(f"Cannot serialize data of type '{type(data)}'.")
 
     def deserialize_data(self, data: TDataDict):  # TODO: Check if None should be supported
         """Deserialize from dictionary containing primitive types, dictionaries, or iterables."""
@@ -161,7 +163,7 @@ class DictSerializer:
                         f"Ensure all serialized classes are included in package import settings."
                     )
                 deserialized_fields = {
-                    k: v if v.__class__.__name__ in primitive_type_names else self.deserialize_data(v)
+                    k: v if v.__class__.__name__ in self.primitive_type_names else self.deserialize_data(v)
                     for k, v in data.items()
                     if k != "_type"
                 }
@@ -180,7 +182,7 @@ class DictSerializer:
             else:
                 # Otherwise return a dictionary with recursively deserialized values
                 result = {
-                    k: v if v.__class__.__name__ in primitive_type_names else self.deserialize_data(v)
+                    k: v if v.__class__.__name__ in self.primitive_type_names else self.deserialize_data(v)
                     for k, v in data.items()
                 }
                 return result
@@ -190,12 +192,14 @@ class DictSerializer:
             if first_item == missing:
                 # Empty iterable, return None
                 return None
-            elif first_item is not None and first_item.__class__.__name__ in primitive_type_names:
+            elif first_item is not None and first_item.__class__.__name__ in self.primitive_type_names:
                 # Performance optimization to skip deserialization for arrays of primitive types
                 # based on the type of first item (assumes that all remaining items are also primitive)
                 return data
             else:
                 # Deserialize each element of the iterable
-                return [v if v.__class__.__name__ in primitive_type_names else self.deserialize_data(v) for v in data]
+                return [
+                    v if v.__class__.__name__ in self.primitive_type_names else self.deserialize_data(v) for v in data
+                ]
         else:
             raise RuntimeError(f"Cannot deserialize data of type '{type(data)}'.")
