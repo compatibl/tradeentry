@@ -21,6 +21,10 @@ def test_save_many():
 
     data_source.save_many([record, record])
 
+    loaded_records = list(data_source.load_many([record.get_key()]))
+    assert len(loaded_records) == 1
+    assert loaded_records[0] == record
+
 
 if __name__ == '__main__':
     test_save_many()

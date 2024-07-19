@@ -45,6 +45,10 @@ class SqliteSchemaManager:
         # execute create table statement
         cursor = self.sqlite_connection.cursor()
         cursor.execute(create_table_statement)
+
+        create_unique_index_statement = f'CREATE UNIQUE INDEX IF NOT EXISTS idx_key ON "{table_name}" (_key);'
+        cursor.execute(create_unique_index_statement)
+
         self.sqlite_connection.commit()
 
     def delete_table_by_name(self, name: str, if_exists: bool = True) -> None:
