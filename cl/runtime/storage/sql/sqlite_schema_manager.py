@@ -16,6 +16,7 @@ from dataclasses import dataclass, field
 from typing import Type, List, Tuple, Dict, Any, Iterable
 
 from inflection import camelize
+from memoization import cached
 
 from cl.runtime.schema.schema import Schema
 
@@ -27,24 +28,19 @@ class SqliteSchemaManager:
     pascalize_column_names: bool = False
     add_class_to_column_names: bool = True
 
-    def create_table(self, type_: Type, if_not_exists: bool = True) -> None:
+    def create_table(self, table_name: str, columns: Iterable[str], if_not_exists: bool = True) -> None:
         """
-        Create sqlite table for given type.
+        Create sqlite table with given name and columns.
 
-        Don`t need to specify column types because sqlite supports dynamic typing.
+        No need to specify column types because sqlite supports dynamic typing.
         Mile wide table contains columns for all subtypes.
         """
 
         if_not_exists_part: str = ' IF NOT EXISTS' if if_not_exists else ''
-
-        # get table name for type
-        table_name: str = self.table_name_for_type(type_)
-
-        # resolve columns and join to statement part
-        columns: str = '"' + '", "'.join(self._resolve_columns_for_type(type_)) + '"'
+        columns_str: str = '"' + '", "'.join(columns) + '"'
 
         # construct final create table statement
-        create_table_statement: str = f'CREATE TABLE{if_not_exists_part} {table_name} ({columns});'
+        create_table_statement: str = f'CREATE TABLE{if_not_exists_part} {table_name} ({columns_str});'
 
         # execute create table statement
         cursor = self.sqlite_connection.cursor()
@@ -86,7 +82,8 @@ class SqliteSchemaManager:
         """Return field name and type of annotation based type declaration."""
         return type_.__annotations__
 
-    def _resolve_columns_for_type(self, type_: Type) -> List[str]:
+    # TODO (Roman): make cached but only for key types
+    def get_columns_mapping(self, type_: Type) -> Dict[str, str]:
         """Collect all types in hierarchy and check type conflicts for fields with the same name."""
 
         types_in_hierarchy = Schema.get_types_in_hierarchy(type_)
@@ -118,12 +115,20 @@ class SqliteSchemaManager:
                 else:
                     all_fields[field_name] = (type_.__name__, field_type)
 
-        columns = ['_key', '_type']
+        columns_mapping = {
+            "_type": "_type",
+            "_key": "_key"
+        }
 
-        columns += [
-            (f'{class_name}.' if self.add_class_to_column_names and class_name is not None else '') +
-            (camelize(field_name, uppercase_first_letter=True) if not self.pascalize_column_names else field_name)
-            for field_name, (class_name, _) in all_fields.items()
-        ]
+        for field_name, (class_name, _) in all_fields.items():
+            field_name = (
+                field_name if not self.pascalize_column_names else camelize(field_name, uppercase_first_letter=True)
+            )
 
-        return columns
+            column_name = (
+                (f'{class_name}.' if self.add_class_to_column_names and class_name is not None else '') + field_name
+            )
+
+            columns_mapping[field_name] = column_name
+
+        return columns_mapping

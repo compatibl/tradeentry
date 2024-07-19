@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 import json
 from dataclasses import dataclass
 from enum import IntEnum
@@ -88,6 +89,8 @@ class FlatDictSerializer(DictSerializer):
             if flattened_value_type in [FlattenedValueType.date, FlattenedValueType.datetime, FlattenedValueType.time]:
                 result = data.isoformat()
             else:
+                # TODO (Roman): refactor to avoid nested data json dumps.
+                #  It is enough to do single json dump for the entire object.
                 result = json.dumps(super().serialize_data(data))
 
             result = self._add_flattened_type(result, flattened_value_type)

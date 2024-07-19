@@ -62,41 +62,39 @@ def test_get_key_class():
         assert type_.get_key_type(None) == expected_key_type # noqa
 
 
-def test_resolve_columns_for_type():
+def test_get_columns_mapping():
 
     test_type = StubDataclassDerivedFromDerivedRecord
 
-    expected_columns = [
-        '_key',
-        '_type',
-        'StubDataclassRecord.Id',
-        'StubDataclassDerivedRecord.DerivedField',
-        'StubDataclassDictFields.StrDict',
-        'StubDataclassDictFields.FloatDict',
-        'StubDataclassDictFields.DateDict',
-        'StubDataclassDictFields.DataDict',
-        'StubDataclassDictFields.KeyDict',
-        'StubDataclassDictFields.RecordDict',
-        'StubDataclassDictFields.DerivedRecordDict',
-        'StubDataclassDictListFields.FloatDictList',
-        'StubDataclassDictListFields.DateDictList',
-        'StubDataclassDictListFields.RecordDictList',
-        'StubDataclassDictListFields.DerivedRecordDictList',
-        'StubDataclassListDictFields.FloatListDict',
-        'StubDataclassListDictFields.DateListDict',
-        'StubDataclassListDictFields.RecordListDict',
-        'StubDataclassListDictFields.DerivedRecordListDict',
-        'StubDataclassListFields.StrList',
-        'StubDataclassListFields.FloatList',
-        'StubDataclassListFields.DateList',
-        'StubDataclassListFields.DataList',
-        'StubDataclassListFields.KeyList',
-        'StubDataclassListFields.RecordList',
-        'StubDataclassListFields.DerivedRecordList',
-        'StubDataclassOtherDerivedRecord.OtherDerived',
-    ]
+    expected_columns = {
+        "Id": "StubDataclassRecord.Id",
+        "DerivedField": "StubDataclassDerivedRecord.DerivedField",
+        "StrDict": "StubDataclassDictFields.StrDict",
+        "FloatDict": "StubDataclassDictFields.FloatDict",
+        "DateDict": "StubDataclassDictFields.DateDict",
+        "DataDict": "StubDataclassDictFields.DataDict",
+        "KeyDict": "StubDataclassDictFields.KeyDict",
+        "RecordDict": "StubDataclassDictFields.RecordDict",
+        "DerivedRecordDict": "StubDataclassDictFields.DerivedRecordDict",
+        "FloatDictList": "StubDataclassDictListFields.FloatDictList",
+        "DateDictList": "StubDataclassDictListFields.DateDictList",
+        "RecordDictList": "StubDataclassDictListFields.RecordDictList",
+        "DerivedRecordDictList": "StubDataclassDictListFields.DerivedRecordDictList",
+        "FloatListDict": "StubDataclassListDictFields.FloatListDict",
+        "DateListDict": "StubDataclassListDictFields.DateListDict",
+        "RecordListDict": "StubDataclassListDictFields.RecordListDict",
+        "DerivedRecordListDict": "StubDataclassListDictFields.DerivedRecordListDict",
+        "StrList": "StubDataclassListFields.StrList",
+        "FloatList": "StubDataclassListFields.FloatList",
+        "DateList": "StubDataclassListFields.DateList",
+        "DataList": "StubDataclassListFields.DataList",
+        "KeyList": "StubDataclassListFields.KeyList",
+        "RecordList": "StubDataclassListFields.RecordList",
+        "DerivedRecordList": "StubDataclassListFields.DerivedRecordList",
+        "OtherDerived": "StubDataclassOtherDerivedRecord.OtherDerived",
+    }
 
-    resolved_columns = SqliteSchemaManager()._resolve_columns_for_type(test_type)
+    resolved_columns = SqliteSchemaManager().get_columns_mapping(test_type)
 
     assert expected_columns == resolved_columns
 
@@ -110,7 +108,9 @@ def test_create_table():
         existing_tables = sqlite_schema_manager.existing_tables()
         assert existing_tables == []
 
-        sqlite_schema_manager.create_table(StubDataclassRecord)
+        table_name = sqlite_schema_manager.table_name_for_type(StubDataclassRecord)
+        columns = sqlite_schema_manager.get_columns_mapping(StubDataclassRecord).values()
+        sqlite_schema_manager.create_table(table_name, columns)
 
         existing_tables = sqlite_schema_manager.existing_tables()
         assert existing_tables == [StubDataclassRecord.__name__]
