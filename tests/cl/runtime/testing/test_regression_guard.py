@@ -13,8 +13,6 @@
 # limitations under the License.
 
 import pytest
-import unittest
-
 from cl.runtime.testing.regression_guard import RegressionGuard
 
 module_path = __file__.removesuffix(".py")
@@ -23,59 +21,58 @@ module_path = __file__.removesuffix(".py")
 def get_output_path_inside_function(channel: str) -> str:
     """Stub function invoked from the test."""
     channel_guard = RegressionGuard(channel=channel)
-    channel_guard.write(channel)
+    channel_guard.write(f"Channel guard: {channel}")
+    channel_guard.verify()
     return channel_guard.output_path
 
 
-def test_stub_function():
+def get_output_path_for_current_guard(channel: str | None = None) -> str:
+    """Stub function invoked from the test."""
+    current_guard = RegressionGuard.current()
+    if channel is not None:
+        current_guard.write(f"Current guard with channel: {channel}")
+    else:
+        current_guard.write("Current guard")
+    return current_guard.output_path
+
+
+def test_function():
     """Stub test function without a class."""
 
     guard = RegressionGuard()
+    base_path = f"{module_path}.test_function"
 
     # Test 'output_path' from the test itself
-    assert guard.output_path == f"{module_path}.test_stub_function"
+    assert guard.output_path == base_path
 
     # Test 'output_path' inside an inner function
-    channel = "channel_1"
-    assert get_output_path_inside_function(channel) == f"{module_path}.test_stub_function.{channel}"
+    channel = "test_function_channel"
+    assert get_output_path_inside_function(channel) == f"{base_path}.{channel}"
 
     # Write output
-    guard.write("text")
+    guard.write("Local guard: test_function")
     guard.verify()
 
 
-class TestStubPytest:
+class TestClass:
     """Stub pytest class."""
 
-    def test_stub_method(self):
+    def test_method(self):
         """Stub test method inside pytest class."""
 
-        # Test 'output_path' from the test itself
-        assert RegressionGuard().output_path == f"{module_path}.test_stub_pytest.test_stub_method"
-
-        # Test 'output_path' inside an inner function
-        channel = "channel_2"
-        assert get_output_path_inside_function(channel) == f"{module_path}.test_stub_pytest.test_stub_method.{channel}"
-
-
-class TestStubUnittest(unittest.TestCase):
-    """Stub unittest class."""
-
-    def test_unittest_method(self):
-        """Stub test method inside unittest class."""
+        guard = RegressionGuard()
+        base_path = f"{module_path}.test_class.test_method"
 
         # Test 'output_path' from the test itself
-        assert RegressionGuard().output_path == f"{module_path}.test_stub_unittest.test_unittest_method"
+        assert guard.output_path == base_path
 
         # Test 'output_path' inside an inner function
-        channel = "channel_3"
-        assert get_output_path_inside_function(channel) == f"{module_path}.test_stub_unittest.test_unittest_method.{channel}"
+        channel = "test_method_channel"
+        assert get_output_path_inside_function(channel) == f"{base_path}.{channel}"
+
+        guard.write("Local guard: test_method")
+        guard.verify()
 
 
 if __name__ == "__main__":
-
-    # Run pytest tests
     pytest.main([__file__])
-
-    # Run unittest tests
-    unittest.main()
