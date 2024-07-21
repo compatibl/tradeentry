@@ -26,8 +26,8 @@ from typing import Type
 from typing_extensions import Self
 from uuid import UUID
 
-primitive_types = [str, float, bool, int, dt.date, dt.time, dt.datetime, UUID, bytes]
-"""List of primitive types."""
+primitive_types = (str, float, bool, int, dt.date, dt.time, dt.datetime, UUID, bytes)
+"""Tuple of primitive types."""
 
 primitive_modules = ["builtins", "datetime", "uuid"]
 """List of modules for primitive types."""
