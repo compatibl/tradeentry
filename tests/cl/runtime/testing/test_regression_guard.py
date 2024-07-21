@@ -20,20 +20,28 @@ from cl.runtime.testing.regression_guard import RegressionGuard
 module_path = __file__.removesuffix(".py")
 
 
-def get_output_path_inside_function() -> str:
+def get_output_path_inside_function(channel: str) -> str:
     """Stub function invoked from the test."""
-    return RegressionGuard().output_path
+    channel_guard = RegressionGuard(channel=channel)
+    channel_guard.write(channel)
+    return channel_guard.output_path
 
 
 def test_stub_function():
     """Stub test function without a class."""
 
-    # Test calling 'get_output_path' from the test itself
-    result = RegressionGuard().output_path
-    assert result == f"{module_path}.test_stub_function"
+    guard = RegressionGuard()
 
-    # Test calling 'get_output_path' inside an inner function
-    assert get_output_path_inside_function() == result
+    # Test 'output_path' from the test itself
+    assert guard.output_path == f"{module_path}.test_stub_function"
+
+    # Test 'output_path' inside an inner function
+    channel = "channel_1"
+    assert get_output_path_inside_function(channel) == f"{module_path}.test_stub_function.{channel}"
+
+    # Write output
+    guard.write("text")
+    guard.verify()
 
 
 class TestStubPytest:
@@ -42,12 +50,12 @@ class TestStubPytest:
     def test_stub_method(self):
         """Stub test method inside pytest class."""
 
-        # Test calling 'get_output_path' from the test itself
-        result = RegressionGuard().output_path
-        assert result == f"{module_path}.test_stub_pytest.test_stub_method"
+        # Test 'output_path' from the test itself
+        assert RegressionGuard().output_path == f"{module_path}.test_stub_pytest.test_stub_method"
 
-        # Test calling 'get_output_path' inside an inner function
-        assert get_output_path_inside_function() == result
+        # Test 'output_path' inside an inner function
+        channel = "channel_2"
+        assert get_output_path_inside_function(channel) == f"{module_path}.test_stub_pytest.test_stub_method.{channel}"
 
 
 class TestStubUnittest(unittest.TestCase):
@@ -56,12 +64,12 @@ class TestStubUnittest(unittest.TestCase):
     def test_unittest_method(self):
         """Stub test method inside unittest class."""
 
-        # Test calling 'get_output_path' from the test itself
-        result = RegressionGuard().output_path
-        assert result == f"{module_path}.test_stub_unittest.test_unittest_method"
+        # Test 'output_path' from the test itself
+        assert RegressionGuard().output_path == f"{module_path}.test_stub_unittest.test_unittest_method"
 
-        # Test calling 'get_output_path' inside an inner function
-        assert get_output_path_inside_function() == result
+        # Test 'output_path' inside an inner function
+        channel = "channel_3"
+        assert get_output_path_inside_function(channel) == f"{module_path}.test_stub_unittest.test_unittest_method.{channel}"
 
 
 if __name__ == "__main__":
