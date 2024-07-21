@@ -54,7 +54,7 @@ class Context:
     """Protocol implemented by context objects providing logging, data source, dataset, and progress reporting."""
 
     __context_stack: ClassVar[List['Context']] = []  # TODO: Set using ContextVars
-    """New current context is pushed to the context stach inside the 'with Context(...)' clause."""
+    """New current context is pushed to the context stack using 'with Context(...)' clause."""
 
     logger: Logger | None = field(default_factory=lambda: current_or_default_logger())
     """Return the logger provided by the context."""

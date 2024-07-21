@@ -20,33 +20,34 @@ from cl.runtime.testing.regression_guard import RegressionGuard
 module_path = __file__.removesuffix(".py")
 
 
-def get_base_path_inside_function() -> str:
+def get_output_path_inside_function() -> str:
     """Stub function invoked from the test."""
-    return RegressionGuard.get_base_path()
+    return RegressionGuard().output_path
 
 
 def test_stub_function():
     """Stub test function without a class."""
 
-    # Test calling 'get_base_path' from the test itself
-    result = RegressionGuard.get_base_path()
+    # Test calling 'get_output_path' from the test itself
+    result = RegressionGuard().output_path
     assert result == f"{module_path}.test_stub_function"
 
-    # Test calling 'get_base_path' inside an inner function
-    assert get_base_path_inside_function() == result
+    # Test calling 'get_output_path' inside an inner function
+    assert get_output_path_inside_function() == result
 
 
 class TestStubPytest:
     """Stub pytest class."""
+
     def test_stub_method(self):
         """Stub test method inside pytest class."""
 
-        # Test calling 'get_base_path' from the test itself
-        result = RegressionGuard.get_base_path()
+        # Test calling 'get_output_path' from the test itself
+        result = RegressionGuard().output_path
         assert result == f"{module_path}.test_stub_pytest.test_stub_method"
 
-        # Test calling 'get_base_path' inside an inner function
-        assert get_base_path_inside_function() == result
+        # Test calling 'get_output_path' inside an inner function
+        assert get_output_path_inside_function() == result
 
 
 class TestStubUnittest(unittest.TestCase):
@@ -55,12 +56,12 @@ class TestStubUnittest(unittest.TestCase):
     def test_unittest_method(self):
         """Stub test method inside unittest class."""
 
-        # Test calling 'get_base_path' from the test itself
-        result = RegressionGuard.get_base_path()
+        # Test calling 'get_output_path' from the test itself
+        result = RegressionGuard().output_path
         assert result == f"{module_path}.test_stub_unittest.test_unittest_method"
 
-        # Test calling 'get_base_path' inside an inner function
-        assert get_base_path_inside_function() == result
+        # Test calling 'get_output_path' inside an inner function
+        assert get_output_path_inside_function() == result
 
 
 if __name__ == "__main__":

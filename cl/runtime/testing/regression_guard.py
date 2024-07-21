@@ -15,60 +15,67 @@
 from __future__ import annotations
 
 import inspect
-from dataclasses import dataclass
-from typing import Any, Iterable, List, ClassVar
-
 import inflection
+from dataclasses import dataclass
+from typing import Any, Iterable, List, ClassVar, cast
 
 
-@dataclass(slots=True, frozen=True, init=False)
+@dataclass(slots=True, init=False)
 class RegressionGuard:
     """
     Detects changes (regression) of output across multiple channels during unit testing.
 
     Notes:
-        - The output is recorded in a file named 'channel.received.ext' in the same
-          directory as the unit test in which the data was captured
-        - If 'channel.expected.ext' does not exist, it is created with the same data
-          as 'channel.received.ext'
-        - Otherwise 'channel.received.ext' and 'channel.expected.ext' are compared and
-          an exception is raised if they differ
+        - Channel name is module.test_function or module.test_class.test_method
+        - The output is recorded in 'channel.received.ext' located next to the unit test
+        - If 'channel.expected.ext' does not exist, it is created with the same data as 'channel.received.ext'
+        - Otherwise, the test fails if 'channel.expected.ext' and 'channel.received.ext' differ
         - To record a new 'channel.expected.ext' file, delete the existing one
-        - The file extension 'ext' is determined automatically based on which verify methods
-          are called
+        - File extension 'ext' is determined based on the verify method(s) called
     """
 
     __stack: ClassVar[List[RegressionGuard]] = []  # TODO: Set using ContextVars
     """New current guard is pushed to the stack using 'with RegressionGuard(...)' clause."""
 
-    base_path: str
-    """
-    If channel is not specified, the output file path will be 'base_path.received.ext'.
-    
-    Notes:
-        - For tests without a class, base path is 'path_to_test_module.test_method' 
-        - For tests inside a class, base path is 'path_to_test_module.test_class.test_method'
-          where test_class is the test class name converted to snake case
-    """
+    output_path: str
+    """Output path including directory and channel."""
 
-    channel: str
-    """Prefix to the output file names 'channel.received.ext' and 'channel.expected.ext'."""
+    ext: str | None = None
+    """Output file extension depends on the verify method(s) called."""
 
-    def __init__(self, subchannel: str | Iterable[str] | None = None):
+    def __init__(self, *, subchannel: str | Iterable[str] | None = None):
         """
-        Initialize the guard, optionally specifying dot-delimited subchannel name or its dot-delimited tokens.
+        Initialize the regression guard, optionally specifying subchannel.
 
         Args:
-            subchannel: If specified, dot-delimited subchannel name or its dot-delimited tokens
-                        are added to the channel of the current regression guard previously set
-                        using 'with RegressionGuard(...)' clause.
-
-                        If the current regression guard is not set, the subchannel is defined relative
-                        to the default channel with channel name in 'test_module.test_method' or
-                        'test_module.TestClass.test_method' format.
+            subchannel: Dot-delimited string or an iterable of dot-delimited tokens added to the current channel
         """
 
-    def verify_text(channel: str, value: Any) -> None:
+        # Check if current regression guard is set
+        if len(self.__stack) == 0:
+            # Current regression guard is not set, find output path by examining call stack
+            output_path = self.get_output_path()
+        else:
+            # Obtain defaults from the current regression guard
+            output_path = self.current().output_path
+
+        if subchannel is not None:
+            if isinstance(subchannel, str):
+                # TODO: Use specialized conversion for primitive types
+                subchannel = str(subchannel)
+            elif hasattr(subchannel, "__iter__"):
+                # TODO: Use specialized conversion for primitive types
+                subchannel = ".".join([str(x) for x in subchannel])
+            else:
+                raise RuntimeError("Output channel must be a primitive type or an iterable of primitive types.")
+
+            if subchannel != "":
+                output_path = f"{output_path}.{subchannel}"
+
+        # Set output path
+        self.output_path = output_path
+
+    def verify_text(self, channel: str, value: Any) -> None:
         """
         Record the value to the specified channel for regression testing purposes.
 
@@ -93,10 +100,10 @@ class RegressionGuard:
         if len(self.__stack) > 0:
             current_guard = self.__stack.pop()
         else:
-            raise RuntimeError("Current regression guard has been modified inside 'with RegressionGuard(...)' clause.")
+            raise RuntimeError("Current regression guard is cleared inside 'with RegressionGuard(...)' clause.")
 
         if current_guard is not self:
-            raise RuntimeError("Current regression guard must only be modified by 'with RegressionGuard(...)' clause.")
+            raise RuntimeError("Current regression guard is modified inside 'with RegressionGuard(...)' clause.")
 
         # TODO: Flush channels before closing them
 
@@ -112,35 +119,32 @@ class RegressionGuard:
             raise RuntimeError("Current regression guard has not been set, use 'with RegressionGuard(...)' to set.")
 
     @classmethod
-    def get_base_path(cls) -> str:
+    def get_output_path(cls) -> str:
         """
-        Get base path for regression test output by inspecting the stack frame to find the test function or method.
+        Return the tuple of absolute directory path and module name of the test
+        inside which this method was invoked by searching the stack frame for 'test_' or a custom
+        test function name pattern.
+        """
 
-        Notes:
-        - For tests without a class, base path is 'path_to_test_module.test_method'
-        - For tests inside a class, base path is 'path_to_test_module.test_class.test_method'
-          where test_class is the test class name converted to snake case
-        """
         stack = inspect.stack()
         for frame_info in stack:
             if frame_info.function.startswith('test_'):
                 frame_globals = frame_info.frame.f_globals
-                # TODO: module_name = frame_globals['__name__']
                 module_file = frame_globals['__file__']
                 test_name = frame_info.function
                 cls_instance = frame_info.frame.f_locals.get('self', None)
-                class_name = cls_instance.__class__.__name__ if cls_instance else None
+                class_name = cast(type, cls_instance).__class__.__name__ if cls_instance else None
 
                 if module_file.endswith(".py"):
-                    module_path = module_file.removesuffix(".py")
+                    module_file_without_ext = module_file.removesuffix(".py")
                 else:
                     raise RuntimeError(f"Test module file {module_file} does not end with '.py'.")
 
                 if class_name is None:
-                    result = f"{module_path}.{test_name}"
+                    result = f"{module_file_without_ext}.{test_name}"
                 else:
                     class_name = inflection.underscore(class_name)
-                    result = f"{module_path}.{class_name}.{test_name}"
+                    result = f"{module_file_without_ext}.{class_name}.{test_name}"
                 return result
 
         # If the end of the frame is reached and no function or method starting from test_ is found,
