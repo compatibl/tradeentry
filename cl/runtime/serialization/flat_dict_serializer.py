@@ -11,10 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+import base64
 import json
 from dataclasses import dataclass
-from enum import IntEnum
+from enum import IntEnum, Enum
+from uuid import UUID
 
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.storage.data_source_types import TDataDict
@@ -29,11 +30,15 @@ class FlattenedValueType(IntEnum):
     date = 3
     datetime = 4
     time = 5
+    bool = 6
+    uuid = 7
+    enum = 8
+    bytes = 9
 
 
 class FlatDictSerializer(DictSerializer):
 
-    primitive_type_names = ["NoneType", "float", "int", "bool", "bytes", "UUID"]
+    primitive_type_names = ["NoneType", "float", "int"]
 
     @staticmethod
     def _add_flattened_type(flattened_value: str, flattened_type: FlattenedValueType) -> str:
@@ -75,19 +80,34 @@ class FlatDictSerializer(DictSerializer):
             flattened_value_type = FlattenedValueType.data
         elif isinstance(data, dict):
             flattened_value_type = FlattenedValueType.dict
-        elif hasattr(data, '__iter__'):
-            flattened_value_type = FlattenedValueType.list
+        elif isinstance(data, Enum):
+            flattened_value_type = FlattenedValueType.enum
         elif data.__class__.__name__ == 'date':
             flattened_value_type = FlattenedValueType.date
         elif data.__class__.__name__ == 'datetime':
             flattened_value_type = FlattenedValueType.datetime
         elif data.__class__.__name__ == 'time':
             flattened_value_type = FlattenedValueType.time
+        elif data.__class__.__name__ == 'bool':
+            flattened_value_type = FlattenedValueType.bool
+        elif data.__class__.__name__ == 'UUID':
+            flattened_value_type = FlattenedValueType.uuid
+        elif data.__class__.__name__ == 'bytes':
+            flattened_value_type = FlattenedValueType.bytes
+        elif hasattr(data, '__iter__'):
+            flattened_value_type = FlattenedValueType.list
 
         if not is_root and flattened_value_type is not None:
 
             if flattened_value_type in [FlattenedValueType.date, FlattenedValueType.datetime, FlattenedValueType.time]:
                 result = data.isoformat()
+            elif flattened_value_type == FlattenedValueType.bool:
+                # TODO (Roman): think about a more efficient way to store bool
+                result = '1' if data else '0'
+            elif flattened_value_type == FlattenedValueType.uuid:
+                result = base64.b64encode(data.bytes).decode()
+            elif flattened_value_type == FlattenedValueType.bytes:
+                result = base64.b64encode(data).decode()
             else:
                 # TODO (Roman): refactor to avoid nested data json dumps.
                 #  It is enough to do single json dump for the entire object.
@@ -112,10 +132,18 @@ class FlatDictSerializer(DictSerializer):
                     converted_data = dt.datetime.fromisoformat(converted_data)
                 elif flattened_type == FlattenedValueType.time:
                     converted_data = dt.time.fromisoformat(converted_data)
+                elif flattened_type == FlattenedValueType.bool:
+                    converted_data = True if converted_data == '1' else False
+                elif flattened_type == FlattenedValueType.uuid:
+                    converted_data = UUID(bytes=base64.b64decode(converted_data.encode()))
+                elif flattened_type == FlattenedValueType.bytes:
+                    converted_data = base64.b64decode(converted_data.encode())
                 else:
                     converted_data = json.loads(converted_data)
 
-            if converted_data.__class__.__name__ in ['str', 'date', 'datetime', 'time']:
+            # TODO (Roman): consider to add serialize_primitive() method and override it
+            # return deserialized primitives to avoid infinity recursion
+            if converted_data.__class__.__name__ in ['str', 'date', 'datetime', 'time', 'bool', 'UUID', 'bytes']:
                 return converted_data
         else:
             converted_data = data

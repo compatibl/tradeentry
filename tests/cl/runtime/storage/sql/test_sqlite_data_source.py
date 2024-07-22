@@ -11,11 +11,24 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 from cl.runtime.storage.sql.sqlite_data_source import SqliteDataSource
+
+from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
+from stubs.cl.runtime import StubDataclassDerivedRecord
+from stubs.cl.runtime import StubDataclassDictFields
+from stubs.cl.runtime import StubDataclassDictListFields
+from stubs.cl.runtime import StubDataclassListDictFields
+from stubs.cl.runtime import StubDataclassListFields
+from stubs.cl.runtime import StubDataclassNestedFields
+from stubs.cl.runtime import StubDataclassOptionalFields
+from stubs.cl.runtime import StubDataclassOtherDerivedRecord
+from stubs.cl.runtime import StubDataclassPrimitiveFields
 from stubs.cl.runtime import StubDataclassRecord
+from stubs.cl.runtime import StubDataclassSingleton
 
 
-def test_save_many():
+def test_smoke():
     data_source = SqliteDataSource(data_source_id="default")
     record = StubDataclassRecord()
 
@@ -26,5 +39,27 @@ def test_save_many():
     assert loaded_records[0] == record
 
 
+def test_complex_records():
+    samples = [
+        StubDataclassRecord(),
+        StubDataclassNestedFields(),
+        StubDataclassDerivedRecord(),
+        StubDataclassDerivedFromDerivedRecord(),
+        StubDataclassOtherDerivedRecord(),
+        StubDataclassListFields(),
+        StubDataclassOptionalFields(),
+        StubDataclassDictFields(),
+        StubDataclassDictListFields(),
+        StubDataclassListDictFields(),
+        StubDataclassPrimitiveFields(),
+        StubDataclassSingleton(),
+    ]
+
+    data_source = SqliteDataSource(data_source_id="default")
+
+    data_source.save_many(samples)
+    data_source.delete_db()
+
+
 if __name__ == '__main__':
-    test_save_many()
+    test_complex_records()
