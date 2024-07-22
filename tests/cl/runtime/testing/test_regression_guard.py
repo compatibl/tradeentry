@@ -85,6 +85,12 @@ class TestClass:
         guard.write(f"Local guard: {base_name}")
         guard.verify()
 
+        # Check that verify_all will run verify on guards for which it is not called explicitly
+        other_channel = "verify_all"
+        other_guard = RegressionGuard(channel=other_channel)
+        other_guard.write(f"{base_path}.{other_channel}")
+        RegressionGuard.verify_all()
+
 
 if __name__ == "__main__":
     pytest.main([__file__])

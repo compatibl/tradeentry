@@ -53,13 +53,16 @@ class RegressionGuard:
     """
 
     __guard_dict: ClassVar[Dict[str, RegressionGuard]] = {}  # TODO: Set using ContextVars
-    """Dictionary of existing guards, an existing guard will be returned for the same output_dir and ext."""
+    """Dictionary of existing guards indexed by the combination of output_dir and ext."""
 
-    __stack: ClassVar[List[RegressionGuard]] = []  # TODO: Set using ContextVars
+    __context_stack: ClassVar[List[RegressionGuard]] = []  # TODO: Set using ContextVars
     """New current guard is pushed to the stack using 'with RegressionGuard(...)' clause."""
 
     __delegate_to: RegressionGuard | None
     """Delegate all function calls to this regression guard if set."""
+
+    __verified: bool
+    """Verify method sets this flag to true, after which further writes raise an error."""
 
     output_path: str
     """Output path including directory and channel."""
@@ -67,21 +70,25 @@ class RegressionGuard:
     ext: str
     """Output file extension, defaults to '.txt'"""
 
-    is_verified: bool
-    """Verify method sets this flag to true, after which further writes raise an error."""
-
-    def __init__(self, *, ext: str = None, channel: str | Iterable[str] | None = None):
+    def __init__(
+            self,
+            *,
+            ext: str = None,
+            channel: str | Iterable[str] | None = None,
+            test_pattern: str | None = None):
         """
         Initialize the regression guard, optionally specifying channel.
 
         Args:
+            ext: File extension without the dot prefix, defaults to 'txt'
             channel: Dot-delimited string or an iterable of dot-delimited tokens added to the current channel
+            test_pattern: Glob pattern to identify the test function or method in stack frame, defaults to 'test_*'
         """
 
         # Check if current regression guard is set
-        if len(self.__stack) == 0:
+        if len(self.__context_stack) == 0:
             # Current regression guard is not set, set output path by examining call stack
-            output_path = self.get_output_path()
+            output_path = self._get_base_path(test_pattern)
         else:
             # Set output path to the same value as the current regression guard
             current_guard = self.current()
@@ -90,8 +97,23 @@ class RegressionGuard:
             if ext is None:
                 ext = current_guard.ext
 
-        # Append channel if specified
-        output_path = self.get_output_path_with_channel(output_path, channel)
+        # Convert to string channel if specified
+        if channel is not None:
+            if isinstance(channel, primitive_types):  # TODO: Move primitive_types to another module
+                # TODO: Use specialized conversion for primitive types
+                channel = str(channel)
+            elif hasattr(channel, "__iter__"):
+                # TODO: Use specialized conversion for primitive types
+                channel = ".".join([
+                        str(x) if isinstance(x, primitive_types) else error_channel_not_primitive_type()
+                        for x in channel
+                    ])
+            else:
+                error_channel_not_primitive_type()
+
+        # Add channel to output path
+        if channel is not None and channel != "":
+            output_path = f"{output_path}.{channel}"
 
         if ext is not None:
             # Remove dot prefix if specified
@@ -102,23 +124,23 @@ class RegressionGuard:
             # Use txt if not specified and not obtained from the current regression guard
             ext = "txt"
 
-        # Set field values
-        self.output_path = output_path
-        self.ext = ext
-        self.is_verified = False
-
         # Check if regression guard already exists for the same combination of output_path and ext
         dict_key = f"{output_path}.{ext}"
         if (existing_dict := self.__guard_dict.get(dict_key, None)) is not None:
-            # Delegate to the existing guard if found
+            # Delegate to the existing guard if found, do not initialize other fields
             self.__delegate_to = existing_dict
         else:
-            # Otherwise add self to dict and initialize
-            self.__delegate_to = None
+            # Otherwise add self to dictionary
             self.__guard_dict[dict_key] = self
 
+            # Initialize fields
+            self.__delegate_to = None
+            self.__verified = False
+            self.output_path = output_path
+            self.ext = ext
+
             # Delete the existing received file if exists
-            if os.path.exists(received_path := self.get_received_path()):
+            if os.path.exists(received_path := self._get_received_path()):
                 os.remove(received_path)
 
     def write(self, value: Any) -> None:
@@ -134,13 +156,13 @@ class RegressionGuard:
             self.__delegate_to.write(value)
             return
 
-        if self.is_verified:
-            raise RuntimeError(f"Regression output file {self.get_received_path()} is already verified "
+        if self.__verified:
+            raise RuntimeError(f"Regression output file {self._get_received_path()} is already verified "
                                f"and can no longer be written to.")
 
         if self.ext == "txt":
-            with open(self.get_received_path(), 'a') as file:
-                file.write(self.format_txt(value))
+            with open(self._get_received_path(), 'a') as file:
+                file.write(self._format_txt(value))
                 # Flush immediately to ensure all of the output is on disk in the event of test exception
                 file.flush()
         else:
@@ -149,8 +171,8 @@ class RegressionGuard:
 
     def verify(self) -> None:
         """
-        Verify that 'channel.received.ext' is the same as 'channel.expected.ext', or if 'channel.expected.ext'
-        does not exist, copy the data from 'channel.received.ext'.
+        Verify for this regression guard that 'channel.received.ext' is the same as 'channel.expected.ext',
+        or if 'channel.expected.ext' does not exist, copy the data from 'channel.received.ext'.
         """
 
         # Delegate to a previously created guard with the same combination of output_path and ext if exists
@@ -158,15 +180,15 @@ class RegressionGuard:
             self.__delegate_to.verify()
             return
 
-        if self.is_verified:
+        if self.__verified:
             # Already verified, exit
             return
         else:
             # Otherwise set 'verified' flag
-            self.is_verified = True
+            self.__verified = True
 
-        received_path = self.get_received_path()
-        expected_path = self.get_expected_path()
+        received_path = self._get_received_path()
+        expected_path = self._get_expected_path()
 
         if os.path.exists(expected_path):
             # Expected file exists, compare
@@ -199,11 +221,28 @@ class RegressionGuard:
             # Delete the received file
             os.remove(received_path)
 
+    @classmethod
+    def verify_all(cls) -> None:
+        """
+        Verify for all regression guards that 'channel.received.ext' is the same as 'channel.expected.ext',
+        or if 'channel.expected.ext' does not exist, copy the data from 'channel.received.ext'.
+        """
+        for guard in cls.__guard_dict.values():
+            guard.verify()
+
+    @classmethod
+    def current(cls):
+        """Return the current regression guard, error message if not set."""
+        if len(cls.__context_stack) > 0:
+            return cls.__context_stack[-1]
+        else:
+            raise RuntimeError("Current regression guard has not been set, use 'with RegressionGuard(...)' to set.")
+
     def __enter__(self):
         """Supports `with` operator for resource disposal."""
 
         # Set current guard on entering 'with RegressionGuard(...)' clause
-        self.__stack.append(self)
+        self.__context_stack.append(self)
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
@@ -216,8 +255,8 @@ class RegressionGuard:
             self.verify()
 
             # Restore the previous current guard on exiting from 'with RegressionGuard(...)' clause
-            if len(self.__stack) > 0:
-                current_guard = self.__stack.pop()
+            if len(self.__context_stack) > 0:
+                current_guard = self.__context_stack.pop()
             else:
                 if exc_type is None:
                     raise RuntimeError("Current regression guard is cleared inside 'with RegressionGuard(...)' clause.")
@@ -228,16 +267,8 @@ class RegressionGuard:
 
         # Return False to propagate the exception to the caller
         return False
-
-    @classmethod
-    def current(cls):
-        """Return the current regression guard, error message if not set."""
-        if len(cls.__stack) > 0:
-            return cls.__stack[-1]
-        else:
-            raise RuntimeError("Current regression guard has not been set, use 'with RegressionGuard(...)' to set.")
         
-    def format_txt(self, value: Any) -> str:
+    def _format_txt(self, value: Any) -> str:
         """Format text for regression testing."""
         value_type = type(value)
         if value_type in primitive_types:
@@ -246,48 +277,32 @@ class RegressionGuard:
         elif value_type == dict:
             return yaml.dump(value, default_flow_style=False) + "\n"
         elif hasattr(value_type, "__iter__"):
-            return "\n".join(map(self.format_txt, value)) + "\n"
+            return "\n".join(map(self._format_txt, value)) + "\n"
         else:
             raise RuntimeError(f"Argument type {value_type} is not accepted for file extension '{self.ext}'. "
                                f"Valid arguments are primitive types, dict, or their iterable.")
 
-    def get_received_path(self) -> str:
+    def _get_received_path(self) -> str:
         """The output is recorded in 'channel.received.ext' located next to the unit test."""
         return f"{self.output_path}.received.{self.ext}"
 
-    def get_expected_path(self) -> str:
+    def _get_expected_path(self) -> str:
         """The output is compared to 'channel.expected.ext' located next to the unit test."""
         return f"{self.output_path}.expected.{self.ext}"
 
     @classmethod
-    def get_output_path_with_channel(cls, output_path: str, channel: str | Iterable[str] | None) -> str:
-        """The output is recorded in 'channel.received.ext' located next to the unit test."""
-
-        if channel is not None:
-            if isinstance(channel, primitive_types):  # TODO: Move primitive_types to another module
-                # TODO: Use specialized conversion for primitive types
-                channel = str(channel)
-            elif hasattr(channel, "__iter__"):
-                # TODO: Use specialized conversion for primitive types
-                channel = ".".join([
-                        str(x) if isinstance(x, primitive_types) else error_channel_not_primitive_type()
-                        for x in channel
-                    ])
-            else:
-                error_channel_not_primitive_type()
-
-        if channel is None or channel == "":
-            return output_path
-        else:
-            return f"{output_path}.{channel}"
-
-    @classmethod
-    def get_output_path(cls) -> str:
+    def _get_base_path(cls, test_pattern: str | None = None) -> str:
         """
-        Return the tuple of absolute directory path and module name of the test
-        inside which this method was invoked by searching the stack frame for 'test_' or a custom
-        test function name pattern.
+        Return test_module.test_function or test_module.test_class.test_function  by searching the stack frame
+        for 'test_' or a custom test function name pattern.
+
+        Args:
+            test_pattern: Glob pattern to identify the test function or method in stack frame, defaults to 'test_*'
         """
+
+        if test_pattern is not None:
+            # TODO: Support custom patterns
+            raise RuntimeError("Custom test function or method name patterns are not yet supported.")
 
         stack = inspect.stack()
         for frame_info in stack:
