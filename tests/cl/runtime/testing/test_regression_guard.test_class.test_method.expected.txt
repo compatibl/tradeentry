@@ -1,1 +1,1 @@
-Local guard: test_method
+Local guard: test_class.test_method

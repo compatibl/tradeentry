@@ -41,6 +41,7 @@ def test_function():
 
     guard = RegressionGuard()
     base_path = f"{module_path}.test_function"
+    base_name = base_path.rsplit(".", 1)[-1]
 
     # Test 'output_path' from the test itself
     assert guard.output_path == base_path
@@ -50,8 +51,18 @@ def test_function():
     assert get_output_path_inside_function(channel) == f"{base_path}.{channel}"
 
     # Write output
-    guard.write("Local guard: test_function")
+    guard.write(f"Local guard: {base_name}")
+
+    # Verify explicitly outside the 'with' clause
     guard.verify()
+
+    for channel in ("with_channel.str", ("with_channel", "tuple")):
+        with RegressionGuard(channel=channel) as context_guard:
+            if isinstance(channel, tuple):
+                channel = ".".join(channel)
+            context_guard.write(f"{base_name}.{channel}.var")
+            RegressionGuard.current().write(f"{base_name}.{channel}.current")
+            RegressionGuard().write(f"{base_name}.{channel}.new")
 
 
 class TestClass:
@@ -62,6 +73,7 @@ class TestClass:
 
         guard = RegressionGuard()
         base_path = f"{module_path}.test_class.test_method"
+        base_name = ".".join(base_path.rsplit(".", 2)[-2:])
 
         # Test 'output_path' from the test itself
         assert guard.output_path == base_path
@@ -70,7 +82,7 @@ class TestClass:
         channel = "test_method_channel"
         assert get_output_path_inside_function(channel) == f"{base_path}.{channel}"
 
-        guard.write("Local guard: test_method")
+        guard.write(f"Local guard: {base_name}")
         guard.verify()
 
 

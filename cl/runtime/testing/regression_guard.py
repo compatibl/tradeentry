@@ -52,11 +52,14 @@ class RegressionGuard:
         - File extension 'ext' is determined based on the verify method(s) called
     """
 
-    __output_path_set: ClassVar[Set[str]] = set()  # TODO: Set using ContextVars
-    """Set of output_path for the existing guards, used to prevent creating two guards with the same output_dir."""
+    __guard_dict: ClassVar[Dict[str, RegressionGuard]] = {}  # TODO: Set using ContextVars
+    """Dictionary of existing guards, an existing guard will be returned for the same output_dir and ext."""
 
     __stack: ClassVar[List[RegressionGuard]] = []  # TODO: Set using ContextVars
     """New current guard is pushed to the stack using 'with RegressionGuard(...)' clause."""
+
+    __delegate_to: RegressionGuard | None
+    """Delegate all function calls to this regression guard if set."""
 
     output_path: str
     """Output path including directory and channel."""
@@ -90,15 +93,6 @@ class RegressionGuard:
         # Append channel if specified
         output_path = self.get_output_path_with_channel(output_path, channel)
 
-        # Check if regression guard already exists for this output path
-        if output_path in self.__output_path_set:
-            # Error if already exists
-            raise RuntimeError(f"Regression guard already exists for output path {output_path}, use the existing "
-                               f"guard directly or using 'with RegressionGuard(...)' clause.")
-        else:
-            # Add to the set otherwise
-            self.__output_path_set.add(output_path)
-
         if ext is not None:
             # Remove dot prefix if specified
             ext = ext.removeprefix(".")
@@ -113,9 +107,19 @@ class RegressionGuard:
         self.ext = ext
         self.is_verified = False
 
-        # Delete the existing received file if exists
-        if os.path.exists(received_file := self.get_received_path()):
-            os.remove(received_file)
+        # Check if regression guard already exists for the same combination of output_path and ext
+        dict_key = f"{output_path}.{ext}"
+        if (existing_dict := self.__guard_dict.get(dict_key, None)) is not None:
+            # Delegate to the existing guard if found
+            self.__delegate_to = existing_dict
+        else:
+            # Otherwise add self to dict and initialize
+            self.__delegate_to = None
+            self.__guard_dict[dict_key] = self
+
+            # Delete the existing received file if exists
+            if os.path.exists(received_file := self.get_received_path()):
+                os.remove(received_file)
 
     def write(self, value: Any) -> None:
         """
@@ -124,6 +128,12 @@ class RegressionGuard:
         Args:
             value: Data to be recorded, accepted data types depend on the specified file extension
         """
+
+        # Delegate to a previously created guard with the same combination of output_path and ext if exists
+        if self.__delegate_to is not None:
+            self.__delegate_to.write(value)
+            return
+
         if self.is_verified:
             raise RuntimeError(f"Regression output file {self.get_received_path()} is already verified "
                                f"and can no longer be written to.")
@@ -142,6 +152,11 @@ class RegressionGuard:
         Verify that 'channel.received.ext' is the same as 'channel.expected.ext', or if 'channel.expected.ext'
         does not exist, copy the data from 'channel.received.ext'.
         """
+
+        # Delegate to a previously created guard with the same combination of output_path and ext if exists
+        if self.__delegate_to is not None:
+            self.__delegate_to.verify()
+            return
 
         if self.is_verified:
             # Already verified, exit
@@ -189,6 +204,7 @@ class RegressionGuard:
         """Supports `with` operator for resource disposal."""
 
         # Verify self
+        # TODO: Do not verify if exiting due to an exception
         self.verify()
 
         # Restore the previous current guard on exiting from 'with RegressionGuard(...)' clause
