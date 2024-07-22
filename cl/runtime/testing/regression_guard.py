@@ -118,8 +118,8 @@ class RegressionGuard:
             self.__guard_dict[dict_key] = self
 
             # Delete the existing received file if exists
-            if os.path.exists(received_file := self.get_received_path()):
-                os.remove(received_file)
+            if os.path.exists(received_path := self.get_received_path()):
+                os.remove(received_path)
 
     def write(self, value: Any) -> None:
         """
@@ -196,6 +196,9 @@ class RegressionGuard:
             with open(received_path, 'rb') as received_file, open(expected_path, 'wb') as expected_file:
                 expected_file.write(received_file.read())
 
+            # Delete the received file
+            os.remove(received_path)
+
     def __enter__(self):
         """Supports `with` operator for resource disposal."""
 
@@ -206,22 +209,24 @@ class RegressionGuard:
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Supports `with` operator for resource disposal."""
 
-        # Verify self
-        # TODO: Do not verify if exiting due to an exception
-        self.verify()
+        # Verify only if there is no exception
+        if exc_type is None:
 
-        # Restore the previous current guard on exiting from 'with RegressionGuard(...)' clause
-        if len(self.__stack) > 0:
-            current_guard = self.__stack.pop()
-        else:
-            raise RuntimeError("Current regression guard is cleared inside 'with RegressionGuard(...)' clause.")
+            # Verify self
+            self.verify()
 
-        if current_guard is not self:
-            raise RuntimeError("Current regression guard is modified inside 'with RegressionGuard(...)' clause.")
+            # Restore the previous current guard on exiting from 'with RegressionGuard(...)' clause
+            if len(self.__stack) > 0:
+                current_guard = self.__stack.pop()
+            else:
+                if exc_type is None:
+                    raise RuntimeError("Current regression guard is cleared inside 'with RegressionGuard(...)' clause.")
 
-        # TODO: Flush channels before closing them
+            if current_guard is not self:
+                if exc_type is None:
+                    raise RuntimeError("Current regression guard is modified inside 'with RegressionGuard(...)' clause.")
 
-        # Return False to propagate exception to the caller
+        # Return False to propagate the exception to the caller
         return False
 
     @classmethod
