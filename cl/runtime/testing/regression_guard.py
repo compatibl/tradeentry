@@ -170,8 +170,11 @@ class RegressionGuard:
 
         if os.path.exists(expected_path):
             # Expected file exists, compare
-            if not filecmp.cmp(received_path, expected_path, shallow=False):
-                # Raise an error with unified diff
+            if filecmp.cmp(received_path, expected_path, shallow=False):
+                # Delete the received file if received and expected match
+                os.remove(received_path)
+            else:
+                # Otherwise keep both files and raise an exception with unified diff
                 with open(received_path, 'r') as received_file, open(expected_path, 'r') as expected_file:
                     received_lines = received_file.readlines()
                     expected_lines = expected_file.readlines()
