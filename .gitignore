@@ -12,7 +12,6 @@ syntax: glob
 *.egg-info/
 *.idea
 *.py[cod]
-*.received.*
 *.so
 build/
 dist/
