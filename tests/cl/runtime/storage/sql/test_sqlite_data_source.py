@@ -11,7 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from collections import defaultdict
 
+from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.storage.sql.sqlite_data_source import SqliteDataSource
 
 from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
@@ -41,24 +43,32 @@ def test_smoke():
 
 def test_complex_records():
     samples = [
-        StubDataclassRecord(),
-        StubDataclassNestedFields(),
-        StubDataclassDerivedRecord(),
-        StubDataclassDerivedFromDerivedRecord(),
-        StubDataclassOtherDerivedRecord(),
-        StubDataclassListFields(),
-        StubDataclassOptionalFields(),
-        StubDataclassDictFields(),
-        StubDataclassDictListFields(),
-        StubDataclassListDictFields(),
-        StubDataclassPrimitiveFields(),
+        StubDataclassRecord(id='abc1'),
+        StubDataclassNestedFields(primitive='abc2'),
+        StubDataclassDerivedRecord(id='abc3'),
+        StubDataclassDerivedFromDerivedRecord(id='abc4'),
+        StubDataclassOtherDerivedRecord(id='abc5'),
+        StubDataclassListFields(id='abc6'),
+        StubDataclassOptionalFields(id='abc7'),
+        StubDataclassDictFields(id='abc8'),
+        StubDataclassDictListFields(id='abc9'),
+        StubDataclassListDictFields(id='abc10'),
+        StubDataclassPrimitiveFields(key_str_field='abc11'),
         StubDataclassSingleton(),
     ]
 
     data_source = SqliteDataSource(data_source_id="default")
 
-    data_source.save_many(samples)
-    data_source.delete_db()
+    try:
+        data_source.save_many(samples)
+
+        sample_keys = [sample.get_key() for sample in samples]
+        loaded_records = list(data_source.load_many(sample_keys))
+
+        assert loaded_records == samples
+
+    finally:
+        data_source.delete_db()
 
 
 if __name__ == '__main__':

@@ -53,7 +53,7 @@ class SqliteDataSource(DataSource):
 
     def load_one(self, record_or_key: KeyProtocol | None, *, dataset: TDataset = None,
                  identities: Iterable[TIdentity] | None = None) -> RecordProtocol | None:
-        pass
+        return self.load_many([record_or_key], dataset=dataset, identities=identities)
 
     # TODO (Roman): maybe return mapping {key: record} in load_many
     def load_many(self, records_or_keys: Iterable[KeyProtocol | None] | None, *, dataset: TDataset = None,
@@ -68,7 +68,6 @@ class SqliteDataSource(DataSource):
         # group by key type and then by it is key or record. if not keys - return themselves.
         for key_type, records_or_keys_group in groupby(records_or_keys, lambda x: x.get_key_type()):
             for is_key_group, keys in groupby(records_or_keys_group, lambda x: is_key(x)):
-
                 if not is_key_group:
                     yield from keys
 
@@ -76,24 +75,39 @@ class SqliteDataSource(DataSource):
 
                 value_placeholders = ", ".join(["?"]*len(serialized_keys))
                 table_name = self._schema_manager.table_name_for_type(key_type)
+
+                # return None for all keys in group if table doesn't exist
+                existing_tables = self._schema_manager.existing_tables()
+                if table_name not in existing_tables:
+                    yield from (None for _ in range(len(serialized_keys)))
+
                 sql_statement = f'SELECT * FROM "{table_name}" WHERE _key IN ({value_placeholders});'
 
                 cursor = self._connection.cursor()
                 cursor.execute(sql_statement, serialized_keys)
                 reversed_columns_mapping = {v: k for k, v in self._schema_manager.get_columns_mapping(key_type).items()}
-                for data in cursor.fetchall():
-                    del data['_key']
-                    # TODO (Roman): select needed columns on db side.
-                    data = {reversed_columns_mapping[k]: v for k, v in data.items() if v is not None}
 
-                    yield serializer.deserialize_data(data)
+                # TODO (Roman): investigate performance impact from this ordering approach
+                # bulk load from db returns records in any order so we need to check all records in group before return
+                # collect db result to dictionary to return it according to input keys order
+                result = {}
+                for data in cursor.fetchall():
+                    data_key = data['_key']
+                    del data['_key']
+                    # TODO (Roman): select only needed columns on db side.
+                    data = {reversed_columns_mapping[k]: v for k, v in data.items() if v is not None}
+                    result[data_key] = serializer.deserialize_data(data)
+
+                # yield records according to input keys order
+                for serialized_key in serialized_keys:
+                    yield result.get(serialized_key)
 
     def load_by_query(self, query: TQuery, *, dataset: TDataset = None,
                       identities: Iterable[TIdentity] | None = None) -> Iterable[RecordProtocol]:
         pass
 
     def save_one(self, record: RecordProtocol | None, *, dataset: TDataset = None, identity: TIdentity = None) -> None:
-        return self.save_many([record])
+        return self.save_many([record], dataset=dataset, identity=identity)
 
     def save_many(
             self, records: Iterable[RecordProtocol], *, dataset: TDataset = None, identity: TIdentity = None

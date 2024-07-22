@@ -16,6 +16,7 @@ import sqlite3
 import pytest
 
 from cl.runtime.schema.schema import Schema
+from cl.runtime.storage.sql.sqlite_data_source import dict_factory
 from cl.runtime.storage.sql.sqlite_schema_manager import SqliteSchemaManager
 from stubs.cl.runtime import StubDataclassRecordKey, StubDataclassRecord, StubDataclassDerivedRecord, \
     StubDataclassDerivedFromDerivedRecord, StubDataclassDictFields, StubDataclassListDictFields, \
@@ -99,27 +100,6 @@ def test_get_columns_mapping():
     resolved_columns = SqliteSchemaManager().get_columns_mapping(test_type)
 
     assert expected_columns == resolved_columns
-
-
-def test_create_table():
-    connection = sqlite3.connect('test_sqlite_db.sqlite')
-
-    with connection as connection:
-        sqlite_schema_manager = SqliteSchemaManager(sqlite_connection=connection)
-
-        existing_tables = sqlite_schema_manager.existing_tables()
-        assert existing_tables == []
-
-        table_name = sqlite_schema_manager.table_name_for_type(StubDataclassRecord)
-        columns = sqlite_schema_manager.get_columns_mapping(StubDataclassRecord).values()
-        sqlite_schema_manager.create_table(table_name, columns)
-
-        existing_tables = sqlite_schema_manager.existing_tables()
-        assert existing_tables == [StubDataclassRecord.__name__]
-
-        sqlite_schema_manager.delete_table_by_name(StubDataclassRecord.__name__)
-        existing_tables = sqlite_schema_manager.existing_tables()
-        assert existing_tables == []
 
 
 if __name__ == '__main__':

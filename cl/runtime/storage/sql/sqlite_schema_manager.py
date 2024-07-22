@@ -70,8 +70,8 @@ class SqliteSchemaManager:
         cursor = self.sqlite_connection.cursor()
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
 
-        # cursor.fetchall() returns [(name,), ...]
-        return [table_name for select_res in cursor.fetchall() for table_name in select_res]
+        # cursor.fetchall() returns [{'name': name},]
+        return [select_res["name"] for select_res in cursor.fetchall()]
 
     def _get_key_type(self, type_: Type) -> Type:
         """Get key type for the given type."""
