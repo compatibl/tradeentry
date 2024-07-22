@@ -146,4 +146,44 @@ class SqliteDataSource(DataSource):
         pass
 
     def delete_db(self) -> None:
-        pass
+        """Delete all tables and indexes on current db instance."""
+
+        # delete several time because tables depended on foreign key can not be deleted before related tables exist.
+        while True:
+
+            if not self._connection:
+                break
+
+            cursor = self._connection.cursor()
+
+            # delete tables
+            delete_all_tables = [
+                str(next(iter(x.values())))
+                for x in cursor.execute(
+                    "select 'drop table ' || name || ';' from sqlite_master where type = 'table';",
+                ).fetchall()
+            ]
+
+            for delete_statement in delete_all_tables:
+                cursor.execute(delete_statement)
+
+            # delete indexes
+            delete_all_indexes = [
+                str(next(iter(x.values())))
+                for x in cursor.execute(
+                    "select 'drop index ' || name || ';' from sqlite_master where type = 'index';",
+                ).fetchall()
+            ]
+
+            for delete_statement in delete_all_indexes:
+                cursor.execute(delete_statement)
+
+            # stop if nothing to delete
+            if len(delete_all_tables) == 0 and len(delete_all_indexes) == 0:
+                break
+
+        # close connection
+        if self._connection:
+            self._connection.close()
+
+        # TODO (Roman): delete db file
