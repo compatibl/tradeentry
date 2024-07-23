@@ -53,7 +53,7 @@ class SqliteDataSource(DataSource):
 
     def load_one(self, record_or_key: KeyProtocol | None, *, dataset: TDataset = None,
                  identities: Iterable[TIdentity] | None = None) -> RecordProtocol | None:
-        return self.load_many([record_or_key], dataset=dataset, identities=identities)
+        return next(iter(self.load_many([record_or_key], dataset=dataset, identities=identities)))
 
     # TODO (Roman): maybe return mapping {key: record} in load_many
     def load_many(self, records_or_keys: Iterable[KeyProtocol | None] | None, *, dataset: TDataset = None,
@@ -68,19 +68,21 @@ class SqliteDataSource(DataSource):
         # group by key type and then by it is key or record. if not keys - return themselves.
         for key_type, records_or_keys_group in groupby(records_or_keys, lambda x: x.get_key_type()):
             for is_key_group, keys in groupby(records_or_keys_group, lambda x: is_key(x)):
+
                 if not is_key_group:
                     yield from keys
 
                 serialized_keys = tuple(key_serializer.serialize_key(key) for key in keys)
 
-                value_placeholders = ", ".join(["?"]*len(serialized_keys))
                 table_name = self._schema_manager.table_name_for_type(key_type)
 
                 # return None for all keys in group if table doesn't exist
                 existing_tables = self._schema_manager.existing_tables()
                 if table_name not in existing_tables:
                     yield from (None for _ in range(len(serialized_keys)))
+                    continue
 
+                value_placeholders = ", ".join(["?"]*len(serialized_keys))
                 sql_statement = f'SELECT * FROM "{table_name}" WHERE _key IN ({value_placeholders});'
 
                 cursor = self._connection.cursor()
@@ -157,7 +159,31 @@ class SqliteDataSource(DataSource):
 
     def delete_many(self, keys: Iterable[KeyProtocol] | None, *, dataset: TDataset = None,
                     identities: Iterable[TIdentity] | None = None) -> None:
-        pass
+
+        key_serializer = StringSerializer()
+
+        grouped_keys = defaultdict(list)
+
+        # TODO (Roman): improve grouping
+        for key in keys:
+            grouped_keys[key.get_key_type()].append(key)
+
+        for key_type, keys_group in grouped_keys.items():
+
+            serialized_keys = tuple(key_serializer.serialize_key(key) for key in keys_group)
+            table_name = self._schema_manager.table_name_for_type(key_type)
+
+            existing_tables = self._schema_manager.existing_tables()
+            if table_name not in existing_tables:
+                continue
+
+            value_placeholders = ", ".join(["?"] * len(serialized_keys))
+            sql_statement = f'DELETE FROM "{table_name}" WHERE _key IN ({value_placeholders});'
+
+            cursor = self._connection.cursor()
+            cursor.execute(sql_statement, serialized_keys)
+
+            self._connection.commit()
 
     def delete_db(self) -> None:
         """Delete all tables and indexes on current db instance."""
