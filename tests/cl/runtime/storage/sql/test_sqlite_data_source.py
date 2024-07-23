@@ -13,6 +13,8 @@
 # limitations under the License.
 from collections import defaultdict
 
+import pytest
+
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.storage.sql.sqlite_data_source import SqliteDataSource
 
@@ -71,5 +73,80 @@ def test_complex_records():
         data_source.delete_db()
 
 
+def test_basic_operations():
+    samples = [
+        StubDataclassRecord(id='abc1'),
+        StubDataclassNestedFields(primitive='abc2'),
+        StubDataclassDerivedRecord(id='abc3'),
+        StubDataclassDerivedFromDerivedRecord(id='abc4'),
+        StubDataclassOtherDerivedRecord(id='abc5'),
+        StubDataclassListFields(id='abc6'),
+        StubDataclassOptionalFields(id='abc7'),
+        StubDataclassDictFields(id='abc8'),
+        StubDataclassDictListFields(id='abc9'),
+        StubDataclassListDictFields(id='abc10'),
+        StubDataclassPrimitiveFields(key_str_field='abc11'),
+    ]
+
+    sample_keys = [x.get_key() for x in samples]
+
+    data_source = SqliteDataSource(data_source_id="default")
+
+    try:
+
+        # load from non-existing tables
+        loaded_records = list(data_source.load_many(sample_keys))
+        assert loaded_records == [None]*len(samples)
+
+        data_source.save_many(samples)
+
+        # load many for all keys
+        loaded_records = list(data_source.load_many(sample_keys))
+        assert loaded_records == samples
+
+        # load one by one for all keys
+        loaded_records = [data_source.load_one(key) for key in sample_keys]
+        assert loaded_records == samples
+
+        # delete first and last key
+        data_source.delete_many([sample_keys[0], sample_keys[-1]])
+        loaded_records = list(data_source.load_many(sample_keys))
+        assert loaded_records == [None, *samples[1:-1], None]
+
+        # delete all keys
+        data_source.delete_many(sample_keys)
+        loaded_records = list(data_source.load_many(sample_keys))
+        assert loaded_records == [None]*len(samples)
+
+    finally:
+        data_source.delete_db()
+
+
+def test_record_upsert():
+
+    data_source = SqliteDataSource(data_source_id="default")
+
+    try:
+        # create sample and save
+        sample = StubDataclassRecord()
+        data_source.save_one(sample)
+        loaded_record = data_source.load_one(sample.get_key())
+        assert loaded_record == sample
+
+        # create sample with the same key and save
+        override_sample = StubDataclassDerivedRecord()
+        data_source.save_one(override_sample)
+        loaded_record = data_source.load_one(sample.get_key())
+        assert loaded_record == override_sample
+
+        override_sample = StubDataclassDerivedFromDerivedRecord()
+        data_source.save_one(override_sample)
+        loaded_record = data_source.load_one(sample.get_key())
+        assert loaded_record == override_sample
+
+    finally:
+        data_source.delete_db()
+
+
 if __name__ == '__main__':
-    test_complex_records()
+    pytest.main([__file__])
