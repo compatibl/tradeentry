@@ -33,7 +33,7 @@ def dict_factory(cursor, row):
 @dataclass(slots=True, kw_only=True, frozen=True)
 class SqliteDataSource(DataSource):
 
-    db_name: str = 'test_db.sqlite'
+    db_name: str = ':memory:'
     _connection: sqlite3.Connection = None
     _schema_manager: SqliteSchemaManager = None
 
