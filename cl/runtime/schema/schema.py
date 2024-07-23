@@ -230,6 +230,7 @@ class Schema:
 
         for type_ in cls.get_types():
 
+            # TODO (Roman): should not skip if input type is not key
             if type_ == record_type:
                 # skip start type
                 continue

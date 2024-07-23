@@ -15,7 +15,7 @@ import sqlite3
 from collections import defaultdict
 from dataclasses import dataclass
 from itertools import groupby
-from typing import Iterable
+from typing import Iterable, Type
 
 from cl.runtime import DataSource
 from cl.runtime.records.protocols import KeyProtocol, RecordProtocol, is_key
@@ -106,7 +106,35 @@ class SqliteDataSource(DataSource):
 
     def load_by_query(self, query: TQuery, *, dataset: TDataset = None,
                       identities: Iterable[TIdentity] | None = None) -> Iterable[RecordProtocol]:
-        pass
+        raise NotImplementedError
+
+    def load_all(self, record_type: Type[RecordProtocol]) -> Iterable[RecordProtocol]:
+        """Load all records for given type including derived."""
+        serializer = FlatDictSerializer()
+
+        table_name: str = self._schema_manager.table_name_for_type(record_type)
+
+        # if table doesn't exist return empty list
+        if table_name not in self._schema_manager.existing_tables():
+            return list()
+
+        # get subtypes for record_type and use them in match condition
+        subtype_names = tuple(self._schema_manager.get_subtype_names(record_type))
+        value_placeholders = ", ".join(["?"] * len(subtype_names))
+        sql_statement = f'SELECT * FROM "{table_name}" WHERE _type in ({value_placeholders});'
+
+        reversed_columns_mapping = {
+            v: k for k, v in self._schema_manager.get_columns_mapping(record_type.get_key_type(None)).items()
+        }
+
+        cursor = self._connection.cursor()
+        cursor.execute(sql_statement, subtype_names)
+
+        for data in cursor.fetchall():
+            del data['_key']
+            # TODO (Roman): select only needed columns on db side.
+            data = {reversed_columns_mapping[k]: v for k, v in data.items() if v is not None}
+            yield serializer.deserialize_data(data)
 
     def save_one(self, record: RecordProtocol | None, *, dataset: TDataset = None, identity: TIdentity = None) -> None:
         return self.save_many([record], dataset=dataset, identity=identity)

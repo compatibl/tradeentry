@@ -11,11 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from collections import defaultdict
+
+from typing import Any
 
 import pytest
+from typing import Iterable
 
-from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.storage.sql.sqlite_data_source import SqliteDataSource
 
 from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
@@ -30,6 +31,24 @@ from stubs.cl.runtime import StubDataclassOtherDerivedRecord
 from stubs.cl.runtime import StubDataclassPrimitiveFields
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassSingleton
+
+
+def _assert_equals_iterable_without_ordering(iterable: Iterable[Any], other_iterable: Iterable[Any]) -> bool:
+    iterable_as_list = list(iterable) if not isinstance(iterable, list) else iterable
+    other_iterable_as_list = list(other_iterable) if not isinstance(other_iterable, list) else other_iterable
+
+    if len(iterable_as_list) != len(other_iterable_as_list):
+        raise ValueError(
+            f"Iterables have different length: {len(iterable_as_list)} and {len(other_iterable_as_list)}"
+        )
+
+    for item in iterable_as_list:
+        if item not in other_iterable_as_list:
+            raise ValueError(
+                f"Item {item} contains only in first iterable."
+            )
+
+    return True
 
 
 def test_smoke():
@@ -143,6 +162,38 @@ def test_record_upsert():
         data_source.save_one(override_sample)
         loaded_record = data_source.load_one(sample.get_key())
         assert loaded_record == override_sample
+
+    finally:
+        data_source.delete_db()
+
+def test_load_all():
+
+    base_samples = [
+        StubDataclassRecord(id='base1'),
+        StubDataclassRecord(id='base2'),
+        StubDataclassRecord(id='base3'),
+    ]
+
+    derived_samples = [
+        StubDataclassDerivedRecord(id='derived1'),
+        StubDataclassDerivedFromDerivedRecord(id='derived2'),
+    ]
+
+    other_derived_samples = [
+        StubDataclassOtherDerivedRecord(id='derived3'),
+    ]
+
+    all_samples = base_samples + derived_samples + other_derived_samples
+    data_source = SqliteDataSource(data_source_id="default")
+
+    try:
+        data_source.save_many(all_samples)
+
+        loaded_records = data_source.load_all(StubDataclassRecord)
+        assert _assert_equals_iterable_without_ordering(all_samples, loaded_records)
+
+        loaded_records = data_source.load_all(StubDataclassDerivedRecord)
+        assert _assert_equals_iterable_without_ordering(derived_samples, loaded_records)
 
     finally:
         data_source.delete_db()

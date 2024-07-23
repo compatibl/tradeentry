@@ -13,7 +13,7 @@
 # limitations under the License.
 import sqlite3
 from dataclasses import dataclass, field
-from typing import Type, List, Tuple, Dict, Any, Iterable
+from typing import Type, List, Tuple, Dict, Any, Iterable, Set
 
 from inflection import camelize
 from memoization import cached
@@ -136,3 +136,8 @@ class SqliteSchemaManager:
             columns_mapping[field_name] = column_name
 
         return columns_mapping
+
+    # TODO (Roman): move to Schema
+    @staticmethod
+    def get_subtype_names(type_: Type) -> Set[str]:
+        return set(schema_type.__name__ for schema_type in Schema.get_types() if type_ in schema_type.__mro__)
