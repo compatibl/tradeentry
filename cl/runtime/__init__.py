@@ -10,3 +10,4 @@ from cl.runtime.storage.local.local_cache import LocalCache
 from cl.runtime.view.view import View
 from cl.runtime.view.record_view import RecordView
 from cl.runtime.view.record_list_view import RecordListView
+from cl.runtime.storage.sql.sqlite_data_source import SqliteDataSource
