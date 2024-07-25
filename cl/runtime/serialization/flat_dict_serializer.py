@@ -24,19 +24,44 @@ import datetime as dt
 
 
 class FlattenedValueType(IntEnum):
+    """Flat-serialized value type."""
+
     data = 0
+    """Data type."""
+
     dict = 1
+    """Dict type."""
+
     list = 2
+    """Vector type."""
+
     date = 3
+    """Date type."""
+
     datetime = 4
+    """Datetime type."""
+
     time = 5
+    """Time type."""
+
     bool = 6
+    """Bool type."""
+
     uuid = 7
+    """UUID type."""
+
     enum = 8
+    """Enum type."""
+
     bytes = 9
+    """Binary type."""
 
 
 class FlatDictSerializer(DictSerializer):
+    """
+    Serialization for slot-based classes to flat dict (without nested fields).
+    Complex types serialize as a json string.
+    """
 
     primitive_type_names = ["NoneType", "float", "int"]
 
