@@ -26,16 +26,23 @@ from cl.runtime.storage.sql.sqlite_schema_manager import SqliteSchemaManager
 
 
 def dict_factory(cursor, row):
+    """sqlite3 row factory to return result as dictionary."""
     fields = [column[0] for column in cursor.description]
     return {key: value for key, value in zip(fields, row)}
 
 
 @dataclass(slots=True, kw_only=True, frozen=True)
 class SqliteDataSource(DataSource):
+    """Sqlite data source without dataset and mile wide table for inheritance."""
 
     db_name: str = ':memory:'
+    """Db name used to open sqlite connection."""
+
     _connection: sqlite3.Connection = None
+    """Sqlite connection."""
+
     _schema_manager: SqliteSchemaManager = None
+    """Sqlite schema manager."""
 
     def __post_init__(self) -> None:
         """Initialize private attributes."""
