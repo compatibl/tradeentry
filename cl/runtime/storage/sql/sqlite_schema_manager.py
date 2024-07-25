@@ -23,10 +23,16 @@ from cl.runtime.schema.schema import Schema
 
 @dataclass(slots=True, kw_only=True)
 class SqliteSchemaManager:
+    """Class to manage the sqlite schema (table names, columns mapping etc.)."""
 
     sqlite_connection: sqlite3.Connection = None
+    """Sqlite connection."""
+
     pascalize_column_names: bool = False
+    """If True - convert column names to pascal case."""
+
     add_class_to_column_names: bool = True
+    """If True - class name will be added to the column name in format ClassName.field_name."""
 
     def create_table(self, table_name: str, columns: Iterable[str], if_not_exists: bool = True) -> None:
         """
