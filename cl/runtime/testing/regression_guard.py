@@ -61,6 +61,9 @@ class RegressionGuard:
     __verified: bool
     """Verify method sets this flag to true, after which further writes raise an error."""
 
+    __exception_text: str | None
+    """Exception text from an earlier verification is reused instead of comparing the files again."""
+
     output_path: str
     """Output path including directory and channel."""
 
@@ -126,6 +129,7 @@ class RegressionGuard:
             # Initialize fields
             self.__delegate_to = None
             self.__verified = False
+            self.__exception_text = None
             self.output_path = output_path
             self.ext = ext
 
@@ -159,79 +163,145 @@ class RegressionGuard:
             # Should not be reached here because of a previous check in __init__
             error_extension_not_supported(self.ext)
 
-    def verify(self) -> None:
+    @classmethod
+    def verify_all(cls, *, silent: bool = False) -> None:
         """
-        Verify for this regression guard that 'channel.received.ext' is the same as 'channel.expected.ext',
-        or if 'channel.expected.ext' does not exist, copy the data from 'channel.received.ext'.
+        For each created guard, verify that 'channel.received.ext' is the same as 'channel.expected.ext'.
+        Defaults to silent=False (raises exception) for calling at the end of the test.
+
+        Notes:
+            - If 'channel.expected.ext' does not exist, create from 'channel.received.ext'
+            - If files are the same, delete 'channel.received.ext' and 'channel.diff.ext'
+            - If files differ, write 'channel.diff.ext' and optionally raise exception
+
+        Args:
+            silent: If true, write the diff file but do not raise exception
+        """
+
+        # Call verify for all guards silently and check if all are true
+        # Because 'all' is used, the comparison will not stop early
+        errors_found = not all(guard.verify(silent=True) for guard in cls.__guard_dict.values())
+
+        if errors_found and not silent:
+            # Collect exception text from guards where it is present
+            exc_text_blocks = [exception_text for guard in cls.__guard_dict.values()
+                               if (exception_text := guard._get_exception_text()) is not None]
+
+            # Merge the collected exception text blocks and raise an error
+            exc_text_merged = "\n".join(exc_text_blocks)
+            raise RuntimeError(exc_text_merged)
+
+    def verify(self, *, silent: bool = True) -> bool:
+        """
+        Verify for this regression guard that 'channel.received.ext' is the same as 'channel.expected.ext'.
+        Defaults to silent=True (no exception) to permit other tests to proceed.
+
+        Notes:
+            - If 'channel.expected.ext' does not exist, create from 'channel.received.ext'
+            - If files are the same, delete 'channel.received.ext' and 'channel.diff.ext'
+            - If files differ, write 'channel.diff.ext' and raise exception unless silent=True
+
+        Returns:
+            bool: True if verification succeeds and false otherwise
+
+        Args:
+            silent: If true, do not raise exception and only write the 'channel.diff.ext' file
         """
 
         # Delegate to a previously created guard with the same combination of output_path and ext if exists
         if self.__delegate_to is not None:
-            self.__delegate_to.verify()
-            return
+            return self.verify(silent=silent)
 
         if self.__verified:
-            # Already verified, exit
-            return
+            # Already verified
+            if not silent:
+                # Use the existing exception text to raise if silent=False
+                raise RuntimeError(self.__exception_text)
+            else:
+                # Otherwise return True if exception text is None (it is set on verification failure)
+                return self.__exception_text is None
         else:
-            # Otherwise set 'verified' flag
+            # Otherwise set 'verified' flag and continue
             self.__verified = True
 
         received_path = self._get_received_path()
         expected_path = self._get_expected_path()
+        diff_path = self._get_diff_path()
+
+        if not os.path.exists(received_path):
+            raise RuntimeError(f"Regression test error, received file {received_path} does not exist.")
 
         if os.path.exists(expected_path):
             # Expected file exists, compare
             if filecmp.cmp(received_path, expected_path, shallow=False):
-                # Delete the received file if received and expected match
+                # Received and expected match, delete the received file and diff file
                 os.remove(received_path)
-            else:
-                # Otherwise keep both files and raise an exception with unified diff
-                with open(received_path, 'r') as received_file, open(expected_path, 'r') as expected_file:
-                    received_lines = received_file.readlines()
-                    expected_lines = expected_file.readlines()
-                    diff = difflib.unified_diff(
-                        expected_lines,
-                        received_lines,
-                        fromfile=expected_path,
-                        tofile=received_path,
-                        n=0
-                    )
+                if os.path.exists(diff_path):
+                    os.remove(diff_path)
 
-                    # Truncate to max_lines and format
-                    line_len = 120
-                    max_lines = 5
-                    begin_str = "BEGIN REGRESSION TEST UNIFIED DIFF "
-                    end_str = "END REGRESSION TEST UNIFIED DIFF "
-                    begin_sep = "-" * (line_len-len(begin_str))
-                    end_sep = "-" * (line_len-len(end_str))
-                    diff = list(diff)
-                    orig_lines = len(diff)
-                    if orig_lines > max_lines:
-                        diff = diff[:max_lines]
-                        truncate_str = f"(TRUNCATED {orig_lines-max_lines} ADDITIONAL LINES) "
-                        end_sep = end_sep[:-len(truncate_str)]
-                    else:
-                        truncate_str = ""
-                    diff_str = "".join(diff)
-                    regression_error = f"\n{begin_str}{begin_sep}\n" + diff_str + f"{end_str}{truncate_str}{end_sep}"
-                    raise RuntimeError(regression_error)
+                # Return True to indicate verification has been successful
+                return True
+            else:
+                # Receive an expected do not match, generate unified diff
+                # TODO: Handle diff for binary output
+                with open(received_path, 'r') as received_file:
+                    received_lines = received_file.readlines()
+                with open(expected_path, 'r') as expected_file:
+                    expected_lines = expected_file.readlines()
+
+                # Convert to list first because the returned object is a generator but
+                # we will need to iterate over the lines more than once
+                diff = list(difflib.unified_diff(
+                    expected_lines,
+                    received_lines,
+                    fromfile=expected_path,
+                    tofile=received_path,
+                    n=0
+                ))
+
+                # Write the complete unified diff into to the diff file
+                with open(diff_path, 'w') as diff_file:
+                    diff_file.write("".join(diff))
+
+                # Truncate to max_lines and surround by begin/end lines for generate exception text
+                line_len = 120
+                max_lines = 5
+                begin_str = "BEGIN REGRESSION TEST UNIFIED DIFF "
+                end_str = "END REGRESSION TEST UNIFIED DIFF "
+                begin_sep = "-" * (line_len-len(begin_str))
+                end_sep = "-" * (line_len-len(end_str))
+                orig_lines = len(diff)
+                if orig_lines > max_lines:
+                    diff = diff[:max_lines]
+                    truncate_str = f"(TRUNCATED {orig_lines-max_lines} ADDITIONAL LINES) "
+                    end_sep = end_sep[:-len(truncate_str)]
+                else:
+                    truncate_str = ""
+                diff_str = "".join(diff)
+                exception_text = f"\n{begin_str}{begin_sep}\n" + diff_str
+                extra_eol = "" if exception_text.endswith("\n") else "\n"
+                exception_text = exception_text + f"{extra_eol}{end_str}{truncate_str}{end_sep}"
+
+                # Record into the object even if silent
+                self.__exception_text = exception_text
+
+                if not silent:
+                    # Raise exception only when not silent
+                    raise RuntimeError(exception_text)
+                else:
+                    return False
         else:
-            # Copy the data from received to expected
+            # Expected file does not exist, copy the data from received to expected
             with open(received_path, 'rb') as received_file, open(expected_path, 'wb') as expected_file:
                 expected_file.write(received_file.read())
 
-            # Delete the received file
+            # Delete the received file and diff file
             os.remove(received_path)
+            if os.path.exists(diff_path):
+                os.remove(diff_path)
 
-    @classmethod
-    def verify_all(cls) -> None:
-        """
-        Verify for all regression guards that 'channel.received.ext' is the same as 'channel.expected.ext',
-        or if 'channel.expected.ext' does not exist, copy the data from 'channel.received.ext'.
-        """
-        for guard in cls.__guard_dict.values():
-            guard.verify()
+            # Verification is considered successful if expected file has been created
+            return True
         
     def _format_txt(self, value: Any) -> str:
         """Format text for regression testing."""
@@ -247,13 +317,26 @@ class RegressionGuard:
             raise RuntimeError(f"Argument type {value_type} is not accepted for file extension '{self.ext}'. "
                                f"Valid arguments are primitive types, dict, or their iterable.")
 
+    def _get_exception_text(self) -> str | None:
+        """Get exception text from this guard or the guard it delegates to."""
+        if self.__delegate_to is not None:
+            # Get from the guard this guard delegates to
+            return self.__delegate_to._get_exception_text()
+        else:
+            # Get from this guard
+            return self.__exception_text
+
     def _get_received_path(self) -> str:
-        """The output is recorded in 'channel.received.ext' located next to the unit test."""
+        """The output is written to 'channel.received.ext' located next to the unit test."""
         return f"{self.output_path}.received.{self.ext}"
 
     def _get_expected_path(self) -> str:
         """The output is compared to 'channel.expected.ext' located next to the unit test."""
         return f"{self.output_path}.expected.{self.ext}"
+
+    def _get_diff_path(self) -> str:
+        """The diff between received and expected is written to 'channel.diff.ext' located next to the unit test."""
+        return f"{self.output_path}.diff.{self.ext}"
 
     @classmethod
     def _get_base_path(cls, test_pattern: str | None = None) -> str:
