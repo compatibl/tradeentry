@@ -55,9 +55,6 @@ class RegressionGuard:
     __guard_dict: ClassVar[Dict[str, RegressionGuard]] = {}  # TODO: Set using ContextVars
     """Dictionary of existing guards indexed by the combination of output_dir and ext."""
 
-    __context_stack: ClassVar[List[RegressionGuard]] = []  # TODO: Set using ContextVars
-    """New current guard is pushed to the stack using 'with RegressionGuard(...)' clause."""
-
     __delegate_to: RegressionGuard | None
     """Delegate all function calls to this regression guard if set."""
 
@@ -85,19 +82,7 @@ class RegressionGuard:
             test_pattern: Glob pattern to identify the test function or method in stack frame, defaults to 'test_*'
         """
 
-        # Check if current regression guard is set
-        if len(self.__context_stack) == 0:
-            # Current regression guard is not set, set output path by examining call stack
-            output_path = self._get_base_path(test_pattern)
-        else:
-            # Set output path to the same value as the current regression guard
-            current_guard = self.current()
-            output_path = current_guard.output_path
-            # Same for extension but only if not specified as parameter
-            if ext is None:
-                ext = current_guard.ext
-
-        # Convert to string channel if specified
+        # Convert channel to string from other types
         if channel is not None:
             if isinstance(channel, primitive_types):  # TODO: Move primitive_types to another module
                 # TODO: Use specialized conversion for primitive types
@@ -111,9 +96,14 @@ class RegressionGuard:
             else:
                 error_channel_not_primitive_type()
 
-        # Add channel to output path
+        # Find base path by examining call stack
+        base_path = self._get_base_path(test_pattern)
+
+        # Add channel to base path if specified
         if channel is not None and channel != "":
-            output_path = f"{output_path}.{channel}"
+            output_path = f"{base_path}.{channel}"
+        else:
+            output_path = base_path
 
         if ext is not None:
             # Remove dot prefix if specified
@@ -121,7 +111,7 @@ class RegressionGuard:
             if ext not in supported_extensions:
                 error_extension_not_supported(ext)
         else:
-            # Use txt if not specified and not obtained from the current regression guard
+            # Use txt if not specified
             ext = "txt"
 
         # Check if regression guard already exists for the same combination of output_path and ext
@@ -204,14 +194,15 @@ class RegressionGuard:
                         expected_lines,
                         received_lines,
                         fromfile=expected_path,
-                        tofile=received_path
+                        tofile=received_path,
+                        n=0
                     )
                     # Limit diff to 5 lines
                     diff = list(diff)
                     if len(diff) > 5:
-                        regression_error = "Regression test diff (truncated to 5 lines):\n" + "\n".join(diff[:5]) + "\n"
+                        regression_error = "Regression test failure, output difference found (truncated to 5 lines):\n" + "".join(diff[:5])
                     else:
-                        regression_error = "Regression test diff:\n" + "\n".join(diff) + "\n"
+                        regression_error = "Regression test failure, output difference found:\n" + "".join(diff)
                     raise RuntimeError(regression_error)
         else:
             # Copy the data from received to expected
@@ -229,44 +220,6 @@ class RegressionGuard:
         """
         for guard in cls.__guard_dict.values():
             guard.verify()
-
-    @classmethod
-    def current(cls):
-        """Return the current regression guard, error message if not set."""
-        if len(cls.__context_stack) > 0:
-            return cls.__context_stack[-1]
-        else:
-            raise RuntimeError("Current regression guard has not been set, use 'with RegressionGuard(...)' to set.")
-
-    def __enter__(self):
-        """Supports `with` operator for resource disposal."""
-
-        # Set current guard on entering 'with RegressionGuard(...)' clause
-        self.__context_stack.append(self)
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        """Supports `with` operator for resource disposal."""
-
-        # Verify only if there is no exception
-        if exc_type is None:
-
-            # Verify self
-            self.verify()
-
-            # Restore the previous current guard on exiting from 'with RegressionGuard(...)' clause
-            if len(self.__context_stack) > 0:
-                current_guard = self.__context_stack.pop()
-            else:
-                if exc_type is None:
-                    raise RuntimeError("Current regression guard is cleared inside 'with RegressionGuard(...)' clause.")
-
-            if current_guard is not self:
-                if exc_type is None:
-                    raise RuntimeError("Current regression guard is modified inside 'with RegressionGuard(...)' clause.")
-
-        # Return False to propagate the exception to the caller
-        return False
         
     def _format_txt(self, value: Any) -> str:
         """Format text for regression testing."""

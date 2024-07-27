@@ -1,1 +1,1 @@
-Local guard: test_function
+test_function

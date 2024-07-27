@@ -1,3 +1,2 @@
-test_function.with_channel.tuple.var
-test_function.with_channel.tuple.current
-test_function.with_channel.tuple.new
+test_function.with_channel.tuple.1
+test_function.with_channel.tuple.2

@@ -1,3 +1,2 @@
-test_function.with_channel.str.var
-test_function.with_channel.str.current
-test_function.with_channel.str.new
+test_function.with_channel.str.1
+test_function.with_channel.str.2
