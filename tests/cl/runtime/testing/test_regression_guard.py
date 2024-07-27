@@ -18,7 +18,7 @@ from cl.runtime.testing.regression_guard import RegressionGuard
 module_path = __file__.removesuffix(".py")
 
 
-def perform_testing(base_path: str):
+def perform_testing(base_path: str, full: bool = False):
     """Stub test function without a class."""
 
     base_name = base_path.rsplit(".", 1)[-1]
@@ -33,28 +33,34 @@ def perform_testing(base_path: str):
     # Verify single guard
     guard_without_channel.verify()
 
-    for channel in ("with_channel.str", ("with_channel", "tuple")):
-        # First instance of guard, created using tuple or string
-        guard_with_channel_1 = RegressionGuard(channel=channel)
-        channel_str = ".".join(channel) if isinstance(channel, tuple) else channel
-        guard_with_channel_1.write(f"{base_name}.{channel_str}.1")
+    # Run additional tests only if full testing is specified
+    if full:
 
-        # Second instance of guard for the same channel, created using string
-        guard_with_channel_2 = RegressionGuard(channel=channel_str)
-        guard_with_channel_2.write(f"{base_name}.{channel_str}.2")
+        # Test channels
+        for channel in ("with_channel.str", ("with_channel", "tuple")):
+            # First instance of guard, created using tuple or string
+            guard_with_channel_1 = RegressionGuard(channel=channel)
+            channel_str = ".".join(channel) if isinstance(channel, tuple) else channel
+            guard_with_channel_1.write(f"{base_name}.{channel_str}.1")
 
-    # Verify all guards
-    RegressionGuard.verify_all()
+            # Second instance of guard for the same channel, created using string
+            guard_with_channel_2 = RegressionGuard(channel=channel_str)
+            guard_with_channel_2.write(f"{base_name}.{channel_str}.2")
 
-    # Verify again, should have no effect
-    RegressionGuard.verify_all()
+        # Test dict output
+
+        # Verify all guards
+        RegressionGuard.verify_all()
+
+        # Verify again, should have no effect
+        RegressionGuard.verify_all()
 
 
 def test_function():
     """Stub test function without a class."""
 
     # Test calling regression guard from a function
-    perform_testing(f"{module_path}.test_function")
+    perform_testing(f"{module_path}.test_function", full=True)
 
 
 class TestClass:

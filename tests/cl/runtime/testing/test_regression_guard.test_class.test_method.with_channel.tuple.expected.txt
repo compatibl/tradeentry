@@ -1,2 +1,0 @@
-test_method.with_channel.tuple.1
-test_method.with_channel.tuple.2
