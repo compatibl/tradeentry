@@ -1,1 +1,0 @@
-Channel guard: test_function_channel

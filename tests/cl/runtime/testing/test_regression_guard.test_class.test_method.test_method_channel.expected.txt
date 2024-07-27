@@ -1,1 +1,0 @@
-Channel guard: test_method_channel

@@ -1,1 +1,0 @@
-C:\Source\Runtime\Code\runtime-community\tests\cl\runtime\testing\test_regression_guard.test_class.test_method.verify_all
