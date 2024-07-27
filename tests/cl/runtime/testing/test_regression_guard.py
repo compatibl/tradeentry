@@ -48,6 +48,20 @@ def perform_testing(base_path: str, full: bool = False):
             guard_with_channel_2.write(f"{base_name}.{channel_str}.2")
 
         # Test dict output
+        test_dict = {
+            "str_key": "abc",
+            "int_key": 1,
+            "float_key": 1.23,
+            "bool_key": True,
+            "dict_key":
+                {
+                    "nested_str_key": "def",
+                    "nested_int_key": 2,
+                },
+            "str_list_key": ["abc", "def"],
+            "int_list_key": [1, 2],
+        }
+        RegressionGuard(channel="dict_txt").write(test_dict)
 
         # Verify all guards
         RegressionGuard.verify_all()

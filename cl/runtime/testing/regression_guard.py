@@ -197,12 +197,24 @@ class RegressionGuard:
                         tofile=received_path,
                         n=0
                     )
-                    # Limit diff to 5 lines
+
+                    # Truncate to max_lines and format
+                    line_len = 120
+                    max_lines = 5
+                    begin_str = "BEGIN REGRESSION TEST UNIFIED DIFF "
+                    end_str = "END REGRESSION TEST UNIFIED DIFF "
+                    begin_sep = "-" * (line_len-len(begin_str))
+                    end_sep = "-" * (line_len-len(end_str))
                     diff = list(diff)
-                    if len(diff) > 5:
-                        regression_error = "Regression test failure, output difference found (truncated to 5 lines):\n" + "".join(diff[:5])
+                    orig_lines = len(diff)
+                    if orig_lines > max_lines:
+                        diff = diff[:max_lines]
+                        truncate_str = f"(TRUNCATED {orig_lines-max_lines} ADDITIONAL LINES) "
+                        end_sep = end_sep[:-len(truncate_str)]
                     else:
-                        regression_error = "Regression test failure, output difference found:\n" + "".join(diff)
+                        truncate_str = ""
+                    diff_str = "".join(diff)
+                    regression_error = f"\n{begin_str}{begin_sep}\n" + diff_str + f"{end_str}{truncate_str}{end_sep}"
                     raise RuntimeError(regression_error)
         else:
             # Copy the data from received to expected
@@ -228,7 +240,7 @@ class RegressionGuard:
             # TODO: Use specialized conversion for primitive types
             return str(value) + "\n"
         elif value_type == dict:
-            return yaml.dump(value, default_flow_style=False) + "\n"
+            return yaml.dump(value, default_flow_style=False, sort_keys=False) + "\n"
         elif hasattr(value_type, "__iter__"):
             return "\n".join(map(self._format_txt, value)) + "\n"
         else:
