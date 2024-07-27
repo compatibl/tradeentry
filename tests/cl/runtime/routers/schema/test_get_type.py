@@ -20,6 +20,8 @@ from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
 from cl.runtime.routers.server import app
 from fastapi.testclient import TestClient
 
+from cl.runtime.testing.regression_guard import RegressionGuard
+
 requests = [{"name": "UiAppState"}, {"name": "UiAppState", "user": "TestUser"}]
 
 expected_result_file_path = os.path.abspath(__file__).replace(".py", ".expected.json")
@@ -31,16 +33,10 @@ def test_method():
     """Test coroutine for /schema/typeV2 route."""
 
     for request in requests:
-        # Run the coroutine wrapper added by the FastAPI decorator and get the result
+        # Run the coroutine wrapper added by the FastAPI decorator and validate the result
         request_obj = TypeRequest(**request)
         result_dict = TypeResponseUtil.get_type(request_obj)
-
-        received_result_file_path = os.path.abspath(__file__).replace(".py", ".received.json")
-        with open(received_result_file_path, "w") as received_result_file:
-            json.dump(result_dict, received_result_file, indent=4)
-
-        # Check result
-        assert result_dict == expected_result
+        RegressionGuard().write(result_dict)
 
 
 def test_api():

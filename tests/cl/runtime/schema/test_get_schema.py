@@ -17,8 +17,7 @@ import json
 import os
 import pytest
 from cl.runtime.schema.for_dataclasses.dataclass_type_decl import DataclassTypeDecl
-from cl.runtime.schema.type_decl import TypeDecl
-from stubs.cl.runtime import StubCustomBase
+from cl.runtime.testing.regression_guard import RegressionGuard
 from stubs.cl.runtime import StubDataclassListFields
 from stubs.cl.runtime import StubDataclassNestedFields
 from stubs.cl.runtime import StubDataclassPrimitiveFields
@@ -38,25 +37,14 @@ def test_method():
     ]
 
     for sample_type in sample_types:
-        class_module = sample_type.__module__.rsplit(".", maxsplit=1)[1]
-        received_result_file_path = os.path.abspath(__file__).replace(".py", f".{class_module}.received.json")
-        expected_result_file_path = os.path.abspath(__file__).replace(".py", f".{class_module}.expected.json")
 
         result_obj = DataclassTypeDecl.for_type(sample_type)
         result_dict = result_obj.to_type_decl_dict()
 
-        # Save the dictionary to a file
-        with open(received_result_file_path, "w") as received_result_file:
-            json.dump(result_dict, received_result_file, indent=4)
+        guard = RegressionGuard(channel=sample_type.__module__.rsplit(".", maxsplit=1)[1])
+        guard.write(result_dict)
 
-        # Load expected result from a file
-        with open(expected_result_file_path, "r", encoding="utf-8") as expected_result_file:
-            expected_result_dict = json.load(expected_result_file)
-
-        # Compare
-        assert result_dict == expected_result_dict
-        pass
-
+    RegressionGuard.verify_all()
 
 if __name__ == "__main__":
     pytest.main([__file__])

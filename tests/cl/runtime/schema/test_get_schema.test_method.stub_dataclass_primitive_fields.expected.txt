@@ -1,0 +1,112 @@
+Module:
+  ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassPrimitiveFields
+Name: StubDataclassPrimitiveFields
+Label: Stub Dataclass Primitive Fields
+Comment: Stub record whose elements are primitive types.
+DisplayKind: Basic
+Elements:
+- Value:
+    Type: String
+  Name: KeyStrField
+  Comment: Stub field.
+- Value:
+    Type: Double
+  Name: KeyFloatField
+  Comment: Stub field.
+- Value:
+    Type: Bool
+  Name: KeyBoolField
+  Comment: Stub field.
+- Value:
+    Type: Int
+  Name: KeyIntField
+  Comment: Stub field.
+- Value:
+    Type: Long
+  Name: KeyLongField
+  Comment: 'The default is maximum safe signed int for JSON: 2^53 - 1.'
+- Value:
+    Type: Date
+  Name: KeyDateField
+  Comment: Stub field.
+- Value:
+    Type: Time
+  Name: KeyTimeField
+  Comment: Stub field.
+- Value:
+    Type: DateTime
+  Name: KeyDateTimeField
+  Comment: Stub field.
+- Value:
+    Type: UUID
+  Name: KeyUuidField
+  Comment: Stub field.
+- Value:
+    Type: Binary
+  Name: KeyBytesField
+  Comment: Stub field.
+- Enum:
+    Module:
+      ModuleName: Stubs.Cl.Runtime.Records.Enum.StubIntEnum
+    Name: StubIntEnum
+  Name: KeyEnumField
+  Comment: Stub field.
+- Value:
+    Type: String
+  Name: ObjStrField
+  Comment: Stub field.
+- Value:
+    Type: Double
+  Name: ObjFloatField
+  Comment: Stub field.
+- Value:
+    Type: Bool
+  Name: ObjBoolField
+  Comment: Stub field.
+- Value:
+    Type: Int
+  Name: ObjIntField
+  Comment: Stub field.
+- Value:
+    Type: Long
+  Name: ObjLongField
+  Comment: 'The default is maximum safe signed int for JSON: 2^53 - 1.'
+- Value:
+    Type: Date
+  Name: ObjDateField
+  Comment: Stub field.
+- Value:
+    Type: Time
+  Name: ObjTimeField
+  Comment: Stub field.
+- Value:
+    Type: DateTime
+  Name: ObjDateTimeField
+  Comment: Stub field.
+- Value:
+    Type: UUID
+  Name: ObjUuidField
+  Comment: Stub field.
+- Value:
+    Type: Binary
+  Name: ObjBytesField
+  Comment: Stub field.
+- Enum:
+    Module:
+      ModuleName: Stubs.Cl.Runtime.Records.Enum.StubIntEnum
+    Name: StubIntEnum
+  Name: ObjEnumField
+  Comment: Stub field.
+Keys:
+- KeyStrField
+- KeyFloatField
+- KeyBoolField
+- KeyIntField
+- KeyLongField
+- KeyDateField
+- KeyTimeField
+- KeyDateTimeField
+- KeyUuidField
+- KeyBytesField
+- KeyEnumField
+
