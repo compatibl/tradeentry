@@ -6,8 +6,8 @@ default:
 
         # Default data source
         data_source:
-            _class: cl.runtime.LocalCache   # Data source class name
-            data_source_id: Default         # Unique identifier
+            _class: cl.runtime.SqliteDataSource   # Data source class name
+            data_source_id: Default               # Unique identifier
 
         dataset: Common
 
