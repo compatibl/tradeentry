@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import inflection
 from cl.runtime import ClassInfo
+from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
 from cl.runtime.routers.storage.select_request import SelectRequest
@@ -54,7 +55,17 @@ class SelectResponse(BaseModel):
         record_class = request.type_
         record_type = ClassInfo.get_class_type(f"{record_module}.{record_class}")
 
-        records = [record_type() for i in range(10)]  # TODO: Load from storage instead of creating
+        data_source = current_or_default_data_source()
+
+        # TODO: replace temporary load_all to load_by_query
+        if not hasattr(data_source, 'load_all'):
+            raise RuntimeError(
+                f"Currently data source need to implement load_all() method for select records by type. "
+                f"Data source {data_source.__class__.__name__} doesn't have load_all()."
+            )
+
+        # load records by type
+        records = data_source.load_all(record_type)
 
         # TODO: Refactor the code below
 
