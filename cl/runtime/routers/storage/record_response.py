@@ -17,6 +17,7 @@ from __future__ import annotations
 import dataclasses
 import inflection
 from cl.runtime import ClassInfo
+from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
 from cl.runtime.routers.storage.record_request import RecordRequest
@@ -28,6 +29,8 @@ from pydantic import Field
 from typing import Any
 from typing import Dict
 from typing import List
+
+from cl.runtime.serialization.string_serializer import StringSerializer
 
 RecordResponseSchema = Dict[str, Any]
 RecordResponseData = Dict[str, Any]
@@ -117,8 +120,10 @@ class RecordResponse(BaseModel):
             # TODO: Use after module is specified
             record_type = ClassInfo.get_class_type(f"{key_module}.{key_class}")
 
-        # TODO: Load from storage instead of creating
-        record = record_type()
+        # load record from storage
+        data_source = current_or_default_data_source()
+        key_serializer = StringSerializer()
+        record = data_source.load_one(key_serializer.deserialize_key(request.key, record_type))
 
         # Convert to standard dictionary format
         # TODO: Optimize speed using dacite or similar library
