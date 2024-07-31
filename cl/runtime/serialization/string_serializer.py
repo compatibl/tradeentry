@@ -13,8 +13,9 @@
 # limitations under the License.
 
 from enum import Enum
-from typing import Any
+from typing import Any, Type
 
+from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.storage.data_source_types import TDataset
 
 primitive_type_names = ["NoneType", "str", "float", "int", "bool", "date", "time", "datetime", "bytes", "UUID"]
@@ -59,3 +60,19 @@ class StringSerializer:
             for k in key_slots
         )
         return result
+
+    def deserialize_key(self, data: str, key_type: Type) -> KeyProtocol:
+        key_slots = key_type.__slots__
+        key_tokens = data.split(";")
+
+        # TODO: support nested keys
+        if len(key_tokens) > len(key_slots):
+            raise ValueError(
+                "key tokens len > key slots len. Probably nested keys. Nested keys currently is not supported."
+            )
+
+        filled_slots = key_slots[:len(key_tokens)]
+
+        # TODO: deserialize string tokens using specific rules (or annotations?)
+        key_fields = {slot: token for slot, token in zip(filled_slots, key_tokens)}
+        return key_type(**key_fields)
