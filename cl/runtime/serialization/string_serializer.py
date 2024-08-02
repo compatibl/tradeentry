@@ -11,14 +11,20 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 from enum import Enum
-from typing import Any, Type
+from typing import Any, Type, Dict, List
 import datetime as dt
+
+import base64
+from uuid import UUID
 
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.serialization.string_value_parser import StringValueParser, StringValueCustomType
 from cl.runtime.storage.data_source_types import TDataset
+
+# TODO (Roman): remove dependency from dict_serializer
+from cl.runtime.serialization.dict_serializer import alias_dict, type_dict
+
 
 primitive_type_names = ["NoneType", "str", "float", "int", "bool", "date", "time", "datetime", "bytes", "UUID"]
 """Detect primitive type by checking if class name is in this list."""
@@ -52,7 +58,8 @@ class StringSerializer:
     def _serialize_key_token(self, data) -> str:
 
         if data is None:
-            return ''
+            # TODO (Roman): make different None and empty string
+            return ""
 
         if isinstance(data, str):
             return data
@@ -67,7 +74,15 @@ class StringSerializer:
         ]:
             result = data.isoformat()
         elif value_custom_type == StringValueCustomType.enum:
-            result = f"{type(data).__name__}.{data.name}"
+            # get enum short name and cache to type_dict
+            short_name = alias_dict[type_] if (type_ := type(data)) in alias_dict else type_.__name__
+            type_dict[short_name] = type_
+
+            result = f"{short_name}.{data.name}"
+        elif value_custom_type == StringValueCustomType.uuid:
+            result = base64.b64encode(data.bytes).decode()
+        elif value_custom_type == StringValueCustomType.bytes:
+            result = base64.b64encode(data).decode()
         else:
             result = str(data)
 
@@ -94,6 +109,19 @@ class StringSerializer:
             return float(value)
         elif value_custom_type == StringValueCustomType.enum:
             enum_type, enum_value = value.split(".")
+            deserialized_type = type_dict.get(enum_type, None)  # noqa
+            if deserialized_type is None:
+                raise RuntimeError(
+                    f"Enum not found for name or alias '{enum_type}' during key token deserialization. "
+                    f"Ensure all serialized enums are included in package import settings."
+                )
+
+            # get enum value
+            return deserialized_type[enum_value]  # noqa
+        elif value_custom_type == StringValueCustomType.uuid:
+            return UUID(bytes=base64.b64decode(value.encode()))
+        elif value_custom_type == StringValueCustomType.bytes:
+            return base64.b64decode(value.encode())
         else:
             return value
 
@@ -102,25 +130,52 @@ class StringSerializer:
 
         key_slots = data.get_key_type().__slots__
         result = ";".join(
-            str(v)  # TODO: Apply rules depending on the specific primitive type
+            self._serialize_key_token(v)  # TODO: Apply rules depending on the specific primitive type
             if (v := getattr(data, k)).__class__.__name__ in primitive_type_names or isinstance(v, Enum)
             else self.serialize_key(v)
             for k in key_slots
         )
-        return result
 
-    def deserialize_key(self, data: str, key_type: Type) -> KeyProtocol:
-        key_slots = key_type.__slots__
-        key_tokens = data.split(";")
+        key_short_name = alias_dict[type_] if (type_ := data.get_key_type()) in alias_dict else type_.__name__
 
-        # TODO: support nested keys
-        if len(key_tokens) > len(key_slots):
-            raise ValueError(
-                "key tokens len > key slots len. Probably nested keys. Nested keys currently is not supported."
-            )
+        # TODO: consider to have separated cache dict for key types
+        type_dict[key_short_name] = type_
+        type_token = StringValueParser.add_type_prefix(key_short_name, StringValueCustomType.key)
+        return f"{type_token};{result}"
 
-        filled_slots = key_slots[:len(key_tokens)]
+    def substitute_to_slots(self, token_iterator, key_type=None) -> Dict[str, Any]:
+        result = {}
+        slots_iterator = iter(key_type.__slots__) if key_type else None
 
-        # TODO: deserialize string tokens using specific rules (or annotations?)
-        key_fields = {slot: self._deserialize_key_token(token) for slot, token in zip(filled_slots, key_tokens)}
-        return key_type(**key_fields)
+        while token := next(token_iterator, None):
+
+            token_value, token_type = StringValueParser.parse(token)
+
+            if token_type == StringValueCustomType.key:
+
+                current_key_type = type_dict.get(token_value, None)  # noqa
+
+                if current_key_type is None:
+                    raise RuntimeError(
+                        f"Class not found for name or alias '{token_value}' during deserialization. "
+                        f"Ensure all serialized classes are included in package import settings."
+                    )
+
+                if slots_iterator is None:
+                    return self.substitute_to_slots(token_iterator, current_key_type)
+                else:
+                    slot = next(slots_iterator)
+                    result[slot] = self.substitute_to_slots(token_iterator, current_key_type)
+
+            else:
+                slot = next(slots_iterator)
+                result[slot] = self._deserialize_key_token(token)
+
+        return key_type(**result)
+
+
+    def deserialize_key(self, data: str) -> KeyProtocol:
+
+        slot_values = self.substitute_to_slots(iter(data.split(";")))
+
+        return slot_values

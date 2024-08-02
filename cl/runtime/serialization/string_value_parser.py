@@ -15,6 +15,8 @@ import re
 from enum import IntEnum, Enum
 from typing import Any
 
+from cl.runtime.records.protocols import is_key
+
 
 class StringValueCustomType(IntEnum):
     """Custom types supported for string representation."""
@@ -50,10 +52,13 @@ class StringValueCustomType(IntEnum):
     """Binary type."""
 
     int = 10
-    """Integer value."""
+    """Integer type."""
 
     float = 11
-    """Float value."""
+    """Float type."""
+
+    key = 12
+    """Key type."""
 
 
 class StringValueParser:
@@ -101,13 +106,7 @@ class StringValueParser:
     @staticmethod
     def get_custom_type(value: Any) -> StringValueCustomType | None:
 
-        if hasattr(value, '__slots__'):
-            return StringValueCustomType.data
-        elif isinstance(value, dict):
-            return StringValueCustomType.dict
-        elif isinstance(value, Enum):
-            return StringValueCustomType.enum
-        elif value.__class__.__name__ == 'date':
+        if value.__class__.__name__ == 'date':
             return StringValueCustomType.date
         elif value.__class__.__name__ == 'datetime':
             return StringValueCustomType.datetime
@@ -115,9 +114,21 @@ class StringValueParser:
             return StringValueCustomType.time
         elif value.__class__.__name__ == 'bool':
             return StringValueCustomType.bool
+        elif value.__class__.__name__ == 'int':
+            return StringValueCustomType.int
+        elif value.__class__.__name__ == 'float':
+            return StringValueCustomType.float
         elif value.__class__.__name__ == 'UUID':
             return StringValueCustomType.uuid
         elif value.__class__.__name__ == 'bytes':
             return StringValueCustomType.bytes
         elif hasattr(value, '__iter__'):
             return StringValueCustomType.list
+        elif is_key(value):
+            return StringValueCustomType.key
+        elif hasattr(value, '__slots__'):
+            return StringValueCustomType.data
+        elif isinstance(value, dict):
+            return StringValueCustomType.dict
+        elif isinstance(value, Enum):
+            return StringValueCustomType.enum

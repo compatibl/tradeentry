@@ -39,10 +39,10 @@ def test_key_serialization():
 
     sample_types = [
         StubDataclassRecord,
-        # StubDataclassPrimitiveFields,
-        # StubDataclassListFields,
-        # StubDataclassNestedFields,
-        # StubDataclassOptionalFields,
+        StubDataclassPrimitiveFields,
+        StubDataclassListFields,
+        StubDataclassNestedFields,
+        StubDataclassOptionalFields,
     ]
 
     key_serializer = StringSerializer()
@@ -55,8 +55,8 @@ def test_key_serialization():
 
         assert serialized_1 == serialized_2
 
-        deserialized_key_1 = key_serializer.deserialize_key(serialized_1, sample_type.get_key_type(None))
-        deserialized_key_2 = key_serializer.deserialize_key(serialized_2, sample_type.get_key_type(None))
+        deserialized_key_1 = key_serializer.deserialize_key(serialized_1)
+        deserialized_key_2 = key_serializer.deserialize_key(serialized_2)
         assert obj_1_key == deserialized_key_1 == deserialized_key_2
 
 
