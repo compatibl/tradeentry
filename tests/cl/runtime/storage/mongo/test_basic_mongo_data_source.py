@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime import DataSource
+import mongomock
 from cl.runtime.context.context import Context
 from cl.runtime.storage.mongo.basic_mongo_data_source import BasicMongoDataSource
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecord
@@ -23,7 +23,10 @@ def test_smoke():
     """Smoke test."""
 
     with Context():
-        data_source = BasicMongoDataSource(data_source_id="default", db_name="Dev;Runtime;V2")
+        data_source = BasicMongoDataSource(
+            _client=mongomock.MongoClient(),
+            data_source_id="default",
+            db_name="Dev;Runtime;V2")
 
         # Create test record and populate with sample data
         record = StubDataclassRecord()

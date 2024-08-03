@@ -52,9 +52,9 @@ class BasicMongoDataSource(DataSource):
     """MongoDB client URI, defaults to mongodb://localhost:27017/"""
 
     _client: MongoClient = None
-    """MongoDB client."""
+    """MongoDB client, tests must specify mongomock.MongoClient."""
 
-    _db: Database = None
+    _db: Database = field(default=None, init=False)
     """MongoDB database."""
 
     def __post_init__(self) -> None:
@@ -62,7 +62,8 @@ class BasicMongoDataSource(DataSource):
 
         # TODO: Implement dispose logic
         # Use setattr to initialize attributes in a frozen object
-        object.__setattr__(self, "_client", MongoClient(self.client_uri))
+        if self._client is None:
+            object.__setattr__(self, "_client", MongoClient(self.client_uri))
         object.__setattr__(self, "_db", self._client[self.db_name])
 
     def load_one(
