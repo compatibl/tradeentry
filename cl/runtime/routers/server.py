@@ -12,22 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from pathlib import Path
+from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
+from starlette.staticfiles import StaticFiles
+
+from cl.runtime.backend.config import api_host_name, api_port, api_host_ip
 from cl.runtime.routers.auth import auth_router
 from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.health import health_router
 from cl.runtime.routers.schema import schema_router
 from cl.runtime.routers.storage import storage_router
-from fastapi import FastAPI
-from starlette.middleware.cors import CORSMiddleware
+
 
 # Server
 app = FastAPI()
 
 origins = [
-    "http://localhost",
-    "http://localhost:8000",
-    "http://localhost:7008",
-    "http://localhost:3002",
+    f"{api_host_name}:{api_port}",
+    f"{api_host_ip}:{api_port}",
 ]
 
 app.add_middleware(
@@ -45,3 +48,24 @@ app.include_router(auth_router.router, prefix="/auth", tags=["Authorization"])
 app.include_router(schema_router.router, prefix="/schema", tags=["Schema"])
 app.include_router(storage_router.router, prefix="/storage", tags=["Storage"])
 app.include_router(entity_router.router, prefix="/entity", tags=["Entity"])
+
+# Search locations for wwwroot directory
+working_dir = Path().resolve()
+module_path = Path(__file__)
+ui_dir = "wwwroot"
+locations = [d.joinpath(ui_dir) for d in (working_dir, module_path.parents[2], module_path.parents[3])]
+
+# Use the first location where dir_name subdirectory exists
+ui_path = None
+for location in locations:
+    if location.exists():
+        ui_path = location
+
+# Launch UI if ui_path is found
+if ui_path is not None:
+    app.mount("/", StaticFiles(directory=ui_path, html=True))
+    print(f"Starting UI configuration in {ui_path}")
+else:
+    locations_str = "\n".join("    " + str(location) for location in locations)
+    print(f"UI configuration not found, starting REST API only.\n"
+          f"Directories searched:\n{locations_str}")

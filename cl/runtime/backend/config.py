@@ -12,10 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import uvicorn
+from pathlib import Path
 
-from cl.runtime.backend.config import api_host_name, api_port
-from cl.runtime.routers.server import app
-
-if __name__ == "__main__":
-    uvicorn.run(app, host=api_host_name, port=api_port)
+# TODO: Use dynaconf to configure
+api_host_name = "localhost"
+api_host_ip = "127.0.0.1"
+api_port = 7008
