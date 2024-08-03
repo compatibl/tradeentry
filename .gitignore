@@ -15,6 +15,7 @@ syntax: glob
 *.so
 build/
 dist/
+wwwroot/
 
 # Using regexp syntax
 syntax: regexp
