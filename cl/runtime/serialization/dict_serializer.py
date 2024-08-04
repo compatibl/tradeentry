@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+import sys
 from collections import Counter
 from cl.runtime.storage.data_source_types import TDataDict
 from dataclasses import dataclass
@@ -50,7 +50,13 @@ def _get_class_hierarchy_slots(data_type) -> Tuple[str]:
         return result
     else:
         # Traverse the class hierarchy from base to derived (reverse MRO order) collecting slots as specified
-        slots_list = [base.__slots__ for base in reversed(data_type.__mro__) if hasattr(base, '__slots__')]
+        version_info = sys.version_info
+        if version_info.major > 3 or version_info.major == 3 and version_info.minor >= 11:
+            # For v3.11 and later, __slots__ includes fields for this class only, use MRO to include base class slots
+            slots_list = [base.__slots__ for base in reversed(data_type.__mro__) if hasattr(base, '__slots__')]
+        else:
+            # For v3.10 and earlier, __slots__ includes fields for this class and its bases without having to use MRO
+            slots_list = data_type.__slots__ if hasattr(data_type, '__slots__') else tuple()
 
         # Exclude empty tuples and convert slots specified as a single string into tuple of size one
         slots_list = [(slots, ) if isinstance(slots, str) else slots for slots in slots_list if slots != tuple()]
