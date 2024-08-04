@@ -42,6 +42,9 @@ type_dict: Dict[str, Type] = dict()
 class_hierarchy_slots_dict: Dict[Type, Tuple] = dict()
 """Dictionary of slots in class hierarchy in the order of declaration from base to derived."""
 
+collect_slots = sys.version_info.major > 3 or sys.version_info.major == 3 and sys.version_info.minor >= 11
+"""For Python 3.11 and later, __slots__ includes fields for this class only, use MRO to include base class slots."""
+
 
 def _get_class_hierarchy_slots(data_type) -> Tuple[str]:
     """Tuple of slots in class hierarchy in the order of declaration from base to derived."""
@@ -50,16 +53,17 @@ def _get_class_hierarchy_slots(data_type) -> Tuple[str]:
         return result
     else:
         # Traverse the class hierarchy from base to derived (reverse MRO order) collecting slots as specified
-        version_info = sys.version_info
-        if version_info.major > 3 or version_info.major == 3 and version_info.minor >= 11:
-            # For v3.11 and later, __slots__ includes fields for this class only, use MRO to include base class slots
-            slots_list = [base.__slots__ for base in reversed(data_type.__mro__) if hasattr(base, '__slots__')]
+        if collect_slots:
+            # For v3.11 and later, __slots__ includes fields for this class only, use MRO to collect base class slots
+            # Exclude None or empty __slots__ (both are falsy)
+            slots_list = [slots for base in reversed(data_type.__mro__) if (slots := getattr(base, '__slots__', None))]
         else:
-            # For v3.10 and earlier, __slots__ includes fields for this class and its bases without having to use MRO
-            slots_list = data_type.__slots__ if hasattr(data_type, '__slots__') else tuple()
+            # Otherwise get slots from this type only
+            # Exclude None or empty __slots__ (both are falsy)
+            slots_list = [slots if (slots := getattr(data_type, '__slots__', None)) else tuple()]
 
         # Exclude empty tuples and convert slots specified as a single string into tuple of size one
-        slots_list = [(slots, ) if isinstance(slots, str) else slots for slots in slots_list if slots != tuple()]
+        slots_list = [(slots, ) if isinstance(slots, str) else slots for slots in slots_list]
 
         # Flatten and convert to tuple, cast relies on elements of sublist being strings
         result = tuple(slot for sublist in slots_list for slot in sublist)
