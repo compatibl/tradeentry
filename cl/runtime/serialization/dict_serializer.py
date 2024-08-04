@@ -39,6 +39,21 @@ alias_dict: Dict[Type, str] = dict()
 type_dict: Dict[str, Type] = dict()
 """Dictionary of types using class name or alias as key (includes all classes and enums)."""
 
+def get_all_slots(cls):
+    # Initialize an empty set to collect slot names
+    slots = set()
+
+    # Traverse the class hierarchy
+    for base in cls.__mro__:
+        if hasattr(base, '__slots__'):
+            # Add slots from the current class
+            if isinstance(base.__slots__, str):
+                slots.add(base.__slots__)
+            else:
+                slots.update(base.__slots__)
+
+    return list(slots)
+
 
 # TODO: Add checks for to_node, from_node implementation for custom override of default serializer
 @dataclass(slots=True, kw_only=True)
@@ -53,6 +68,8 @@ class DictSerializer:
 
         if (slots := getattr(data, "__slots__", None)) is not None:
             # Slots class, serialize as dictionary
+            # Get slots from this class and its bases in the order of declaration from base to derived
+            all_slots = get_all_slots(data.__class__)
             # Serialize slot values in the order of declaration except those that are None
             result = {
                 k
@@ -60,7 +77,7 @@ class DictSerializer:
                 else camelize(k, uppercase_first_letter=True): v
                 if v.__class__.__name__ in primitive_type_names
                 else self.serialize_data(v)
-                for k in slots
+                for k in all_slots
                 if (v := getattr(data, k)) is not None
             }
             # To find short name, use 'in' which is faster than 'get' when most types do not have aliases
