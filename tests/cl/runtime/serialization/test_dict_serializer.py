@@ -59,6 +59,7 @@ def test_data_serialization():
 
         assert obj_1 == obj_2
         assert serialized_1 == serialized_2
+        pass
 
 
 if __name__ == "__main__":

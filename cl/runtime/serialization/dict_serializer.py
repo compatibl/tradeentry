@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.protocols import RecordProtocol
+from collections import Counter
 from cl.runtime.storage.data_source_types import TDataDict
 from dataclasses import dataclass
 from enum import Enum
 from inflection import camelize
-from typing import Dict
+from typing import Dict, Tuple, cast
 from typing import Type
 
 
@@ -39,20 +39,36 @@ alias_dict: Dict[Type, str] = dict()
 type_dict: Dict[str, Type] = dict()
 """Dictionary of types using class name or alias as key (includes all classes and enums)."""
 
-def get_all_slots(cls):
-    # Initialize an empty set to collect slot names
-    slots = set()
+class_hierarchy_slots_dict: Dict[Type, Tuple] = dict()
+"""Dictionary of slots in class hierarchy in the order of declaration from base to derived."""
 
-    # Traverse the class hierarchy
-    for base in cls.__mro__:
-        if hasattr(base, '__slots__'):
-            # Add slots from the current class
-            if isinstance(base.__slots__, str):
-                slots.add(base.__slots__)
-            else:
-                slots.update(base.__slots__)
 
-    return list(slots)
+def _get_class_hierarchy_slots(data_type) -> Tuple[str]:
+    """Tuple of slots in class hierarchy in the order of declaration from base to derived."""
+    if (result := class_hierarchy_slots_dict.get(data_type, None)) is not None:
+        # Use cached value
+        return result
+    else:
+        # Traverse the class hierarchy from base to derived (reverse MRO order) collecting slots as specified
+        slots_list = [base.__slots__ for base in reversed(data_type.__mro__) if hasattr(base, '__slots__')]
+
+        # Exclude empty tuples and convert slots specified as a single string into tuple of size one
+        slots_list = [(slots, ) if isinstance(slots, str) else slots for slots in slots_list if slots != tuple()]
+
+        # Flatten and convert to tuple, cast relies on elements of sublist being strings
+        result = tuple(slot for sublist in slots_list for slot in sublist)
+
+        # Check for duplicates
+        if len(result) > len(set(result)):
+            # Error message if duplicates are found
+            counts = Counter(result)
+            duplicates = [slot for slot, count in counts.items() if count > 1]
+            duplicates_str = ", ".join(duplicates)
+            raise RuntimeError(f"Duplicate field names found in class hierarchy "
+                               f"for {data_type.__name__}: {duplicates_str}.")
+
+        class_hierarchy_slots_dict[data_type] = result
+        return cast(Tuple[str], result)
 
 
 # TODO: Add checks for to_node, from_node implementation for custom override of default serializer
@@ -66,10 +82,11 @@ class DictSerializer:
     def serialize_data(self, data):  # TODO: Check if None should be supported
         """Serialize to dictionary containing primitive types, dictionaries, or iterables."""
 
-        if (slots := getattr(data, "__slots__", None)) is not None:
+        if getattr(data, "__slots__", None) is not None:
             # Slots class, serialize as dictionary
+
             # Get slots from this class and its bases in the order of declaration from base to derived
-            all_slots = get_all_slots(data.__class__)
+            all_slots = _get_class_hierarchy_slots(data.__class__)
             # Serialize slot values in the order of declaration except those that are None
             result = {
                 k
