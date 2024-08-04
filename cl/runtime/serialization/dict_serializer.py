@@ -51,7 +51,7 @@ class DictSerializer:
     def serialize_data(self, data):  # TODO: Check if None should be supported
         """Serialize to dictionary containing primitive types, dictionaries, or iterables."""
 
-        if hasattr(data, "__slots__"):
+        if (slots := getattr(data, "__slots__", None)) is not None:
             # Slots class, serialize as dictionary
             # Serialize slot values in the order of declaration except those that are None
             result = {
@@ -60,7 +60,7 @@ class DictSerializer:
                 else camelize(k, uppercase_first_letter=True): v
                 if v.__class__.__name__ in primitive_type_names
                 else self.serialize_data(v)
-                for k in data.__slots__
+                for k in slots
                 if (v := getattr(data, k)) is not None
             }
             # To find short name, use 'in' which is faster than 'get' when most types do not have aliases
