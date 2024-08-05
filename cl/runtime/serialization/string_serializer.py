@@ -88,27 +88,25 @@ class StringSerializer:
 
         return StringValueParser.add_type_prefix(result, value_custom_type)
 
-    def _deserialize_key_token(self, data: str) -> Any:
+    def _deserialize_key_token(self, data: str, custom_type: StringValueCustomType | None) -> Any:
 
-        value, value_custom_type = StringValueParser.parse(data)
+        if custom_type is None:
+            return data if data != '' else None
 
-        if value_custom_type is None:
-            return value if value != '' else None
-
-        if value_custom_type == StringValueCustomType.date:
-            return dt.date.fromisoformat(value)
-        elif value_custom_type == StringValueCustomType.datetime:
-            return dt.datetime.fromisoformat(value)
-        elif value_custom_type == StringValueCustomType.time:
-            return dt.time.fromisoformat(value)
-        elif value_custom_type == StringValueCustomType.bool:
-            return True if value.lower() == "true" else False
-        elif value_custom_type == StringValueCustomType.int:
-            return int(value)
-        elif value_custom_type == StringValueCustomType.float:
-            return float(value)
-        elif value_custom_type == StringValueCustomType.enum:
-            enum_type, enum_value = value.split(".")
+        if custom_type == StringValueCustomType.date:
+            return dt.date.fromisoformat(data)
+        elif custom_type == StringValueCustomType.datetime:
+            return dt.datetime.fromisoformat(data)
+        elif custom_type == StringValueCustomType.time:
+            return dt.time.fromisoformat(data)
+        elif custom_type == StringValueCustomType.bool:
+            return True if data.lower() == "true" else False
+        elif custom_type == StringValueCustomType.int:
+            return int(data)
+        elif custom_type == StringValueCustomType.float:
+            return float(data)
+        elif custom_type == StringValueCustomType.enum:
+            enum_type, enum_value = data.split(".")
             deserialized_type = type_dict.get(enum_type, None)  # noqa
             if deserialized_type is None:
                 raise RuntimeError(
@@ -118,12 +116,12 @@ class StringSerializer:
 
             # get enum value
             return deserialized_type[enum_value]  # noqa
-        elif value_custom_type == StringValueCustomType.uuid:
-            return UUID(bytes=base64.b64decode(value.encode()))
-        elif value_custom_type == StringValueCustomType.bytes:
-            return base64.b64decode(value.encode())
+        elif custom_type == StringValueCustomType.uuid:
+            return UUID(bytes=base64.b64decode(data.encode()))
+        elif custom_type == StringValueCustomType.bytes:
+            return base64.b64decode(data.encode())
         else:
-            return value
+            return data
 
     def serialize_key(self, data):
         """Serialize key to string, flattening for composite keys."""
@@ -143,39 +141,41 @@ class StringSerializer:
         type_token = StringValueParser.add_type_prefix(key_short_name, StringValueCustomType.key)
         return f"{type_token};{result}"
 
-    def substitute_to_slots(self, token_iterator, key_type=None) -> Dict[str, Any]:
+    def _substitute_slots(self, tokens_iterator, type_=None):
+
         result = {}
-        slots_iterator = iter(key_type.__slots__) if key_type else None
 
-        while token := next(token_iterator, None):
+        slots_iterator = iter(type_.__slots__) if type_ else None
+        slot = next(slots_iterator) if slots_iterator else None
 
-            token_value, token_type = StringValueParser.parse(token)
-
+        while token := next(tokens_iterator, None):
+            token, token_type = StringValueParser.parse(token)
             if token_type == StringValueCustomType.key:
+                current_type = type_dict.get(token)
 
-                current_key_type = type_dict.get(token_value, None)  # noqa
-
-                if current_key_type is None:
+                if current_type is None:
                     raise RuntimeError(
-                        f"Class not found for name or alias '{token_value}' during deserialization. "
+                        f"Class not found for name or alias '{token}' during key deserialization. "
                         f"Ensure all serialized classes are included in package import settings."
                     )
 
+                key = self._substitute_slots(tokens_iterator, current_type)
+
                 if slots_iterator is None:
-                    return self.substitute_to_slots(token_iterator, current_key_type)
+                    return key
                 else:
-                    slot = next(slots_iterator)
-                    result[slot] = self.substitute_to_slots(token_iterator, current_key_type)
-
+                    result[slot] = key
             else:
-                slot = next(slots_iterator)
-                result[slot] = self._deserialize_key_token(token)
+                result[slot] = self._deserialize_key_token(token, token_type)
 
-        return key_type(**result)
+            slot = next(slots_iterator, None)
 
+            if slot is None:
+                break
+
+        return type_(**result)
 
     def deserialize_key(self, data: str) -> KeyProtocol:
 
-        slot_values = self.substitute_to_slots(iter(data.split(";")))
-
+        slot_values = self._substitute_slots(iter(data.split(";")))
         return slot_values
