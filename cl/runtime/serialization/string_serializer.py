@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from enum import Enum
-from typing import Any, Type, Dict, List
+from typing import Any, Type, Dict, List, Iterator
 import datetime as dt
 
 import base64
@@ -55,7 +55,9 @@ class StringSerializer:
             raise RuntimeError(f"Invalid dataset or its token {dataset}. Valid token types are None, "
                                f"primitive types, enum or their iterables.")
 
-    def _serialize_key_token(self, data) -> str:
+    @staticmethod
+    def _serialize_key_token(data) -> str:
+        """Serialize key field to string token."""
 
         if data is None:
             # TODO (Roman): make different None and empty string
@@ -88,7 +90,9 @@ class StringSerializer:
 
         return StringValueParser.add_type_prefix(result, value_custom_type)
 
-    def _deserialize_key_token(self, data: str, custom_type: StringValueCustomType | None) -> Any:
+    @staticmethod
+    def _deserialize_key_token(data: str, custom_type: StringValueCustomType | None) -> Any:
+        """Deserialize key string token of custom type."""
 
         if custom_type is None:
             return data if data != '' else None
@@ -136,20 +140,54 @@ class StringSerializer:
 
         key_short_name = alias_dict[type_] if (type_ := data.get_key_type()) in alias_dict else type_.__name__
 
-        # TODO: consider to have separated cache dict for key types
+        # TODO (Roman): consider to have separated cache dict for key types
         type_dict[key_short_name] = type_
         type_token = StringValueParser.add_type_prefix(key_short_name, StringValueCustomType.key)
         return f"{type_token};{result}"
 
-    def _substitute_slots(self, tokens_iterator, type_=None):
+    # TODO (Roman): add errors with description for invalid keys
+    def _fill_key_slots(self, tokens_iterator: Iterator[str], type_: Type | None = None) -> Any:
+        """
+        Sequentially fill slots of key type_ with values from iterator. If type_ is None try to determine type from
+        tokens. Values should be in specific format and will be deserialized. Function is recursive for embedded keys.
 
-        result = {}
+        Embedded keys are defined by separated tokens in a specific format that contain the type of the embedded key.
+        Other tokens contain serialized field values.
 
+        Example:
+            KeyType.__slots__ = ("int_field", "str_field", "embedded_key_field", "other_str_field")
+            EmbeddedKeyType.__slots__ = ("int_field", "str_field")
+
+            tokens = ("::#key#KeyType", "::#int#1", "str1", "::#key#EmbeddedKeyType", "::#int#2", "str2", "str3")
+
+            Result:
+                KeyType(
+                    int_field = 1,
+                    str_field = "str1",
+                    EmbeddedKeyType(
+                        int_field = 2,
+                        str_field = "str2"
+                    ),
+                    other_str_field = "str3"
+                )
+        """
+
+        # contains slot values
+        slot_values: Dict[str, Any] = {}
+
+        # init slots iterator if type_ is specified
         slots_iterator = iter(type_.__slots__) if type_ else None
+
+        # reserve first slot from slots iterator
         slot = next(slots_iterator) if slots_iterator else None
 
+        # iterate over tokens using tokens iterator
         while token := next(tokens_iterator, None):
+
+            # parse token to value and custom type
             token, token_type = StringValueParser.parse(token)
+
+            # if token is key get type and fill embedded key slots recursively using the same iterator instance
             if token_type == StringValueCustomType.key:
                 current_type = type_dict.get(token)
 
@@ -159,23 +197,28 @@ class StringSerializer:
                         f"Ensure all serialized classes are included in package import settings."
                     )
 
-                key = self._substitute_slots(tokens_iterator, current_type)
+                key = self._fill_key_slots(tokens_iterator, current_type)
 
+                # slots_iterator - None, means the root key object, so return it, otherwise assign the associated slot
                 if slots_iterator is None:
                     return key
                 else:
-                    result[slot] = key
+                    slot_values[slot] = key
             else:
-                result[slot] = self._deserialize_key_token(token, token_type)
+                # deserialize token and assign the associated slot
+                slot_values[slot] = self._deserialize_key_token(token, token_type)
 
+            # reserve next slot for next token
             slot = next(slots_iterator, None)
 
+            # if the slots are over - break.
             if slot is None:
                 break
 
-        return type_(**result)
+        # construct final key object
+        return type_(**slot_values)
 
     def deserialize_key(self, data: str) -> KeyProtocol:
+        """Deserialize key object from string representation."""
 
-        slot_values = self._substitute_slots(iter(data.split(";")))
-        return slot_values
+        return self._fill_key_slots(iter(data.split(";")))

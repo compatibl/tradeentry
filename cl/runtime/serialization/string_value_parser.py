@@ -105,7 +105,7 @@ class StringValueParser:
 
     @staticmethod
     def get_custom_type(value: Any) -> StringValueCustomType | None:
-
+        """Determine custom_type of value."""
         if value.__class__.__name__ == 'date':
             return StringValueCustomType.date
         elif value.__class__.__name__ == 'datetime':
