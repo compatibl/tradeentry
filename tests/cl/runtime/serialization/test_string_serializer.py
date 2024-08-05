@@ -50,14 +50,16 @@ def test_key_serialization():
     for sample_type in sample_types:
         obj_1 = sample_type()
         obj_1_key = obj_1.get_key()
-        serialized_1 = key_serializer.serialize_key(obj_1)
-        serialized_2 = key_serializer.serialize_key(obj_1_key)
+        serialized_1 = key_serializer.serialize_key(obj_1, add_type_prefix=True)
+        serialized_2 = key_serializer.serialize_key(obj_1_key, add_type_prefix=True)
+        serialized_3 = key_serializer.serialize_key(obj_1, add_type_prefix=False)
 
         assert serialized_1 == serialized_2
 
         deserialized_key_1 = key_serializer.deserialize_key(serialized_1)
         deserialized_key_2 = key_serializer.deserialize_key(serialized_2)
-        assert obj_1_key == deserialized_key_1 == deserialized_key_2
+        deserialized_key_3 = key_serializer.deserialize_key(serialized_3, sample_type.get_key_type(None))
+        assert obj_1_key == deserialized_key_1 == deserialized_key_2 == deserialized_key_3
 
 
 if __name__ == "__main__":

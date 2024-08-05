@@ -17,6 +17,9 @@ from __future__ import annotations
 import dataclasses
 import inflection
 from cl.runtime import ClassInfo
+from cl.runtime.backend.core.ui_app_state import UiAppState
+from cl.runtime.backend.core.ui_app_state_key import UiAppStateKey
+from cl.runtime.backend.core.user_key import UserKey
 from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
@@ -123,7 +126,14 @@ class RecordResponse(BaseModel):
         # load record from storage
         data_source = current_or_default_data_source()
         key_serializer = StringSerializer()
-        record = data_source.load_one(key_serializer.deserialize_key(request.key, record_type))
+
+        # TODO (Roman): UiAppState record request from FE should have key in proper format where user is embedded key
+        if record_type == UiAppState and request.key == "root":
+            deserialized_key = UiAppStateKey(user=UserKey(username="root"))
+        else:
+            deserialized_key = key_serializer.deserialize_key(request.key, record_type.get_key_type(None))
+
+        record = data_source.load_one(deserialized_key)
 
         # Convert to standard dictionary format
         # TODO: Optimize speed using dacite or similar library

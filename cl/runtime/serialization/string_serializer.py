@@ -19,6 +19,7 @@ import base64
 from uuid import UUID
 
 from cl.runtime.records.protocols import KeyProtocol
+from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.string_value_parser import StringValueParser, StringValueCustomType
 from cl.runtime.storage.data_source_types import TDataset
 
@@ -127,23 +128,26 @@ class StringSerializer:
         else:
             return data
 
-    def serialize_key(self, data):
+    def serialize_key(self, data, add_type_prefix: bool = False):
         """Serialize key to string, flattening for composite keys."""
 
         key_slots = data.get_key_type().__slots__
         result = ";".join(
             self._serialize_key_token(v)  # TODO: Apply rules depending on the specific primitive type
             if (v := getattr(data, k)).__class__.__name__ in primitive_type_names or isinstance(v, Enum)
-            else self.serialize_key(v)
+            else self.serialize_key(v, add_type_prefix=True)
             for k in key_slots
         )
 
-        key_short_name = alias_dict[type_] if (type_ := data.get_key_type()) in alias_dict else type_.__name__
+        if add_type_prefix:
+            key_short_name = alias_dict[type_] if (type_ := data.get_key_type()) in alias_dict else type_.__name__
 
-        # TODO (Roman): consider to have separated cache dict for key types
-        type_dict[key_short_name] = type_
-        type_token = StringValueParser.add_type_prefix(key_short_name, StringValueCustomType.key)
-        return f"{type_token};{result}"
+            # TODO (Roman): consider to have separated cache dict for key types
+            type_dict[key_short_name] = type_
+            type_token = StringValueParser.add_type_prefix(key_short_name, StringValueCustomType.key)
+            result = f"{type_token};{result}"
+
+        return result
 
     # TODO (Roman): add errors with description for invalid keys
     def _fill_key_slots(self, tokens_iterator: Iterator[str], type_: Type | None = None) -> Any:
@@ -189,7 +193,9 @@ class StringSerializer:
 
             # if token is key get type and fill embedded key slots recursively using the same iterator instance
             if token_type == StringValueCustomType.key:
-                current_type = type_dict.get(token)
+
+                # TODO (Roman): verify proper way to get type in serialization.
+                current_type = Schema.get_type_by_short_name(token)
 
                 if current_type is None:
                     raise RuntimeError(
@@ -218,7 +224,7 @@ class StringSerializer:
         # construct final key object
         return type_(**slot_values)
 
-    def deserialize_key(self, data: str) -> KeyProtocol:
+    def deserialize_key(self, data: str, type_: Type | None = None) -> KeyProtocol:
         """Deserialize key object from string representation."""
 
-        return self._fill_key_slots(iter(data.split(";")))
+        return self._fill_key_slots(iter(data.split(";")), type_)
