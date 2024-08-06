@@ -101,7 +101,7 @@ class RecordResponse(BaseModel):
     schema_: RecordResponseSchema = Field(..., alias="schema")
     """Schema field of the response data type for the /storage/record route."""
 
-    data: RecordResponseData
+    data: RecordResponseData | None
     """Data field of the response data type for the /storage/record route."""
 
     @staticmethod
@@ -128,8 +128,8 @@ class RecordResponse(BaseModel):
         key_serializer = StringSerializer()
 
         # TODO (Roman): UiAppState record request from FE should have key in proper format where user is embedded key
-        if record_type == UiAppState and request.key == "root":
-            deserialized_key = UiAppStateKey(user=UserKey(username="root"))
+        if record_type == UiAppState:
+            deserialized_key = UiAppStateKey(user=UserKey(username=request.key))
         else:
             deserialized_key = key_serializer.deserialize_key(request.key, record_type.get_key_type(None))
 
