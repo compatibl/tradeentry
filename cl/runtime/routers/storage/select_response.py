@@ -57,7 +57,7 @@ class SelectResponse(BaseModel):
 
         data_source = current_or_default_data_source()
 
-        # TODO: replace temporary load_all to load_by_query
+        # TODO (Roman): replace temporary load_all to load_by_query
         if not hasattr(data_source, 'load_all'):
             raise RuntimeError(
                 f"Currently data source need to implement load_all() method for select records by type. "
