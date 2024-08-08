@@ -34,6 +34,7 @@ from typing import Dict
 from typing import List
 
 from cl.runtime.serialization.string_serializer import StringSerializer
+from cl.runtime.serialization.ui_dict_serializer import UiDictSerializer
 
 RecordResponseSchema = Dict[str, Any]
 RecordResponseData = Dict[str, Any]
@@ -135,12 +136,11 @@ class RecordResponse(BaseModel):
 
         record = data_source.load_one(deserialized_key)
 
-        # Convert to standard dictionary format
         # TODO: Optimize speed using dacite or similar library
-        record_dict = to_record_dict(record)
 
-        # Apply legacy dict conventions
-        record_dict_in_legacy_format = to_legacy_dict(record_dict)
+        ui_serializer = UiDictSerializer(pascalize_keys=True)
+        # serialize record to ui format
+        record_dict_in_legacy_format = ui_serializer.serialize_data(record)
 
         # TODO: Update to return record_dict after legacy dict format is removed
         return RecordResponse(schema=type_decl_dict, data=record_dict_in_legacy_format)
