@@ -91,7 +91,7 @@ class DictSerializer:
     primitive_type_names = ["NoneType", "str", "float", "int", "bool", "date", "time", "datetime", "bytes", "UUID"]
     """Detect primitive type by checking if class name is in this list."""
     
-    def serialize_data(self, data):  # TODO: Check if None should be supported
+    def serialize_data(self, data, select_fields: List[str] | None = None):  # TODO: Check if None should be supported
         """Serialize to dictionary containing primitive types, dictionaries, or iterables."""
 
         if getattr(data, "__slots__", None) is not None:
@@ -107,7 +107,7 @@ class DictSerializer:
                 if v.__class__.__name__ in self.primitive_type_names
                 else self.serialize_data(v)
                 for k in all_slots
-                if (v := getattr(data, k)) is not None
+                if (not select_fields or k in select_fields) and (v := getattr(data, k)) is not None
             }
             # To find short name, use 'in' which is faster than 'get' when most types do not have aliases
             short_name = alias_dict[type_] if (type_ := data.__class__) in alias_dict else type_.__name__

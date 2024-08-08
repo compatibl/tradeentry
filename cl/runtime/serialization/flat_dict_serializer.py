@@ -15,6 +15,7 @@ import base64
 import json
 from dataclasses import dataclass
 from enum import IntEnum, Enum
+from typing import List
 from uuid import UUID
 
 from cl.runtime.serialization.dict_serializer import DictSerializer
@@ -32,7 +33,7 @@ class FlatDictSerializer(DictSerializer):
 
     primitive_type_names = ["NoneType", "float", "int"]
 
-    def serialize_data(self, data, is_root: bool = False):
+    def serialize_data(self, data, select_fields: List[str] | None = None, *, is_root: bool = False):
 
         if isinstance(data, str):
             return data
@@ -55,11 +56,11 @@ class FlatDictSerializer(DictSerializer):
             else:
                 # TODO (Roman): refactor to avoid nested data json dumps.
                 #  It is enough to do single json dump for the entire object.
-                result = json.dumps(super().serialize_data(data))
+                result = json.dumps(super().serialize_data(data, select_fields))
 
             result = StringValueParser.add_type_prefix(result, value_custom_type)
         else:
-            result = super().serialize_data(data)
+            result = super().serialize_data(data, select_fields)
 
         return result
 
