@@ -18,43 +18,10 @@ from enum import IntEnum, Enum
 from uuid import UUID
 
 from cl.runtime.serialization.dict_serializer import DictSerializer
+from cl.runtime.serialization.string_value_parser import StringValueCustomType, StringValueParser
 from cl.runtime.storage.data_source_types import TDataDict
 import re
 import datetime as dt
-
-
-class FlattenedValueType(IntEnum):
-    """Flat-serialized value type."""
-
-    data = 0
-    """Data type."""
-
-    dict = 1
-    """Dict type."""
-
-    list = 2
-    """Vector type."""
-
-    date = 3
-    """Date type."""
-
-    datetime = 4
-    """Datetime type."""
-
-    time = 5
-    """Time type."""
-
-    bool = 6
-    """Bool type."""
-
-    uuid = 7
-    """UUID type."""
-
-    enum = 8
-    """Enum type."""
-
-    bytes = 9
-    """Binary type."""
 
 
 class FlatDictSerializer(DictSerializer):
@@ -65,80 +32,32 @@ class FlatDictSerializer(DictSerializer):
 
     primitive_type_names = ["NoneType", "float", "int"]
 
-    @staticmethod
-    def _add_flattened_type(flattened_value: str, flattened_type: FlattenedValueType) -> str:
-        """Add prefix to flattened_value created from flattened_type."""
-        flattened_type_prefix = f'::#{flattened_type.name}#'
-        return flattened_type_prefix + flattened_value
-
-    @staticmethod
-    def _remove_flattened_type(serialized_str_value: str) -> (str, FlattenedValueType | None):
-        """
-        Check if value contains flattened type prefix and parse it to tuple of unprefixed value and flattened type.
-        If value does not contain flattened type prefix will be returned (serialized_str_value, None).
-        """
-
-        # check if value contains flattened type value using regex
-        flattened_value_pattern = re.compile('::#(?P<type>.*?)#.*')
-        flattened_value_match = flattened_value_pattern.match(serialized_str_value)
-
-        if flattened_value_match:
-            # get flattened type name according to pattern
-            flattened_type = flattened_value_match.group('type')
-
-            # remove flattened type prefix from value
-            flattened_value = serialized_str_value.removeprefix(f'::#{flattened_type}#')
-
-            flattened_type = FlattenedValueType[flattened_type]
-            return flattened_value, flattened_type
-        else:
-            # return unmodified value and flattened type None
-            return serialized_str_value, None
-
     def serialize_data(self, data, is_root: bool = False):
-
-        flattened_value_type: FlattenedValueType | None = None
 
         if isinstance(data, str):
             return data
-        elif hasattr(data, '__slots__'):
-            flattened_value_type = FlattenedValueType.data
-        elif isinstance(data, dict):
-            flattened_value_type = FlattenedValueType.dict
-        elif isinstance(data, Enum):
-            flattened_value_type = FlattenedValueType.enum
-        elif data.__class__.__name__ == 'date':
-            flattened_value_type = FlattenedValueType.date
-        elif data.__class__.__name__ == 'datetime':
-            flattened_value_type = FlattenedValueType.datetime
-        elif data.__class__.__name__ == 'time':
-            flattened_value_type = FlattenedValueType.time
-        elif data.__class__.__name__ == 'bool':
-            flattened_value_type = FlattenedValueType.bool
-        elif data.__class__.__name__ == 'UUID':
-            flattened_value_type = FlattenedValueType.uuid
-        elif data.__class__.__name__ == 'bytes':
-            flattened_value_type = FlattenedValueType.bytes
-        elif hasattr(data, '__iter__'):
-            flattened_value_type = FlattenedValueType.list
 
-        if not is_root and flattened_value_type is not None:
+        value_custom_type = StringValueParser.get_custom_type(data)
 
-            if flattened_value_type in [FlattenedValueType.date, FlattenedValueType.datetime, FlattenedValueType.time]:
+        if not is_root and value_custom_type is not None:
+
+            if value_custom_type in [
+                StringValueCustomType.date, StringValueCustomType.datetime, StringValueCustomType.time
+            ]:
                 result = data.isoformat()
-            elif flattened_value_type == FlattenedValueType.bool:
+            elif value_custom_type == StringValueCustomType.bool:
                 # TODO (Roman): think about a more efficient way to store bool
                 result = '1' if data else '0'
-            elif flattened_value_type == FlattenedValueType.uuid:
+            elif value_custom_type == StringValueCustomType.uuid:
                 result = base64.b64encode(data.bytes).decode()
-            elif flattened_value_type == FlattenedValueType.bytes:
+            elif value_custom_type == StringValueCustomType.bytes:
                 result = base64.b64encode(data).decode()
             else:
                 # TODO (Roman): refactor to avoid nested data json dumps.
                 #  It is enough to do single json dump for the entire object.
                 result = json.dumps(super().serialize_data(data))
 
-            result = self._add_flattened_type(result, flattened_value_type)
+            result = StringValueParser.add_type_prefix(result, value_custom_type)
         else:
             result = super().serialize_data(data)
 
@@ -148,20 +67,20 @@ class FlatDictSerializer(DictSerializer):
 
         # check all str values if it is flattened from some type
         if isinstance(data, str):
-            converted_data, flattened_type = self._remove_flattened_type(data)
+            converted_data, custom_type = StringValueParser.parse(data)
 
-            if flattened_type is not None:
-                if flattened_type == FlattenedValueType.date:
+            if custom_type is not None:
+                if custom_type == StringValueCustomType.date:
                     converted_data = dt.date.fromisoformat(converted_data)
-                elif flattened_type == FlattenedValueType.datetime:
+                elif custom_type == StringValueCustomType.datetime:
                     converted_data = dt.datetime.fromisoformat(converted_data)
-                elif flattened_type == FlattenedValueType.time:
+                elif custom_type == StringValueCustomType.time:
                     converted_data = dt.time.fromisoformat(converted_data)
-                elif flattened_type == FlattenedValueType.bool:
+                elif custom_type == StringValueCustomType.bool:
                     converted_data = True if converted_data == '1' else False
-                elif flattened_type == FlattenedValueType.uuid:
+                elif custom_type == StringValueCustomType.uuid:
                     converted_data = UUID(bytes=base64.b64decode(converted_data.encode()))
-                elif flattened_type == FlattenedValueType.bytes:
+                elif custom_type == StringValueCustomType.bytes:
                     converted_data = base64.b64decode(converted_data.encode())
                 else:
                     converted_data = json.loads(converted_data)
