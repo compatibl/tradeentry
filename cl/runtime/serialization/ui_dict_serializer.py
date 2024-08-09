@@ -73,7 +73,7 @@ class UiDictSerializer(DictSerializer):
             )
         ]
 
-        table_record = {}
+        table_record = super().serialize_data(data, select_fields=table_slots)
         table_record["_t"] = data.__class__.__name__
         table_record["_key"] = key_serializer.serialize_key(data.get_key())
 
