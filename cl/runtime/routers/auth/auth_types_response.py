@@ -35,12 +35,5 @@ class AuthTypesResponseItem(BaseModel):
     def get_types(request: UserRequest) -> List[AuthTypesResponseItem]:
         """Implements /auth/types route."""
 
-        results = []
-        type_response = AuthTypesResponseItem(
-            id="Default",
-            name="Default",
-            type="None",
-        )
-        results.append(type_response)
-
-        return results
+        # Do not perform authentication in the open source version
+        return []
