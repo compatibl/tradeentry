@@ -18,7 +18,7 @@ from cl.runtime.records.protocols import KeyProtocol, RecordProtocol
 from cl.runtime.storage.data_source_types import TDataset, TIdentity, TQuery
 
 
-class SqlDataSource(DataSource):
+class SqliteDataSource(DataSource):
     def batch_size(self) -> int:
         pass
 
