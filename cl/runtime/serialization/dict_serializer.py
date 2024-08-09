@@ -92,7 +92,13 @@ class DictSerializer:
     """Detect primitive type by checking if class name is in this list."""
     
     def serialize_data(self, data, select_fields: List[str] | None = None):  # TODO: Check if None should be supported
-        """Serialize to dictionary containing primitive types, dictionaries, or iterables."""
+        """
+        Serialize to dictionary containing primitive types, dictionaries, or iterables.
+
+        Args:
+            data: Object to serialize
+            select_fields: Fields of data object which will be used for serialization. If None - use all fields.
+        """
 
         if getattr(data, "__slots__", None) is not None:
             # Slots class, serialize as dictionary

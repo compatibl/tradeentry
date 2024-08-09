@@ -22,6 +22,7 @@ from cl.runtime.serialization.string_serializer import StringSerializer
 
 
 class UiDictSerializer(DictSerializer):
+    """Serialization for slot-based classes to ui format dict (legacy format)."""
 
     def serialize_data(self, data, select_fields: List[str] | None = None):
         # TODO (Roman): make serialization format deserializable
@@ -58,23 +59,33 @@ class UiDictSerializer(DictSerializer):
         else:
             return super().serialize_data(data, select_fields)
 
-    def serialize_data_for_table(self, data: RecordProtocol) -> Dict[str, Any]:
+    def serialize_record_for_table(self, record: RecordProtocol) -> Dict[str, Any]:
+        """
+        Serialize record to ui table format.
+        Contains only fields of supported types, _key and _t will be added based on record.
+        """
 
         key_serializer = StringSerializer()
-        all_slots = _get_class_hierarchy_slots(data.__class__)
+        all_slots = _get_class_hierarchy_slots(record.__class__)
 
+        # get subset of slots which supported in table format
         table_slots = [
             slot for slot in all_slots
-            if (slot_v := getattr(data, slot))
+            if (slot_v := getattr(record, slot))
             and (
+                # TODO (Roman): check other types for table format
+                # select fields if it is primitive, key or enum
                 slot_v.__class__.__name__ in self.primitive_type_names
                 or is_key(slot_v)
                 or isinstance(slot_v, Enum)
             )
         ]
 
-        table_record = super().serialize_data(data, select_fields=table_slots)
-        table_record["_t"] = data.__class__.__name__
-        table_record["_key"] = key_serializer.serialize_key(data.get_key())
+        # serialize record to ui format using table_slots
+        table_record: Dict[str, Any] = self.serialize_data(record, select_fields=table_slots)
+
+        # add _t and _key attributes
+        table_record["_t"] = record.__class__.__name__
+        table_record["_key"] = key_serializer.serialize_key(record.get_key())
 
         return table_record

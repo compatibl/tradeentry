@@ -70,23 +70,9 @@ class SelectResponse(BaseModel):
 
         # TODO: Refactor the code below
 
-        # # Convert to semicolon-delimited primary key fields, omitting the first token (table)
-        # data_serializer = DictSerializer(pascalize_keys=True)
-        # key_serializer = StringSerializer()
-        # serialized_keys_and_records = [
-        #     (key_serializer.serialize_key(x), data_serializer.serialize_data(x), type(x).__name__) for x in records
-        # ]
-        #
-        # # Add _t and _key fields
-        # [
-        #     record.update({"_t": real_type, "_key": key, "User": "root"})
-        #     for key, record, real_type in serialized_keys_and_records
-        # ]
-        # [record.pop("_type") for key, record, _ in serialized_keys_and_records]
-
         ui_serializer = UiDictSerializer(pascalize_keys=True)
 
         # TODO (Roman): check if we are calling /select somewhere other than the main grid.
-        serialized_records = tuple(ui_serializer.serialize_data_for_table(record) for record in records)
+        serialized_records = tuple(ui_serializer.serialize_record_for_table(record) for record in records)
 
         return SelectResponse(schema=type_decl_dict, data=serialized_records).dict(by_alias=True)
