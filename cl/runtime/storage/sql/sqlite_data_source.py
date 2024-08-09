@@ -59,12 +59,12 @@ class SqliteDataSource(DataSource):
         pass
 
     def load_one(self, record_or_key: KeyProtocol | None, *, dataset: TDataset = None,
-                 identities: Iterable[TIdentity] | None = None) -> RecordProtocol | None:
-        return next(iter(self.load_many([record_or_key], dataset=dataset, identities=identities)))
+                 identity: TIdentity | None = None) -> RecordProtocol | None:
+        return next(iter(self.load_many([record_or_key], dataset=dataset, identity=identity)))
 
     # TODO (Roman): maybe return mapping {key: record} in load_many
     def load_many(self, records_or_keys: Iterable[KeyProtocol | None] | None, *, dataset: TDataset = None,
-                  identities: Iterable[TIdentity] | None = None) -> Iterable[RecordProtocol | None] | None:
+                  identity: TIdentity | None = None) -> Iterable[RecordProtocol | None] | None:
 
         serializer = FlatDictSerializer()
         key_serializer = StringSerializer()
@@ -73,11 +73,19 @@ class SqliteDataSource(DataSource):
         # itertools.groupby works just like that and does not violate the order.
 
         # group by key type and then by it is key or record. if not keys - return themselves.
-        for key_type, records_or_keys_group in groupby(records_or_keys, lambda x: x.get_key_type()):
+        for key_type, records_or_keys_group in groupby(records_or_keys, lambda x: x.get_key_type() if x else None):
+
+            # handle None records_or_keys
+            if key_type is None:
+                yield from records_or_keys_group
+                continue
+
             for is_key_group, keys in groupby(records_or_keys_group, lambda x: is_key(x)):
 
+                # return directly if input is record
                 if not is_key_group:
                     yield from keys
+                    continue
 
                 serialized_keys = tuple(key_serializer.serialize_key(key) for key in keys)
 

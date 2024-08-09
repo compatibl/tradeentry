@@ -31,6 +31,9 @@ def test_smoke():
         DataSource.default().save_many([record], dataset=dataset)
         loaded_records = StubDataclassRecord.load_many([record, key, None], context=context, dataset=dataset)
 
+        # load_many can return not subscriptable but iterable
+        loaded_records = list(loaded_records)
+
         assert loaded_records[0] == record
         assert loaded_records[1] == record
         assert loaded_records[2] is None
