@@ -56,6 +56,15 @@ class UiDictSerializer(DictSerializer):
                 serialized_dict_items.append({"key": k, "value": {value_type: v}})
 
             return serialized_dict_items
+        elif getattr(data, "__slots__", None) is not None:
+            serialized_data = super().serialize_data(data, select_fields)
+
+            # replace "_type" with "_t"
+            if "_type" in serialized_data:
+                serialized_data["_t"] = data.__class__.__name__
+                del serialized_data["_type"]
+
+            return serialized_data
         else:
             return super().serialize_data(data, select_fields)
 
@@ -84,8 +93,12 @@ class UiDictSerializer(DictSerializer):
         # serialize record to ui format using table_slots
         table_record: Dict[str, Any] = self.serialize_data(record, select_fields=table_slots)
 
-        # add _t and _key attributes
-        table_record["_t"] = record.__class__.__name__
+        # replace "_type" with "_t"
+        if "_type" in table_record:
+            table_record["_t"] = record.__class__.__name__
+            del table_record["_type"]
+
+        # add "_key"
         table_record["_key"] = key_serializer.serialize_key(record.get_key())
 
         return table_record
