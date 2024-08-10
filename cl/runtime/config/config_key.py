@@ -12,17 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import uvicorn
+from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.records.key_mixin import KeyMixin
+from dataclasses import dataclass
+from typing import Type
 
-from cl.runtime.backend.config import api_host_name, api_port
-from cl.runtime.routers.server import app
-from stubs.cl.runtime.config.stub_runtime_config import StubRuntimeConfig
 
-if __name__ == "__main__":
+@dataclass(slots=True, kw_only=True)
+class ConfigKey(KeyMixin):
+    """Performs configuration using parameters specified in this record."""
 
-    # TODO: Temporary workaround before full configuration workflow is supported
-    config = StubRuntimeConfig()
-    config.config_id = "Stub Runtime Config"
-    config.configure()
+    config_id: str = missing()
+    """Unique configuration identifier."""
 
-    uvicorn.run(app, host=api_host_name, port=api_port)
+    def get_key_type(self) -> Type:
+        return ConfigKey

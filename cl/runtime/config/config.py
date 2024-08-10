@@ -12,17 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import uvicorn
+from abc import ABC, abstractmethod
 
-from cl.runtime.backend.config import api_host_name, api_port
-from cl.runtime.routers.server import app
-from stubs.cl.runtime.config.stub_runtime_config import StubRuntimeConfig
+from cl.runtime import RecordMixin
+from cl.runtime.config.config_key import ConfigKey
+from dataclasses import dataclass
 
-if __name__ == "__main__":
 
-    # TODO: Temporary workaround before full configuration workflow is supported
-    config = StubRuntimeConfig()
-    config.config_id = "Stub Runtime Config"
-    config.configure()
+@dataclass(slots=True, kw_only=True)
+class Config(ConfigKey, RecordMixin[ConfigKey], ABC):
+    """Performs configuration using parameters specified in this record."""
 
-    uvicorn.run(app, host=api_host_name, port=api_port)
+    def get_key(self) -> ConfigKey:
+        return ConfigKey(config_id=self.config_id)
+
+    @abstractmethod
+    def configure(self) -> None:
+        """Perform configuration using parameters specified in this record."""
