@@ -17,19 +17,23 @@ from __future__ import annotations
 import importlib
 import inspect
 from cl.runtime import ClassInfo
-from cl.runtime.records.protocols import KeyProtocol, is_key, RecordProtocol
+from cl.runtime.records.protocols import KeyProtocol
+from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.records.protocols import is_key
 from cl.runtime.schema.type_decl import TypeDecl
 from cl.runtime.schema.type_decl import pascalize
 from cl.runtime.schema.type_decl_key import TypeDeclKey
-from collections import Counter, defaultdict
+from collections import Counter
+from collections import defaultdict
 from enum import Enum
 from memoization import cached
 from pkgutil import walk_packages
 from types import ModuleType
-from typing import Dict, cast
+from typing import Dict
 from typing import Iterable
 from typing import List
 from typing import Type
+from typing import cast
 from typing_extensions import Self
 
 
@@ -216,10 +220,10 @@ class Schema:
         Include all base and child classes ordered by hierarchy.
         """
 
-        get_key_type = getattr(record_type, 'get_key_type', None)
+        get_key_type = getattr(record_type, "get_key_type", None)
 
         if get_key_type is None:
-            raise RuntimeError(f'Type {record_type} is not record type.')
+            raise RuntimeError(f"Type {record_type} is not record type.")
 
         # get key type
         # TODO (Roman): review get_key_type method of KeyProtocol. maybe it can be staticmethod or classmethod?
@@ -229,13 +233,12 @@ class Schema:
         types_ = defaultdict(list)
 
         for type_ in cls.get_types():
-
             # TODO (Roman): should not skip if input type is not key
             if type_ == record_type:
                 # skip start type
                 continue
 
-            type_get_key_type = getattr(type_, 'get_key_type', None)
+            type_get_key_type = getattr(type_, "get_key_type", None)
             if type_get_key_type is None:
                 # skip non-record types
                 continue

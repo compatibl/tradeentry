@@ -13,17 +13,17 @@
 # limitations under the License.
 
 import sys
-from collections import Counter
-
 from cl.runtime.serialization.sentinel_type import sentinel_value
 from cl.runtime.storage.data_source_types import TDataDict
+from collections import Counter
 from dataclasses import dataclass
 from enum import Enum
 from inflection import camelize
-from typing import Dict, Tuple, cast
-from typing import Dict, List
+from typing import Dict
+from typing import List
+from typing import Tuple
 from typing import Type
-
+from typing import cast
 
 # TODO: Initialize from settings
 alias_dict: Dict[Type, str] = dict()
@@ -50,14 +50,14 @@ def _get_class_hierarchy_slots(data_type) -> Tuple[str]:
         if collect_slots:
             # For v3.11 and later, __slots__ includes fields for this class only, use MRO to collect base class slots
             # Exclude None or empty __slots__ (both are falsy)
-            slots_list = [slots for base in reversed(data_type.__mro__) if (slots := getattr(base, '__slots__', None))]
+            slots_list = [slots for base in reversed(data_type.__mro__) if (slots := getattr(base, "__slots__", None))]
         else:
             # Otherwise get slots from this type only
             # Exclude None or empty __slots__ (both are falsy)
-            slots_list = [slots if (slots := getattr(data_type, '__slots__', None)) else tuple()]
+            slots_list = [slots if (slots := getattr(data_type, "__slots__", None)) else tuple()]
 
         # Exclude empty tuples and convert slots specified as a single string into tuple of size one
-        slots_list = [(slots, ) if isinstance(slots, str) else slots for slots in slots_list]
+        slots_list = [(slots,) if isinstance(slots, str) else slots for slots in slots_list]
 
         # Flatten and convert to tuple, cast relies on elements of sublist being strings
         result = tuple(slot for sublist in slots_list for slot in sublist)
@@ -68,8 +68,9 @@ def _get_class_hierarchy_slots(data_type) -> Tuple[str]:
             counts = Counter(result)
             duplicates = [slot for slot, count in counts.items() if count > 1]
             duplicates_str = ", ".join(duplicates)
-            raise RuntimeError(f"Duplicate field names found in class hierarchy "
-                               f"for {data_type.__name__}: {duplicates_str}.")
+            raise RuntimeError(
+                f"Duplicate field names found in class hierarchy " f"for {data_type.__name__}: {duplicates_str}."
+            )
 
         class_hierarchy_slots_dict[data_type] = result
         return cast(Tuple[str], result)
@@ -85,7 +86,7 @@ class DictSerializer:
 
     primitive_type_names = ["NoneType", "str", "float", "int", "bool", "date", "time", "datetime", "bytes", "UUID"]
     """Detect primitive type by checking if class name is in this list."""
-    
+
     def serialize_data(self, data, select_fields: List[str] | None = None):  # TODO: Check if None should be supported
         """
         Serialize to dictionary containing primitive types, dictionaries, or iterables.
@@ -136,7 +137,9 @@ class DictSerializer:
                 return data
             else:
                 # Serialize each element of the iterable
-                return [v if v.__class__.__name__ in self.primitive_type_names else self.serialize_data(v) for v in data]
+                return [
+                    v if v.__class__.__name__ in self.primitive_type_names else self.serialize_data(v) for v in data
+                ]
         elif isinstance(data, Enum):
             # Serialize enum as a dict using enum class short name and item name (rather than item value)
             # To find short name, use 'in' which is faster than 'get' when most types do not have aliases

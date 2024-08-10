@@ -50,8 +50,5 @@ class TypeHierarchyResponseItem(BaseModel):
         if not inspect.isabstract(base_type):
             all_type_names.append(base_type_name)
 
-        result = [
-            TypeHierarchyResponseItem(name=type_name, label=titleize(type_name))
-            for type_name in all_type_names
-        ]
+        result = [TypeHierarchyResponseItem(name=type_name, label=titleize(type_name)) for type_name in all_type_names]
         return result

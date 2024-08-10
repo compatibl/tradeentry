@@ -12,13 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import sqlite3
-from dataclasses import dataclass, field
-from typing import Type, List, Tuple, Dict, Any, Iterable, Set
-
+from cl.runtime.schema.schema import Schema
+from dataclasses import dataclass
+from dataclasses import field
 from inflection import camelize
 from memoization import cached
-
-from cl.runtime.schema.schema import Schema
+from typing import Any
+from typing import Dict
+from typing import Iterable
+from typing import List
+from typing import Set
+from typing import Tuple
+from typing import Type
 
 
 @dataclass(slots=True, kw_only=True)
@@ -42,11 +47,11 @@ class SqliteSchemaManager:
         Mile wide table contains columns for all subtypes.
         """
 
-        if_not_exists_part: str = ' IF NOT EXISTS' if if_not_exists else ''
+        if_not_exists_part: str = " IF NOT EXISTS" if if_not_exists else ""
         columns_str: str = '"' + '", "'.join(columns) + '"'
 
         # construct final create table statement
-        create_table_statement: str = f'CREATE TABLE{if_not_exists_part} {table_name} ({columns_str});'
+        create_table_statement: str = f"CREATE TABLE{if_not_exists_part} {table_name} ({columns_str});"
 
         # execute create table statement
         cursor = self.sqlite_connection.cursor()
@@ -60,7 +65,7 @@ class SqliteSchemaManager:
     def delete_table_by_name(self, name: str, if_exists: bool = True) -> None:
         """Delete table in db."""
         cursor = self.sqlite_connection.cursor()
-        if_exists_part: str = ' IF EXISTS' if if_exists else ''
+        if_exists_part: str = " IF EXISTS" if if_exists else ""
         cursor.execute(f"DROP TABLE {if_exists_part} '{name}';")
         self.sqlite_connection.commit()
 
@@ -69,7 +74,7 @@ class SqliteSchemaManager:
         key_type = self._get_key_type(type_)
 
         # return table name as key type name without 'Key' suffix
-        return key_type.__name__.removesuffix('Key')
+        return key_type.__name__.removesuffix("Key")
 
     def existing_tables(self) -> List[str]:
         """Return existing tables in db."""
@@ -81,9 +86,9 @@ class SqliteSchemaManager:
 
     def _get_key_type(self, type_: Type) -> Type:
         """Get key type for the given type."""
-        get_key_type = getattr(type_, 'get_key_type', None)
+        get_key_type = getattr(type_, "get_key_type", None)
         if get_key_type is None:
-            raise RuntimeError(f'Type {type_} is not record type.')
+            raise RuntimeError(f"Type {type_} is not record type.")
 
         # get key attributes
         return get_key_type(None)
@@ -105,12 +110,11 @@ class SqliteSchemaManager:
 
         # {field_name: (subclass_name, field_type)}
         all_fields: Dict[str, Tuple[str, Type]] = {
-            key_field_name: (key_fields_class_name, key_field_type) for key_field_name, key_field_type in
-            key_fields.items()
+            key_field_name: (key_fields_class_name, key_field_type)
+            for key_field_name, key_field_type in key_fields.items()
         }
 
         for type_ in types_in_hierarchy:
-
             fields = self._get_type_fields(type_).items()
             for field_name, field_type in fields:
                 existing_field = all_fields.get(field_name)
@@ -119,16 +123,13 @@ class SqliteSchemaManager:
                     # check if fields with the same name have compatible type
                     if not issubclass(field_type, existing_field[1]):
                         raise TypeError(
-                            f'Field {field_name}: {field_type} of class {type_.__name__} conflicts with the same field '
-                            f'{field_name}: {existing_field[1]} in base class {existing_field[0]}'
+                            f"Field {field_name}: {field_type} of class {type_.__name__} conflicts with the same field "
+                            f"{field_name}: {existing_field[1]} in base class {existing_field[0]}"
                         )
                 else:
                     all_fields[field_name] = (type_.__name__, field_type)
 
-        columns_mapping = {
-            "_type": "_type",
-            "_key": "_key"
-        }
+        columns_mapping = {"_type": "_type", "_key": "_key"}
 
         for field_name, (class_name, _) in all_fields.items():
             field_name = (
@@ -136,8 +137,8 @@ class SqliteSchemaManager:
             )
 
             column_name = (
-                (f'{class_name}.' if self.add_class_to_column_names and class_name is not None else '') + field_name
-            )
+                f"{class_name}." if self.add_class_to_column_names and class_name is not None else ""
+            ) + field_name
 
             columns_mapping[field_name] = column_name
 

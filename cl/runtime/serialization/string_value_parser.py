@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import re
-from enum import IntEnum, Enum
-from typing import Any
-
 from cl.runtime.records.protocols import is_key
+from enum import Enum
+from enum import IntEnum
+from typing import Any
 
 
 class StringValueCustomType(IntEnum):
@@ -71,7 +71,7 @@ class StringValueParser:
         if type_ is None:
             return value
 
-        type_prefix = f'::#{type_.name}#'
+        type_prefix = f"::#{type_.name}#"
         return type_prefix + value
 
     @staticmethod
@@ -87,15 +87,15 @@ class StringValueParser:
         """
 
         # check if value starts with type info prefix using regex
-        typed_value_pattern = re.compile('::#(?P<type>.*?)#.*')
+        typed_value_pattern = re.compile("::#(?P<type>.*?)#.*")
         typed_value_match = typed_value_pattern.match(value)
 
         if typed_value_match:
             # get custom type name according to pattern
-            value_custom_type = typed_value_match.group('type')
+            value_custom_type = typed_value_match.group("type")
 
             # remove type prefix from value
-            value_without_prefix = value.removeprefix(f'::#{value_custom_type}#')
+            value_without_prefix = value.removeprefix(f"::#{value_custom_type}#")
 
             value_custom_type = StringValueCustomType[value_custom_type]
             return value_without_prefix, value_custom_type
@@ -106,27 +106,27 @@ class StringValueParser:
     @staticmethod
     def get_custom_type(value: Any) -> StringValueCustomType | None:
         """Determine custom_type of value."""
-        if value.__class__.__name__ == 'date':
+        if value.__class__.__name__ == "date":
             return StringValueCustomType.date
-        elif value.__class__.__name__ == 'datetime':
+        elif value.__class__.__name__ == "datetime":
             return StringValueCustomType.datetime
-        elif value.__class__.__name__ == 'time':
+        elif value.__class__.__name__ == "time":
             return StringValueCustomType.time
-        elif value.__class__.__name__ == 'bool':
+        elif value.__class__.__name__ == "bool":
             return StringValueCustomType.bool
-        elif value.__class__.__name__ == 'int':
+        elif value.__class__.__name__ == "int":
             return StringValueCustomType.int
-        elif value.__class__.__name__ == 'float':
+        elif value.__class__.__name__ == "float":
             return StringValueCustomType.float
-        elif value.__class__.__name__ == 'UUID':
+        elif value.__class__.__name__ == "UUID":
             return StringValueCustomType.uuid
-        elif value.__class__.__name__ == 'bytes':
+        elif value.__class__.__name__ == "bytes":
             return StringValueCustomType.bytes
-        elif hasattr(value, '__iter__'):
+        elif hasattr(value, "__iter__"):
             return StringValueCustomType.list
         elif is_key(value):
             return StringValueCustomType.key
-        elif hasattr(value, '__slots__'):
+        elif hasattr(value, "__slots__"):
             return StringValueCustomType.data
         elif isinstance(value, dict):
             return StringValueCustomType.dict

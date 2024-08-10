@@ -24,7 +24,6 @@ def test_smoke():
     # TODO: Check that calling Context.current() here raises an error if called here
 
     with Context() as current_context_1:
-
         # Check that current context is set inside 'with Context(...)' clause
         assert Context.current() is current_context_1
 

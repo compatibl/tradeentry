@@ -12,11 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
-from typing import Dict
-
 from cl.runtime.serialization.sentinel_type import sentinel_value
 from cl.runtime.settings.settings import Settings
+from dataclasses import dataclass
+from typing import Dict
 
 _package_aliases_dict: Dict[str, str] = {}
 """Cached package aliases for faster lookup."""

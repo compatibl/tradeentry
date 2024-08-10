@@ -14,11 +14,11 @@
 
 from __future__ import annotations
 
-from typing import Protocol, ClassVar
 from cl.runtime.storage.data_source_types import TDataset
-from logging import Logger
-
 from cl.runtime.storage.protocols import DataSourceProtocol
+from logging import Logger
+from typing import ClassVar
+from typing import Protocol
 
 
 class ProgressProtocol(Protocol):

@@ -12,17 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import base64
+import datetime as dt
 import json
+import re
+from cl.runtime.serialization.dict_serializer import DictSerializer
+from cl.runtime.serialization.string_value_parser import StringValueCustomType
+from cl.runtime.serialization.string_value_parser import StringValueParser
+from cl.runtime.storage.data_source_types import TDataDict
 from dataclasses import dataclass
-from enum import IntEnum, Enum
+from enum import Enum
+from enum import IntEnum
 from typing import List
 from uuid import UUID
-
-from cl.runtime.serialization.dict_serializer import DictSerializer
-from cl.runtime.serialization.string_value_parser import StringValueCustomType, StringValueParser
-from cl.runtime.storage.data_source_types import TDataDict
-import re
-import datetime as dt
 
 
 class FlatDictSerializer(DictSerializer):
@@ -34,21 +35,21 @@ class FlatDictSerializer(DictSerializer):
     primitive_type_names = ["NoneType", "float", "int"]
 
     def serialize_data(self, data, select_fields: List[str] | None = None, *, is_root: bool = False):
-
         if isinstance(data, str):
             return data
 
         value_custom_type = StringValueParser.get_custom_type(data)
 
         if not is_root and value_custom_type is not None:
-
             if value_custom_type in [
-                StringValueCustomType.date, StringValueCustomType.datetime, StringValueCustomType.time
+                StringValueCustomType.date,
+                StringValueCustomType.datetime,
+                StringValueCustomType.time,
             ]:
                 result = data.isoformat()
             elif value_custom_type == StringValueCustomType.bool:
                 # TODO (Roman): think about a more efficient way to store bool
-                result = '1' if data else '0'
+                result = "1" if data else "0"
             elif value_custom_type == StringValueCustomType.uuid:
                 result = base64.b64encode(data.bytes).decode()
             elif value_custom_type == StringValueCustomType.bytes:
@@ -65,7 +66,6 @@ class FlatDictSerializer(DictSerializer):
         return result
 
     def deserialize_data(self, data: TDataDict):
-
         # check all str values if it is flattened from some type
         if isinstance(data, str):
             converted_data, custom_type = StringValueParser.parse(data)
@@ -78,7 +78,7 @@ class FlatDictSerializer(DictSerializer):
                 elif custom_type == StringValueCustomType.time:
                     converted_data = dt.time.fromisoformat(converted_data)
                 elif custom_type == StringValueCustomType.bool:
-                    converted_data = True if converted_data == '1' else False
+                    converted_data = True if converted_data == "1" else False
                 elif custom_type == StringValueCustomType.uuid:
                     converted_data = UUID(bytes=base64.b64decode(converted_data.encode()))
                 elif custom_type == StringValueCustomType.bytes:
@@ -88,7 +88,7 @@ class FlatDictSerializer(DictSerializer):
 
             # TODO (Roman): consider to add serialize_primitive() method and override it
             # return deserialized primitives to avoid infinity recursion
-            if converted_data.__class__.__name__ in ['str', 'date', 'datetime', 'time', 'bool', 'UUID', 'bytes']:
+            if converted_data.__class__.__name__ in ["str", "date", "datetime", "time", "bool", "UUID", "bytes"]:
                 return converted_data
         else:
             converted_data = data

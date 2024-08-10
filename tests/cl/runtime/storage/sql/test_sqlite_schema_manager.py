@@ -11,21 +11,24 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import sqlite3
-
 import pytest
-
+import sqlite3
 from cl.runtime.schema.schema import Schema
 from cl.runtime.storage.sql.sqlite_data_source import dict_factory
 from cl.runtime.storage.sql.sqlite_schema_manager import SqliteSchemaManager
-from stubs.cl.runtime import StubDataclassRecordKey, StubDataclassRecord, StubDataclassDerivedRecord, \
-    StubDataclassDerivedFromDerivedRecord, StubDataclassDictFields, StubDataclassListDictFields, \
-    StubDataclassDictListFields, StubDataclassListFields, StubDataclassOtherDerivedRecord
+from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
+from stubs.cl.runtime import StubDataclassDerivedRecord
+from stubs.cl.runtime import StubDataclassDictFields
+from stubs.cl.runtime import StubDataclassDictListFields
+from stubs.cl.runtime import StubDataclassListDictFields
+from stubs.cl.runtime import StubDataclassListFields
+from stubs.cl.runtime import StubDataclassOtherDerivedRecord
+from stubs.cl.runtime import StubDataclassRecord
+from stubs.cl.runtime import StubDataclassRecordKey
 
 
 # TODO (Roman): move to Schema tests
 def test_get_subtypes_in_hierarchy():
-
     types_in_hierarchy = Schema.get_types_in_hierarchy(StubDataclassRecordKey)
 
     expected_types = {
@@ -45,7 +48,6 @@ def test_get_subtypes_in_hierarchy():
 
 # TODO (Roman): move to Schema tests
 def test_get_key_class():
-
     test_subtypes = (
         StubDataclassRecord,
         StubDataclassDerivedRecord,
@@ -60,11 +62,10 @@ def test_get_key_class():
     expected_key_type = StubDataclassRecordKey
 
     for type_ in test_subtypes:
-        assert type_.get_key_type(None) == expected_key_type # noqa
+        assert type_.get_key_type(None) == expected_key_type  # noqa
 
 
 def test_get_columns_mapping():
-
     test_type = StubDataclassDerivedFromDerivedRecord
 
     expected_columns = {
@@ -102,5 +103,5 @@ def test_get_columns_mapping():
     assert expected_columns == resolved_columns
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

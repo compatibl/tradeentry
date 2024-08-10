@@ -11,14 +11,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from enum import Enum
-from typing import Any, List
-
-from typing_extensions import Dict
-
-from cl.runtime.records.protocols import is_key, RecordProtocol
-from cl.runtime.serialization.dict_serializer import DictSerializer, _get_class_hierarchy_slots
+from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.records.protocols import is_key
+from cl.runtime.serialization.dict_serializer import DictSerializer
+from cl.runtime.serialization.dict_serializer import _get_class_hierarchy_slots
 from cl.runtime.serialization.string_serializer import StringSerializer
+from enum import Enum
+from typing import Any
+from typing import List
+from typing_extensions import Dict
 
 
 class UiDictSerializer(DictSerializer):
@@ -35,7 +36,7 @@ class UiDictSerializer(DictSerializer):
         elif isinstance(data, Enum):
             # serialize enum as its name
             serialized_enum = super().serialize_data(data, select_fields)
-            return serialized_enum.get('_name')
+            return serialized_enum.get("_name")
         elif is_key(data):
             # serialize key as ';' delimited string
             return ";".join((getattr(data, slot) for slot in data.__slots__))
@@ -79,7 +80,8 @@ class UiDictSerializer(DictSerializer):
 
         # get subset of slots which supported in table format
         table_slots = [
-            slot for slot in all_slots
+            slot
+            for slot in all_slots
             if (slot_v := getattr(record, slot))
             and (
                 # TODO (Roman): check other types for table format

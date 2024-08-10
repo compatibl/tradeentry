@@ -27,14 +27,13 @@ from cl.runtime.routers.storage.record_request import RecordRequest
 from cl.runtime.schema.field_decl import primitive_types  # TODO: Move definition to a separate module
 from cl.runtime.schema.schema import Schema
 from cl.runtime.schema.type_decl import pascalize
+from cl.runtime.serialization.string_serializer import StringSerializer
+from cl.runtime.serialization.ui_dict_serializer import UiDictSerializer
 from pydantic import BaseModel
 from pydantic import Field
 from typing import Any
 from typing import Dict
 from typing import List
-
-from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.serialization.ui_dict_serializer import UiDictSerializer
 
 RecordResponseSchema = Dict[str, Any]
 RecordResponseData = Dict[str, Any]

@@ -12,18 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from pathlib import Path
-from fastapi import FastAPI
-from starlette.middleware.cors import CORSMiddleware
-from starlette.staticfiles import StaticFiles
-
-from cl.runtime.backend.config import api_host_name, api_port, api_host_ip
+from cl.runtime.backend.config import api_host_ip
+from cl.runtime.backend.config import api_host_name
+from cl.runtime.backend.config import api_port
 from cl.runtime.routers.auth import auth_router
 from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.health import health_router
 from cl.runtime.routers.schema import schema_router
 from cl.runtime.routers.storage import storage_router
-
+from fastapi import FastAPI
+from pathlib import Path
+from starlette.middleware.cors import CORSMiddleware
+from starlette.staticfiles import StaticFiles
 
 # Server
 app = FastAPI()
@@ -67,5 +67,4 @@ if ui_path is not None:
     print(f"Starting UI configuration in {ui_path}")
 else:
     locations_str = "\n".join("    " + str(location) for location in locations)
-    print(f"UI configuration not found, starting REST API only.\n"
-          f"Directories searched:\n{locations_str}")
+    print(f"UI configuration not found, starting REST API only.\n" f"Directories searched:\n{locations_str}")

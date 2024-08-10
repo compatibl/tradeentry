@@ -12,17 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import sqlite3
+from cl.runtime import DataSource
+from cl.runtime.records.protocols import KeyProtocol
+from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.records.protocols import is_key
+from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
+from cl.runtime.serialization.string_serializer import StringSerializer
+from cl.runtime.storage.data_source_types import TDataset
+from cl.runtime.storage.data_source_types import TIdentity
+from cl.runtime.storage.data_source_types import TQuery
+from cl.runtime.storage.sql.sqlite_schema_manager import SqliteSchemaManager
 from collections import defaultdict
 from dataclasses import dataclass
 from itertools import groupby
-from typing import Iterable, Type
-
-from cl.runtime import DataSource
-from cl.runtime.records.protocols import KeyProtocol, RecordProtocol, is_key
-from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
-from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.storage.data_source_types import TDataset, TIdentity, TQuery
-from cl.runtime.storage.sql.sqlite_schema_manager import SqliteSchemaManager
+from typing import Iterable
+from typing import Type
 
 
 def dict_factory(cursor, row):
@@ -35,7 +39,7 @@ def dict_factory(cursor, row):
 class SqliteDataSource(DataSource):
     """Sqlite data source without dataset and mile wide table for inheritance."""
 
-    db_name: str = ':memory:'
+    db_name: str = ":memory:"
     """Db name used to open sqlite connection."""
 
     _connection: sqlite3.Connection = None
@@ -51,21 +55,24 @@ class SqliteDataSource(DataSource):
         # Use setattr to initialize attributes in a frozen object
         object.__setattr__(self, "_connection", sqlite3.connect(self.db_name))
         self._connection.row_factory = dict_factory
-        object.__setattr__(
-            self, "_schema_manager", SqliteSchemaManager(sqlite_connection=self._connection)
-        )
+        object.__setattr__(self, "_schema_manager", SqliteSchemaManager(sqlite_connection=self._connection))
 
     def batch_size(self) -> int:
         pass
 
-    def load_one(self, record_or_key: KeyProtocol | None, *, dataset: TDataset = None,
-                 identity: TIdentity | None = None) -> RecordProtocol | None:
+    def load_one(
+        self, record_or_key: KeyProtocol | None, *, dataset: TDataset = None, identity: TIdentity | None = None
+    ) -> RecordProtocol | None:
         return next(iter(self.load_many([record_or_key], dataset=dataset, identity=identity)))
 
     # TODO (Roman): maybe return mapping {key: record} in load_many
-    def load_many(self, records_or_keys: Iterable[KeyProtocol | None] | None, *, dataset: TDataset = None,
-                  identity: TIdentity | None = None) -> Iterable[RecordProtocol | None] | None:
-
+    def load_many(
+        self,
+        records_or_keys: Iterable[KeyProtocol | None] | None,
+        *,
+        dataset: TDataset = None,
+        identity: TIdentity | None = None,
+    ) -> Iterable[RecordProtocol | None] | None:
         serializer = FlatDictSerializer()
         key_serializer = StringSerializer()
 
@@ -74,14 +81,12 @@ class SqliteDataSource(DataSource):
 
         # group by key type and then by it is key or record. if not keys - return themselves.
         for key_type, records_or_keys_group in groupby(records_or_keys, lambda x: x.get_key_type() if x else None):
-
             # handle None records_or_keys
             if key_type is None:
                 yield from records_or_keys_group
                 continue
 
             for is_key_group, keys in groupby(records_or_keys_group, lambda x: is_key(x)):
-
                 # return directly if input is record
                 if not is_key_group:
                     yield from keys
@@ -97,7 +102,7 @@ class SqliteDataSource(DataSource):
                     yield from (None for _ in range(len(serialized_keys)))
                     continue
 
-                value_placeholders = ", ".join(["?"]*len(serialized_keys))
+                value_placeholders = ", ".join(["?"] * len(serialized_keys))
                 sql_statement = f'SELECT * FROM "{table_name}" WHERE _key IN ({value_placeholders});'
 
                 cursor = self._connection.cursor()
@@ -109,8 +114,8 @@ class SqliteDataSource(DataSource):
                 # collect db result to dictionary to return it according to input keys order
                 result = {}
                 for data in cursor.fetchall():
-                    data_key = data['_key']
-                    del data['_key']
+                    data_key = data["_key"]
+                    del data["_key"]
                     # TODO (Roman): select only needed columns on db side.
                     data = {reversed_columns_mapping[k]: v for k, v in data.items() if v is not None}
                     result[data_key] = serializer.deserialize_data(data)
@@ -119,8 +124,9 @@ class SqliteDataSource(DataSource):
                 for serialized_key in serialized_keys:
                     yield result.get(serialized_key)
 
-    def load_by_query(self, query: TQuery, *, dataset: TDataset = None,
-                      identities: Iterable[TIdentity] | None = None) -> Iterable[RecordProtocol]:
+    def load_by_query(
+        self, query: TQuery, *, dataset: TDataset = None, identities: Iterable[TIdentity] | None = None
+    ) -> Iterable[RecordProtocol]:
         raise NotImplementedError
 
     def load_all(self, record_type: Type[RecordProtocol]) -> Iterable[RecordProtocol]:
@@ -146,7 +152,7 @@ class SqliteDataSource(DataSource):
         cursor.execute(sql_statement, subtype_names)
 
         for data in cursor.fetchall():
-            del data['_key']
+            del data["_key"]
             # TODO (Roman): select only needed columns on db side.
             data = {reversed_columns_mapping[k]: v for k, v in data.items() if v is not None}
             yield serializer.deserialize_data(data)
@@ -155,9 +161,8 @@ class SqliteDataSource(DataSource):
         return self.save_many([record], dataset=dataset, identity=identity)
 
     def save_many(
-            self, records: Iterable[RecordProtocol], *, dataset: TDataset = None, identity: TIdentity = None
+        self, records: Iterable[RecordProtocol], *, dataset: TDataset = None, identity: TIdentity = None
     ) -> None:
-
         serializer = FlatDictSerializer()
         key_serializer = StringSerializer()
 
@@ -168,7 +173,6 @@ class SqliteDataSource(DataSource):
             grouped_records[record.get_key_type()].append(record)
 
         for key_type, records_group in grouped_records.items():
-
             serialized_records = []
 
             for rec in records_group:
@@ -194,15 +198,19 @@ class SqliteDataSource(DataSource):
 
             self._schema_manager.create_table(table_name, columns_mapping.values(), if_not_exists=True)
 
-            sql_statement = f"REPLACE INTO \"{table_name}\" ({columns_str}) VALUES {value_placeholders};"
+            sql_statement = f'REPLACE INTO "{table_name}" ({columns_str}) VALUES {value_placeholders};'
 
             cursor = self._connection.cursor()
             cursor.execute(sql_statement, sql_values)
             self._connection.commit()
 
-    def delete_many(self, keys: Iterable[KeyProtocol] | None, *, dataset: TDataset = None,
-                    identities: Iterable[TIdentity] | None = None) -> None:
-
+    def delete_many(
+        self,
+        keys: Iterable[KeyProtocol] | None,
+        *,
+        dataset: TDataset = None,
+        identities: Iterable[TIdentity] | None = None,
+    ) -> None:
         key_serializer = StringSerializer()
 
         grouped_keys = defaultdict(list)
@@ -212,7 +220,6 @@ class SqliteDataSource(DataSource):
             grouped_keys[key.get_key_type()].append(key)
 
         for key_type, keys_group in grouped_keys.items():
-
             serialized_keys = tuple(key_serializer.serialize_key(key) for key in keys_group)
             table_name = self._schema_manager.table_name_for_type(key_type)
 
@@ -233,7 +240,6 @@ class SqliteDataSource(DataSource):
 
         # delete several time because tables depended on foreign key can not be deleted before related tables exist.
         while True:
-
             if not self._connection:
                 break
 

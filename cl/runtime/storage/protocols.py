@@ -17,8 +17,8 @@ from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TQuery
-from typing import Protocol
 from typing import Iterable
+from typing import Protocol
 
 
 class DataSourceProtocol(Protocol):

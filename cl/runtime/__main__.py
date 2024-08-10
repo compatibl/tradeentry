@@ -13,13 +13,12 @@
 # limitations under the License.
 
 import uvicorn
-
-from cl.runtime.backend.config import api_host_name, api_port
+from cl.runtime.backend.config import api_host_name
+from cl.runtime.backend.config import api_port
 from cl.runtime.routers.server import app
 from stubs.cl.runtime.config.stub_runtime_config import StubRuntimeConfig
 
 if __name__ == "__main__":
-
     # TODO: Temporary workaround before full configuration workflow is supported
     config = StubRuntimeConfig()
     config.config_id = "Stub Runtime Config"

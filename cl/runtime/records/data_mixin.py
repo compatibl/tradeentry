@@ -14,10 +14,9 @@
 
 from abc import ABC
 from abc import abstractmethod
+from cl.runtime.serialization.protocols import DataSerializerProtocol
 from typing import Any
 from typing_extensions import Self
-
-from cl.runtime.serialization.protocols import DataSerializerProtocol
 
 
 class DataMixin(ABC):

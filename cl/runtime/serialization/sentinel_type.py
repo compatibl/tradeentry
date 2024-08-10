@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 class SentinelType:
     """Type of the sentinel value used to indicate missing or special case when None is a valid choice."""
 

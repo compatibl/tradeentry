@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC, abstractmethod
-
+from abc import ABC
+from abc import abstractmethod
 from cl.runtime import RecordMixin
 from cl.runtime.config.config_key import ConfigKey
 from dataclasses import dataclass

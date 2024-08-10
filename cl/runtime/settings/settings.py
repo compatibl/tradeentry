@@ -15,12 +15,11 @@
 from __future__ import annotations
 
 from abc import abstractmethod
-from functools import reduce
-
-from typing_extensions import Self
 from dataclasses import dataclass
-from typing import Dict
 from dynaconf import Dynaconf
+from functools import reduce
+from typing import Dict
+from typing_extensions import Self
 
 
 def get_dynaconf_dict() -> Dict[str, Dict]:
@@ -69,9 +68,8 @@ class Settings:
 
         # Check if cached value exists, load if not found
         if (result := _settings_dict.get(settings_path, None)) is None:
-
             # Use dot-delimited settings path 'a.b' to access 'dynaconf_settings["a"]["b"]'
-            settings_dict = reduce(lambda d, key: d[key], settings_path.split('.'), _dynaconf_dict)
+            settings_dict = reduce(lambda d, key: d[key], settings_path.split("."), _dynaconf_dict)
 
             # TODO: Support hierarchical data using deserializer
             # TODO: Support JSON string format for fields

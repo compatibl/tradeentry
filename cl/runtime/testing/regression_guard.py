@@ -16,15 +16,20 @@ from __future__ import annotations
 
 import difflib
 import filecmp
+import inflection
 import inspect
 import os
-
-import inflection
 import yaml
-from dataclasses import dataclass, field
-from typing import Any, Iterable, List, ClassVar, cast, Dict, Set
-
 from cl.runtime.schema.field_decl import primitive_types
+from dataclasses import dataclass
+from dataclasses import field
+from typing import Any
+from typing import ClassVar
+from typing import Dict
+from typing import Iterable
+from typing import List
+from typing import Set
+from typing import cast
 
 supported_extensions = ["txt"]
 
@@ -34,8 +39,10 @@ def error_channel_not_primitive_type() -> Any:
 
 
 def error_extension_not_supported(ext: str) -> Any:
-    raise RuntimeError(f"Extension {ext} is not supported by RegressionGuard. "
-                       f"Supported extensions: {', '.join(supported_extensions)}")
+    raise RuntimeError(
+        f"Extension {ext} is not supported by RegressionGuard. "
+        f"Supported extensions: {', '.join(supported_extensions)}"
+    )
 
 
 @dataclass(slots=True, init=False)
@@ -70,12 +77,7 @@ class RegressionGuard:
     ext: str
     """Output file extension, defaults to '.txt'"""
 
-    def __init__(
-            self,
-            *,
-            ext: str = None,
-            channel: str | Iterable[str] | None = None,
-            test_pattern: str | None = None):
+    def __init__(self, *, ext: str = None, channel: str | Iterable[str] | None = None, test_pattern: str | None = None):
         """
         Initialize the regression guard, optionally specifying channel.
 
@@ -92,10 +94,9 @@ class RegressionGuard:
                 channel = str(channel)
             elif hasattr(channel, "__iter__"):
                 # TODO: Use specialized conversion for primitive types
-                channel = ".".join([
-                        str(x) if isinstance(x, primitive_types) else error_channel_not_primitive_type()
-                        for x in channel
-                    ])
+                channel = ".".join(
+                    [str(x) if isinstance(x, primitive_types) else error_channel_not_primitive_type() for x in channel]
+                )
             else:
                 error_channel_not_primitive_type()
 
@@ -151,11 +152,13 @@ class RegressionGuard:
             return
 
         if self.__verified:
-            raise RuntimeError(f"Regression output file {self._get_received_path()} is already verified "
-                               f"and can no longer be written to.")
+            raise RuntimeError(
+                f"Regression output file {self._get_received_path()} is already verified "
+                f"and can no longer be written to."
+            )
 
         if self.ext == "txt":
-            with open(self._get_received_path(), 'a') as file:
+            with open(self._get_received_path(), "a") as file:
                 file.write(self._format_txt(value))
                 # Flush immediately to ensure all of the output is on disk in the event of test exception
                 file.flush()
@@ -184,8 +187,11 @@ class RegressionGuard:
 
         if errors_found and not silent:
             # Collect exception text from guards where it is present
-            exc_text_blocks = [exception_text for guard in cls.__guard_dict.values()
-                               if (exception_text := guard._get_exception_text()) is not None]
+            exc_text_blocks = [
+                exception_text
+                for guard in cls.__guard_dict.values()
+                if (exception_text := guard._get_exception_text()) is not None
+            ]
 
             # Merge the collected exception text blocks and raise an error
             exc_text_merged = "\n".join(exc_text_blocks)
@@ -244,23 +250,21 @@ class RegressionGuard:
             else:
                 # Receive an expected do not match, generate unified diff
                 # TODO: Handle diff for binary output
-                with open(received_path, 'r') as received_file:
+                with open(received_path, "r") as received_file:
                     received_lines = received_file.readlines()
-                with open(expected_path, 'r') as expected_file:
+                with open(expected_path, "r") as expected_file:
                     expected_lines = expected_file.readlines()
 
                 # Convert to list first because the returned object is a generator but
                 # we will need to iterate over the lines more than once
-                diff = list(difflib.unified_diff(
-                    expected_lines,
-                    received_lines,
-                    fromfile=expected_path,
-                    tofile=received_path,
-                    n=0
-                ))
+                diff = list(
+                    difflib.unified_diff(
+                        expected_lines, received_lines, fromfile=expected_path, tofile=received_path, n=0
+                    )
+                )
 
                 # Write the complete unified diff into to the diff file
-                with open(diff_path, 'w') as diff_file:
+                with open(diff_path, "w") as diff_file:
                     diff_file.write("".join(diff))
 
                 # Truncate to max_lines and surround by begin/end lines for generate exception text
@@ -268,13 +272,13 @@ class RegressionGuard:
                 max_lines = 5
                 begin_str = "BEGIN REGRESSION TEST UNIFIED DIFF "
                 end_str = "END REGRESSION TEST UNIFIED DIFF "
-                begin_sep = "-" * (line_len-len(begin_str))
-                end_sep = "-" * (line_len-len(end_str))
+                begin_sep = "-" * (line_len - len(begin_str))
+                end_sep = "-" * (line_len - len(end_str))
                 orig_lines = len(diff)
                 if orig_lines > max_lines:
                     diff = diff[:max_lines]
                     truncate_str = f"(TRUNCATED {orig_lines-max_lines} ADDITIONAL LINES) "
-                    end_sep = end_sep[:-len(truncate_str)]
+                    end_sep = end_sep[: -len(truncate_str)]
                 else:
                     truncate_str = ""
                 diff_str = "".join(diff)
@@ -292,7 +296,7 @@ class RegressionGuard:
                     return False
         else:
             # Expected file does not exist, copy the data from received to expected
-            with open(received_path, 'rb') as received_file, open(expected_path, 'wb') as expected_file:
+            with open(received_path, "rb") as received_file, open(expected_path, "wb") as expected_file:
                 expected_file.write(received_file.read())
 
             # Delete the received file and diff file
@@ -302,7 +306,7 @@ class RegressionGuard:
 
             # Verification is considered successful if expected file has been created
             return True
-        
+
     def _format_txt(self, value: Any) -> str:
         """Format text for regression testing."""
         value_type = type(value)
@@ -314,8 +318,10 @@ class RegressionGuard:
         elif hasattr(value_type, "__iter__"):
             return "\n".join(map(self._format_txt, value)) + "\n"
         else:
-            raise RuntimeError(f"Argument type {value_type} is not accepted for file extension '{self.ext}'. "
-                               f"Valid arguments are primitive types, dict, or their iterable.")
+            raise RuntimeError(
+                f"Argument type {value_type} is not accepted for file extension '{self.ext}'. "
+                f"Valid arguments are primitive types, dict, or their iterable."
+            )
 
     def _get_exception_text(self) -> str | None:
         """Get exception text from this guard or the guard it delegates to."""
@@ -354,11 +360,11 @@ class RegressionGuard:
 
         stack = inspect.stack()
         for frame_info in stack:
-            if frame_info.function.startswith('test_'):
+            if frame_info.function.startswith("test_"):
                 frame_globals = frame_info.frame.f_globals
-                module_file = frame_globals['__file__']
+                module_file = frame_globals["__file__"]
                 test_name = frame_info.function
-                cls_instance = frame_info.frame.f_locals.get('self', None)
+                cls_instance = frame_info.frame.f_locals.get("self", None)
                 class_name = cast(type, cls_instance).__class__.__name__ if cls_instance else None
 
                 if module_file.endswith(".py"):

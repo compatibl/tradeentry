@@ -11,21 +11,24 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from enum import Enum
-from typing import Any, Type, Dict, List, Iterator
-import datetime as dt
-
 import base64
-from uuid import UUID
-
+import datetime as dt
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.schema.schema import Schema
-from cl.runtime.serialization.string_value_parser import StringValueParser, StringValueCustomType
-from cl.runtime.storage.data_source_types import TDataset
 
 # TODO (Roman): remove dependency from dict_serializer
-from cl.runtime.serialization.dict_serializer import alias_dict, type_dict
-
+from cl.runtime.serialization.dict_serializer import alias_dict
+from cl.runtime.serialization.dict_serializer import type_dict
+from cl.runtime.serialization.string_value_parser import StringValueCustomType
+from cl.runtime.serialization.string_value_parser import StringValueParser
+from cl.runtime.storage.data_source_types import TDataset
+from enum import Enum
+from typing import Any
+from typing import Dict
+from typing import Iterator
+from typing import List
+from typing import Type
+from uuid import UUID
 
 primitive_type_names = ["NoneType", "str", "float", "int", "bool", "date", "time", "datetime", "bytes", "UUID"]
 """Detect primitive type by checking if class name is in this list."""
@@ -53,8 +56,10 @@ class StringSerializer:
         elif getattr(dataset, "__iter__", None) is not None:
             return "\\".join(self.serialize_dataset(token) for token in dataset)
         else:
-            raise RuntimeError(f"Invalid dataset or its token {dataset}. Valid token types are None, "
-                               f"primitive types, enum or their iterables.")
+            raise RuntimeError(
+                f"Invalid dataset or its token {dataset}. Valid token types are None, "
+                f"primitive types, enum or their iterables."
+            )
 
     @staticmethod
     def _serialize_key_token(data) -> str:
@@ -73,7 +78,9 @@ class StringSerializer:
             raise ValueError(f"Value {str(data)} of type {type(data)} is not supported in key.")
 
         if value_custom_type in [
-            StringValueCustomType.date, StringValueCustomType.datetime, StringValueCustomType.time
+            StringValueCustomType.date,
+            StringValueCustomType.datetime,
+            StringValueCustomType.time,
         ]:
             result = data.isoformat()
         elif value_custom_type == StringValueCustomType.enum:
@@ -96,7 +103,7 @@ class StringSerializer:
         """Deserialize key string token of custom type."""
 
         if custom_type is None:
-            return data if data != '' else None
+            return data if data != "" else None
 
         if custom_type == StringValueCustomType.date:
             return dt.date.fromisoformat(data)
@@ -187,13 +194,11 @@ class StringSerializer:
 
         # iterate over tokens using tokens iterator
         while token := next(tokens_iterator, None):
-
             # parse token to value and custom type
             token, token_type = StringValueParser.parse(token)
 
             # if token is key get type and fill embedded key slots recursively using the same iterator instance
             if token_type == StringValueCustomType.key:
-
                 # TODO (Roman): verify proper way to get type in serialization.
                 current_type = Schema.get_type_by_short_name(token)
 

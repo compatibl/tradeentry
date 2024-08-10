@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import pytest
 import mongomock
+import pytest
 from cl.runtime.context.context import Context
 from cl.runtime.storage.mongo.basic_mongo_data_source import BasicMongoDataSource
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecord
@@ -24,9 +24,8 @@ def test_smoke():
 
     with Context():
         data_source = BasicMongoDataSource(
-            _client=mongomock.MongoClient(),
-            data_source_id="default",
-            db_name="Dev;Runtime;V2")
+            _client=mongomock.MongoClient(), data_source_id="default", db_name="Dev;Runtime;V2"
+        )
 
         # Create test record and populate with sample data
         record = StubDataclassRecord()

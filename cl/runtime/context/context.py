@@ -12,17 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
-from typing import ClassVar, List
-
 from cl.runtime.context.null_progress import NullProgress
 from cl.runtime.context.protocols import ProgressProtocol
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.data_source_types import TDataset
-from logging import Logger
-
 from cl.runtime.storage.protocols import DataSourceProtocol
+from dataclasses import dataclass
+from logging import Logger
+from typing import ClassVar
+from typing import List
 
 # Use in case progress is not specified
 null_progress = NullProgress()
@@ -53,7 +52,7 @@ def current_or_default_progress() -> ProgressProtocol:
 class Context:
     """Protocol implemented by context objects providing logging, data source, dataset, and progress reporting."""
 
-    __context_stack: ClassVar[List['Context']] = []  # TODO: Set using ContextVars
+    __context_stack: ClassVar[List["Context"]] = []  # TODO: Set using ContextVars
     """New current context is pushed to the context stack using 'with Context(...)' clause."""
 
     logger: Logger | None = field(default_factory=lambda: current_or_default_logger())

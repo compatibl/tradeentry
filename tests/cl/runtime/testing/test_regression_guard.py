@@ -35,7 +35,6 @@ def perform_testing(base_path: str, full: bool = False):
 
     # Run additional tests only if full testing is specified
     if full:
-
         # Test channels
         for channel in ("with_channel.str", ("with_channel", "tuple")):
             # First instance of guard, created using tuple or string
@@ -53,11 +52,10 @@ def perform_testing(base_path: str, full: bool = False):
             "int_key": 1,
             "float_key": 1.23,
             "bool_key": True,
-            "dict_key":
-                {
-                    "nested_str_key": "def",
-                    "nested_int_key": 2,
-                },
+            "dict_key": {
+                "nested_str_key": "def",
+                "nested_int_key": 2,
+            },
             "str_list_key": ["abc", "def"],
             "int_list_key": [1, 2],
         }

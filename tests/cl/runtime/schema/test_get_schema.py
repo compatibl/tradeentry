@@ -37,7 +37,6 @@ def test_method():
     ]
 
     for sample_type in sample_types:
-
         result_obj = DataclassTypeDecl.for_type(sample_type)
         result_dict = result_obj.to_type_decl_dict()
 
@@ -45,6 +44,7 @@ def test_method():
         guard.write(result_dict)
 
     RegressionGuard.verify_all()
+
 
 if __name__ == "__main__":
     pytest.main([__file__])

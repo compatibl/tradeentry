@@ -12,13 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Any
-
 import pytest
-from typing import Iterable
-
 from cl.runtime.storage.sql.sqlite_data_source import SqliteDataSource
-
 from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassDictFields
@@ -31,6 +26,8 @@ from stubs.cl.runtime import StubDataclassOtherDerivedRecord
 from stubs.cl.runtime import StubDataclassPrimitiveFields
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassSingleton
+from typing import Any
+from typing import Iterable
 
 
 def _assert_equals_iterable_without_ordering(iterable: Iterable[Any], other_iterable: Iterable[Any]) -> bool:
@@ -38,15 +35,11 @@ def _assert_equals_iterable_without_ordering(iterable: Iterable[Any], other_iter
     other_iterable_as_list = list(other_iterable) if not isinstance(other_iterable, list) else other_iterable
 
     if len(iterable_as_list) != len(other_iterable_as_list):
-        raise ValueError(
-            f"Iterables have different length: {len(iterable_as_list)} and {len(other_iterable_as_list)}"
-        )
+        raise ValueError(f"Iterables have different length: {len(iterable_as_list)} and {len(other_iterable_as_list)}")
 
     for item in iterable_as_list:
         if item not in other_iterable_as_list:
-            raise ValueError(
-                f"Item {item} contains only in first iterable."
-            )
+            raise ValueError(f"Item {item} contains only in first iterable.")
 
     return True
 
@@ -64,17 +57,17 @@ def test_smoke():
 
 def test_complex_records():
     samples = [
-        StubDataclassRecord(id='abc1'),
-        StubDataclassNestedFields(primitive='abc2'),
-        StubDataclassDerivedRecord(id='abc3'),
-        StubDataclassDerivedFromDerivedRecord(id='abc4'),
-        StubDataclassOtherDerivedRecord(id='abc5'),
-        StubDataclassListFields(id='abc6'),
-        StubDataclassOptionalFields(id='abc7'),
-        StubDataclassDictFields(id='abc8'),
-        StubDataclassDictListFields(id='abc9'),
-        StubDataclassListDictFields(id='abc10'),
-        StubDataclassPrimitiveFields(key_str_field='abc11'),
+        StubDataclassRecord(id="abc1"),
+        StubDataclassNestedFields(primitive="abc2"),
+        StubDataclassDerivedRecord(id="abc3"),
+        StubDataclassDerivedFromDerivedRecord(id="abc4"),
+        StubDataclassOtherDerivedRecord(id="abc5"),
+        StubDataclassListFields(id="abc6"),
+        StubDataclassOptionalFields(id="abc7"),
+        StubDataclassDictFields(id="abc8"),
+        StubDataclassDictListFields(id="abc9"),
+        StubDataclassListDictFields(id="abc10"),
+        StubDataclassPrimitiveFields(key_str_field="abc11"),
         StubDataclassSingleton(),
     ]
 
@@ -94,17 +87,17 @@ def test_complex_records():
 
 def test_basic_operations():
     samples = [
-        StubDataclassRecord(id='abc1'),
-        StubDataclassNestedFields(primitive='abc2'),
-        StubDataclassDerivedRecord(id='abc3'),
-        StubDataclassDerivedFromDerivedRecord(id='abc4'),
-        StubDataclassOtherDerivedRecord(id='abc5'),
-        StubDataclassListFields(id='abc6'),
-        StubDataclassOptionalFields(id='abc7'),
-        StubDataclassDictFields(id='abc8'),
-        StubDataclassDictListFields(id='abc9'),
-        StubDataclassListDictFields(id='abc10'),
-        StubDataclassPrimitiveFields(key_str_field='abc11'),
+        StubDataclassRecord(id="abc1"),
+        StubDataclassNestedFields(primitive="abc2"),
+        StubDataclassDerivedRecord(id="abc3"),
+        StubDataclassDerivedFromDerivedRecord(id="abc4"),
+        StubDataclassOtherDerivedRecord(id="abc5"),
+        StubDataclassListFields(id="abc6"),
+        StubDataclassOptionalFields(id="abc7"),
+        StubDataclassDictFields(id="abc8"),
+        StubDataclassDictListFields(id="abc9"),
+        StubDataclassListDictFields(id="abc10"),
+        StubDataclassPrimitiveFields(key_str_field="abc11"),
     ]
 
     sample_keys = [x.get_key() for x in samples]
@@ -112,10 +105,9 @@ def test_basic_operations():
     data_source = SqliteDataSource(data_source_id="default")
 
     try:
-
         # load from non-existing tables
         loaded_records = list(data_source.load_many(sample_keys))
-        assert loaded_records == [None]*len(samples)
+        assert loaded_records == [None] * len(samples)
 
         data_source.save_many(samples)
 
@@ -135,14 +127,13 @@ def test_basic_operations():
         # delete all keys
         data_source.delete_many(sample_keys)
         loaded_records = list(data_source.load_many(sample_keys))
-        assert loaded_records == [None]*len(samples)
+        assert loaded_records == [None] * len(samples)
 
     finally:
         data_source.delete_db()
 
 
 def test_record_upsert():
-
     data_source = SqliteDataSource(data_source_id="default")
 
     try:
@@ -166,21 +157,21 @@ def test_record_upsert():
     finally:
         data_source.delete_db()
 
-def test_load_all():
 
+def test_load_all():
     base_samples = [
-        StubDataclassRecord(id='base1'),
-        StubDataclassRecord(id='base2'),
-        StubDataclassRecord(id='base3'),
+        StubDataclassRecord(id="base1"),
+        StubDataclassRecord(id="base2"),
+        StubDataclassRecord(id="base3"),
     ]
 
     derived_samples = [
-        StubDataclassDerivedRecord(id='derived1'),
-        StubDataclassDerivedFromDerivedRecord(id='derived2'),
+        StubDataclassDerivedRecord(id="derived1"),
+        StubDataclassDerivedFromDerivedRecord(id="derived2"),
     ]
 
     other_derived_samples = [
-        StubDataclassOtherDerivedRecord(id='derived3'),
+        StubDataclassOtherDerivedRecord(id="derived3"),
     ]
 
     all_samples = base_samples + derived_samples + other_derived_samples
@@ -199,5 +190,5 @@ def test_load_all():
         data_source.delete_db()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

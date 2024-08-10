@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.routers.schema.type_hierarchy_response_item import TypeHierarchyResponseItem
 from cl.runtime.routers.schema.type_hierarchy_request import TypeHierarchyRequest
+from cl.runtime.routers.schema.type_hierarchy_response_item import TypeHierarchyResponseItem
 from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
 from cl.runtime.routers.schema.types_response_item import TypesResponseItem
@@ -22,7 +22,8 @@ from fastapi import APIRouter
 from fastapi import Header
 from fastapi import Query
 from starlette.requests import Request
-from typing import Dict, List
+from typing import Dict
+from typing import List
 
 # TODO: Prefix type aliases with T
 TypesResponse = List[TypesResponseItem]
