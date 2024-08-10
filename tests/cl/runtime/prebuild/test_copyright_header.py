@@ -31,10 +31,11 @@ def test_init_files():
     root_paths = [project_root / x for x in relative_paths]
 
     # Get the list of missing init files are present without fixing the problem
-    files_with_copyright_header_error = check_copyright_header(root_paths)
+    files_with_copyright_header_error, files_with_trailing_line_error = check_copyright_header(root_paths)
 
-    # Confirm that there are no missing files
-    assert files_with_copyright_header_error is None
+    # Confirm that there are no files with copyright header error or missing trailing line
+    assert not files_with_copyright_header_error
+    assert not files_with_trailing_line_error
 
 
 if __name__ == "__main__":
