@@ -34,10 +34,10 @@ if __name__ == '__main__':
 
     if files_with_copyright_header_error:
         raise RuntimeError("Invalid copyright header in file(s):\n" +
-              "".join([f"{file}\n" for file in files_with_copyright_header_error]))
+              "".join([f"    {file}\n" for file in files_with_copyright_header_error]))
     elif files_with_trailing_line_error:
         print("Adding a missing blank line after copyright header in file(s):\n" +
-              "".join([f"{file}\n" for file in files_with_trailing_line_error]))
+              "".join([f"    {file}\n" for file in files_with_trailing_line_error]))
     else:
         print("Verified copyright header and trailing blank line under directory root(s):\n" +
-              "".join([f"{root_path}\n" for root_path in root_paths]))
+              "".join([f"    {root_path}\n" for root_path in root_paths]))

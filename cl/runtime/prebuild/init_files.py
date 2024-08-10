@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Iterable, List
 
 
-def check_init_files(root_paths: Iterable[str | Path], *, apply_fix: bool) -> List[str] | None:
+def check_init_files(root_paths: Iterable[str | Path], *, apply_fix: bool) -> List[str]:
     """
     Check that __init__.py is present in all subdirectories of 'root_path'.
     Optionally create when missing.
@@ -55,8 +55,5 @@ def check_init_files(root_paths: Iterable[str | Path], *, apply_fix: bool) -> Li
                         with open(init_file_path, 'w') as f:
                             pass
 
-    # List of missing absolute paths or None if all files are present
-    if len(missing_files) > 0:
-        return missing_files
-    else:
-        return None
+    # Return the list of absolute paths for the missing files
+    return missing_files

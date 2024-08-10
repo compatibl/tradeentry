@@ -34,7 +34,7 @@ def test_init_files():
     missing_files = check_init_files(root_paths, apply_fix=False)
 
     # Confirm that there are no missing files
-    assert missing_files is None
+    assert not missing_files
 
 
 if __name__ == "__main__":

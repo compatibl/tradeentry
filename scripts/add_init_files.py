@@ -29,9 +29,9 @@ if __name__ == '__main__':
     # Create __init__.py files in subdirectories under each element of source_paths
     missing_files = check_init_files(root_paths, apply_fix=True)
 
-    if missing_files is not None:
+    if missing_files:
         print("Adding missing __init__.py file(s):\n" +
-              "".join([f"Added {missing_file}\n" for missing_file in missing_files]))
+              "".join([f"    {missing_file}\n" for missing_file in missing_files]))
     else:
         print("Verified that all __init__.py files are present under directory root(s):\n" +
-              "".join([f"{root_path}\n" for root_path in root_paths]))
+              "".join([f"    {root_path}\n" for root_path in root_paths]))
