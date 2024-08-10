@@ -11,8 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 import sys
 from collections import Counter
+
+from cl.runtime.serialization.sentinel_type import sentinel_value
 from cl.runtime.storage.data_source_types import TDataDict
 from dataclasses import dataclass
 from enum import Enum
@@ -20,15 +23,6 @@ from inflection import camelize
 from typing import Dict, Tuple, cast
 from typing import Dict, List
 from typing import Type
-
-
-class MissingType:
-    """Type representing a missing value."""
-
-
-# TODO: Rename to stop_value and StopValueType to avoid conflict with dataclass missing
-missing = MissingType()
-"""Represents missing value distinct from None."""
 
 
 # TODO: Initialize from settings
@@ -132,8 +126,8 @@ class DictSerializer:
             return result
         elif hasattr(data, "__iter__"):
             # Get the first item without iterating over the entire sequence
-            first_item = next(iter(data), missing)
-            if first_item == missing:
+            first_item = next(iter(data), sentinel_value)
+            if first_item == sentinel_value:
                 # Empty iterable, return None
                 return None
             elif first_item is not None and first_item.__class__.__name__ in self.primitive_type_names:
@@ -195,8 +189,8 @@ class DictSerializer:
                 return result
         elif hasattr(data, "__iter__"):
             # Get the first item without iterating over the entire sequence
-            first_item = next(iter(data), missing)
-            if first_item == missing:
+            first_item = next(iter(data), sentinel_value)
+            if first_item == sentinel_value:
                 # Empty iterable, return None
                 return None
             elif first_item is not None and first_item.__class__.__name__ in self.primitive_type_names:

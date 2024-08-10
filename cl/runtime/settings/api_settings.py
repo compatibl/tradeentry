@@ -15,7 +15,7 @@
 from dataclasses import dataclass
 from typing import Dict
 
-from cl.runtime.serialization.dict_serializer import missing
+from cl.runtime.serialization.sentinel_type import sentinel_value
 from cl.runtime.settings.settings import Settings
 
 _package_aliases_dict: Dict[str, str] = {}
@@ -49,7 +49,7 @@ class ApiSettings(Settings):
             return None
 
         # Otherwise check if a cached value exists, using missing_value as sentinel
-        if (alias := _package_aliases_dict.get(module_prefix, missing)) == missing:
+        if (alias := _package_aliases_dict.get(module_prefix, sentinel_value)) == sentinel_value:
             # Cached value is not found, scan package_aliases for a matching prefix
             alias = next((v for k, v in self.package_aliases.items() if module_prefix.startswith(k)), None)
             # Add to cache
