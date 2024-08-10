@@ -19,7 +19,7 @@ from abc import abstractmethod
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
-from cl.runtime.settings.config import dynaconf_settings
+from cl.runtime.settings.settings import _dynaconf_dict
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TQuery
@@ -155,6 +155,7 @@ class DataSource(ABC):
 
         if DataSource.__default is None:
             # Load from configuration if not set
-            data_source_type = ClassInfo.get_class_type(dynaconf_settings["context"]["data_source"].pop("_class"))
-            DataSource.__default = data_source_type(**dynaconf_settings["context"]["data_source"])
+            # TODO: Use settings loader instead of accessing _dynaconf_dict directly
+            data_source_type = ClassInfo.get_class_type(_dynaconf_dict["context"]["data_source"].pop("_class"))
+            DataSource.__default = data_source_type(**_dynaconf_dict["context"]["data_source"])
         return DataSource.__default

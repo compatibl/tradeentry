@@ -18,9 +18,34 @@ from abc import abstractmethod
 from functools import reduce
 
 from typing_extensions import Self
-from cl.runtime.settings.config import dynaconf_settings
 from dataclasses import dataclass
 from typing import Dict
+from dynaconf import Dynaconf
+
+
+def get_dynaconf_dict() -> Dict[str, Dict]:
+    """Load dynaconf settings and convert them to hierarchical dictionary format."""
+
+    # Dynaconf settings in raw format, some keys may be strings instead of dictionaries or lists
+    raw_settings = Dynaconf(
+        environments=True,
+        envvar_prefix="CL",
+        env_switcher="CL_CONFIG_ENV",
+        settings_files=["settings.yaml", ".secrets.yaml"],
+    )
+
+    # Convert containers at all levels to dictionaries and lists
+    result = raw_settings.as_dict()
+
+    # Convert root level keys to lowercase in case the settings are
+    # specified using environment variables in SETTINGS_KEY format
+    result = {k.lower(): v for k, v in result.items()}
+
+    return result
+
+
+_dynaconf_dict: Dict[str, Dict] = get_dynaconf_dict()
+"""The entire set of Dynaconf settings in hierarchical dictionary format."""
 
 _settings_dict: Dict[str, Settings] = {}
 """Dictionary of preloaded settings objects indexed by the settings path."""
@@ -46,7 +71,7 @@ class Settings:
         if (result := _settings_dict.get(settings_path, None)) is None:
 
             # Use dot-delimited settings path 'a.b' to access 'dynaconf_settings["a"]["b"]'
-            settings_dict = reduce(lambda d, key: d[key], settings_path.split('.'), dynaconf_settings)
+            settings_dict = reduce(lambda d, key: d[key], settings_path.split('.'), _dynaconf_dict)
 
             # TODO: Support hierarchical data using deserializer
             # TODO: Support JSON string format for fields
