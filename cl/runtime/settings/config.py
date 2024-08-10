@@ -25,5 +25,6 @@ dynaconf_settings = Dynaconf(
 # Convert containers at all levels to dictionaries and lists
 dynaconf_settings = dynaconf_settings.as_dict()
 
-# Convert root level keys to lowercase
+# Convert root level keys to lowercase in case the settings are
+# specified using environment variables in SETTINGS_KEY format
 dynaconf_settings = {k.lower(): v for k, v in dynaconf_settings.items()}

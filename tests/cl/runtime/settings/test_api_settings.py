@@ -16,15 +16,22 @@ import pytest
 from cl.runtime.settings.api_settings import ApiSettings
 
 
-def test_smoke():
+def test_package_aliases():
     """Test UiSettings class."""
 
-    api_settings = ApiSettings.default()
+    api_settings = ApiSettings.instance()
 
     assert api_settings.package_aliases == {
         "cl.runtime": "rt",
-        "stubs.cl.runtime": "rt",
+        "stubs.cl.runtime": "stubs.rt",
     }
+
+    # Call twice to check caching
+    for _ in range(2):
+        assert api_settings.get_package_alias("cl") is None
+        assert api_settings.get_package_alias("cl.unknown.package") is None
+        assert api_settings.get_package_alias("cl.runtime") == "rt"
+        assert api_settings.get_package_alias("cl.runtime.storage") == "rt"
 
 
 if __name__ == "__main__":

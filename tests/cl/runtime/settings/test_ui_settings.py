@@ -19,11 +19,11 @@ from cl.runtime.settings.ui_settings import UiSettings
 def test_smoke():
     """Test UiSettings class."""
 
-    ui_settings = UiSettings.default()
+    ui_settings = UiSettings.instance()
 
     assert ui_settings.package_labels == {
-        "cl.runtime": "Runtime",
-        "stubs.cl.runtime": "Runtime Stubs",
+        "rt": "Runtime",
+        "stubs.rt": "Runtime Stubs",
     }
     assert ui_settings.type_labels == {
         "SampleClass": "Sample Class Label",
@@ -34,7 +34,7 @@ def test_smoke():
     assert ui_settings.method_labels == {
         "sample_method": "Sample Method Label",
     }
-    assert ui_settings.item_labels == {
+    assert ui_settings.enum_item_labels == {
         "SAMPLE_ITEM": "Sample Item Label",
     }
 

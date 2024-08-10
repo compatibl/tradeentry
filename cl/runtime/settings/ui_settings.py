@@ -12,69 +12,63 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
-from cl.runtime.settings.config import dynaconf_settings
 from dataclasses import dataclass
-from typing import ClassVar
 from typing import Dict
 
+from cl.runtime.settings.settings import Settings
 
-@dataclass(slots=True, kw_only=True)
-class UiSettings:
-    """UI settings do not affect the REST API."""
 
-    __default: ClassVar[UiSettings | None] = None
-    """Default instance is initialized from Dynaconf settings."""
+@dataclass(slots=True, kw_only=True, frozen=True)
+class UiSettings(Settings):
+    """UI settings are for visual presentation to the user only. They do not affect the REST API."""
 
-    package_labels: Dict[str, str] | str | None = None
+    package_labels: Dict[str, str] | None = None
     """
-    Optional humanized package label in 'pattern: label' format for the UI only.
-    Use this feature to organize types by package in large projects and to
-    resolve conflicts when classes in different modules share the same class name.
-    - For modules that do not match the glob pattern, no package name is used
+    Custom package alias labels as a dictionary in 'package_alias: Package Label' format for the UI only.
+    
+    Notes:
+        - Use this feature to provide custom labels for package aliases.
+        - It does not apply when package_aliases are not specified in api_settings
+        - When custom label is not specified, the package alias is humanized as package_alias -> Package Alias
+        - This UI setting does not affect the REST API
+    """
+
+    type_labels: Dict[str, str] | None = None
+    """
+    Custom record type labels as a dictionary in 'ClassName: Class Label' format for the UI only.
+
+    Notes:
+        - When not specified, the label is humanized as ClassName -> Class Name
+        - This UI setting does not affect the REST API
+    """
+
+    field_labels: Dict[str, str] | None = None
+    """
+    Custom field labels as a dictionary in 'field_name: Field Name' format for the UI only.
+    
+    Notes:
+    - When not specified, the label is humanized as field_name -> Field Name
     - This UI setting does not affect the REST API
-    - Dictionary or string in JSON format is accepted
     """
 
-    type_labels: Dict[str, str] | str | None = None
+    method_labels: Dict[str, str] | None = None
     """
-    Replace humanized class name by the specified label for the UI only
-    - When not specified, the name is humanized according to ClassName -> Class Name
+    Custom method labels as a dictionary in 'method_name: Method Name' format for the UI only.
+    
+    Notes:
+    - When not specified, the name is humanized as method_name -> Method Name
     - This UI setting does not affect the REST API
-    - Dictionary or string in JSON format is accepted
     """
 
-    field_labels: Dict[str, str] | str | None = None
+    enum_item_labels: Dict[str, str] | None = None
     """
-    Replace humanized field name by the specified label for the UI only
-    - When not specified, the name is humanized according to field_name -> Field Name
+    Custom enum item labels as a dictionary in 'ITEM_NAME: Item Name' format for the UI only.
+    
+    Notes:
+    - When not specified, the name is humanized as ITEM_NAME -> Item Name
     - This UI setting does not affect the REST API
-    - Dictionary or string in JSON format is accepted
     """
 
-    method_labels: Dict[str, str] | str | None = None
-    """
-    Replace humanized method name by the specified label for the UI only
-    - When not specified, the name is humanized according to method_name -> Method Name
-    - This UI setting does not affect the REST API
-    - Dictionary or string in JSON format is accepted
-    """
-
-    item_labels: Dict[str, str] | str | None = None
-    """
-    Replace humanized method name by the specified enum item (member) for the UI only
-    - When not specified, the name is humanized according to ITEM_NAME -> Item Name
-    - This UI setting does not affect the REST API
-    - Dictionary or string in JSON format is accepted
-    """
-
-    @staticmethod
-    def default() -> UiSettings:
-        """Default instance is initialized from Dynaconf settings."""
-
-        if UiSettings.__default is None:
-            # Load from Dynaconf settings on first call
-            ui_settings_dict = dynaconf_settings["ui_settings"]
-            UiSettings.__default = UiSettings(**ui_settings_dict)
-        return UiSettings.__default
+    @classmethod
+    def get_settings_path(cls) -> str:
+        return "runtime.ui_settings"

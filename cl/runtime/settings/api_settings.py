@@ -12,40 +12,47 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
-from cl.runtime.settings.config import dynaconf_settings
 from dataclasses import dataclass
-from typing import ClassVar
 from typing import Dict
 
+from cl.runtime.serialization.dict_serializer import missing
+from cl.runtime.settings.settings import Settings
 
-@dataclass(slots=True, kw_only=True)
-class ApiSettings:
-    """REST API settings do not affect the UI."""
+_package_aliases_dict: Dict[str, str] = {}
+"""Cached package aliases for faster lookup."""
 
-    __default: ClassVar[ApiSettings | None] = None
-    """Default instance is initialized from Dynaconf settings."""
 
-    package_aliases: Dict[str, str] | str | None = None
+@dataclass(slots=True, kw_only=True, frozen=True)
+class ApiSettings(Settings):
+    """REST API settings."""
+
+    package_aliases: Dict[str, str] | None = None
     """
-    Optional package aliases for the REST API, and DB in 'pattern: alias' format.
-    Use this feature to organize types by package in large projects and to
-    resolve conflicts when classes in different modules share the same class name.
-    - Usage:
-        - When module does not match the glob pattern, ClassName is used without prefix
-        - When module matches the glob pattern, alias.ClassName is used.
-        - This setting has no effect where full module is required, e.g., for the _class field.
-    - This REST API setting does not affect the UI
-    - Dictionary or string in JSON format is accepted
+    Custom namespace package or code subdirectory aliases as a dictionary in 'module_prefix: alias' format.
+
+    Notes:
+        - Use this feature to (a) organize type lists and DB tables by alias prefix in large projects and
+          (b) resolve conflicts when two or more record types share the same class name
+        - When specified, alias.ClassName is used, otherwise ClassName is used without a prefix
+        - The same alias applies to all subdirectories of 'module_prefix'
     """
 
-    @staticmethod
-    def default() -> ApiSettings:
-        """Default instance is initialized from Dynaconf settings."""
+    @classmethod
+    def get_settings_path(cls) -> str:
+        return "runtime.api_settings"
 
-        if ApiSettings.__default is None:
-            # Load from Dynaconf settings on first call
-            api_settings_dict = dynaconf_settings["api_settings"]
-            ApiSettings.__default = ApiSettings(**api_settings_dict)
-        return ApiSettings.__default
+    def get_package_alias(self, module_prefix: str) -> str | None:
+        """Get alias for the module prefix in dot-delimited format or None if alias is not specified."""
+
+        if self.package_aliases is None:
+            # Return None and exit if package_aliases are not specified
+            return None
+
+        # Otherwise check if a cached value exists, using missing_value as sentinel
+        if (alias := _package_aliases_dict.get(module_prefix, missing)) == missing:
+            # Cached value is not found, scan package_aliases for a matching prefix
+            alias = next((v for k, v in self.package_aliases.items() if module_prefix.startswith(k)), None)
+            # Add to cache
+            _package_aliases_dict[module_prefix] = alias
+
+        return alias

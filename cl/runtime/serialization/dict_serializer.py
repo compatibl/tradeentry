@@ -26,6 +26,7 @@ class MissingType:
     """Type representing a missing value."""
 
 
+# TODO: Rename to stop_value and StopValueType to avoid conflict with dataclass missing
 missing = MissingType()
 """Represents missing value distinct from None."""
 

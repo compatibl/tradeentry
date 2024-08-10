@@ -17,51 +17,37 @@ default:
         # is allowed only if 'temp_id_pattern' is specified and matches data_source_id
         temp_id_pattern: Temp.*
 
-    # REST API settings do not affect the UI
-    api_settings:
+    # Runtime settings
+    runtime:
 
-        # Optional package aliases for the REST API, and DB in 'pattern: alias' format.
-        # Use this feature to organize types by package in large projects and to
-        # resolve conflicts when classes in different modules share the same class name.
-        # - When module does not match the glob pattern, ClassName is used without prefix
-        # - When module matches the glob pattern, alias.ClassName is used.
-        # This setting has no effect where full module is required, e.g., for the _class field.
-        package_aliases:
-            cl.runtime: rt
-            stubs.cl.runtime: rt
+        # REST API settings.
+        api_settings:
 
-    # UI settings do not affect the REST API
-    ui_settings:
+            # Custom namespace package or code subdirectory aliases as a dictionary in 'module_prefix: alias' format.
+            package_aliases:
+                cl.runtime: rt
+                stubs.cl.runtime: stubs.rt
 
-        # Optional humanized package label in 'pattern: label' format for the UI only.
-        # Use this feature to organize types by package in large projects and to
-        # resolve conflicts when classes in different modules share the same class name.
-        # - For modules that do not match the glob pattern, no package name is used
-        # - This UI setting does not affect the REST API
-        package_labels:
-            cl.runtime: Runtime
-            stubs.cl.runtime: Runtime Stubs
+        # UI settings do not affect the REST API.
+        ui_settings:
 
-        # Replace humanized class name by the specified label for the UI only
-        # - When not specified, the name is humanized according to ClassName -> Class Name
-        # - This UI setting does not affect the REST API
-        type_labels:
-            SampleClass: Sample Class Label
+            # Custom package alias labels as a dictionary in 'package_alias: Package Label' format for the UI only.
+            package_labels:
+                rt: Runtime
+                stubs.rt: Runtime Stubs
 
-        # Replace humanized field name by the specified label for the UI only
-        # - When not specified, the name is humanized according to field_name -> Field Name
-        # - This UI setting does not affect the REST API
-        field_labels:
-            sample_field: Sample Field Label
+            # Custom record type labels as a dictionary in 'ClassName: Class Label' format for the UI only.
+            type_labels:
+                SampleClass: Sample Class Label
 
-        # Replace humanized method name by the specified label for the UI only
-        # - When not specified, the name is humanized according to method_name -> Method Name
-        # - This UI setting does not affect the REST API
-        method_labels:
-           sample_method: Sample Method Label
+            # Custom field labels as a dictionary in 'field_name: Field Name' format for the UI only.
+            field_labels:
+                sample_field: Sample Field Label
 
-        # Replace humanized method name by the specified enum item (member) for the UI only
-        # - When not specified, the name is humanized according to ITEM_NAME -> Item Name
-        # - This UI setting does not affect the REST API
-        item_labels:
-            SAMPLE_ITEM: Sample Item Label
+            # Custom method labels as a dictionary in 'method_name: Method Name' format for the UI only.
+            method_labels:
+               sample_method: Sample Method Label
+
+            # Custom enum item labels as a dictionary in 'ITEM_NAME: Item Name' format for the UI only.
+            enum_item_labels:
+                SAMPLE_ITEM: Sample Item Label
