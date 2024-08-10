@@ -12,26 +12,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import pytest
 from pathlib import Path
+
 from cl.runtime.prebuild.init_files import check_init_files
 
-if __name__ == '__main__':
+
+def test_init_files():
+    """Prebuild test to check that __init__.py is present in all code directories."""
 
     # Project root assuming the script is located in project_root/scripts
-    project_path = Path(__file__).parent.parent
+    project_root = Path(__file__).parents[4]
 
-    # Relative source root paths
+    # Relative paths to source directories
     relative_paths = ["cl", "stubs"]
 
-    # Absolute source root paths
-    root_paths = [project_path / x for x in relative_paths]
+    # Absolute paths to source directories
+    root_paths = [project_root / x for x in relative_paths]
 
-    # Create __init__.py files in subdirectories under each element of source_paths
-    missing_files = check_init_files(root_paths, apply_fix=True)
+    # Get the list of missing init files are present without fixing the problem
+    missing_files = check_init_files(root_paths, apply_fix=False)
 
-    if missing_files is not None:
-        print("Adding missing __init__.py file(s):\n" +
-              "".join([f"Added {missing_file}\n" for missing_file in missing_files]))
-    else:
-        print("Verified that all __init__.py files are present under directory root(s):\n" +
-              "".join([f"{root_path}\n" for root_path in root_paths]))
+    # Confirm that there are no missing files
+    assert missing_files is None
+
+
+if __name__ == "__main__":
+    pytest.main([__file__])
