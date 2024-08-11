@@ -13,18 +13,20 @@
 # limitations under the License.
 
 import os
-from pathlib import Path
-from typing import Iterable, List, Tuple
 from fnmatch import fnmatch
+from pathlib import Path
+from typing import Iterable
+from typing import List
+from typing import Tuple
 
 
 def check_copyright_header(
-        root_paths: Iterable[str | Path],
-        *,
-        copyright_header: str | None = None,
-        include_patterns: List[str] | None = None,
-        exclude_patterns: List[str] | None = None,
-        fix_trailing_blank_line: bool = False,
+    root_paths: Iterable[str | Path],
+    *,
+    copyright_header: str | None = None,
+    include_patterns: List[str] | None = None,
+    exclude_patterns: List[str] | None = None,
+    fix_trailing_blank_line: bool = False,
 ) -> Tuple[List[str], List[str]]:
     """
     Check that the specified copyright header is present in all files with the specified glob filename pattern.
@@ -73,14 +75,12 @@ def check_copyright_header(
 
     # Apply to each element of root_paths
     for root_path in root_paths:
-
         # Convert to path if provided in string format
         if isinstance(root_path, str):
             root_path = Path(root_path)
 
         # Walk the directory tree
         for dir_path, dir_names, filenames in os.walk(root_path):
-
             # Apply exclude patterns
             filenames = [x for x in filenames if not any(fnmatch(x, y) for y in exclude_patterns)]
 
@@ -88,12 +88,10 @@ def check_copyright_header(
             filenames = [x for x in filenames if any(fnmatch(x, y) for y in include_patterns)]
 
             for filename in filenames:
-
                 # Load the file
                 file_path = os.path.join(dir_path, filename)
                 remaining_lines = None
-                with open(file_path, 'r') as file:
-
+                with open(file_path, "r") as file:
                     # Check for the correct copyright header (disregard the trailing blank line)
                     file_header = file.read(len(copyright_header))
                     if file_header != copyright_header:
@@ -114,7 +112,7 @@ def check_copyright_header(
                     # Combine the copyright header with trailing blank line with
                     # 'next_line' and 'remaining_lines' and write back to the file
                     updated_text = copyright_header + "\n" + next_line + "".join(remaining_lines)
-                    with open(file_path, 'w') as file:
+                    with open(file_path, "w") as file:
                         file.write(updated_text)
 
     return files_with_copyright_header_error, files_with_trailing_line_error
