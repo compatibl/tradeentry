@@ -23,6 +23,10 @@ setuptools.setup(
         where='.', include=['cl.runtime', 'cl.runtime.*'], exclude=['tests', 'tests.*']
     ),
     package_dir={'': '.'},
+    package_data={
+        '': ['py.typed'],
+    },
+    include_package_data=True,
     classifiers=[
         # Alpha - will attempt to avoid breaking changes but they remain possible
         'Development Status :: 3 - Alpha',
