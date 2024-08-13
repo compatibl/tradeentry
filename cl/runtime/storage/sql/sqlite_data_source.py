@@ -40,7 +40,7 @@ def dict_factory(cursor, row):
 class SqliteDataSource(DataSource):
     """Sqlite data source without dataset and mile wide table for inheritance."""
 
-    db_name: str = ":memory:"
+    db_name: str = "my_db.sqlite"
     """Db name used to open sqlite connection."""
 
     _connection: sqlite3.Connection = None
@@ -75,7 +75,6 @@ class SqliteDataSource(DataSource):
         identity: TIdentity | None = None,
     ) -> Iterable[RecordProtocol | None] | None:
         serializer = FlatDictSerializer()
-        key_serializer = StringSerializer()
 
         # it is important to preserve the original order of records_or_keys.
         # itertools.groupby works just like that and does not violate the order.
@@ -93,22 +92,30 @@ class SqliteDataSource(DataSource):
                     yield from keys
                     continue
 
-                serialized_keys = tuple(key_serializer.serialize_key(key) for key in keys)
+                key_fields = self._schema_manager.get_primary_keys(key_type)
+                keys = list(keys)
+                all_serialized_keys = [
+                    serializer.serialize_data(getattr(key, key_field)) for key in keys for key_field in key_fields
+                ]
 
                 table_name = self._schema_manager.table_name_for_type(key_type)
 
                 # return None for all keys in group if table doesn't exist
                 existing_tables = self._schema_manager.existing_tables()
                 if table_name not in existing_tables:
-                    yield from (None for _ in range(len(serialized_keys)))
+                    yield from (None for _ in range(len(keys)))
                     continue
 
-                value_placeholders = ", ".join(["?"] * len(serialized_keys))
-                sql_statement = f'SELECT * FROM "{table_name}" WHERE _key IN ({value_placeholders});'
+                columns_mapping = self._schema_manager.get_columns_mapping(key_type)
+                value_places = ", ".join([f'({", ".join(["?"] * len(key_fields))})' for _ in range(len(keys))])
+                key_column_places = ", ".join(["?"] * len(key_fields))
 
+                sql_statement = f'SELECT * FROM "{table_name}" WHERE ({key_column_places}) IN ({value_places});'
+
+                query_values = [columns_mapping[key] for key in key_fields] + all_serialized_keys
                 cursor = self._connection.cursor()
-                cursor.execute(sql_statement, serialized_keys)
-                reversed_columns_mapping = {v: k for k, v in self._schema_manager.get_columns_mapping(key_type).items()}
+                cursor.execute(sql_statement, query_values)
+                reversed_columns_mapping = {v: k for k, v in columns_mapping.items()}
 
                 # TODO (Roman): investigate performance impact from this ordering approach
                 # bulk load from db returns records in any order so we need to check all records in group before return
@@ -119,11 +126,14 @@ class SqliteDataSource(DataSource):
                     del data["_key"]
                     # TODO (Roman): select only needed columns on db side.
                     data = {reversed_columns_mapping[k]: v for k, v in data.items() if v is not None}
-                    result[data_key] = serializer.deserialize_data(data)
+                    deserialized_data = serializer.deserialize_data(data)
+
+                    # TODO (Roman): make key hashable and remove conversion of key to str
+                    result[str(deserialized_data.get_key())] = deserialized_data
 
                 # yield records according to input keys order
-                for serialized_key in serialized_keys:
-                    yield result.get(serialized_key)
+                for key in keys:
+                    yield result.get(str(key))
 
     def load_by_query(
         self, query: TQuery, *, dataset: TDataset = None, identities: Iterable[TIdentity] | None = None
@@ -153,7 +163,6 @@ class SqliteDataSource(DataSource):
         cursor.execute(sql_statement, subtype_names)
 
         for data in cursor.fetchall():
-            del data["_key"]
             # TODO (Roman): select only needed columns on db side.
             data = {reversed_columns_mapping[k]: v for k, v in data.items() if v is not None}
             yield serializer.deserialize_data(data)
@@ -178,7 +187,7 @@ class SqliteDataSource(DataSource):
 
             for rec in records_group:
                 serialized_record = serializer.serialize_data(rec, is_root=True)
-                serialized_record["_key"] = key_serializer.serialize_key(rec)
+                # serialized_record["_key"] = key_serializer.serialize_key(rec)
                 serialized_records.append(serialized_record)
 
             all_fields = list({k for rec in serialized_records for k in rec.keys()})
@@ -197,7 +206,13 @@ class SqliteDataSource(DataSource):
 
             table_name = self._schema_manager.table_name_for_type(key_type)
 
-            self._schema_manager.create_table(table_name, columns_mapping.values(), if_not_exists=True)
+            primary_keys = [
+                columns_mapping[primary_key] for primary_key in self._schema_manager.get_primary_keys(key_type)
+            ]
+
+            self._schema_manager.create_table(
+                table_name, columns_mapping.values(), if_not_exists=True, primary_keys=primary_keys
+            )
 
             sql_statement = f'REPLACE INTO "{table_name}" ({columns_str}) VALUES {value_placeholders};'
 

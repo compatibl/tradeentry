@@ -33,10 +33,10 @@ class FlatDictSerializer(DictSerializer):
     Complex types serialize as a json string.
     """
 
-    primitive_type_names = ["NoneType", "float", "int"]
+    primitive_type_names = ["NoneType", "float", "int", "str"]
 
     def serialize_data(self, data, select_fields: List[str] | None = None, *, is_root: bool = False):
-        if isinstance(data, str):
+        if data.__class__.__name__ in self.primitive_type_names:
             return data
 
         value_custom_type = StringValueParser.get_custom_type(data)

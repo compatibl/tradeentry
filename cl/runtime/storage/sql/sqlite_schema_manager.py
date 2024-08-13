@@ -40,7 +40,13 @@ class SqliteSchemaManager:
     add_class_to_column_names: bool = True
     """If True - class name will be added to the column name in format ClassName.field_name."""
 
-    def create_table(self, table_name: str, columns: Iterable[str], if_not_exists: bool = True) -> None:
+    def create_table(
+            self,
+            table_name: str,
+            columns: Iterable[str],
+            if_not_exists: bool = True,
+            primary_keys: List[str] | None = None
+    ) -> None:
         """
         Create sqlite table with given name and columns.
 
@@ -58,8 +64,10 @@ class SqliteSchemaManager:
         cursor = self.sqlite_connection.cursor()
         cursor.execute(create_table_statement)
 
-        create_unique_index_statement = f'CREATE UNIQUE INDEX IF NOT EXISTS idx_key ON "{table_name}" (_key);'
-        cursor.execute(create_unique_index_statement)
+        if primary_keys:
+            keys_str = ', '.join([f'"{key}"' for key in primary_keys])
+            create_unique_index_statement = f'CREATE UNIQUE INDEX IF NOT EXISTS idx_key ON "{table_name}" ({keys_str});'
+            cursor.execute(create_unique_index_statement)
 
         self.sqlite_connection.commit()
 
@@ -130,7 +138,7 @@ class SqliteSchemaManager:
                 else:
                     all_fields[field_name] = (type_.__name__, field_type)
 
-        columns_mapping = {"_type": "_type", "_key": "_key"}
+        columns_mapping = {"_type": "_type"}
 
         for field_name, (class_name, _) in all_fields.items():
             field_name = (
@@ -149,3 +157,9 @@ class SqliteSchemaManager:
     @staticmethod
     def get_subtype_names(type_: Type) -> Set[str]:
         return set(schema_type.__name__ for schema_type in Schema.get_types() if type_ in schema_type.__mro__)
+
+    def get_primary_keys(self, type_: Type) -> List[str]:
+        """Return list of primary key fields."""
+        key_type = self._get_key_type(type_)
+        key_fields = self._get_type_fields(key_type)
+        return list(key_fields.keys())
