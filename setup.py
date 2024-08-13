@@ -20,11 +20,12 @@ setuptools.setup(
         'Source Code': 'https://github.com/compatibl/runtime',
     },
     packages=setuptools.find_namespace_packages(
-        where='.', include=['cl.runtime', 'cl.runtime.*'], exclude=['tests', 'tests.*']
+        where='.', include=['cl.runtime', 'cl.runtime.*', 'data'], exclude=['tests', 'tests.*']
     ),
     package_dir={'': '.'},
     package_data={
-        '': ['py.typed', 'data/*'],
+        '': ['py.typed'],
+        'data': ['csv/**/*.csv', 'yaml/**/*.yaml', 'json/**/*.json'],
     },
     include_package_data=True,
     classifiers=[
