@@ -17,7 +17,6 @@ from __future__ import annotations
 from abc import abstractmethod
 from dataclasses import dataclass
 from dynaconf import Dynaconf
-from functools import reduce
 from typing import Dict
 from typing_extensions import Self
 
@@ -29,7 +28,7 @@ def get_dynaconf_dict() -> Dict[str, Dict]:
     raw_settings = Dynaconf(
         environments=True,
         envvar_prefix="CL",
-        env_switcher="CL_CONFIG_ENV",
+        env_switcher="CL_SETTINGS_ENV",
         settings_files=["settings.yaml", ".secrets.yaml"],
     )
 
@@ -56,24 +55,30 @@ class Settings:
 
     @classmethod
     @abstractmethod
-    def get_settings_path(cls) -> str:
-        """Path relative to dynaconf settings file root in dot delimited format."""
+    def get_prefix(cls) -> str:
+        """
+        Dynaconf field prefix for this settings class with the trailing underscore (if the underscore-delimited),
+        for example 'runtime_' for the Runtime package.
+
+        Notes:
+            - Only those config fields that start from the prefix are used by this settings class
+            - The prefix is removed before the fields are provided to the constructor of this class
+        """
 
     @classmethod
     def instance(cls) -> Self:
         """Return singleton instance."""
 
-        # Each derived settings class defines a unique path
-        settings_path = cls.get_settings_path()
+        # Each settings class has a unique prefix used to filter dynaconf fields
+        prefix = cls.get_prefix()
 
         # Check if cached value exists, load if not found
-        if (result := _settings_dict.get(settings_path, None)) is None:
-            # Use dot-delimited settings path 'a.b' to access 'dynaconf_settings["a"]["b"]'
-            settings_dict = reduce(lambda d, key: d[key], settings_path.split("."), _dynaconf_dict)
+        if (result := _settings_dict.get(prefix, None)) is None:
 
-            # TODO: Support hierarchical data using deserializer
-            # TODO: Support JSON string format for fields
+            # Filter by prefix and create a new dictionary where prefix is removed from keys
+            settings_dict = {k[len(prefix):]: v for k, v in _dynaconf_dict.items() if k.startswith(prefix)}
+
             result = cls(**settings_dict)
-            _settings_dict[settings_path] = result
+            _settings_dict[prefix] = result
 
         return result

@@ -13,26 +13,14 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.settings.api_settings import ApiSettings
+from cl.runtime.settings.runtime_settings import RuntimeSettings
 
 
-@pytest.mark.skip("Temporarily disabled during refactoring.")  # TODO: Enable
-def test_package_aliases():
+def test_smoke():
     """Test UiSettings class."""
 
-    api_settings = ApiSettings.instance()
-
-    assert api_settings.package_aliases == {
-        "cl.runtime": "rt",
-        "stubs.cl.runtime": "stubs.rt",
-    }
-
-    # Call twice to check caching
-    for _ in range(2):
-        assert api_settings.get_package_alias("cl") is None
-        assert api_settings.get_package_alias("cl.unknown.package") is None
-        assert api_settings.get_package_alias("cl.runtime") == "rt"
-        assert api_settings.get_package_alias("cl.runtime.storage") == "rt"
+    settings = RuntimeSettings.instance()
+    assert settings.data_source_id == "Runtime Default"
 
 
 if __name__ == "__main__":

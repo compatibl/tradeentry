@@ -18,7 +18,7 @@ from typing import Dict
 
 
 @dataclass(slots=True, kw_only=True, frozen=True)
-class UiSettings(Settings):
+class UiSettings:
     """UI settings are for visual presentation to the user only. They do not affect the REST API."""
 
     package_labels: Dict[str, str] | None = None
@@ -67,7 +67,3 @@ class UiSettings(Settings):
     - When not specified, the name is humanized as ITEM_NAME -> Item Name
     - This UI setting does not affect the REST API
     """
-
-    @classmethod
-    def get_settings_path(cls) -> str:
-        return "runtime.ui_settings"

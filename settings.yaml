@@ -1,53 +1,5 @@
 # Settings specified under default heading apply to all environments
 default:
 
-    # Default context 
-    context:
-
-        # Default data source
-        data_source:
-            _class: cl.runtime.SqliteDataSource   # Data source class name
-            data_source_id: Default               # Unique identifier
-
-        dataset: Common
-
-    data_source_settings:
-
-        # Deletion of temporary databases (e.g. those used for caching or testing) via the API
-        # is allowed only if 'temp_id_pattern' is specified and matches data_source_id
-        temp_id_pattern: Temp.*
-
-    # Runtime settings
-    runtime:
-
-        # REST API settings.
-        api_settings:
-
-            # Custom namespace package or code subdirectory aliases as a dictionary in 'module_prefix: alias' format.
-            package_aliases:
-                cl.runtime: rt
-                stubs.cl.runtime: stubs.rt
-
-        # UI settings do not affect the REST API.
-        ui_settings:
-
-            # Custom package alias labels as a dictionary in 'package_alias: Package Label' format for the UI only.
-            package_labels:
-                rt: Runtime
-                stubs.rt: Runtime Stubs
-
-            # Custom record type labels as a dictionary in 'ClassName: Class Label' format for the UI only.
-            type_labels:
-                SampleClass: Sample Class Label
-
-            # Custom field labels as a dictionary in 'field_name: Field Name' format for the UI only.
-            field_labels:
-                sample_field: Sample Field Label
-
-            # Custom method labels as a dictionary in 'method_name: Method Name' format for the UI only.
-            method_labels:
-               sample_method: Sample Method Label
-
-            # Custom enum item labels as a dictionary in 'ITEM_NAME: Item Name' format for the UI only.
-            enum_item_labels:
-                SAMPLE_ITEM: Sample Item Label
+    # Default data source identifier
+    runtime_data_source_id: Runtime Default

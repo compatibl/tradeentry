@@ -22,7 +22,7 @@ _package_aliases_dict: Dict[str, str] = {}
 
 
 @dataclass(slots=True, kw_only=True, frozen=True)
-class ApiSettings(Settings):
+class ApiSettings:
     """REST API settings."""
 
     package_aliases: Dict[str, str] | None = None
@@ -35,10 +35,6 @@ class ApiSettings(Settings):
         - When specified, alias.ClassName is used, otherwise ClassName is used without a prefix
         - The same alias applies to all subdirectories of 'module_prefix'
     """
-
-    @classmethod
-    def get_settings_path(cls) -> str:
-        return "runtime.api_settings"
 
     def get_package_alias(self, module_prefix: str) -> str | None:
         """Get alias for the module prefix in dot-delimited format or None if alias is not specified."""
