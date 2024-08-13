@@ -24,7 +24,7 @@ setuptools.setup(
     ),
     package_dir={'': '.'},
     package_data={
-        '': ['py.typed'],
+        '': ['py.typed', 'data/*'],
     },
     include_package_data=True,
     classifiers=[
