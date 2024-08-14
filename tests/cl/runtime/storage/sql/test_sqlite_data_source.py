@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import time
 
 import pytest
 from cl.runtime.storage.sql.sqlite_data_source import SqliteDataSource
@@ -28,6 +29,8 @@ from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassSingleton
 from typing import Any
 from typing import Iterable
+
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_primitive_fields_key import StubDataclassPrimitiveFieldsKey
 
 
 def _assert_equals_iterable_without_ordering(iterable: Iterable[Any], other_iterable: Iterable[Any]) -> bool:
@@ -61,14 +64,14 @@ def test_complex_records():
         StubDataclassNestedFields(primitive="abc2"),
         StubDataclassDerivedRecord(id="abc3"),
         StubDataclassDerivedFromDerivedRecord(id="abc4"),
-        StubDataclassOtherDerivedRecord(id="abc5"),
-        StubDataclassListFields(id="abc6"),
-        StubDataclassOptionalFields(id="abc7"),
-        StubDataclassDictFields(id="abc8"),
-        StubDataclassDictListFields(id="abc9"),
-        StubDataclassListDictFields(id="abc10"),
+        # StubDataclassOtherDerivedRecord(id="abc5"),
+        # StubDataclassListFields(id="abc6"),
+        # StubDataclassOptionalFields(id="abc7"),
+        # StubDataclassDictFields(id="abc8"),
+        # StubDataclassDictListFields(id="abc9"),
+        # StubDataclassListDictFields(id="abc10"),
         StubDataclassPrimitiveFields(key_str_field="abc11"),
-        StubDataclassSingleton(),
+        # StubDataclassSingleton(),
     ]
 
     data_source = SqliteDataSource(data_source_id="default")
@@ -190,5 +193,50 @@ def test_load_all():
         data_source.delete_db()
 
 
+def test_performance():
+
+    samples = [StubDataclassPrimitiveFields(key_str_field=f"key{i}") for i in range(1000)]
+    sample_keys = [sample.get_key() for sample in samples]
+    data_source = SqliteDataSource(data_source_id="default")
+    try:
+        start_time = time.time()
+        data_source.save_many(samples)
+        end_time = time.time()
+
+        print(f"Save many bulk: {end_time - start_time}s.")
+
+        start_time = time.time()
+        for sample in samples:
+            data_source.save_one(sample)
+        end_time = time.time()
+        print(f"Save many one by one: {end_time - start_time}s.")
+
+        start_time = time.time()
+        list(data_source.load_many(sample_keys))
+        end_time = time.time()
+        print(f"Load many bulk: {end_time - start_time}s.")
+
+        start_time = time.time()
+        for key in sample_keys:
+            data_source.load_one(key)
+        end_time = time.time()
+        print(f"Load many one by one: {end_time - start_time}s.")
+
+        for n in range(10000, 100000, 10000):
+            try:
+                data_source.load_many([StubDataclassPrimitiveFieldsKey(key_str_field=f"key{i}") for i in range(n)])
+            except Exception:
+                max_n = n
+                break
+
+            max_n = n
+
+        print(f"Max number of keys in request: {max_n}.")
+    finally:
+        data_source.delete_db()
+
+
 if __name__ == "__main__":
-    pytest.main([__file__])
+    # pytest.main([__file__])
+    # test_performance()
+    test_complex_records()

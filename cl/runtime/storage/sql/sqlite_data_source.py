@@ -108,13 +108,12 @@ class SqliteDataSource(DataSource):
 
                 columns_mapping = self._schema_manager.get_columns_mapping(key_type)
                 value_places = ", ".join([f'({", ".join(["?"] * len(key_fields))})' for _ in range(len(keys))])
-                key_column_places = ", ".join(["?"] * len(key_fields))
+                key_column_str = ", ".join([f'"{columns_mapping[key]}"' for key in key_fields])
 
-                sql_statement = f'SELECT * FROM "{table_name}" WHERE ({key_column_places}) IN ({value_places});'
+                sql_statement = f'SELECT * FROM "{table_name}" WHERE ({key_column_str}) IN ({value_places});'
 
-                query_values = [columns_mapping[key] for key in key_fields] + all_serialized_keys
                 cursor = self._connection.cursor()
-                cursor.execute(sql_statement, query_values)
+                cursor.execute(sql_statement, all_serialized_keys)
                 reversed_columns_mapping = {v: k for k, v in columns_mapping.items()}
 
                 # TODO (Roman): investigate performance impact from this ordering approach
@@ -122,8 +121,6 @@ class SqliteDataSource(DataSource):
                 # collect db result to dictionary to return it according to input keys order
                 result = {}
                 for data in cursor.fetchall():
-                    data_key = data["_key"]
-                    del data["_key"]
                     # TODO (Roman): select only needed columns on db side.
                     data = {reversed_columns_mapping[k]: v for k, v in data.items() if v is not None}
                     deserialized_data = serializer.deserialize_data(data)

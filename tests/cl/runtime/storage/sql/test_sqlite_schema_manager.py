@@ -71,7 +71,6 @@ def test_get_columns_mapping():
 
     expected_columns = {
         "_type": "_type",
-        "_key": "_key",
         "id": "StubDataclassRecord.id",
         "derived_field": "StubDataclassDerivedRecord.derived_field",
         "str_dict": "StubDataclassDictFields.str_dict",
