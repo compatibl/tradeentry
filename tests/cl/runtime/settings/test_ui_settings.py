@@ -13,14 +13,13 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.settings.ui_settings import UiSettings
 
 
-@pytest.mark.skip("Temporarily disabled during refactoring.")  # TODO: Enable
+@pytest.mark.skip("Temporarily disabled during refactoring.")  # TODO: Switch to new classes and enable
 def test_smoke():
     """Test UiSettings class."""
 
-    ui_settings = UiSettings.instance()
+    ui_settings = None
 
     assert ui_settings.package_labels == {
         "rt": "Runtime",

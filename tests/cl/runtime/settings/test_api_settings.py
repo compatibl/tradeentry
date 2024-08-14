@@ -13,14 +13,14 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.settings.api_settings import ApiSettings
+from cl.runtime.settings.package_alias import PackageAlias
 
 
-@pytest.mark.skip("Temporarily disabled during refactoring.")  # TODO: Enable
+@pytest.mark.skip("Temporarily disabled during refactoring.")  # TODO: Switch to new classes and enable
 def test_package_aliases():
     """Test UiSettings class."""
 
-    api_settings = ApiSettings.instance()
+    api_settings = None
 
     assert api_settings.package_aliases == {
         "cl.runtime": "rt",
