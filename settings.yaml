@@ -1,5 +1,13 @@
 # Settings specified under default heading apply to all environments
 default:
 
-    # Default data source identifier
+    # Load types from these packages
+    # TODO: Prefix or glob pattern
+    runtime_load_packages:
+        - cl.runtime
+        - stubs.cl.runtime
+
+    # Default data source
+    # TODO: Refactor to only specify the ID
+    runtime_data_source_class: cl.runtime.storage.sql.sqlite_data_source.SqliteDataSource
     runtime_data_source_id: Runtime Default

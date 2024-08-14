@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import List
+
 from cl.runtime.settings.settings import Settings
 from dataclasses import dataclass
 
@@ -19,6 +21,12 @@ from dataclasses import dataclass
 @dataclass(slots=True, kw_only=True, frozen=True)
 class RuntimeSettings(Settings):
     """Runtime package settings."""
+
+    load_packages: List[str]
+    """List of packages to load."""
+
+    data_source_class: str
+    """Data source class in module.ClassName format."""
 
     data_source_id: str
     """Default data source identifier (the data source record must be loaded in code or from a csv/yaml/json file)."""

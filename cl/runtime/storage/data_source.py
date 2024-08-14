@@ -156,6 +156,7 @@ class DataSource(ABC):
         if DataSource.__default is None:
             # Load from configuration if not set
             # TODO: Use settings loader instead of accessing _dynaconf_dict directly
-            data_source_type = ClassInfo.get_class_type(_dynaconf_dict["context"]["data_source"].pop("_class"))
-            DataSource.__default = data_source_type(**_dynaconf_dict["context"]["data_source"])
+            data_source_type = ClassInfo.get_class_type(_dynaconf_dict["runtime_data_source_class"])
+            data_source_id = str(_dynaconf_dict["runtime_data_source_id"])
+            DataSource.__default = data_source_type(data_source_id=data_source_id)
         return DataSource.__default
