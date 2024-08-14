@@ -12,13 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
-from typing import Dict
-
 from cl.runtime import RecordMixin
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.settings.package_alias_key import PackageAliasKey
 from cl.runtime.serialization.sentinel_type import sentinel_value
+from cl.runtime.settings.package_alias_key import PackageAliasKey
+from dataclasses import dataclass
+from typing import Dict
 
 _package_alias_dict: Dict[str, str] = {}
 """Cached package aliases with module as key for faster lookup."""

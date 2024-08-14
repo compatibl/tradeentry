@@ -75,9 +75,8 @@ class Settings:
 
         # Check if cached value exists, load if not found
         if (result := _settings_dict.get(prefix, None)) is None:
-
             # Filter by prefix and create a new dictionary where prefix is removed from keys
-            settings_dict = {k[len(prefix):]: v for k, v in _dynaconf_dict.items() if k.startswith(prefix)}
+            settings_dict = {k[len(prefix) :]: v for k, v in _dynaconf_dict.items() if k.startswith(prefix)}
 
             result = cls(**settings_dict)
             _settings_dict[prefix] = result
