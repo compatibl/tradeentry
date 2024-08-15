@@ -36,35 +36,37 @@ class FlatDictSerializer(DictSerializer):
     primitive_type_names = ["NoneType", "float", "int"]
 
     def serialize_data(self, data, select_fields: List[str] | None = None, *, is_root: bool = False):
+
         if isinstance(data, str):
             return data
 
-        value_custom_type = StringValueParser.get_custom_type(data)
+        if data.__class__.__name__ in super().primitive_type_names:
+            serialized_data = data
+        else:
+            serialized_data = super().serialize_data(data, select_fields)
+
+        value_custom_type = StringValueParser.get_custom_type(serialized_data)
 
         if not is_root and value_custom_type is not None:
-            if value_custom_type in [
-                StringValueCustomType.date,
-                StringValueCustomType.datetime,
-                StringValueCustomType.time,
-            ]:
-                result = data.isoformat()
-            elif value_custom_type == StringValueCustomType.bool:
+            handled_serialized_value = None
+            if serialized_data.__class__.__name__ in ("date", "datetime", "time"):
+                handled_serialized_value = serialized_data.isoformat()
+            elif serialized_data.__class__.__name__ == "bool":
                 # TODO (Roman): think about a more efficient way to store bool
-                result = "1" if data else "0"
-            elif value_custom_type == StringValueCustomType.uuid:
-                result = base64.b64encode(data.bytes).decode()
-            elif value_custom_type == StringValueCustomType.bytes:
-                result = base64.b64encode(data).decode()
-            else:
+                handled_serialized_value = "1" if data else "0"
+            elif serialized_data.__class__.__name__ == "UUID":
+                handled_serialized_value = base64.b64encode(data.bytes).decode()
+            elif serialized_data.__class__.__name__ == "bytes":
+                handled_serialized_value = base64.b64encode(data).decode()
+            elif isinstance(serialized_data, (dict, list)):
                 # TODO (Roman): refactor to avoid nested data json dumps.
                 #  It is enough to do single json dump for the entire object.
-                result = json.dumps(super().serialize_data(data, select_fields))
+                handled_serialized_value = json.dumps(serialized_data)
 
-            result = StringValueParser.add_type_prefix(result, value_custom_type)
+            return StringValueParser.add_type_prefix(handled_serialized_value, value_custom_type) \
+                if handled_serialized_value is not None else serialized_data
         else:
-            result = super().serialize_data(data, select_fields)
-
-        return result
+            return serialized_data
 
     def deserialize_data(self, data: TDataDict):
         # check all str values if it is flattened from some type
@@ -89,7 +91,7 @@ class FlatDictSerializer(DictSerializer):
 
             # TODO (Roman): consider to add serialize_primitive() method and override it
             # return deserialized primitives to avoid infinity recursion
-            if converted_data.__class__.__name__ in ["str", "date", "datetime", "time", "bool", "UUID", "bytes"]:
+            if converted_data.__class__.__name__ in super().primitive_type_names:
                 return converted_data
         else:
             converted_data = data
