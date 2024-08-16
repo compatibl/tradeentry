@@ -15,7 +15,7 @@
 
 def viewer_impl(method, *, label=None):
     """Decorator to mark methods that visualize the record."""
-
+    method._is_viewer = True
     return method
 
 
