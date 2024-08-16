@@ -25,7 +25,11 @@ from cl.runtime.storage.sql.sqlite_schema_manager import SqliteSchemaManager
 from collections import defaultdict
 from dataclasses import dataclass
 from itertools import groupby
-from typing import Iterable, List, Tuple, Any, Dict
+from typing import Any
+from typing import Dict
+from typing import Iterable
+from typing import List
+from typing import Tuple
 from typing import Type
 
 
@@ -91,9 +95,7 @@ class SqliteDataSource(DataSource):
         Expected all keys are of the same type for which key fields are specified.
         """
 
-        return tuple(
-            serializer.serialize_data(getattr(key, key_field)) for key in keys for key_field in key_fields
-        )
+        return tuple(serializer.serialize_data(getattr(key, key_field)) for key in keys for key_field in key_fields)
 
     def load_one(
         self, record_or_key: KeyProtocol | None, *, dataset: TDataset = None, identity: TIdentity | None = None
@@ -219,7 +221,6 @@ class SqliteDataSource(DataSource):
             grouped_records[record.get_key_type()].append(record)
 
         for key_type, records_group in grouped_records.items():
-
             # serialize records
             serialized_records = [serializer.serialize_data(rec, is_root=True) for rec in records_group]
 

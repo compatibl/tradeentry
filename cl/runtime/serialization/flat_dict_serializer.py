@@ -32,7 +32,6 @@ class FlatDictSerializer(DictSerializer):
     primitive_type_names = ["NoneType", "float", "int"]
 
     def serialize_data(self, data, select_fields: List[str] | None = None, *, is_root: bool = False):
-
         if isinstance(data, str):
             return data
 
@@ -59,8 +58,11 @@ class FlatDictSerializer(DictSerializer):
                 #  It is enough to do single json dump for the entire object.
                 handled_serialized_value = json.dumps(serialized_data)
 
-            return StringValueParser.add_type_prefix(handled_serialized_value, value_custom_type) \
-                if handled_serialized_value is not None else serialized_data
+            return (
+                StringValueParser.add_type_prefix(handled_serialized_value, value_custom_type)
+                if handled_serialized_value is not None
+                else serialized_data
+            )
         else:
             return serialized_data
 

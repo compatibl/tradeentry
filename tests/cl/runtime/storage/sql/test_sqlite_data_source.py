@@ -12,9 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import time
-
 import pytest
+import time
 from cl.runtime.storage.sql.sqlite_data_source import SqliteDataSource
 from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
 from stubs.cl.runtime import StubDataclassDerivedRecord
@@ -194,7 +193,6 @@ def test_load_all():
 
 @pytest.mark.skip("Performance test.")
 def test_performance():
-
     n = 1000
     samples = [StubDataclassPrimitiveFields(key_str_field=f"key{i}") for i in range(n)]
     sample_keys = [sample.get_key() for sample in samples]

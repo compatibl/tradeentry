@@ -38,11 +38,11 @@ class SqliteSchemaManager:
     """If True - class name will be added to the column name in format ClassName.field_name."""
 
     def create_table(
-            self,
-            table_name: str,
-            columns: Iterable[str],
-            if_not_exists: bool = True,
-            primary_keys: List[str] | None = None
+        self,
+        table_name: str,
+        columns: Iterable[str],
+        if_not_exists: bool = True,
+        primary_keys: List[str] | None = None,
     ) -> None:
         """
         Create sqlite table with given name and columns.
@@ -62,7 +62,7 @@ class SqliteSchemaManager:
         cursor.execute(create_table_statement)
 
         if primary_keys:
-            keys_str = ', '.join([f'"{key}"' for key in primary_keys])
+            keys_str = ", ".join([f'"{key}"' for key in primary_keys])
             create_unique_index_statement = f'CREATE UNIQUE INDEX IF NOT EXISTS idx_key ON "{table_name}" ({keys_str});'
             cursor.execute(create_unique_index_statement)
 
