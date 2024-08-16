@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
 from abc import abstractmethod
 from dataclasses import dataclass
 from dynaconf import Dynaconf
@@ -22,7 +20,7 @@ from typing_extensions import Self
 
 
 def get_dynaconf_dict() -> Dict[str, Dict]:
-    """Load dynaconf settings and convert them to hierarchical dictionary format."""
+    """Load Dynaconf settings and convert them to hierarchical dictionary format."""
 
     # Dynaconf settings in raw format, some keys may be strings instead of dictionaries or lists
     raw_settings = Dynaconf(
@@ -30,7 +28,6 @@ def get_dynaconf_dict() -> Dict[str, Dict]:
         envvar_prefix="CL",
         env_switcher="CL_SETTINGS_ENV",
         settings_files=["settings.yaml", ".secrets.yaml"],
-        merge_enabled=True,
     )
 
     # Convert containers at all levels to dictionaries and lists
@@ -46,7 +43,7 @@ def get_dynaconf_dict() -> Dict[str, Dict]:
 _dynaconf_dict: Dict[str, Dict] = get_dynaconf_dict()
 """The entire set of Dynaconf settings in hierarchical dictionary format."""
 
-_settings_dict: Dict[str, Settings] = {}
+_settings_dict: Dict[str, 'Settings'] = {}
 """Dictionary of preloaded settings objects indexed by the settings path."""
 
 
@@ -76,7 +73,7 @@ class Settings:
         # Check if cached value exists, load if not found
         if (result := _settings_dict.get(prefix, None)) is None:
             # Filter by prefix and create a new dictionary where prefix is removed from keys
-            settings_dict = {k[len(prefix) :]: v for k, v in _dynaconf_dict.items() if k.startswith(prefix)}
+            settings_dict = {k[len(prefix):]: v for k, v in _dynaconf_dict.items() if k.startswith(prefix)}
 
             result = cls(**settings_dict)
             _settings_dict[prefix] = result

@@ -22,7 +22,16 @@ class RuntimeSettings(Settings):
     """Runtime package settings."""
 
     load_packages: List[str]
-    """List of packages to load."""
+    """List of packages to load in dot-delimited module prefix format, for example 'cl.runtime'."""
+
+    api_host_name: str
+    """REST API host name (either host name or IP can be used to access the API)."""
+
+    api_host_ip: str
+    """REST API host IP (either host name or IP can be used to access the API)."""
+
+    api_port: int
+    """REST API port."""
 
     data_source_class: str
     """Data source class in module.ClassName format."""

@@ -19,8 +19,8 @@ from cl.runtime.settings.runtime_settings import RuntimeSettings
 def test_smoke():
     """Test UiSettings class."""
 
-    settings = RuntimeSettings.instance()
-    assert settings.data_source_id == "Runtime Default"
+    runtime_settings = RuntimeSettings.instance()
+    assert runtime_settings.data_source_id == "Runtime Default"
 
 
 if __name__ == "__main__":

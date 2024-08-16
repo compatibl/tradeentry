@@ -36,6 +36,8 @@ from typing import Type
 from typing import cast
 from typing_extensions import Self
 
+from cl.runtime.settings.runtime_settings import RuntimeSettings
+
 
 def is_key_or_record(data_type):
     """Return true if the type is a record based on the presence of 'get_key_type' method."""
@@ -98,8 +100,10 @@ class Schema:
         """
 
         if cls._type_dict_by_short_name is None:
-            # TODO: Load from config file
-            packages = ["cl.runtime", "stubs.cl.runtime"]
+
+            # Load packages from Dynaconf
+            runtime_settings = RuntimeSettings.instance()
+            packages = runtime_settings.load_packages
 
             # Get modules for the specified packages
             modules = cls._get_modules(packages)
