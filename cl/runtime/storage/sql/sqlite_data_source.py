@@ -26,7 +26,7 @@ from cl.runtime.storage.sql.sqlite_schema_manager import SqliteSchemaManager
 from collections import defaultdict
 from dataclasses import dataclass
 from itertools import groupby
-from typing import Iterable, List, Tuple, Any
+from typing import Iterable, List, Tuple, Any, Dict
 from typing import Type
 
 
@@ -61,6 +61,41 @@ class SqliteDataSource(DataSource):
     def batch_size(self) -> int:
         pass
 
+    @staticmethod
+    def _add_where_keys_in_clause(
+        sql_statement: str,
+        key_fields: Tuple[str, ...],
+        columns_mapping: Dict[str, str],
+        keys_len: int,
+    ) -> str:
+        """
+        Add "WHERE (key_field1, ...) IN ((value1_for_field1, ...), (value2_for_field1, ...), ...)" clause to
+        sql_statement.
+        """
+
+        # if key fields isn't empty add WHERE clause
+        if key_fields:
+            value_places = ", ".join([f'({", ".join(["?"] * len(key_fields))})' for _ in range(keys_len)])
+            key_column_str = ", ".join([f'"{columns_mapping[key]}"' for key in key_fields])
+
+            # add WHERE clause to sql_statement
+            sql_statement += f" WHERE ({key_column_str}) IN ({value_places})"
+
+        return sql_statement
+
+    @staticmethod
+    def _serialize_keys_to_flat_tuple(
+        keys: Iterable[KeyProtocol], key_fields: Tuple[str, ...], serializer
+    ) -> Tuple[Any, ...]:
+        """
+        Sequentially serialize key fields for each key in keys into a flat tuple of values.
+        Expected all keys are of the same type for which key fields are specified.
+        """
+
+        return tuple(
+            serializer.serialize_data(getattr(key, key_field)) for key in keys for key_field in key_fields
+        )
+
     def load_one(
         self, record_or_key: KeyProtocol | None, *, dataset: TDataset = None, identity: TIdentity | None = None
     ) -> RecordProtocol | None:
@@ -86,35 +121,40 @@ class SqliteDataSource(DataSource):
                 yield from records_or_keys_group
                 continue
 
-            for is_key_group, keys in groupby(records_or_keys_group, lambda x: is_key(x)):
+            for is_key_group, keys_group in groupby(records_or_keys_group, lambda x: is_key(x)):
                 # return directly if input is record
                 if not is_key_group:
-                    yield from keys
+                    yield from keys_group
                     continue
 
-                keys = tuple(keys)
-
-                key_fields = self._schema_manager.get_primary_keys(key_type)
-                all_serialized_keys = tuple(
-                    serializer.serialize_data(getattr(key, key_field)) for key in keys for key_field in key_fields
-                )
-
                 table_name = self._schema_manager.table_name_for_type(key_type)
+
+                # if keys_group don't support "in" or "len" operator convert it to tuple
+                if not hasattr(keys_group, "__contains__") or not hasattr(keys_group, "__len__"):
+                    keys_group = tuple(keys_group)
 
                 # return None for all keys in group if table doesn't exist
                 existing_tables = self._schema_manager.existing_tables()
                 if table_name not in existing_tables:
-                    yield from (None for _ in range(len(keys)))
+                    yield from (None for _ in range(len(keys_group)))
                     continue
 
+                key_fields = self._schema_manager.get_primary_keys(key_type)
                 columns_mapping = self._schema_manager.get_columns_mapping(key_type)
-                value_places = ", ".join([f'({", ".join(["?"] * len(key_fields))})' for _ in range(len(keys))])
-                key_column_str = ", ".join([f'"{columns_mapping[key]}"' for key in key_fields])
 
-                sql_statement = f'SELECT * FROM "{table_name}" WHERE ({key_column_str}) IN ({value_places});'
+                # if keys_group don't support "in" or "len" operator convert it to tuple
+                sql_statement = f'SELECT * FROM "{table_name}"'
+                sql_statement = self._add_where_keys_in_clause(
+                    sql_statement, key_fields, columns_mapping, len(keys_group)
+                )
+                sql_statement += ";"
+
+                # serialize keys to tuple
+                query_values = self._serialize_keys_to_flat_tuple(keys_group, key_fields, serializer)
 
                 cursor = self._connection.cursor()
-                cursor.execute(sql_statement, all_serialized_keys)
+                cursor.execute(sql_statement, query_values)
+
                 reversed_columns_mapping = {v: k for k, v in columns_mapping.items()}
 
                 # TODO (Roman): investigate performance impact from this ordering approach
@@ -130,7 +170,7 @@ class SqliteDataSource(DataSource):
                     result[str(deserialized_data.get_key())] = deserialized_data
 
                 # yield records according to input keys order
-                for key in keys:
+                for key in keys_group:
                     yield result.get(str(key))
 
     def load_by_query(
@@ -180,15 +220,15 @@ class SqliteDataSource(DataSource):
             grouped_records[record.get_key_type()].append(record)
 
         for key_type, records_group in grouped_records.items():
-            serialized_records = []
 
-            for rec in records_group:
-                serialized_record = serializer.serialize_data(rec, is_root=True)
-                # serialized_record["_key"] = key_serializer.serialize_key(rec)
-                serialized_records.append(serialized_record)
+            # serialize records
+            serialized_records = [serializer.serialize_data(rec, is_root=True) for rec in records_group]
 
+            # get maximum set of fields from records
             all_fields = list({k for rec in serialized_records for k in rec.keys()})
 
+            # fill sql_values with ordered values from serialized records
+            # if field isn't in some records - fill with None
             sql_values = tuple(
                 serialized_record[k] if k in serialized_record else None
                 for serialized_record in serialized_records
@@ -213,8 +253,17 @@ class SqliteDataSource(DataSource):
 
             sql_statement = f'REPLACE INTO "{table_name}" ({columns_str}) VALUES {value_placeholders};'
 
+            if not primary_keys:
+                # TODO (Roman): this is a workaround for handling singleton records.
+                #  Since they don't have primary keys, we can't automatically replace existing records.
+                #  So this code just deletes the existing records before saving.
+                #  As a possible solution, we can introduce some mandatory primary key that isn't based on the
+                #  key fields.
+                self.delete_many((rec.get_key() for rec in records_group))
+
             cursor = self._connection.cursor()
             cursor.execute(sql_statement, sql_values)
+
             self._connection.commit()
 
     def delete_many(
@@ -238,20 +287,25 @@ class SqliteDataSource(DataSource):
             existing_tables = self._schema_manager.existing_tables()
             if table_name not in existing_tables:
                 continue
-            keys = tuple(keys_group)
+
             key_fields = self._schema_manager.get_primary_keys(key_type)
-            all_serialized_keys = tuple(
-                serializer.serialize_data(getattr(key, key_field)) for key in keys for key_field in key_fields
-            )
-
             columns_mapping = self._schema_manager.get_columns_mapping(key_type)
-            value_places = ", ".join([f'({", ".join(["?"] * len(key_fields))})' for _ in range(len(keys))])
-            key_column_str = ", ".join([f'"{columns_mapping[key]}"' for key in key_fields])
-            sql_statement = f'DELETE FROM "{table_name}" WHERE ({key_column_str}) IN ({value_places});'
 
+            # if keys_group don't support "in" or "len" operator convert it to tuple
+            if not hasattr(keys_group, "__contains__") or not hasattr(keys_group, "__len__"):
+                keys_group = tuple(keys_group)
+
+            # construct sql_statement with placeholders for values
+            sql_statement = f'DELETE FROM "{table_name}"'
+            sql_statement = self._add_where_keys_in_clause(sql_statement, key_fields, columns_mapping, len(keys_group))
+            sql_statement += ";"
+
+            # serialize keys to tuple
+            query_values = self._serialize_keys_to_flat_tuple(keys_group, key_fields, serializer)
+
+            # perform delete query
             cursor = self._connection.cursor()
-            cursor.execute(sql_statement, all_serialized_keys)
-
+            cursor.execute(sql_statement, query_values)
             self._connection.commit()
 
     def delete_db(self) -> None:

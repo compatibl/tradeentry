@@ -158,8 +158,8 @@ class SqliteSchemaManager:
     def get_subtype_names(type_: Type) -> Set[str]:
         return set(schema_type.__name__ for schema_type in Schema.get_types() if type_ in schema_type.__mro__)
 
-    def get_primary_keys(self, type_: Type) -> List[str]:
+    def get_primary_keys(self, type_: Type) -> Tuple[str, ...]:
         """Return list of primary key fields."""
         key_type = self._get_key_type(type_)
         key_fields = self._get_type_fields(key_type)
-        return list(key_fields.keys())
+        return tuple(key_fields.keys())

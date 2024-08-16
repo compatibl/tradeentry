@@ -65,14 +65,14 @@ def test_complex_records():
         StubDataclassNestedFields(primitive="abc2"),
         StubDataclassDerivedRecord(id="abc3"),
         StubDataclassDerivedFromDerivedRecord(id="abc4"),
-        # StubDataclassOtherDerivedRecord(id="abc5"),
-        # StubDataclassListFields(id="abc6"),
-        # StubDataclassOptionalFields(id="abc7"),
-        # StubDataclassDictFields(id="abc8"),
-        # StubDataclassDictListFields(id="abc9"),
-        # StubDataclassListDictFields(id="abc10"),
+        StubDataclassOtherDerivedRecord(id="abc5"),
+        StubDataclassListFields(id="abc6"),
+        StubDataclassOptionalFields(id="abc7"),
+        StubDataclassDictFields(id="abc8"),
+        StubDataclassDictListFields(id="abc9"),
+        StubDataclassListDictFields(id="abc10"),
         StubDataclassPrimitiveFields(key_str_field="abc11"),
-        # StubDataclassSingleton(),
+        StubDataclassSingleton(),
     ]
 
     data_source = SqliteDataSource(data_source_id="default")
@@ -194,6 +194,7 @@ def test_load_all():
         data_source.delete_db()
 
 
+@pytest.mark.skip("Performance test.")
 def test_performance():
 
     samples = [StubDataclassPrimitiveFields(key_str_field=f"key{i}") for i in range(1000)]
@@ -233,6 +234,24 @@ def test_performance():
             max_n = n
 
         print(f"Max number of keys in request: {max_n}.")
+    finally:
+        data_source.delete_db()
+
+
+def test_singleton():
+    singleton_sample = StubDataclassSingleton()
+    data_source = SqliteDataSource(data_source_id="default")
+    try:
+        data_source.save_one(singleton_sample)
+        loaded_sample = data_source.load_one(singleton_sample.get_key())
+        assert loaded_sample == singleton_sample
+
+        other_singleton_sample = StubDataclassSingleton(str_field="other")
+        data_source.save_one(other_singleton_sample)
+        all_records = list(data_source.load_all(other_singleton_sample.__class__))
+        assert len(all_records) == 1
+        assert all_records[0] == other_singleton_sample
+
     finally:
         data_source.delete_db()
 
