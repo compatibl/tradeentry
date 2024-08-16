@@ -11,22 +11,28 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from requests import Request
 
 from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
 from cl.runtime.routers.entity.list_panels_response_item import ListPanelsResponseItem
 from fastapi import APIRouter
 from fastapi import Header
 from fastapi import Query
-from typing import List
+from typing import List, Dict, Any
+
+from cl.runtime.routers.entity.panel_request import PanelRequest
+from cl.runtime.routers.entity.panel_response_util import PanelResponseUtil
 
 ListPanelsResponse = List[ListPanelsResponseItem]
+PanelResponseDataItem = Dict[str, Any]
+PanelResponse = Dict[str, PanelResponseDataItem | List[PanelResponseDataItem] | None]
 
 router = APIRouter()
 
 
 # TODO: Consider changing to /panels for consistency
 @router.get("/list_panels", response_model=ListPanelsResponse)
-async def get_datasets(
+async def get_list_panels(
     type: str = Query(..., description="Class name"),  # noqa Suppress report about shadowed built-in type
     key: str = Query(None, description="Primary key fields in semicolon-delimited format"),
     dataset: str = Query(None, description="Dataset string"),
@@ -34,3 +40,15 @@ async def get_datasets(
 ) -> ListPanelsResponse:
     """List of panels for the specified record."""
     return ListPanelsResponseItem.list_panels(ListPanelsRequest(type=type, key=key, dataset=dataset, user=user))
+
+
+@router.get('/panel', response_model=PanelResponse)
+async def get_panel(
+    request: Request,
+    type: str = Query(..., description="Class name"),  # noqa Suppress report about shadowed built-in type
+    panel_id: str = Query(..., description="View name"),
+    key: str = Query(None, description="Primary key fields in semicolon-delimited format"),
+    dataset: str = Query(None, description="Dataset string"),
+):
+    """Return panel content by its displayed name."""
+    return PanelResponseUtil.get_content(PanelRequest(type=type, panel_id=panel_id, key=key, dataset=dataset))
