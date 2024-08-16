@@ -31,8 +31,6 @@ from stubs.cl.runtime import StubDataclassSingleton
 from typing import Any
 from typing import Iterable
 
-from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_primitive_fields_key import StubDataclassPrimitiveFieldsKey
-
 
 def _assert_equals_iterable_without_ordering(iterable: Iterable[Any], other_iterable: Iterable[Any]) -> bool:
     iterable_as_list = list(iterable) if not isinstance(iterable, list) else iterable
@@ -197,10 +195,12 @@ def test_load_all():
 @pytest.mark.skip("Performance test.")
 def test_performance():
 
-    samples = [StubDataclassPrimitiveFields(key_str_field=f"key{i}") for i in range(1000)]
+    n = 1000
+    samples = [StubDataclassPrimitiveFields(key_str_field=f"key{i}") for i in range(n)]
     sample_keys = [sample.get_key() for sample in samples]
     data_source = SqliteDataSource(data_source_id="default")
     try:
+        print(f">>> Test stub type: {StubDataclassPrimitiveFields.__name__}, {n=}.")
         start_time = time.time()
         data_source.save_many(samples)
         end_time = time.time()
@@ -224,16 +224,6 @@ def test_performance():
         end_time = time.time()
         print(f"Load many one by one: {end_time - start_time}s.")
 
-        for n in range(10000, 100000, 10000):
-            try:
-                data_source.load_many([StubDataclassPrimitiveFieldsKey(key_str_field=f"key{i}") for i in range(n)])
-            except Exception:
-                max_n = n
-                break
-
-            max_n = n
-
-        print(f"Max number of keys in request: {max_n}.")
     finally:
         data_source.delete_db()
 

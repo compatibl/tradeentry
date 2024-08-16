@@ -18,7 +18,6 @@ from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
-from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TQuery
@@ -40,7 +39,7 @@ def dict_factory(cursor, row):
 class SqliteDataSource(DataSource):
     """Sqlite data source without dataset and mile wide table for inheritance."""
 
-    db_name: str = "my_db.sqlite"
+    db_name: str = ":memory:"
     """Db name used to open sqlite connection."""
 
     _connection: sqlite3.Connection = None
