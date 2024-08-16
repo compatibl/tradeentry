@@ -23,19 +23,6 @@ from cl.runtime.schema.value_decl import ValueDecl
 from dataclasses import dataclass
 from typing_extensions import Self
 
-primitive_type_map = {
-    "str": "String",
-    "float": "Double",
-    "bool": "Bool",
-    "int": "Int",
-    "long": "Long",
-    "date": "Date",
-    "time": "Time",
-    "datetime": "DateTime",
-    "UUID": "UUID",  # TODO: Check for support in ElementDecl
-    "bytes": "Binary",
-}
-
 
 @dataclass(slots=True, kw_only=True)
 class ElementDecl(MemberDecl):  # TODO: Consider renaming to TypeFieldDecl or FieldDecl
@@ -84,9 +71,7 @@ class ElementDecl(MemberDecl):  # TODO: Consider renaming to TypeFieldDecl or Fi
 
         if field_decl.field_kind == "primitive":
             # Primitive type
-            if (primitive_type := primitive_type_map.get(field_decl.field_type, None)) is None:
-                raise RuntimeError(f"Primitive field type {field_decl.field_type} is not supported.")
-            result.value = ValueDecl(type_=primitive_type)
+            result.value = ValueDecl.create(field_decl.field_type)
         else:
             # Complex type
             module_name, type_name = field_decl.field_type.rsplit(".", 1)

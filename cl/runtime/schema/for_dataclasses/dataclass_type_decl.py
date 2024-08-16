@@ -31,7 +31,14 @@ class DataclassTypeDecl(TypeDecl):
 
     @classmethod
     @cached(custom_key_maker=for_type_key_maker)
-    def for_type(cls, record_type: Type, *, dependencies: Set[Type] | None = None, skip_fields: bool = False) -> Self:
+    def for_type(
+        cls,
+        record_type: Type,
+        *,
+        dependencies: Set[Type] | None = None,
+        skip_fields: bool = False,
+        skip_handlers: bool = False,
+    ) -> Self:
         """
         Create or return cached object for the specified record type.
 
@@ -39,6 +46,7 @@ class DataclassTypeDecl(TypeDecl):
             record_type: Type of the record for which the declaration is created
             dependencies: Set of types used in field or methods of the specified type, populated only if not None
             skip_fields: Use this flag to skip fields generation when the method is invoked from a derived class
+            skip_handlers: Use this flag to skip handlers generation when the method is invoked internal methods
         """
 
         if not dataclasses.is_dataclass(record_type):

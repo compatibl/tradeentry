@@ -16,9 +16,11 @@ from __future__ import annotations
 
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
-from cl.runtime.routers.user_request import UserRequest
 from pydantic import BaseModel
 from typing import List
+
+from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
+from cl.runtime.schema.schema import Schema
 
 
 class ListPanelsResponseItem(BaseModel):
@@ -35,6 +37,14 @@ class ListPanelsResponseItem(BaseModel):
     def list_panels(request: ListPanelsRequest) -> List[ListPanelsResponseItem]:
         """Implements /entity/list_panels route."""
 
-        # Default response when running locally without authorization
-        result_dict = {"name": "Stub Panel"}
-        return [ListPanelsResponseItem(**result_dict)]
+        # TODO: Return saved view names
+        type_ = Schema.get_type_by_short_name(request.type)
+        handlers_block = HandlerDeclareBlockDecl.get_type_methods(type_).handlers
+
+        if handlers_block is not None and handlers_block:
+            return [
+                ListPanelsResponseItem(name=handler.label)
+                for handler in handlers_block
+                if handler.type_ == 'viewer'
+            ]
+        return []

@@ -33,7 +33,7 @@ from inflection import camelize
 from inflection import titleize
 from itertools import tee
 from memoization import cached
-from typing import Any
+from typing import Any, Optional
 from typing import Dict
 from typing import List
 from typing import Literal
@@ -60,9 +60,16 @@ def to_type_decl_dict(node: Dict[str, Any] | List[Dict[str, Any]] | str) -> Dict
         # For type declarations only, skip nodes that have the value of None or False
         # Remove suffix _ from field names if present
         # pascalized_values = {k: (pascalize(v) if k in ['module_name', 'name'] else v) for k, v in node.items()}
-        result = {
-            pascalize(k.removesuffix("_")): to_type_decl_dict(v) for k, v in node.items() if v not in [None, False]
-        }
+        # Searching for the name of given type declaration
+        result: Dict[str, Any] = {}
+        if (_t := get_name_of_type_decl_dict(node)) is not None:
+            result['_t'] = pascalize(_t)
+        result.update(
+            {
+                (pascalize(k.removesuffix("_")) if k != '_t' else k): to_type_decl_dict(v)
+                for k, v in node.items() if v not in [None, False]
+            }
+        )
         return result
     elif isinstance(node, list):
         # For type declarations only, skip nodes that have the value of None or False
@@ -80,11 +87,44 @@ def to_type_decl_dict(node: Dict[str, Any] | List[Dict[str, Any]] | str) -> Dict
 
 
 def for_type_key_maker(
-    cls, record_type: Type, *, dependencies: Set[Type] | None = None, skip_fields: bool = False
+    cls,
+    record_type: Type,
+    *,
+    dependencies: Set[Type] | None = None,
+    skip_fields: bool = False,
+    skip_handlers: bool = False,
 ) -> str:
     """Custom key marker for 'for_type' class method."""
     # TODO: Replace by lambda if skip_fields parameter is removed
-    return f"{record_type.__module__}.{record_type.__name__}.{dependencies.__hash__}{skip_fields}"
+    return f"{record_type.__module__}.{record_type.__name__}.{dependencies.__hash__}{skip_fields}{skip_handlers}"
+
+
+def get_name_of_type_decl_dict(dict_: Dict[str, Dict]) -> Optional[str]:
+    """Search for the type name in the given dict and return in format {module}.{name} ."""
+
+    # Element fields contain "key_" in case of key-field or "data" section in case of data-field
+    key_field = dict_.get('key_', None)
+    data_field = dict_.get('data', None)
+    name_field = 'name'
+    module_field = 'module'
+    module_name_field = 'module_name'
+
+    module = None
+    name = None
+
+    if key_field is not None and name_field in key_field:
+        module = key_field.get(module_field, {}).get(module_name_field, None)
+        name = key_field[name_field]
+    elif data_field is not None and name_field in data_field:
+        module = data_field.get(module_field, {}).get(module_name_field, None)
+        name = data_field[name_field]
+    # Name of the whole type is contained in "name" field. But type decl cannot contain only "name" and "module" fields
+    elif (name_ := dict_.get(name_field, None)) is not None and module_field in dict_:
+        if len(dict_) > 2:
+            name = name_
+
+    type_name = f'{module}.{name}' if module is not None else name
+    return type_name
 
 
 @dataclass(slots=True, kw_only=True)

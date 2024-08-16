@@ -12,12 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.primitive.primitive_util import PrimitiveUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from dataclasses import dataclass
-from typing import Literal
+from typing import Literal, Type
+from typing_extensions import Self
 
-PrimitiveTypeLiteral = Literal["str", "float", "bool", "int", "dt.date", "dt.time", "dt.datetime", "uuid.UUID", "bytes"]
+PrimitiveTypeLiteral = Literal["String", "Double", "Bool", "Int", "Long", "Date", "Time", "DateTime", "UUID", "Binary"]
 
 
 @dataclass(slots=True, kw_only=True)
@@ -26,3 +27,11 @@ class ValueDecl:
 
     type_: PrimitiveTypeLiteral = missing()
     """Primitive type name."""
+
+    @classmethod
+    def create(cls, record_type: Type | str) -> Self:
+        """Create an instance based on specified type."""
+
+        if not PrimitiveUtil.is_primitive(record_type):
+            raise RuntimeError(f"Primitive field type {record_type} is not supported.")
+        return ValueDecl(type_=PrimitiveUtil.get_runtime_name(record_type))  # noqa
