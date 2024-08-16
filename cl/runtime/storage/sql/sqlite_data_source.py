@@ -26,7 +26,7 @@ from cl.runtime.storage.sql.sqlite_schema_manager import SqliteSchemaManager
 from collections import defaultdict
 from dataclasses import dataclass
 from itertools import groupby
-from typing import Iterable
+from typing import Iterable, List, Tuple, Any
 from typing import Type
 
 
@@ -92,11 +92,12 @@ class SqliteDataSource(DataSource):
                     yield from keys
                     continue
 
+                keys = tuple(keys)
+
                 key_fields = self._schema_manager.get_primary_keys(key_type)
-                keys = list(keys)
-                all_serialized_keys = [
+                all_serialized_keys = tuple(
                     serializer.serialize_data(getattr(key, key_field)) for key in keys for key_field in key_fields
-                ]
+                )
 
                 table_name = self._schema_manager.table_name_for_type(key_type)
 
@@ -171,7 +172,6 @@ class SqliteDataSource(DataSource):
         self, records: Iterable[RecordProtocol], *, dataset: TDataset = None, identity: TIdentity = None
     ) -> None:
         serializer = FlatDictSerializer()
-        key_serializer = StringSerializer()
 
         grouped_records = defaultdict(list)
 
@@ -224,7 +224,7 @@ class SqliteDataSource(DataSource):
         dataset: TDataset = None,
         identities: Iterable[TIdentity] | None = None,
     ) -> None:
-        key_serializer = StringSerializer()
+        serializer = FlatDictSerializer()
 
         grouped_keys = defaultdict(list)
 
@@ -233,18 +233,24 @@ class SqliteDataSource(DataSource):
             grouped_keys[key.get_key_type()].append(key)
 
         for key_type, keys_group in grouped_keys.items():
-            serialized_keys = tuple(key_serializer.serialize_key(key) for key in keys_group)
             table_name = self._schema_manager.table_name_for_type(key_type)
 
             existing_tables = self._schema_manager.existing_tables()
             if table_name not in existing_tables:
                 continue
+            keys = tuple(keys_group)
+            key_fields = self._schema_manager.get_primary_keys(key_type)
+            all_serialized_keys = tuple(
+                serializer.serialize_data(getattr(key, key_field)) for key in keys for key_field in key_fields
+            )
 
-            value_placeholders = ", ".join(["?"] * len(serialized_keys))
-            sql_statement = f'DELETE FROM "{table_name}" WHERE _key IN ({value_placeholders});'
+            columns_mapping = self._schema_manager.get_columns_mapping(key_type)
+            value_places = ", ".join([f'({", ".join(["?"] * len(key_fields))})' for _ in range(len(keys))])
+            key_column_str = ", ".join([f'"{columns_mapping[key]}"' for key in key_fields])
+            sql_statement = f'DELETE FROM "{table_name}" WHERE ({key_column_str}) IN ({value_places});'
 
             cursor = self._connection.cursor()
-            cursor.execute(sql_statement, serialized_keys)
+            cursor.execute(sql_statement, all_serialized_keys)
 
             self._connection.commit()
 
