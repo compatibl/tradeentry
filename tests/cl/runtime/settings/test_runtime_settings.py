@@ -16,16 +16,6 @@ import pytest
 from cl.runtime.settings.api_settings import ApiSettings
 
 from cl.runtime.settings.context_settings import ContextSettings
-from cl.runtime.settings.dynaconf_settings import DynaconfSettings
-
-
-def test_dynaconf_settings():
-    """Test DynaconfSettings class."""
-
-    dynaconf_settings = DynaconfSettings.instance()
-    assert dynaconf_settings._root_path is not None
-    assert dynaconf_settings._loaded_files is not None
-
 
 def test_context_settings():
     """Test ContextSettings class."""

@@ -20,7 +20,7 @@ from dataclasses import dataclass
 
 from dotenv import load_dotenv, find_dotenv
 from dynaconf import Dynaconf
-from typing import Any, Type, ClassVar
+from typing import Type, ClassVar
 from typing import Dict
 from typing_extensions import Self
 
@@ -53,6 +53,9 @@ dynaconf_loaded_files = _all_settings._loaded_files  # noqa
 dynaconf_root_path = _all_settings._root_path # noqa
 """Environment variable prefix for overriding dynaconf file settings."""
 
+# Convert to list if a single string is specified
+if isinstance(dynaconf_file_patterns, str):
+    dynaconf_file_patterns = [dynaconf_file_patterns]
 
 @dataclass(slots=True, kw_only=True)
 class Settings:
@@ -137,7 +140,7 @@ class Settings:
                         dynaconf_file_list = dynaconf_loaded_files
                     else:
                         dynaconf_file_patterns_str = ", ".join(dynaconf_file_patterns)
-                        dynaconf_file_list = [f"No {dynaconf_file_patterns_str} files in default search path"]
+                        dynaconf_file_list = [f"No {dynaconf_file_patterns_str} file(s) in default search path"]
                     sources_list.extend(f"Dynaconf file {dynaconf_msg}: {x}" for x in dynaconf_file_list)
                     
                     # Convert to string
