@@ -41,5 +41,5 @@ class RuntimeSettings(Settings):
     """Default data source identifier (the data source record must be loaded in code or from a csv/yaml/json file)."""
 
     @classmethod
-    def get_prefix(cls) -> str:
+    def get_prefix(cls) -> str | None:
         return "runtime"
