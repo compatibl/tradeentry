@@ -52,5 +52,5 @@ class ContextSettings(Settings):
             raise RuntimeError(f"{type(self).__name__} field 'data_source' must be a string.")
 
     @classmethod
-    def get_prefix(cls) -> str | None:
+    def get_prefix(cls) -> str:
         return "runtime_context"

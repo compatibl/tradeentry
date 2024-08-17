@@ -50,5 +50,5 @@ class ApiSettings(Settings):
             raise RuntimeError(f"{type(self).__name__} field 'port' must be an int or a string.")
 
     @classmethod
-    def get_prefix(cls) -> str | None:
+    def get_prefix(cls) -> str:
         return "runtime_api"
