@@ -12,12 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from cl.runtime.settings.api_settings import ApiSettings
+
 from cl.runtime.routers.auth import auth_router
 from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.health import health_router
 from cl.runtime.routers.schema import schema_router
 from cl.runtime.routers.storage import storage_router
-from cl.runtime.settings.runtime_settings import RuntimeSettings
 from fastapi import FastAPI
 from pathlib import Path
 from starlette.middleware.cors import CORSMiddleware
@@ -27,12 +28,12 @@ from starlette.staticfiles import StaticFiles
 app = FastAPI()
 
 # Get Runtime settings from Dynaconf
-runtime_settings = RuntimeSettings.instance()
+api_settings = ApiSettings.instance()
 
 # Permit origins based on either hostname or host IP
 origins = [
-    f"{runtime_settings.api_host_name}:{runtime_settings.api_port}",
-    f"{runtime_settings.api_host_ip}:{runtime_settings.api_port}",
+    f"{api_settings.host_name}:{api_settings.port}",
+    f"{api_settings.host_ip}:{api_settings.port}",
 ]
 
 app.add_middleware(

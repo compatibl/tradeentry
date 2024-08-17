@@ -13,8 +13,9 @@
 # limitations under the License.
 
 import uvicorn
+from cl.runtime.settings.api_settings import ApiSettings
+
 from cl.runtime.routers.server import app
-from cl.runtime.settings.runtime_settings import RuntimeSettings
 from stubs.cl.runtime.config.stub_runtime_config import StubRuntimeConfig  # TODO: Remove after refactoring
 
 if __name__ == "__main__":
@@ -24,5 +25,5 @@ if __name__ == "__main__":
     config.configure()
 
     # Run Uvicorn using hostname and port specified by Dynaconf
-    runtime_settings = RuntimeSettings.instance()
-    uvicorn.run(app, host=runtime_settings.api_host_name, port=runtime_settings.api_port)
+    api_settings = ApiSettings.instance()
+    uvicorn.run(app, host=api_settings.host_name, port=api_settings.port)

@@ -1,16 +1,12 @@
 # Settings specified under default heading apply to all environments
 [default]
 
-# Load types from these packages
-# TODO: Prefix or glob pattern
-runtime_load_packages = ["cl.runtime", "stubs.cl.runtime"]
+# Refer to the ContextSettings class for documentation
+runtime_context_packages = ["cl.runtime", "stubs.cl.runtime"]  # TODO: Prefix or glob pattern
+runtime_context_data_source_class = "cl.runtime.storage.sql.sqlite_data_source.SqliteDataSource"  # TODO: Deprecated
+runtime_context_data_source = "Runtime Default"
 
-# REST API hostname, host IP, and port (either of the two can be used to access the API)
+# Refer to the ApiSettings class for documentation
 runtime_api_host_name = "localhost"
 runtime_api_host_ip = "127.0.0.1"
 runtime_api_port = 7008
-
-# Default data source
-# TODO: Refactor to only specify the ID
-runtime_data_source_class = "cl.runtime.storage.sql.sqlite_data_source.SqliteDataSource"
-runtime_data_source_id = "Runtime Default"

@@ -13,14 +13,32 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.settings.runtime_settings import RuntimeSettings
+from cl.runtime.settings.api_settings import ApiSettings
+
+from cl.runtime.settings.context_settings import ContextSettings
+from cl.runtime.settings.dynaconf_settings import DynaconfSettings
 
 
-def test_smoke():
-    """Test UiSettings class."""
+def test_dynaconf_settings():
+    """Test DynaconfSettings class."""
 
-    runtime_settings = RuntimeSettings.instance()
-    assert runtime_settings.data_source_id == "Runtime Default"
+    dynaconf_settings = DynaconfSettings.instance()
+    assert dynaconf_settings._root_path is not None
+    assert dynaconf_settings._loaded_files is not None
+
+
+def test_context_settings():
+    """Test ContextSettings class."""
+
+    context_settings = ContextSettings.instance()
+    assert context_settings.data_source == "Runtime Default"
+
+
+def test_api_settings():
+    """Test ApiSettings class."""
+
+    api_settings = ApiSettings.instance()
+    assert api_settings.host_name == "localhost"
 
 
 if __name__ == "__main__":

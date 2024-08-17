@@ -19,7 +19,7 @@ from abc import abstractmethod
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
-from cl.runtime.settings.runtime_settings import RuntimeSettings
+from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TQuery
@@ -155,8 +155,8 @@ class DataSource(ABC):
 
         if DataSource.__default is None:
             # Load from configuration if not set
-            runtime_settings = RuntimeSettings.instance()
-            data_source_type = ClassInfo.get_class_type(runtime_settings.data_source_class)
-            data_source_id = str(runtime_settings.data_source_id)
+            context_settings = ContextSettings.instance()  # TODO: Refactor to place this inside Context
+            data_source_type = ClassInfo.get_class_type(context_settings.data_source_class)
+            data_source_id = str(context_settings.data_source)
             DataSource.__default = data_source_type(data_source_id=data_source_id)
         return DataSource.__default

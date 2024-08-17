@@ -22,8 +22,11 @@ from typing import List
 class DynaconfSettings(Settings):
     """Dynaconf system settings."""
 
-    root_path_for_dynaconf: str
+    _root_path: str
     """Absolute path where Dynaconf settings file is found, use to define the location of project resources."""
+
+    _loaded_files: str
+    """List of loaded Dynaconf settings files."""
 
     @classmethod
     def get_prefix(cls) -> str | None:

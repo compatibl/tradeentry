@@ -23,7 +23,7 @@ from typing import Dict
 from typing_extensions import Self
 
 # Dynaconf settings in raw format (including system settings), some keys may be strings instead of dictionaries or lists
-dynaconf_all_settings = Dynaconf(
+_all_settings = Dynaconf(
     environments=True,
     envvar_prefix="CL",
     env_switcher="CL_SETTINGS_ENV",
@@ -31,15 +31,18 @@ dynaconf_all_settings = Dynaconf(
     settings_files=["settings.toml", ".secrets.toml"],
 )
 
-dynaconf_envvar_prefix = dynaconf_all_settings.envvar_prefix_for_dynaconf
-"""Environment variable prefix for overriding dynaconf file settings."""
-
-dynaconf_loaded_files = dynaconf_all_settings._loaded_files  # noqa
-"""Loaded dynaconf settings files."""
-
 # Extract user settings only using as_dict(), then convert containers at all levels to dictionaries and lists
 # and convert root level keys to lowercase in case the settings are specified using envvars in uppercase format
-dynaconf_user_settings = {k.lower(): v for k, v in dynaconf_all_settings.as_dict().items()}
+_user_settings = {k.lower(): v for k, v in _all_settings.as_dict().items()}
+
+dynaconf_envvar_prefix = _all_settings.envvar_prefix_for_dynaconf
+"""Environment variable prefix for overriding dynaconf file settings."""
+
+dynaconf_loaded_files = _all_settings._loaded_files  # noqa
+"""Loaded dynaconf settings files."""
+
+dynaconf_root_path = _all_settings._root_path # noqa
+"""Environment variable prefix for overriding dynaconf file settings."""
 
 
 @dataclass(slots=True, kw_only=True, frozen=True)
@@ -92,38 +95,40 @@ class Settings:
                 if field_info.default is MISSING and field_info.default_factory is MISSING
             ]
 
-            if prefix is not None:
-                # Filter user settings by 'prefix_' and create a new dictionary where prefix is removed from keys
-                p = prefix + "_"
-                settings_dict = {k[len(p):]: v for k, v in dynaconf_user_settings.items() if k.startswith(p)}
+            if prefix is None:
+                # Prefix is None, use system settings and extract required keys only
+                # This will exclude fields that are not specified in the settings class
+                settings_dict = {k: getattr(_all_settings, k, None) for k in dir(_all_settings) if k in required_fields}
             else:
-                # Otherwise create a copy of all settings under lowercase keys (including system settings)
-                settings_dict = {k: v for k, v in dynaconf_all_settings.items() if k.islower()}
+                # Filter user settings by 'prefix_' and create a new dictionary where prefix is removed from keys
+                # This will include fields that are not specified in the settings class
+                p = prefix + "_"
+                settings_dict = {k[len(p):]: v for k, v in _user_settings.items() if k.startswith(p)}
 
-            # Find required fields that are not specified
-            missing_fields = [k for k in required_fields if k not in settings_dict]
-            if missing_fields:
-                # List loaded files for the error message
-                if isinstance(dynaconf_loaded_files, str):
-                    settings_file_str = dynaconf_loaded_files
-                else:
-                    settings_file_str = ", ".join(dynaconf_loaded_files)
+                # Check for missing required fields
+                missing_fields = [k for k in required_fields if k not in settings_dict]
+                if missing_fields:
+                    # List loaded files for the error message
+                    if isinstance(dynaconf_loaded_files, str):
+                        settings_file_str = dynaconf_loaded_files
+                    else:
+                        settings_file_str = ", ".join(dynaconf_loaded_files)
 
-                # Combine the global Dynaconf envvar prefix with settings prefix in uppercase
-                envvar_prefix = f"{dynaconf_envvar_prefix}_{prefix.upper()}_"
+                    # Combine the global Dynaconf envvar prefix with settings prefix in uppercase
+                    envvar_prefix = f"{dynaconf_envvar_prefix}_{prefix.upper()}_"
 
-                # List of missing required fields
-                fields_error_msg_list = [
-                    f">>> '{envvar_prefix}{k.upper()}' (envvar/.env) or '{prefix}_{k}' (Dynaconf)"
-                    for k in missing_fields
-                ]
-                fields_error_msg_str = "\n".join(fields_error_msg_list)
+                    # List of missing required fields
+                    fields_error_msg_list = [
+                        f">>> '{envvar_prefix}{k.upper()}' (envvar/.env) or '{prefix}_{k}' (Dynaconf)"
+                        for k in missing_fields
+                    ]
+                    fields_error_msg_str = "\n".join(fields_error_msg_list)
 
-                # Raise exception with detailed information
-                raise ValueError(
-                    f"Required fields not found in Dynaconf settings file(s): "
-                    f"{settings_file_str}:\n" + fields_error_msg_str
-                )
+                    # Raise exception with detailed information
+                    raise ValueError(
+                        f"Required fields not found in Dynaconf settings file(s): "
+                        f"{settings_file_str}:\n" + fields_error_msg_str
+                    )
 
             result = cls(**settings_dict)
             cls.__settings_dict[cls] = result

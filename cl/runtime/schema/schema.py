@@ -23,7 +23,6 @@ from cl.runtime.records.protocols import is_key
 from cl.runtime.schema.type_decl import TypeDecl
 from cl.runtime.schema.type_decl import pascalize
 from cl.runtime.schema.type_decl_key import TypeDeclKey
-from cl.runtime.settings.runtime_settings import RuntimeSettings
 from collections import Counter
 from collections import defaultdict
 from enum import Enum
@@ -36,6 +35,8 @@ from typing import List
 from typing import Type
 from typing import cast
 from typing_extensions import Self
+
+from cl.runtime.settings.context_settings import ContextSettings
 
 
 def is_key_or_record(data_type):
@@ -100,8 +101,8 @@ class Schema:
 
         if cls._type_dict_by_short_name is None:
             # Load packages from Dynaconf
-            runtime_settings = RuntimeSettings.instance()
-            packages = runtime_settings.load_packages
+            context_settings = ContextSettings.instance()
+            packages = context_settings.packages
 
             # Get modules for the specified packages
             modules = cls._get_modules(packages)
