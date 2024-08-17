@@ -8,7 +8,7 @@ runtime_load_packages = ["cl.runtime", "stubs.cl.runtime"]
 # REST API hostname, host IP, and port (either of the two can be used to access the API)
 runtime_api_host_name = "localhost"
 runtime_api_host_ip = "127.0.0.1"
-runtime_api_port = "7008"
+runtime_api_port = 7008
 
 # Default data source
 # TODO: Refactor to only specify the ID
