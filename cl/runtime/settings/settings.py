@@ -14,6 +14,7 @@
 
 from __future__ import annotations
 
+import os
 from abc import abstractmethod
 from dataclasses import MISSING
 from dataclasses import dataclass
@@ -28,7 +29,6 @@ from typing_extensions import Self
 # Load dotenv first (override priority is envvars, dotenv, Dynaconf)
 load_dotenv()
 
-# Dynaconf settings in raw format (including system settings), some keys may be strings instead of dictionaries or lists
 _all_settings = Dynaconf(
     environments=True,
     envvar_prefix="CL",
@@ -37,10 +37,15 @@ _all_settings = Dynaconf(
     settings_files=["settings.toml", ".secrets.toml"],
     dotenv_override=True,
 )
+"""
+Dynaconf settings in raw format (including system settings), some keys may be strings instead of dictionaries or lists.
+"""
 
-# Extract user settings only using as_dict(), then convert containers at all levels to dictionaries and lists
-# and convert root level keys to lowercase in case the settings are specified using envvars in uppercase format
 _user_settings = {k.lower(): v for k, v in _all_settings.as_dict().items()}
+"""
+Extract user settings only using as_dict(), then convert containers at all levels to dictionaries and lists
+and convert root level keys to lowercase in case the settings are specified using envvars in uppercase format
+"""
 
 dynaconf_envvar_prefix = _all_settings.envvar_prefix_for_dynaconf
 """Environment variable prefix for overriding dynaconf file settings."""
@@ -48,15 +53,21 @@ dynaconf_envvar_prefix = _all_settings.envvar_prefix_for_dynaconf
 dynaconf_file_patterns = _all_settings.settings_file
 """List of Dynaconf settings file patterns or file paths."""
 
-dynaconf_loaded_files = _all_settings._loaded_files  # noqa
-"""Loaded dynaconf settings files."""
-
-dynaconf_root_path = _all_settings._root_path  # noqa
-"""Environment variable prefix for overriding dynaconf file settings."""
-
 # Convert to list if a single string is specified
 if isinstance(dynaconf_file_patterns, str):
     dynaconf_file_patterns = [dynaconf_file_patterns]
+
+dynaconf_loaded_files = _all_settings._loaded_files  # noqa
+"""Loaded dynaconf settings files."""
+
+dynaconf_dir_path = _all_settings._root_path  # noqa
+"""Absolute path the location of the first Dynaconf file if found, None otherwise."""
+
+dotenv_file_path = find_dotenv_output if (find_dotenv_output := find_dotenv()) != "" else None
+"""Absolute path to .env file if found, None otherwise."""
+
+dotenv_dir_path = os.path.dirname(dotenv_file_path) if dotenv_file_path is not None else None
+"""Absolute path to .env directory if found, None otherwise."""
 
 
 @dataclass(slots=True, kw_only=True)

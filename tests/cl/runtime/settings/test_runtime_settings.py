@@ -15,6 +15,7 @@
 import pytest
 from cl.runtime.settings.api_settings import ApiSettings
 from cl.runtime.settings.context_settings import ContextSettings
+from cl.runtime.settings.preload_settings import PreloadSettings
 
 
 def test_context_settings():
@@ -29,6 +30,15 @@ def test_api_settings():
 
     api_settings = ApiSettings.instance()
     assert api_settings.host_name == "localhost"
+
+
+def test_preload_settings():
+    """Test PreloadSettings class."""
+
+    preload_settings = PreloadSettings.instance()
+    assert [x.endswith("csv") for x in preload_settings.csv_dirs]
+    assert [x.endswith("yaml") for x in preload_settings.yaml_dirs]
+    assert [x.endswith("json") for x in preload_settings.json_dirs]
 
 
 if __name__ == "__main__":
