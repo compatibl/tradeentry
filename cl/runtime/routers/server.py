@@ -17,12 +17,11 @@ from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.health import health_router
 from cl.runtime.routers.schema import schema_router
 from cl.runtime.routers.storage import storage_router
+from cl.runtime.settings.runtime_settings import RuntimeSettings
 from fastapi import FastAPI
 from pathlib import Path
 from starlette.middleware.cors import CORSMiddleware
 from starlette.staticfiles import StaticFiles
-
-from cl.runtime.settings.runtime_settings import RuntimeSettings
 
 # Server
 app = FastAPI()

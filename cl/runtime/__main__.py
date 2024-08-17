@@ -18,7 +18,6 @@ from cl.runtime.settings.runtime_settings import RuntimeSettings
 from stubs.cl.runtime.config.stub_runtime_config import StubRuntimeConfig  # TODO: Remove after refactoring
 
 if __name__ == "__main__":
-
     # TODO: Temporary workaround before full configuration workflow is supported
     config = StubRuntimeConfig()
     config.config_id = "Stub Runtime Config"
