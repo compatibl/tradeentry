@@ -18,7 +18,7 @@ from dataclasses import dataclass
 from typing import List
 
 
-@dataclass(slots=True, kw_only=True, frozen=True)
+@dataclass(slots=True, kw_only=True)
 class ApiSettings(Settings):
     """Runtime REST API settings."""
 
@@ -30,6 +30,24 @@ class ApiSettings(Settings):
 
     port: int  # TODO: Provide default
     """REST API port."""
+
+    def __post_init__(self):
+        """Perform validation and type conversions."""
+
+        if not isinstance(self.host_name, str):
+            raise RuntimeError(f"{type(self).__name__} field 'host_name' must be a string.")
+        if not isinstance(self.host_ip, str):
+            raise RuntimeError(f"{type(self).__name__} field 'host_ip' must be a string.")
+
+        if isinstance(self.port, int):
+            pass
+        elif isinstance(self.port, str):
+            if self.port.isdigit():
+                self.port = int(self.port)
+            else:
+                raise RuntimeError(f"{type(self).__name__} field 'port' includes non-digit characters.")
+        else:
+            raise RuntimeError(f"{type(self).__name__} field 'port' must be an int or a string.")
 
     @classmethod
     def get_prefix(cls) -> str | None:

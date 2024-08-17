@@ -54,7 +54,7 @@ dynaconf_root_path = _all_settings._root_path # noqa
 """Environment variable prefix for overriding dynaconf file settings."""
 
 
-@dataclass(slots=True, kw_only=True, frozen=True)
+@dataclass(slots=True, kw_only=True)
 class Settings:
     """Base class for a singleton settings object."""
 
