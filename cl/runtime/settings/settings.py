@@ -17,11 +17,12 @@ from __future__ import annotations
 from abc import abstractmethod
 from dataclasses import MISSING
 from dataclasses import dataclass
-
-from dotenv import load_dotenv, find_dotenv
+from dotenv import find_dotenv
+from dotenv import load_dotenv
 from dynaconf import Dynaconf
-from typing import Type, ClassVar
+from typing import ClassVar
 from typing import Dict
+from typing import Type
 from typing_extensions import Self
 
 # Load dotenv first (override priority is envvars, dotenv, Dynaconf)
@@ -50,12 +51,13 @@ dynaconf_file_patterns = _all_settings.settings_file
 dynaconf_loaded_files = _all_settings._loaded_files  # noqa
 """Loaded dynaconf settings files."""
 
-dynaconf_root_path = _all_settings._root_path # noqa
+dynaconf_root_path = _all_settings._root_path  # noqa
 """Environment variable prefix for overriding dynaconf file settings."""
 
 # Convert to list if a single string is specified
 if isinstance(dynaconf_file_patterns, str):
     dynaconf_file_patterns = [dynaconf_file_patterns]
+
 
 @dataclass(slots=True, kw_only=True)
 class Settings:
@@ -84,7 +86,6 @@ class Settings:
 
         # Check if cached value exists, load if not found
         if (result := cls.__settings_dict.get(cls, None)) is None:
-
             # A settings class may specify an optional prefix used to filter dynaconf fields
             prefix = cls.get_prefix()
 
@@ -115,7 +116,7 @@ class Settings:
                 # Filter user settings by 'prefix_' and create a new dictionary where prefix is removed from keys
                 # This will include fields that are not specified in the settings class
                 p = prefix + "_"
-                settings_dict = {k[len(p):]: v for k, v in _user_settings.items() if k.startswith(p)}
+                settings_dict = {k[len(p) :]: v for k, v in _user_settings.items() if k.startswith(p)}
 
                 # Check for missing required fields
                 missing_fields = [k for k in required_fields if k not in settings_dict]
@@ -142,7 +143,7 @@ class Settings:
                         dynaconf_file_patterns_str = ", ".join(dynaconf_file_patterns)
                         dynaconf_file_list = [f"No {dynaconf_file_patterns_str} file(s) in default search path"]
                     sources_list.extend(f"Dynaconf file {dynaconf_msg}: {x}" for x in dynaconf_file_list)
-                    
+
                     # Convert to string
                     settings_sources_str = "\n".join(f"    - {x}" for x in sources_list)
 

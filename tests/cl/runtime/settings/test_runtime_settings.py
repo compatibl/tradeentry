@@ -14,8 +14,8 @@
 
 import pytest
 from cl.runtime.settings.api_settings import ApiSettings
-
 from cl.runtime.settings.context_settings import ContextSettings
+
 
 def test_context_settings():
     """Test ContextSettings class."""

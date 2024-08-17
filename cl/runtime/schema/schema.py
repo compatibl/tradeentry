@@ -23,6 +23,7 @@ from cl.runtime.records.protocols import is_key
 from cl.runtime.schema.type_decl import TypeDecl
 from cl.runtime.schema.type_decl import pascalize
 from cl.runtime.schema.type_decl_key import TypeDeclKey
+from cl.runtime.settings.context_settings import ContextSettings
 from collections import Counter
 from collections import defaultdict
 from enum import Enum
@@ -35,8 +36,6 @@ from typing import List
 from typing import Type
 from typing import cast
 from typing_extensions import Self
-
-from cl.runtime.settings.context_settings import ContextSettings
 
 
 def is_key_or_record(data_type):

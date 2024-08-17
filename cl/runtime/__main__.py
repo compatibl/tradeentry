@@ -13,9 +13,8 @@
 # limitations under the License.
 
 import uvicorn
-from cl.runtime.settings.api_settings import ApiSettings
-
 from cl.runtime.routers.server import app
+from cl.runtime.settings.api_settings import ApiSettings
 from stubs.cl.runtime.config.stub_runtime_config import StubRuntimeConfig  # TODO: Remove after refactoring
 
 if __name__ == "__main__":

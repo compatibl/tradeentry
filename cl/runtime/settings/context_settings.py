@@ -41,7 +41,7 @@ class ContextSettings(Settings):
             self.packages = []
         elif isinstance(self.packages, str):
             self.packages = [self.packages]
-        elif hasattr(self.packages, '__iter__'):
+        elif hasattr(self.packages, "__iter__"):
             self.packages = list(self.packages)
         else:
             raise RuntimeError(f"{type(self).__name__} field 'packages' must be a string or an iterable of strings.")
