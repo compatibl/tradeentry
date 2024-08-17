@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.settings.settings import Settings
 from dataclasses import dataclass
 from typing import List
@@ -24,7 +25,7 @@ class RuntimeSettings(Settings):
     load_packages: List[str]
     """List of packages to load in dot-delimited module prefix format, for example 'cl.runtime'."""
 
-    api_host_name: str
+    api_host_name: str = "localhost"
     """REST API host name (either host name or IP can be used to access the API)."""
 
     api_host_ip: str
@@ -41,4 +42,4 @@ class RuntimeSettings(Settings):
 
     @classmethod
     def get_prefix(cls) -> str:
-        return "runtime_"
+        return "runtime"
