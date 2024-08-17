@@ -27,7 +27,7 @@ def get_dynaconf_dict() -> Dict[str, Dict]:
         environments=True,
         envvar_prefix="CL",
         env_switcher="CL_SETTINGS_ENV",
-        settings_files=["settings.yaml", ".secrets.yaml"],
+        settings_files=["settings.toml", ".secrets.toml"],
     )
 
     # Convert containers at all levels to dictionaries and lists
