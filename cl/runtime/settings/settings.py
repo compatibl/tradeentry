@@ -32,8 +32,8 @@ dynaconf_all_settings = Dynaconf(
 dynaconf_envvar_prefix = dynaconf_all_settings.envvar_prefix_for_dynaconf
 """Environment variable prefix for overriding dynaconf file settings."""
 
-dynaconf_settings_file = dynaconf_all_settings.settings_file
-"""Dynaconf settings files to load."""
+dynaconf_loaded_files = dynaconf_all_settings._loaded_files  # noqa
+"""Loaded dynaconf settings files."""
 
 # Extract user settings only using as_dict(), then convert containers at all levels to dictionaries and lists
 # and convert root level keys to lowercase in case the settings are specified using envvars in uppercase format
@@ -86,17 +86,25 @@ class Settings:
             # Find required fields that are not specified
             missing_fields = [k for k in required_fields if k not in settings_dict]
             if missing_fields:
-                if isinstance(dynaconf_settings_file, str):
-                    settings_file_str = dynaconf_settings_file
+                # List loaded files for the error message
+                if isinstance(dynaconf_loaded_files, str):
+                    settings_file_str = dynaconf_loaded_files
                 else:
-                    settings_file_str = ", ".join(dynaconf_settings_file)
+                    settings_file_str = ", ".join(dynaconf_loaded_files)
+
+                # Combine the global Dynaconf envvar prefix with settings prefix in uppercase
+                envvar_prefix = f"{dynaconf_envvar_prefix}_{prefix.upper()}"
+
+                # List of missing required fields
                 fields_error_msg_list = [
-                    f">>> '{dynaconf_envvar_prefix}_{prefix.upper()}{k.upper()}' (envvar/.env) or '{prefix}{k}' (Dynaconf)"
+                    f">>> '{envvar_prefix}{k.upper()}' (envvar/.env) or '{prefix}{k}' (Dynaconf)"
                     for k in missing_fields
                 ]
                 fields_error_msg_str = "\n".join(fields_error_msg_list)
+
+                # Raise exception with detailed information
                 raise ValueError(
-                    f"Required settings fields not found in Dynaconf settings file(s) "
+                    f"Required fields not found in Dynaconf settings file(s): "
                     f"{settings_file_str}:\n" + fields_error_msg_str
                 )
 
