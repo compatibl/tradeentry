@@ -22,6 +22,9 @@ from typing import List
 class DynaconfSettings(Settings):
     """Dynaconf system settings."""
 
+    settings_file: List[str]
+    """List of Dynaconf settings file patterns or file paths."""
+
     _root_path: str
     """Absolute path where Dynaconf settings file is found, use to define the location of project resources."""
 

@@ -17,10 +17,15 @@ from __future__ import annotations
 from abc import abstractmethod
 from dataclasses import MISSING
 from dataclasses import dataclass
+
+from dotenv import load_dotenv, find_dotenv
 from dynaconf import Dynaconf
 from typing import Any, Type, ClassVar
 from typing import Dict
 from typing_extensions import Self
+
+# Load dotenv first (override priority is envvars, dotenv, Dynaconf)
+load_dotenv()
 
 # Dynaconf settings in raw format (including system settings), some keys may be strings instead of dictionaries or lists
 _all_settings = Dynaconf(
@@ -29,6 +34,7 @@ _all_settings = Dynaconf(
     env_switcher="CL_SETTINGS_ENV",
     envvar="CL_SETTINGS_FILE",
     settings_files=["settings.toml", ".secrets.toml"],
+    dotenv_override=True,
 )
 
 # Extract user settings only using as_dict(), then convert containers at all levels to dictionaries and lists
@@ -37,6 +43,9 @@ _user_settings = {k.lower(): v for k, v in _all_settings.as_dict().items()}
 
 dynaconf_envvar_prefix = _all_settings.envvar_prefix_for_dynaconf
 """Environment variable prefix for overriding dynaconf file settings."""
+
+dynaconf_file_patterns = _all_settings.settings_file
+"""List of Dynaconf settings file patterns or file paths."""
 
 dynaconf_loaded_files = _all_settings._loaded_files  # noqa
 """Loaded dynaconf settings files."""
@@ -108,26 +117,43 @@ class Settings:
                 # Check for missing required fields
                 missing_fields = [k for k in required_fields if k not in settings_dict]
                 if missing_fields:
-                    # List loaded files for the error message
-                    if isinstance(dynaconf_loaded_files, str):
-                        settings_file_str = dynaconf_loaded_files
-                    else:
-                        settings_file_str = ", ".join(dynaconf_loaded_files)
-
                     # Combine the global Dynaconf envvar prefix with settings prefix in uppercase
-                    envvar_prefix = f"{dynaconf_envvar_prefix}_{prefix.upper()}_"
+                    envvar_prefix = f"{dynaconf_envvar_prefix}_{prefix.upper()}"
+                    dynaconf_msg = f"(in lowercase with prefix '{prefix}_')"
+                    envvar_msg = f"(in uppercase with prefix '{envvar_prefix}_')"
+
+                    # Environment variables
+                    sources_list = [f"Environment variables {envvar_msg}"]
+
+                    # Dotenv file or message that it is not found
+                    if (env_file := find_dotenv()) != "":
+                        env_file_name = env_file
+                    else:
+                        env_file_name = "No .env file in default search path"
+                    sources_list.append(f"Dotenv file {envvar_msg}: {env_file_name}")
+
+                    # Dynaconf file(s) or message that they are not found
+                    if dynaconf_loaded_files:
+                        dynaconf_file_list = dynaconf_loaded_files
+                    else:
+                        dynaconf_file_patterns_str = ", ".join(dynaconf_file_patterns)
+                        dynaconf_file_list = [f"No {dynaconf_file_patterns_str} files in default search path"]
+                    sources_list.extend(f"Dynaconf file {dynaconf_msg}: {x}" for x in dynaconf_file_list)
+                    
+                    # Convert to string
+                    settings_sources_str = "\n".join(f"    - {x}" for x in sources_list)
 
                     # List of missing required fields
                     fields_error_msg_list = [
-                        f">>> '{envvar_prefix}{k.upper()}' (envvar/.env) or '{prefix}_{k}' (Dynaconf)"
+                        f"    - '{envvar_prefix}_{k.upper()}' (envvar/.env) or '{prefix}_{k}' (Dynaconf)"
                         for k in missing_fields
                     ]
                     fields_error_msg_str = "\n".join(fields_error_msg_list)
 
                     # Raise exception with detailed information
                     raise ValueError(
-                        f"Required fields not found in Dynaconf settings file(s): "
-                        f"{settings_file_str}:\n" + fields_error_msg_str
+                        f"Required settings field(s) for {cls.__name__} not found:\n{fields_error_msg_str}\n"
+                        f"Settings sources searched in the order of priority:\n{settings_sources_str}"
                     )
 
             result = cls(**settings_dict)
