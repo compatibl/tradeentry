@@ -15,7 +15,7 @@
 from abc import ABC
 from abc import abstractmethod
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.runtime.storage.data_source import DataSource
+from cl.runtime.storage.protocols import DataSourceProtocol
 from cl.runtime.loaders.loader_key import LoaderKey
 from dataclasses import dataclass
 
@@ -28,5 +28,5 @@ class Loader(LoaderKey, RecordMixin[LoaderKey], ABC):
         return LoaderKey(loader_id=self.loader_id)
 
     @abstractmethod
-    def load(self, data_source: DataSource) -> None:
+    def load(self, data_source: DataSourceProtocol) -> None:
         """Load one or multiple records into the specified data source."""

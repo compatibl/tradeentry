@@ -12,7 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.data_source import DataSource
+import csv
+from typing import Mapping, Any, Type, Dict
+
+from cl.runtime.records.protocols import RecordProtocol
+
+from cl.runtime.storage.protocols import DataSourceProtocol
 from cl.runtime.loaders.loader import Loader
 from dataclasses import dataclass
 
@@ -21,5 +26,24 @@ from dataclasses import dataclass
 class CsvFileLoader(Loader):
     """Load records from a single CSV file into the context data source."""
 
-    def load(self, data_source: DataSource) -> None:
-        pass
+    record_type: Type
+    """Absolute path to the CSV file including extension."""
+
+    file_path: str
+    """Absolute path to the CSV file including extension."""
+
+    def load(self, data_source: DataSourceProtocol) -> None:
+        with open(self.file_path, mode='r') as file:
+
+            # The reader is an iterable of row dicts
+            csv_reader = csv.DictReader(file)
+
+            # Deserialize rows into records
+            records = [self._deserialize_row(row_dict) for row_dict in csv_reader]
+
+            # Save records to the specified data source
+            data_source.save_many(records)
+
+    def _deserialize_row(self, row_dict: Dict[str, Any]) -> RecordProtocol:
+        """Deserialize row into a record."""
+        return self.record_type(**row_dict)

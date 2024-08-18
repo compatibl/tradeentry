@@ -12,8 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-from cl.runtime.storage.data_source import DataSource
+import os
+from cl.runtime.schema.schema import Schema
+from cl.runtime.loaders.csv_file_loader import CsvFileLoader
+from cl.runtime.storage.protocols import DataSourceProtocol
 from cl.runtime.loaders.loader import Loader
 from dataclasses import dataclass
 
@@ -22,5 +24,25 @@ from dataclasses import dataclass
 class CsvDirLoader(Loader):
     """Load records a CSV directory into the context data source."""
 
-    def load(self, data_source: DataSource) -> None:
-        pass
+    dir_path: str
+    """Absolute path to the CSV directory where file naming convention is 'ClassName.csv'."""
+
+    def load(self, data_source: DataSourceProtocol) -> None:
+
+        # Filenames with extension but without directory path in the specified directory
+        filenames = [f.name for f in os.scandir(self.dir_path) if f.is_file() and f.name.endswith('.csv')]
+
+        # Create and run a file loader for each file
+        [self._create_loader(filename).load(data_source) for filename in filenames]
+
+    def _create_loader(self, filename: str) -> CsvFileLoader:
+        """Load the specified file."""
+
+        # Obtain record type from classname which is filename without extension
+        classname = filename.removesuffix(".csv")
+        record_type = Schema.get_type_by_short_name(classname)  # TODO: Apply type aliases
+
+        # Create CSV file loader
+        file_path = os.path.join(self.dir_path, filename)
+        loader = CsvFileLoader(record_type=record_type, file_path=file_path)
+        return loader
