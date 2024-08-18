@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import sqlite3
-from cl.runtime import DataSource
+from cl.runtime.storage.data_source import DataSource
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key

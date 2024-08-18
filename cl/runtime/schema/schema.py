@@ -16,10 +16,8 @@ from __future__ import annotations
 
 import importlib
 import inspect
-from cl.runtime import ClassInfo
-from cl.runtime.records.protocols import KeyProtocol
-from cl.runtime.records.protocols import RecordProtocol
-from cl.runtime.records.protocols import is_key
+
+from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.schema.type_decl import TypeDecl
 from cl.runtime.schema.type_decl import pascalize
 from cl.runtime.schema.type_decl_key import TypeDeclKey

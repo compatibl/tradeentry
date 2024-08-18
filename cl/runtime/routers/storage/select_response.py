@@ -15,7 +15,7 @@
 from __future__ import annotations
 
 import inflection
-from cl.runtime import ClassInfo
+from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil

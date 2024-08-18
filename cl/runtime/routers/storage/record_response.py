@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import dataclasses
 import inflection
-from cl.runtime import ClassInfo
+from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.backend.core.ui_app_state_key import UiAppStateKey
 from cl.runtime.backend.core.user_key import UserKey

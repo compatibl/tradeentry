@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import itertools
-from cl.runtime import DataSource
+from cl.runtime.storage.data_source import DataSource
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import InitProtocol
