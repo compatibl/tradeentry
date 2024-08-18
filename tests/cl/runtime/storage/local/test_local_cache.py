@@ -13,30 +13,30 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime import DataSource
-from cl.runtime.context.context import Context
+from cl.runtime.storage.local.local_cache import LocalCache
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecord
 
 
 def test_smoke():
     """Smoke test."""
 
-    with Context() as context:
-        # Create test record and populate with sample data
-        record = StubDataclassRecord()
-        key = record.get_key()
+    # Create an instance of record cache
+    cache = LocalCache.instance()
 
-        # Test saving and loading
-        dataset = ["Sample"]
-        DataSource.default().save_many([record], dataset=dataset)
-        loaded_records = StubDataclassRecord.load_many([record, key, None], context=context, dataset=dataset)
+    # Create test record and populate with sample data
+    record = StubDataclassRecord()
+    key = record.get_key()
 
-        # load_many can return not subscriptable but iterable
-        loaded_records = list(loaded_records)
+    # Test saving and loading
+    dataset = ["Sample"]
+    cache.save_many([record], dataset=dataset)
+    loaded_records = cache.load_many([record, key, None], dataset=dataset)
 
-        assert loaded_records[0] == record
-        assert loaded_records[1] == record
-        assert loaded_records[2] is None
+    # Convert to list
+    loaded_records = list(loaded_records)
+    assert loaded_records[0] == record
+    assert loaded_records[1] == record
+    assert loaded_records[2] is None
 
 
 if __name__ == "__main__":

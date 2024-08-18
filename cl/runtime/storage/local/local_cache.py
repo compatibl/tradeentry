@@ -12,34 +12,34 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime import DataSource
+from __future__ import annotations
+
+from cl.runtime.serialization.string_serializer import StringSerializer
+from typing_extensions import Self
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
-from cl.runtime.serialization.dict_serializer import DictSerializer
-from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.storage.data_source_types import TDataDict
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.dataset_util import DatasetUtil
 from dataclasses import dataclass
 from dataclasses import field
-from itertools import groupby
-from typing import Dict
+from typing import Dict, ClassVar
 from typing import Iterable
-from typing import Type
 from typing import cast
 
-# TODO: Revise and consider making fields of the data source
-data_serializer = DictSerializer()
 key_serializer = StringSerializer()
 
 
-@dataclass(slots=True, kw_only=True, frozen=True)
-class LocalCache(DataSource):
-    """Data source based on in-memory cache using Python dict."""
+@dataclass(slots=True, kw_only=True)
+class LocalCache:
+    """In-memory cache for objects without serialization."""
 
-    _cache: Dict[str, Dict[Type, Dict[str, TDataDict]]] = field(default_factory=dict)
+    __instance: ClassVar[LocalCache] | None = None
+    """Singleton instance is created on first access."""
+
+    __cache: Dict[KeyProtocol, RecordProtocol] = field(default_factory=lambda: {})
+    """Record instance is stored in cache without serialization."""
 
     def load_one(
         self,
@@ -49,7 +49,7 @@ class LocalCache(DataSource):
         identity: TIdentity | None = None,
     ) -> RecordProtocol | None:
         if record_or_key is None or getattr(record_or_key, "get_key", None) is not None:
-            # Record or None, return without lookup
+            # Key instance is Record or None, return without lookup
             return cast(RecordProtocol, record_or_key)
 
         elif getattr(record_or_key, "get_key_type"):
@@ -61,19 +61,15 @@ class LocalCache(DataSource):
             dataset = DatasetUtil.to_str(dataset)
 
             # Try to retrieve dataset dictionary, insert if it does not yet exist
-            dataset_cache = self._cache.setdefault(dataset, {})
+            dataset_cache = self.__cache.setdefault(dataset, {})
 
             # Try to retrieve table dictionary, return None if not found
             if (table_cache := dataset_cache.setdefault(key_type, None)) is None:
                 return None
 
             # Look up the record, return None if not found
-            if (serialized_record := table_cache[serialized_key]) is None:
-                return None
-
-            # Deserialize and return
-            record = data_serializer.deserialize_data(serialized_record)
-            return record
+            result = table_cache.get(serialized_key, None)
+            return result
 
         else:
             raise RuntimeError(f"Type {record_or_key.__class__.__name__} is not a record or key.")
@@ -116,7 +112,7 @@ class LocalCache(DataSource):
         dataset = DatasetUtil.to_str(dataset)
 
         # Try to retrieve dataset dictionary, insert if it does not yet exist
-        dataset_cache = self._cache.setdefault(dataset, {})
+        dataset_cache = self.__cache.setdefault(dataset, {})
 
         # Try to retrieve table dictionary using `key_type` as key, insert if it does not yet exist
         key_type = record.get_key_type()
@@ -124,10 +120,9 @@ class LocalCache(DataSource):
 
         # Serialize both key and record
         serialized_key = key_serializer.serialize_key(record)
-        serialized_record = data_serializer.serialize_data(record)
 
         # Add record to cache, overwriting an existing record if present
-        table_cache[serialized_key] = serialized_record
+        table_cache[serialized_key] = record
 
     def save_many(
         self,
@@ -150,5 +145,12 @@ class LocalCache(DataSource):
         dataset = DatasetUtil.to_str(dataset)
         raise NotImplementedError()
 
-    def delete_db(self) -> None:
-        raise NotImplementedError()
+    @classmethod
+    def instance(cls) -> Self:
+        """Return singleton instance."""
+
+        # Check if cached value exists, load if not found
+        if cls.__instance is None:
+            # Create if does not yet exist
+            cls.__instance = LocalCache()
+        return cls.__instance
