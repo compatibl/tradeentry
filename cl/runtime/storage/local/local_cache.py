@@ -29,14 +29,15 @@ from typing import Iterable
 from typing import cast
 
 key_serializer = StringSerializer()
+"""Serializer for keys used in cache lookup."""
+
+_local_cache_instance: LocalCache | None = None
+"""Singleton instance is created on first access."""
 
 
 @dataclass(slots=True, kw_only=True)
 class LocalCache:
     """In-memory cache for objects without serialization."""
-
-    __instance: ClassVar[LocalCache] | None = None
-    """Singleton instance is created on first access."""
 
     __cache: Dict[KeyProtocol, RecordProtocol] = field(default_factory=lambda: {})
     """Record instance is stored in cache without serialization."""
@@ -150,7 +151,8 @@ class LocalCache:
         """Return singleton instance."""
 
         # Check if cached value exists, load if not found
-        if cls.__instance is None:
+        global _local_cache_instance
+        if _local_cache_instance is None:
             # Create if does not yet exist
-            cls.__instance = LocalCache()
-        return cls.__instance
+            _local_cache_instance = LocalCache()
+        return _local_cache_instance

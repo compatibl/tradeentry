@@ -15,7 +15,7 @@
 from __future__ import annotations
 
 import os
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 from dataclasses import MISSING
 from dataclasses import dataclass
 from dotenv import find_dotenv
@@ -71,7 +71,7 @@ dotenv_dir_path = os.path.dirname(dotenv_file_path) if dotenv_file_path is not N
 
 
 @dataclass(slots=True, kw_only=True)
-class Settings:
+class Settings(ABC):
     """Base class for a singleton settings object."""
 
     __settings_dict: ClassVar[Dict[Type, Settings]] = {}
@@ -166,6 +166,8 @@ class Settings:
                 )
 
             result = cls(**settings_dict)
+
+            # Cache the result
             cls.__settings_dict[cls] = result
 
         return result
