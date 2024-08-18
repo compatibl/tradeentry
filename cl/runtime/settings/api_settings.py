@@ -26,7 +26,7 @@ class ApiSettings(Settings):
     host_ip: str = "127.0.0.1"
     """REST API host IP (either host name or IP can be used to access the API)."""
 
-    port: int  # TODO: Provide default
+    port: int = 7008
     """REST API port."""
 
     def __post_init__(self):
