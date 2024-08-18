@@ -18,10 +18,12 @@ import os
 from abc import abstractmethod, ABC
 from dataclasses import MISSING
 from dataclasses import dataclass
+from pathlib import Path
+
 from dotenv import find_dotenv
 from dotenv import load_dotenv
 from dynaconf import Dynaconf
-from typing import ClassVar
+from typing import ClassVar, Iterable, List
 from typing import Dict
 from typing import Type
 from typing_extensions import Self
@@ -171,3 +173,51 @@ class Settings(ABC):
             cls.__settings_dict[cls] = result
 
         return result
+
+    @classmethod
+    def normalize_paths(cls, field_name: str, field_value: Iterable[str | Path] | str | Path) -> List[str]:
+        """
+        Convert to absolute path if path relative to the location of .env or Dynaconf file is specified
+        and convert to list if single value is specified.
+        """
+
+        # Check that the argument is either a string or Path or an iterable
+        if isinstance(field_value, str) or isinstance(field_value, Path):
+            paths = [field_value]
+        elif hasattr(field_value, "__iter__"):
+            paths = list(field_value)
+        else:
+            raise RuntimeError(f"Field '{field_name}' with value '{field_value}' in class '{cls.__name__}' "
+                               f"must be a string or Path variable or their iterable.")
+
+        result = [cls.normalize_path(field_name, path) for path in paths]
+        return result
+
+    @classmethod
+    def normalize_path(cls, field_name: str, field_value: Path | str) -> str:
+        """Convert to absolute path if path relative to the location of .env or Dynaconf file is specified."""
+
+        # Convert to Path if specified as string
+        if isinstance(field_value, Path):
+            path = field_value
+        elif isinstance(field_value, str):
+            path = Path(field_value)
+        elif field_value is None or field_value == "":
+            raise RuntimeError(f"Field '{field_name}' in class '{cls.__name__}' has an empty element.")
+        else:
+            raise RuntimeError(f"Field '{field_name}' in class '{cls.__name__}' has an element "
+                               f"with type {type(field_value)} which is neither a Path nor a string.")
+
+        if not path.is_absolute():
+            if dotenv_dir_path is not None:
+                # Use .env file location if found
+                path = Path(dotenv_dir_path) / path
+            elif dynaconf_dir_path is not None:
+                # Use Dynaconf settings file location if found
+                path = Path(dynaconf_dir_path) / path
+            else:
+                raise RuntimeError(f"Cannot resolve relative preload path value {path} for {field_name} when "
+                                   "neither .env nor dynaconf settings file is present to use as project root.")
+
+        # Return as absolute path string
+        return str(path)

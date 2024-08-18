@@ -13,15 +13,26 @@
 # limitations under the License.
 
 import uvicorn
+
+from cl.runtime.settings.preload_settings import PreloadSettings
+from cl.runtime.storage.local.local_cache import LocalCache
+
 from cl.runtime.routers.server import app
 from cl.runtime.settings.api_settings import ApiSettings
 from stubs.cl.runtime.config.stub_runtime_config import StubRuntimeConfig  # TODO: Remove after refactoring
 
 if __name__ == "__main__":
+
     # TODO: Temporary workaround before full configuration workflow is supported
     config = StubRuntimeConfig()
     config.config_id = "Stub Runtime Config"
     config.configure()
+
+    # TODO: Use the data source specified in settings
+    data_source = LocalCache.instance()
+
+    # Preload data
+    PreloadSettings.instance().preload(data_source)
 
     # Run Uvicorn using hostname and port specified by Dynaconf
     api_settings = ApiSettings.instance()

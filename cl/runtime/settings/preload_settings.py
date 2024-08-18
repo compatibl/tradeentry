@@ -12,8 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 from pathlib import Path
 from typing import List, Iterable
+
+from cl.runtime.storage.protocols import DataSourceProtocol
 
 from cl.runtime.records.dataclasses_extensions import field
 
@@ -25,68 +28,57 @@ from dataclasses import dataclass
 class PreloadSettings(Settings):
     """Runtime settings for preloading records from files."""
 
-    csv_dirs: List[str] = field(default_factory=lambda: "preload/csv")
-    """CSV data directory as absolute or relative (to Dynaconf project root) path."""
-
-    yaml_dirs: List[str] = field(default_factory=lambda: "preload/yaml")
-    """YAML data directory as absolute or relative (to Dynaconf project root) path."""
-
-    json_dirs: List[str] = field(default_factory=lambda: "preload/json")
-    """JSON data directory as absolute or relative (to Dynaconf project root) path."""
+    dirs: List[str] = field(default_factory=lambda: [])
+    """
+    Absolute or relative (to Dynaconf project root) directory paths under which preloaded data is located.
+    
+    Notes:
+        - Each element of 'dir_path' will be searched for csv, yaml, and json subdirectories
+        - For CSV, the data is in csv/.../ClassName.csv where ... is optional dataset
+        - For YAML, the data is in yaml/ClassName/.../KeyToken1;KeyToken2.yaml where ... is optional dataset
+        - For JSON, the data is in json/ClassName/.../KeyToken1;KeyToken2.json where ... is optional dataset
+    """
 
     def __post_init__(self):
         """Perform validation and type conversions."""
 
-        # Convert to absolute path if specified as relative path
-        self.csv_dirs = self.normalize_paths("csv_dirs", self.csv_dirs)
-        self.yaml_dirs = self.normalize_paths("yaml_dirs", self.yaml_dirs)
-        self.json_dirs = self.normalize_paths("json_dirs", self.json_dirs)
+        # Convert to absolute paths if specified as relative paths and convert to list if single value is specified
+        self.dirs = self.normalize_paths("dirs", self.dirs)
 
     @classmethod
     def get_prefix(cls) -> str:
         return "runtime_preload"
 
-    @classmethod
-    def normalize_paths(cls, field_name: str, field_value: Iterable[str | Path] | str | Path) -> List[str]:
-        """Convert to absolute path if path relative to the location of .env or Dynaconf file is specified."""
-        
-        # Check that the argument is either a string or a list of strings
-        if isinstance(field_value, str) or isinstance(field_value, Path):
-            paths = [field_value]
-        elif hasattr(field_value, "__iter__"):
-            paths = list(field_value)
-        else:
-            raise RuntimeError(f"Field '{field_name}' in class '{cls.__name__}' "
-                               f"must be a string or Path variable or their iterable.")
+    def preload(self, data_source: DataSourceProtocol) -> None:
+        """
+        Preload from the specified directory paths.
 
-        result = [cls.normalize_path(field_name, path) for path in paths]
+        Args:
+            data_source: Data source to which the data will be loaded.
+        """
+
+        csv_dirs = self._find_type_root_dirs("csv")
+        yaml_dirs = self._find_type_root_dirs("yaml")
+        json_dirs = self._find_type_root_dirs("json")
+        pass
+
+    def _find_type_root_dirs(self, root_name: str) -> List[str]:
+
+        result = []
+
+        # Set of directories to skip
+        exclude_dirs = {"csv", "yaml", "json"}
+
+        # Walk through the directory tree for each specified preload dir
+        for preload_dir in self.dirs:
+
+            for dir_path, dir_names, filenames in os.walk(preload_dir):
+
+                if root_name in dir_names:
+                    result.append(os.path.join(os.path.abspath(dir_path), root_name))
+
+                # Remove excluded directories from dir_names to prevent os.walk from continuing
+                # to search inside preload file type roots
+                dir_names[:] = [d for d in dir_names if d not in exclude_dirs]
+
         return result
-
-    @classmethod
-    def normalize_path(cls, field_name: str, field_value: Path | str) -> str:
-        """Convert to absolute path if path relative to the location of .env or Dynaconf file is specified."""
-
-        # Convert to Path if specified as string
-        if isinstance(field_value, Path):
-            path = field_value
-        elif isinstance(field_value, str):
-            path = Path(field_value)
-        elif field_value is None or field_value == "":
-            raise RuntimeError(f"Field '{field_name}' in class '{cls.__name__}' has an empty element.")
-        else:
-            raise RuntimeError(f"Field '{field_name}' in class '{cls.__name__}' has an element "
-                               f"with type {type(field_value)} which is neither a Path nor a string.")
-
-        if not path.is_absolute():
-            if dotenv_dir_path is not None:
-                # Use .env file location if found
-                path = Path(dotenv_dir_path) / path
-            elif dynaconf_dir_path is not None:
-                # Use Dynaconf settings file location if found
-                path = Path(dynaconf_dir_path) / path
-            else:
-                raise RuntimeError(f"Cannot resolve relative preload path value {path} for {field_name} when "
-                                   "neither .env nor dynaconf settings file is present to use as project root.")
-
-        # Return as absolute path string
-        return str(path)
