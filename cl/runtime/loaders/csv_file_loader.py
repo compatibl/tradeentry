@@ -42,7 +42,8 @@ class CsvFileLoader(Loader):
             records = [self._deserialize_row(row_dict) for row_dict in csv_reader]
 
             # Save records to the specified data source
-            data_source.save_many(records)
+            if records:
+                data_source.save_many(records)
 
     def _deserialize_row(self, row_dict: Dict[str, Any]) -> RecordProtocol:
         """Deserialize row into a record."""

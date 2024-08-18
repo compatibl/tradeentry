@@ -16,6 +16,7 @@ import os
 from pathlib import Path
 from typing import List, Iterable
 
+from cl.runtime.loaders.csv_dir_loader import CsvDirLoader
 from cl.runtime.storage.protocols import DataSourceProtocol
 
 from cl.runtime.records.dataclasses_extensions import field
@@ -57,10 +58,16 @@ class PreloadSettings(Settings):
             data_source: Data source to which the data will be loaded.
         """
 
+        # Preload CSV data
         csv_dirs = self._find_type_root_dirs("csv")
+        for csv_dir in csv_dirs:
+            csv_loader = CsvDirLoader(dir_path=csv_dir)
+            csv_loader.load(data_source)  # TODO: Rename to preload or other name to avoid conflict with RecordMixin
+
         yaml_dirs = self._find_type_root_dirs("yaml")
+
         json_dirs = self._find_type_root_dirs("json")
-        pass
+
 
     def _find_type_root_dirs(self, root_name: str) -> List[str]:
 
