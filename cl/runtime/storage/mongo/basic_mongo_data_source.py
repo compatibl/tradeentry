@@ -41,7 +41,7 @@ data_serializer = DictSerializer()
 key_serializer = StringSerializer()
 
 
-@dataclass(slots=True, kw_only=True, frozen=True)
+@dataclass(slots=True, kw_only=True)
 class BasicMongoDataSource(DataSource):
     """MongoDB data source without datasets."""
 

@@ -28,7 +28,7 @@ from typing import ClassVar
 from typing import Iterable
 
 
-@dataclass(slots=True, kw_only=True, frozen=True)
+@dataclass(slots=True, kw_only=True)
 class DataSource(ABC):
     """Abstract base class for polymorphic data storage with dataset isolation."""
 

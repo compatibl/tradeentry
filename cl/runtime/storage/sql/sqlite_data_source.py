@@ -39,7 +39,7 @@ def dict_factory(cursor, row):
     return {key: value for key, value in zip(fields, row)}
 
 
-@dataclass(slots=True, kw_only=True, frozen=True)
+@dataclass(slots=True, kw_only=True)
 class SqliteDataSource(DataSource):
     """Sqlite data source without dataset and mile wide table for inheritance."""
 
