@@ -113,6 +113,15 @@ class BasicMongoDataSource(DataSource):
         result = [self.load_one(x) for x in records_or_keys]
         return result
 
+    def load_all(
+        self,
+        record_type: Type[RecordProtocol],
+        *,
+        dataset: TDataset = None,
+        identity: TIdentity | None = None,
+    ) -> Iterable[RecordProtocol]:
+        raise NotImplementedError()
+
     def load_by_query(
         self,
         query: TQuery,

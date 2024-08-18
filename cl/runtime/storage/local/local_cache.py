@@ -24,7 +24,7 @@ from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.dataset_util import DatasetUtil
 from dataclasses import dataclass
 from dataclasses import field
-from typing import Dict, ClassVar
+from typing import Dict, ClassVar, Type
 from typing import Iterable
 from typing import cast
 
@@ -85,6 +85,15 @@ class LocalCache:
         # TODO: Review performance compared to a custom implementation for load_many
         result = [self.load_one(x) for x in records_or_keys]
         return result
+
+    def load_all(
+        self,
+        record_type: Type[RecordProtocol],
+        *,
+        dataset: TDataset = None,
+        identity: TIdentity | None = None,
+    ) -> Iterable[RecordProtocol]:
+        raise NotImplementedError()
 
     def load_by_query(
         self,

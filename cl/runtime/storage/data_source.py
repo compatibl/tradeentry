@@ -24,7 +24,7 @@ from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TQuery
 from dataclasses import dataclass
-from typing import ClassVar
+from typing import ClassVar, Type
 from typing import Iterable
 
 
@@ -68,6 +68,23 @@ class DataSource(ABC):
 
         Args:
             records_or_keys: Iterable of records or keys (records are returned without DB lookup).
+            dataset: Lookup dataset as a delimited string, list of levels, or None
+            identity: Identity token for row level access
+        """
+
+    @abstractmethod
+    def load_all(
+        self,
+        record_type: Type[RecordProtocol],
+        *,
+        dataset: TDataset = None,
+        identity: TIdentity | None = None,
+    ) -> Iterable[RecordProtocol]:
+        """
+        Load all records of the specified type.
+
+        Args:
+            record_type: Type of the record to load.
             dataset: Lookup dataset as a delimited string, list of levels, or None
             identity: Identity token for row level access
         """

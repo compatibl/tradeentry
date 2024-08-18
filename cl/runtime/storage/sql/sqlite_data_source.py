@@ -174,6 +174,15 @@ class SqliteDataSource(DataSource):
                 for key in keys_group:
                     yield result.get(str(key))
 
+    def load_all(
+        self,
+        record_type: Type[RecordProtocol],
+        *,
+        dataset: TDataset = None,
+        identity: TIdentity | None = None,
+    ) -> Iterable[RecordProtocol]:
+        raise NotImplementedError()
+
     def load_by_query(
         self, query: TQuery, *, dataset: TDataset = None, identities: Iterable[TIdentity] | None = None
     ) -> Iterable[RecordProtocol]:

@@ -17,7 +17,7 @@ from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TQuery
-from typing import Iterable
+from typing import Iterable, Type
 from typing import Protocol
 
 
@@ -52,6 +52,22 @@ class DataSourceProtocol(Protocol):
 
         Args:
             records_or_keys: Iterable of records or keys (records are returned without DB lookup).
+            dataset: Lookup dataset as a delimited string, list of levels, or None
+            identity: Identity token for row level access
+        """
+
+    def load_all(
+        self,
+        record_type: Type[RecordProtocol],
+        *,
+        dataset: TDataset = None,
+        identity: TIdentity | None = None,
+    ) -> Iterable[RecordProtocol]:
+        """
+        Load all records of the specified type.
+
+        Args:
+            record_type: Type of the record to load.
             dataset: Lookup dataset as a delimited string, list of levels, or None
             identity: Identity token for row level access
         """
