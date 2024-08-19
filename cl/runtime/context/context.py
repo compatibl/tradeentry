@@ -73,14 +73,14 @@ class Context:
         return cls.__context_stack[-1] if len(cls.__context_stack) > 0 else None
 
     def __enter__(self):
-        """Supports `with` operator for resource disposal."""
+        """Supports 'with' operator for resource disposal."""
 
         # Set current context on entering 'with Context(...)' clause
         self.__context_stack.append(self)
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Supports `with` operator for resource disposal."""
+        """Supports 'with' operator for resource disposal."""
 
         # Restore the previous current context on exiting from 'with Context(...)' clause
         if len(self.__context_stack) > 0:

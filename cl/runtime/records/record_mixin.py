@@ -48,11 +48,11 @@ class RecordMixin(Generic[TKey]):
         Types that can be used to query for this type (in arbitrary order). Override if required.
 
         Notes:
-            - The default implementation returns all classes in MRO where method `get_key` is not abstract.
+            - The default implementation returns all classes in MRO where method 'get_key' is not abstract.
             - The result is memoized (cached) for better performance.
         """
 
-        # Get the list of classes in MRO that implement `get_key` method
+        # Get the list of classes in MRO that implement 'get_key' method
         result = [
             c
             for c in cls.mro()
@@ -63,8 +63,8 @@ class RecordMixin(Generic[TKey]):
 
         # Make sure there is at least one such class in the returned list
         if len(result) == 0:
-            # If the list is empty, the class itself does not implement `get_key` method
-            raise RuntimeError(f"Class {cls.__module__}.{cls.__name__} does not implement `get_key` method.")
+            # If the list is empty, the class itself does not implement 'get_key' method
+            raise RuntimeError(f"Class {cls.__module__}.{cls.__name__} does not implement 'get_key' method.")
 
         return result
 

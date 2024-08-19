@@ -41,7 +41,7 @@ def field(
         default_factory: Factory to generate a new instance for default value (for container types)
         name: Override field name in REST (label will be titleized version of this parameter)
         label: Override titleized name in UI
-        subtype: Override field type, the only permitted value is `long` for int field type
+        subtype: Override field type, the only permitted value is 'long' for int field type
         formatter: Standard formatter name (without curly brackets) or raw Python format string (in curly brackets)
     """
     metadata = {

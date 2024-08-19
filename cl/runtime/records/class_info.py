@@ -53,7 +53,7 @@ class ClassInfo(ABC):
     @cached
     def get_class_type(class_path: str) -> Type:
         """
-        Get class type from string in `module.ClassName` format, importing the module if necessary.
+        Get class type from string in 'module.ClassName' format, importing the module if necessary.
 
         Notes:
             Return value is cached to increase performance.

@@ -129,15 +129,15 @@ class DatasetUtil:
         dataset = unquote(dataset)
 
         if not dataset.startswith(DatasetUtil._sep):
-            raise Exception(f"Dataset `{dataset}` does not start with a backslash separator.")
+            raise Exception(f"Dataset '{dataset}' does not start with a backslash separator.")
         if dataset.endswith(DatasetUtil._sep):
-            raise Exception(f"Dataset `{dataset}` must not end with a backslash separator.")
+            raise Exception(f"Dataset '{dataset}' must not end with a backslash separator.")
         if DatasetUtil._two_sep in dataset:
-            raise Exception(f"Dataset `{dataset}` contains two backslash separators in a row.")
+            raise Exception(f"Dataset '{dataset}' contains two backslash separators in a row.")
         if dataset.startswith(" "):
-            raise Exception(f"Dataset `{dataset}` has a leading space.")
+            raise Exception(f"Dataset '{dataset}' has a leading space.")
         if dataset.endswith(" "):
-            raise Exception(f"Dataset `{dataset}` has a trailing space.")
+            raise Exception(f"Dataset '{dataset}' has a trailing space.")
 
         return dataset
 

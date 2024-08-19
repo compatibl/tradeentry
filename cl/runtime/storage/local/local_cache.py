@@ -126,7 +126,7 @@ class LocalCache:
         # Try to retrieve dataset dictionary, insert if it does not yet exist
         dataset_cache = self.__cache.setdefault(dataset, {})
 
-        # Try to retrieve table dictionary using `key_type` as key, insert if it does not yet exist
+        # Try to retrieve table dictionary using 'key_type' as key, insert if it does not yet exist
         key_type = record.get_key_type()
         table_cache = dataset_cache.setdefault(key_type, {})
 

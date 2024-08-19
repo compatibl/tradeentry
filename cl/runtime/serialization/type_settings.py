@@ -28,7 +28,7 @@ class TypeSettings:
     def get_type_alias(type_: Type | str) -> str:
         """
         Get type alias for use in REST and UI (in case of UI, label will override).
-        Returns `type_.__name__` if alias is not set.
+        Returns 'type_.__name__' if alias is not set.
         """
         # Argument is either type or full type path
         if isinstance(type_, type):
@@ -38,7 +38,7 @@ class TypeSettings:
             type_path = type_
             typename = type_.rsplit(".", 1)[-1]
         else:
-            raise TypeError("First argument of `TypeSettings.get_type_alias` must be either path or string.")
+            raise TypeError("First argument of 'TypeSettings.get_type_alias' must be either path or string.")
 
         # Return typename if alias is not already set
         result = TypeSettings.__type_alias_dict.setdefault(type_path, typename)
