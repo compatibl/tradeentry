@@ -14,19 +14,18 @@
 
 from abc import ABC
 from abc import abstractmethod
-from cl.runtime.loaders.loader_key import LoaderKey
+from cl.runtime.io.reader_key import ReaderKey
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.runtime.storage.protocols import DataSourceProtocol
 from dataclasses import dataclass
 
 
 @dataclass(slots=True, kw_only=True)
-class Loader(LoaderKey, RecordMixin[LoaderKey], ABC):
-    """Load records into the specified data source."""
+class Reader(ReaderKey, RecordMixin[ReaderKey], ABC):
+    """Read records from the specified files or directories and save them to the current context."""
 
-    def get_key(self) -> LoaderKey:
-        return LoaderKey(loader_id=self.loader_id)
+    def get_key(self) -> ReaderKey:
+        return ReaderKey(loader_id=self.loader_id)
 
     @abstractmethod
-    def load(self, data_source: DataSourceProtocol) -> None:
-        """Load one or multiple records into the specified data source."""
+    def read(self) -> None:
+        """Read records from the specified files or directories and save them to the current context."""

@@ -15,9 +15,9 @@
 import os
 
 import pytest
-from cl.runtime.settings.settings import Settings
-
 from cl.runtime.context.context import Context
+
+from cl.runtime.settings.settings import Settings
 
 from cl.runtime.io.csv_dir_reader import CsvDirReader
 from cl.runtime.io.csv_file_reader import CsvFileReader
@@ -29,21 +29,23 @@ from stubs.cl.runtime import StubDataclassRecordKey
 
 
 def test_smoke():
-    """Test CsvFileReader class."""
+    """Test CsvDirReader class."""
 
     project_root = Settings.get_project_root()
-    file_path = os.path.join(project_root, "preload/stubs/cl/runtime/csv/StubDataclassDerivedRecord.csv")
+    dir_path = os.path.join(project_root, "preload/stubs/cl/runtime/csv")
 
     # Create a new instance of local cache for the test
     data_source = LocalCache()
     with Context(data_source=data_source):
 
-        # TODO: Change the API not to take record type or make it optional
-        file_reader = CsvFileReader(record_type=StubDataclassDerivedRecord, file_path=file_path)
-        file_reader.read()
+        dir_reader = CsvDirReader(dir_path=dir_path)
+        dir_reader.read()
 
         # Verify
         # TODO: Check count using load_all or count method of DataSource when created
+        for i in range(1, 2):
+            record = data_source.load_one(StubDataclassRecordKey(id=f"base_id_{i}"))
+            assert record == StubDataclassRecord(id=f"base_id_{i}")
         for i in range(1, 2):
             record = data_source.load_one(StubDataclassRecordKey(id=f"derived_id_{i}"))
             assert record == StubDataclassDerivedRecord(

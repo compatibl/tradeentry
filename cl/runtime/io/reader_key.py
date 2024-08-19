@@ -19,11 +19,11 @@ from typing import Type
 
 
 @dataclass(slots=True, kw_only=True)
-class LoaderKey(KeyMixin):
+class ReaderKey(KeyMixin):
     """Load records into the specified data source."""
 
     loader_id: str = missing()
     """Unique loader identifier."""
 
     def get_key_type(self) -> Type:
-        return LoaderKey
+        return ReaderKey

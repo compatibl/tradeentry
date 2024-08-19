@@ -177,6 +177,25 @@ class Settings(ABC):
         return result
 
     @classmethod
+    def get_project_root(cls) -> str:
+        """
+        Returns absolute path of the directory containing .env file, and if not present the directory
+        containing the first Dynaconf settings file found. Error message if neither is found.
+        """
+        if dotenv_dir_path is not None:
+            # Use .env file location if found
+            return dotenv_dir_path
+        elif dynaconf_dir_path is not None:
+            # Otherwise use the location of the first Dynaconf file found
+            # TODO: Add a test to confirm the logic when several Dynaconf files are in different locations
+            return dynaconf_dir_path
+        else:
+            raise RuntimeError(
+                f"Cannot resolve relative preload path value {path} for {field_name} when "
+                "neither .env nor dynaconf settings file is present to use as project root."
+            )
+
+    @classmethod
     def normalize_paths(cls, field_name: str, field_value: Iterable[str | Path] | str | Path) -> List[str]:
         """
         Convert to absolute path if path relative to the location of .env or Dynaconf file is specified
@@ -215,17 +234,8 @@ class Settings(ABC):
             )
 
         if not path.is_absolute():
-            if dotenv_dir_path is not None:
-                # Use .env file location if found
-                path = Path(dotenv_dir_path) / path
-            elif dynaconf_dir_path is not None:
-                # Use Dynaconf settings file location if found
-                path = Path(dynaconf_dir_path) / path
-            else:
-                raise RuntimeError(
-                    f"Cannot resolve relative preload path value {path} for {field_name} when "
-                    "neither .env nor dynaconf settings file is present to use as project root."
-                )
+            project_root = cls.get_project_root()
+            path = os.path.join(project_root, path)
 
         # Return as absolute path string
         return str(path)

@@ -14,12 +14,9 @@
 
 import os
 from cl.runtime.context.context import Context
-from cl.runtime.loaders.csv_dir_loader import CsvDirLoader
+from cl.runtime.io.csv_dir_reader import CsvDirReader
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.settings.settings import Settings
-from cl.runtime.settings.settings import dotenv_dir_path
-from cl.runtime.settings.settings import dynaconf_dir_path
-from cl.runtime.storage.protocols import DataSourceProtocol
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
@@ -59,9 +56,9 @@ class PreloadSettings(Settings):
         # Preload CSV data
         csv_dirs = self._find_type_root_dirs("csv")
         for csv_dir in csv_dirs:
-            csv_loader = CsvDirLoader(dir_path=csv_dir)
+            csv_reader = CsvDirReader(dir_path=csv_dir)
             # TODO: Rename to preload or other name to avoid conflict with RecordMixin
-            csv_loader.load(context.data_source)
+            csv_reader.load(context.data_source)
 
         yaml_dirs = self._find_type_root_dirs("yaml")
         json_dirs = self._find_type_root_dirs("json")

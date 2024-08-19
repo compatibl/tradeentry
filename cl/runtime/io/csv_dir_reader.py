@@ -13,28 +13,28 @@
 # limitations under the License.
 
 import os
-from cl.runtime.loaders.csv_file_loader import CsvFileLoader
-from cl.runtime.loaders.loader import Loader
+from cl.runtime.io.csv_file_reader import CsvFileReader
+from cl.runtime.io.reader import Reader
 from cl.runtime.schema.schema import Schema
 from cl.runtime.storage.protocols import DataSourceProtocol
 from dataclasses import dataclass
 
 
 @dataclass(slots=True, kw_only=True)
-class CsvDirLoader(Loader):
+class CsvDirReader(Reader):
     """Load records a CSV directory into the context data source."""
 
     dir_path: str
     """Absolute path to the CSV directory where file naming convention is 'ClassName.csv'."""
 
-    def load(self, data_source: DataSourceProtocol) -> None:
+    def read(self) -> None:
         # Filenames with extension but without directory path in the specified directory
         filenames = [f.name for f in os.scandir(self.dir_path) if f.is_file() and f.name.endswith(".csv")]
 
         # Create and run a file loader for each file
-        [self._create_loader(filename).load(data_source) for filename in filenames]
+        [self._create_reader(filename).read() for filename in filenames]
 
-    def _create_loader(self, filename: str) -> CsvFileLoader:
+    def _create_reader(self, filename: str) -> CsvFileReader:
         """Load the specified file."""
 
         # Obtain record type from classname which is filename without extension
@@ -43,5 +43,5 @@ class CsvDirLoader(Loader):
 
         # Create CSV file loader
         file_path = os.path.join(self.dir_path, filename)
-        loader = CsvFileLoader(record_type=record_type, file_path=file_path)
+        loader = CsvFileReader(record_type=record_type, file_path=file_path)
         return loader
