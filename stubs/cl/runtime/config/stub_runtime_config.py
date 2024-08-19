@@ -29,6 +29,7 @@ from stubs.cl.runtime import StubDataclassOtherDerivedRecord
 from stubs.cl.runtime import StubDataclassPrimitiveFields
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassSingleton
+from stubs.cl.runtime.decorators.stub_viewers import StubViewers
 
 
 @dataclass(slots=True, kw_only=True)
@@ -63,6 +64,9 @@ class StubRuntimeConfig(Config):
         stub_dataclass_primitive_fields_records = [
             StubDataclassPrimitiveFields(key_str_field=f"K{i}") for i in range(10)
         ]
+
+        stub_viewers_records = [StubViewers(stub_id=f"L{i}") for i in range(10)]
+
         stub_dataclass_singleton_record = [StubDataclassSingleton()]
 
         all_records = [
@@ -78,6 +82,7 @@ class StubRuntimeConfig(Config):
             *stub_dataclass_list_dict_fields_records,
             *stub_dataclass_primitive_fields_records,
             *stub_dataclass_singleton_record,
+            *stub_viewers_records
         ]
 
         # save stubs to db
