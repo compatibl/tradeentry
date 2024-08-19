@@ -13,14 +13,16 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.settings.context_settings import ContextSettings
+from cl.runtime.settings.api_settings import ApiSettings
 
 
 def test_smoke():
-    """Test ContextSettings class."""
+    """Test ApiSettings class."""
 
-    context_settings = ContextSettings.instance()
-    assert context_settings.data_source == "Runtime Default"
+    api_settings = ApiSettings.instance()
+    assert api_settings.host_name == "localhost"
+    assert api_settings.host_ip == "127.0.0.1"
+    assert api_settings.port == 7008
 
 
 if __name__ == "__main__":

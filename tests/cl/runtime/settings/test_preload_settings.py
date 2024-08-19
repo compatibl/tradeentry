@@ -12,15 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
 import pytest
-from cl.runtime.settings.context_settings import ContextSettings
+from cl.runtime.settings.preload_settings import PreloadSettings
 
 
-def test_smoke():
-    """Test ContextSettings class."""
+def test_preload_settings():
+    """Test PreloadSettings class."""
 
-    context_settings = ContextSettings.instance()
-    assert context_settings.data_source == "Runtime Default"
+    preload_settings = PreloadSettings.instance()
+
+    # Check that all paths exist and are absolute paths
+    assert all(os.path.exists(dir_path) for dir_path in preload_settings.dirs)
+    assert all(os.path.isabs(dir_path) for dir_path in preload_settings.dirs)
 
 
 if __name__ == "__main__":

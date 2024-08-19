@@ -14,7 +14,7 @@
 
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.runtime.settings.enum_item_label_key import EnumItemLabelKey
+from cl.runtime.settings.labels.enum_item_label_key import EnumItemLabelKey
 from dataclasses import dataclass
 
 

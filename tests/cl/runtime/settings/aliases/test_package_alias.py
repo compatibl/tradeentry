@@ -13,26 +13,23 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.settings.package_alias import PackageAlias
+
+from cl.runtime import Context, LocalCache
+from cl.runtime.settings.aliases.package_alias import PackageAlias
 
 
 @pytest.mark.skip("Temporarily disabled during refactoring.")  # TODO: Switch to new classes and enable
 def test_package_aliases():
     """Test UiSettings class."""
 
-    api_settings = None
-
-    assert api_settings.package_aliases == {
-        "cl.runtime": "rt",
-        "stubs.cl.runtime": "stubs.rt",
-    }
+    # TODO: Load all package aliases into a dictionary from preload directory
 
     # Call twice to check caching
     for _ in range(2):
-        assert api_settings.get_package_alias("cl") is None
-        assert api_settings.get_package_alias("cl.unknown.package") is None
-        assert api_settings.get_package_alias("cl.runtime") == "rt"
-        assert api_settings.get_package_alias("cl.runtime.storage") == "rt"
+        assert PackageAlias.get_alias("cl") is None
+        assert PackageAlias.get_alias("cl.unknown.package") is None
+        assert PackageAlias.get_alias("cl.runtime") == "rt"
+        assert PackageAlias.get_alias("cl.runtime.storage") == "rt"
 
 
 if __name__ == "__main__":

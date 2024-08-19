@@ -14,7 +14,7 @@
 
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.runtime.settings.class_label_key import ClassLabelKey
+from cl.runtime.settings.labels.class_label_key import ClassLabelKey
 from dataclasses import dataclass
 
 

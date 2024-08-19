@@ -15,7 +15,7 @@
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.serialization.sentinel_type import sentinel_value
-from cl.runtime.settings.package_alias_key import PackageAliasKey
+from cl.runtime.settings.aliases.package_alias_key import PackageAliasKey
 from dataclasses import dataclass
 from typing import Dict
 
@@ -41,7 +41,7 @@ class PackageAlias(PackageAliasKey, RecordMixin[PackageAliasKey]):
         return PackageAliasKey(package_pattern=self.package_pattern)
 
     @classmethod
-    def get_package_alias(cls, module: str) -> str | None:
+    def get_alias(cls, module: str) -> str | None:
         """Get alias for the module in dot-delimited format or None if alias is not specified."""
 
         # Otherwise check if a cached value exists, using missing_value as sentinel
