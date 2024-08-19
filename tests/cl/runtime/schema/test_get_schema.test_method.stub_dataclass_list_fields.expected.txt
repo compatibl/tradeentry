@@ -1,3 +1,4 @@
+_t: StubDataclassListFields
 Module:
   ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassListFields
 Name: StubDataclassListFields
@@ -27,28 +28,32 @@ Elements:
   Name: DateList
   Comment: Stub field.
   Vector: true
-- Data:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData.StubDataclassData
+  Data:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData
     Name: StubDataclassData
   Name: DataList
   Comment: Stub field.
   Vector: true
-- Key:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+  Key:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
     Name: StubDataclassRecord
   Name: KeyList
   Comment: Stub field.
   Vector: true
-- Data:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+  Data:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
     Name: StubDataclassRecord
   Name: RecordList
   Comment: Stub field.
   Vector: true
-- Data:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassDerivedRecord.StubDataclassDerivedRecord
+  Data:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassDerivedRecord
     Name: StubDataclassDerivedRecord

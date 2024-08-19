@@ -1,3 +1,4 @@
+_t: StubDataclassOptionalFields
 Module:
   ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassOptionalFields
 Name: StubDataclassOptionalFields
@@ -45,14 +46,16 @@ Elements:
   Vector: true
   Optional: true
   OptionalVectorElement: true
-- Data:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData.StubDataclassData
+  Data:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData
     Name: StubDataclassData
   Name: OptionalData
   Comment: Optional data.
   Optional: true
-- Data:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData.StubDataclassData
+  Data:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData
     Name: StubDataclassData
@@ -60,7 +63,8 @@ Elements:
   Comment: Required list of optional data.
   Vector: true
   OptionalVectorElement: true
-- Data:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData.StubDataclassData
+  Data:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData
     Name: StubDataclassData
@@ -69,14 +73,16 @@ Elements:
   Vector: true
   Optional: true
   OptionalVectorElement: true
-- Key:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+  Key:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
     Name: StubDataclassRecord
   Name: OptionalKey
   Comment: Optional key.
   Optional: true
-- Key:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+  Key:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
     Name: StubDataclassRecord
@@ -84,7 +90,8 @@ Elements:
   Comment: Required list of optional key.
   Vector: true
   OptionalVectorElement: true
-- Key:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+  Key:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
     Name: StubDataclassRecord
@@ -93,14 +100,16 @@ Elements:
   Vector: true
   Optional: true
   OptionalVectorElement: true
-- Data:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+  Data:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
     Name: StubDataclassRecord
   Name: OptionalRecord
   Comment: Optional record.
   Optional: true
-- Data:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+  Data:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
     Name: StubDataclassRecord
@@ -108,7 +117,8 @@ Elements:
   Comment: Required list of optional record.
   Vector: true
   OptionalVectorElement: true
-- Data:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+  Data:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
     Name: StubDataclassRecord

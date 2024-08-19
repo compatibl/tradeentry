@@ -1,3 +1,4 @@
+_t: StubDataclassNestedFields
 Module:
   ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassNestedFields
 Name: StubDataclassNestedFields
@@ -9,55 +10,64 @@ Elements:
     Type: String
   Name: Primitive
   Comment: String key element.
-- Key:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+  Key:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
     Name: StubDataclassRecord
   Name: Embedded1
   Comment: Embedded key 1.
-- Key:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+  Key:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
     Name: StubDataclassRecord
   Name: Embedded2
   Comment: Embedded key 2.
-- Data:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData.StubDataclassData
+  Data:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData
     Name: StubDataclassData
   Name: BaseField
   Comment: Stub field.
-- Data:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassDerivedData.StubDataclassDerivedData
+  Data:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassDerivedData
     Name: StubDataclassDerivedData
   Name: DerivedField
   Comment: Stub field.
-- Data:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassDerivedFromDerivedData.StubDataclassDerivedFromDerivedData
+  Data:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassDerivedFromDerivedData
     Name: StubDataclassDerivedFromDerivedData
   Name: DerivedFromDerivedField
   Comment: Stub field.
-- Data:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData.StubDataclassData
+  Data:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData
     Name: StubDataclassData
   Name: PolymorphicField
   Comment: Declared StubDataclassData but provided an instance of StubDataclassDerivedData.
-- Data:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassDerivedData.StubDataclassDerivedData
+  Data:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassDerivedData
     Name: StubDataclassDerivedData
   Name: PolymorphicDerivedField
   Comment: Declared StubDataclassDerivedData but provided an instance of StubDataclassDerivedFromDerivedData.
-- Key:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+  Key:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
     Name: StubDataclassRecord
   Name: KeyField
   Comment: Stub field.
-- Key:
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+  Key:
     Module:
       ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
     Name: StubDataclassRecord

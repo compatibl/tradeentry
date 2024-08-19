@@ -1,3 +1,4 @@
+_t: StubDataclassRecord
 Module:
   ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
 Name: StubDataclassRecord

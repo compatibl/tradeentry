@@ -1,3 +1,4 @@
+_t: StubDataclassPrimitiveFields
 Module:
   ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassPrimitiveFields
 Name: StubDataclassPrimitiveFields

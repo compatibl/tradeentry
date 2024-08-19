@@ -1,4 +1,5 @@
 Cl.Runtime.Backend.Core.UiAppState.UiAppState:
+  _t: UiAppState
   Module:
     ModuleName: Cl.Runtime.Backend.Core.UiAppState
   Name: UiAppState
@@ -6,13 +7,15 @@ Cl.Runtime.Backend.Core.UiAppState.UiAppState:
   Comment: UiAppState.
   DisplayKind: Basic
   Elements:
-  - Key:
+  - _t: Cl.Runtime.Backend.Core.User.User
+    Key:
       Module:
         ModuleName: Cl.Runtime.Backend.Core.User
       Name: User
     Name: User
     Comment: A user the app state is applied for.
-  - Data:
+  - _t: Cl.Runtime.Backend.Core.TabInfo.TabInfo
+    Data:
       Module:
         ModuleName: Cl.Runtime.Backend.Core.TabInfo
       Name: TabInfo
@@ -48,6 +51,7 @@ Cl.Runtime.Backend.Core.UiAppState.UiAppState:
   Keys:
   - User
 Cl.Runtime.Backend.Core.BaseTypeInfo.BaseTypeInfo:
+  _t: BaseTypeInfo
   Module:
     ModuleName: Cl.Runtime.Backend.Core.BaseTypeInfo
   Name: BaseTypeInfo
@@ -69,6 +73,7 @@ Cl.Runtime.Backend.Core.BaseTypeInfo.BaseTypeInfo:
     Name: Label
     Comment: Label of type.
 Cl.Runtime.Backend.Core.TabInfo.TabInfo:
+  _t: TabInfo
   Module:
     ModuleName: Cl.Runtime.Backend.Core.TabInfo
   Name: TabInfo
@@ -77,13 +82,15 @@ Cl.Runtime.Backend.Core.TabInfo.TabInfo:
   Kind: Element
   DisplayKind: Basic
   Elements:
-  - Data:
+  - _t: Cl.Runtime.Backend.Core.BaseTypeInfo.BaseTypeInfo
+    Data:
       Module:
         ModuleName: Cl.Runtime.Backend.Core.BaseTypeInfo
       Name: BaseTypeInfo
     Name: Type
     Comment: Type.
 Cl.Runtime.Backend.Core.User.User:
+  _t: User
   Module:
     ModuleName: Cl.Runtime.Backend.Core.User
   Name: User
@@ -112,6 +119,7 @@ Cl.Runtime.Backend.Core.User.User:
   - Username
 
 Cl.Runtime.Backend.Core.UiAppState.UiAppState:
+  _t: UiAppState
   Module:
     ModuleName: Cl.Runtime.Backend.Core.UiAppState
   Name: UiAppState
@@ -119,13 +127,15 @@ Cl.Runtime.Backend.Core.UiAppState.UiAppState:
   Comment: UiAppState.
   DisplayKind: Basic
   Elements:
-  - Key:
+  - _t: Cl.Runtime.Backend.Core.User.User
+    Key:
       Module:
         ModuleName: Cl.Runtime.Backend.Core.User
       Name: User
     Name: User
     Comment: A user the app state is applied for.
-  - Data:
+  - _t: Cl.Runtime.Backend.Core.TabInfo.TabInfo
+    Data:
       Module:
         ModuleName: Cl.Runtime.Backend.Core.TabInfo
       Name: TabInfo
@@ -161,6 +171,7 @@ Cl.Runtime.Backend.Core.UiAppState.UiAppState:
   Keys:
   - User
 Cl.Runtime.Backend.Core.BaseTypeInfo.BaseTypeInfo:
+  _t: BaseTypeInfo
   Module:
     ModuleName: Cl.Runtime.Backend.Core.BaseTypeInfo
   Name: BaseTypeInfo
@@ -182,6 +193,7 @@ Cl.Runtime.Backend.Core.BaseTypeInfo.BaseTypeInfo:
     Name: Label
     Comment: Label of type.
 Cl.Runtime.Backend.Core.TabInfo.TabInfo:
+  _t: TabInfo
   Module:
     ModuleName: Cl.Runtime.Backend.Core.TabInfo
   Name: TabInfo
@@ -190,13 +202,15 @@ Cl.Runtime.Backend.Core.TabInfo.TabInfo:
   Kind: Element
   DisplayKind: Basic
   Elements:
-  - Data:
+  - _t: Cl.Runtime.Backend.Core.BaseTypeInfo.BaseTypeInfo
+    Data:
       Module:
         ModuleName: Cl.Runtime.Backend.Core.BaseTypeInfo
       Name: BaseTypeInfo
     Name: Type
     Comment: Type.
 Cl.Runtime.Backend.Core.User.User:
+  _t: User
   Module:
     ModuleName: Cl.Runtime.Backend.Core.User
   Name: User
