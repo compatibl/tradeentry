@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import uvicorn
+from cl.runtime.context.context import Context
 
 from cl.runtime.settings.preload_settings import PreloadSettings
 from cl.runtime.storage.local.local_cache import LocalCache
@@ -23,17 +24,16 @@ from stubs.cl.runtime.config.stub_runtime_config import StubRuntimeConfig  # TOD
 
 if __name__ == "__main__":
 
-    # TODO: Temporary workaround before full configuration workflow is supported
-    config = StubRuntimeConfig()
-    config.config_id = "Stub Runtime Config"
-    config.configure()
+    with Context():
 
-    # TODO: Use the data source specified in settings
-    data_source = LocalCache.instance()
+        # TODO: Temporary workaround before full configuration workflow is supported
+        config = StubRuntimeConfig()
+        config.config_id = "Stub Runtime Config"
+        config.configure()
 
-    # Preload data
-    PreloadSettings.instance().preload(data_source)
+        # Preload data
+        PreloadSettings.instance().preload()
 
-    # Run Uvicorn using hostname and port specified by Dynaconf
-    api_settings = ApiSettings.instance()
-    uvicorn.run(app, host=api_settings.host_name, port=api_settings.port)
+        # Run Uvicorn using hostname and port specified by Dynaconf
+        api_settings = ApiSettings.instance()
+        uvicorn.run(app, host=api_settings.host_name, port=api_settings.port)

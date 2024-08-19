@@ -16,6 +16,8 @@ import os
 from pathlib import Path
 from typing import List, Iterable
 
+from cl.runtime.context.context import Context
+
 from cl.runtime.loaders.csv_dir_loader import CsvDirLoader
 from cl.runtime.storage.protocols import DataSourceProtocol
 
@@ -50,22 +52,19 @@ class PreloadSettings(Settings):
     def get_prefix(cls) -> str:
         return "runtime_preload"
 
-    def preload(self, data_source: DataSourceProtocol) -> None:
-        """
-        Preload from the specified directory paths.
+    def preload(self) -> None:
+        """Preload from the specified directory paths."""
 
-        Args:
-            data_source: Data source to which the data will be loaded.
-        """
+        context = Context.current()
 
         # Preload CSV data
         csv_dirs = self._find_type_root_dirs("csv")
         for csv_dir in csv_dirs:
             csv_loader = CsvDirLoader(dir_path=csv_dir)
-            csv_loader.load(data_source)  # TODO: Rename to preload or other name to avoid conflict with RecordMixin
+            # TODO: Rename to preload or other name to avoid conflict with RecordMixin
+            csv_loader.load(context.data_source)
 
         yaml_dirs = self._find_type_root_dirs("yaml")
-
         json_dirs = self._find_type_root_dirs("json")
 
 
