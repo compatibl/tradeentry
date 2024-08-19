@@ -16,7 +16,6 @@ from __future__ import annotations
 
 import importlib
 import inspect
-
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.schema.type_decl import TypeDecl
 from cl.runtime.schema.type_decl import pascalize

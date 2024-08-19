@@ -13,14 +13,14 @@
 # limitations under the License.
 
 import pytest
-from pathlib import Path
-
 from cl.runtime.loaders.csv_dir_loader import CsvDirLoader
-from cl.runtime.storage.local.local_cache import LocalCache
-
 from cl.runtime.loaders.csv_file_loader import CsvFileLoader
 from cl.runtime.settings.preload_settings import PreloadSettings
-from stubs.cl.runtime import StubDataclassDerivedRecord, StubDataclassRecordKey, StubDataclassRecord
+from cl.runtime.storage.local.local_cache import LocalCache
+from pathlib import Path
+from stubs.cl.runtime import StubDataclassDerivedRecord
+from stubs.cl.runtime import StubDataclassRecord
+from stubs.cl.runtime import StubDataclassRecordKey
 
 
 def test_csv_file_loader():

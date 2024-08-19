@@ -14,9 +14,9 @@
 
 from abc import ABC
 from abc import abstractmethod
+from cl.runtime.loaders.loader_key import LoaderKey
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.storage.protocols import DataSourceProtocol
-from cl.runtime.loaders.loader_key import LoaderKey
 from dataclasses import dataclass
 
 

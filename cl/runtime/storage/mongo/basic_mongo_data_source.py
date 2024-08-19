@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import itertools
-from cl.runtime.storage.data_source import DataSource
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import InitProtocol
@@ -21,6 +20,7 @@ from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
+from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.data_source_types import TDataDict
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity

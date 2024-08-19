@@ -16,11 +16,11 @@ from __future__ import annotations
 
 import dataclasses
 import inflection
-from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.backend.core.ui_app_state_key import UiAppStateKey
 from cl.runtime.backend.core.user_key import UserKey
 from cl.runtime.context.context import current_or_default_data_source
+from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
 from cl.runtime.routers.storage.record_request import RecordRequest

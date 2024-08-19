@@ -13,18 +13,17 @@
 # limitations under the License.
 
 import os
-from pathlib import Path
-from typing import List, Iterable
-
 from cl.runtime.context.context import Context
-
 from cl.runtime.loaders.csv_dir_loader import CsvDirLoader
-from cl.runtime.storage.protocols import DataSourceProtocol
-
 from cl.runtime.records.dataclasses_extensions import field
-
-from cl.runtime.settings.settings import Settings, dotenv_dir_path, dynaconf_dir_path
+from cl.runtime.settings.settings import Settings
+from cl.runtime.settings.settings import dotenv_dir_path
+from cl.runtime.settings.settings import dynaconf_dir_path
+from cl.runtime.storage.protocols import DataSourceProtocol
 from dataclasses import dataclass
+from pathlib import Path
+from typing import Iterable
+from typing import List
 
 
 @dataclass(slots=True, kw_only=True)
@@ -67,9 +66,7 @@ class PreloadSettings(Settings):
         yaml_dirs = self._find_type_root_dirs("yaml")
         json_dirs = self._find_type_root_dirs("json")
 
-
     def _find_type_root_dirs(self, root_name: str) -> List[str]:
-
         result = []
 
         # Set of directories to skip
@@ -77,9 +74,7 @@ class PreloadSettings(Settings):
 
         # Walk through the directory tree for each specified preload dir
         for preload_dir in self.dirs:
-
             for dir_path, dir_names, filenames in os.walk(preload_dir):
-
                 if root_name in dir_names:
                     result.append(os.path.join(os.path.abspath(dir_path), root_name))
 

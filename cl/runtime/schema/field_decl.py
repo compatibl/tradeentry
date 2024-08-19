@@ -15,7 +15,6 @@
 import datetime as dt
 import types
 import typing
-
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.schema.field_kind import FieldKind

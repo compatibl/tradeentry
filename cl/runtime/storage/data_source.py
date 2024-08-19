@@ -24,8 +24,9 @@ from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TQuery
 from dataclasses import dataclass
-from typing import ClassVar, Type
+from typing import ClassVar
 from typing import Iterable
+from typing import Type
 
 
 @dataclass(slots=True, kw_only=True)

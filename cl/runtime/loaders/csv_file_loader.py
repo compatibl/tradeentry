@@ -13,13 +13,14 @@
 # limitations under the License.
 
 import csv
-from typing import Mapping, Any, Type, Dict
-
-from cl.runtime.records.protocols import RecordProtocol
-
-from cl.runtime.storage.protocols import DataSourceProtocol
 from cl.runtime.loaders.loader import Loader
+from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.storage.protocols import DataSourceProtocol
 from dataclasses import dataclass
+from typing import Any
+from typing import Dict
+from typing import Mapping
+from typing import Type
 
 
 @dataclass(slots=True, kw_only=True)
@@ -33,8 +34,7 @@ class CsvFileLoader(Loader):
     """Absolute path to the CSV file including extension."""
 
     def load(self, data_source: DataSourceProtocol) -> None:
-        with open(self.file_path, mode='r') as file:
-
+        with open(self.file_path, mode="r") as file:
             # The reader is an iterable of row dicts
             csv_reader = csv.DictReader(file)
 

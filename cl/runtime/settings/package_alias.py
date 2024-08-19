@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.serialization.sentinel_type import sentinel_value
 from cl.runtime.settings.package_alias_key import PackageAliasKey
 from dataclasses import dataclass
