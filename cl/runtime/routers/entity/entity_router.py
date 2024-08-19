@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from requests import Request
 
 from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
 from cl.runtime.routers.entity.list_panels_response_item import ListPanelsResponseItem
@@ -44,7 +43,6 @@ async def get_list_panels(
 
 @router.get('/panel', response_model=PanelResponse)
 async def get_panel(
-    request: Request,
     type: str = Query(..., description="Class name"),  # noqa Suppress report about shadowed built-in type
     panel_id: str = Query(..., description="View name"),
     key: str = Query(None, description="Primary key fields in semicolon-delimited format"),
