@@ -11,46 +11,46 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import json
+import os
 
 import pytest
-from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
 from cl.runtime.routers.entity.list_panels_response_item import ListPanelsResponseItem
 from cl.runtime.routers.server import app
 from fastapi.testclient import TestClient
 
+from cl.runtime.routers.storage.record_request import RecordRequest
+from cl.runtime.routers.storage.record_response import RecordResponse
+
 requests = [
-    {"type": "StubClass"},
-    {"type": "StubClass", "key": "abc"},
-    {"type": "StubClass", "key": "abc", "dataset": "xyz"},
-    {"type": "StubClass", "key": "abc", "dataset": "xyz", "user": "TestUser"},
+    {"type": "StubDataclassRecord", "key": "A0"},
 ]
-expected_result = [
-    {
-        "Name": "Stub Panel",
-    }
-]
+
+expected_result_file_path = os.path.abspath(__file__).replace(".py", ".expected.json")
+with open(expected_result_file_path, "r", encoding="utf-8") as file:
+    expected_result = json.load(file)
 
 
 def test_method():
-    """Test coroutine for /storage/get_envs route."""
+    """Test coroutine for /storage/record route."""
 
     for request in requests:
         # Run the coroutine wrapper added by the FastAPI decorator and get the result
-        request_obj = ListPanelsRequest(**request)
-        result = ListPanelsResponseItem.list_panels(request_obj)
+        request_obj = RecordRequest(**request)
+        result = RecordResponse.get_record(request_obj)
 
-        # Check if the result is a list
-        assert isinstance(result, list)
+        # Check if the result is a RecordResponce instance
+        assert isinstance(result, RecordResponse)
 
-        # Check if each item in the result is a ListPanelsResponseItem instance
-        assert all(isinstance(x, ListPanelsResponseItem) for x in result)
+        # Check if there are only "schema" and "data"
+        assert [x.strip("_") for x in dict(result).keys()] == ["schema", "data"]
 
-        # Check if each item in the result is a valid ListPanelsResponseItem instance
-        assert result == [ListPanelsResponseItem(**x) for x in expected_result]
+        # Check if each item in the result is a valid RecordResponse instance
+        assert result == RecordResponse(**expected_result)
 
 
 def test_api():
-    """Test REST API for /storage/get_envs route."""
+    """Test REST API for /storage/record route."""
 
     with TestClient(app) as client:
         for request in requests:
@@ -63,7 +63,7 @@ def test_api():
             request_params = {k: v for k, v in request_params.items() if v is not None}
 
             # Get response
-            response = client.get("/entity/list_panels", headers=request_headers, params=request_params)
+            response = client.get("/storage/record", headers=request_headers, params=request_params)
             assert response.status_code == 200
             result = response.json()
 
