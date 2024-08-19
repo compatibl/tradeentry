@@ -12,6 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
+from cl.runtime.settings.settings import Settings
+
 from cl.runtime.routers.auth import auth_router
 from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.health import health_router
@@ -19,7 +23,6 @@ from cl.runtime.routers.schema import schema_router
 from cl.runtime.routers.storage import storage_router
 from cl.runtime.settings.api_settings import ApiSettings
 from fastapi import FastAPI
-from pathlib import Path
 from starlette.middleware.cors import CORSMiddleware
 from starlette.staticfiles import StaticFiles
 
@@ -51,22 +54,13 @@ app.include_router(schema_router.router, prefix="/schema", tags=["Schema"])
 app.include_router(storage_router.router, prefix="/storage", tags=["Storage"])
 app.include_router(entity_router.router, prefix="/entity", tags=["Entity"])
 
-# Search locations for wwwroot directory
-working_dir = Path().resolve()
-module_path = Path(__file__)
-ui_dir = "wwwroot"
-locations = [d.joinpath(ui_dir) for d in (working_dir, module_path.parents[2], module_path.parents[3])]
+# TODO: Make it possible to override wwwroot directory location in settings
+project_root = Settings.get_project_root()
+wwwroot_dir = os.path.join(project_root, "wwwroot")
 
-# Use the first location where dir_name subdirectory exists
-ui_path = None
-for location in locations:
-    if location.exists():
-        ui_path = location
-
-# Launch UI if ui_path is found
-if ui_path is not None:
-    app.mount("/", StaticFiles(directory=ui_path, html=True))
-    print(f"Starting UI configuration in {ui_path}")
+if os.path.exists(wwwroot_dir):
+    # Launch UI if ui_path is found
+    app.mount("/", StaticFiles(directory=wwwroot_dir, html=True))
+    print(f"Starting UI")
 else:
-    locations_str = "\n".join("    " + str(location) for location in locations)
-    print(f"UI configuration not found, starting REST API only.\n" f"Directories searched:\n{locations_str}")
+    print(f"UI directory {wwwroot_dir} not found, starting REST API only.")

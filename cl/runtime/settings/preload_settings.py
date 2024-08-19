@@ -18,8 +18,6 @@ from cl.runtime.io.csv_dir_reader import CsvDirReader
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.settings.settings import Settings
 from dataclasses import dataclass
-from pathlib import Path
-from typing import Iterable
 from typing import List
 
 
@@ -58,7 +56,7 @@ class PreloadSettings(Settings):
         for csv_dir in csv_dirs:
             csv_reader = CsvDirReader(dir_path=csv_dir)
             # TODO: Rename to preload or other name to avoid conflict with RecordMixin
-            csv_reader.load(context.data_source)
+            csv_reader.read()
 
         yaml_dirs = self._find_type_root_dirs("yaml")
         json_dirs = self._find_type_root_dirs("json")

@@ -22,7 +22,6 @@ from dataclasses import dataclass
 from dotenv import find_dotenv
 from dotenv import load_dotenv
 from dynaconf import Dynaconf
-from pathlib import Path
 from typing import ClassVar
 from typing import Dict
 from typing import Iterable
@@ -196,44 +195,42 @@ class Settings(ABC):
             )
 
     @classmethod
-    def normalize_paths(cls, field_name: str, field_value: Iterable[str | Path] | str | Path) -> List[str]:
+    def normalize_paths(cls, field_name: str, field_value: Iterable[str] | str) -> List[str]:
         """
         Convert to absolute path if path relative to the location of .env or Dynaconf file is specified
         and convert to list if single value is specified.
         """
 
-        # Check that the argument is either a string or Path or an iterable
-        if isinstance(field_value, str) or isinstance(field_value, Path):
+        # Check that the argument is either a string or an iterable
+        if isinstance(field_value, str):
             paths = [field_value]
         elif hasattr(field_value, "__iter__"):
             paths = list(field_value)
         else:
             raise RuntimeError(
                 f"Field '{field_name}' with value '{field_value}' in class '{cls.__name__}' "
-                f"must be a string or Path variable or their iterable."
+                f"must be a string or an iterable of strings."
             )
 
         result = [cls.normalize_path(field_name, path) for path in paths]
         return result
 
     @classmethod
-    def normalize_path(cls, field_name: str, field_value: Path | str) -> str:
+    def normalize_path(cls, field_name: str, field_value: str) -> str:
         """Convert to absolute path if path relative to the location of .env or Dynaconf file is specified."""
 
-        # Convert to Path if specified as string
-        if isinstance(field_value, Path):
+        # Check that 'field_value' is a string
+        if isinstance(field_value, str):
             path = field_value
-        elif isinstance(field_value, str):
-            path = Path(field_value)
         elif field_value is None or field_value == "":
             raise RuntimeError(f"Field '{field_name}' in class '{cls.__name__}' has an empty element.")
         else:
             raise RuntimeError(
                 f"Field '{field_name}' in class '{cls.__name__}' has an element "
-                f"with type {type(field_value)} which is neither a Path nor a string."
+                f"with type {type(field_value)} which is not a string."
             )
 
-        if not path.is_absolute():
+        if not os.path.isabs(path):
             project_root = cls.get_project_root()
             path = os.path.join(project_root, path)
 

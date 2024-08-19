@@ -14,14 +14,13 @@
 
 import os
 from fnmatch import fnmatch
-from pathlib import Path
 from typing import Iterable
 from typing import List
 from typing import Tuple
 
 
 def check_copyright_header(
-    root_paths: Iterable[str | Path],
+    root_paths: Iterable[str],
     *,
     copyright_header: str | None = None,
     include_patterns: List[str] | None = None,
@@ -59,9 +58,6 @@ def check_copyright_header(
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-
-    copyright_header_with_trailing_blank_line = copyright_header + "\n"
-
     # Use default include patterns if not specified by the caller
     if include_patterns is None:
         include_patterns = ["*.py"]
@@ -75,10 +71,6 @@ def check_copyright_header(
 
     # Apply to each element of root_paths
     for root_path in root_paths:
-        # Convert to path if provided in string format
-        if isinstance(root_path, str):
-            root_path = Path(root_path)
-
         # Walk the directory tree
         for dir_path, dir_names, filenames in os.walk(root_path):
             # Apply exclude patterns

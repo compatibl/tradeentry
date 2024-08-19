@@ -13,12 +13,11 @@
 # limitations under the License.
 
 import os
-from pathlib import Path
 from typing import Iterable
 from typing import List
 
 
-def check_init_files(root_paths: Iterable[str | Path], *, apply_fix: bool) -> List[str]:
+def check_init_files(root_paths: Iterable[str], *, apply_fix: bool) -> List[str]:
     """
     Check that __init__.py is present in all subdirectories of 'root_path'.
     Optionally create when missing.
@@ -36,10 +35,6 @@ def check_init_files(root_paths: Iterable[str | Path], *, apply_fix: bool) -> Li
 
     # Apply to each element of root_paths
     for root_path in root_paths:
-        # Convert to path if provided in string format
-        if isinstance(root_path, str):
-            root_path = Path(root_path)
-
         # Walk the directory tree
         for dir_path, dir_names, filenames in os.walk(root_path):
             # Check if there are .py files in the directory
