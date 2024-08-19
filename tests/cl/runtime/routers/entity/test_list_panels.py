@@ -19,15 +19,36 @@ from cl.runtime.routers.server import app
 from fastapi.testclient import TestClient
 
 requests = [
-    {"type": "StubClass"},
-    {"type": "StubClass", "key": "abc"},
-    {"type": "StubClass", "key": "abc", "dataset": "xyz"},
-    {"type": "StubClass", "key": "abc", "dataset": "xyz", "user": "TestUser"},
+    {"type": "StubViewers"},
+    {"type": "StubViewers", "key": "L"},
+    {"type": "StubViewers", "key": "L", "dataset": "xyz"},
+    {"type": "StubViewers", "key": "L", "dataset": "xyz", "user": "TestUser"},
 ]
 expected_result = [
     {
-        "Name": "Stub Panel",
-    }
+        "Name": "Instance Viewer 1A"
+    },
+    {
+        "Name": "Instance Viewer 1B"
+    },
+    {
+        "Name": "Instance Viewer 1C"
+    },
+    {
+        "Name": "Instance Viewer 1D"
+    },
+    {
+        "Name": "Instance Viewer 2A"
+    },
+    {
+        "Name": "Instance Viewer 2B"
+    },
+    {
+        "Name": "Instance Viewer 2C"
+    },
+    {
+        "Name": "Instance Viewer 3A"
+    },
 ]
 
 
