@@ -51,26 +51,26 @@ Extract user settings only using as_dict(), then convert containers at all level
 and convert root level keys to lowercase in case the settings are specified using envvars in uppercase format
 """
 
-dynaconf_envvar_prefix = _all_settings.envvar_prefix_for_dynaconf
+_dynaconf_envvar_prefix = _all_settings.envvar_prefix_for_dynaconf
 """Environment variable prefix for overriding dynaconf file settings."""
 
-dynaconf_file_patterns = _all_settings.settings_file
+_dynaconf_file_patterns = _all_settings.settings_file
 """List of Dynaconf settings file patterns or file paths."""
 
 # Convert to list if a single string is specified
-if isinstance(dynaconf_file_patterns, str):
-    dynaconf_file_patterns = [dynaconf_file_patterns]
+if isinstance(_dynaconf_file_patterns, str):
+    _dynaconf_file_patterns = [_dynaconf_file_patterns]
 
-dynaconf_loaded_files = _all_settings._loaded_files  # noqa
+_dynaconf_loaded_files = _all_settings._loaded_files  # noqa
 """Loaded dynaconf settings files."""
 
-dynaconf_dir_path = _all_settings._root_path  # noqa
+_dynaconf_dir_path = _all_settings._root_path  # noqa
 """Absolute path the location of the first Dynaconf file if found, None otherwise."""
 
-dotenv_file_path = find_dotenv_output if (find_dotenv_output := find_dotenv()) != "" else None
+_dotenv_file_path = find_dotenv_output if (find_dotenv_output := find_dotenv()) != "" else None
 """Absolute path to .env file if found, None otherwise."""
 
-dotenv_dir_path = os.path.dirname(dotenv_file_path) if dotenv_file_path is not None else None
+_dotenv_dir_path = os.path.dirname(_dotenv_file_path) if _dotenv_file_path is not None else None
 """Absolute path to .env directory if found, None otherwise."""
 
 
@@ -131,7 +131,7 @@ class Settings(ABC):
             missing_fields = [k for k in required_fields if k not in settings_dict]
             if missing_fields:
                 # Combine the global Dynaconf envvar prefix with settings prefix in uppercase
-                envvar_prefix = f"{dynaconf_envvar_prefix}_{prefix.upper()}"
+                envvar_prefix = f"{_dynaconf_envvar_prefix}_{prefix.upper()}"
                 dynaconf_msg = f"(in lowercase with prefix '{prefix}_')"
                 envvar_msg = f"(in uppercase with prefix '{envvar_prefix}_')"
 
@@ -146,11 +146,11 @@ class Settings(ABC):
                 sources_list.append(f"Dotenv file {envvar_msg}: {env_file_name}")
 
                 # Dynaconf file(s) or message that they are not found
-                if dynaconf_loaded_files:
-                    dynaconf_file_list = dynaconf_loaded_files
+                if _dynaconf_loaded_files:
+                    dynaconf_file_list = _dynaconf_loaded_files
                 else:
-                    dynaconf_file_patterns_str = ", ".join(dynaconf_file_patterns)
-                    dynaconf_file_list = [f"No {dynaconf_file_patterns_str} file(s) in default search path"]
+                    _dynaconf_file_patterns_str = ", ".join(_dynaconf_file_patterns)
+                    dynaconf_file_list = [f"No {_dynaconf_file_patterns_str} file(s) in default search path"]
                 sources_list.extend(f"Dynaconf file {dynaconf_msg}: {x}" for x in dynaconf_file_list)
 
                 # Convert to string
@@ -182,13 +182,13 @@ class Settings(ABC):
         Returns absolute path of the directory containing .env file, and if not present the directory
         containing the first Dynaconf settings file found. Error message if neither is found.
         """
-        if dotenv_dir_path is not None:
+        if _dotenv_dir_path is not None:
             # Use .env file location if found
-            return dotenv_dir_path
-        elif dynaconf_dir_path is not None:
+            return _dotenv_dir_path
+        elif _dynaconf_dir_path is not None:
             # Otherwise use the location of the first Dynaconf file found
             # TODO: Add a test to confirm the logic when several Dynaconf files are in different locations
-            return dynaconf_dir_path
+            return _dynaconf_dir_path
         else:
             raise RuntimeError(
                 f"Cannot resolve relative preload path value {path} for {field_name} when "
