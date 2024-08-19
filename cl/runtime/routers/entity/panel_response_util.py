@@ -52,7 +52,7 @@ class PanelResponseUtil(BaseModel):
 
         # Deserialize key from string to object
         serializer = StringSerializer()
-        key_obj = serializer.deserialize_key(data=request.key, key_type=type_)
+        key_obj = serializer.deserialize_key(data=request.key, type_=type_)
 
         # Load record from the data source
         data_source = current_or_default_data_source()
