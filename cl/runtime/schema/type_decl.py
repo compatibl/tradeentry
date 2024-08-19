@@ -191,7 +191,14 @@ class TypeDecl(TypeDeclKey, RecordMixin[TypeDeclKey]):
 
     @classmethod
     @cached(custom_key_maker=for_type_key_maker)
-    def for_type(cls, record_type: Type, *, dependencies: Set[Type] | None = None, skip_fields: bool = False) -> Self:
+    def for_type(
+        cls,
+        record_type: Type,
+        *,
+        dependencies: Set[Type] | None = None,
+        skip_fields: bool = False,
+        skip_handlers: bool = False,
+    ) -> Self:
         """
         Create or return cached object for the specified record type.
 
@@ -199,6 +206,7 @@ class TypeDecl(TypeDeclKey, RecordMixin[TypeDeclKey]):
             record_type: Type of the record for which the declaration is created
             dependencies: Set of types used in field or methods of the specified type, populated only if not None
             skip_fields: Use this flag to skip fields generation when the method is invoked from a derived class
+            skip_handlers: Use this flag to skip handlers generation when the method is invoked internal methods
         """
 
         if issubclass(record_type, Enum):
@@ -240,6 +248,12 @@ class TypeDecl(TypeDeclKey, RecordMixin[TypeDeclKey]):
                 # Add to dependencies
                 if dependencies is not None:
                     dependencies.add(parent_type)
+
+        # Get type public methods
+        if not skip_handlers:
+            handlers_block = HandlerDeclareBlockDecl.get_type_methods(record_type)
+            if handlers_block.handlers:
+                result.declare = handlers_block
 
         # Get key fields by parsing the source of 'get_key' method
         result.keys = KeyUtil.get_key_fields(record_type)  # TODO: Use slots of key type when present?
