@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import os
-
 import pytest
 from cl.runtime.settings.preload_settings import PreloadSettings
 

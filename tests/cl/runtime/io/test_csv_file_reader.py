@@ -13,11 +13,10 @@
 # limitations under the License.
 
 import os
-
 import pytest
-from cl.runtime.settings.settings import Settings
 from cl.runtime.context.context import Context
 from cl.runtime.io.csv_file_reader import CsvFileReader
+from cl.runtime.settings.settings import Settings
 from cl.runtime.storage.local.local_cache import LocalCache
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassRecordKey
@@ -32,7 +31,6 @@ def test_smoke():
     # Create a new instance of local cache for the test
     data_source = LocalCache()
     with Context(data_source=data_source):
-
         # TODO: Change the API not to take record type or make it optional
         file_reader = CsvFileReader(record_type=StubDataclassDerivedRecord, file_path=file_path)
         file_reader.read()
@@ -42,7 +40,8 @@ def test_smoke():
         for i in range(1, 2):
             record = data_source.load_one(StubDataclassRecordKey(id=f"derived_id_{i}"))
             assert record == StubDataclassDerivedRecord(
-                id=f"derived_id_{i}", derived_field=f"test_derived_field_value_{i}")
+                id=f"derived_id_{i}", derived_field=f"test_derived_field_value_{i}"
+            )
 
 
 if __name__ == "__main__":

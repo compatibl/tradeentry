@@ -13,15 +13,13 @@
 # limitations under the License.
 
 import os
-
-from cl.runtime.settings.settings import Settings
-
 from cl.runtime.routers.auth import auth_router
 from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.health import health_router
 from cl.runtime.routers.schema import schema_router
 from cl.runtime.routers.storage import storage_router
 from cl.runtime.settings.api_settings import ApiSettings
+from cl.runtime.settings.settings import Settings
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from starlette.staticfiles import StaticFiles

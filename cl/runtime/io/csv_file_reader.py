@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import csv
-
 from cl.runtime import Context
 from cl.runtime.io.reader import Reader
 from cl.runtime.records.protocols import RecordProtocol
