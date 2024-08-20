@@ -21,9 +21,9 @@ from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.string_serializer import StringSerializer
 from pydantic import BaseModel
-from typing import Dict, Any, Optional, List
+from typing import Dict, Any, List
 
-PanelResponseData = Optional[Dict[str, Any] | List[Dict[str, Any]] | None]
+PanelResponseData = Dict[str, Any] | List[Dict[str, Any]] | None
 
 
 class PanelResponseUtil(BaseModel):

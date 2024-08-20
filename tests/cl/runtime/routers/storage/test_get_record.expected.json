@@ -23,8 +23,5 @@
             ]
         }
     },
-    "data": {
-        "Id": "A0",
-        "_t": "StubDataclassRecord"
-    }
+    "data": null
 }

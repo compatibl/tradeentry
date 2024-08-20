@@ -53,7 +53,7 @@ expected_result = [
 
 
 def test_method():
-    """Test coroutine for /storage/get_envs route."""
+    """Test coroutine for /entity/list_panels route."""
 
     for request in requests:
         # Run the coroutine wrapper added by the FastAPI decorator and get the result
@@ -71,7 +71,7 @@ def test_method():
 
 
 def test_api():
-    """Test REST API for /storage/get_envs route."""
+    """Test REST API for /entity/list_panels route."""
 
     with TestClient(app) as client:
         for request in requests:
