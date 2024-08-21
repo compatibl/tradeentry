@@ -10,8 +10,8 @@
         "DisplayKind": "Basic",
         "Elements": [
             {
+                "_t": "Cl.Runtime.Backend.Core.User.User",
                 "Key": {
-                    "_t": "Cl.Runtime.Backend.Core.User",
                     "Module": {
                         "ModuleName": "Cl.Runtime.Backend.Core.User"
                     },
@@ -21,8 +21,8 @@
                 "Comment": "A user the app state is applied for."
             },
             {
+                "_t": "Cl.Runtime.Backend.Core.TabInfo.TabInfo",
                 "Data": {
-                    "_t": "Cl.Runtime.Backend.Core.TabInfo.TabInfo",
                     "Module": {
                         "ModuleName": "Cl.Runtime.Backend.Core.TabInfo"
                     },
@@ -124,8 +124,8 @@
         "DisplayKind": "Basic",
         "Elements": [
             {
+                "_t": "Cl.Runtime.Backend.Core.BaseTypeInfo.BaseTypeInfo",
                 "Data": {
-                    "_t": "Cl.Runtime.Backend.Core.BaseTypeInfo.BaseTypeInfo",
                     "Module": {
                         "ModuleName": "Cl.Runtime.Backend.Core.BaseTypeInfo"
                     },
