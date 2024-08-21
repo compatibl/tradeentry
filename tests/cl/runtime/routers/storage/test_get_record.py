@@ -11,11 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 import json
 import os
 
 import pytest
-from cl.runtime.routers.entity.list_panels_response_item import ListPanelsResponseItem
 from cl.runtime.routers.server import app
 from fastapi.testclient import TestClient
 

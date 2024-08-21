@@ -57,7 +57,9 @@ class SqliteDataSource(DataSource):
 
         # TODO: Implement dispose logic
         # Use setattr to initialize attributes in a frozen object
-        object.__setattr__(self, "_connection", sqlite3.connect(self.db_name))
+
+        # TODO (Roman): check behavior in multithreading datasource usage
+        object.__setattr__(self, "_connection", sqlite3.connect(self.db_name, check_same_thread=False))
         self._connection.row_factory = dict_factory
         object.__setattr__(self, "_schema_manager", SqliteSchemaManager(sqlite_connection=self._connection))
 
