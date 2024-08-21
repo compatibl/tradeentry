@@ -319,7 +319,7 @@ class SqliteDataSource(DataSource):
             cursor.execute(sql_statement, query_values)
             self._connection.commit()
 
-    def delete_db(self) -> None:
+    def delete_db(self, *, close_connection: bool = False) -> None:
         """Delete all tables and indexes on current db instance."""
 
         # delete several time because tables depended on foreign key can not be deleted before related tables exist.
@@ -356,7 +356,7 @@ class SqliteDataSource(DataSource):
                 break
 
         # close connection
-        if self._connection:
+        if self._connection and close_connection:
             self._connection.close()
 
         # TODO (Roman): delete db file

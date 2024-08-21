@@ -12,11 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import pytest
+
 from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.routers.entity.panel_request import PanelRequest
 from cl.runtime.routers.entity.panel_response_util import PanelResponseUtil
 from cl.runtime.serialization.string_serializer import StringSerializer
 from stubs.cl.runtime.decorators.stub_viewers import StubViewers
+from cl.runtime.routers.server import app
+from fastapi.testclient import TestClient
 
 # create stub with viewers
 stub_viewers = StubViewers()
@@ -57,5 +61,40 @@ def test_method():
             result = PanelResponseUtil.get_content(request_object)
 
             assert isinstance(result, dict)
+            assert result == expected_result
     finally:
         data_source.delete_db()
+
+
+def test_api():
+    """Test REST API for /entity/panel route."""
+
+    data_source = current_or_default_data_source()
+    try:
+        data_source.save_one(stub_viewers)
+
+        with TestClient(app) as client:
+            for request, expected_result in zip(requests, expected_results):
+                # Split request headers and query
+                request_headers = {"user": request.get("user")}
+                request_params = {
+                    "type": request.get("type"), "panel_id": request.get("panel_id"), "key": request.get("key")
+                }
+
+                # Eliminate empty keys
+                request_headers = {k: v for k, v in request_headers.items() if v is not None}
+                request_params = {k: v for k, v in request_params.items() if v is not None}
+
+                # Get response
+                response = client.get("/entity/panel", headers=request_headers, params=request_params)
+                assert response.status_code == 200
+                result = response.json()
+
+                # Check result
+                assert result == expected_result
+    finally:
+        data_source.delete_db()
+
+
+if __name__ == "__main__":
+    pytest.main([__file__])
