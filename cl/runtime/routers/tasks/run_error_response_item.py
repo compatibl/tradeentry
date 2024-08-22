@@ -12,24 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+
+from cl.runtime.records.dataclasses_extensions import missing
 
 
 class RunErrorResponseItem(BaseModel):
-    task_run_id: str
+    task_run_id: str | None = missing()
     """Task run id."""
 
-    key: str
+    key: str | None = missing()
     """Key of the record."""
 
-    name: str
+    name: str | None = missing()
     """Name of the exception."""
 
-    status_code: int
+    status_code: int | None = missing()
     """Status code of the task."""
 
-    message: str
+    message: str | None = missing()
     """Message of the exception."""
 
-    stack_trace: str
+    stack_trace: str | None = missing()
     """Stack trace of the exception."""

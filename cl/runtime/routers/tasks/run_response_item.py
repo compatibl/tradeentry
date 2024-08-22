@@ -17,12 +17,13 @@ from __future__ import annotations
 import base64
 import traceback
 from typing import Type, List
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
-from cl.runtime import ClassInfo
+from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseItem
 from cl.runtime.routers.tasks.run_request import RunRequest
+from cl.runtime.schema.schema import Schema
 
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.tasks.task_runner import TaskRunner
@@ -32,11 +33,11 @@ from cl.runtime.tasks.task_status import TaskStatus
 class RunResponseItem(BaseModel):
     """Data type for a single item in the response list for the /tasks/run route."""
 
-    key: str = Field(..., alias="Key")
-    """Key of the record."""
-
-    task_run_id: str = Field(..., alias="TaskRunId")
+    task_run_id: str
     """Task run id."""
+
+    key: str | None = missing()
+    """Key of the record."""
 
     @staticmethod
     def run_tasks(request: RunRequest) -> List[RunResponseItem | RunErrorResponseItem]:
@@ -48,11 +49,12 @@ class RunResponseItem(BaseModel):
         requested_keys = request.keys if request.keys else [None]
         key_serializer = StringSerializer()
 
-        type_: Type[RecordProtocol] | type = ClassInfo.get_class_type(request.table)
+        type_: Type[RecordProtocol] | type = Schema.get_type_by_short_name(request.table)
 
         # run task for all keys in request
         for serialized_key in requested_keys:
-            key = key_serializer.deserialize_key(serialized_key)
+            key = key_serializer.deserialize_key(serialized_key, type_.get_key_type(None)) \
+                if serialized_key is not None else None
 
             # construct TaskRunner for params from request
             task_runner = TaskRunner(
@@ -73,7 +75,7 @@ class RunResponseItem(BaseModel):
                         name="HandlerExecutionException",
                         status_code=TaskStatus.Failed,
                         message=str(exc),
-                        stacktrace=_traceback,
+                        stack_trace=_traceback,
                     )
                 )
             else:

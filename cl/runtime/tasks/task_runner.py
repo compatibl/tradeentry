@@ -12,10 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import re
 import uuid
 from dataclasses import dataclass
 from typing import Dict, Any, Type, Callable
 
+from inflection import underscore
 from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import KeyProtocol, RecordProtocol
@@ -75,17 +77,26 @@ class TaskRunner:
         record = data_source.load_one(self.record_key)
 
         # run callable as task
-        callable_ = getattr(record, self.handler)
+        callable_ = getattr(record, self._get_method_name())
         self._run_callable_as_task(run_id, callable_, self.args)
 
     def _run_static_task(self, run_id: uuid.UUID) -> None:
         # run callable as task
         # TODO (Roman): add class as first arg for classmethods
-        callable_ = getattr(self.record_type, self.handler)
+        callable_ = getattr(self.record_type, self._get_method_name())
         self._run_callable_as_task(run_id, callable_, self.args)
 
+    def _get_method_name(self) -> str:
+        prev_name = underscore(self.handler)
+
+        # add underscore before numbers
+        return re.sub(r"([0-9]+)", r"_\1", prev_name)
+
     @staticmethod
-    def _run_callable_as_task(run_id: uuid.UUID, callable_: Callable, args: Dict[str, Any]) -> None:
+    def _run_callable_as_task(run_id: uuid.UUID, callable_: Callable, args: Dict[str, Any] | None) -> None:
+
+        # set empty args
+        args = args if args is not None else {}
 
         # TODO (Roman): support async handlers
         data_source = current_or_default_data_source()

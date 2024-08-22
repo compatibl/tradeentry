@@ -14,12 +14,16 @@
 
 import datetime as dt
 import inspect
+
+from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.decorators.handler_decorator import handler
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
 from logging import getLogger
+
+from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
 from stubs.cl.runtime.records.enum.stub_int_enum import StubIntEnum
 from typing import Any
@@ -147,6 +151,7 @@ class StubHandlers(StubHandlersKey, RecordMixin[StubHandlersKey]):
         """Stub handler."""
         print_method_info()
 
+    @handler
     def handler_with_args(
         self,
         int_arg: int,
@@ -159,18 +164,29 @@ class StubHandlers(StubHandlersKey, RecordMixin[StubHandlersKey]):
             f"enum_arg={enum_arg} data_arg={data_arg})"
         )
 
+    @handler
     def handler_with_two_args(self, arg_1: str, arg_2: str) -> str:
         """Stub method."""
         return arg_1 + arg_2
 
+    @handler
     def handler_with_args_and_optional(self, arg_1: str, arg_2: str, arg_3: str = None) -> str:
         """Stub method."""
         return arg_1 + arg_2
 
+    @handler
     def handler_with_reserved_param_name(self, from_: dt.date = None) -> dt.date:
         """Stub method."""
         return from_
 
+    @handler
     def handler_with_error(self):
         """Stub method."""
         raise RuntimeError("Error in handler.")
+
+    @handler
+    def handler_save_to_db(self):
+        print_method_info()
+        data_source = current_or_default_data_source()
+        stub = StubDataclassRecord(id="saved_from_handler")
+        data_source.save_one(stub)
