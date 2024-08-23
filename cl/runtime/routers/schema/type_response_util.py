@@ -29,4 +29,13 @@ class TypeResponseUtil:
         # TODO: Check why empty module is passed, is module the short name prefix?
         record_type = Schema.get_type_by_short_name(request.name)
         result = Schema.for_type(record_type)
+
+        for decl_name, decl_dict in result.items():
+            # add Implement handlers block
+            if declare_block := decl_dict.get("Declare"):
+                if handlers_block := declare_block.get("Handlers"):
+                    # TODO (Roman): skip abstract methods
+                    implement_block = [{"Name": handler_decl.get("Name")} for handler_decl in handlers_block]
+                    result[decl_name]["Implement"] = {"Handlers": implement_block}
+
         return result
