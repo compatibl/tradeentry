@@ -15,7 +15,7 @@
 
 def handler_impl(method, *, label=None):
     """Decorator to mark methods that perform user action."""
-
+    method._is_handler = True
     return method
 
 

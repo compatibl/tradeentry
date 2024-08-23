@@ -52,13 +52,16 @@ class HandlerDeclareBlockDecl:
                 handler = HandlerDeclareDecl()
                 handler.name = member_name
                 handler.comment = member.__doc__
+                handler.static = isinstance(inspect.getattr_static(record_type, member_name), staticmethod)
 
                 # TODO: Add labels support
                 handler.label = titleize(humanize(member_name))
 
                 # TODO: Implement for handlers and contents
-                if getattr(member, '_is_viewer', None) is not None:
-                    handler.type_ = 'viewer'
+                if getattr(member, "_is_viewer", None) is not None:
+                    handler.type_ = "viewer"
+                elif getattr(member, "_is_handler", None) is not None:
+                    handler.type_ = "job"
                 else:
                     continue
                 handlers.append(handler)
