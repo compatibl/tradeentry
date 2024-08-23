@@ -126,7 +126,6 @@ def test_api():
                         assert item.get('Key') is not None
                         assert item.get('Key') in request['keys']
 
-
             for request, expected_records in zip(save_to_db_requests, expected_records_in_db):
 
                 expected_keys = [rec.get_key() for rec in expected_records]

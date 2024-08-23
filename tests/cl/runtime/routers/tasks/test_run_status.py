@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 import uuid
 
 import pytest
@@ -91,6 +92,7 @@ def test_api():
                     assert result_item.get("Key") == key_str
     finally:
         data_source.delete_db()
+
 
 if __name__ == "__main__":
     pytest.main([__file__])
