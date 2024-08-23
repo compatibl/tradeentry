@@ -50,7 +50,8 @@ class TaskResultResponseItem(BaseModel):
             # TODO (Roman): optimize using load_many instead of load_one in TaskObserver.get_result()
 
             # convert string run_id to UUID and create TaskObserver
-            task_observer = TaskObserver(task_run_id=UUID(run_id_as_str))
+            run_id = UUID(bytes=base64.b64decode(run_id_as_str.encode()))
+            task_observer = TaskObserver(task_run_id=run_id)
 
             key = task_observer.get_key()
             key_serializer = StringSerializer()

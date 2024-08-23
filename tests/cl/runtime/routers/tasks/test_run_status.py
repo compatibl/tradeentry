@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import base64
 import uuid
 
 import pytest
@@ -38,7 +39,7 @@ task_runs = [
 ]
 requests = [
     {
-        "task_run_ids": [str(task_run.id) for task_run in task_runs],
+        "task_run_ids": [base64.b64encode(task_run.id.bytes).decode() for task_run in task_runs],
         "data_source": "DEPRECATED",
         "dataset": "",
     }
