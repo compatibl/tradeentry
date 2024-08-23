@@ -11,13 +11,86 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import uuid
+
+import pytest
+from starlette.testclient import TestClient
+
+from cl.runtime.context.context import current_or_default_data_source
+from cl.runtime.routers.tasks.task_result_request import TaskResultRequest
+from cl.runtime.routers.tasks.task_result_response_item import TaskResultResponseItem
+from cl.runtime.routers.server import app
+from cl.runtime.serialization.string_serializer import StringSerializer
+from cl.runtime.tasks.task_run import TaskRun
+from cl.runtime.tasks.task_status import TaskStatus
+from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
+
+stub_handlers = StubHandlers()
+key_serializer = StringSerializer()
+key_str = key_serializer.serialize_key(stub_handlers.get_key())
+
+
+task_runs = (
+    TaskRun(id=uuid.uuid1(), status=TaskStatus.Completed, key=stub_handlers.get_key(), result="result"),
+    TaskRun(id=uuid.uuid1(), status=TaskStatus.Completed, key=stub_handlers.get_key(), result=123),
+)
+requests = [
+    {
+        "task_run_ids": [str(task_run.id) for task_run in task_runs],
+        "data_source": "DEPRECATED",
+        "dataset": "",
+    }
+]
 
 
 def test_method():
     """Test coroutine for /tasks/run/result route."""
-    pass
+    data_source = current_or_default_data_source()
+    try:
+        data_source.save_one(stub_handlers)
+        data_source.save_many(task_runs)
+
+        for request in requests:
+            request_object = TaskResultRequest(**request)
+            result = TaskResultResponseItem.get_task_results(request_object)
+
+            assert isinstance(result, list)
+
+            for result_item in result:
+                assert isinstance(result_item, TaskResultResponseItem)
+                assert result_item.task_run_id is not None
+                assert result_item.task_run_id in request_object.task_run_ids
+                assert result_item.result is not None
+                assert result_item.key == key_str
+    finally:
+        data_source.delete_db()
 
 
 def test_api():
-    """Test coroutine for /tasks/run/result route."""
-    pass
+    """Test REST API for /tasks/run/result route."""
+    data_source = current_or_default_data_source()
+    try:
+        data_source.save_one(stub_handlers)
+        data_source.save_many(task_runs)
+
+        with TestClient(app) as client:
+            for request in requests:
+                response = client.post("/tasks/run/result", json=request)
+                assert response.status_code == 200
+
+                result = response.json()
+                assert isinstance(result, list)
+
+                for result_item in result:
+                    TaskResultResponseItem(**result_item)
+                    assert isinstance(result_item, dict)
+                    assert result_item.get("TaskRunId") is not None
+                    assert result_item.get("TaskRunId") in request["task_run_ids"]
+                    assert result_item.get("Result") is not None
+                    assert result_item.get("Key") == key_str
+    finally:
+        data_source.delete_db()
+
+
+if __name__ == "__main__":
+    pytest.main([__file__])

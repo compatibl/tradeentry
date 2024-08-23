@@ -14,6 +14,7 @@
 
 from pydantic import BaseModel
 
+from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.records.dataclasses_extensions import missing
 
 
@@ -35,3 +36,7 @@ class RunErrorResponseItem(BaseModel):
 
     stack_trace: str | None = missing()
     """Stack trace of the exception."""
+
+    class Config:
+        alias_generator = StringUtil.to_pascal_case
+        populate_by_name = True

@@ -60,7 +60,7 @@ class TaskRunner:
 
         # save TaskRun with status "Submitted"
         data_source = current_or_default_data_source()
-        data_source.save_one(TaskRun(id=run_id, status=TaskStatus.Submitted))
+        data_source.save_one(TaskRun(id=run_id, status=TaskStatus.Submitted, key=self.record_key))
 
         # run instance or static handler as task
         if self.record_key is not None:

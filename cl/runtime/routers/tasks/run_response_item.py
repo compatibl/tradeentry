@@ -19,6 +19,7 @@ import traceback
 from typing import Type, List
 from pydantic import BaseModel
 
+from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseItem
@@ -38,6 +39,10 @@ class RunResponseItem(BaseModel):
 
     key: str | None = missing()
     """Key of the record."""
+
+    class Config:
+        alias_generator = StringUtil.to_pascal_case
+        populate_by_name = True
 
     @staticmethod
     def run_tasks(request: RunRequest) -> List[RunResponseItem | RunErrorResponseItem]:

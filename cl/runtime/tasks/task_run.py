@@ -32,6 +32,7 @@ class TaskRun(TaskRunKey, RecordMixin[TaskRunKey]):
     result: Any = missing()
     """Result of task."""
 
-    def get_key(self) -> KeyProtocol:
-        return TaskRunKey()
+    key: KeyProtocol | None = missing()
 
+    def get_key(self) -> KeyProtocol:
+        return TaskRunKey(id=self.id)

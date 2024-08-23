@@ -12,10 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import pytest
+from fastapi.testclient import TestClient
+
 from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseItem
 from cl.runtime.routers.tasks.run_request import RunRequest
 from cl.runtime.routers.tasks.run_response_item import RunResponseItem
+from cl.runtime.routers.server import app
 from cl.runtime.serialization.string_serializer import StringSerializer
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
@@ -98,5 +102,45 @@ def test_method():
 
 
 def test_api():
-    """Test coroutine for /tasks/run route."""
-    pass
+    """Test REST API for /tasks/run route."""
+
+    data_source = current_or_default_data_source()
+    try:
+        data_source.save_one(stub_handlers)
+
+        with TestClient(app) as client:
+            for request in simple_requests + save_to_db_requests:
+                response = client.post("/tasks/run", json=request)
+                assert response.status_code == 200
+                result = response.json()
+
+                # Check that the result is a list
+                assert isinstance(result, list)
+
+                # Check if each item in the result has valid data to construct RunResponseItem
+                for item in result:
+                    RunResponseItem(**item)
+                    assert item.get('TaskRunId') is not None
+
+                    if request.get('keys'):
+                        assert item.get('Key') is not None
+                        assert item.get('Key') in request['keys']
+
+
+            for request, expected_records in zip(save_to_db_requests, expected_records_in_db):
+
+                expected_keys = [rec.get_key() for rec in expected_records]
+
+                # clear existing records
+                data_source.delete_many(expected_keys)
+
+                client.post("/tasks/run", json=request)
+
+                actual_records = list(data_source.load_many(expected_keys))
+                assert actual_records == expected_records
+    finally:
+        data_source.delete_db()
+
+
+if __name__ == "__main__":
+    pytest.main([__file__])

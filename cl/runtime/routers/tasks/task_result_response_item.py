@@ -20,7 +20,9 @@ from uuid import UUID
 
 from pydantic import BaseModel
 
+from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.tasks.task_result_request import TaskResultRequest
+from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.tasks.task_observer import TaskObserver
 
 
@@ -34,6 +36,13 @@ class TaskResultResponseItem(BaseModel):
     task_run_id: str
     """Task run id."""
 
+    key: str | None
+    """Key of the record."""
+
+    class Config:
+        alias_generator = StringUtil.to_pascal_case
+        populate_by_name = True
+
     @staticmethod
     def get_task_results(request: TaskResultRequest) -> List[TaskResultResponseItem]:
         response_items = []
@@ -41,13 +50,17 @@ class TaskResultResponseItem(BaseModel):
             # TODO (Roman): optimize using load_many instead of load_one in TaskObserver.get_result()
 
             # convert string run_id to UUID and create TaskObserver
-            run_id = UUID(bytes=base64.b64decode(run_id_as_str.encode()))
-            task_observer = TaskObserver(task_run_id=run_id)
+            task_observer = TaskObserver(task_run_id=UUID(run_id_as_str))
 
-            # get result from TaskObserver and create response item
+            key = task_observer.get_key()
+            key_serializer = StringSerializer()
+            # get result and key from TaskObserver and create response item
             response_items.append(
-                TaskResultResponseItem(result=task_observer.get_result(), task_run_id=run_id_as_str)
+                TaskResultResponseItem(
+                    result=task_observer.get_result(),
+                    task_run_id=run_id_as_str,
+                    key=key_serializer.serialize_key(key) if key else None,
+                )
             )
 
         return response_items
-
