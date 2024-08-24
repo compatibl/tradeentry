@@ -17,7 +17,6 @@ from cl.runtime.context.context import Context
 from cl.runtime.routers.server import app
 from cl.runtime.settings.api_settings import ApiSettings
 from cl.runtime.settings.preload_settings import PreloadSettings
-from cl.runtime.storage.local.local_cache import LocalCache
 from stubs.cl.runtime.config.stub_runtime_config import StubRuntimeConfig  # TODO: Remove after refactoring
 
 if __name__ == "__main__":

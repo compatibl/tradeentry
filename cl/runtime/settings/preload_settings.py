@@ -14,7 +14,7 @@
 
 import os
 from cl.runtime.context.context import Context
-from cl.runtime.io.csv_dir_reader import CsvDirReader
+from cl.runtime.file.csv_dir_reader import CsvDirReader
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.settings.settings import Settings
 from dataclasses import dataclass

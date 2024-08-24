@@ -15,7 +15,7 @@
 import os
 import pytest
 from cl.runtime.context.context import Context
-from cl.runtime.io.csv_dir_reader import CsvDirReader
+from cl.runtime.file.csv_dir_reader import CsvDirReader
 from cl.runtime.settings.settings import Settings
 from cl.runtime.storage.local.local_cache import LocalCache
 from stubs.cl.runtime import StubDataclassDerivedRecord

@@ -14,7 +14,7 @@
 
 import csv
 from cl.runtime import Context
-from cl.runtime.io.reader import Reader
+from cl.runtime.file.reader import Reader
 from cl.runtime.records.protocols import RecordProtocol
 from dataclasses import dataclass
 from typing import Any

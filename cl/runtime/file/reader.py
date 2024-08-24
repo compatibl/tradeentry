@@ -14,7 +14,7 @@
 
 from abc import ABC
 from abc import abstractmethod
-from cl.runtime.io.reader_key import ReaderKey
+from cl.runtime.file.reader_key import ReaderKey
 from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
 
