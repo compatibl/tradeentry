@@ -51,7 +51,7 @@ class RecordProtocol(KeyProtocol):
     """Protocol implemented by records but not keys."""
 
     def get_key(self) -> KeyProtocol:
-        """Return a new key object whose fields populated from self, do not implement to return self."""
+        """Return a new key object whose fields populated from self, do not return self."""
 
 
 class InitProtocol:

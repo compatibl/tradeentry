@@ -39,7 +39,7 @@ class RecordMixin(Generic[TKey]):
 
     @abstractmethod
     def get_key(self) -> KeyProtocol:
-        """Return a new key object whose fields populated from self, do not implement to return self."""
+        """Return a new key object whose fields populated from self, do not return self."""
 
     @classmethod
     @cached

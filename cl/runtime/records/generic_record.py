@@ -36,6 +36,5 @@ class GenericRecord(RecordMixin[KeyProtocol]):
     """Dictionary of data fields (including the primary key fields) in the order of declaration."""
 
     def get_key(self) -> KeyProtocol:
-        """Return a new key object whose fields populated from self, do not implement to return self."""
         key_dict = dict({k: v for k in self.key_fields if (v := self.data_dict.get(k, None)) is not None})
         return GenericKey(key_type=self.key_type, key_dict=key_dict)
