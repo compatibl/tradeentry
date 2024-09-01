@@ -15,7 +15,6 @@
 from dataclasses import dataclass
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.tasks.task import Task
-from cl.runtime.tasks.workflow_key import WorkflowKey
 from cl.runtime.tasks.workflow_phase_key import WorkflowPhaseKey
 
 

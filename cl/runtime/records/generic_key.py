@@ -24,7 +24,7 @@ from typing import Type
 class GenericKey(KeyMixin):
     """Generic key can be substituted for any key type other than itself."""
 
-    key_type: Type = missing()
+    key_type: Type = missing()  # TODO: Consider using short name instead
     """Key type."""
 
     key_dict: TKeyDict = missing()
