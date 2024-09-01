@@ -13,14 +13,15 @@
 # limitations under the License.
 
 import inspect
-
-from inflection import humanize, titleize
-from memoization import cached
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.schema.handler_declare_decl import HandlerDeclareDecl
 from cl.runtime.schema.handler_variable_decl import HandlerVariableDecl
 from dataclasses import dataclass
-from typing import List, Iterable
+from inflection import humanize
+from inflection import titleize
+from memoization import cached
+from typing import Iterable
+from typing import List
 
 
 @dataclass(slots=True, kw_only=True)
@@ -32,7 +33,7 @@ class HandlerDeclareBlockDecl:
 
     @classmethod
     @cached
-    def get_type_methods(cls, record_type: type, inherit: bool = False) -> 'HandlerDeclareBlockDecl':
+    def get_type_methods(cls, record_type: type, inherit: bool = False) -> "HandlerDeclareBlockDecl":
         """Extract class public methods."""
 
         type_members: Iterable[str] = []
@@ -44,7 +45,7 @@ class HandlerDeclareBlockDecl:
         # Search for methods in type members
         handlers: List[HandlerDeclareDecl] = list()
         for member_name in type_members:
-            if member_name.startswith('_') or member_name.startswith('__'):  # Skip all private methods
+            if member_name.startswith("_") or member_name.startswith("__"):  # Skip all private methods
                 continue
 
             member = getattr(record_type, member_name)
@@ -68,7 +69,7 @@ class HandlerDeclareBlockDecl:
 
                 # Process method's return type
                 # TODO: Add support of return comment
-                if (return_type := member.__annotations__.get('return', None)) is not None:
+                if (return_type := member.__annotations__.get("return", None)) is not None:
                     handler.return_ = HandlerVariableDecl.create(value_type=return_type, record_type=record_type)
 
         return cls(handlers=handlers)

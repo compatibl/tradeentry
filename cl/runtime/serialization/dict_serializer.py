@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import sys
-
 from cl.runtime.serialization.sentinel_type import sentinel_value
 from cl.runtime.storage.data_source_types import TDataDict
 from collections import Counter
@@ -47,6 +46,7 @@ def get_type_dict() -> Dict[str, Type]:
     global _type_dict
     if _type_dict is None:
         from cl.runtime.schema.schema import Schema  # TODO: Refactor to avoid cyclic dependency
+
         _type_dict = Schema.get_type_dict()
     return _type_dict
 

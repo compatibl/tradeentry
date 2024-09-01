@@ -13,14 +13,13 @@
 # limitations under the License.
 
 import pytest
-from fastapi.testclient import TestClient
-
 from cl.runtime.context.context import current_or_default_data_source
+from cl.runtime.routers.server import app
 from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseItem
 from cl.runtime.routers.tasks.run_request import RunRequest
 from cl.runtime.routers.tasks.run_response_item import RunResponseItem
-from cl.runtime.routers.server import app
 from cl.runtime.serialization.string_serializer import StringSerializer
+from fastapi.testclient import TestClient
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
@@ -31,36 +30,26 @@ key_str = key_serializer.serialize_key(stub_handlers.get_key())
 
 simple_requests = [
     {
-      "data_source": "DEPRECATED",
-      "dataset": "",
-      "table": "StubHandlers",
-      "keys": [
-        key_str
-      ],
-      "method": "InstanceHandler1b"
+        "data_source": "DEPRECATED",
+        "dataset": "",
+        "table": "StubHandlers",
+        "keys": [key_str],
+        "method": "InstanceHandler1b",
     },
-    {
-      "dataset": "",
-      "table": "StubHandlers",
-      "method": "StaticHandler1a"
-    }
+    {"dataset": "", "table": "StubHandlers", "method": "StaticHandler1a"},
 ]
 
 save_to_db_requests = [
     {
-      "data_source": "DEPRECATED",
-      "dataset": "",
-      "table": "StubHandlers",
-      "keys": [
-        key_str
-      ],
-      "method": "HandlerSaveToDb"
+        "data_source": "DEPRECATED",
+        "dataset": "",
+        "table": "StubHandlers",
+        "keys": [key_str],
+        "method": "HandlerSaveToDb",
     }
 ]
 
-expected_records_in_db = [
-    [StubDataclassRecord(id="saved_from_handler")]
-]
+expected_records_in_db = [[StubDataclassRecord(id="saved_from_handler")]]
 
 
 def test_method():
@@ -85,7 +74,6 @@ def test_method():
                     assert result_item.key in request_object.keys
 
         for request, expected_records in zip(save_to_db_requests, expected_records_in_db):
-
             expected_keys = [rec.get_key() for rec in expected_records]
 
             # clear existing records
@@ -120,14 +108,13 @@ def test_api():
                 # Check if each item in the result has valid data to construct RunResponseItem
                 for item in result:
                     RunResponseItem(**item)
-                    assert item.get('TaskRunId') is not None
+                    assert item.get("TaskRunId") is not None
 
-                    if request.get('keys'):
-                        assert item.get('Key') is not None
-                        assert item.get('Key') in request['keys']
+                    if request.get("keys"):
+                        assert item.get("Key") is not None
+                        assert item.get("Key") in request["keys"]
 
             for request, expected_records in zip(save_to_db_requests, expected_records_in_db):
-
                 expected_keys = [rec.get_key() for rec in expected_records]
 
                 # clear existing records

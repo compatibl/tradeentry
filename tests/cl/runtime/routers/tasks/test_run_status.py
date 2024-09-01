@@ -13,18 +13,16 @@
 # limitations under the License.
 
 import base64
-import uuid
-
 import pytest
-from starlette.testclient import TestClient
-
+import uuid
 from cl.runtime.context.context import current_or_default_data_source
+from cl.runtime.routers.server import app
 from cl.runtime.routers.tasks.task_status_request import TaskStatusRequest
 from cl.runtime.routers.tasks.task_status_response_item import TaskStatusResponseItem
-from cl.runtime.routers.server import app
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.tasks.v1.task_run import TaskRunV1
 from cl.runtime.tasks.v1.task_status import TaskStatus
+from starlette.testclient import TestClient
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
 stub_handlers = StubHandlers()

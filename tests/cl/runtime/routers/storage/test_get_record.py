@@ -14,13 +14,11 @@
 
 import json
 import os
-
 import pytest
 from cl.runtime.routers.server import app
-from fastapi.testclient import TestClient
-
 from cl.runtime.routers.storage.record_request import RecordRequest
 from cl.runtime.routers.storage.record_response import RecordResponse
+from fastapi.testclient import TestClient
 
 requests = [
     {"type": "StubDataclassRecord", "key": "A0"},

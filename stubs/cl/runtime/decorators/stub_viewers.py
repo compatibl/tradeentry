@@ -16,10 +16,11 @@ from cl.runtime.decorators.viewer_decorator import viewer
 from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
 from logging import getLogger
-
-from stubs.cl.runtime import StubDataclassRecordKey, StubDataclassDerivedRecord
+from stubs.cl.runtime import StubDataclassDerivedRecord
+from stubs.cl.runtime import StubDataclassRecordKey
 from stubs.cl.runtime.decorators.stub_viewers_key import StubViewersKey
-from typing import Optional, List
+from typing import List
+from typing import Optional
 from typing_extensions import Self
 
 _logger = getLogger(__name__)
@@ -41,7 +42,7 @@ class StubViewers(StubViewersKey, RecordMixin[StubViewersKey]):
                 "Name": None,
                 "Language": "Markdown",
                 "Body": ["# Viewer with UI element", "### _Script_"],
-                "WordWrap": None
+                "WordWrap": None,
             }
         )
 
@@ -64,27 +65,27 @@ class StubViewers(StubViewersKey, RecordMixin[StubViewersKey]):
     def instance_viewer_2a(self) -> List[StubDataclassRecordKey]:
         """Stub viewer with list of keys."""
         return [
-            StubDataclassRecordKey(id='Key 1'),
-            StubDataclassRecordKey(id='Key 2'),
-            StubDataclassRecordKey(id='Key 3'),
+            StubDataclassRecordKey(id="Key 1"),
+            StubDataclassRecordKey(id="Key 2"),
+            StubDataclassRecordKey(id="Key 3"),
         ]
 
     @viewer
     def instance_viewer_2b(self) -> List[StubDataclassDerivedRecord]:
         """Stub viewer with list of records."""
         return [
-            StubDataclassDerivedRecord(id='Record 1'),
-            StubDataclassDerivedRecord(id='Record 2'),
-            StubDataclassDerivedRecord(id='Record 3'),
+            StubDataclassDerivedRecord(id="Record 1"),
+            StubDataclassDerivedRecord(id="Record 2"),
+            StubDataclassDerivedRecord(id="Record 3"),
         ]
 
     @viewer
     def instance_viewer_2c(self) -> List[Self]:
         """Stub viewer with list of current type's records."""
-        return [StubViewers(stub_id='Record 1'), StubViewers(stub_id='Record 2'), StubViewers(stub_id='Record 3')]
+        return [StubViewers(stub_id="Record 1"), StubViewers(stub_id="Record 2"), StubViewers(stub_id="Record 3")]
 
     @viewer
-    def instance_viewer_3a(self, param1: str = 'Test', param2: str = None) -> str:
+    def instance_viewer_3a(self, param1: str = "Test", param2: str = None) -> str:
         """Stub viewer with optional parameters."""
 
         return str(
@@ -93,7 +94,7 @@ class StubViewers(StubViewersKey, RecordMixin[StubViewersKey]):
                 "Name": None,
                 "Language": "Markdown",
                 "Body": [f"# Viewer with optional parameters", f"### Param1: {param1}", f"### Param2: {param2}"],
-                "WordWrap": None
+                "WordWrap": None,
             }
         )
 

@@ -15,15 +15,13 @@
 from __future__ import annotations
 
 import base64
-from typing import List
-from uuid import UUID
-
-from pydantic import BaseModel
-
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.tasks.task_status_request import TaskStatusRequest
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.tasks.v1.task_observer import TaskObserver
+from pydantic import BaseModel
+from typing import List
+from uuid import UUID
 
 
 class TaskStatusResponseItem(BaseModel):

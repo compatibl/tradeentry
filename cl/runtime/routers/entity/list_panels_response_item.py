@@ -16,11 +16,10 @@ from __future__ import annotations
 
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
-from pydantic import BaseModel
-from typing import List
-
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.schema import Schema
+from pydantic import BaseModel
+from typing import List
 
 
 class ListPanelsResponseItem(BaseModel):
@@ -43,8 +42,6 @@ class ListPanelsResponseItem(BaseModel):
 
         if handlers_block is not None and handlers_block:
             return [
-                ListPanelsResponseItem(name=handler.label)
-                for handler in handlers_block
-                if handler.type_ == 'viewer'
+                ListPanelsResponseItem(name=handler.label) for handler in handlers_block if handler.type_ == "viewer"
             ]
         return []

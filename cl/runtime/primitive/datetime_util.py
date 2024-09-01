@@ -14,8 +14,10 @@
 
 import datetime as dt
 import re
-from math import floor, ceil
-from typing import Tuple, Callable
+from math import ceil
+from math import floor
+from typing import Callable
+from typing import Tuple
 
 # Compile the regex pattern for datetime in ISO-8601 format yyyy-mm-ddThh:mm:ss.fffZ
 datetime_pattern = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$")
@@ -23,7 +25,7 @@ datetime_pattern = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$")
 
 class DatetimeUtil:
     """Helper class for datetime rounded to whole milliseconds to ensure lossless serialization roundtrip."""
-    
+
     @classmethod
     def now(cls) -> dt.datetime:
         """Current datetime in UTC timezone rounded to the nearest whole milliseconds."""
@@ -107,15 +109,15 @@ class DatetimeUtil:
 
     @classmethod
     def from_fields(
-            cls,
-            year: int,
-            month: int,
-            day: int,
-            hour: int,
-            minute: int,
-            second: int,
-            *,
-            millisecond: int | None = None,
+        cls,
+        year: int,
+        month: int,
+        day: int,
+        hour: int,
+        minute: int,
+        second: int,
+        *,
+        millisecond: int | None = None,
     ) -> dt.datetime:
         """Convert fields with millisecond precision to dt.datetime in UTC timezone."""
 

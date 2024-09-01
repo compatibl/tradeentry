@@ -85,7 +85,7 @@ class StubRuntimeConfig(Config):
             *stub_dataclass_primitive_fields_records,
             *stub_dataclass_singleton_record,
             *stub_viewers_records,
-            *stub_handlers_records
+            *stub_handlers_records,
         ]
 
         # save stubs to db

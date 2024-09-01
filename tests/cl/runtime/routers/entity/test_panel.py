@@ -13,14 +13,13 @@
 # limitations under the License.
 
 import pytest
-
 from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.routers.entity.panel_request import PanelRequest
 from cl.runtime.routers.entity.panel_response_util import PanelResponseUtil
-from cl.runtime.serialization.string_serializer import StringSerializer
-from stubs.cl.runtime.decorators.stub_viewers import StubViewers
 from cl.runtime.routers.server import app
+from cl.runtime.serialization.string_serializer import StringSerializer
 from fastapi.testclient import TestClient
+from stubs.cl.runtime.decorators.stub_viewers import StubViewers
 
 # create stub with viewers
 stub_viewers = StubViewers()
@@ -41,7 +40,7 @@ expected_results = [
             "Name": None,
             "Language": "Markdown",
             "Body": ["# Viewer with UI element", "### _Script_"],
-            "WordWrap": None
+            "WordWrap": None,
         }
     },
     {"ViewOf": None},
@@ -78,7 +77,9 @@ def test_api():
                 # Split request headers and query
                 request_headers = {"user": request.get("user")}
                 request_params = {
-                    "type": request.get("type"), "panel_id": request.get("panel_id"), "key": request.get("key")
+                    "type": request.get("type"),
+                    "panel_id": request.get("panel_id"),
+                    "key": request.get("key"),
                 }
 
                 # Eliminate empty keys

@@ -17,9 +17,9 @@
 from __future__ import annotations
 
 import dataclasses
-from enum import Enum
 from cl.runtime.schema.field_decl import primitive_types  # TODO: Move definition to a separate module
 from cl.runtime.schema.type_decl import pascalize
+from enum import Enum
 from typing import Any
 from typing import Dict
 from typing import List
@@ -57,12 +57,12 @@ def to_record_dict(node):  # TODO: Apply type hints
         node_dict = dataclasses.asdict(node)
         node_dict = {k: getattr(node, k) for k in node_dict.keys()}
         result = {k: to_record_dict(v) for k, v in node_dict.items() if v is not None}
-        result['_t'] = type(node).__name__
+        result["_t"] = type(node).__name__
         return result
     else:
         node_dict = dataclasses.asdict(node)
         result = {k: to_record_dict(v) for k, v in node_dict.items() if v is not None}
-        result['_t'] = type(node).__name__
+        result["_t"] = type(node).__name__
         return result
 
 

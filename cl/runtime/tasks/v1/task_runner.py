@@ -14,16 +14,19 @@
 
 import re
 import uuid
-from dataclasses import dataclass
-from typing import Dict, Any, Type, Callable
-
-from inflection import underscore
 from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.protocols import KeyProtocol, RecordProtocol
+from cl.runtime.records.protocols import KeyProtocol
+from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.tasks.v1.task_observer import TaskObserver
 from cl.runtime.tasks.v1.task_run import TaskRunV1
 from cl.runtime.tasks.v1.task_status import TaskStatus
+from dataclasses import dataclass
+from inflection import underscore
+from typing import Any
+from typing import Callable
+from typing import Dict
+from typing import Type
 
 
 @dataclass
@@ -71,7 +74,6 @@ class TaskRunner:
         return TaskObserver(task_run_id=run_id)
 
     def _run_instance_task(self, run_id: uuid.UUID) -> None:
-
         # load record from db
         data_source = current_or_default_data_source()
         record = data_source.load_one(self.record_key)
@@ -94,7 +96,6 @@ class TaskRunner:
 
     @staticmethod
     def _run_callable_as_task(run_id: uuid.UUID, callable_: Callable, args: Dict[str, Any] | None) -> None:
-
         # set empty args
         args = args if args is not None else {}
 

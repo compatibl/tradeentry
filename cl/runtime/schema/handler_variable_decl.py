@@ -14,16 +14,17 @@
 
 import inspect
 import types
-
-from memoization import cached
-from typing import Type, get_origin, get_args, Union
-from typing_extensions import Self
-
 from cl.runtime.primitive.primitive_util import PrimitiveUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.schema.member_decl import MemberDecl
-from dataclasses import dataclass
 from cl.runtime.schema.value_decl import ValueDecl
+from dataclasses import dataclass
+from memoization import cached
+from typing import Type
+from typing import Union
+from typing import get_args
+from typing import get_origin
+from typing_extensions import Self
 
 
 @dataclass(slots=True, kw_only=True)
@@ -52,6 +53,7 @@ class HandlerVariableDecl(MemberDecl):
             value_type: Type of the value
         """
         from cl.runtime.schema.type_decl import TypeDecl
+
         result = cls()
 
         # Get origin and args of the field type
@@ -92,11 +94,11 @@ class HandlerVariableDecl(MemberDecl):
         # TODO (Ina): Add Enum and Dict supporting, handle unexpected types
         if PrimitiveUtil.is_primitive(value_type_):
             result.value = ValueDecl.create(value_type_)
-        elif value_type_.__name__.endswith('Key'):
+        elif value_type_.__name__.endswith("Key"):
             result.key_ = TypeDecl.for_type(value_type_, skip_handlers=True)
         elif inspect.isclass(value_type_):
             result.data = TypeDecl.for_type(value_type_, skip_handlers=True)
         else:
-            raise Exception(f'Unexpected handler type {value_type_.__name__}.')
+            raise Exception(f"Unexpected handler type {value_type_.__name__}.")
 
         return result

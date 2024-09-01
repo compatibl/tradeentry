@@ -12,22 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
-
-from fastapi import APIRouter, Request
-
 from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseItem
-from cl.runtime.routers.tasks.run_response_item import RunResponseItem
 from cl.runtime.routers.tasks.run_request import RunRequest
+from cl.runtime.routers.tasks.run_response_item import RunResponseItem
 from cl.runtime.routers.tasks.task_result_request import TaskResultRequest
 from cl.runtime.routers.tasks.task_result_response_item import TaskResultResponseItem
 from cl.runtime.routers.tasks.task_status_request import TaskStatusRequest
 from cl.runtime.routers.tasks.task_status_response_item import TaskStatusResponseItem
+from fastapi import APIRouter
+from fastapi import Request
+from typing import List
 
 router = APIRouter()
 
 
-@router.post('/run', response_model=List[RunResponseItem | RunErrorResponseItem])
+@router.post("/run", response_model=List[RunResponseItem | RunErrorResponseItem])
 async def tasks_run(request: Request, payload: RunRequest):
     """Receive params for tasks execute."""
     headers = {}
@@ -40,23 +39,23 @@ async def tasks_run(request: Request, payload: RunRequest):
     return RunResponseItem.run_tasks(payload)
 
 
-@router.post('/run/cancel')
+@router.post("/run/cancel")
 async def tasks_cancel():
     # TODO: Implement this endpoint if needed
     return None
 
 
-@router.post('/run/cancel_all')
+@router.post("/run/cancel_all")
 async def tasks_cancel_all():
     # TODO: Implement this endpoint if needed
     return None
 
 
-@router.post('/run/status', response_model=List[TaskStatusResponseItem])
+@router.post("/run/status", response_model=List[TaskStatusResponseItem])
 async def tasks_status(payload: TaskStatusRequest):
     return TaskStatusResponseItem.get_task_statuses(request=payload)
 
 
-@router.post('/run/result', response_model=List[TaskResultResponseItem])
+@router.post("/run/result", response_model=List[TaskResultResponseItem])
 async def tasks_result(payload: TaskResultRequest):
     return TaskResultResponseItem.get_task_results(request=payload)

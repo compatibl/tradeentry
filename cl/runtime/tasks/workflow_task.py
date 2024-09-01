@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
-from typing import List
 from cl.runtime.context.context import Context
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.workflow_phase_key import WorkflowPhaseKey
+from dataclasses import dataclass
+from typing import List
 
 
 @dataclass(slots=True, kw_only=True)
@@ -28,7 +28,6 @@ class WorkflowTask(Task):
     """Tasks run in parallel in the order of phases, however each phase waits until its prerequisites are completed."""
 
     def execute(self) -> None:
-
         # Check that phases do not specify prerequisites
         phases = Context.current().data_source.load_many(self.phases)  # TODO: Error message if not found
         if any(phase.prerequisites is not None for phase in phases):

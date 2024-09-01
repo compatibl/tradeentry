@@ -13,24 +13,22 @@
 # limitations under the License.
 
 import multiprocessing
-from dataclasses import dataclass
-from cl.runtime.records.protocols import is_record
 from cl.runtime import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil
+from cl.runtime.records.protocols import is_record
 from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.tasks.static_handler_task import StaticHandlerTask
-
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_status import TaskStatus
+from dataclasses import dataclass
 
 
 def execute_task(task_id: str) -> None:
     """Invoke execute method of the specified task."""
 
     with Context() as context:
-
         # Load task object
         task_key = TaskKey(task_id=task_id)
         task = context.data_source.load_one(task_key)

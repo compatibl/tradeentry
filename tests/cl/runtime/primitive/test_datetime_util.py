@@ -137,7 +137,6 @@ def test_rounding():
     """Test rounding to whole milliseconds."""
 
     for sample in get_rounding_samples():
-
         value = sample[0]
         correct_rounded_value = sample[1]
         rounded = DatetimeUtil.round(value)
@@ -160,14 +159,14 @@ def test_rounding():
             assert rounded_up > value
 
             # Check rounding values
-            microsecond_down = 1000*(value.microsecond//1000)
+            microsecond_down = 1000 * (value.microsecond // 1000)
             assert rounded_down == value.replace(microsecond=microsecond_down)
 
-            microsecond_up = 1000*(value.microsecond//1000+1)
+            microsecond_up = 1000 * (value.microsecond // 1000 + 1)
             if microsecond_up == 1_000_000:
                 assert rounded_up == value.replace(microsecond=0) + dt.timedelta(seconds=1)
             else:
-                assert rounded_up == value.replace(microsecond=1000*(value.microsecond//1000+1))
+                assert rounded_up == value.replace(microsecond=1000 * (value.microsecond // 1000 + 1))
 
 
 def test_to_from_str():

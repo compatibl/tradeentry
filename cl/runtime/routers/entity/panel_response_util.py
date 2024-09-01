@@ -16,12 +16,15 @@ import ast
 import dataclasses
 from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.routers.entity.panel_request import PanelRequest
-from cl.runtime.routers.response_util import to_record_dict, to_legacy_dict
+from cl.runtime.routers.response_util import to_legacy_dict
+from cl.runtime.routers.response_util import to_record_dict
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.string_serializer import StringSerializer
 from pydantic import BaseModel
-from typing import Dict, Any, List
+from typing import Any
+from typing import Dict
+from typing import List
 
 PanelResponseData = Dict[str, Any] | List[Dict[str, Any]] | None
 
@@ -42,13 +45,13 @@ class PanelResponseUtil(BaseModel):
         # Check if the selected type has the needed viewer and get its name (only viewer's label is provided)
         handlers = HandlerDeclareBlockDecl.get_type_methods(type_).handlers
         if (
-                handlers is not None
-                and handlers
-                and (found_viewers := [h.name for h in handlers if h.label == request.panel_id and h.type_ == 'viewer'])
+            handlers is not None
+            and handlers
+            and (found_viewers := [h.name for h in handlers if h.label == request.panel_id and h.type_ == "viewer"])
         ):
             viewer_name: str = found_viewers[0]
         else:
-            raise Exception(f'Type {request.type} has no view with the name {request.panel_id}.')
+            raise Exception(f"Type {request.type} has no view with the name {request.panel_id}.")
 
         # Deserialize key from string to object
         serializer = StringSerializer()
@@ -59,7 +62,7 @@ class PanelResponseUtil(BaseModel):
         record = data_source.load_one(key_obj, dataset=request.dataset)
         if record is None:
             raise RuntimeError(
-                f'Record with type {request.type} and key {request.key} is not found in dataset {request.dataset}.'
+                f"Record with type {request.type} and key {request.key} is not found in dataset {request.dataset}."
             )
 
         # Call the viewer and get the result
@@ -73,7 +76,7 @@ class PanelResponseUtil(BaseModel):
         else:
             view_dict = PanelResponseUtil._get_view_dict(result_view)
 
-        return {'ViewOf': view_dict}
+        return {"ViewOf": view_dict}
 
     @staticmethod
     def _get_view_dict(view: Any) -> Dict[str, Any]:
@@ -84,9 +87,9 @@ class PanelResponseUtil(BaseModel):
         elif view is not None:
             # TODO (Ina): Do not use a method from dataclasses
             result_type = type(view)
-            if result_type.__name__.endswith('Key'):
+            if result_type.__name__.endswith("Key"):
                 view_dict = to_legacy_dict(dataclasses.asdict(view))
-                view_dict['_t'] = result_type.__name__
+                view_dict["_t"] = result_type.__name__
             else:
                 view_dict = to_legacy_dict(to_record_dict(view))
         else:

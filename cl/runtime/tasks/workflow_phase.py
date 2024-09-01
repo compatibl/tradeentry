@@ -12,10 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import final, List
-from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.tasks.workflow_phase_key import WorkflowPhaseKey
+from dataclasses import dataclass
+from typing import List
+from typing import final
 
 
 @final

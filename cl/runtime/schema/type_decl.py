@@ -33,10 +33,11 @@ from inflection import camelize
 from inflection import titleize
 from itertools import tee
 from memoization import cached
-from typing import Any, Optional
+from typing import Any
 from typing import Dict
 from typing import List
 from typing import Literal
+from typing import Optional
 from typing import Set
 from typing import Type
 from typing import get_type_hints
@@ -63,11 +64,12 @@ def to_type_decl_dict(node: Dict[str, Any] | List[Dict[str, Any]] | str) -> Dict
         # Searching for the name of given type declaration
         result: Dict[str, Any] = {}
         if (_t := get_name_of_type_decl_dict(node)) is not None:
-            result['_t'] = pascalize(_t)
+            result["_t"] = pascalize(_t)
         result.update(
             {
-                (pascalize(k.removesuffix("_")) if k != '_t' else k): to_type_decl_dict(v)
-                for k, v in node.items() if v not in [None, False]
+                (pascalize(k.removesuffix("_")) if k != "_t" else k): to_type_decl_dict(v)
+                for k, v in node.items()
+                if v not in [None, False]
             }
         )
         return result
@@ -103,11 +105,11 @@ def get_name_of_type_decl_dict(dict_: Dict[str, Dict]) -> Optional[str]:
     """Search for the type name in the given dict and return in format {module}.{name} ."""
 
     # Element fields contain "key_" in case of key-field or "data" section in case of data-field
-    key_field = dict_.get('key_', None)
-    data_field = dict_.get('data', None)
-    name_field = 'name'
-    module_field = 'module'
-    module_name_field = 'module_name'
+    key_field = dict_.get("key_", None)
+    data_field = dict_.get("data", None)
+    name_field = "name"
+    module_field = "module"
+    module_name_field = "module_name"
 
     module = None
     name = None
@@ -123,7 +125,7 @@ def get_name_of_type_decl_dict(dict_: Dict[str, Dict]) -> Optional[str]:
         if len(dict_) > 2:
             name = name_
 
-    type_name = f'{module}.{name}' if module is not None else name
+    type_name = f"{module}.{name}" if module is not None else name
     return type_name
 
 

@@ -13,17 +13,20 @@
 # limitations under the License.
 
 import inspect
-from dataclasses import dataclass
-from typing import Any, Callable, Dict
-from cl.runtime.records.protocols import KeyProtocol
-from typing_extensions import Self
-from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.serialization.dict_serializer import DictSerializer
-from cl.runtime.storage.data_source_types import TDataDict, TKeyDict
 from cl.runtime.context.context import Context
 from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.records.protocols import KeyProtocol
+from cl.runtime.serialization.dict_serializer import DictSerializer
+from cl.runtime.serialization.string_serializer import StringSerializer
+from cl.runtime.storage.data_source_types import TDataDict
+from cl.runtime.storage.data_source_types import TKeyDict
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
+from dataclasses import dataclass
+from typing import Any
+from typing import Callable
+from typing import Dict
+from typing_extensions import Self
 
 key_string_serializer = StringSerializer()  # TODO: Support composite keys
 param_dict_serializer = DictSerializer()  # TODO: Support complex params
@@ -56,62 +59,54 @@ class InstanceHandlerTask(Task):
             method()
 
     @classmethod
-    def from_key(
-            cls,
-            *,
-            task_id: str,
-            key: KeyProtocol,
-            method: Callable,
-            parent: TaskKey | None = None
-    ) -> Self:
+    def from_key(cls, *, task_id: str, key: KeyProtocol, method: Callable, parent: TaskKey | None = None) -> Self:
         """Create from key and method callable."""
 
         # Populate known fields
         result = cls(task_id=task_id, key=key, parent=parent)
 
         # Get method name from callable
-        method_tokens = method.__qualname__.split('.')
+        method_tokens = method.__qualname__.split(".")
         if len(method_tokens) == 2:
             # Two tokens means the callable is bound to a class
             result.method_name = method_tokens[1]
 
-            if hasattr(method, '__self__'):
-                raise RuntimeError(f"When key is provided separately, method {method.__qualname__} "
-                                   f"must be specified as 'ClassName.method' rather than 'obj.method'.")
+            if hasattr(method, "__self__"):
+                raise RuntimeError(
+                    f"When key is provided separately, method {method.__qualname__} "
+                    f"must be specified as 'ClassName.method' rather than 'obj.method'."
+                )
 
         return result
 
     @classmethod
-    def from_instance(
-            cls,
-            *,
-            task_id: str,
-            method: Callable,
-            parent: TaskKey | None = None
-    ) -> Self:
+    def from_instance(cls, *, task_id: str, method: Callable, parent: TaskKey | None = None) -> Self:
         """Create from instance method (record.method_name)."""
 
         # Populate known fields
         result = cls(task_id=task_id, parent=parent)
 
         # Get method name from callable
-        method_tokens = method.__qualname__.split('.')
+        method_tokens = method.__qualname__.split(".")
         if len(method_tokens) == 2:
             # Two tokens means the callable is bound to a class
             result.method_name = method_tokens[1]
 
-            if hasattr(method, '__self__'):
+            if hasattr(method, "__self__"):
                 if not inspect.isclass(method.__self__):
                     # Assign record instead of key
                     result.key = method.__self__
                 else:
-                    raise RuntimeError(f"Method {method.__qualname__} is a class method, "
-                                       f"use StaticHandlerTask instead.")
+                    raise RuntimeError(
+                        f"Method {method.__qualname__} is a class method, " f"use StaticHandlerTask instead."
+                    )
             else:
-                raise RuntimeError(f"Method {method.__qualname__} is a static method, "
-                                       f"use StaticHandlerTask instead.")
+                raise RuntimeError(
+                    f"Method {method.__qualname__} is a static method, " f"use StaticHandlerTask instead."
+                )
         else:
-            raise RuntimeError(f"Method {method.__qualname__} is a function rather than a class method, "
-                               f"use FunctionTask instead.")
+            raise RuntimeError(
+                f"Method {method.__qualname__} is a function rather than a class method, " f"use FunctionTask instead."
+            )
 
         return result

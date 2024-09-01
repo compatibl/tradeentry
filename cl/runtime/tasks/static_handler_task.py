@@ -13,13 +13,15 @@
 # limitations under the License.
 
 import inspect
-from dataclasses import dataclass
-from typing import Callable, Dict, Type
-from typing_extensions import Self
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.schema.schema import Schema
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
+from dataclasses import dataclass
+from typing import Callable
+from typing import Dict
+from typing import Type
+from typing_extensions import Self
 
 
 @dataclass(slots=True, kw_only=True)
@@ -58,31 +60,26 @@ class StaticHandlerTask(Task):
             raise RuntimeError(f"Method type {self.method_type} is not 'staticmethod' or 'classmethod'.")
 
     @classmethod
-    def from_type(
-        cls,
-        *,
-        task_id: str,
-        record_type: Type,
-        method: Callable,
-        parent: TaskKey | None = None
-    ) -> Self:
+    def from_type(cls, *, task_id: str, record_type: Type, method: Callable, parent: TaskKey | None = None) -> Self:
         """Create from static or class handler method callable."""
 
         # Populate known fields
         result = cls(task_id=task_id, type_name=record_type.__name__, parent=parent)
 
-        method_tokens = method.__qualname__.split('.')
+        method_tokens = method.__qualname__.split(".")
         if len(method_tokens) == 2:
             # Two tokens means the callable is bound to a class as expected for a static or class method
             if result.type_name != method_tokens[0]:
-                raise RuntimeError(f"Record type specified as input {result.type_name} does not match "
-                                   f"the class {method_tokens[0]} of the method callable.")
+                raise RuntimeError(
+                    f"Record type specified as input {result.type_name} does not match "
+                    f"the class {method_tokens[0]} of the method callable."
+                )
 
             # Assign method name
             result.method_name = method_tokens[1]
 
             # Assign method type (staticmethod or classmethod)
-            if hasattr(method, '__self__'):
+            if hasattr(method, "__self__"):
                 # If __self__ is present, check if this is a class indicating a classmethod
                 if inspect.isclass(method.__self__):
                     # If method_callable.__self__ is defined and is a class, it is a classmethod

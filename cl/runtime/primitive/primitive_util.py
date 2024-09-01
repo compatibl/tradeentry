@@ -13,8 +13,9 @@
 # limitations under the License.
 
 import inspect
-from typing import Dict, Type
 from memoization import cached
+from typing import Dict
+from typing import Type
 
 
 class PrimitiveUtil:

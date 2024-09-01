@@ -13,9 +13,8 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.schema.schema import Schema
-
 from cl.runtime.context.context import Context
+from cl.runtime.schema.schema import Schema
 from cl.runtime.tasks.process.process_queue import ProcessQueue
 from cl.runtime.tasks.static_handler_task import StaticHandlerTask
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
@@ -25,7 +24,6 @@ def test_smoke():
     """Smoke test."""
 
     with Context() as context:
-
         obj = StubHandlers(stub_id="abc")
         context.data_source.save_one(obj)
 

@@ -16,19 +16,18 @@ from __future__ import annotations
 
 import base64
 import traceback
-from typing import Type, List
-from pydantic import BaseModel
-
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseItem
 from cl.runtime.routers.tasks.run_request import RunRequest
 from cl.runtime.schema.schema import Schema
-
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.tasks.v1.task_runner import TaskRunner
 from cl.runtime.tasks.v1.task_status import TaskStatus
+from pydantic import BaseModel
+from typing import List
+from typing import Type
 
 
 class RunResponseItem(BaseModel):
@@ -46,7 +45,6 @@ class RunResponseItem(BaseModel):
 
     @staticmethod
     def run_tasks(request: RunRequest) -> List[RunResponseItem | RunErrorResponseItem]:
-
         response_items = []
 
         # TODO (Roman): request [None] for static handlers explicitly
@@ -58,16 +56,14 @@ class RunResponseItem(BaseModel):
 
         # run task for all keys in request
         for serialized_key in requested_keys:
-            key = key_serializer.deserialize_key(serialized_key, type_.get_key_type(None)) \
-                if serialized_key is not None else None
+            key = (
+                key_serializer.deserialize_key(serialized_key, type_.get_key_type(None))
+                if serialized_key is not None
+                else None
+            )
 
             # construct TaskRunner for params from request
-            task_runner = TaskRunner(
-                record_key=key,
-                record_type=type_,
-                handler=request.method,
-                args=request.arguments_
-            )
+            task_runner = TaskRunner(record_key=key, record_type=type_, handler=request.method, args=request.arguments_)
 
             try:
                 # submit task and convert run_id to string

@@ -12,18 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import datetime as dt
 import pytest
 import uuid
-import datetime as dt
-from typing import List
-
 from cl.runtime.primitive.datetime_util import DatetimeUtil
-
 from cl.runtime.primitive.uuid_util import UuidUtil
+from typing import List
 
 
 def is_ordered(values: List[uuid.UUID]):
-    return all(values[i] < values[i+1] for i in range(len(values) - 1))
+    return all(values[i] < values[i + 1] for i in range(len(values) - 1))
 
 
 def test_create_one():

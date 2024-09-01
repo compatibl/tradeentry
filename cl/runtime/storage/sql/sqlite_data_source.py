@@ -14,13 +14,11 @@
 
 import os
 import sqlite3
-
-from cl.runtime.settings.settings import Settings
-
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
+from cl.runtime.settings.settings import Settings
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
