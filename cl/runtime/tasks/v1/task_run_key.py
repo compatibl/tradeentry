@@ -21,11 +21,11 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class TaskRunKey(KeyMixin):
+class TaskRunV1Key(KeyMixin):
     """Key for class with information about task run."""
 
     id: UUID = missing()
     """Unique identifier of task run."""
 
     def get_key_type(self) -> Type:
-        return TaskRunKey
+        return TaskRunV1Key

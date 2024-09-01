@@ -18,12 +18,12 @@ from typing import Dict, Any
 from cl.runtime import RecordMixin
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import KeyProtocol
-from cl.runtime.tasks.v1.task_run_key import TaskRunKey
+from cl.runtime.tasks.v1.task_run_key import TaskRunV1Key
 from cl.runtime.tasks.v1.task_status import TaskStatus
 
 
 @dataclass(slots=True, kw_only=True)
-class TaskRun(TaskRunKey, RecordMixin[TaskRunKey]):
+class TaskRunV1(TaskRunV1Key, RecordMixin[TaskRunV1Key]):
     """Class with information about task run."""
 
     status: TaskStatus = missing()
@@ -35,4 +35,4 @@ class TaskRun(TaskRunKey, RecordMixin[TaskRunKey]):
     key: KeyProtocol | None = missing()
 
     def get_key(self) -> KeyProtocol:
-        return TaskRunKey(id=self.id)
+        return TaskRunV1Key(id=self.id)

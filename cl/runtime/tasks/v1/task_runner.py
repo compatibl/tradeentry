@@ -22,7 +22,7 @@ from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import KeyProtocol, RecordProtocol
 from cl.runtime.tasks.v1.task_observer import TaskObserver
-from cl.runtime.tasks.v1.task_run import TaskRun
+from cl.runtime.tasks.v1.task_run import TaskRunV1
 from cl.runtime.tasks.v1.task_status import TaskStatus
 
 
@@ -60,7 +60,7 @@ class TaskRunner:
 
         # save TaskRun with status "Submitted"
         data_source = current_or_default_data_source()
-        data_source.save_one(TaskRun(id=run_id, status=TaskStatus.Submitted, key=self.record_key))
+        data_source.save_one(TaskRunV1(id=run_id, status=TaskStatus.Submitted, key=self.record_key))
 
         # run instance or static handler as task
         if self.record_key is not None:
@@ -105,7 +105,7 @@ class TaskRunner:
             result = callable_(**args)
         except Exception as exc:
             # update TaskRun with status "Failed" and error message in result
-            data_source.save_one(TaskRun(id=run_id, status=TaskStatus.Failed, result=f"{type(exc)}: {exc}."))
+            data_source.save_one(TaskRunV1(id=run_id, status=TaskStatus.Failed, result=f"{type(exc)}: {exc}."))
         else:
             # update TaskRun with status "Completed" and callable result
-            data_source.save_one(TaskRun(id=run_id, status=TaskStatus.Completed, result=result))
+            data_source.save_one(TaskRunV1(id=run_id, status=TaskStatus.Completed, result=result))

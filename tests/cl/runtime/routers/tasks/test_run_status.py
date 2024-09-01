@@ -23,7 +23,7 @@ from cl.runtime.routers.tasks.task_status_request import TaskStatusRequest
 from cl.runtime.routers.tasks.task_status_response_item import TaskStatusResponseItem
 from cl.runtime.routers.server import app
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.tasks.v1.task_run import TaskRun
+from cl.runtime.tasks.v1.task_run import TaskRunV1
 from cl.runtime.tasks.v1.task_status import TaskStatus
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
@@ -33,9 +33,9 @@ key_str = key_serializer.serialize_key(stub_handlers.get_key())
 
 
 task_runs = [
-    TaskRun(id=uuid.uuid4(), status=TaskStatus.Submitted, key=stub_handlers.get_key()),
-    TaskRun(id=uuid.uuid4(), status=TaskStatus.Failed, key=stub_handlers.get_key()),
-    TaskRun(id=uuid.uuid4(), status=TaskStatus.Completed, key=stub_handlers.get_key()),
+    TaskRunV1(id=uuid.uuid4(), status=TaskStatus.Submitted, key=stub_handlers.get_key()),
+    TaskRunV1(id=uuid.uuid4(), status=TaskStatus.Failed, key=stub_handlers.get_key()),
+    TaskRunV1(id=uuid.uuid4(), status=TaskStatus.Completed, key=stub_handlers.get_key()),
 ]
 requests = [
     {

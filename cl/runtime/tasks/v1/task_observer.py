@@ -19,8 +19,8 @@ from uuid import UUID
 from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import KeyProtocol
-from cl.runtime.tasks.v1.task_run import TaskRun
-from cl.runtime.tasks.v1.task_run_key import TaskRunKey
+from cl.runtime.tasks.v1.task_run import TaskRunV1
+from cl.runtime.tasks.v1.task_run_key import TaskRunV1Key
 from cl.runtime.tasks.v1.task_status import TaskStatus
 
 
@@ -46,6 +46,6 @@ class TaskObserver:
         task_run = self._get_task_run()
         return task_run.key if task_run else None
 
-    def _get_task_run(self) -> TaskRun | None:
+    def _get_task_run(self) -> TaskRunV1 | None:
         data_source = current_or_default_data_source()
-        return data_source.load_one(TaskRunKey(id=self.task_run_id))
+        return data_source.load_one(TaskRunV1Key(id=self.task_run_id))
