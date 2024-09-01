@@ -21,9 +21,9 @@ from inflection import underscore
 from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import KeyProtocol, RecordProtocol
-from cl.runtime.tasks.task_observer import TaskObserver
-from cl.runtime.tasks.task_run import TaskRun
-from cl.runtime.tasks.task_status import TaskStatus
+from cl.runtime.tasks.v1.task_observer import TaskObserver
+from cl.runtime.tasks.v1.task_run import TaskRun
+from cl.runtime.tasks.v1.task_status import TaskStatus
 
 
 @dataclass

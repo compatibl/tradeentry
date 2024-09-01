@@ -27,8 +27,8 @@ from cl.runtime.routers.tasks.run_request import RunRequest
 from cl.runtime.schema.schema import Schema
 
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.tasks.task_runner import TaskRunner
-from cl.runtime.tasks.task_status import TaskStatus
+from cl.runtime.tasks.v1.task_runner import TaskRunner
+from cl.runtime.tasks.v1.task_status import TaskStatus
 
 
 class RunResponseItem(BaseModel):

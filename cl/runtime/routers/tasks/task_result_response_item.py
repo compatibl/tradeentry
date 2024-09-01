@@ -23,7 +23,7 @@ from pydantic import BaseModel
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.tasks.task_result_request import TaskResultRequest
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.tasks.task_observer import TaskObserver
+from cl.runtime.tasks.v1.task_observer import TaskObserver
 
 
 class TaskResultResponseItem(BaseModel):

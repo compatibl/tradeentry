@@ -18,8 +18,8 @@ from typing import Dict, Any
 from cl.runtime import RecordMixin
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import KeyProtocol
-from cl.runtime.tasks.task_run_key import TaskRunKey
-from cl.runtime.tasks.task_status import TaskStatus
+from cl.runtime.tasks.v1.task_run_key import TaskRunKey
+from cl.runtime.tasks.v1.task_status import TaskStatus
 
 
 @dataclass(slots=True, kw_only=True)
