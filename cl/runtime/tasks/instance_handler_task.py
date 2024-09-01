@@ -14,7 +14,7 @@
 
 import inspect
 from dataclasses import dataclass
-from typing import Any, Callable
+from typing import Any, Callable, Dict
 from cl.runtime.records.protocols import KeyProtocol
 from typing_extensions import Self
 from cl.runtime.serialization.string_serializer import StringSerializer
@@ -33,13 +33,13 @@ param_dict_serializer = DictSerializer()  # TODO: Support complex params
 class InstanceHandlerTask(Task):
     """Executes instance handler of the specified record."""
 
-    key: KeyProtocol = missing()
+    key: Dict = missing()
     """Record for which instance handler will be invoked."""
 
     method_name: str = missing()
     """Handler method name."""
 
-    param_dict: TDataDict | None = None
+    param_dict: Dict = missing()
     """Dictionary of method parameters (None if the method does not have parameters other than self)."""
 
     def execute(self) -> Any:

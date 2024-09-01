@@ -14,11 +14,8 @@
 
 import inspect
 from dataclasses import dataclass
-from typing import Any, Callable, Dict, Type
-
-from cl.runtime.storage.data_source_types import TDataDict
+from typing import Callable, Dict, Type
 from typing_extensions import Self
-
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.schema.schema import Schema
 from cl.runtime.tasks.task import Task
@@ -38,7 +35,7 @@ class StaticHandlerTask(Task):
     method_type: str = missing()  # TODO: Switch to literal or enum, values are staticmethod or classmethod
     """Static or class method."""
 
-    param_dict: TDataDict | None = None
+    # TODO: Enable param_dict: Dict = missing()
     """Dictionary of method parameters (None if the method does not have parameters other than cls for classmethod)."""
 
     def execute(self) -> None:
@@ -47,13 +44,13 @@ class StaticHandlerTask(Task):
         method = getattr(record_type, self.method_name)
 
         if self.method_type == "staticmethod":
-            if self.param_dict is not None:
+            if False:  # TODO: Tnable self.param_dict is not None:
                 method(**self.param_dict)
             else:
                 method()
         elif self.method_type == "classmethod":
             # Pass class as first argument for @classmethod
-            if self.param_dict is not None:
+            if False:  # TODO: Enable parqms, check for self.param_dict is not None:
                 method.__func__(record_type, **self.param_dict)
             else:
                 method.__func__(record_type)
