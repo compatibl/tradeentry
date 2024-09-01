@@ -19,7 +19,7 @@ from cl.runtime.schema.schema import Schema
 
 # TODO (Roman): remove dependency from dict_serializer
 from cl.runtime.serialization.dict_serializer import alias_dict
-from cl.runtime.serialization.dict_serializer import type_dict
+from cl.runtime.serialization.dict_serializer import get_type_dict
 from cl.runtime.serialization.string_value_parser import StringValueCustomType
 from cl.runtime.serialization.string_value_parser import StringValueParser
 from cl.runtime.storage.data_source_types import TDataset
@@ -85,8 +85,9 @@ class StringSerializer:
         ]:
             result = data.isoformat()
         elif value_custom_type == StringValueCustomType.enum:
-            # get enum short name and cache to type_dict
+            # Get enum short name and cache to type_dict
             short_name = alias_dict[type_] if (type_ := type(data)) in alias_dict else type_.__name__
+            type_dict = get_type_dict()
             type_dict[short_name] = type_
 
             result = f"{short_name}.{data.name}"
@@ -120,6 +121,7 @@ class StringSerializer:
             return float(data)
         elif custom_type == StringValueCustomType.enum:
             enum_type, enum_value = data.split(".")
+            type_dict = get_type_dict()
             deserialized_type = type_dict.get(enum_type, None)  # noqa
             if deserialized_type is None:
                 raise RuntimeError(
@@ -151,6 +153,7 @@ class StringSerializer:
             key_short_name = alias_dict[type_] if (type_ := data.get_key_type()) in alias_dict else type_.__name__
 
             # TODO (Roman): consider to have separated cache dict for key types
+            type_dict = get_type_dict()
             type_dict[key_short_name] = type_
             type_token = StringValueParser.add_type_prefix(key_short_name, StringValueCustomType.key)
             result = f"{type_token};{result}"

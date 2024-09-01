@@ -31,7 +31,6 @@ from typing import Dict
 from typing import Iterable
 from typing import List
 from typing import Type
-from typing import cast
 from typing_extensions import Self
 
 
@@ -68,7 +67,7 @@ class Schema:
         """Add types to the dictionary by short name (class name with optional package alias)."""
 
         types_dict = {x.__name__: x for x in types}
-        cls._type_dict_by_short_name.update(types_dict)
+        cls.get_type_dict().update(types_dict)
 
     @classmethod
     def get_type_by_short_name(cls, short_name: str) -> Type:

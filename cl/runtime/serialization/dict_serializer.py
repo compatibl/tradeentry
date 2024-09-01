@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import sys
+
 from cl.runtime.serialization.sentinel_type import sentinel_value
 from cl.runtime.storage.data_source_types import TDataDict
 from collections import Counter
@@ -30,7 +31,7 @@ alias_dict: Dict[Type, str] = dict()
 """Dictionary of class name aliases using type as key (includes classes and enums with aliases only)."""
 
 # TODO: Initialize from settings
-type_dict: Dict[str, Type] = dict()
+_type_dict: Dict[str, Type] = None
 """Dictionary of types using class name or alias as key (includes all classes and enums)."""
 
 class_hierarchy_slots_dict: Dict[Type, Tuple] = dict()
@@ -38,6 +39,16 @@ class_hierarchy_slots_dict: Dict[Type, Tuple] = dict()
 
 collect_slots = sys.version_info.major > 3 or sys.version_info.major == 3 and sys.version_info.minor >= 11
 """For Python 3.11 and later, __slots__ includes fields for this class only, use MRO to include base class slots."""
+
+
+# TODO: Should classes not included packages be supported? If not do not update type dict in serializer.
+def get_type_dict() -> Dict[str, Type]:
+    """Load type dictionary from schema if not present."""
+    global _type_dict
+    if _type_dict is None:
+        from cl.runtime.schema.schema import Schema  # TODO: Refactor to avoid cyclic dependency
+        _type_dict = Schema.get_type_dict()
+    return _type_dict
 
 
 def _get_class_hierarchy_slots(data_type) -> Tuple[str]:
@@ -114,6 +125,7 @@ class DictSerializer:
             # To find short name, use 'in' which is faster than 'get' when most types do not have aliases
             short_name = alias_dict[type_] if (type_ := data.__class__) in alias_dict else type_.__name__
             # Cache type for subsequent reverse lookup
+            type_dict = get_type_dict()
             type_dict[short_name] = type_
             # Add to result
             result["_type"] = short_name
@@ -145,6 +157,7 @@ class DictSerializer:
             # To find short name, use 'in' which is faster than 'get' when most types do not have aliases
             short_name = alias_dict[type_] if (type_ := type(data)) in alias_dict else type_.__name__
             # Cache type for subsequent reverse lookup
+            type_dict = get_type_dict()
             type_dict[short_name] = type_
             return {"_enum": short_name, "_name": data.name}
         else:
@@ -160,6 +173,7 @@ class DictSerializer:
             # Determine if the dictionary is a serialized dataclass or a dictionary
             if (short_name := data.get("_type", None)) is not None:
                 # If _type is specified, create an instance of _type after deserializing fields recursively
+                type_dict = get_type_dict()
                 deserialized_type = type_dict.get(short_name, None)  # noqa
                 if deserialized_type is None:
                     raise RuntimeError(
@@ -175,6 +189,7 @@ class DictSerializer:
                 return result
             elif (short_name := data.get("_enum", None)) is not None:
                 # If _enum is specified, create an instance of _enum using _name
+                type_dict = get_type_dict()
                 deserialized_type = type_dict.get(short_name, None)  # noqa
                 if deserialized_type is None:
                     raise RuntimeError(
