@@ -51,9 +51,9 @@ class InstanceHandlerTask(Task):
 
         # Pass record as first argument (self) for an instance method
         if self.param_dict is not None:
-            method(record, **self.param_dict)
+            method(**self.param_dict)
         else:
-            method(record)
+            method()
 
     @classmethod
     def from_key(
