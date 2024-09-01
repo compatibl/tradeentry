@@ -108,6 +108,68 @@ def get_rounding_samples() -> List[Tuple[dt.datetime, dt.datetime]]:
     ]
 
 
+def test_now():
+    """Test rounding current time to whole milliseconds."""
+
+    # Datetime before rounded down to 1ms per UUIDv7 RFC-9562 standard
+    datetime_before = DatetimeUtil.floor(dt.datetime.now(dt.timezone.utc))
+
+    now_floor = DatetimeUtil.now_floor()
+    now = DatetimeUtil.now()
+    now_ceil = DatetimeUtil.now_ceil()
+
+    # Datetime after rounded up to 1ms per UUIDv7 RFC-9562 standard
+    datetime_after = DatetimeUtil.ceil(dt.datetime.now(dt.timezone.utc))
+
+    # Check that timestamp is within the expected range
+    assert datetime_before <= now_floor
+    assert now_floor <= now
+    assert now <= now_ceil
+    assert now_ceil <= datetime_after
+
+    # Check that timestamp is rounded to 1ms and has UTC timezone
+    for value in [now_floor, now, now_ceil]:
+        assert value.microsecond % 1000 == 0
+        assert value.tzinfo == dt.timezone.utc
+
+
+def test_rounding():
+    """Test rounding to whole milliseconds."""
+
+    for sample in get_rounding_samples():
+
+        value = sample[0]
+        correct_rounded_value = sample[1]
+        rounded = DatetimeUtil.round(value)
+        rounded_down = DatetimeUtil.floor(value)
+        rounded_up = DatetimeUtil.ceil(value)
+
+        # Check that rounded value matches expected
+        assert rounded == correct_rounded_value
+
+        # Check rounded down and up values
+        if value.microsecond % 1000 == 0:
+            # Sample is already rounded to milliseconds
+            assert rounded_down == rounded
+            assert rounded_up == rounded
+        else:
+            # Sample not rounded to milliseconds
+
+            # Check rounding direction
+            assert rounded_down < value
+            assert rounded_up > value
+
+            # Check rounding values
+            microsecond_down = 1000*(value.microsecond//1000)
+            assert rounded_down == value.replace(microsecond=microsecond_down)
+
+            microsecond_up = 1000*(value.microsecond//1000+1)
+            if microsecond_up == 1_000_000:
+                assert rounded_up == value.replace(microsecond=0) + dt.timedelta(seconds=1)
+            else:
+                assert rounded_up == value.replace(microsecond=1000*(value.microsecond//1000+1))
+
+
 def test_to_from_str():
     """Test for to_str, from_str methods."""
 
@@ -158,14 +220,6 @@ def test_to_from_fields():
     for sample in get_invalid_fields_samples():
         with pytest.raises(Exception):
             DatetimeUtil.from_fields(sample)
-
-
-def test_round():
-    """Test rounding to millisecond."""
-
-    for sample in get_rounding_samples():
-        rounded = DatetimeUtil.round(sample[0])
-        assert rounded == sample[1]
 
 
 if __name__ == "__main__":

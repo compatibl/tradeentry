@@ -17,6 +17,7 @@ import datetime as dt
 
 # TODO: Implement create_many
 
+
 class UuidUtil:
     """
     Utility class for time-ordered UUIDv7 RFC-9562 with additional strict ordering guarantees

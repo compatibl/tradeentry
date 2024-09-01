@@ -16,6 +16,9 @@ import pytest
 import uuid
 import datetime as dt
 from typing import List
+
+from cl.runtime.primitive.datetime_util import DatetimeUtil
+
 from cl.runtime.primitive.uuid_util import UuidUtil
 
 
@@ -35,17 +38,15 @@ def test_create_one():
 def test_datetime_of():
     """Test UuidUtil.datetime_of method."""
 
-    # Datetime before rounded to 1ms per UUIDv7 RFC-9562 standard, rounding is down
-    datetime_before = dt.datetime.now(dt.timezone.utc)
-    datetime_before = datetime_before.replace(microsecond=1000*(datetime_before.microsecond//1000))
+    # Datetime before rounded down to 1ms per UUIDv7 RFC-9562 standard
+    datetime_before = DatetimeUtil.floor(dt.datetime.now(dt.timezone.utc))
 
     datetime_result = UuidUtil.datetime_of(UuidUtil.create_one())
 
-    # Datetime after rounded to 1ms per UUIDv7 RFC-9562 standard, rounding is up
-    datetime_after = dt.datetime.now(dt.timezone.utc).replace(microsecond=0)
-    datetime_after = datetime_after.replace(microsecond=1000*(datetime_before.microsecond//1000+1))
+    # Datetime after rounded up to 1ms per UUIDv7 RFC-9562 standard
+    datetime_after = DatetimeUtil.ceil(dt.datetime.now(dt.timezone.utc))
 
-    # Check that timetamp is within the expected range
+    # Check that timestamp is within the expected range
     assert datetime_before <= datetime_result
     assert datetime_result <= datetime_after
 
