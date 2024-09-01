@@ -12,7 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 import sqlite3
+
+from cl.runtime.settings.settings import Settings
+
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key
@@ -43,7 +47,7 @@ def dict_factory(cursor, row):
 class SqliteDataSource(DataSource):
     """Sqlite data source without dataset and mile wide table for inheritance."""
 
-    db_name: str = ":memory:"
+    db_name: str = None
     """Db name used to open sqlite connection."""
 
     _connection: sqlite3.Connection = None
@@ -58,10 +62,19 @@ class SqliteDataSource(DataSource):
         # TODO: Implement dispose logic
         # Use setattr to initialize attributes in a frozen object
 
+        # Set default DB if db_name is not specified
+        if self.db_name is None:
+            project_root = Settings.get_project_root()
+            db_dir = os.path.join(project_root, "db")
+            if not os.path.exists(db_dir):
+                # Create the directory if does not exist
+                os.makedirs(db_dir)
+            self.db_name = os.path.join(db_dir, "runtime.db")
+
         # TODO (Roman): check behavior in multithreading datasource usage
-        object.__setattr__(self, "_connection", sqlite3.connect(self.db_name, check_same_thread=False))
+        self._connection = sqlite3.connect(self.db_name, check_same_thread=False)
         self._connection.row_factory = dict_factory
-        object.__setattr__(self, "_schema_manager", SqliteSchemaManager(sqlite_connection=self._connection))
+        self._schema_manager = SqliteSchemaManager(sqlite_connection=self._connection)
 
     def batch_size(self) -> int:
         pass
