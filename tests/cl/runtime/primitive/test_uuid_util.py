@@ -14,13 +14,15 @@
 
 import datetime as dt
 import pytest
-import uuid
+from uuid_utils import UUID
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.uuid_util import UuidUtil
-from typing import List
+from typing import List, Iterable
 
 
-def is_ordered(values: List[uuid.UUID]):
+def is_ordered(values: Iterable[UUID]):
+    if not hasattr(values, '__len__') or not hasattr(values, '__getitem__'):
+        values = list(values)
     return all(values[i] < values[i + 1] for i in range(len(values) - 1))
 
 
@@ -30,6 +32,19 @@ def test_create_one():
     result_1 = [UuidUtil.create_one() for _ in range(10)]
     result_2 = [UuidUtil.create_one() for _ in range(10)]
     result = result_1 + result_2
+    assert is_ordered(result_1)
+    assert is_ordered(result_1)
+    assert is_ordered(result)
+
+
+def test_create_many():
+    """Test UuidUtil.create_one method."""
+
+    result_1 = UuidUtil.create_many(10)
+    result_2 = UuidUtil.create_many(10)
+    result = result_1 + result_2
+    assert is_ordered(result_1)
+    assert is_ordered(result_1)
     assert is_ordered(result)
 
 

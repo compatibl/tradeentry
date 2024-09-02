@@ -13,9 +13,9 @@
 # limitations under the License.
 
 import datetime as dt
-import uuid_utils
-
-# TODO: Implement create_many
+from typing import Iterable
+from uuid_utils import UUID
+from uuid_utils import uuid7
 
 
 class UuidUtil:
@@ -25,21 +25,21 @@ class UuidUtil:
     """
 
     # TODO: Use context vars to prevent a race condition between contexts or threads
-    _prev_uuid = uuid_utils.uuid7()
+    _prev_uuid = uuid7()
     """The last UUID created during the previous call within the same context."""
 
     @classmethod
-    def create_one(cls) -> uuid_utils.UUID:
+    def create_one(cls) -> UUID:
         """
-        Return UUIDv7 with strict order guarantee within the same process, thread and context.
-        In all other cases, ordering is guaranteed within timestamp resolution.
+        Within the same process, thread and context the returned value is greater than any previous values.
+        In all other cases, the value is unique and greater than values returned in prior milliseconds.
         """
 
         # TODO: Multiple context or threads are not yet supported
 
         # Keep getting new uuid7 until it is more than '_prev_uuid'
         # At worst this will delay execution by one time tick only
-        while (result := uuid_utils.uuid7()) <= cls._prev_uuid:
+        while (result := uuid7()) <= cls._prev_uuid:
             pass
 
         # Update _prev_uuid with the result to ensure strict ordering within the same process thread and context
@@ -47,7 +47,16 @@ class UuidUtil:
         return result
 
     @classmethod
-    def datetime_of(cls, value: uuid_utils.UUID) -> dt.datetime:
+    def create_many(cls, count: int) -> Iterable[UUID]:
+        """
+        Within the same process, thread and context returned values are ordered and greater than any previous values.
+        In all other cases, the returned values are ordered and greater than values returned in prior milliseconds.
+        """
+        # TODO: Improve performance of create_many by getting many values at the same time and ordering them
+        return [cls.create_one() for _ in range(count)]
+
+    @classmethod
+    def datetime_of(cls, value: UUID) -> dt.datetime:
         """Return datetime of a single UUIDv7 value."""
-        # Field 'timestamp' is in milliseconds while 'fromtimestamp' expects seconds, divide by 1000
+        # Field 'UUID.timestamp' is int milliseconds while 'fromtimestamp' method expects float seconds, divide by 1000
         return dt.datetime.fromtimestamp(value.timestamp / 1000, dt.timezone.utc)
