@@ -21,6 +21,8 @@ from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue_key import TaskQueueKey
 from dataclasses import dataclass
 
+from cl.runtime.tasks.task_run_key import TaskRunKey
+
 
 @dataclass(slots=True, kw_only=True)
 class Task(TaskKey, RecordMixin[TaskKey], ABC):
@@ -48,7 +50,9 @@ class Task(TaskKey, RecordMixin[TaskKey], ABC):
         """Invoked by the queue to which the task is submitted."""
 
     @handler
-    def submit(self, queue: TaskQueueKey) -> None:
-        """Submit task to the specified queue (all further access to the run is provided via TaskRun record)."""
+    def submit(self, queue: TaskQueueKey) -> TaskRunKey:
+        """Submit task to this queue (all further access to the run is provided via the returned TaskRunKey)."""
         queue_obj = Context.current().data_source.load_one(queue)  # TODO: Optimize in case of repeated calls
-        queue_obj.submit_task(self)
+        task_run_key = queue_obj.submit_task(self)
+        return task_run_key
+

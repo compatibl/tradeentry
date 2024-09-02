@@ -29,13 +29,15 @@ router = APIRouter()
 @router.post("/run", response_model=List[RunResponseItem | RunErrorResponseItem])
 async def tasks_run(request: Request, payload: RunRequest):
     """Receive params for tasks execute."""
+
+    # TODO: Refactor tasks_run and other routes
     headers = {}
     request_headers = dict(request.headers)
     for key in ("host", "user", "environment", "cutofftime"):
         headers[key] = request_headers.get(key)
 
+    # Run tasks without blocking the process
     payload.headers = headers
-
     return RunResponseItem.run_tasks(payload)
 
 

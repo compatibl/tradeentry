@@ -23,11 +23,15 @@ from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseIte
 from cl.runtime.routers.tasks.run_request import RunRequest
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.tasks.v1.task_runner import TaskRunner
-from cl.runtime.tasks.v1.task_status import TaskStatus
+from cl.runtime.tasks.instance_handler_task import InstanceHandlerTask
+from cl.runtime.tasks.process.process_queue import ProcessQueue
+from cl.runtime.tasks.task_status import TaskStatus
 from pydantic import BaseModel
 from typing import List
 from typing import Type
+
+# TODO: Make it possible to configure the queue to use
+handler_queue = ProcessQueue(queue_id="Handler Queue")
 
 
 class RunResponseItem(BaseModel):
@@ -56,18 +60,22 @@ class RunResponseItem(BaseModel):
 
         # run task for all keys in request
         for serialized_key in requested_keys:
-            key = (
-                key_serializer.deserialize_key(serialized_key, type_.get_key_type(None))
-                if serialized_key is not None
-                else None
-            )
 
-            # construct TaskRunner for params from request
-            task_runner = TaskRunner(record_key=key, record_type=type_, handler=request.method, args=request.arguments_)
+            # Create handler task
+            # TODO: Support class methods and static methods
+            # TODO: Add request.arguments_ and type_
+            handler_task = InstanceHandlerTask(
+                record_short_name=request.table,
+                key_str=serialized_key,
+                method_name=request.method)
+
+            # TODO Include other parameters or use GUID
+            handler_task.task_id = f"{handler_task.record_short_name}:{handler_task.key_str}:{handler_task.method_name}"
+            task_run_key = handler_queue.submit_task(handler_task)
 
             try:
                 # submit task and convert run_id to string
-                run_id_as_str = base64.b64encode(task_runner.submit().task_run_id.bytes).decode()
+                run_id_as_str = base64.b64encode(task_run_key.task_run_id.bytes).decode()
             except Exception as exc:
                 # add error response item if failed to submit task. errors in handler execution handle task runner.
                 _traceback = traceback.format_exc()

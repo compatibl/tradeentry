@@ -21,6 +21,7 @@ from cl.runtime.tasks.static_handler_task import StaticHandlerTask
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
 from cl.runtime.tasks.task_run import TaskRun
+from cl.runtime.tasks.task_run_key import TaskRunKey
 from cl.runtime.tasks.task_status import TaskStatus
 from dataclasses import dataclass
 
@@ -62,8 +63,8 @@ class ProcessQueue(TaskQueue):
     def resume_all(self) -> None:
         """Resume starting new runs and send resume command to existing runs."""
 
-    def submit_task(self, task: TaskKey) -> None:
-        """Submit task to this queue (all further access to the run is provided via TaskRun record)."""
+    def submit_task(self, task: TaskKey) -> TaskRunKey:
+        """Submit task to this queue (all further access to the run is provided via the returned TaskRunKey)."""
 
         # Record the task submission time
         submit_time = DatetimeUtil.now()

@@ -13,22 +13,23 @@
 # limitations under the License.
 
 import inspect
+import re
+from inflection import underscore
+from cl.runtime.schema.schema import Schema
 from cl.runtime.context.context import Context
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.storage.data_source_types import TDataDict
-from cl.runtime.storage.data_source_types import TKeyDict
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, cast
 from typing import Callable
 from typing import Dict
 from typing_extensions import Self
 
-key_string_serializer = StringSerializer()  # TODO: Support composite keys
+key_serializer = StringSerializer()
 param_dict_serializer = DictSerializer()  # TODO: Support complex params
 
 
@@ -36,8 +37,11 @@ param_dict_serializer = DictSerializer()  # TODO: Support complex params
 class InstanceHandlerTask(Task):
     """Executes instance handler of the specified record."""
 
-    key: Dict = missing()
-    """Record for which instance handler will be invoked."""
+    record_short_name: str = missing()
+    """Record short name as string."""
+
+    key_str: str = missing()
+    """Key serialized as semicolon-delimited string."""
 
     method_name: str = missing()
     """Handler method name."""
@@ -48,9 +52,18 @@ class InstanceHandlerTask(Task):
     def execute(self) -> Any:
         """Invoke the specified instance method handler."""
 
+        # Save self to ensure the worker process loads the same record
+        # TODO: Consider creating TaskRun directly with Task object field instead of key
+        Context.current().data_source.save_one(self)
+
+        record_type = Schema.get_type_by_short_name(self.record_short_name)
+        key_type = record_type().get_key_type()  # TODO: Avoid creating the object to get key type, make classmethod?
+        key = key_serializer.deserialize_key(self.key_str, key_type)
+
         # Load record from storage
-        record = Context.current().data_source.load_one(self.key)
-        method = getattr(record, self.method_name)  # TODO: Check it is an instance method
+        record = Context.current().data_source.load_one(key)
+        method_name = self.normalize_method_name(self.method_name)
+        method = getattr(record, method_name)  # TODO: Check it is an instance method
 
         # Pass record as first argument (self) for an instance method
         if self.param_dict is not None:
@@ -109,4 +122,18 @@ class InstanceHandlerTask(Task):
                 f"Method {method.__qualname__} is a function rather than a class method, " f"use FunctionTask instead."
             )
 
+        return result
+
+    @classmethod
+    def normalize_method_name(cls, method_name: str) -> str:
+        """If method name has uppercase letters, assume it is PascalCase and convert to snake_case."""
+
+        if any(c.isupper() for c in method_name):
+            # Use inflection library
+            result = underscore(method_name)
+            # In addition, add underscore before numbers
+            result = re.sub(r"([0-9]+)", r"_\1", result)
+        else:
+            # Already in snake_case, return unchanged argument
+            result = method_name
         return result

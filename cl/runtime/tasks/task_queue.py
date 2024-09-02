@@ -18,6 +18,8 @@ from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue_key import TaskQueueKey
 from dataclasses import dataclass
 
+from cl.runtime.tasks.task_run_key import TaskRunKey
+
 
 @dataclass(slots=True, kw_only=True)
 class TaskQueue(TaskQueueKey, ABC):
@@ -56,5 +58,5 @@ class TaskQueue(TaskQueueKey, ABC):
         """Resume starting new runs and send resume command to existing runs."""
 
     @abstractmethod
-    def submit_task(self, task: TaskKey) -> None:
-        """Submit task to this queue (all further access to the run is provided via TaskRun record)."""
+    def submit_task(self, task: TaskKey) -> TaskRunKey:
+        """Submit task to this queue (all further access to the run is provided via the returned TaskRunKey)."""

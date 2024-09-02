@@ -31,7 +31,7 @@ def test_smoke():
         task = StaticHandlerTask.from_type(task_id="abc", record_type=StubHandlers, method=method)
 
         queue = ProcessQueue()
-        queue.submit_task(task)
+        task_run_key = queue.submit_task(task)
 
 
 if __name__ == "__main__":
