@@ -16,7 +16,7 @@ import datetime as dt
 import pytest
 from uuid_utils import UUID
 from cl.runtime.primitive.datetime_util import DatetimeUtil
-from cl.runtime.primitive.uuid_util import UuidUtil
+from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from typing import List, Iterable
 
 
@@ -27,10 +27,10 @@ def is_ordered(values: Iterable[UUID]):
 
 
 def test_create_one():
-    """Test UuidUtil.create_one method."""
+    """Test OrderedUuid.create_one method."""
 
-    result_1 = [UuidUtil.create_one() for _ in range(10)]
-    result_2 = [UuidUtil.create_one() for _ in range(10)]
+    result_1 = [OrderedUuid.create_one() for _ in range(10)]
+    result_2 = [OrderedUuid.create_one() for _ in range(10)]
     result = result_1 + result_2
     assert is_ordered(result_1)
     assert is_ordered(result_1)
@@ -38,10 +38,10 @@ def test_create_one():
 
 
 def test_create_many():
-    """Test UuidUtil.create_one method."""
+    """Test OrderedUuid.create_one method."""
 
-    result_1 = UuidUtil.create_many(10)
-    result_2 = UuidUtil.create_many(10)
+    result_1 = OrderedUuid.create_many(10)
+    result_2 = OrderedUuid.create_many(10)
     result = result_1 + result_2
     assert is_ordered(result_1)
     assert is_ordered(result_1)
@@ -49,12 +49,12 @@ def test_create_many():
 
 
 def test_datetime_of():
-    """Test UuidUtil.datetime_of method."""
+    """Test OrderedUuid.datetime_of method."""
 
     # Datetime before rounded down to 1ms per UUIDv7 RFC-9562 standard
     datetime_before = DatetimeUtil.floor(dt.datetime.now(dt.timezone.utc))
 
-    datetime_result = UuidUtil.datetime_of(UuidUtil.create_one())
+    datetime_result = OrderedUuid.datetime_of(OrderedUuid.create_one())
 
     # Datetime after rounded up to 1ms per UUIDv7 RFC-9562 standard
     datetime_after = DatetimeUtil.ceil(dt.datetime.now(dt.timezone.utc))

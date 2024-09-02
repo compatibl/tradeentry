@@ -18,7 +18,7 @@ from uuid_utils import UUID
 from uuid_utils import uuid7
 
 
-class UuidUtil:
+class OrderedUuid:
     """
     Utility class for time-ordered UUIDv7 RFC-9562 with additional strict ordering guarantees
     within the same process, thread and context.
