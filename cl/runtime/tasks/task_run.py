@@ -13,6 +13,8 @@
 # limitations under the License.
 
 import datetime as dt
+
+from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.tasks.task_key import TaskKey
@@ -52,6 +54,11 @@ class TaskRun(TaskRunKey, RecordMixin[TaskRunKey]):
 
     result: bytes | None = None  # TODO: Use subtype="orjson"?
     """Result bytes using orjson encoding when available."""
+
+    def __post_init__(self):
+        # Automatically generate time-ordered unique task run identifier in UUIDv7 format if not yet specified
+        if self.task_run_id is None:
+            self.task_run_id = OrderedUuid.create_one()
 
     def get_key(self) -> TaskRunKey:
         return TaskRunKey(task_run_id=self.task_run_id)

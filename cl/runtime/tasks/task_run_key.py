@@ -29,7 +29,7 @@ class TaskRunKey(KeyMixin):
         - This record must never be modified by the task itself
     """
 
-    task_run_id: UUID = missing()  # TODO: Use subtype="uuid7"?
+    task_run_id: UUID = missing()
     """Time-ordered unique task run identifier in UUIDv7 format."""
 
     def get_key_type(self) -> Type:
