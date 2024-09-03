@@ -84,5 +84,9 @@ class ProcessQueue(TaskQueue):
         task_run.task = task
         task_run.submit_time = submit_time
         task_run.update_time = submit_time
-        task_run.status = TaskStatus.Running
+        task_run.status = TaskStatus.Completed  # TODO: Update after the task is actually completed
         Context.current().data_source.save_one(task_run)
+
+        return task_run.get_key()
+
+
