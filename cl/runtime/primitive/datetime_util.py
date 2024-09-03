@@ -34,12 +34,12 @@ class DatetimeUtil:
     @classmethod
     def now_floor(cls) -> dt.datetime:
         """Current datetime in UTC timezone rounded down to whole milliseconds."""
-        return cls.round(dt.datetime.now(dt.timezone.utc))
+        return cls.floor(dt.datetime.now(dt.timezone.utc))
 
     @classmethod
     def now_ceil(cls) -> dt.datetime:
         """Current datetime in UTC timezone rounded up to whole milliseconds."""
-        return cls.round(dt.datetime.now(dt.timezone.utc))
+        return cls.ceil(dt.datetime.now(dt.timezone.utc))
 
     @classmethod
     def round(cls, value: dt.datetime) -> dt.datetime:
@@ -256,20 +256,19 @@ class DatetimeUtil:
 
         if value.microsecond % 1_000 == 0:
             # Already whole milliseconds
-            rounded_microseconds = 1_000 * value.second + value.microsecond // 1_000
+            rounded_milliseconds = 1_000 * value.second + value.microsecond // 1_000
         else:
             # Round to whole milliseconds
-            fractional_milliseconds_float = 1_000 * value.second + value.microsecond / 1_000.0
-            rounded_microseconds = rounding_function(fractional_milliseconds_float)
+            fractional_milliseconds_float = 1_000 * value.second + value.microsecond / 1_000
+            rounded_milliseconds = rounding_function(fractional_milliseconds_float)
 
-        second: int = rounded_microseconds // 1_000
-        rounded_microseconds -= second * 1_000
+        second: int = rounded_milliseconds // 1_000
+        rounded_milliseconds -= second * 1_000
         if second > 59 or second < 0:
             raise RuntimeError(f"Invalid second {second} for datetime {value} after rounding.")
 
-        millisecond: int = rounded_microseconds
-        if millisecond > 999 or millisecond < 0:
-            raise RuntimeError(f"Invalid millisecond {millisecond} for datetime {value} after rounding.")
+        if rounded_milliseconds > 999 or rounded_milliseconds < 0:
+            raise RuntimeError(f"Invalid millisecond {rounded_milliseconds} for datetime {value} after rounding.")
 
         result = dt.datetime(
             value.year,
@@ -278,7 +277,7 @@ class DatetimeUtil:
             value.hour,
             value.minute,
             second,  # New value from rounding
-            1_000 * millisecond,
+            1_000 * rounded_milliseconds,
             dt.timezone.utc,  # New value from rounding
         )
         return result

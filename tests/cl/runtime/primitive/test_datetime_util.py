@@ -111,26 +111,28 @@ def get_rounding_samples() -> List[Tuple[dt.datetime, dt.datetime]]:
 def test_now():
     """Test rounding current time to whole milliseconds."""
 
-    # Datetime before rounded down to 1ms per UUIDv7 RFC-9562 standard
-    datetime_before = DatetimeUtil.floor(dt.datetime.now(dt.timezone.utc))
+    for _ in range(1000):
 
-    now_floor = DatetimeUtil.now_floor()
-    now = DatetimeUtil.now()
-    now_ceil = DatetimeUtil.now_ceil()
+        # Datetime before rounded down to 1ms per UUIDv7 RFC-9562 standard
+        datetime_before = DatetimeUtil.floor(dt.datetime.now(dt.timezone.utc))
 
-    # Datetime after rounded up to 1ms per UUIDv7 RFC-9562 standard
-    datetime_after = DatetimeUtil.ceil(dt.datetime.now(dt.timezone.utc))
+        now_floor = DatetimeUtil.now_floor()
+        now = DatetimeUtil.now()
+        now_ceil = DatetimeUtil.now_ceil()
 
-    # Check that timestamp is within the expected range
-    assert datetime_before <= now_floor
-    assert now_floor <= now
-    assert now <= now_ceil
-    assert now_ceil <= datetime_after
+        # Datetime after rounded up to 1ms per UUIDv7 RFC-9562 standard
+        datetime_after = DatetimeUtil.ceil(dt.datetime.now(dt.timezone.utc))
 
-    # Check that timestamp is rounded to 1ms and has UTC timezone
-    for value in [now_floor, now, now_ceil]:
-        assert value.microsecond % 1000 == 0
-        assert value.tzinfo == dt.timezone.utc
+        # Check that timestamp is within the expected range
+        assert datetime_before <= now_floor
+        assert now_floor <= now
+        assert now <= now_ceil
+        assert now_ceil <= datetime_after
+
+        # Check that timestamp is rounded to 1ms and has UTC timezone
+        for value in [now_floor, now, now_ceil]:
+            assert value.microsecond % 1000 == 0
+            assert value.tzinfo == dt.timezone.utc
 
 
 def test_rounding():

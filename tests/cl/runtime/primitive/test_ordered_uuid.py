@@ -51,21 +51,26 @@ def test_create_many():
 def test_datetime_of():
     """Test OrderedUuid.datetime_of method."""
 
-    # Datetime before rounded down to 1ms per UUIDv7 RFC-9562 standard
-    datetime_before = DatetimeUtil.floor(dt.datetime.now(dt.timezone.utc))
+    # Allow for 3ms tolerance between timer reading of UUIDv7 generator and datetime.now method
+    tolerance_ms = 3
+    for _ in range(1000):
 
-    datetime_result = OrderedUuid.datetime_of(OrderedUuid.create_one())
+        # Datetime before rounded down to 1ms per UUIDv7 RFC-9562 standard
+        datetime_before = DatetimeUtil.floor(dt.datetime.now(dt.timezone.utc))
 
-    # Datetime after rounded up to 1ms per UUIDv7 RFC-9562 standard
-    datetime_after = DatetimeUtil.ceil(dt.datetime.now(dt.timezone.utc))
+        # Get result
+        datetime_result = OrderedUuid.datetime_of(OrderedUuid.create_one())
 
-    # Check that timestamp is within the expected range
-    assert datetime_before <= datetime_result
-    assert datetime_result <= datetime_after
+        # Datetime after rounded up to 1ms per UUIDv7 RFC-9562 standard
+        datetime_after = DatetimeUtil.ceil(dt.datetime.now(dt.timezone.utc))
 
-    # Check that timestamp is rounded to 1ms and has UTC timezone
-    assert datetime_result.microsecond % 1000 == 0
-    assert datetime_result.tzinfo == dt.timezone.utc
+        # Check that timestamp is within the expected range, allowing for tolerance in timer reading
+        assert datetime_before - dt.timedelta(milliseconds=tolerance_ms) <= datetime_result
+        assert datetime_result <= datetime_after + dt.timedelta(milliseconds=tolerance_ms)
+
+        # Check that timestamp is rounded to 1ms and has UTC timezone
+        assert datetime_result.microsecond % 1000 == 0
+        assert datetime_result.tzinfo == dt.timezone.utc
 
 
 if __name__ == "__main__":
