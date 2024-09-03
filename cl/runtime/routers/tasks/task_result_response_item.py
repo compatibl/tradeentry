@@ -15,20 +15,24 @@
 from __future__ import annotations
 
 import base64
+
+from cl.runtime import Context
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.tasks.task_result_request import TaskResultRequest
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.tasks.v1.task_observer import TaskObserver
 from pydantic import BaseModel
-from typing import Any
+from typing import Any, cast, Iterable
 from typing import List
-from uuid import UUID
+from uuid_utils import UUID
+
+from cl.runtime.tasks.task_run import TaskRun
+from cl.runtime.tasks.task_run_key import TaskRunKey
 
 
 class TaskResultResponseItem(BaseModel):
     """Data type for a single item in the response list for the /tasks/run/result route."""
 
-    # TODO (Yauheni): fix the result type according to the actual result type
+    # TODO: Decide on permitted result formats
     result: Any
     """Result of the task run."""
 
@@ -44,23 +48,17 @@ class TaskResultResponseItem(BaseModel):
 
     @staticmethod
     def get_task_results(request: TaskResultRequest) -> List[TaskResultResponseItem]:
-        response_items = []
-        for run_id_as_str in request.task_run_ids:
-            # TODO (Roman): optimize using load_many instead of load_one in TaskObserver.get_result()
+        """Get results for tasks in request."""
 
-            # convert string run_id to UUID and create TaskObserver
-            run_id = UUID(bytes=base64.b64decode(run_id_as_str.encode()))
-            task_observer = TaskObserver(task_run_id=run_id)
+        task_run_keys = [TaskRunKey(task_run_id=UUID(x)) for x in request.task_run_ids]
+        task_runs = cast(Iterable[TaskRun], Context.current().data_source.load_many(task_run_keys))
 
-            key = task_observer.get_key()
-            key_serializer = StringSerializer()
-            # get result and key from TaskObserver and create response item
-            response_items.append(
-                TaskResultResponseItem(
-                    result=task_observer.get_result(),
-                    task_run_id=run_id_as_str,
-                    key=key_serializer.serialize_key(key) if key else None,
-                )
+        response_items = [
+            TaskResultResponseItem(
+                result=task_run.result,  # TODO: Use bytes for the response?
+                task_run_id=str(task_run.task_run_id),
+                key=task_run.task.task_id,
             )
-
+            for task_run in task_runs
+        ]
         return response_items

@@ -76,7 +76,8 @@ class InstanceHandlerTask(Task):
         """Create from key and method callable."""
 
         # Populate known fields
-        result = cls(task_id=task_id, key=key, parent=parent)
+        key_str = key_serializer.serialize_key(key)
+        result = cls(task_id=task_id, key_str=key_str, parent=parent)
 
         # Get method name from callable
         method_tokens = method.__qualname__.split(".")

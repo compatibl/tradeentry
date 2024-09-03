@@ -13,15 +13,14 @@
 # limitations under the License.
 
 from __future__ import annotations
-
-import base64
+from cl.runtime import Context
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.tasks.task_status_request import TaskStatusRequest
-from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.tasks.v1.task_observer import TaskObserver
 from pydantic import BaseModel
-from typing import List
-from uuid import UUID
+from typing import List, cast, Iterable
+from uuid_utils import UUID
+from cl.runtime.tasks.task_run import TaskRun
+from cl.runtime.tasks.task_run_key import TaskRunKey
 
 
 class TaskStatusResponseItem(BaseModel):
@@ -33,8 +32,8 @@ class TaskStatusResponseItem(BaseModel):
     task_run_id: str
     """Task run unique id."""
 
-    key: str | None
-    """Key of the record."""
+    key: str | None  # TODO: Rename to task_id in REST API for clarity
+    """Task key."""
 
     class Config:
         alias_generator = StringUtil.to_pascal_case
@@ -44,23 +43,15 @@ class TaskStatusResponseItem(BaseModel):
     def get_task_statuses(request: TaskStatusRequest) -> List[TaskStatusResponseItem]:
         """Get status for tasks in request."""
 
-        response_items = []
-        for run_id_as_str in request.task_run_ids:
-            # TODO (Roman): optimize using load_many instead of load_one in TaskObserver.get_status()
+        task_run_keys = [TaskRunKey(task_run_id=UUID(x)) for x in request.task_run_ids]
+        task_runs = cast(Iterable[TaskRun], Context.current().data_source.load_many(task_run_keys))
 
-            # convert string run_id to UUID and create TaskObserver
-            run_id = UUID(bytes=base64.b64decode(run_id_as_str.encode()))
-            task_observer = TaskObserver(task_run_id=run_id)
-
-            key = task_observer.get_key()
-            key_serializer = StringSerializer()
-            # get status and key from TaskObserver and create response item
-            response_items.append(
-                TaskStatusResponseItem(
-                    status_code=task_observer.get_status(),
-                    task_run_id=run_id_as_str,
-                    key=key_serializer.serialize_key(key) if key else None,
-                ),
+        response_items = [
+            TaskStatusResponseItem(
+                status_code=task_run.status,
+                task_run_id=str(task_run.task_run_id),
+                key=task_run.task.task_id,
             )
-
+            for task_run in task_runs
+        ]
         return response_items

@@ -12,32 +12,43 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import base64
 import pytest
-import uuid
-from cl.runtime.context.context import current_or_default_data_source
+from cl.runtime.primitive.datetime_util import DatetimeUtil
+from cl.runtime.context.context import current_or_default_data_source, Context
 from cl.runtime.routers.server import app
+from cl.runtime.routers.tasks.run_response_item import handler_queue
 from cl.runtime.routers.tasks.task_status_request import TaskStatusRequest
 from cl.runtime.routers.tasks.task_status_response_item import TaskStatusResponseItem
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.tasks.v1.task_run import TaskRunV1
-from cl.runtime.tasks.v1.task_status import TaskStatus
+from cl.runtime.tasks.instance_handler_task import InstanceHandlerTask
+from cl.runtime.tasks.task_run import TaskRun
+from cl.runtime.tasks.task_status import TaskStatus
 from starlette.testclient import TestClient
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
+from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
 
-stub_handlers = StubHandlers()
+# Create handler task
+task = InstanceHandlerTask.from_key(
+    task_id="abc",
+    key=StubHandlersKey(stub_id="abc"),
+    method=StubHandlers.instance_handler_1a
+)
+
+# Get handler task key
 key_serializer = StringSerializer()
-key_str = key_serializer.serialize_key(stub_handlers.get_key())
+task_key_str = key_serializer.serialize_key(task.get_key())
 
-
+# Create task run records
+t = DatetimeUtil.now()
+queue_key = handler_queue.get_key()
 task_runs = [
-    TaskRunV1(id=uuid.uuid4(), status=TaskStatus.Submitted, key=stub_handlers.get_key()),
-    TaskRunV1(id=uuid.uuid4(), status=TaskStatus.Failed, key=stub_handlers.get_key()),
-    TaskRunV1(id=uuid.uuid4(), status=TaskStatus.Completed, key=stub_handlers.get_key()),
+    TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatus.Pending),
+    TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatus.Failed),
+    TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatus.Completed),
 ]
 requests = [
     {
-        "task_run_ids": [base64.b64encode(task_run.id.bytes).decode() for task_run in task_runs],
+        "task_run_ids": [str(task_run.task_run_id) for task_run in task_runs],
         "data_source": "DEPRECATED",
         "dataset": "",
     }
@@ -46,10 +57,11 @@ requests = [
 
 def test_method():
     """Test coroutine for /tasks/run/status route."""
-    data_source = current_or_default_data_source()
-    try:
-        data_source.save_one(stub_handlers)
-        data_source.save_many(task_runs)
+
+    # TODO: Use UnitTestContext instead
+    with Context() as context:
+        context.data_source.save_one(task)
+        context.data_source.save_many(task_runs)
 
         for request in requests:
             request_object = TaskStatusRequest(**request)
@@ -62,17 +74,16 @@ def test_method():
                 assert result_item.task_run_id is not None
                 assert result_item.task_run_id in request_object.task_run_ids
                 assert result_item.status_code is not None
-                assert result_item.key == key_str
-    finally:
-        data_source.delete_db()
+                assert result_item.key == task_key_str
 
 
 def test_api():
     """Test REST API for /tasks/run/status route."""
-    data_source = current_or_default_data_source()
-    try:
-        data_source.save_one(stub_handlers)
-        data_source.save_many(task_runs)
+
+    # TODO: Use UnitTestContext instead
+    with Context() as context:
+        context.data_source.save_one(task)
+        context.data_source.save_many(task_runs)
 
         with TestClient(app) as client:
             for request in requests:
@@ -88,9 +99,7 @@ def test_api():
                     assert result_item.get("TaskRunId") is not None
                     assert result_item.get("TaskRunId") in request["task_run_ids"]
                     assert result_item.get("StatusCode") is not None
-                    assert result_item.get("Key") == key_str
-    finally:
-        data_source.delete_db()
+                    assert result_item.get("Key") == task_key_str
 
 
 if __name__ == "__main__":

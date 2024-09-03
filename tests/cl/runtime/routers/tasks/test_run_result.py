@@ -14,29 +14,58 @@
 
 import base64
 import pytest
-import uuid
-from cl.runtime.context.context import current_or_default_data_source
+from cl.runtime.primitive.datetime_util import DatetimeUtil
+
+from cl.runtime.context.context import current_or_default_data_source, Context
+from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.routers.server import app
+from cl.runtime.routers.tasks.run_response_item import handler_queue
 from cl.runtime.routers.tasks.task_result_request import TaskResultRequest
 from cl.runtime.routers.tasks.task_result_response_item import TaskResultResponseItem
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.tasks.v1.task_run import TaskRunV1
-from cl.runtime.tasks.v1.task_status import TaskStatus
+from cl.runtime.tasks.instance_handler_task import InstanceHandlerTask
+from cl.runtime.tasks.task_status import TaskStatus
 from starlette.testclient import TestClient
+from cl.runtime.tasks.task_run import TaskRun
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
+from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
+
+# Create handler tasks
+tasks = [
+    InstanceHandlerTask.from_key(
+        task_id=f"{i}",
+        key=StubHandlersKey(stub_id=f"{i}"),
+        method=StubHandlers.instance_handler_1a
+    )
+    for i in range(2)
+]
+
+# Get handler task key
+key_serializer = StringSerializer()
+task_keys_str = [key_serializer.serialize_key(task.get_key()) for task in tasks]
+
+# Create task run records
+t = DatetimeUtil.now()
+queue_key = handler_queue.get_key()
+task_runs = [
+    TaskRun(
+        queue=queue_key,
+        task=task,
+        submit_time=t,
+        update_time=t,
+        status=TaskStatus.Completed,
+        result=b"result"
+    )
+    for task in tasks
+]
 
 stub_handlers = StubHandlers()
 key_serializer = StringSerializer()
 key_str = key_serializer.serialize_key(stub_handlers.get_key())
 
-
-task_runs = (
-    TaskRunV1(id=uuid.uuid1(), status=TaskStatus.Completed, key=stub_handlers.get_key(), result="result"),
-    TaskRunV1(id=uuid.uuid1(), status=TaskStatus.Completed, key=stub_handlers.get_key(), result=123),
-)
 requests = [
     {
-        "task_run_ids": [base64.b64encode(task_run.id.bytes).decode() for task_run in task_runs],
+        "task_run_ids": [str(task_run.task_run_id) for task_run in task_runs],
         "data_source": "DEPRECATED",
         "dataset": "",
     }
@@ -45,10 +74,11 @@ requests = [
 
 def test_method():
     """Test coroutine for /tasks/run/result route."""
-    data_source = current_or_default_data_source()
-    try:
-        data_source.save_one(stub_handlers)
-        data_source.save_many(task_runs)
+
+    # TODO: Use UnitTestContext instead
+    with Context() as context:
+        context.data_source.save_many(tasks)
+        context.data_source.save_many(task_runs)
 
         for request in requests:
             request_object = TaskResultRequest(**request)
@@ -61,17 +91,16 @@ def test_method():
                 assert result_item.task_run_id is not None
                 assert result_item.task_run_id in request_object.task_run_ids
                 assert result_item.result is not None
-                assert result_item.key == key_str
-    finally:
-        data_source.delete_db()
+                assert result_item.key in task_keys_str
 
 
 def test_api():
     """Test REST API for /tasks/run/result route."""
-    data_source = current_or_default_data_source()
-    try:
-        data_source.save_one(stub_handlers)
-        data_source.save_many(task_runs)
+
+    # TODO: Use UnitTestContext instead
+    with Context() as context:
+        context.data_source.save_many(tasks)
+        context.data_source.save_many(task_runs)
 
         with TestClient(app) as client:
             for request in requests:
@@ -87,9 +116,7 @@ def test_api():
                     assert result_item.get("TaskRunId") is not None
                     assert result_item.get("TaskRunId") in request["task_run_ids"]
                     assert result_item.get("Result") is not None
-                    assert result_item.get("Key") == key_str
-    finally:
-        data_source.delete_db()
+                    assert result_item.get("Key") in task_keys_str
 
 
 if __name__ == "__main__":

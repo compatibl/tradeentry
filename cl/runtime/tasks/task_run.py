@@ -52,8 +52,8 @@ class TaskRun(TaskRunKey, RecordMixin[TaskRunKey]):
     progress: int | None = None
     """Task progress as percent integer from 0 to 100 when available."""
 
-    result: bytes | None = None  # TODO: Use subtype="orjson"?
-    """Result bytes using orjson encoding when available."""
+    result: str | None = None
+    """Result converted to string."""
 
     def __post_init__(self):
         # Automatically generate time-ordered unique task run identifier in UUIDv7 format if not yet specified
