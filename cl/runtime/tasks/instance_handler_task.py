@@ -109,7 +109,7 @@ class InstanceHandlerTask(Task):
             if hasattr(method, "__self__"):
                 if not inspect.isclass(method.__self__):
                     # Assign record instead of key
-                    result.key = method.__self__
+                    result.key_str = method.__self__.get_key()
                 else:
                     raise RuntimeError(
                         f"Method {method.__qualname__} is a class method, " f"use StaticHandlerTask instead."
