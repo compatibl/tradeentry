@@ -18,7 +18,7 @@ from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.tasks.task_status_request import TaskStatusRequest
 from pydantic import BaseModel
 from typing import List, cast, Iterable
-from uuid_utils import UUID
+from uuid import UUID
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
 

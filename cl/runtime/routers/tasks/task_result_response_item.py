@@ -23,7 +23,7 @@ from cl.runtime.serialization.string_serializer import StringSerializer
 from pydantic import BaseModel
 from typing import Any, cast, Iterable
 from typing import List
-from uuid_utils import UUID
+from uuid import UUID
 
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
