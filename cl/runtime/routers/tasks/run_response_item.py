@@ -51,6 +51,7 @@ class RunResponseItem(BaseModel):
     def run_tasks(request: RunRequest) -> List[RunResponseItem | RunErrorResponseItem]:
         response_items = []
 
+        # TODO: Refactor
         # TODO (Roman): request [None] for static handlers explicitly
         # Workaround for static handlers
         requested_keys = request.keys if request.keys else [None]
@@ -75,7 +76,7 @@ class RunResponseItem(BaseModel):
 
             try:
                 # submit task and convert run_id to string
-                run_id_as_str = base64.b64encode(task_run_key.task_run_id.bytes).decode()
+                run_id_as_str = str(task_run_key.task_run_id)
             except Exception as exc:
                 # add error response item if failed to submit task. errors in handler execution handle task runner.
                 _traceback = traceback.format_exc()

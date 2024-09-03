@@ -92,7 +92,7 @@ class StringSerializer:
 
             result = f"{short_name}.{data.name}"
         elif value_custom_type == StringValueCustomType.uuid:
-            result = base64.b64encode(data.bytes).decode()
+            result = str(data)
         elif value_custom_type == StringValueCustomType.bytes:
             result = base64.b64encode(data).decode()
         else:
@@ -132,7 +132,7 @@ class StringSerializer:
             # get enum value
             return deserialized_type[enum_value]  # noqa
         elif custom_type == StringValueCustomType.uuid:
-            return UUID(bytes=base64.b64decode(data.encode()))
+            return UUID(data)
         elif custom_type == StringValueCustomType.bytes:
             return base64.b64decode(data.encode())
         else:

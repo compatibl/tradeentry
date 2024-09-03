@@ -50,7 +50,7 @@ class FlatDictSerializer(DictSerializer):
                 # TODO (Roman): think about a more efficient way to store bool
                 handled_serialized_value = "1" if data else "0"
             elif serialized_data.__class__.__name__ == "UUID":
-                handled_serialized_value = base64.b64encode(data.bytes).decode()
+                handled_serialized_value = str(data)
             elif serialized_data.__class__.__name__ == "bytes":
                 handled_serialized_value = base64.b64encode(data).decode()
             elif isinstance(serialized_data, (dict, list)):
@@ -81,7 +81,7 @@ class FlatDictSerializer(DictSerializer):
                 elif custom_type == StringValueCustomType.bool:
                     converted_data = True if converted_data == "1" else False
                 elif custom_type == StringValueCustomType.uuid:
-                    converted_data = UUID(bytes=base64.b64decode(converted_data.encode()))
+                    converted_data = UUID(converted_data)
                 elif custom_type == StringValueCustomType.bytes:
                     converted_data = base64.b64decode(converted_data.encode())
                 else:
