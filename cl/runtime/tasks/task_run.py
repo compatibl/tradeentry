@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import datetime as dt
-
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin

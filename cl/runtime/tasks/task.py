@@ -19,9 +19,8 @@ from cl.runtime.decorators.handler_decorator import handler
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue_key import TaskQueueKey
-from dataclasses import dataclass
-
 from cl.runtime.tasks.task_run_key import TaskRunKey
+from dataclasses import dataclass
 
 
 @dataclass(slots=True, kw_only=True)
@@ -55,4 +54,3 @@ class Task(TaskKey, RecordMixin[TaskKey], ABC):
         queue_obj = Context.current().data_source.load_one(queue)  # TODO: Optimize in case of repeated calls
         task_run_key = queue_obj.submit_task(self)
         return task_run_key
-

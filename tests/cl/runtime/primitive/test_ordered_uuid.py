@@ -14,14 +14,15 @@
 
 import datetime as dt
 import pytest
-from uuid_utils import UUID
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
-from typing import List, Iterable
+from typing import Iterable
+from typing import List
+from uuid_utils import UUID
 
 
 def is_ordered(values: Iterable[UUID]):
-    if not hasattr(values, '__len__') or not hasattr(values, '__getitem__'):
+    if not hasattr(values, "__len__") or not hasattr(values, "__getitem__"):
         values = list(values)
     return all(values[i] < values[i + 1] for i in range(len(values) - 1))
 
@@ -54,7 +55,6 @@ def test_datetime_of():
     # Allow for 3ms tolerance between timer reading of UUIDv7 generator and datetime.now method
     tolerance_ms = 3
     for _ in range(1000):
-
         # Datetime before rounded down to 1ms per UUIDv7 RFC-9562 standard
         datetime_before = DatetimeUtil.floor(dt.datetime.now(dt.timezone.utc))
 

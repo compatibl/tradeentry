@@ -13,7 +13,8 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.context.context import current_or_default_data_source, Context
+from cl.runtime.context.context import Context
+from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.routers.server import app
 from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseItem
 from cl.runtime.routers.tasks.run_request import RunRequest

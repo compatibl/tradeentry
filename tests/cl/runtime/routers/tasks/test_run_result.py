@@ -14,9 +14,9 @@
 
 import base64
 import pytest
+from cl.runtime.context.context import Context
+from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.primitive.datetime_util import DatetimeUtil
-
-from cl.runtime.context.context import current_or_default_data_source, Context
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.routers.server import app
 from cl.runtime.routers.tasks.run_response_item import handler_queue
@@ -24,18 +24,16 @@ from cl.runtime.routers.tasks.task_result_request import TaskResultRequest
 from cl.runtime.routers.tasks.task_result_response_item import TaskResultResponseItem
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.tasks.instance_handler_task import InstanceHandlerTask
+from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_status import TaskStatus
 from starlette.testclient import TestClient
-from cl.runtime.tasks.task_run import TaskRun
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
 
 # Create handler tasks
 tasks = [
     InstanceHandlerTask.from_key(
-        task_id=f"{i}",
-        key=StubHandlersKey(stub_id=f"{i}"),
-        method=StubHandlers.instance_handler_1a
+        task_id=f"{i}", key=StubHandlersKey(stub_id=f"{i}"), method=StubHandlers.instance_handler_1a
     )
     for i in range(2)
 ]
@@ -48,14 +46,7 @@ task_keys_str = [key_serializer.serialize_key(task.get_key()) for task in tasks]
 t = DatetimeUtil.now()
 queue_key = handler_queue.get_key()
 task_runs = [
-    TaskRun(
-        queue=queue_key,
-        task=task,
-        submit_time=t,
-        update_time=t,
-        status=TaskStatus.Completed,
-        result=b"result"
-    )
+    TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatus.Completed, result=b"result")
     for task in tasks
 ]
 

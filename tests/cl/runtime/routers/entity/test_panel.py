@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import pytest
-
 from cl.runtime import Context
 from cl.runtime.routers.entity.panel_request import PanelRequest
 from cl.runtime.routers.entity.panel_response_util import PanelResponseUtil

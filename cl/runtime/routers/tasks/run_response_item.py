@@ -61,14 +61,12 @@ class RunResponseItem(BaseModel):
 
         # run task for all keys in request
         for serialized_key in requested_keys:
-
             # Create handler task
             # TODO: Support class methods and static methods
             # TODO: Add request.arguments_ and type_
             handler_task = InstanceHandlerTask(
-                record_short_name=request.table,
-                key_str=serialized_key,
-                method_name=request.method)
+                record_short_name=request.table, key_str=serialized_key, method_name=request.method
+            )
 
             # TODO Include other parameters or use GUID
             handler_task.task_id = f"{handler_task.record_short_name}:{handler_task.key_str}:{handler_task.method_name}"

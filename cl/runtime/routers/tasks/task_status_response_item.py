@@ -13,14 +13,17 @@
 # limitations under the License.
 
 from __future__ import annotations
+
 from cl.runtime import Context
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.tasks.task_status_request import TaskStatusRequest
-from pydantic import BaseModel
-from typing import List, cast, Iterable
-from uuid import UUID
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
+from pydantic import BaseModel
+from typing import Iterable
+from typing import List
+from typing import cast
+from uuid import UUID
 
 
 class TaskStatusResponseItem(BaseModel):

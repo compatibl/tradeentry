@@ -13,8 +13,9 @@
 # limitations under the License.
 
 import pytest
+from cl.runtime.context.context import Context
+from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.primitive.datetime_util import DatetimeUtil
-from cl.runtime.context.context import current_or_default_data_source, Context
 from cl.runtime.routers.server import app
 from cl.runtime.routers.tasks.run_response_item import handler_queue
 from cl.runtime.routers.tasks.task_status_request import TaskStatusRequest
@@ -29,9 +30,7 @@ from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
 
 # Create handler task
 task = InstanceHandlerTask.from_key(
-    task_id="abc",
-    key=StubHandlersKey(stub_id="abc"),
-    method=StubHandlers.instance_handler_1a
+    task_id="abc", key=StubHandlersKey(stub_id="abc"), method=StubHandlers.instance_handler_1a
 )
 
 # Get handler task key

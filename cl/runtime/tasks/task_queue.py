@@ -16,9 +16,8 @@ from abc import ABC
 from abc import abstractmethod
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue_key import TaskQueueKey
-from dataclasses import dataclass
-
 from cl.runtime.tasks.task_run_key import TaskRunKey
+from dataclasses import dataclass
 
 
 @dataclass(slots=True, kw_only=True)

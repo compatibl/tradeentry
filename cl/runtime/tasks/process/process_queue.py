@@ -88,5 +88,3 @@ class ProcessQueue(TaskQueue):
         Context.current().data_source.save_one(task_run)
 
         return task_run.get_key()
-
-

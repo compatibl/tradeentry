@@ -112,7 +112,6 @@ def test_now():
     """Test rounding current time to whole milliseconds."""
 
     for _ in range(1000):
-
         # Datetime before rounded down to 1ms per UUIDv7 RFC-9562 standard
         datetime_before = DatetimeUtil.floor(dt.datetime.now(dt.timezone.utc))
 

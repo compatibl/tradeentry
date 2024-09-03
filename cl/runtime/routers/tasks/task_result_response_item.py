@@ -15,18 +15,18 @@
 from __future__ import annotations
 
 import base64
-
 from cl.runtime import Context
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.tasks.task_result_request import TaskResultRequest
 from cl.runtime.serialization.string_serializer import StringSerializer
-from pydantic import BaseModel
-from typing import Any, cast, Iterable
-from typing import List
-from uuid import UUID
-
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
+from pydantic import BaseModel
+from typing import Any
+from typing import Iterable
+from typing import List
+from typing import cast
+from uuid import UUID
 
 
 class TaskResultResponseItem(BaseModel):
