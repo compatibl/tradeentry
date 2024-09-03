@@ -37,7 +37,7 @@ def test_method():
         request_obj = RecordRequest(**request)
         result = RecordResponse.get_record(request_obj)
 
-        # Check if the result is a RecordResponce instance
+        # Check if the result is a RecordResponse instance
         assert isinstance(result, RecordResponse)
 
         # Check if there are only "schema" and "data"

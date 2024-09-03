@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import datetime as dt
-import uuid
 from enum import Enum
 from typing import Any
 from typing import Dict
@@ -22,8 +21,9 @@ from typing import List
 from typing import Literal
 from typing import Tuple
 from typing import Type
+from uuid import UUID
 
-TPrimitive = str | float | bool | int | dt.date | dt.time | dt.datetime | uuid.UUID | bytes
+TPrimitive = str | float | bool | int | dt.date | dt.time | dt.datetime | UUID | bytes
 """Supported primitive value types for serialized data in dictionary format."""
 
 TDataField = Dict[str, "TDataField"] | List["TDataField"] | TPrimitive | Enum | None
@@ -44,7 +44,7 @@ TIdentity = str | None
 TDataset = Iterable[str] | None
 """Dataset as a delimited string, list of levels, or None."""
 
-TStamp = dt.datetime | uuid.UUID | None
+TStamp = dt.datetime | UUID | None
 """Timestamp or time-ordered globally unique identifier in UUID7 format."""  # TODO: Confirm UUID format to use
 
 TQuery = Tuple[
