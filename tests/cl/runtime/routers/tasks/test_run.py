@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.context.context import current_or_default_data_source
+from cl.runtime.context.context import current_or_default_data_source, Context
 from cl.runtime.routers.server import app
 from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseItem
 from cl.runtime.routers.tasks.run_request import RunRequest
@@ -55,9 +55,9 @@ expected_records_in_db = [[StubDataclassRecord(id="saved_from_handler")]]
 def test_method():
     """Test coroutine for /tasks/run route."""
 
-    data_source = current_or_default_data_source()
-    try:
-        data_source.save_one(stub_handlers)
+    # TODO: Use UnitTestContext instead
+    with Context() as context:
+        context.data_source.save_one(stub_handlers)
 
         for request in simple_requests + save_to_db_requests:
             request_object = RunRequest(**request)
@@ -77,24 +77,21 @@ def test_method():
             expected_keys = [rec.get_key() for rec in expected_records]
 
             # clear existing records
-            data_source.delete_many(expected_keys)
+            context.data_source.delete_many(expected_keys)
 
             request_object = RunRequest(**request)
             RunResponseItem.run_tasks(request_object)
 
-            actual_records = list(data_source.load_many(expected_keys))
+            actual_records = list(context.data_source.load_many(expected_keys))
             assert actual_records == expected_records
-
-    finally:
-        data_source.delete_db()
 
 
 def test_api():
     """Test REST API for /tasks/run route."""
 
-    data_source = current_or_default_data_source()
-    try:
-        data_source.save_one(stub_handlers)
+    # TODO: Use UnitTestContext instead
+    with Context() as context:
+        context.data_source.save_one(stub_handlers)
 
         with TestClient(app) as client:
             for request in simple_requests + save_to_db_requests:
@@ -118,14 +115,12 @@ def test_api():
                 expected_keys = [rec.get_key() for rec in expected_records]
 
                 # clear existing records
-                data_source.delete_many(expected_keys)
+                context.data_source.delete_many(expected_keys)
 
                 client.post("/tasks/run", json=request)
 
-                actual_records = list(data_source.load_many(expected_keys))
+                actual_records = list(context.data_source.load_many(expected_keys))
                 assert actual_records == expected_records
-    finally:
-        data_source.delete_db()
 
 
 if __name__ == "__main__":

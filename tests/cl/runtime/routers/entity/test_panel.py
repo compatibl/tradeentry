@@ -13,7 +13,8 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.context.context import current_or_default_data_source
+
+from cl.runtime import Context
 from cl.runtime.routers.entity.panel_request import PanelRequest
 from cl.runtime.routers.entity.panel_response_util import PanelResponseUtil
 from cl.runtime.routers.server import app
@@ -51,9 +52,9 @@ expected_results = [
 def test_method():
     """Test coroutine for /entity/panel route."""
 
-    data_source = current_or_default_data_source()
-    try:
-        data_source.save_one(stub_viewers)
+    # TODO: Use UnitTestContext instead
+    with Context() as context:
+        context.data_source.save_one(stub_viewers)
 
         for request, expected_result in zip(requests, expected_results):
             request_object = PanelRequest(**request)
@@ -61,16 +62,14 @@ def test_method():
 
             assert isinstance(result, dict)
             assert result == expected_result
-    finally:
-        data_source.delete_db()
 
 
 def test_api():
     """Test REST API for /entity/panel route."""
 
-    data_source = current_or_default_data_source()
-    try:
-        data_source.save_one(stub_viewers)
+    # TODO: Use UnitTestContext instead
+    with Context() as context:
+        context.data_source.save_one(stub_viewers)
 
         with TestClient(app) as client:
             for request, expected_result in zip(requests, expected_results):
@@ -93,8 +92,6 @@ def test_api():
 
                 # Check result
                 assert result == expected_result
-    finally:
-        data_source.delete_db()
 
 
 if __name__ == "__main__":
