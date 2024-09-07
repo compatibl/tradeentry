@@ -15,7 +15,7 @@
                     "Module": {
                         "ModuleName": "Cl.Runtime.Backend.Core.UserKey"
                     },
-                    "Name": "User"
+                    "Name": "UserKey"
                 },
                 "Name": "User",
                 "Comment": "A user the app state is applied for."
@@ -141,9 +141,10 @@
         "Module": {
             "ModuleName": "Cl.Runtime.Backend.Core.UserKey"
         },
-        "Name": "User",
-        "Label": "User",
+        "Name": "UserKey",
+        "Label": "User Key",
         "Comment": "User which is allowed to log in.",
+        "Kind": "Element",
         "DisplayKind": "Basic",
         "Elements": [
             {
@@ -152,32 +153,7 @@
                 },
                 "Name": "Username",
                 "Comment": "Unique user identifier."
-            },
-            {
-                "Value": {
-                    "Type": "String"
-                },
-                "Name": "FirstName",
-                "Comment": "First name of the user."
-            },
-            {
-                "Value": {
-                    "Type": "String"
-                },
-                "Name": "LastName",
-                "Comment": "Last name of the user."
-            },
-            {
-                "Value": {
-                    "Type": "String"
-                },
-                "Name": "Email",
-                "Comment": "Email of the user.",
-                "Optional": true
             }
-        ],
-        "Keys": [
-            "Username"
         ]
     }
 }
