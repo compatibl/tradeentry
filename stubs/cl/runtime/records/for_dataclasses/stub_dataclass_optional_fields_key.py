@@ -26,5 +26,6 @@ class StubDataclassOptionalFieldsKey(KeyMixin):
     id: str = "abc"
     """Unique identifier."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return StubDataclassOptionalFieldsKey

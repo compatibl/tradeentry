@@ -31,5 +31,6 @@ class ClassLabelKey(KeyMixin):
     class_name: str = missing()
     """Class name without module (the setting will apply to this class name in every module)."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return ClassLabelKey

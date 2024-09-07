@@ -34,5 +34,6 @@ class WorkflowPhaseKey(KeyMixin):
     phase_id: str = missing()
     """Unique workflow phase identifier."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return WorkflowPhaseKey

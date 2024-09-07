@@ -24,5 +24,6 @@ class StubDataclassVersionedRecordKey(KeyMixin):
     id: str = "abc"
     """Stub field."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return StubDataclassVersionedRecordKey

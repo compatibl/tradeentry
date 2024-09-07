@@ -27,5 +27,6 @@ class StubDataclassCyclicAKey(KeyMixin):
     b_key: StubDataclassCyclicBKey = missing()
     """Key for class B."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return StubDataclassCyclicAKey

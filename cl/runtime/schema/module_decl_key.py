@@ -26,5 +26,6 @@ class ModuleDeclKey(KeyMixin):
     module_name: str = missing()
     """Module name in dot-delimited format."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return ModuleDeclKey

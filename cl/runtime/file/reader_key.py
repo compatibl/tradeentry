@@ -25,5 +25,6 @@ class ReaderKey(KeyMixin):
     loader_id: str = missing()
     """Unique loader identifier."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return ReaderKey

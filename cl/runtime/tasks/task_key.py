@@ -35,5 +35,6 @@ class TaskKey(KeyMixin):
     task_id: str = missing()
     """Unique task identifier."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return TaskKey

@@ -32,5 +32,6 @@ class TaskRunKey(KeyMixin):
     task_run_id: UUID = missing()
     """Time-ordered unique task run identifier in UUIDv7 format."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return TaskRunKey

@@ -39,5 +39,6 @@ class StubCustomBaseKey(KeyMixin):
             "int_field": self.int_field,
         }
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return StubCustomBaseKey

@@ -31,5 +31,6 @@ class UiTypeStateKey(KeyMixin):
     user: UserKey | None = missing()
     """A user the app state is applied for."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return UiTypeStateKey

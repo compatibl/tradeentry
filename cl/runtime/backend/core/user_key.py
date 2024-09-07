@@ -26,5 +26,6 @@ class UserKey(KeyMixin):
     username: str = missing()
     """Unique user identifier."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return UserKey

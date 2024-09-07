@@ -12,24 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.key_mixin import KeyMixin
 from cl.runtime.storage.data_source_types import TKeyDict
 from dataclasses import dataclass
-from typing import Type
 
 
 @dataclass(slots=True, kw_only=True)
-class GenericKey(KeyMixin):
+class GenericKey:
     """Generic key can be substituted for any key type other than itself."""
 
-    key_type: Type = missing()  # TODO: Consider using short name instead
-    """Key type."""
+    key_type_str: str = missing()
+    """Key type as dot-delimited string in module.ClassNameKey format inclusive of Key suffix if present."""
 
     key_dict: TKeyDict = missing()
     """Dictionary of key fields in the order of declaration."""
-
-    def get_key_type(self) -> Type:
-        """Return key type even when called from a record, implement using literal type rather than type(self)."""
-        return self.key_type

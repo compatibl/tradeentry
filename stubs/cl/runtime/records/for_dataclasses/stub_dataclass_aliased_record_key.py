@@ -25,5 +25,6 @@ class StubDataclassAliasedRecordKey(KeyMixin):  # TODO: Specify alias and add de
 
     id: str = missing()
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return StubDataclassAliasedRecordKey

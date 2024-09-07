@@ -24,5 +24,6 @@ class StubViewersKey(KeyMixin):
     stub_id: str = "abc"
     """Stub identifier."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return StubViewersKey

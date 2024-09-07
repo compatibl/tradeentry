@@ -34,5 +34,6 @@ class TaskQueueKey(KeyMixin):
     queue_id: str = missing()
     """Unique task queue identifier."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return TaskQueueKey

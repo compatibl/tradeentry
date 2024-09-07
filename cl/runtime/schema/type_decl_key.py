@@ -30,5 +30,6 @@ class TypeDeclKey(KeyMixin):
     name: str = missing()
     """Type name is unique when combined with module."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return TypeDeclKey

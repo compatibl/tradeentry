@@ -33,5 +33,6 @@ class StubDataclassNestedFieldsKey(KeyMixin):
     embedded_2: StubDataclassRecordKey = field(default_factory=lambda: StubDataclassRecordKey(id="xyz"))
     """Embedded key 2."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return StubDataclassNestedFieldsKey

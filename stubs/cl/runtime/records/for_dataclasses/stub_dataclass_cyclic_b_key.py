@@ -26,5 +26,6 @@ class StubDataclassCyclicBKey(KeyMixin):
     str_id: str = missing()
     """String identifier for class A."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return StubDataclassCyclicBKey

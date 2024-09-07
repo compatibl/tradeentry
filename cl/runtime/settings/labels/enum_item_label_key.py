@@ -31,5 +31,6 @@ class EnumItemLabelKey(KeyMixin):
     enum_item_name: str = missing()
     """Item name without reference to an enum (the setting will apply to this field name in every enum)."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return EnumItemLabelKey

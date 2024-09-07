@@ -31,5 +31,6 @@ class PackageLabelKey(KeyMixin):
     package_alias: str = missing()
     """Package alias for which the package label is defined."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return PackageLabelKey

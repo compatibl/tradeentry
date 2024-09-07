@@ -25,5 +25,6 @@ class ConfigKey(KeyMixin):
     config_id: str = missing()
     """Unique configuration identifier."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return ConfigKey

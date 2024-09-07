@@ -21,5 +21,6 @@ from typing import Type
 class StubDataclassSingletonKey(KeyMixin):
     """Singleton record has no key fields."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return StubDataclassSingletonKey

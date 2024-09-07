@@ -63,5 +63,6 @@ class StubDataclassPrimitiveFieldsKey(KeyMixin):
     key_enum_field: StubIntEnum = StubIntEnum.ENUM_VALUE_2
     """Stub field."""
 
-    def get_key_type(self) -> Type:
+    @classmethod
+    def get_key_type(cls) -> Type:
         return StubDataclassPrimitiveFieldsKey
