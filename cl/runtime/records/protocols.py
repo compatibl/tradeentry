@@ -43,8 +43,9 @@ def has_validate(type_or_obj: Any) -> bool:
 class KeyProtocol(Protocol):
     """Protocol implemented by keys and also required for records which are derived from keys."""
 
-    def get_key_type(self) -> Type:
-        """Return key type even when called from a record, implement using literal type rather than type(self)."""
+    @classmethod
+    def get_key_type(cls) -> Type:
+        """Return key type even when called from a record, return literal key type rather than 'cls'."""
 
 
 class RecordProtocol(KeyProtocol):

@@ -183,8 +183,8 @@ class FieldDecl:
                 # For keys, remove suffix
                 if result.field_kind == "key":
                     if field_class_path.endswith("Key"):
-                        field_class_module = field_type.__module__.removesuffix("_key")
-                        field_class_name = field_type.__name__.removesuffix("Key")
+                        field_class_module = field_type.__module__
+                        field_class_name = field_type.__name__
                         field_class_path = f"{field_class_module}.{field_class_name}"
                     else:
                         raise RuntimeError("Field has TypeKind=key but class name does not end in 'Key'.")

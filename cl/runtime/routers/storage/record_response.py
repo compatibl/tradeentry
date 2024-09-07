@@ -52,9 +52,9 @@ def to_record_dict(node):  # TODO: Apply type hints
         # TODO: !!! Generally should not skip nodes that have the value of None
         return [to_record_dict(v) for v in node if v is not None]
     elif node_type is tuple:
-        # TODO: Support short alias
-        # Generic key, remove Key suffix from key type to obtain table name
-        table = node[0].__name__.removesuffix("Key")
+        # TODO: Decision on short alias
+        # Tuple key, remove Key suffix from key type to obtain table name
+        table = node[0].__name__
         result = ";".join([table] + node[1:])
         return result
     elif node_type.__name__.endswith("Key"):
@@ -86,9 +86,9 @@ def to_legacy_dict(node: Dict[str, Any] | List[Dict[str, Any]] | str) -> Dict[st
         # Skip nodes that have the value of None
         return [to_legacy_dict(v) for v in node if v is not None]
     elif isinstance(node, tuple):
-        # TODO: Support short alias
+        # TODO: Decision on short alias
         # Generic key, remove Key suffix from key type to obtain table name
-        table = node[0].__name__.removesuffix("Key")
+        table = node[0].__name__
         result = ";".join([table] + node[1:])
         return result
     else:
@@ -131,7 +131,7 @@ class RecordResponse(BaseModel):
         if record_type == UiAppState:
             deserialized_key = UiAppStateKey(user=UserKey(username=request.key))
         else:
-            deserialized_key = key_serializer.deserialize_key(request.key, record_type.get_key_type(None))
+            deserialized_key = key_serializer.deserialize_key(request.key, record_type.get_key_type())
 
         record = data_source.load_one(deserialized_key)
 

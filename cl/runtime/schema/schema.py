@@ -16,6 +16,9 @@ from __future__ import annotations
 
 import importlib
 import inspect
+
+from cl.runtime.records.protocols import KeyProtocol
+
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.schema.type_decl import TypeDecl
 from cl.runtime.schema.type_decl import pascalize
@@ -27,7 +30,7 @@ from enum import Enum
 from memoization import cached
 from pkgutil import walk_packages
 from types import ModuleType
-from typing import Dict
+from typing import Dict, cast
 from typing import Iterable
 from typing import List
 from typing import Type
@@ -218,40 +221,32 @@ class Schema:
         Include all base and child classes ordered by hierarchy.
         """
 
-        get_key_type = getattr(record_type, "get_key_type", None)
-
-        if get_key_type is None:
-            raise RuntimeError(f"Type {record_type} is not record type.")
-
-        # get key type
-        # TODO (Roman): review get_key_type method of KeyProtocol. maybe it can be staticmethod or classmethod?
-        key_type = get_key_type(None)
+        key_type = record_type.get_key_type()
 
         # container to collect types
         types_ = defaultdict(list)
 
-        for type_ in cls.get_types():
+        # TODO(Sasha): Do not iterate over all types, follow the specific type's hierarchy instead
+        all_schema_types = cls.get_types()
+        for type_ in all_schema_types:
             # TODO (Roman): should not skip if input type is not key
+
             if type_ == record_type:
-                # skip start type
+                # Skip the specified type
                 continue
 
-            type_get_key_type = getattr(type_, "get_key_type", None)
-            if type_get_key_type is None:
-                # skip non-record types
+            if not hasattr(type_, "get_key_type"):
+                # Skip types that do not implement get_key_type
                 continue
 
-            try:
-                type_key_type = type_get_key_type(None)
-            except AttributeError:
-                # skip types whose key type unavailable from type
-                continue
+            # Get key type of type_
+            key_type_of_type_ = cast(KeyProtocol, type_).get_key_type()
 
-            if key_type != type_key_type:
+            if key_type != key_type_of_type_:
                 # skip types of another key type
                 continue
 
-            # try to resolve hierarchy
+            # Try to resolve hierarchy
             try:
                 i = type_.__mro__.index(key_type)
             except ValueError:

@@ -13,10 +13,15 @@
 # limitations under the License.
 
 import sqlite3
+
+from cl.runtime.records.protocols import KeyProtocol
+
+from cl.runtime.records.key_mixin import KeyMixin
+
 from cl.runtime.schema.schema import Schema
 from dataclasses import dataclass
 from inflection import camelize
-from typing import Dict
+from typing import Dict, cast
 from typing import Iterable
 from typing import List
 from typing import Set
@@ -77,10 +82,10 @@ class SqliteSchemaManager:
 
     def table_name_for_type(self, type_: Type) -> str:
         """Return table name for the given type."""
-        key_type = self._get_key_type(type_)
 
-        # return table name as key type name without 'Key' suffix
-        return key_type.__name__.removesuffix("Key")
+        # Return key type name inclusive of Key suffix
+        key_type = cast(KeyProtocol, type_).get_key_type()
+        return key_type.__name__  # TODO: Also include module
 
     def existing_tables(self) -> List[str]:
         """Return existing tables in db."""
@@ -90,16 +95,7 @@ class SqliteSchemaManager:
         # cursor.fetchall() returns [{'name': name},]
         return [select_res["name"] for select_res in cursor.fetchall()]
 
-    def _get_key_type(self, type_: Type) -> Type:
-        """Get key type for the given type."""
-        get_key_type = getattr(type_, "get_key_type", None)
-        if get_key_type is None:
-            raise RuntimeError(f"Type {type_} is not record type.")
-
-        # get key attributes
-        return get_key_type(None)
-
-    def _get_type_fields(self, type_: Type) -> Dict[str, Type]:
+    def _get_type_fields(self, type_: Type) -> Dict[str, Type]:  # TODO: Consolidate this and similar code in Schema
         """Return field name and type of annotation based type declaration."""
         return type_.__annotations__
 
@@ -108,10 +104,12 @@ class SqliteSchemaManager:
         """Collect all types in hierarchy and check type conflicts for fields with the same name."""
 
         types_in_hierarchy = Schema.get_types_in_hierarchy(type_)
-        key_type = self._get_key_type(type_)
+        key_type = cast(KeyProtocol, type_).get_key_type()
 
-        # get key attributes
-        key_fields_class_name: str = key_type.__name__.removesuffix("Key")
+        # Get table name inclusive of Key suffix if present
+        key_fields_class_name: str = key_type.__name__  # TODO: Also include module
+
+        # Get fields
         key_fields = self._get_type_fields(key_type)
 
         # {field_name: (subclass_name, field_type)}
@@ -157,6 +155,6 @@ class SqliteSchemaManager:
 
     def get_primary_keys(self, type_: Type) -> Tuple[str, ...]:
         """Return list of primary key fields."""
-        key_type = self._get_key_type(type_)
+        key_type = cast(KeyProtocol, type_).get_key_type()
         key_fields = self._get_type_fields(key_type)
         return tuple(key_fields.keys())

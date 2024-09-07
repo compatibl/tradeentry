@@ -217,7 +217,7 @@ class SqliteDataSource(DataSource):
         sql_statement = f'SELECT * FROM "{table_name}" WHERE _type in ({value_placeholders});'
 
         reversed_columns_mapping = {
-            v: k for k, v in self._schema_manager.get_columns_mapping(record_type.get_key_type(None)).items()
+            v: k for k, v in self._schema_manager.get_columns_mapping(record_type.get_key_type()).items()
         }
 
         cursor = self._connection.cursor()

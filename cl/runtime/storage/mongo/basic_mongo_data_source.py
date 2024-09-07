@@ -86,7 +86,7 @@ class BasicMongoDataSource(DataSource):
 
             # Key, get collection name from key type by removing Key suffix if present
             key_type = record_or_key.get_key_type()
-            collection_name = key_type.__name__.removesuffix("Key")  # TODO: Support aliases
+            collection_name = key_type.__name__  # TODO: Decision on short alias
             collection = self._db[collection_name]
 
             serialized_key = key_serializer.serialize_key(record_or_key)
@@ -153,7 +153,7 @@ class BasicMongoDataSource(DataSource):
 
         # Get collection name from key type by removing Key suffix if present
         key_type = record.get_key_type()
-        collection_name = key_type.__name__.removesuffix("Key")  # TODO: Support aliases
+        collection_name = key_type.__name__  # TODO: Decision on short alias
         collection = self._db[collection_name]
 
         # Serialize record data and key

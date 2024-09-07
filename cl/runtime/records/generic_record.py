@@ -16,7 +16,6 @@ from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.generic_key import GenericKey
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.runtime.storage.data_source_types import TDataDict
 from dataclasses import dataclass
 from typing import Dict
 from typing import Iterable
@@ -24,11 +23,11 @@ from typing import Type
 
 
 @dataclass(slots=True, kw_only=True)
-class GenericRecord(RecordMixin[KeyProtocol]):
+class GenericRecord:
     """Generic record can represent any record type."""
 
-    key_type: Type = missing()
-    """Key type."""
+    key_type_str: str = missing()
+    """Key type as dot-delimited string in module.ClassNameKey format inclusive of Key suffix if present."""
 
     key_fields: Iterable[str] = missing()
     """Names of primary key fields."""
@@ -38,4 +37,5 @@ class GenericRecord(RecordMixin[KeyProtocol]):
 
     def get_key(self) -> KeyProtocol:
         key_dict = dict({k: v for k in self.key_fields if (v := self.data_dict.get(k, None)) is not None})
-        return GenericKey(key_type=self.key_type, key_dict=key_dict)
+        raise NotImplementedError()
+

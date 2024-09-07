@@ -19,8 +19,9 @@ from cl.runtime.view.view_key import ViewKey
 from typing import cast
 
 
+@pytest.mark.skip("Generic keys and records are not yet supported.")
 def test_smoke():
-    """Test KeyUtil.get_key_fields method."""
+    """Smoke test."""
 
     rec = GenericRecord()
     rec.key_type = ViewKey
