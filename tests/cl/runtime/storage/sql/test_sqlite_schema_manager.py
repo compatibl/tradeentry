@@ -63,7 +63,7 @@ def test_get_key_class():
     expected_key_type = StubDataclassRecordKey
 
     for type_ in test_subtypes:
-        assert type_.get_key_type(None) == expected_key_type  # noqa
+        assert type_.get_key_type() == expected_key_type
 
 
 def test_get_columns_mapping():
@@ -71,7 +71,7 @@ def test_get_columns_mapping():
 
     expected_columns = {
         "_type": "_type",
-        "id": "StubDataclassRecord.id",
+        "id": "StubDataclassRecordKey.id",
         "derived_field": "StubDataclassDerivedRecord.derived_field",
         "str_dict": "StubDataclassDictFields.str_dict",
         "float_dict": "StubDataclassDictFields.float_dict",

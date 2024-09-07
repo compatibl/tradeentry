@@ -10,18 +10,18 @@ Elements:
     Type: String
   Name: Primitive
   Comment: String key element.
-- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey.StubDataclassRecordKey
   Key:
     Module:
-      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
-    Name: StubDataclassRecord
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey
+    Name: StubDataclassRecordKey
   Name: Embedded1
   Comment: Embedded key 1.
-- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey.StubDataclassRecordKey
   Key:
     Module:
-      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
-    Name: StubDataclassRecord
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey
+    Name: StubDataclassRecordKey
   Name: Embedded2
   Comment: Embedded key 2.
 - _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData.StubDataclassData
@@ -59,18 +59,18 @@ Elements:
     Name: StubDataclassDerivedData
   Name: PolymorphicDerivedField
   Comment: Declared StubDataclassDerivedData but provided an instance of StubDataclassDerivedFromDerivedData.
-- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey.StubDataclassRecordKey
   Key:
     Module:
-      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
-    Name: StubDataclassRecord
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey
+    Name: StubDataclassRecordKey
   Name: KeyField
   Comment: Stub field.
-- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey.StubDataclassRecordKey
   Key:
     Module:
-      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
-    Name: StubDataclassRecord
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey
+    Name: StubDataclassRecordKey
   Name: RecordAsKeyField
   Comment: Stub field with key type initialized to record type instance.
 Keys:

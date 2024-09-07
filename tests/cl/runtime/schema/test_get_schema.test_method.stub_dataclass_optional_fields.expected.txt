@@ -73,28 +73,28 @@ Elements:
   Vector: true
   Optional: true
   OptionalVectorElement: true
-- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey.StubDataclassRecordKey
   Key:
     Module:
-      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
-    Name: StubDataclassRecord
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey
+    Name: StubDataclassRecordKey
   Name: OptionalKey
   Comment: Optional key.
   Optional: true
-- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey.StubDataclassRecordKey
   Key:
     Module:
-      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
-    Name: StubDataclassRecord
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey
+    Name: StubDataclassRecordKey
   Name: RequiredListOfOptionalKey
   Comment: Required list of optional key.
   Vector: true
   OptionalVectorElement: true
-- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey.StubDataclassRecordKey
   Key:
     Module:
-      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
-    Name: StubDataclassRecord
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey
+    Name: StubDataclassRecordKey
   Name: OptionalListOfOptionalKey
   Comment: Optional list of optional key.
   Vector: true

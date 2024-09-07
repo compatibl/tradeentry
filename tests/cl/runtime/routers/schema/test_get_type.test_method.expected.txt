@@ -7,11 +7,11 @@ Cl.Runtime.Backend.Core.UiAppState.UiAppState:
   Comment: UiAppState.
   DisplayKind: Basic
   Elements:
-  - _t: Cl.Runtime.Backend.Core.User.User
+  - _t: Cl.Runtime.Backend.Core.UserKey.UserKey
     Key:
       Module:
-        ModuleName: Cl.Runtime.Backend.Core.User
-      Name: User
+        ModuleName: Cl.Runtime.Backend.Core.UserKey
+      Name: UserKey
     Name: User
     Comment: A user the app state is applied for.
   - _t: Cl.Runtime.Backend.Core.TabInfo.TabInfo
@@ -89,34 +89,20 @@ Cl.Runtime.Backend.Core.TabInfo.TabInfo:
       Name: BaseTypeInfo
     Name: Type
     Comment: Type.
-Cl.Runtime.Backend.Core.User.User:
-  _t: User
+Cl.Runtime.Backend.Core.UserKey.UserKey:
+  _t: UserKey
   Module:
-    ModuleName: Cl.Runtime.Backend.Core.User
-  Name: User
-  Label: User
+    ModuleName: Cl.Runtime.Backend.Core.UserKey
+  Name: UserKey
+  Label: User Key
   Comment: User which is allowed to log in.
+  Kind: Element
   DisplayKind: Basic
   Elements:
   - Value:
       Type: String
     Name: Username
     Comment: Unique user identifier.
-  - Value:
-      Type: String
-    Name: FirstName
-    Comment: First name of the user.
-  - Value:
-      Type: String
-    Name: LastName
-    Comment: Last name of the user.
-  - Value:
-      Type: String
-    Name: Email
-    Comment: Email of the user.
-    Optional: true
-  Keys:
-  - Username
 
 Cl.Runtime.Backend.Core.UiAppState.UiAppState:
   _t: UiAppState
@@ -127,11 +113,11 @@ Cl.Runtime.Backend.Core.UiAppState.UiAppState:
   Comment: UiAppState.
   DisplayKind: Basic
   Elements:
-  - _t: Cl.Runtime.Backend.Core.User.User
+  - _t: Cl.Runtime.Backend.Core.UserKey.UserKey
     Key:
       Module:
-        ModuleName: Cl.Runtime.Backend.Core.User
-      Name: User
+        ModuleName: Cl.Runtime.Backend.Core.UserKey
+      Name: UserKey
     Name: User
     Comment: A user the app state is applied for.
   - _t: Cl.Runtime.Backend.Core.TabInfo.TabInfo
@@ -209,32 +195,18 @@ Cl.Runtime.Backend.Core.TabInfo.TabInfo:
       Name: BaseTypeInfo
     Name: Type
     Comment: Type.
-Cl.Runtime.Backend.Core.User.User:
-  _t: User
+Cl.Runtime.Backend.Core.UserKey.UserKey:
+  _t: UserKey
   Module:
-    ModuleName: Cl.Runtime.Backend.Core.User
-  Name: User
-  Label: User
+    ModuleName: Cl.Runtime.Backend.Core.UserKey
+  Name: UserKey
+  Label: User Key
   Comment: User which is allowed to log in.
+  Kind: Element
   DisplayKind: Basic
   Elements:
   - Value:
       Type: String
     Name: Username
     Comment: Unique user identifier.
-  - Value:
-      Type: String
-    Name: FirstName
-    Comment: First name of the user.
-  - Value:
-      Type: String
-    Name: LastName
-    Comment: Last name of the user.
-  - Value:
-      Type: String
-    Name: Email
-    Comment: Email of the user.
-    Optional: true
-  Keys:
-  - Username
 

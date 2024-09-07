@@ -36,11 +36,11 @@ Elements:
   Name: DataList
   Comment: Stub field.
   Vector: true
-- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey.StubDataclassRecordKey
   Key:
     Module:
-      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
-    Name: StubDataclassRecord
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey
+    Name: StubDataclassRecordKey
   Name: KeyList
   Comment: Stub field.
   Vector: true

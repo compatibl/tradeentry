@@ -10,10 +10,10 @@
         "DisplayKind": "Basic",
         "Elements": [
             {
-                "_t": "Cl.Runtime.Backend.Core.User.User",
+                "_t": "Cl.Runtime.Backend.Core.UserKey.UserKey",
                 "Key": {
                     "Module": {
-                        "ModuleName": "Cl.Runtime.Backend.Core.User"
+                        "ModuleName": "Cl.Runtime.Backend.Core.UserKey"
                     },
                     "Name": "User"
                 },
@@ -136,10 +136,10 @@
             }
         ]
     },
-    "Cl.Runtime.Backend.Core.User.User": {
-        "_t": "User",
+    "Cl.Runtime.Backend.Core.UserKey.UserKey": {
+        "_t": "UserKey",
         "Module": {
-            "ModuleName": "Cl.Runtime.Backend.Core.User"
+            "ModuleName": "Cl.Runtime.Backend.Core.UserKey"
         },
         "Name": "User",
         "Label": "User",
