@@ -21,7 +21,7 @@ from cl.runtime.routers.tasks.run_response_item import handler_queue
 from cl.runtime.routers.tasks.task_status_request import TaskStatusRequest
 from cl.runtime.routers.tasks.task_status_response_item import TaskStatusResponseItem
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.tasks.instance_handler_task import InstanceHandlerTask
+from cl.runtime.tasks.instance_method_task import InstanceMethodTask
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_status import TaskStatus
 from starlette.testclient import TestClient
@@ -29,7 +29,7 @@ from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
 
 # Create handler task
-task = InstanceHandlerTask.from_key(
+task = InstanceMethodTask.from_key(
     task_id="abc", key=StubHandlersKey(stub_id="abc"), method=StubHandlers.instance_handler_1a
 )
 

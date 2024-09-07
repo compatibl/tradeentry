@@ -14,25 +14,11 @@
 
 import pytest
 
-from cl.runtime import Context
-from cl.runtime.tasks.static_method_task import StaticMethodTask
-from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
-
+@pytest.mark.skip("FunctionTask is not yet supported.")
 def test_create():
-    """Test 'test_create' method."""
-
-    with Context() as context:
-
-        sample_handler_tuples = [
-            (StubHandlers, StubHandlers.static_handler_1a),
-        ]
-
-        for sample_handler_tuple in sample_handler_tuples:
-            record_type = sample_handler_tuple[0]
-            method_callable = sample_handler_tuple[1]
-            task = StaticMethodTask.create(task_id="abc", record_type=record_type, method_callable=method_callable)
-            task.execute()
+    """Test 'create' method."""
+    raise NotImplementedError()
 
 
 if __name__ == "__main__":

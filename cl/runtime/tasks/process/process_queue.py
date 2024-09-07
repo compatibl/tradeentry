@@ -16,8 +16,6 @@ import multiprocessing
 from cl.runtime import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.records.protocols import is_record
-from cl.runtime.settings.context_settings import ContextSettings
-from cl.runtime.tasks.static_handler_task import StaticHandlerTask
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
 from cl.runtime.tasks.task_run import TaskRun

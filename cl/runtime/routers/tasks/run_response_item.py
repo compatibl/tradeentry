@@ -23,7 +23,7 @@ from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseIte
 from cl.runtime.routers.tasks.run_request import RunRequest
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.tasks.instance_handler_task import InstanceHandlerTask
+from cl.runtime.tasks.instance_method_task import InstanceMethodTask
 from cl.runtime.tasks.process.process_queue import ProcessQueue
 from cl.runtime.tasks.task_status import TaskStatus
 from pydantic import BaseModel
@@ -55,21 +55,20 @@ class RunResponseItem(BaseModel):
         # TODO (Roman): request [None] for static handlers explicitly
         # Workaround for static handlers
         requested_keys = request.keys if request.keys else [None]
-        key_serializer = StringSerializer()
 
-        type_: Type[RecordProtocol] | type = Schema.get_type_by_short_name(request.table)
-
-        # run task for all keys in request
+        # Run task for all keys in request
         for serialized_key in requested_keys:
             # Create handler task
             # TODO: Support class methods and static methods
             # TODO: Add request.arguments_ and type_
-            handler_task = InstanceHandlerTask(
-                record_short_name=request.table, key_str=serialized_key, method_name=request.method
+            key_type = Schema.get_type_by_short_name(request.table)
+            key_type_str = f"{key_type.__module__}.{key_type.__name__}"
+            handler_task = InstanceMethodTask(
+                key_type_str=key_type_str, key_str=serialized_key, method_name=request.method
             )
 
             # TODO Include other parameters or use GUID
-            handler_task.task_id = f"{handler_task.record_short_name}:{handler_task.key_str}:{handler_task.method_name}"
+            handler_task.task_id = f"{handler_task.key_type_str}:{handler_task.key_str}:{handler_task.method_name}"
             task_run_key = handler_queue.submit_task(handler_task)
 
             try:

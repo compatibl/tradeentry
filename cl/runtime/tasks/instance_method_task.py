@@ -13,21 +13,18 @@
 # limitations under the License.
 
 import inspect
-import re
+from cl.runtime import ClassInfo
 from cl.runtime.context.context import Context
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.tasks.task import Task
+from cl.runtime.tasks.callable_task import CallableTask
 from cl.runtime.tasks.task_key import TaskKey
 from dataclasses import dataclass
-from inflection import underscore
 from typing import Any
 from typing import Callable
-from typing import Dict
-from typing import cast
 from typing_extensions import Self
 
 key_serializer = StringSerializer()
@@ -35,107 +32,74 @@ param_dict_serializer = DictSerializer()  # TODO: Support complex params
 
 
 @dataclass(slots=True, kw_only=True)
-class InstanceHandlerTask(Task):
-    """Executes instance handler of the specified record."""
+class InstanceMethodTask(CallableTask):
+    """Invoke a class instance method, do not use for @classmethod or @staticmethod."""
 
-    record_short_name: str = missing()
-    """Record short name as string."""
+    key_type_str: str = missing()
+    """Key type as dot-delimited string in module.ClassNameKey format inclusive of Key suffix if present."""
 
     key_str: str = missing()
-    """Key serialized as semicolon-delimited string."""
+    """Key as semicolon-delimited string."""
 
     method_name: str = missing()
-    """Handler method name."""
-
-    param_dict: Dict = missing()
-    """Dictionary of method parameters (None if the method does not have parameters other than self)."""
+    """The name of instance method in snake_case or PascalCase format, do not use for @classmethod or @staticmethod."""
 
     def execute(self) -> Any:
-        """Invoke the specified instance method handler."""
+        """Invoke the specified class instance method handler."""
 
         # Save self to ensure the worker process loads the same record
-        # TODO: Consider creating TaskRun directly with Task object field instead of key
         Context.current().data_source.save_one(self)
 
-        record_type = Schema.get_type_by_short_name(self.record_short_name)
-        key_type = record_type().get_key_type()  # TODO: Avoid creating the object to get key type, make classmethod?
+        key_type = ClassInfo.get_class_type(self.key_type_str)
         key = key_serializer.deserialize_key(self.key_str, key_type)
 
         # Load record from storage
         record = Context.current().data_source.load_one(key)
+
+        # Convert the name to snake_case and get method callable
         method_name = self.normalize_method_name(self.method_name)
-        method = getattr(record, method_name)  # TODO: Check it is an instance method
+        method = getattr(record, method_name)
 
-        # Pass record as first argument (self) for an instance method
-        if self.param_dict is not None:
-            method(**self.param_dict)
-        else:
-            method()
+        # Invoke the callable
+        method()
 
     @classmethod
-    def from_key(cls, *, task_id: str, key: KeyProtocol, method: Callable, parent: TaskKey | None = None) -> Self:
-        """Create from key and method callable."""
+    def create(
+            cls,
+            *,
+            task_id: str,
+            parent: TaskKey | None = None,
+            record_or_key: KeyProtocol | None = None,
+            method_callable: Callable,
+            ) -> Self:
+        """
+        Create from the record or its key and an instance-bound or class-bound method callable.
 
-        # Populate known fields
-        key_str = key_serializer.serialize_key(key)
-        result = cls(task_id=task_id, key_str=key_str, parent=parent)
+        Notes:
+            - The key is required if the callable is for a class rather than an instance.
 
-        # Get method name from callable
-        method_tokens = method.__qualname__.split(".")
-        if len(method_tokens) == 2:
-            # Two tokens means the callable is bound to a class
-            result.method_name = method_tokens[1]
-
-            if hasattr(method, "__self__"):
-                raise RuntimeError(
-                    f"When key is provided separately, method {method.__qualname__} "
-                    f"must be specified as 'ClassName.method' rather than 'obj.method'."
-                )
-
-        return result
-
-    @classmethod
-    def from_instance(cls, *, task_id: str, method: Callable, parent: TaskKey | None = None) -> Self:
-        """Create from instance method (record.method_name)."""
+        Args:
+            task_id: Unique task identifier
+            parent: Parent task (optional)
+            record_or_key: Record or its key
+            method_callable: Callable bound to a class (ClassName.method_name) or its instance (obj.method_name)
+        """
 
         # Populate known fields
         result = cls(task_id=task_id, parent=parent)
 
-        # Get method name from callable
-        method_tokens = method.__qualname__.split(".")
+        # Get key type and key
+        key_type = record_or_key.get_key_type()
+        result.key_type_str = f"{key_type.__module__}.{key_type.__name__}"
+        result.key_str = key_serializer.serialize_key(record_or_key)
+
+        # Two tokens because the callable is bound to a class or its instance
+        method_tokens = method_callable.__qualname__.split(".")
         if len(method_tokens) == 2:
-            # Two tokens means the callable is bound to a class
+            # Second token is method name
             result.method_name = method_tokens[1]
-
-            if hasattr(method, "__self__"):
-                if not inspect.isclass(method.__self__):
-                    # Assign record instead of key
-                    result.key_str = method.__self__.get_key()
-                else:
-                    raise RuntimeError(
-                        f"Method {method.__qualname__} is a class method, " f"use StaticHandlerTask instead."
-                    )
-            else:
-                raise RuntimeError(
-                    f"Method {method.__qualname__} is a static method, " f"use StaticHandlerTask instead."
-                )
         else:
-            raise RuntimeError(
-                f"Method {method.__qualname__} is a function rather than a class method, " f"use FunctionTask instead."
-            )
+            raise RuntimeError(f"Callable '{method_callable.__qualname__}' for task_id='{result.task_id}' does not "
+                               f"have two dot-delimited tokens indicating it is not a method bound to a class.")
 
-        return result
-
-    @classmethod
-    def normalize_method_name(cls, method_name: str) -> str:
-        """If method name has uppercase letters, assume it is PascalCase and convert to snake_case."""
-
-        if any(c.isupper() for c in method_name):
-            # Use inflection library
-            result = underscore(method_name)
-            # In addition, add underscore before numbers
-            result = re.sub(r"([0-9]+)", r"_\1", result)
-        else:
-            # Already in snake_case, return unchanged argument
-            result = method_name
         return result

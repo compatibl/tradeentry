@@ -26,17 +26,17 @@ from typing_extensions import Self
 
 
 @dataclass(slots=True, kw_only=True)
-class StaticMethodTask(CallableTask):
-    """Invoke a @staticmethod, do not use for @classmethod or instance method."""
+class ClassMethodTask(CallableTask):
+    """Invoke a @classmethod, do not use for @staticmethod or instance method."""
 
     type_str: str = missing()
     """Class type as dot-delimited string in module.ClassName format."""
 
     method_name: str = missing()
-    """The name of @staticmethod in snake_case or PascalCase format."""
+    """The name of @classmethod in snake_case or PascalCase format."""
 
     def execute(self) -> None:
-        """Invoke the specified @staticmethod."""
+        """Invoke the specified @classmethod."""
 
         # Get record type from fully qualified name in module.ClassName format
         record_type = ClassInfo.get_class_type(self.type_str)
@@ -45,10 +45,6 @@ class StaticMethodTask(CallableTask):
         method = getattr(record_type, self.method_name)
 
         # Invoke the callable
-        method()
-
-        record_type = ClassInfo.get_class_type(self.type_str)
-        method = getattr(record_type, self.method_name)
         method()
 
     @classmethod
@@ -60,17 +56,17 @@ class StaticMethodTask(CallableTask):
             record_type: Type,
             method_callable: Callable
     ) -> Self:
-        """Create from @staticmethod callable and record type."""
+        """Create from @classmethod callable and record type."""
 
         # Populate known fields
         result = cls(task_id=task_id, parent=parent)
         result.type_str = f"{record_type.__module__}.{record_type.__name__}"
 
-        # Check that __self__ is not present, otherwise it is a @classmethod
-        if hasattr(method_callable, "__self__"):
-            raise RuntimeError(f"Callable '{method_callable.__qualname__}' for task_id='{result.task_id}' has "
-                               f"'__self__' attribute indicating it may be a @classmethod rather than @staticmethod, "
-                               f"use 'ClassMethodTask' instead of 'StaticMethodTask'.")
+        # Check that __self__ is present, otherwise it is a @staticmethod
+        if (callable_cls := getattr(method_callable, "__self__", None)) is None or not inspect.isclass(callable_cls):
+            raise RuntimeError(f"Callable '{method_callable.__qualname__}' for task_id='{result.task_id}' does not "
+                               f"have '__self__' attribute indicating it is a @staticmethod rather than @classmethod, "
+                               f"use 'StaticMethodTask' instead of 'ClassMethodTask'.")
 
         # Two tokens because the callable is bound to a class
         method_tokens = method_callable.__qualname__.split(".")

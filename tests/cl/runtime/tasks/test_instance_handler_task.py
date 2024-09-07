@@ -13,35 +13,35 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.tasks.instance_handler_task import InstanceHandlerTask
+
+from cl.runtime import Context
+from cl.runtime.tasks.instance_method_task import InstanceMethodTask
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
-from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
 
 
-def test_from_key():
-    """Test 'from_callable' method."""
+def test_create():
+    """Test 'test_create' method."""
 
-    sample_handler_tuples = [
-        (StubHandlersKey(stub_id="abc"), StubHandlers.instance_handler_1a),
-    ]
+    with Context() as context:
 
-    for sample_handler_tuple in sample_handler_tuples:
-        key = sample_handler_tuple[0]
-        method = sample_handler_tuple[1]
-        task = InstanceHandlerTask.from_key(task_id="abc", key=key, method=method)
-        pass
+        records = [StubHandlers(stub_id="abc")]
+        context.data_source.save_many(records)
 
+        sample_handler_tuples = (
+            [(x.get_key(), StubHandlers.instance_handler_1a) for x in records] +
+            [(x, StubHandlers.class_handler_1a) for x in records] +
+            [(x, x.instance_handler_1a) for x in records]
+        )
 
-def test_from_instance():
-    """Test 'from_callable' method."""
-
-    sample_handlers = [
-        StubHandlers(stub_id="abc").instance_handler_1a,
-    ]
-
-    for sample_handler in sample_handlers:
-        task = InstanceHandlerTask.from_instance(task_id="abc", method=sample_handler)
-        pass
+        for sample_handler_tuple in sample_handler_tuples:
+            record_or_key = sample_handler_tuple[0]
+            method_callable = sample_handler_tuple[1]
+            task = InstanceMethodTask.create(
+                task_id="abc",
+                method_callable=method_callable,
+                record_or_key=record_or_key,
+            )
+            task.execute()
 
 
 if __name__ == "__main__":

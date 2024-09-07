@@ -13,25 +13,26 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.context.context import Context
-from cl.runtime.schema.schema import Schema
-from cl.runtime.tasks.process.process_queue import ProcessQueue
-from cl.runtime.tasks.static_method_task import StaticMethodTask
+
+from cl.runtime import Context
+from cl.runtime.tasks.class_method_task import ClassMethodTask
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
 
-def test_smoke():
-    """Smoke test."""
+def test_create():
+    """Test 'test_create' method."""
 
     with Context() as context:
-        obj = StubHandlers(stub_id="abc")
-        context.data_source.save_one(obj)
 
-        method_callable = StubHandlers.static_handler_1a
-        task = StaticMethodTask.create(task_id="abc", record_type=StubHandlers, method_callable=method_callable)
+        sample_handler_tuples = [
+            (StubHandlers, StubHandlers.class_handler_1a),
+        ]
 
-        queue = ProcessQueue()
-        task_run_key = queue.submit_task(task)
+        for sample_handler_tuple in sample_handler_tuples:
+            record_type = sample_handler_tuple[0]
+            method_callable = sample_handler_tuple[1]
+            task = ClassMethodTask.create(task_id="abc", record_type=record_type, method_callable=method_callable)
+            task.execute()
 
 
 if __name__ == "__main__":
