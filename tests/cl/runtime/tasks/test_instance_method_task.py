@@ -18,22 +18,35 @@ from cl.runtime.tasks.instance_method_task import InstanceMethodTask
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
 
-def test_create():
+def test_smoke():
     """Test 'test_create' method."""
 
     with Context() as context:
-        records = [StubHandlers(stub_id="abc")]
+
+        records = [
+            StubHandlers(stub_id="abc"),
+        ]
         context.data_source.save_many(records)
 
-        sample_handler_tuples = (
-            [(x.get_key(), StubHandlers.instance_handler_1a) for x in records]
-            + [(x, StubHandlers.class_handler_1a) for x in records]
-            + [(x, x.instance_handler_1a) for x in records]
+        object_and_instance_handler_on_object = [(x, x.instance_handler_1a) for x in records]
+        key_and_instance_handler_on_object = [(x.get_key(), x.instance_handler_1a) for x in records]
+        object_and_instance_handler_on_class = [(x, StubHandlers.instance_handler_1a) for x in records]
+        key_and_instance_handler_on_class = [(x.get_key(), StubHandlers.instance_handler_1a) for x in records]
+        object_and_class_handler_on_class = [(x, StubHandlers.class_handler_1a) for x in records]
+        key_and_class_handler_on_class = [(x.get_key(), StubHandlers.class_handler_1a) for x in records]
+
+        sample_inputs = (
+            object_and_instance_handler_on_object +
+            key_and_instance_handler_on_object +
+            object_and_instance_handler_on_class +
+            key_and_instance_handler_on_class +
+            object_and_class_handler_on_class +
+            key_and_class_handler_on_class
         )
 
-        for sample_handler_tuple in sample_handler_tuples:
-            record_or_key = sample_handler_tuple[0]
-            method_callable = sample_handler_tuple[1]
+        for sample_input in sample_inputs:
+            record_or_key = sample_input[0]
+            method_callable = sample_input[1]
             task = InstanceMethodTask.create(
                 task_id="abc",
                 method_callable=method_callable,

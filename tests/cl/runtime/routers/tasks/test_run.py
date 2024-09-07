@@ -30,7 +30,7 @@ key_str = key_serializer.serialize_key(stub_handlers.get_key())
 
 simple_requests = [
     {
-        "data_source": "DEPRECATED",
+        "data_source": "DEPRECATED",  # TODO: Review and remove
         "dataset": "",
         "table": "StubHandlers",
         "keys": [key_str],
@@ -41,7 +41,7 @@ simple_requests = [
 
 save_to_db_requests = [
     {
-        "data_source": "DEPRECATED",
+        "data_source": "DEPRECATED",  # TODO: Review and remove
         "dataset": "",
         "table": "StubHandlers",
         "keys": [key_str],
