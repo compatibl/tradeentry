@@ -18,6 +18,7 @@ from math import ceil
 from math import floor
 from typing import Callable
 from typing import Tuple
+from cl.runtime.primitive.ordered_uuid import OrderedUuid
 
 # Compile the regex pattern for datetime in ISO-8601 format yyyy-mm-ddThh:mm:ss.fffZ
 datetime_pattern = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$")
@@ -28,18 +29,8 @@ class DatetimeUtil:
 
     @classmethod
     def now(cls) -> dt.datetime:
-        """Current datetime in UTC timezone rounded to the nearest whole milliseconds."""
-        return cls.round(dt.datetime.now(dt.timezone.utc))
-
-    @classmethod
-    def now_floor(cls) -> dt.datetime:
-        """Current datetime in UTC timezone rounded down to whole milliseconds."""
-        return cls.floor(dt.datetime.now(dt.timezone.utc))
-
-    @classmethod
-    def now_ceil(cls) -> dt.datetime:
-        """Current datetime in UTC timezone rounded up to whole milliseconds."""
-        return cls.ceil(dt.datetime.now(dt.timezone.utc))
+        """Current datetime in UTC timezone rounded to the nearest whole milliseconds to match UUIDv7 RFC-9562 spec."""
+        return OrderedUuid.datetime_of(OrderedUuid.create_one())
 
     @classmethod
     def round(cls, value: dt.datetime) -> dt.datetime:

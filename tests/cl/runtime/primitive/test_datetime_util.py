@@ -18,6 +18,7 @@ from cl.runtime.primitive.datetime_util import DatetimeUtil
 from typing import List
 from typing import Tuple
 from zoneinfo import ZoneInfo
+from cl.runtime.primitive.ordered_uuid import OrderedUuid
 
 
 def get_valid_samples() -> List[Tuple[int, str]]:
@@ -112,26 +113,33 @@ def test_now():
     """Test rounding current time to whole milliseconds."""
 
     for _ in range(1000):
+
         # Datetime before rounded down to 1ms per UUIDv7 RFC-9562 standard
         datetime_before = DatetimeUtil.floor(dt.datetime.now(dt.timezone.utc))
 
-        now_floor = DatetimeUtil.now_floor()
+        # Datetime from ordered UUID before rounded down to 1ms per UUIDv7 RFC-9562 standard
+        from_ordered_uuid_before = OrderedUuid.datetime_of(OrderedUuid.create_one())
         now = DatetimeUtil.now()
-        now_ceil = DatetimeUtil.now_ceil()
+
+        # Datetime from ordered UUID after rounded down to 1ms per UUIDv7 RFC-9562 standard
+        from_ordered_uuid_after = OrderedUuid.datetime_of(OrderedUuid.create_one())
 
         # Datetime after rounded up to 1ms per UUIDv7 RFC-9562 standard
         datetime_after = DatetimeUtil.ceil(dt.datetime.now(dt.timezone.utc))
 
-        # Check that timestamp is within the expected range
-        assert datetime_before <= now_floor
-        assert now_floor <= now
-        assert now <= now_ceil
-        assert now_ceil <= datetime_after
+        # Check that DatetimeUtil.now is consistent with the timestamp of OrderedUid.create_one()
+        assert from_ordered_uuid_before <= now
+        assert now <= from_ordered_uuid_after
+
+        # Check that the timestamp of OrderedUid.create_one() is consistent with native dt.datetime.now up to tolerance
+        tolerance_before_ms = 0
+        tolerance_after_ms = 1
+        assert datetime_before - dt.timedelta(milliseconds=tolerance_before_ms) <= from_ordered_uuid_before
+        assert from_ordered_uuid_after <= datetime_after + dt.timedelta(milliseconds=tolerance_after_ms)
 
         # Check that timestamp is rounded to 1ms and has UTC timezone
-        for value in [now_floor, now, now_ceil]:
-            assert value.microsecond % 1000 == 0
-            assert value.tzinfo == dt.timezone.utc
+        assert now.microsecond % 1000 == 0
+        assert now.tzinfo == dt.timezone.utc
 
 
 def test_rounding():
