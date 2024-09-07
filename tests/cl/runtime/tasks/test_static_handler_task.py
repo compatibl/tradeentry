@@ -25,6 +25,7 @@ def test_create():
     with Context() as context:
 
         sample_handler_tuples = [
+            (StubHandlers, StubHandlers.class_handler_1a),
             (StubHandlers, StubHandlers.static_handler_1a),
         ]
 

@@ -27,7 +27,7 @@ from typing_extensions import Self
 
 @dataclass(slots=True, kw_only=True)
 class StaticMethodTask(CallableTask):
-    """Invoke a @staticmethod, do not use for @classmethod or instance method."""
+    """Invoke a @staticmethod or @classmethod, do not use for instance methods."""
 
     type_str: str = missing()
     """Class type as dot-delimited string in module.ClassName format."""
@@ -36,7 +36,7 @@ class StaticMethodTask(CallableTask):
     """The name of @staticmethod in snake_case or PascalCase format."""
 
     def execute(self) -> None:
-        """Invoke the specified @staticmethod."""
+        """Invoke the specified @staticmethod or @classmethod."""
 
         # Get record type from fully qualified name in module.ClassName format
         record_type = ClassInfo.get_class_type(self.type_str)
@@ -66,11 +66,11 @@ class StaticMethodTask(CallableTask):
         result = cls(task_id=task_id, parent=parent)
         result.type_str = f"{record_type.__module__}.{record_type.__name__}"
 
-        # Check that __self__ is not present, otherwise it is a @classmethod
-        if hasattr(method_callable, "__self__"):
-            raise RuntimeError(f"Callable '{method_callable.__qualname__}' for task_id='{result.task_id}' has "
-                               f"'__self__' attribute indicating it may be a @classmethod rather than @staticmethod, "
-                               f"use 'ClassMethodTask' instead of 'StaticMethodTask'.")
+        # Check that __self__ is either absent (@staticmethod) or is a class (@classmethod)
+        if (method_cls := getattr(method_callable, "__self__", None)) is not None and not inspect.isclass(method_cls):
+            raise RuntimeError(f"Callable '{method_callable.__qualname__}' for task_id='{result.task_id}' is "
+                               f"an instance method rather than @staticmethod or @classmethod, "
+                               f"use 'InstanceMethodTask' instead of 'StaticMethodTask'.")
 
         # Two tokens because the callable is bound to a class
         method_tokens = method_callable.__qualname__.split(".")
