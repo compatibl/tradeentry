@@ -22,7 +22,6 @@ def test_create():
     """Test 'test_create' method."""
 
     with Context():
-
         sample_inputs = [
             (StubHandlers, StubHandlers.class_handler_1a),
             (StubHandlers, StubHandlers.static_handler_1a),

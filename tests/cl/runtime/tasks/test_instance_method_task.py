@@ -22,7 +22,6 @@ def test_smoke():
     """Test 'test_create' method."""
 
     with Context() as context:
-
         records = [
             StubHandlers(stub_id="abc"),
         ]
@@ -36,12 +35,12 @@ def test_smoke():
         key_and_class_handler_on_class = [(x.get_key(), StubHandlers.class_handler_1a) for x in records]
 
         sample_inputs = (
-            object_and_instance_handler_on_object +
-            key_and_instance_handler_on_object +
-            object_and_instance_handler_on_class +
-            key_and_instance_handler_on_class +
-            object_and_class_handler_on_class +
-            key_and_class_handler_on_class
+            object_and_instance_handler_on_object
+            + key_and_instance_handler_on_object
+            + object_and_instance_handler_on_class
+            + key_and_instance_handler_on_class
+            + object_and_class_handler_on_class
+            + key_and_class_handler_on_class
         )
 
         for sample_input in sample_inputs:

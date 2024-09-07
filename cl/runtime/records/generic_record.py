@@ -38,4 +38,3 @@ class GenericRecord:
     def get_key(self) -> KeyProtocol:
         key_dict = dict({k: v for k in self.key_fields if (v := self.data_dict.get(k, None)) is not None})
         raise NotImplementedError()
-
