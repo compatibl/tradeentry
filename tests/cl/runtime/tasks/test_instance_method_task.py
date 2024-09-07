@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import pytest
-
 from cl.runtime import Context
 from cl.runtime.tasks.instance_method_task import InstanceMethodTask
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
@@ -23,14 +22,13 @@ def test_create():
     """Test 'test_create' method."""
 
     with Context() as context:
-
         records = [StubHandlers(stub_id="abc")]
         context.data_source.save_many(records)
 
         sample_handler_tuples = (
-            [(x.get_key(), StubHandlers.instance_handler_1a) for x in records] +
-            [(x, StubHandlers.class_handler_1a) for x in records] +
-            [(x, x.instance_handler_1a) for x in records]
+            [(x.get_key(), StubHandlers.instance_handler_1a) for x in records]
+            + [(x, StubHandlers.class_handler_1a) for x in records]
+            + [(x, x.instance_handler_1a) for x in records]
         )
 
         for sample_handler_tuple in sample_handler_tuples:

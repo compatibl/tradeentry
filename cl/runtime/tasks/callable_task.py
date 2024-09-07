@@ -15,7 +15,6 @@
 import inspect
 import re
 from abc import ABC
-
 from cl.runtime.context.context import Context
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import KeyProtocol

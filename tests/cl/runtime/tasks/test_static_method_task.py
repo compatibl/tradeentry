@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import pytest
-
 from cl.runtime import Context
 from cl.runtime.tasks.static_method_task import StaticMethodTask
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
@@ -23,7 +22,6 @@ def test_create():
     """Test 'test_create' method."""
 
     with Context() as context:
-
         sample_handler_tuples = [
             (StubHandlers, StubHandlers.class_handler_1a),
             (StubHandlers, StubHandlers.static_handler_1a),

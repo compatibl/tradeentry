@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import inspect
-
 from cl.runtime import ClassInfo
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.schema.schema import Schema
@@ -53,12 +52,7 @@ class StaticMethodTask(CallableTask):
 
     @classmethod
     def create(
-            cls,
-            *,
-            task_id: str,
-            parent: TaskKey | None = None,
-            record_type: Type,
-            method_callable: Callable
+        cls, *, task_id: str, parent: TaskKey | None = None, record_type: Type, method_callable: Callable
     ) -> Self:
         """Create from @staticmethod callable and record type."""
 
@@ -68,9 +62,11 @@ class StaticMethodTask(CallableTask):
 
         # Check that __self__ is either absent (@staticmethod) or is a class (@classmethod)
         if (method_cls := getattr(method_callable, "__self__", None)) is not None and not inspect.isclass(method_cls):
-            raise RuntimeError(f"Callable '{method_callable.__qualname__}' for task_id='{result.task_id}' is "
-                               f"an instance method rather than @staticmethod or @classmethod, "
-                               f"use 'InstanceMethodTask' instead of 'StaticMethodTask'.")
+            raise RuntimeError(
+                f"Callable '{method_callable.__qualname__}' for task_id='{result.task_id}' is "
+                f"an instance method rather than @staticmethod or @classmethod, "
+                f"use 'InstanceMethodTask' instead of 'StaticMethodTask'."
+            )
 
         # Two tokens because the callable is bound to a class
         method_tokens = method_callable.__qualname__.split(".")
@@ -78,6 +74,8 @@ class StaticMethodTask(CallableTask):
             # Second token is method name
             result.method_name = method_tokens[1]
         else:
-            raise RuntimeError(f"Callable '{method_callable.__qualname__}' for task_id='{result.task_id}' does not "
-                               f"have two dot-delimited tokens indicating it is not a method bound to a class.")
+            raise RuntimeError(
+                f"Callable '{method_callable.__qualname__}' for task_id='{result.task_id}' does not "
+                f"have two dot-delimited tokens indicating it is not a method bound to a class."
+            )
         return result

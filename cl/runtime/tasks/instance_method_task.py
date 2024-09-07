@@ -65,13 +65,13 @@ class InstanceMethodTask(CallableTask):
 
     @classmethod
     def create(
-            cls,
-            *,
-            task_id: str,
-            parent: TaskKey | None = None,
-            record_or_key: KeyProtocol | None = None,
-            method_callable: Callable,
-            ) -> Self:
+        cls,
+        *,
+        task_id: str,
+        parent: TaskKey | None = None,
+        record_or_key: KeyProtocol | None = None,
+        method_callable: Callable,
+    ) -> Self:
         """
         Create from the record or its key and an instance-bound or class-bound method callable.
 
@@ -99,7 +99,9 @@ class InstanceMethodTask(CallableTask):
             # Second token is method name
             result.method_name = method_tokens[1]
         else:
-            raise RuntimeError(f"Callable '{method_callable.__qualname__}' for task_id='{result.task_id}' does not "
-                               f"have two dot-delimited tokens indicating it is not a method bound to a class.")
+            raise RuntimeError(
+                f"Callable '{method_callable.__qualname__}' for task_id='{result.task_id}' does not "
+                f"have two dot-delimited tokens indicating it is not a method bound to a class."
+            )
 
         return result
