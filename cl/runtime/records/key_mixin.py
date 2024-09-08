@@ -26,4 +26,4 @@ class KeyMixin(ABC):
     @classmethod
     @abstractmethod
     def get_key_type(cls) -> Type:
-        """Return key type even when called from a record, return literal key type rather than 'cls'."""
+        """Return key type even when called from a record."""

@@ -13,29 +13,22 @@
 # limitations under the License.
 
 from abc import abstractmethod
-from cl.runtime.context.protocols import ContextProtocol
 from cl.runtime.records.protocols import KeyProtocol
-from cl.runtime.storage.data_source_types import TIdentity
-from memoization import cached
 from typing import Generic
-from typing import Iterable
-from typing import List
-from typing import Type
 from typing import TypeVar
-from typing_extensions import Self
 
 TKey = TypeVar("TKey", bound=KeyProtocol)
 
 
 class RecordMixin(Generic[TKey]):
     """
-    Optional mixin class for a record parameterized by its key, code must not rely on inheritance from this class.
-    Using MyRecord(MyKey, RecordMixin[MyKey]) syntax provides additional methods to the record class.
+    Optional mixin class for a record, code must not rely on inheritance from this class.
+    Derive MyRecord from both MyKey and RecordMixin[MyKey] as in MyRecord(MyKey, RecordMixin[MyKey]).
     """
 
     __slots__ = ()
     """To prevent creation of __dict__ in derived types."""
 
     @abstractmethod
-    def get_key(self) -> KeyProtocol:
+    def get_key(self) -> TKey:
         """Return a new key object whose fields populated from self, do not return self."""

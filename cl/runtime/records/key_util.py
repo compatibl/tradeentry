@@ -15,10 +15,7 @@
 import ast
 import inspect
 import textwrap
-from typing import Any
-from typing import Dict
 from typing import List
-from typing import Tuple
 from typing import Type
 
 
@@ -35,8 +32,8 @@ class KeyUtil:
             This method parses the source code of 'get_key' method of 'record_type' and returns all
             instance fields it accesses in the order of access, for example if 'get_key' source is:
 
-            def get_key(self) -> ClassKey:
-                return ClassKey(key_field_1=self.key_field_1, key_field_2=self.key_field_2)
+            def get_key(self) -> MyKey:
+                return MyKey(key_field_1=self.key_field_1, key_field_2=self.key_field_2)
 
             this method will return:
 
