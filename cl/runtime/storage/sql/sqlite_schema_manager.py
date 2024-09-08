@@ -147,8 +147,8 @@ class SqliteSchemaManager:
         return columns_mapping
 
     # TODO (Roman): move to Schema
-    @staticmethod
-    def get_subtype_names(type_: Type) -> Set[str]:
+    @classmethod
+    def get_subtype_names(cls, type_: Type) -> Set[str]:
         return set(schema_type.__name__ for schema_type in Schema.get_types() if type_ in schema_type.__mro__)
 
     def get_primary_keys(self, type_: Type) -> Tuple[str, ...]:

@@ -38,8 +38,8 @@ class TypesResponseItem(BaseModel):
         alias_generator = StringUtil.to_pascal_case
         populate_by_name = True
 
-    @staticmethod
-    def get_types(request: UserRequest) -> List[TypesResponseItem]:
+    @classmethod
+    def get_types(cls, request: UserRequest) -> List[TypesResponseItem]:
         """Implements /schema/types route."""
 
         # TODO: Check why UserRequest is not used in this method

@@ -42,8 +42,8 @@ class TaskStatusResponseItem(BaseModel):
         alias_generator = StringUtil.to_pascal_case
         populate_by_name = True
 
-    @staticmethod
-    def get_task_statuses(request: TaskStatusRequest) -> List[TaskStatusResponseItem]:
+    @classmethod
+    def get_task_statuses(cls, request: TaskStatusRequest) -> List[TaskStatusResponseItem]:
         """Get status for tasks in request."""
 
         task_run_keys = [TaskRunKey(task_run_id=UUID(x)) for x in request.task_run_ids]

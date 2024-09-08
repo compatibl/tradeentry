@@ -34,7 +34,7 @@ class DatasetUtil:
     def to_levels(cls, dataset: str) -> List[str]:
         """Convert the dataset from any input format to a list of levels and perform validation."""
 
-        if dataset is None or dataset == DatasetUtil._sep:
+        if dataset is None or dataset == cls._sep:
             return []  # Root dataset has no levels
 
         elif isinstance(dataset, str):
@@ -46,11 +46,11 @@ class DatasetUtil:
                 dataset = dataset.removeprefix(cls._sep)
 
             # Split into levels according to the separator
-            dataset = dataset.split(DatasetUtil._sep)
+            dataset = dataset.split(cls._sep)
 
         if hasattr(dataset, "__iter__"):
             # Validate all levels
-            [DatasetUtil._normalize_level(level) for level in dataset]
+            [cls._normalize_level(level) for level in dataset]
         else:
             raise RuntimeError(f"Dataset {dataset} is not a delimited string, iterable of strings, or None.")
 
@@ -65,13 +65,13 @@ class DatasetUtil:
         """
 
         # Convert to levels
-        levels = DatasetUtil.to_levels(dataset)
+        levels = cls.to_levels(dataset)
 
         # Each element of this list has one less level, starting from the original list and ending with empty list
         list_of_partial_lists = [levels[: len(levels) - i] for i in range(len(levels) + 1)]
 
         # Convert each list element to string format
-        result = [DatasetUtil.combine(*partial_list) for partial_list in list_of_partial_lists]
+        result = [cls.combine(*partial_list) for partial_list in list_of_partial_lists]
         return result
 
     @classmethod
@@ -89,13 +89,13 @@ class DatasetUtil:
             return cls._sep
 
         # Convert non-empty tokens to levels with validation
-        arg_levels = [DatasetUtil.to_levels(p) for p in datasets if p is not None]
+        arg_levels = [cls.to_levels(p) for p in datasets if p is not None]
 
         # Merge lists
         all_levels = [level for dataset in arg_levels if dataset is not None for level in dataset if level is not None]
 
         # Convert to string
-        result = DatasetUtil._sep + DatasetUtil._sep.join(all_levels)
+        result = cls._sep + cls._sep.join(all_levels)
         return result
 
     @classmethod
@@ -111,11 +111,11 @@ class DatasetUtil:
         # Convert URL quoted unicode characters
         dataset = unquote(dataset)
 
-        if not dataset.startswith(DatasetUtil._sep):
+        if not dataset.startswith(cls._sep):
             raise Exception(f"Dataset '{dataset}' does not start with a backslash separator.")
-        if dataset.endswith(DatasetUtil._sep):
+        if dataset.endswith(cls._sep):
             raise Exception(f"Dataset '{dataset}' must not end with a backslash separator.")
-        if DatasetUtil._two_sep in dataset:
+        if cls._two_sep in dataset:
             raise Exception(f"Dataset '{dataset}' contains two backslash separators in a row.")
         if dataset.startswith(" "):
             raise Exception(f"Dataset '{dataset}' has a leading space.")
@@ -135,7 +135,7 @@ class DatasetUtil:
             # Validate string level format
             if dataset_level == "":
                 raise Exception(f"A dataset level is an empty string.")
-            if DatasetUtil._sep in dataset_level:
+            if cls._sep in dataset_level:
                 raise Exception(f"Dataset level '{dataset_level}' includes backslash. This is not allowed "
                                 f"because backslash also serves as a level separator.")
             if dataset_level.startswith(" "):

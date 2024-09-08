@@ -24,8 +24,8 @@ from typing import Type
 class ClassInfo(ABC):
     """Helper methods for Record."""
 
-    @staticmethod
-    def get_class_path(cls: Type) -> str:
+    @classmethod
+    def get_class_path(cls, class_: Type) -> str:
         """Returns the concatenation of module path and class name using dot delimiter.
 
         - The argument cls is either a literal class type, for example StubClass,
@@ -34,10 +34,10 @@ class ClassInfo(ABC):
           as their argument. This method is itself not cached because caching would involve
           calling the same method, resulting in no performance gain.
         """
-        return f"{cls.__module__}.{cls.__name__}"
+        return f"{class_.__module__}.{class_.__name__}"
 
-    @staticmethod
-    def split_class_path(class_path: str) -> Tuple[str, str]:
+    @classmethod
+    def split_class_path(cls, class_path: str) -> Tuple[str, str]:
         """Split dot-delimited class path into module path and class name.
 
         Returns:
@@ -46,9 +46,9 @@ class ClassInfo(ABC):
         result = class_path.rsplit(".", 1)
         return result[0], result[1]
 
-    @staticmethod
+    @classmethod
     @cached
-    def get_class_type(class_path: str) -> Type:
+    def get_class_type(cls, class_path: str) -> Type:
         """
         Get class type from string in 'module.ClassName' format, importing the module if necessary.
 
@@ -59,7 +59,7 @@ class ClassInfo(ABC):
             class_path: String in module.ClassName format.
         """
 
-        module_name, class_name = ClassInfo.split_class_path(class_path)
+        module_name, class_name = cls.split_class_path(class_path)
 
         # Check that the module exists and is fully initialized
         module = sys.modules.get(module_name)
@@ -81,9 +81,9 @@ class ClassInfo(ABC):
         except AttributeError:
             raise RuntimeError(f"Module {module_name} does not contain top-level class {class_name}.")
 
-    @staticmethod
-    @cached(custom_key_maker=lambda record_type: f"{record_type.__module__}.{record_type.__name__}")
-    def get_inheritance_chain(record_type: Type) -> List[str]:
+    @classmethod
+    @cached(custom_key_maker=lambda cls, record_type: f"{record_type.__module__}.{record_type.__name__}")
+    def get_inheritance_chain(cls, record_type: Type) -> List[str]:
         """
         Returns the list of fully qualified class names in MRO order starting from this class
         and ending with the class that has suffix Key. Exactly one class with suffix Key should

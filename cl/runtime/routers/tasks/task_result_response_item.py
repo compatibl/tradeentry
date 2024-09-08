@@ -46,8 +46,8 @@ class TaskResultResponseItem(BaseModel):
         alias_generator = StringUtil.to_pascal_case
         populate_by_name = True
 
-    @staticmethod
-    def get_task_results(request: TaskResultRequest) -> List[TaskResultResponseItem]:
+    @classmethod
+    def get_task_results(cls, request: TaskResultRequest) -> List[TaskResultResponseItem]:
         """Get results for tasks in request."""
 
         task_run_keys = [TaskRunKey(task_run_id=UUID(x)) for x in request.task_run_ids]

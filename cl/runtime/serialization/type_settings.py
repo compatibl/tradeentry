@@ -24,8 +24,8 @@ class TypeSettings:
 
     __type_alias_dict: Dict[str, str] = dict()
 
-    @staticmethod
-    def get_type_alias(type_: Type | str) -> str:
+    @classmethod
+    def get_type_alias(cls, type_: Type | str) -> str:
         """
         Get type alias for use in REST and UI (in case of UI, label will override).
         Returns 'type_.__name__' if alias is not set.
@@ -41,11 +41,11 @@ class TypeSettings:
             raise TypeError("First argument of 'TypeSettings.get_type_alias' must be either path or string.")
 
         # Return typename if alias is not already set
-        result = TypeSettings.__type_alias_dict.setdefault(type_path, typename)
+        result = cls.__type_alias_dict.setdefault(type_path, typename)
         return result
 
-    @staticmethod
-    def set_type_alias(type_: Type | str, type_alias: str) -> None:
+    @classmethod
+    def set_type_alias(cls, type_: Type | str, type_alias: str) -> None:
         """
         Set type alias for use in REST and UI (in case of UI, label will override).
 
@@ -56,7 +56,7 @@ class TypeSettings:
         type_path = f"{type_.__module__}.{type_.__name__}" if isinstance(type_, type) else type_
 
         # This will do nothing when value is already set
-        type_name = TypeSettings.__type_alias_dict.setdefault(type_path, type_alias)
+        type_name = cls.__type_alias_dict.setdefault(type_path, type_alias)
 
         # Log an attempt to override already set value
         if type_name != type_alias:

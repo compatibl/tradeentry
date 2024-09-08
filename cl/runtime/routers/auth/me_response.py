@@ -40,8 +40,8 @@ class MeResponse(BaseModel):
     scopes: List[str] | None
     """Type label displayed in the UI is humanized class name (may be customized in settings)."""
 
-    @staticmethod
-    def get_me(request: UserRequest) -> MeResponse:
+    @classmethod
+    def get_me(cls, request: UserRequest) -> MeResponse:
         """Implements /auth/me route."""
 
         # Get user from the request or use default value if not specified

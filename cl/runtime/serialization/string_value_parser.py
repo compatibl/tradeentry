@@ -65,8 +65,8 @@ class StringValueCustomType(IntEnum):
 class StringValueParser:
     """Parser for string value representations of custom types."""
 
-    @staticmethod
-    def add_type_prefix(value: str, type_: StringValueCustomType | None) -> str:
+    @classmethod
+    def add_type_prefix(cls, value: str, type_: StringValueCustomType | None) -> str:
         """Add type prefix to value that is a string representation of object of type type_."""
 
         if type_ is None:
@@ -75,8 +75,8 @@ class StringValueParser:
         type_prefix = f"::#{type_.name}#"
         return type_prefix + value
 
-    @staticmethod
-    def parse(value: str) -> (str, StringValueCustomType | None):
+    @classmethod
+    def parse(cls, value: str) -> (str, StringValueCustomType | None):
         """
         Check if value is a string representation of some custom type and parse it to separated objects:
             value without type and value type.
@@ -104,8 +104,8 @@ class StringValueParser:
             # return unmodified value and custom type None
             return value, None
 
-    @staticmethod
-    def get_custom_type(value: Any) -> StringValueCustomType | None:
+    @classmethod
+    def get_custom_type(cls, value: Any) -> StringValueCustomType | None:
         """Determine custom_type of value."""
         if value.__class__.__name__ == "date":
             return StringValueCustomType.date

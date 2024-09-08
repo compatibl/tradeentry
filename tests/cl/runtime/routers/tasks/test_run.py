@@ -36,7 +36,11 @@ simple_requests = [
         "keys": [key_str],
         "method": "InstanceHandler1b",
     },
-    {"dataset": "", "table": "StubHandlers", "method": "StaticHandler1a"},
+    {
+        "dataset": "",
+        "table": "StubHandlers",
+        "method": "StaticHandler1a"
+    },
 ]
 
 save_to_db_requests = [

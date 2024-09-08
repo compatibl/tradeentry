@@ -75,12 +75,13 @@ class SqliteDataSource(DataSource):
     def batch_size(self) -> int:
         pass
 
-    @staticmethod
+    @classmethod
     def _add_where_keys_in_clause(
-        sql_statement: str,
-        key_fields: Tuple[str, ...],
-        columns_mapping: Dict[str, str],
-        keys_len: int,
+            cls,
+            sql_statement: str,
+            key_fields: Tuple[str, ...],
+            columns_mapping: Dict[str, str],
+            keys_len: int,
     ) -> str:
         """
         Add "WHERE (key_field1, ...) IN ((value1_for_field1, ...), (value2_for_field1, ...), ...)" clause to
@@ -97,9 +98,12 @@ class SqliteDataSource(DataSource):
 
         return sql_statement
 
-    @staticmethod
+    @classmethod
     def _serialize_keys_to_flat_tuple(
-        keys: Iterable[KeyProtocol], key_fields: Tuple[str, ...], serializer
+            cls,
+            keys: Iterable[KeyProtocol],
+            key_fields: Tuple[str, ...],
+            serializer,
     ) -> Tuple[Any, ...]:
         """
         Sequentially serialize key fields for each key in keys into a flat tuple of values.

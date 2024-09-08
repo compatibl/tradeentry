@@ -19,18 +19,18 @@ from typing import List
 class StubFloatUtil:
     """Create mock samples of List[float]."""
 
-    @staticmethod
-    def create_strictly_ascending_list() -> List[float]:
+    @classmethod
+    def create_strictly_ascending_list(cls) -> List[float]:
         """Create list that is sorted in ascending order with or without tolerance, and has no repeated values."""
         return [1.0, 2.0, 3.0]
 
-    @staticmethod
-    def create_equal_or_ascending_list() -> List[float]:
+    @classmethod
+    def create_equal_or_ascending_list(cls) -> List[float]:
         """Create list that is sorted in ascending order with or without tolerance, and has repeated values."""
         return [1.0, 2.0, 2.0, 3.0]
 
-    @staticmethod
-    def create_equal_or_ascending_list_with_tolerance() -> List[float]:
+    @classmethod
+    def create_equal_or_ascending_list_with_tolerance(cls) -> List[float]:
         """
         Create list that is sorted in equal or ascending order with tolerance,
         but unsorted without tolerance, and has repeated values.
@@ -38,18 +38,18 @@ class StubFloatUtil:
         tolerance = FloatUtil.tolerance
         return [1.0, 2.0 + 0.1 * tolerance, 2.0, 2.0, 2.0 - 0.1 * tolerance, 3.0]
 
-    @staticmethod
-    def create_strictly_descending_list() -> List[float]:
+    @classmethod
+    def create_strictly_descending_list(cls) -> List[float]:
         """Create list that is sorted in descending order with or without tolerance, and has no repeated values."""
         return [3.0, 2.0, 1.0]
 
-    @staticmethod
-    def create_equal_or_descending_list() -> List[float]:
+    @classmethod
+    def create_equal_or_descending_list(cls) -> List[float]:
         """Create list that is sorted in descending order with or without tolerance, and has repeated values."""
         return [3.0, 2.0, 2.0, 1.0]
 
-    @staticmethod
-    def create_equal_or_descending_list_with_tolerance() -> List[float]:
+    @classmethod
+    def create_equal_or_descending_list_with_tolerance(cls) -> List[float]:
         """
         Create list that is sorted in equal or descending order with tolerance,
         but unsorted without tolerance, and has repeated values.

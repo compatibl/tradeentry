@@ -22,8 +22,8 @@ from typing import Dict
 class TypeResponseUtil:
     """Response helper class for the /schema/typeV2 route."""
 
-    @staticmethod
-    def get_type(request: TypeRequest) -> Dict[str, Dict]:
+    @classmethod
+    def get_type(cls, request: TypeRequest) -> Dict[str, Dict]:
         """Implements /storage/get_datasets route."""
 
         # TODO: Check why empty module is passed, is module the short name prefix?

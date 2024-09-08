@@ -27,16 +27,16 @@ eol: str = "\n"
 class StringUtil:
     """Utilities for case conversion and other operations on string."""
 
-    @staticmethod
-    def to_pascal_case(value: str) -> str:
+    @classmethod
+    def to_pascal_case(cls, value: str) -> str:
         """Converts each dot-delimited token to PascalCase by replacing underscores with capital letters."""
         input_tokens = value.split(".")
         result_tokens = [_to_pascal_re.sub(lambda match: f"{match.group(1).upper()}", x) for x in input_tokens]
         result = ".".join(result_tokens)
         return result
 
-    @staticmethod
-    def to_snake_case(value: str) -> str:
+    @classmethod
+    def to_snake_case(cls, value: str) -> str:
         """
         Converts each dot-delimited token to snake_case by inserting underscore before each capital
         letter and then changing case to lower.
@@ -46,8 +46,8 @@ class StringUtil:
         result = ".".join(result_tokens)
         return result
 
-    @staticmethod
-    def split_by_uppercase(value: str) -> List[str]:
+    @classmethod
+    def split_by_uppercase(cls, value: str) -> List[str]:
         """Splits input string by any uppercase char."""
 
         parts = re.findall("[A-Z][^A-Z]*", value)
@@ -56,23 +56,23 @@ class StringUtil:
 
         return parts
 
-    @staticmethod
-    def list_to_label(headers: List[str]) -> List[str]:
+    @classmethod
+    def list_to_label(cls, headers: List[str]) -> List[str]:
         """
         Convert strings to words separated by space that start from upper case for all elements of input list.
         """
 
-        return [StringUtil.header_to_label(header) for header in headers]
+        return [cls.header_to_label(header) for header in headers]
 
-    @staticmethod
-    def header_to_label(header: str) -> str:
+    @classmethod
+    def header_to_label(cls, header: str) -> str:
         """
         Convert string to words separated by space that start from upper case for all elements of input list.
         """
-        return " ".join(re.findall(r"[A-Z][^A-Z]*", StringUtil.to_pascal_case(header)))
+        return " ".join(re.findall(r"[A-Z][^A-Z]*", cls.to_pascal_case(header)))
 
-    @staticmethod
-    def replace_prefix(value: str, old_prefix: str, new_prefix: str) -> str:
+    @classmethod
+    def replace_prefix(cls, value: str, old_prefix: str, new_prefix: str) -> str:
         """Replaces old prefix with new if it starts with it, otherwise returns as is."""
         if value.startswith(old_prefix):
             return new_prefix + value[len(old_prefix) :]

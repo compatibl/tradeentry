@@ -20,8 +20,8 @@ from uuid import UUID
 class StubDictUtil:
     """Utilities for mock dictionaries."""
 
-    @staticmethod
-    def create_primitive() -> TDataDict:
+    @classmethod
+    def create_primitive(cls) -> TDataDict:
         """Create a mock dictionary whose fields include all supported primitive types."""
 
         result = {

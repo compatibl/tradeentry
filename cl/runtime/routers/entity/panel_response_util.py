@@ -35,8 +35,8 @@ class PanelResponseUtil(BaseModel):
     view_of: PanelResponseData
     """Response data type for the /entity/panel route."""
 
-    @staticmethod
-    def get_content(request: PanelRequest) -> Dict[str, PanelResponseData]:
+    @classmethod
+    def get_content(cls, request: PanelRequest) -> Dict[str, PanelResponseData]:
         """Implements /entity/panel route."""
 
         # Get type of the record
@@ -78,8 +78,8 @@ class PanelResponseUtil(BaseModel):
 
         return {"ViewOf": view_dict}
 
-    @staticmethod
-    def _get_view_dict(view: Any) -> Dict[str, Any]:
+    @classmethod
+    def _get_view_dict(cls, view: Any) -> Dict[str, Any]:
         """Convert value to dict format."""
 
         if isinstance(view, str):

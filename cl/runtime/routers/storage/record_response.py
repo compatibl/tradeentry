@@ -104,8 +104,8 @@ class RecordResponse(BaseModel):
     data: RecordResponseData | None
     """Data field of the response data type for the /storage/record route."""
 
-    @staticmethod
-    def get_record(request: RecordRequest) -> RecordResponse:
+    @classmethod
+    def get_record(cls, request: RecordRequest) -> RecordResponse:
         """Implements /storage/record route."""
 
         # Default response when running locally without authorization

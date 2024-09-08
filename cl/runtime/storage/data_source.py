@@ -166,8 +166,8 @@ class DataSource(ABC):
         Error if data source identifier does not match the temp_db pattern in settings.
         """
 
-    @staticmethod
-    def default() -> DataSource:
+    @classmethod
+    def default(cls) -> DataSource:
         """Default data source is initialized from settings and cannot be modified in code."""
 
         if DataSource.__default is None:

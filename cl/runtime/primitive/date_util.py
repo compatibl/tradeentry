@@ -23,43 +23,43 @@ date_pattern = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 class DateUtil:
     """Utility class for dt.date."""
 
-    @staticmethod
-    def to_str(value: dt.date) -> str:
+    @classmethod
+    def to_str(cls, value: dt.date) -> str:
         """Convert to string in ISO-8601 format: 'yyyy-mm-dd'"""
         result = f"{value.year:04}-{value.month:02}-{value.day:02}"
         return result
 
-    @staticmethod
-    def from_str(value: str) -> dt.date:
+    @classmethod
+    def from_str(cls, value: str) -> dt.date:
         """Convert from string in ISO-8601 format: 'yyyy-mm-dd'"""
 
         # Validate string format
-        DateUtil.validate_str(value)
+        cls.validate_str(value)
 
         # Convert to date using strict parsing
         result = dt.date.fromisoformat(value)
         return result
 
-    @staticmethod
-    def to_fields(value: dt.date) -> Tuple[int, int, int]:
+    @classmethod
+    def to_fields(cls, value: dt.date) -> Tuple[int, int, int]:
         """Convert dt.date to fields."""
         return value.year, value.month, value.day
 
-    @staticmethod
-    def from_fields(year: int, month: int, day: int) -> dt.date:
+    @classmethod
+    def from_fields(cls, year: int, month: int, day: int) -> dt.date:
         """Convert fields to dt.date."""
 
         result = dt.date(year, month, day)
         return result
 
-    @staticmethod
-    def to_iso_int(value: dt.date) -> int:
+    @classmethod
+    def to_iso_int(cls, value: dt.date) -> int:
         """Convert dt.date in yyyymmdd format."""
         result = 1_00_00 * value.year + 1_00 * value.month + value.day
         return result
 
-    @staticmethod
-    def from_iso_int(value: int) -> dt.date:
+    @classmethod
+    def from_iso_int(cls, value: int) -> dt.date:
         """Convert int in yyyymmdd format."""
 
         if value < 10000000:
@@ -84,8 +84,8 @@ class DateUtil:
         result = dt.date(year, month, day)
         return result
 
-    @staticmethod
-    def validate_str(value: str) -> None:
+    @classmethod
+    def validate_str(cls, value: str) -> None:
         """Validate that date string is in ISO-8601 format: 'yyyy-mm-dd'"""
         if not date_pattern.match(value):
             raise RuntimeError(f"Date string {value} must be in ISO-8601 format: 'yyyy-mm-dd'.")

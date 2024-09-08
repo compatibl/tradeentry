@@ -31,8 +31,8 @@ class AuthTypesResponseItem(BaseModel):
     type: str
     """Type of the authentication."""
 
-    @staticmethod
-    def get_types(request: UserRequest) -> List[AuthTypesResponseItem]:
+    @classmethod
+    def get_types(cls, request: UserRequest) -> List[AuthTypesResponseItem]:
         """Implements /auth/types route."""
 
         # Do not perform authentication in the open source version

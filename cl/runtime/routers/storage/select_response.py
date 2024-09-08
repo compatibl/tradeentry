@@ -45,8 +45,8 @@ class SelectResponse(BaseModel):
     data: SelectResponseData
     """Data field of the response data type for the /storage/select route."""
 
-    @staticmethod
-    def get_records(request: SelectRequest) -> SelectResponse:
+    @classmethod
+    def get_records(cls, request: SelectRequest) -> SelectResponse:
         """Implements /storage/select route."""
 
         # Default response when running locally without authorization

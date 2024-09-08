@@ -38,8 +38,8 @@ primitive_type_names = ["NoneType", "str", "float", "int", "bool", "date", "time
 class StringSerializer:
     """Serialize key to string, flattening hierarchical structure."""
 
-    @staticmethod
-    def _serialize_key_token(data) -> str:
+    @classmethod
+    def _serialize_key_token(cls, data) -> str:
         """Serialize key field to string token."""
 
         if data is None:
@@ -76,8 +76,8 @@ class StringSerializer:
 
         return StringValueParser.add_type_prefix(result, value_custom_type)
 
-    @staticmethod
-    def _deserialize_key_token(data: str, custom_type: StringValueCustomType | None) -> Any:
+    @classmethod
+    def _deserialize_key_token(cls, data: str, custom_type: StringValueCustomType | None) -> Any:
         """Deserialize key string token of custom type."""
 
         if custom_type is None:

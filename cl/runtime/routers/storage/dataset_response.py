@@ -33,8 +33,8 @@ class DatasetResponse(BaseModel):
         alias_generator = StringUtil.to_pascal_case
         populate_by_name = True
 
-    @staticmethod
-    def get_datasets(request: UserRequest) -> List[DatasetResponse]:
+    @classmethod
+    def get_datasets(cls, request: UserRequest) -> List[DatasetResponse]:
         """Implements /storage/get_datasets route."""
 
         # Default response when running locally without authorization

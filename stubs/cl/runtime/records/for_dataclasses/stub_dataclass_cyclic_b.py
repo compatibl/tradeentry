@@ -35,8 +35,8 @@ class StubDataclassCyclicB(StubDataclassCyclicBKey, RecordMixin[StubDataclassCyc
     def get_key(self) -> StubDataclassCyclicBKey:
         return StubDataclassCyclicBKey(str_id=self.str_id)
 
-    @staticmethod
-    def create() -> StubDataclassCyclicB:
+    @classmethod
+    def create(cls) -> StubDataclassCyclicB:
         """Create an instance of this class populated with sample data."""
 
         # Import inside function to avoid cyclic reference error

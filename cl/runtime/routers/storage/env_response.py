@@ -29,8 +29,8 @@ class EnvResponse(BaseModel):
     parent: str = Field(..., alias="Parent")
     """Name of the parent environment."""
 
-    @staticmethod
-    def get_envs(request: UserRequest) -> List[EnvResponse]:
+    @classmethod
+    def get_envs(cls, request: UserRequest) -> List[EnvResponse]:
         """Implements /storage/get_envs route."""
 
         # Default response when running locally without authorization

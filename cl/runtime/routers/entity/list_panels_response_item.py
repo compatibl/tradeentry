@@ -32,8 +32,8 @@ class ListPanelsResponseItem(BaseModel):
         alias_generator = StringUtil.to_pascal_case
         populate_by_name = True
 
-    @staticmethod
-    def list_panels(request: ListPanelsRequest) -> List[ListPanelsResponseItem]:
+    @classmethod
+    def list_panels(cls, request: ListPanelsRequest) -> List[ListPanelsResponseItem]:
         """Implements /entity/list_panels route."""
 
         # TODO: Return saved view names

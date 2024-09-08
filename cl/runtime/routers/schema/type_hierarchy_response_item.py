@@ -36,8 +36,8 @@ class TypeHierarchyResponseItem(BaseModel):
         alias_generator = StringUtil.to_pascal_case
         populate_by_name = True
 
-    @staticmethod
-    def get_types(request: TypeHierarchyRequest) -> List[TypeHierarchyResponseItem]:
+    @classmethod
+    def get_types(cls, request: TypeHierarchyRequest) -> List[TypeHierarchyResponseItem]:
         """Implements /schema/type-hierarchy route."""
 
         base_type_name = request.name
