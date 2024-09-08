@@ -100,12 +100,12 @@ class TimeUtil:
 
     @classmethod
     def from_fields(
-            cls,
-            hour: int,
-            minute: int,
-            second: int,
-            *,
-            millisecond: int | None = None,
+        cls,
+        hour: int,
+        minute: int,
+        second: int,
+        *,
+        millisecond: int | None = None,
     ) -> dt.time:
         """Convert fields with millisecond precision to dt.time."""
 

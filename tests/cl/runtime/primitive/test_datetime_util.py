@@ -15,10 +15,10 @@
 import datetime as dt
 import pytest
 from cl.runtime.primitive.datetime_util import DatetimeUtil
+from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from typing import List
 from typing import Tuple
 from zoneinfo import ZoneInfo
-from cl.runtime.primitive.ordered_uuid import OrderedUuid
 
 
 def get_valid_samples() -> List[Tuple[int, str]]:
@@ -113,7 +113,6 @@ def test_now():
     """Test rounding current time to whole milliseconds."""
 
     for _ in range(1000):
-
         # Datetime before rounded down to 1ms per UUIDv7 RFC-9562 standard
         datetime_before = DatetimeUtil.floor(dt.datetime.now(dt.timezone.utc))
 

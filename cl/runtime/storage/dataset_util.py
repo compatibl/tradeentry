@@ -16,7 +16,8 @@ import datetime as dt
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.storage.data_source_types import TPrimitive
-from typing import List, Iterable
+from typing import Iterable
+from typing import List
 from urllib.parse import unquote
 
 
@@ -136,8 +137,10 @@ class DatasetUtil:
             if dataset_level == "":
                 raise Exception(f"A dataset level is an empty string.")
             if cls._sep in dataset_level:
-                raise Exception(f"Dataset level '{dataset_level}' includes backslash. This is not allowed "
-                                f"because backslash also serves as a level separator.")
+                raise Exception(
+                    f"Dataset level '{dataset_level}' includes backslash. This is not allowed "
+                    f"because backslash also serves as a level separator."
+                )
             if dataset_level.startswith(" "):
                 raise Exception(f"Dataset level '{dataset_level}' has a leading space.")
             if dataset_level.endswith(" "):
@@ -154,5 +157,7 @@ class DatasetUtil:
             return DatetimeUtil.to_str(dataset_level)
         else:
             # TODO: Add other primitive types
-            raise Exception(f"Dataset level '{str(dataset_level)}' has type {type(dataset_level)} which is not "
-                            f"one of the permitted dataset token types or their iterable.")
+            raise Exception(
+                f"Dataset level '{str(dataset_level)}' has type {type(dataset_level)} which is not "
+                f"one of the permitted dataset token types or their iterable."
+            )

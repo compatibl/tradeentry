@@ -39,7 +39,7 @@ simple_requests = [
     {
         "dataset": "",
         "table": "StubHandlers",
-        "method": "StaticHandler1a"
+        "method": "StaticHandler1a",
     },
 ]
 

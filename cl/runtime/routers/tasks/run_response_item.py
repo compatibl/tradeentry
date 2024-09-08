@@ -66,7 +66,7 @@ class RunResponseItem(BaseModel):
                 key_type = Schema.get_type_by_short_name(request.table)
                 key_type_str = f"{key_type.__module__}.{key_type.__name__}"
                 handler_task = InstanceMethodTask(
-                    task_id=f"{key_type_str}:{serialized_key}:{request.method}", # TODO Include parameters or use GUID
+                    task_id=f"{key_type_str}:{serialized_key}:{request.method}",  # TODO Include parameters or use GUID
                     key_type_str=key_type_str,
                     key_str=serialized_key,
                     method_name=request.method,

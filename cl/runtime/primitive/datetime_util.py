@@ -14,11 +14,11 @@
 
 import datetime as dt
 import re
+from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from math import ceil
 from math import floor
 from typing import Callable
 from typing import Tuple
-from cl.runtime.primitive.ordered_uuid import OrderedUuid
 
 # Compile the regex pattern for datetime in ISO-8601 format yyyy-mm-ddThh:mm:ss.fffZ
 datetime_pattern = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$")
