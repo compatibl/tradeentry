@@ -16,7 +16,6 @@ from cl.runtime.context.null_progress import NullProgress
 from cl.runtime.context.protocols import ProgressProtocol
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.storage.data_source import DataSource
-from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.protocols import DataSourceProtocol
 from dataclasses import dataclass
 from logging import Logger
@@ -38,7 +37,7 @@ def current_or_default_data_source() -> DataSourceProtocol:
     return context.data_source if (context := Context.current()) is not None else DataSource.default()
 
 
-def current_or_default_dataset() -> TDataset:
+def current_or_default_dataset() -> str:
     """Return dataset of the current context or None if current progress is not set."""
     return context.dataset if (context := Context.current()) is not None else None
 
@@ -61,7 +60,7 @@ class Context:
     data_source: DataSourceProtocol | None = field(default_factory=lambda: current_or_default_data_source())
     """Return the default data source of the context or None if not set."""
 
-    dataset: TDataset = field(default_factory=lambda: current_or_default_dataset())
+    dataset: str = field(default_factory=lambda: current_or_default_dataset())
     """Default dataset of the context, set to None if not specified"""
 
     progress: ProgressProtocol = field(default_factory=lambda: current_or_default_progress())

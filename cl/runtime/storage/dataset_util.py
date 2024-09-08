@@ -15,9 +15,8 @@
 import datetime as dt
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.primitive.datetime_util import DatetimeUtil
-from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TPrimitive
-from typing import List
+from typing import List, Iterable
 from urllib.parse import unquote
 
 
@@ -31,32 +30,8 @@ class DatasetUtil:
     _sep = "\\"
     _two_sep = "\\\\"
 
-    @staticmethod
-    def to_str(dataset: TDataset) -> str:
-        """Convert the dataset from any input format to delimited string and perform validation."""
-
-        if dataset is None:
-            return DatasetUtil._sep  # Separator only if input is None or an empty string
-        elif dataset == DatasetUtil._sep:
-            return dataset  # Return argument if it is equal to separator
-        elif isinstance(dataset, str):
-            # Normalize if string
-            result = DatasetUtil._normalize_str(dataset)
-            return result
-
-        elif isinstance(dataset, list):
-            # Serialize and normalize levels if list
-            dataset = [DatasetUtil._normalize_level(x, dataset) for x in dataset]
-
-            # Concatenate and return
-            dataset_str = DatasetUtil._sep + DatasetUtil._sep.join(dataset)
-            return dataset_str
-
-        else:
-            raise RuntimeError(f"Dataset {dataset} is not a delimited string, list of levels, or None.")
-
-    @staticmethod
-    def to_levels(dataset: TDataset) -> List[str]:
+    @classmethod
+    def to_levels(cls, dataset: str) -> List[str]:
         """Convert the dataset from any input format to a list of levels and perform validation."""
 
         if dataset is None or dataset == DatasetUtil._sep:
@@ -66,22 +41,23 @@ class DatasetUtil:
             # Convert URL quoted unicode characters
             dataset = unquote(dataset)
 
-            # Split and remove thr first level after checking it is empty
-            dataset = dataset.split(DatasetUtil._sep)
-            if len(dataset) < 2 or dataset[0] != "":
-                raise RuntimeError(f"Dataset {dataset} does not start from the separator {DatasetUtil._sep}.")
-            dataset = dataset[1:]
+            # Remove leading separator if present
+            if dataset.startswith(cls._sep):
+                dataset = dataset.removeprefix(cls._sep)
 
-        if isinstance(dataset, list):
+            # Split into levels according to the separator
+            dataset = dataset.split(DatasetUtil._sep)
+
+        if hasattr(dataset, "__iter__"):
             # Validate all levels
             [DatasetUtil._normalize_level(level) for level in dataset]
         else:
-            raise RuntimeError(f"Dataset {dataset} is not a delimited string, list of levels, or None.")
+            raise RuntimeError(f"Dataset {dataset} is not a delimited string, iterable of strings, or None.")
 
         return dataset
 
-    @staticmethod
-    def to_lookup_list(dataset: TDataset) -> List[str]:
+    @classmethod
+    def to_lookup_list(cls, dataset: str) -> List[str]:
         """
         Convert the dataset in any format to a list of datasets in string format.
         Each element of the returned list represents one step in a hierarchical lookup
@@ -92,31 +68,38 @@ class DatasetUtil:
         levels = DatasetUtil.to_levels(dataset)
 
         # Each element of this list has one less level, starting from the original list and ending with empty list
-        list_of_lists = [levels[: len(levels) - i] for i in range(len(levels) + 1)]
+        list_of_partial_lists = [levels[: len(levels) - i] for i in range(len(levels) + 1)]
 
         # Convert each list element to string format
-        result = [DatasetUtil.to_str(dataset) for dataset in list_of_lists]
+        result = [DatasetUtil.combine(*partial_list) for partial_list in list_of_partial_lists]
         return result
 
-    @staticmethod
-    def combine(*datasets: TDataset) -> TDataset | None:
+    @classmethod
+    def combine(cls, *datasets: TPrimitive | Iterable[TPrimitive] | None) -> str:
         """
-        Combine one or more datasets paths with validation, where each path may contain more than one level.
-        Returns dataset as a list of levels.
+        Combine one or more datasets with validation, where each argument may contain more than one level.
+
+        Notes:
+            - The arguments may optionally begin from dataset separator (backslash)
+            - Arguments that are None are disregarded
         """
 
+        # Return root dataset if no parameters are passed
         if len(datasets) == 0:
-            raise RuntimeError("No arguments were passed to DatasetUtil.combine method.")
+            return cls._sep
 
-        # Validate and convert to
-        datasets = [DatasetUtil.to_levels(p) for p in datasets]
+        # Convert non-empty tokens to levels with validation
+        arg_levels = [DatasetUtil.to_levels(p) for p in datasets if p is not None]
 
-        # Merge lists, no further validation is required
-        result = [level for dataset in datasets for level in dataset]
+        # Merge lists
+        all_levels = [level for dataset in arg_levels if dataset is not None for level in dataset if level is not None]
+
+        # Convert to string
+        result = DatasetUtil._sep + DatasetUtil._sep.join(all_levels)
         return result
 
-    @staticmethod
-    def _normalize_str(dataset: str) -> str:
+    @classmethod
+    def _normalize_str(cls, dataset: str) -> str:
         """
         Normalize a dataset provided in string format by converting URL quoted unicode characters.
         Validates that the dataset consists of backslash delimited levels with leading backslash.
@@ -141,65 +124,35 @@ class DatasetUtil:
 
         return dataset
 
-    @staticmethod
-    def _normalize_level(level: TPrimitive, dataset: TDataset = None) -> str:
-        """
-        Serialize or convert URL quoted unicode characters and validate a single dataset level.
-        Takes complete dataset as an optional argument to use in error reporting only.
-        """
+    @classmethod
+    def _normalize_level(cls, dataset_level: TPrimitive | None) -> str:
+        """Validate and convert input to a single dataset level."""
 
-        # Validate
-        if level is None:
-            in_dataset = DatasetUtil._in_dataset_msg(dataset)
-            raise Exception(f"A dataset level{in_dataset}is None.")
-
-        elif isinstance(level, str):
+        if isinstance(dataset_level, str):
             # Convert URL quoted unicode characters
-            level = unquote(level)
+            dataset_level = unquote(dataset_level)
 
             # Validate string level format
-            if level == "":
-                in_dataset = DatasetUtil._in_dataset_msg(dataset)
-                raise Exception(f"A dataset level{in_dataset}is an empty string.")
-            if DatasetUtil._sep in level:
-                in_dataset = DatasetUtil._in_dataset_msg(dataset)
-                raise Exception(f"Dataset level '{level}'{in_dataset}contains backslash separator.")
-            if level.startswith(" "):
-                in_dataset = DatasetUtil._in_dataset_msg(dataset)
-                raise Exception(f"Dataset level '{level}'{in_dataset}has a leading space.")
-            if level.endswith(" "):
-                in_dataset = DatasetUtil._in_dataset_msg(dataset)
-                raise Exception(f"Dataset level '{level}'{in_dataset}has a trailing space.")
+            if dataset_level == "":
+                raise Exception(f"A dataset level is an empty string.")
+            if DatasetUtil._sep in dataset_level:
+                raise Exception(f"Dataset level '{dataset_level}' includes backslash. This is not allowed "
+                                f"because backslash also serves as a level separator.")
+            if dataset_level.startswith(" "):
+                raise Exception(f"Dataset level '{dataset_level}' has a leading space.")
+            if dataset_level.endswith(" "):
+                raise Exception(f"Dataset level '{dataset_level}' has a trailing space.")
 
-            return level
+            return dataset_level
 
-        elif isinstance(level, dt.date):
+        elif isinstance(dataset_level, dt.date):
             # Convert to ISO-8601 format for date (yyyy-mm-dd)
-            return DateUtil.to_str(level)
-        elif isinstance(level, dt.datetime):
+            return DateUtil.to_str(dataset_level)
+        elif isinstance(dataset_level, dt.datetime):
             # Convert to ISO-8601 format for datetime (yyyy-mm-dd) with validation
             # Datetime must be rounded to milliseconds and in UTC timezone
-            return DatetimeUtil.to_str(level)
+            return DatetimeUtil.to_str(dataset_level)
         else:
-            in_dataset = DatasetUtil._in_dataset_msg(dataset)
-            raise Exception(f"A dataset level '{str(level)}'{in_dataset}is not one of the permitted primitive types.")
-
-    @staticmethod
-    def _in_dataset_msg(dataset: TDataset) -> str:
-        """Form part of an error message containing full dataset."""
-
-        # Convert whole_dataset to an error message segment
-        if dataset is None or dataset == "":
-            # Single space if dataset is None or empty
-            return " "
-        elif is_list := (isinstance(dataset, list) or isinstance(dataset, str)):
-            if is_list:
-                # Concatenate *without validation* if dataset is provided in list format
-                dataset = [str(x) for x in dataset]
-                dataset = DatasetUtil._sep + DatasetUtil._sep.join(dataset)
-
-            # Convert URL quoted unicode characters and return
-            dataset = unquote(dataset)
-            return f" in '{dataset}' "
-        else:
-            raise RuntimeError(f"Dataset {dataset} is not a delimited string, list of levels, or None.")
+            # TODO: Add other primitive types
+            raise Exception(f"Dataset level '{str(dataset_level)}' has type {type(dataset_level)} which is not "
+                            f"one of the permitted dataset token types or their iterable.")

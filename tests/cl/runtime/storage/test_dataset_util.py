@@ -21,90 +21,63 @@ def test_to_levels():
 
     assert DatasetUtil.to_levels(None) == []
     assert DatasetUtil.to_levels("\\") == []
-    assert DatasetUtil.to_levels("\\A") == ["A"]
-    assert DatasetUtil.to_levels("\\A\\B") == ["A", "B"]
+    assert DatasetUtil.to_levels("\\abc") == ["abc"]
+    assert DatasetUtil.to_levels("\\abc\\def") == ["abc", "def"]
 
     with pytest.raises(Exception):
         assert DatasetUtil.to_levels(" ")
     with pytest.raises(Exception):
-        assert DatasetUtil.to_levels(" A")
+        assert DatasetUtil.to_levels(" abc")
     with pytest.raises(Exception):
-        assert DatasetUtil.to_levels("A ")
+        assert DatasetUtil.to_levels("abc ")
     with pytest.raises(Exception):
-        assert DatasetUtil.to_levels(" A\\B")
+        assert DatasetUtil.to_levels(" abc\\def")
     with pytest.raises(Exception):
-        assert DatasetUtil.to_levels("\\A\\B ")
+        assert DatasetUtil.to_levels("\\abc\\def ")
     with pytest.raises(Exception):
-        assert DatasetUtil.to_levels("\\A \\B")
+        assert DatasetUtil.to_levels("\\abc \\def")
     with pytest.raises(Exception):
-        assert DatasetUtil.to_levels("\\A\\ B")
+        assert DatasetUtil.to_levels("\\abc\\ def")
     with pytest.raises(Exception):
-        DatasetUtil.to_levels("A")
+        DatasetUtil.to_levels("\\abc\\")
     with pytest.raises(Exception):
-        DatasetUtil.to_levels("\\A\\")
+        DatasetUtil.to_levels("\\abc\\")
     with pytest.raises(Exception):
-        DatasetUtil.to_levels("\\A\\")
+        DatasetUtil.to_levels("\\ abc")
     with pytest.raises(Exception):
-        DatasetUtil.to_levels("\\ A")
-    with pytest.raises(Exception):
-        DatasetUtil.to_levels("\\A \\B")
-
-
-def test_to_str():
-    """Test DasetUtil.to_str()."""
-
-    assert DatasetUtil.to_str(None) == "\\"
-    assert DatasetUtil.to_str([]) == "\\"
-    assert DatasetUtil.to_str(["A"]) == "\\A"
-    assert DatasetUtil.to_str(["A", "B"]) == "\\A\\B"
-
-    with pytest.raises(Exception):
-        DatasetUtil.to_str(["\\\\"])
-    with pytest.raises(Exception):
-        DatasetUtil.to_str([" "])
-    with pytest.raises(Exception):
-        DatasetUtil.to_str([" A"])
-    with pytest.raises(Exception):
-        DatasetUtil.to_str(["A "])
-    with pytest.raises(Exception):
-        DatasetUtil.to_str(["\\A", "B"])
-    with pytest.raises(Exception):
-        DatasetUtil.to_str(["A", "B\\"])
-    with pytest.raises(Exception):
-        DatasetUtil.to_str(["A", "\\B"])
-    with pytest.raises(Exception):
-        DatasetUtil.to_str(["A\\", "B"])
+        DatasetUtil.to_levels("\\abc \\def")
 
 
 def test_combine():
     """Test DatasetUtil.combine."""
 
-    assert DatasetUtil.combine(None) == []
-    assert DatasetUtil.combine("\\") == []
-    assert DatasetUtil.combine(None, None) == []
-    assert DatasetUtil.combine("\\", None) == []
-    assert DatasetUtil.combine(None, "\\A") == ["A"]
-    assert DatasetUtil.combine("\\A", None) == ["A"]
-    assert DatasetUtil.combine("\\A") == ["A"]
-    assert DatasetUtil.combine("\\A", "\\B") == ["A", "B"]
-    assert DatasetUtil.combine(None, ["A"], ["B"]) == ["A", "B"]
+    assert DatasetUtil.combine(None) == "\\"
+    assert DatasetUtil.combine("\\") == "\\"
+    assert DatasetUtil.combine(None, None) == "\\"
+    assert DatasetUtil.combine("\\", None) == "\\"
+    assert DatasetUtil.combine(None, "\\abc") == "\\abc"
+    assert DatasetUtil.combine("\\abc", None) == "\\abc"
+    assert DatasetUtil.combine("abc") == "\\abc"
+    assert DatasetUtil.combine("abc", "def") == "\\abc\\def"
+    assert DatasetUtil.combine(None, "abc", "def") == "\\abc\\def"
+    assert DatasetUtil.combine("abc", None, "def") == "\\abc\\def"
+    assert DatasetUtil.combine("\\abc") == "\\abc"
+    assert DatasetUtil.combine("\\abc\\def") == "\\abc\\def"
+    assert DatasetUtil.combine("\\abc", "\\def") == "\\abc\\def"
+    assert DatasetUtil.combine(None, "abc", "def") == "\\abc\\def"
 
     with pytest.raises(Exception):
         DatasetUtil.combine("\\\\")
     with pytest.raises(Exception):
         DatasetUtil.combine(" ")
     with pytest.raises(Exception):
-        DatasetUtil.combine(" A")
+        DatasetUtil.combine(" abc")
     with pytest.raises(Exception):
-        DatasetUtil.combine("A ")
+        DatasetUtil.combine("abc ")
     with pytest.raises(Exception):
-        DatasetUtil.combine("\\A", "B")
+        DatasetUtil.combine("abc", "def\\")
     with pytest.raises(Exception):
-        DatasetUtil.combine("A", "B\\")
-    with pytest.raises(Exception):
-        DatasetUtil.combine("A", "\\B")
-    with pytest.raises(Exception):
-        DatasetUtil.combine("A\\", "B")
+        DatasetUtil.combine("abc\\", "def")
 
 
 def test_lookup_list():
@@ -112,8 +85,8 @@ def test_lookup_list():
 
     assert DatasetUtil.to_lookup_list(None) == ["\\"]
     assert DatasetUtil.to_lookup_list("\\") == ["\\"]
-    assert DatasetUtil.to_lookup_list("\\A") == ["\\A", "\\"]
-    assert DatasetUtil.to_lookup_list("\\A\\B") == ["\\A\\B", "\\A", "\\"]
+    assert DatasetUtil.to_lookup_list("\\abc") == ["\\abc", "\\"]
+    assert DatasetUtil.to_lookup_list("\\abc\\def") == ["\\abc\\def", "\\abc", "\\"]
 
 
 if __name__ == "__main__":

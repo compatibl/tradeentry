@@ -41,9 +41,6 @@ TKeyDict = Dict[str, TKeyField]
 TIdentity = str | None
 """Identity token for row level access."""
 
-TDataset = Iterable[str] | None
-"""Dataset as a delimited string, list of levels, or None."""
-
 TStamp = dt.datetime | UUID | None
 """Timestamp or time-ordered globally unique identifier in UUID7 format."""  # TODO: Confirm UUID format to use
 

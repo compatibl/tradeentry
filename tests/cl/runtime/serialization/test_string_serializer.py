@@ -21,19 +21,6 @@ from stubs.cl.runtime import StubDataclassPrimitiveFields
 from stubs.cl.runtime import StubDataclassRecord
 
 
-def test_dataset_serialization():
-    """Test dataset serialization."""
-
-    serializer = StringSerializer()
-
-    assert serializer.serialize_dataset(None) == ""
-    assert serializer.serialize_dataset("abc") == "abc"
-    assert serializer.serialize_dataset("abc\\def") == "abc\\def"
-    assert serializer.serialize_dataset(("abc", "def")) == "abc\\def"
-    assert serializer.serialize_dataset(("abc", ("def", "xyz"))) == "abc\\def\\xyz"
-    assert serializer.serialize_dataset(("abc", ("def", 123.456))) == "abc\\def\\123.456"
-
-
 def test_key_serialization():
     """Test key serialization."""
 

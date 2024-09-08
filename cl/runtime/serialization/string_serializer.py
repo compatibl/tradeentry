@@ -22,7 +22,6 @@ from cl.runtime.serialization.dict_serializer import alias_dict
 from cl.runtime.serialization.dict_serializer import get_type_dict
 from cl.runtime.serialization.string_value_parser import StringValueCustomType
 from cl.runtime.serialization.string_value_parser import StringValueParser
-from cl.runtime.storage.data_source_types import TDataset
 from enum import Enum
 from typing import Any
 from typing import Dict
@@ -37,30 +36,7 @@ primitive_type_names = ["NoneType", "str", "float", "int", "bool", "date", "time
 
 # TODO: Add checks for custom override of default serializer inside the class
 class StringSerializer:
-    """Serialize dataset and key to string, flattening hierarchical structure."""
-
-    def serialize_dataset(self, dataset: TDataset) -> Any:
-        """Serialize dataset to backslash-delimited string (empty string for None), flattening composite datasets."""
-
-        if dataset is None:
-            return ""
-        elif dataset.__class__.__name__ in primitive_type_names:
-            if isinstance(dataset, str):
-                if dataset.startswith("\\") or dataset.endswith("\\"):
-                    raise RuntimeError(f"Dataset or dataset token '{dataset}' must not begin or end with backslash.")
-                if dataset.startswith(" ") or dataset.endswith(" "):
-                    raise RuntimeError(f"Dataset or dataset token '{dataset}' must not begin or end with whitespace.")
-            # TODO: Apply rules depending on the specific primitive type
-            return str(dataset)
-        elif isinstance(dataset, Enum):
-            return dataset.name
-        elif getattr(dataset, "__iter__", None) is not None:
-            return "\\".join(self.serialize_dataset(token) for token in dataset)
-        else:
-            raise RuntimeError(
-                f"Invalid dataset or its token {dataset}. Valid token types are None, "
-                f"primitive types, enum or their iterables."
-            )
+    """Serialize key to string, flattening hierarchical structure."""
 
     @staticmethod
     def _serialize_key_token(data) -> str:

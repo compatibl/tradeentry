@@ -14,7 +14,6 @@
 
 from __future__ import annotations
 
-from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.protocols import DataSourceProtocol
 from logging import Logger
 from typing import ClassVar
@@ -37,7 +36,7 @@ class ContextProtocol(Protocol):
     data_source: DataSourceProtocol | None
     """Return the default data source of the context or None if not set."""
 
-    dataset: TDataset
+    dataset: str
     """Return the default dataset of the context or None if not set."""
 
     progress: ProgressProtocol | None

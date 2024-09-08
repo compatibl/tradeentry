@@ -15,7 +15,6 @@
 from abc import abstractmethod
 from cl.runtime.context.protocols import ContextProtocol
 from cl.runtime.records.protocols import KeyProtocol
-from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
 from memoization import cached
 from typing import Generic
@@ -74,7 +73,7 @@ class RecordMixin(Generic[TKey]):
         records_or_keys: Iterable[Self | TKey | None] | None,
         *,
         context: ContextProtocol | None = None,
-        dataset: TDataset = None,
+        dataset: str | None = None,
         identity: TIdentity | None = None,
     ) -> Iterable[Self | None] | None:
         """
@@ -83,7 +82,7 @@ class RecordMixin(Generic[TKey]):
         Args:
             records_or_keys: Iterable of records or keys (records are returned without DB lookup).
             context: Optional context, if None current context will be used
-            dataset: Lookup dataset as a delimited string, list of levels, or None
+            dataset: If specified, append to the root dataset of the data source
             identity: Identity token for row level access
         """
 

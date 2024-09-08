@@ -129,8 +129,6 @@ class BasicMongoDataSource(DataSource):
         identity: TIdentity | None = None,
     ) -> Iterable[RecordProtocol]:
         # Validate the dataset and if necessary convert to delimited string
-        dataset = DatasetUtil.to_str(dataset)
-
         raise NotImplementedError()
 
     def save_one(
@@ -193,7 +191,6 @@ class BasicMongoDataSource(DataSource):
         identity: TIdentity | None = None,
     ) -> None:
         # Validate the dataset and if necessary convert to delimited string
-        dataset = DatasetUtil.to_str(dataset)
         raise NotImplementedError()
 
     def delete_db(self) -> None:

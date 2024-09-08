@@ -12,16 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.storage.data_source_types import TDataset
 from typing import Any
 from typing import Protocol
-
-
-class DatasetSerializerProtocol(Protocol):
-    """Protocol for dataset serialization, deserialization is not required."""
-
-    def serialize_dataset(self, dataset: TDataset) -> Any:
-        """Serialize dataset to backslash-delimited string (empty string for None), flattening composite datasets."""
 
 
 class KeySerializerProtocol(Protocol):

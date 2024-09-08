@@ -59,9 +59,6 @@ class LocalCache:
             key_type = record_or_key.get_key_type()
             serialized_key = key_serializer.serialize_key(record_or_key)
 
-            # Validate the dataset and if necessary convert to delimited string
-            dataset = DatasetUtil.to_str(dataset)
-
             # Try to retrieve dataset dictionary, insert if it does not yet exist
             dataset_cache = self.__cache.setdefault(dataset, {})
 
@@ -104,8 +101,6 @@ class LocalCache:
         identity: TIdentity | None = None,
     ) -> Iterable[RecordProtocol]:
         # Validate the dataset and if necessary convert to delimited string
-        dataset = DatasetUtil.to_str(dataset)
-
         raise NotImplementedError()
 
     def save_one(
@@ -118,9 +113,6 @@ class LocalCache:
         # If record is None, do nothing
         if record is None:
             return
-
-        # Validate the dataset and if necessary convert to delimited string
-        dataset = DatasetUtil.to_str(dataset)
 
         # Try to retrieve dataset dictionary, insert if it does not yet exist
         dataset_cache = self.__cache.setdefault(dataset, {})
@@ -153,7 +145,6 @@ class LocalCache:
         identity: TIdentity | None = None,
     ) -> None:
         # Validate the dataset and if necessary convert to delimited string
-        dataset = DatasetUtil.to_str(dataset)
         raise NotImplementedError()
 
     @classmethod
