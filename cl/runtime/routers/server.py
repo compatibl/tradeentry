@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 from cl.runtime.routers.auth import auth_router
 from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.health import health_router
@@ -20,10 +19,8 @@ from cl.runtime.routers.schema import schema_router
 from cl.runtime.routers.storage import storage_router
 from cl.runtime.routers.tasks import tasks_router
 from cl.runtime.settings.api_settings import ApiSettings
-from cl.runtime.settings.settings import Settings
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-from starlette.staticfiles import StaticFiles
 
 # Server
 app = FastAPI()
@@ -53,14 +50,3 @@ app.include_router(schema_router.router, prefix="/schema", tags=["Schema"])
 app.include_router(storage_router.router, prefix="/storage", tags=["Storage"])
 app.include_router(entity_router.router, prefix="/entity", tags=["Entity"])
 app.include_router(tasks_router.router, prefix="/tasks", tags=["Tasks"])
-
-# TODO: Make it possible to override wwwroot directory location in settings
-project_root = Settings.get_project_root()
-wwwroot_dir = os.path.join(project_root, "wwwroot")
-
-if os.path.exists(wwwroot_dir):
-    # Launch UI if ui_path is found
-    app.mount("/", StaticFiles(directory=wwwroot_dir, html=True))
-    print(f"Starting UI")
-else:
-    print(f"UI directory {wwwroot_dir} not found, starting REST API only.")

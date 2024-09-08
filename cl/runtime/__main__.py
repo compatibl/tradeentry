@@ -12,11 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 import uvicorn
+from starlette.staticfiles import StaticFiles
 from cl.runtime.context.context import Context
 from cl.runtime.routers.server import app
 from cl.runtime.settings.api_settings import ApiSettings
 from cl.runtime.settings.preload_settings import PreloadSettings
+from cl.runtime.settings.settings import Settings
 from stubs.cl.runtime.config.stub_runtime_config import StubRuntimeConfig  # TODO: Remove after refactoring
 
 if __name__ == "__main__":
@@ -28,6 +31,17 @@ if __name__ == "__main__":
 
         # Preload data
         PreloadSettings.instance().preload()
+
+        # TODO: Make it possible to override wwwroot directory location in settings
+        project_root = Settings.get_project_root()
+        wwwroot_dir = os.path.join(project_root, "wwwroot")
+
+        if os.path.exists(wwwroot_dir):
+            # Launch UI if ui_path is found
+            app.mount("/", StaticFiles(directory=wwwroot_dir, html=True))
+            print(f"Starting UI")
+        else:
+            print(f"UI directory {wwwroot_dir} not found, starting REST API only.")
 
         # Run Uvicorn using hostname and port specified by Dynaconf
         api_settings = ApiSettings.instance()
