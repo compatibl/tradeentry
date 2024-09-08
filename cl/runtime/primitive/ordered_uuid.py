@@ -13,9 +13,14 @@
 # limitations under the License.
 
 import datetime as dt
-from typing import Iterable
-from uuid_utils import UUID
-from uuid_utils import uuid7
+import uuid_utils
+from typing import Iterable, cast
+from uuid import UUID
+
+
+def _get_uuid7() -> UUID:
+    """Get a new UUIDv7 and convert the result from uuid_utils.UUID type to uuid.UUID type."""
+    return UUID(bytes=uuid_utils.uuid7().bytes)
 
 
 class OrderedUuid:
@@ -25,7 +30,7 @@ class OrderedUuid:
     """
 
     # TODO: Use context vars to prevent a race condition between contexts or threads
-    _prev_uuid = uuid7()
+    _prev_uuid = _get_uuid7()
     """The last UUID created during the previous call within the same context."""
 
     @classmethod
@@ -39,7 +44,7 @@ class OrderedUuid:
 
         # Keep getting new uuid7 until it is more than '_prev_uuid'
         # At worst this will delay execution by one time tick only
-        while (result := uuid7()) <= cls._prev_uuid:
+        while (result := _get_uuid7()) <= cls._prev_uuid:
             pass
 
         # Update _prev_uuid with the result to ensure strict ordering within the same process thread and context
@@ -59,4 +64,4 @@ class OrderedUuid:
     def datetime_of(cls, value: UUID) -> dt.datetime:
         """Return datetime of a single UUIDv7 value."""
         # Field 'UUID.timestamp' is int milliseconds while 'fromtimestamp' method expects float seconds, divide by 1000
-        return dt.datetime.fromtimestamp(value.timestamp / 1000, dt.timezone.utc)
+        return dt.datetime.fromtimestamp(uuid_utils.UUID(bytes=value.bytes).timestamp / 1000, dt.timezone.utc)

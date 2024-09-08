@@ -17,8 +17,7 @@ import pytest
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from typing import Iterable
-from typing import List
-from uuid_utils import UUID
+from uuid import UUID
 
 
 def is_ordered(values: Iterable[UUID]):
