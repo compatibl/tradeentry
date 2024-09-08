@@ -12,25 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import itertools
-from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.protocols import InitProtocol
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.storage.data_source import DataSource
-from cl.runtime.storage.data_source_types import TDataDict
-from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TQuery
-from cl.runtime.storage.dataset_util import DatasetUtil
 from dataclasses import dataclass
 from dataclasses import field
 from itertools import groupby
 from pymongo import MongoClient
 from pymongo.database import Database
-from typing import Dict
 from typing import Iterable
 from typing import Type
 from typing import cast
@@ -70,7 +63,7 @@ class BasicMongoDataSource(DataSource):
         record_or_key: KeyProtocol | None,
         *,
         dataset: str | None = None,
-        identity: TIdentity | None = None,
+        identity: str | None = None,
     ) -> RecordProtocol | None:
         if record_or_key is None or getattr(record_or_key, "get_key", None) is not None:
             # Record or None, return without lookup
@@ -106,7 +99,7 @@ class BasicMongoDataSource(DataSource):
         records_or_keys: Iterable[KeyProtocol | None] | None,
         *,
         dataset: str | None = None,
-        identity: TIdentity | None = None,
+        identity: str | None = None,
     ) -> Iterable[RecordProtocol | None] | None:
         # TODO: Review performance compared to a custom implementation for load_many
         result = [self.load_one(x) for x in records_or_keys]
@@ -117,7 +110,7 @@ class BasicMongoDataSource(DataSource):
         record_type: Type[RecordProtocol],
         *,
         dataset: str | None = None,
-        identity: TIdentity | None = None,
+        identity: str | None = None,
     ) -> Iterable[RecordProtocol]:
         raise NotImplementedError()
 
@@ -126,7 +119,7 @@ class BasicMongoDataSource(DataSource):
         query: TQuery,
         *,
         dataset: str | None = None,
-        identity: TIdentity | None = None,
+        identity: str | None = None,
     ) -> Iterable[RecordProtocol]:
         # Validate the dataset and if necessary convert to delimited string
         raise NotImplementedError()
@@ -136,7 +129,7 @@ class BasicMongoDataSource(DataSource):
         record: RecordProtocol | None,
         *,
         dataset: str | None = None,
-        identity: TIdentity = None,
+        identity: str | None = None,
     ) -> None:
         # If record is None, do nothing
         if record is None:
@@ -165,7 +158,7 @@ class BasicMongoDataSource(DataSource):
         records: Iterable[RecordProtocol],
         *,
         dataset: str | None = None,
-        identity: TIdentity = None,
+        identity: str | None = None,
     ) -> None:
         # TODO: Temporary, replace by independent implementation
         [self.save_one(x, dataset=dataset, identity=identity) for x in records]
@@ -188,7 +181,7 @@ class BasicMongoDataSource(DataSource):
         keys: Iterable[KeyProtocol] | None,
         *,
         dataset: str | None = None,
-        identity: TIdentity | None = None,
+        identity: str | None = None,
     ) -> None:
         # Validate the dataset and if necessary convert to delimited string
         raise NotImplementedError()

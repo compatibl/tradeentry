@@ -38,9 +38,6 @@ TKeyField = Dict[str, "TKeyField"] | TPrimitive | Enum
 TKeyDict = Dict[str, TKeyField]
 """Serialized key in dictionary format."""
 
-TIdentity = str | None
-"""Identity token for row level access."""
-
 TStamp = dt.datetime | UUID | None
 """Timestamp or time-ordered globally unique identifier in UUID7 format."""  # TODO: Confirm UUID format to use
 

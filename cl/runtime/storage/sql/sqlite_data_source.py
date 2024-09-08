@@ -20,7 +20,6 @@ from cl.runtime.records.protocols import is_key
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
 from cl.runtime.settings.settings import Settings
 from cl.runtime.storage.data_source import DataSource
-from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.sql.sqlite_schema_manager import SqliteSchemaManager
 from collections import defaultdict
@@ -117,7 +116,7 @@ class SqliteDataSource(DataSource):
         record_or_key: KeyProtocol | None,
         *,
         dataset: str | None = None,
-        identity: TIdentity | None = None,
+        identity: str | None = None,
     ) -> RecordProtocol | None:
         return next(iter(self.load_many([record_or_key], dataset=dataset, identity=identity)))
 
@@ -127,7 +126,7 @@ class SqliteDataSource(DataSource):
         records_or_keys: Iterable[KeyProtocol | None] | None,
         *,
         dataset: str | None = None,
-        identity: TIdentity | None = None,
+        identity: str | None = None,
     ) -> Iterable[RecordProtocol | None] | None:
         serializer = FlatDictSerializer()
 
@@ -198,7 +197,7 @@ class SqliteDataSource(DataSource):
         record_type: Type[RecordProtocol],
         *,
         dataset: str | None = None,
-        identity: TIdentity | None = None,
+        identity: str | None = None,
     ) -> Iterable[RecordProtocol]:
         raise NotImplementedError()
 
@@ -207,7 +206,7 @@ class SqliteDataSource(DataSource):
         query: TQuery,
         *,
         dataset: str | None = None,
-        identity: TIdentity | None = None,
+        identity: str | None = None,
     ) -> Iterable[RecordProtocol]:
         raise NotImplementedError
 
@@ -242,7 +241,7 @@ class SqliteDataSource(DataSource):
         record: RecordProtocol | None,
         *,
         dataset: str | None = None,
-        identity: TIdentity = None,
+        identity: str | None = None,
     ) -> None:
         return self.save_many([record], dataset=dataset, identity=identity)
 
@@ -251,7 +250,7 @@ class SqliteDataSource(DataSource):
         records: Iterable[RecordProtocol],
         *,
         dataset: str | None = None,
-        identity: TIdentity = None,
+        identity: str | None = None,
     ) -> None:
         serializer = FlatDictSerializer()
 
@@ -312,7 +311,7 @@ class SqliteDataSource(DataSource):
         keys: Iterable[KeyProtocol] | None,
         *,
         dataset: str | None = None,
-        identity: TIdentity | None = None,
+        identity: str | None = None,
     ) -> None:
         serializer = FlatDictSerializer()
 

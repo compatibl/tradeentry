@@ -20,7 +20,6 @@ from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.settings.context_settings import ContextSettings
-from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TQuery
 from dataclasses import dataclass
 from typing import ClassVar
@@ -44,7 +43,7 @@ class DataSource(ABC):
         record_or_key: KeyProtocol | None,
         *,
         dataset: str | None = None,
-        identity: TIdentity | None = None,
+        identity: str | None = None,
     ) -> RecordProtocol | None:
         """
         Load a single record using a key. If record is passed instead of a key, it is returned without DB lookup.
@@ -52,7 +51,7 @@ class DataSource(ABC):
         Args:
             record_or_key: Record or key (records are returned without DB lookup)
             dataset: If specified, append to the root dataset of the data source
-            identity: Identity token for row level access
+            identity: Identity token for database access and row-level security
         """
 
     @abstractmethod
@@ -61,7 +60,7 @@ class DataSource(ABC):
         records_or_keys: Iterable[KeyProtocol | None] | None,
         *,
         dataset: str | None = None,
-        identity: TIdentity | None = None,
+        identity: str | None = None,
     ) -> Iterable[RecordProtocol | None] | None:
         """
         Load records using a list of records or keys (records are returned without DB lookup).
@@ -69,7 +68,7 @@ class DataSource(ABC):
         Args:
             records_or_keys: Iterable of records or keys (records are returned without DB lookup).
             dataset: If specified, append to the root dataset of the data source
-            identity: Identity token for row level access
+            identity: Identity token for database access and row-level security
         """
 
     @abstractmethod
@@ -78,7 +77,7 @@ class DataSource(ABC):
         record_type: Type[RecordProtocol],
         *,
         dataset: str | None = None,
-        identity: TIdentity | None = None,
+        identity: str | None = None,
     ) -> Iterable[RecordProtocol]:
         """
         Load all records of the specified type.
@@ -86,7 +85,7 @@ class DataSource(ABC):
         Args:
             record_type: Type of the record to load.
             dataset: If specified, append to the root dataset of the data source
-            identity: Identity token for row level access
+            identity: Identity token for database access and row-level security
         """
 
     @abstractmethod
@@ -95,7 +94,7 @@ class DataSource(ABC):
         query: TQuery,
         *,
         dataset: str | None = None,
-        identity: TIdentity | None = None,
+        identity: str | None = None,
     ) -> Iterable[RecordProtocol]:
         """
         Load records based on the query.
@@ -105,7 +104,7 @@ class DataSource(ABC):
                 returned by the query based on NoSQL query conditions and order in MongoDB format.
                 Keys in CONDITIONS_DICT and ORDER_DICT must match the fields of TYPE.
             dataset: If specified, append to the root dataset of the data source
-            identity: Identity token for row level access
+            identity: Identity token for database access and row-level security
         """
 
     @abstractmethod
@@ -114,7 +113,7 @@ class DataSource(ABC):
         record: RecordProtocol | None,
         *,
         dataset: str | None = None,
-        identity: TIdentity = None,
+        identity: str | None = None,
     ) -> None:
         """
         Save records to storage.
@@ -122,7 +121,7 @@ class DataSource(ABC):
         Args:
             record: Record or None.
             dataset: Target dataset as a delimited string, list of levels, or None
-            identity: Identity token for row level access
+            identity: Identity token for database access and row-level security
         """
 
     @abstractmethod
@@ -131,7 +130,7 @@ class DataSource(ABC):
         records: Iterable[RecordProtocol],
         *,
         dataset: str | None = None,
-        identity: TIdentity = None,
+        identity: str | None = None,
     ) -> None:
         """
         Save records to storage.
@@ -139,7 +138,7 @@ class DataSource(ABC):
         Args:
             records: Iterable of records.
             dataset: Target dataset as a delimited string, list of levels, or None
-            identity: Identity token for row level access
+            identity: Identity token for database access and row-level security
         """
 
     @abstractmethod
@@ -148,7 +147,7 @@ class DataSource(ABC):
         keys: Iterable[KeyProtocol] | None,
         *,
         dataset: str | None = None,
-        identity: TIdentity | None = None,
+        identity: str | None = None,
     ) -> None:
         """
         Delete records using an iterable of keys.
@@ -156,7 +155,7 @@ class DataSource(ABC):
         Args:
             keys: Iterable of keys.
             dataset: Target dataset as a delimited string, list of levels, or None
-            identity: Identity token for row level access
+            identity: Identity token for database access and row-level security
         """
 
     @abstractmethod
