@@ -192,5 +192,5 @@ class BasicMongoDataSource(DataSource):
         # Validate the dataset and if necessary convert to delimited string
         raise NotImplementedError()
 
-    def delete_db(self) -> None:
+    def delete_all(self) -> None:
         raise NotImplementedError()

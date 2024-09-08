@@ -348,7 +348,7 @@ class SqliteDataSource(DataSource):
             cursor.execute(sql_statement, query_values)
             self._connection.commit()
 
-    def delete_db(self) -> None:
+    def delete_all(self) -> None:
         # Run in a loop because tables that depend on a foreign key can not be deleted before related tables
         while True:
             if not self._connection:

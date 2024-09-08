@@ -159,7 +159,7 @@ class DataSource(ABC):
         """
 
     @abstractmethod
-    def delete_db(self) -> None:
+    def delete_all(self) -> None:
         """
         Permanently delete (drop) the database without the possibility of recovery.
         Error if data source identifier does not match the temp_db pattern in settings.

@@ -232,11 +232,10 @@ class Context:
         )
 
     @classmethod
-    def delete_db(cls) -> None:
+    def delete_all(cls) -> None:
         """
-        Permanently delete (drop) the database without the possibility of recovery.
+        Permanently delete (drop) all records and schema without the possibility of recovery.
         Error if data source identifier does not match the temp_db pattern in settings.
         """
-        Context.current().data_source.delete_db()
-
-
+        # TODO(High): Add a check for temp DB name pattern
+        Context.current().data_source.delete_all()

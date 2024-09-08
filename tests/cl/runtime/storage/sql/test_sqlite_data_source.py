@@ -83,7 +83,7 @@ def test_complex_records():
         assert loaded_records == samples
 
     finally:
-        data_source.delete_db()
+        data_source.delete_all()
 
 
 def test_basic_operations():
@@ -131,7 +131,7 @@ def test_basic_operations():
         assert loaded_records == [None] * len(samples)
 
     finally:
-        data_source.delete_db()
+        data_source.delete_all()
 
 
 def test_record_upsert():
@@ -156,7 +156,7 @@ def test_record_upsert():
         assert loaded_record == override_sample
 
     finally:
-        data_source.delete_db()
+        data_source.delete_all()
 
 
 def test_load_all():
@@ -188,7 +188,7 @@ def test_load_all():
         assert _assert_equals_iterable_without_ordering(derived_samples, loaded_records)
 
     finally:
-        data_source.delete_db()
+        data_source.delete_all()
 
 
 @pytest.mark.skip("Performance test.")
@@ -223,7 +223,7 @@ def test_performance():
         print(f"Load many one by one: {end_time - start_time}s.")
 
     finally:
-        data_source.delete_db()
+        data_source.delete_all()
 
 
 def test_singleton():
@@ -241,7 +241,7 @@ def test_singleton():
         assert all_records[0] == other_singleton_sample
 
     finally:
-        data_source.delete_db()
+        data_source.delete_all()
 
 
 if __name__ == "__main__":
