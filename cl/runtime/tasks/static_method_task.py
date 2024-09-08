@@ -41,13 +41,10 @@ class StaticMethodTask(CallableTask):
         record_type = ClassInfo.get_class_type(self.type_str)
 
         # Method callable is already bound to cls, it is not necessary to pass cls as an explicit parameter
-        method = getattr(record_type, self.method_name)
+        method_name = self.normalize_method_name(self.method_name)
+        method = getattr(record_type, method_name)
 
         # Invoke the callable
-        method()
-
-        record_type = ClassInfo.get_class_type(self.type_str)
-        method = getattr(record_type, self.method_name)
         method()
 
     @classmethod
