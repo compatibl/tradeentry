@@ -173,6 +173,8 @@ class DataSource(ABC):
             # Load from configuration if not set
             context_settings = ContextSettings.instance()  # TODO: Refactor to place this inside Context
             data_source_type = ClassInfo.get_class_type(context_settings.data_source_class)
-            data_source_id = str(context_settings.data_source)
-            DataSource.__default = data_source_type(data_source_id=data_source_id)
+            DataSource.__default = data_source_type(
+                data_source_id=context_settings.data_source_id,
+                db_name=context_settings.db_name,
+            )
         return DataSource.__default

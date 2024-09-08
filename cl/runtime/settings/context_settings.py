@@ -24,10 +24,13 @@ class ContextSettings(Settings):
     packages: List[str]
     """List of packages to load in dot-delimited module prefix format, for example 'cl.runtime'."""
 
-    data_source_class: str  # TODO: Deprecated, switch to preloaded class
-    """Data source class in module.ClassName format."""
+    data_source_class: str  # TODO: Deprecated, switch to class-specific fields
+    """Default data source class in module.ClassName format."""
 
-    data_source: str
+    data_source_id: str
+    """Default data source identifier (the data source record must be loaded in code or from a csv/yaml/json file)."""
+
+    db_name: str  # TODO: Deprecated, switch to class-specific fields
     """Default data source identifier (the data source record must be loaded in code or from a csv/yaml/json file)."""
 
     def __post_init__(self):
@@ -45,10 +48,10 @@ class ContextSettings(Settings):
         else:
             raise RuntimeError(f"{type(self).__name__} field 'packages' must be a string or an iterable of strings.")
 
-        if isinstance(self.data_source, str):
-            pass
-        else:
+        if not isinstance(self.data_source_id, str):
             raise RuntimeError(f"{type(self).__name__} field 'data_source' must be a string.")
+        if not isinstance(self.db_name, str):
+            raise RuntimeError(f"{type(self).__name__} field 'db_name' must be a string.")
 
     @classmethod
     def get_prefix(cls) -> str:
