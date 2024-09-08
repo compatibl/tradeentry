@@ -29,7 +29,7 @@ class WorkflowTask(Task):
 
     def execute(self) -> None:
         # Check that phases do not specify prerequisites
-        phases = Context.current().data_source.load_many(self.phases)  # TODO: Error message if not found
+        phases = Context.load_many(self.phases)  # TODO: Error message if not found
         if any(phase.prerequisites is not None for phase in phases):
             # TODO: Support checking for prerequisites
             raise RuntimeError("Checking for prerequisites is not yet supported.")

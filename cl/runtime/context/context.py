@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from cl.runtime.records.protocols import KeyProtocol, RecordProtocol
 from cl.runtime.context.null_progress import NullProgress
 from cl.runtime.context.protocols import ProgressProtocol
 from cl.runtime.records.dataclasses_extensions import field
@@ -19,7 +20,7 @@ from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.protocols import DataSourceProtocol
 from dataclasses import dataclass
 from logging import Logger
-from typing import ClassVar
+from typing import ClassVar, Iterable, Type
 from typing import List
 
 # Use in case progress is not specified
@@ -97,3 +98,145 @@ class Context:
 
         # Return False to propagate exception to the caller
         return False
+
+    @classmethod
+    def load_one(
+        cls,
+        record_or_key: KeyProtocol | None,
+        *,
+        dataset: str | None = None,
+        identity: str | None = None,
+    ) -> RecordProtocol | None:
+        """
+        Load a single record using a key. If record is passed instead of a key, it is returned without DB lookup.
+
+        Args:
+            record_or_key: Record or key (records are returned without DB lookup)
+            dataset: If specified, append to the root dataset of the data source
+            identity: Identity token for database access and row-level security
+        """
+        return Context.current().data_source.load_one(
+            record_or_key,
+            dataset=dataset,
+            identity=identity,
+        )
+
+    @classmethod
+    def load_many(
+        cls,
+        records_or_keys: Iterable[KeyProtocol | None] | None,
+        *,
+        dataset: str | None = None,
+        identity: str | None = None,
+    ) -> Iterable[RecordProtocol | None] | None:
+        """
+        Load records using a list of records or keys (records are returned without DB lookup).
+
+        Args:
+            records_or_keys: Iterable of records or keys (records are returned without DB lookup).
+            dataset: If specified, append to the root dataset of the data source
+            identity: Identity token for database access and row-level security
+        """
+        return Context.current().data_source.load_many(
+            records_or_keys,
+            dataset=dataset,
+            identity=identity,
+        )
+
+    @classmethod
+    def load_all(
+        cls,
+        record_type: Type[RecordProtocol],
+        *,
+        dataset: str | None = None,
+        identity: str | None = None,
+    ) -> Iterable[RecordProtocol]:
+        """
+        Load all records of the specified type.
+
+        Args:
+            record_type: Type of the record to load.
+            dataset: If specified, append to the root dataset of the data source
+            identity: Identity token for database access and row-level security
+        """
+        return Context.current().data_source.load_all(
+            record_type,
+            dataset=dataset,
+            identity=identity,
+        )
+
+    @classmethod
+    def save_one(
+        cls,
+        record: RecordProtocol | None,
+        *,
+        dataset: str | None = None,
+        identity: str | None = None,
+    ) -> None:
+        """
+        Save records to storage.
+
+        Args:
+            record: Record or None.
+            dataset: Target dataset as a delimited string, list of levels, or None
+            identity: Identity token for database access and row-level security
+        """
+        Context.current().data_source.save_one(
+            record,
+            dataset=dataset,
+            identity=identity,
+        )
+
+    @classmethod
+    def save_many(
+        cls,
+        records: Iterable[RecordProtocol],
+        *,
+        dataset: str | None = None,
+        identity: str | None = None,
+    ) -> None:
+        """
+        Save records to storage.
+
+        Args:
+            records: Iterable of records.
+            dataset: Target dataset as a delimited string, list of levels, or None
+            identity: Identity token for database access and row-level security
+        """
+        Context.current().data_source.save_many(
+            records,
+            dataset=dataset,
+            identity=identity,
+        )
+
+    @classmethod
+    def delete_many(
+        cls,
+        keys: Iterable[KeyProtocol] | None,
+        *,
+        dataset: str | None = None,
+        identity: str | None = None,
+    ) -> None:
+        """
+        Delete records using an iterable of keys.
+
+        Args:
+            keys: Iterable of keys.
+            dataset: Target dataset as a delimited string, list of levels, or None
+            identity: Identity token for database access and row-level security
+        """
+        Context.current().data_source.delete_many(
+            keys,
+            dataset=dataset,
+            identity=identity,
+        )
+
+    @classmethod
+    def delete_db(cls) -> None:
+        """
+        Permanently delete (drop) the database without the possibility of recovery.
+        Error if data source identifier does not match the temp_db pattern in settings.
+        """
+        Context.current().data_source.delete_db()
+
+

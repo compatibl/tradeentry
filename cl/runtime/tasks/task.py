@@ -51,6 +51,6 @@ class Task(TaskKey, RecordMixin[TaskKey], ABC):
     @handler
     def submit(self, queue: TaskQueueKey) -> TaskRunKey:
         """Submit task to this queue (all further access to the run is provided via the returned TaskRunKey)."""
-        queue_obj = Context.current().data_source.load_one(queue)  # TODO: Optimize in case of repeated calls
+        queue_obj = Context.load_one(queue)  # TODO: Optimize in case of repeated calls
         task_run_key = queue_obj.submit_task(self)
         return task_run_key

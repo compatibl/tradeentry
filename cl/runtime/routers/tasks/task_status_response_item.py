@@ -47,7 +47,7 @@ class TaskStatusResponseItem(BaseModel):
         """Get status for tasks in request."""
 
         task_run_keys = [TaskRunKey(task_run_id=UUID(x)) for x in request.task_run_ids]
-        task_runs = cast(Iterable[TaskRun], Context.current().data_source.load_many(task_run_keys))
+        task_runs = cast(Iterable[TaskRun], Context.load_many(task_run_keys))
 
         response_items = [
             TaskStatusResponseItem(

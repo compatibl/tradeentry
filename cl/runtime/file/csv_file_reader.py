@@ -42,7 +42,7 @@ class CsvFileReader(Reader):
 
             # Save records to the specified data source
             if records:
-                Context.current().data_source.save_many(records)
+                Context.save_many(records)
 
     def _deserialize_row(self, row_dict: Dict[str, Any]) -> RecordProtocol:
         """Deserialize row into a record."""

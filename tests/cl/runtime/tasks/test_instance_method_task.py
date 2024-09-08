@@ -21,11 +21,11 @@ from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 def test_smoke():
     """Test 'test_create' method."""
 
-    with Context() as context:
+    with Context():
         records = [
             StubHandlers(stub_id="abc"),
         ]
-        context.data_source.save_many(records)
+        Context.save_many(records)
 
         object_and_instance_handler_on_object = [(x, x.instance_handler_1a) for x in records]
         key_and_instance_handler_on_object = [(x.get_key(), x.instance_handler_1a) for x in records]

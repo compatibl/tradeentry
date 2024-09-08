@@ -53,8 +53,8 @@ def test_method():
     """Test coroutine for /entity/panel route."""
 
     # TODO: Use UnitTestContext instead
-    with Context() as context:
-        context.data_source.save_one(stub_viewers)
+    with Context():
+        Context.save_one(stub_viewers)
 
         for request, expected_result in zip(requests, expected_results):
             request_object = PanelRequest(**request)
@@ -68,8 +68,8 @@ def test_api():
     """Test REST API for /entity/panel route."""
 
     # TODO: Use UnitTestContext instead
-    with Context() as context:
-        context.data_source.save_one(stub_viewers)
+    with Context():
+        Context.save_one(stub_viewers)
 
         test_app = FastAPI()
         test_app.include_router(entity_router.router, prefix="/entity", tags=["Entity"])

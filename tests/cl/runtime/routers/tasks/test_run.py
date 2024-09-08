@@ -61,8 +61,8 @@ def test_method():
     """Test coroutine for /tasks/run route."""
 
     # TODO: Use UnitTestContext instead
-    with Context() as context:
-        context.data_source.save_one(stub_handlers)
+    with Context():
+        Context.save_one(stub_handlers)
 
         for request in simple_requests + save_to_db_requests:
             request_object = RunRequest(**request)
@@ -84,7 +84,7 @@ def test_method():
             request_object = RunRequest(**request)
             RunResponseItem.run_tasks(request_object)
 
-            actual_records = list(context.data_source.load_many(expected_keys))
+            actual_records = list(Context.load_many(expected_keys))
             assert actual_records == expected_records
 
 
@@ -92,8 +92,8 @@ def test_api():
     """Test REST API for /tasks/run route."""
 
     # TODO: Use UnitTestContext instead
-    with Context() as context:
-        context.data_source.save_one(stub_handlers)
+    with Context():
+        Context.save_one(stub_handlers)
 
         test_app = FastAPI()
         test_app.include_router(tasks_router.router, prefix="/tasks", tags=["Tasks"])
@@ -120,7 +120,7 @@ def test_api():
 
                 test_client.post("/tasks/run", json=request)
 
-                actual_records = list(context.data_source.load_many(expected_keys))
+                actual_records = list(Context.load_many(expected_keys))
                 assert actual_records == expected_records
 
 

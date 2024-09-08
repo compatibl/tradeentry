@@ -23,9 +23,9 @@ from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 def test_smoke():
     """Smoke test."""
 
-    with Context() as context:
+    with Context():
         obj = StubHandlers(stub_id="abc")
-        context.data_source.save_one(obj)
+        Context.save_one(obj)
 
         method_callable = StubHandlers.static_handler_1a
         task = StaticMethodTask.create(task_id="abc", record_type=StubHandlers, method_callable=method_callable)

@@ -13,9 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime import DataSource
 from cl.runtime.context.context import Context
-from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecord
 
 
 def test_smoke():

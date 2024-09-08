@@ -27,10 +27,10 @@ from dataclasses import dataclass
 def execute_task(task_id: str) -> None:
     """Invoke execute method of the specified task."""
 
-    with Context() as context:
+    with Context():
         # Load task object
         task_key = TaskKey(task_id=task_id)
-        task = context.data_source.load_one(task_key)
+        task = Context.load_one(task_key)
         task.execute()
 
 
@@ -69,7 +69,7 @@ class ProcessQueue(TaskQueue):
 
         # Save task if provided as record rather than key
         if is_record(task):
-            Context.current().data_source.save_one(task)
+            Context.save_one(task)
 
         # Spawn a daemon process that will exit when this process exits
         worker_process = multiprocessing.Process(target=execute_task, args=(task.task_id,))
@@ -83,6 +83,6 @@ class ProcessQueue(TaskQueue):
         task_run.submit_time = submit_time
         task_run.update_time = submit_time
         task_run.status = TaskStatus.Completed  # TODO: Update after the task is actually completed
-        Context.current().data_source.save_one(task_run)
+        Context.save_one(task_run)
 
         return task_run.get_key()
