@@ -20,7 +20,6 @@ from cl.runtime.records.protocols import is_key
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
 from cl.runtime.settings.settings import Settings
 from cl.runtime.storage.data_source import DataSource
-from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.sql.sqlite_schema_manager import SqliteSchemaManager
@@ -30,7 +29,6 @@ from itertools import groupby
 from typing import Any
 from typing import Dict
 from typing import Iterable
-from typing import List
 from typing import Tuple
 from typing import Type
 
@@ -111,7 +109,11 @@ class SqliteDataSource(DataSource):
         return tuple(serializer.serialize_data(getattr(key, key_field)) for key in keys for key_field in key_fields)
 
     def load_one(
-        self, record_or_key: KeyProtocol | None, *, dataset: TDataset = None, identity: TIdentity | None = None
+        self,
+        record_or_key: KeyProtocol | None,
+        *,
+        dataset: str | None = None,
+        identity: TIdentity | None = None,
     ) -> RecordProtocol | None:
         return next(iter(self.load_many([record_or_key], dataset=dataset, identity=identity)))
 
@@ -120,7 +122,7 @@ class SqliteDataSource(DataSource):
         self,
         records_or_keys: Iterable[KeyProtocol | None] | None,
         *,
-        dataset: TDataset = None,
+        dataset: str | None = None,
         identity: TIdentity | None = None,
     ) -> Iterable[RecordProtocol | None] | None:
         serializer = FlatDictSerializer()
@@ -191,18 +193,21 @@ class SqliteDataSource(DataSource):
         self,
         record_type: Type[RecordProtocol],
         *,
-        dataset: TDataset = None,
+        dataset: str | None = None,
         identity: TIdentity | None = None,
     ) -> Iterable[RecordProtocol]:
         raise NotImplementedError()
 
     def load_by_query(
-        self, query: TQuery, *, dataset: TDataset = None, identities: Iterable[TIdentity] | None = None
+        self,
+        query: TQuery,
+        *,
+        dataset: str | None = None,
+        identity: TIdentity | None = None,
     ) -> Iterable[RecordProtocol]:
         raise NotImplementedError
 
     def load_all(self, record_type: Type[RecordProtocol]) -> Iterable[RecordProtocol]:
-        """Load all records for given type including derived."""
         serializer = FlatDictSerializer()
 
         table_name: str = self._schema_manager.table_name_for_type(record_type)
@@ -228,11 +233,21 @@ class SqliteDataSource(DataSource):
             data = {reversed_columns_mapping[k]: v for k, v in data.items() if v is not None}
             yield serializer.deserialize_data(data)
 
-    def save_one(self, record: RecordProtocol | None, *, dataset: TDataset = None, identity: TIdentity = None) -> None:
+    def save_one(
+        self,
+        record: RecordProtocol | None,
+        *,
+        dataset: str | None = None,
+        identity: TIdentity = None,
+    ) -> None:
         return self.save_many([record], dataset=dataset, identity=identity)
 
     def save_many(
-        self, records: Iterable[RecordProtocol], *, dataset: TDataset = None, identity: TIdentity = None
+        self,
+        records: Iterable[RecordProtocol],
+        *,
+        dataset: str | None = None,
+        identity: TIdentity = None,
     ) -> None:
         serializer = FlatDictSerializer()
 
@@ -292,8 +307,8 @@ class SqliteDataSource(DataSource):
         self,
         keys: Iterable[KeyProtocol] | None,
         *,
-        dataset: TDataset = None,
-        identities: Iterable[TIdentity] | None = None,
+        dataset: str | None = None,
+        identity: TIdentity | None = None,
     ) -> None:
         serializer = FlatDictSerializer()
 
@@ -330,13 +345,11 @@ class SqliteDataSource(DataSource):
             cursor.execute(sql_statement, query_values)
             self._connection.commit()
 
-    def delete_db(self, *, close_connection: bool = False) -> None:
-        """Delete all tables and indexes on current db instance."""
-
-        # delete several time because tables depended on foreign key can not be deleted before related tables exist.
+    def delete_db(self) -> None:
+        # Run in a loop because tables that depend on a foreign key can not be deleted before related tables
         while True:
             if not self._connection:
-                break
+                raise RuntimeError("Attempting to delete data when no open connection exists.")
 
             cursor = self._connection.cursor()
 
@@ -351,7 +364,7 @@ class SqliteDataSource(DataSource):
             for delete_statement in delete_all_tables:
                 cursor.execute(delete_statement)
 
-            # delete indexes
+            # Delete indexes
             delete_all_indexes = [
                 str(next(iter(x.values())))
                 for x in cursor.execute(
@@ -362,12 +375,12 @@ class SqliteDataSource(DataSource):
             for delete_statement in delete_all_indexes:
                 cursor.execute(delete_statement)
 
-            # stop if nothing to delete
+            # Stop when nothing else to delete
             if len(delete_all_tables) == 0 and len(delete_all_indexes) == 0:
                 break
 
-        # close connection
-        if self._connection and close_connection:
+        # Close connection
+        if self._connection:
             self._connection.close()
 
-        # TODO (Roman): delete db file
+        # TODO (Roman): Delete db file

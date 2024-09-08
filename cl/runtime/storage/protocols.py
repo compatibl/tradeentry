@@ -14,7 +14,6 @@
 
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
-from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TQuery
 from typing import Iterable
@@ -29,7 +28,7 @@ class DataSourceProtocol(Protocol):
         self,
         record_or_key: KeyProtocol | None,
         *,
-        dataset: TDataset = None,
+        dataset: str | None = None,
         identity: TIdentity | None = None,
     ) -> RecordProtocol | None:
         """
@@ -37,7 +36,7 @@ class DataSourceProtocol(Protocol):
 
         Args:
             record_or_key: Record or key (records are returned without DB lookup)
-            dataset: Lookup dataset as a delimited string, list of levels, or None
+            dataset: If specified, append to the root dataset of the data source
             identity: Identity token for row level access
         """
 
@@ -45,7 +44,7 @@ class DataSourceProtocol(Protocol):
         self,
         records_or_keys: Iterable[KeyProtocol | None] | None,
         *,
-        dataset: TDataset = None,
+        dataset: str | None = None,
         identity: TIdentity | None = None,
     ) -> Iterable[RecordProtocol | None] | None:
         """
@@ -53,7 +52,7 @@ class DataSourceProtocol(Protocol):
 
         Args:
             records_or_keys: Iterable of records or keys (records are returned without DB lookup).
-            dataset: Lookup dataset as a delimited string, list of levels, or None
+            dataset: If specified, append to the root dataset of the data source
             identity: Identity token for row level access
         """
 
@@ -61,7 +60,7 @@ class DataSourceProtocol(Protocol):
         self,
         record_type: Type[RecordProtocol],
         *,
-        dataset: TDataset = None,
+        dataset: str | None = None,
         identity: TIdentity | None = None,
     ) -> Iterable[RecordProtocol]:
         """
@@ -69,7 +68,7 @@ class DataSourceProtocol(Protocol):
 
         Args:
             record_type: Type of the record to load.
-            dataset: Lookup dataset as a delimited string, list of levels, or None
+            dataset: If specified, append to the root dataset of the data source
             identity: Identity token for row level access
         """
 
@@ -77,7 +76,7 @@ class DataSourceProtocol(Protocol):
         self,
         query: TQuery,
         *,
-        dataset: TDataset = None,
+        dataset: str | None = None,
         identity: TIdentity | None = None,
     ) -> Iterable[RecordProtocol]:
         """
@@ -87,7 +86,7 @@ class DataSourceProtocol(Protocol):
             query: Tuple of (TYPE, CONDITIONS_DICT, ORDER_DICT) where TYPE and its descendants will be
                 returned by the query based on NoSQL query conditions and order in MongoDB format.
                 Keys in CONDITIONS_DICT and ORDER_DICT must match the fields of TYPE.
-            dataset: Lookup dataset as a delimited string, list of levels, or None
+            dataset: If specified, append to the root dataset of the data source
             identity: Identity token for row level access
         """
 
@@ -95,7 +94,7 @@ class DataSourceProtocol(Protocol):
         self,
         record: RecordProtocol | None,
         *,
-        dataset: TDataset = None,
+        dataset: str | None = None,
         identity: TIdentity = None,
     ) -> None:
         """
@@ -111,7 +110,7 @@ class DataSourceProtocol(Protocol):
         self,
         records: Iterable[RecordProtocol],
         *,
-        dataset: TDataset = None,
+        dataset: str | None = None,
         identity: TIdentity = None,
     ) -> None:
         """
@@ -127,7 +126,7 @@ class DataSourceProtocol(Protocol):
         self,
         keys: Iterable[KeyProtocol] | None,
         *,
-        dataset: TDataset = None,
+        dataset: str | None = None,
         identity: TIdentity | None = None,
     ) -> None:
         """

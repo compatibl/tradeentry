@@ -17,7 +17,6 @@ from __future__ import annotations
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.storage.data_source_types import TDataset
 from cl.runtime.storage.data_source_types import TIdentity
 from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.dataset_util import DatasetUtil
@@ -48,7 +47,7 @@ class LocalCache:
         self,
         record_or_key: KeyProtocol | None,
         *,
-        dataset: TDataset = None,
+        dataset: str | None = None,
         identity: TIdentity | None = None,
     ) -> RecordProtocol | None:
         if record_or_key is None or getattr(record_or_key, "get_key", None) is not None:
@@ -81,7 +80,7 @@ class LocalCache:
         self,
         records_or_keys: Iterable[KeyProtocol | None] | None,
         *,
-        dataset: TDataset = None,
+        dataset: str | None = None,
         identity: TIdentity | None = None,
     ) -> Iterable[RecordProtocol | None] | None:
         # TODO: Review performance compared to a custom implementation for load_many
@@ -92,7 +91,7 @@ class LocalCache:
         self,
         record_type: Type[RecordProtocol],
         *,
-        dataset: TDataset = None,
+        dataset: str | None = None,
         identity: TIdentity | None = None,
     ) -> Iterable[RecordProtocol]:
         raise NotImplementedError()
@@ -101,7 +100,7 @@ class LocalCache:
         self,
         query: TQuery,
         *,
-        dataset: TDataset = None,
+        dataset: str | None = None,
         identity: TIdentity | None = None,
     ) -> Iterable[RecordProtocol]:
         # Validate the dataset and if necessary convert to delimited string
@@ -113,7 +112,7 @@ class LocalCache:
         self,
         record: RecordProtocol | None,
         *,
-        dataset: TDataset = None,
+        dataset: str | None = None,
         identity: TIdentity = None,
     ) -> None:
         # If record is None, do nothing
@@ -140,7 +139,7 @@ class LocalCache:
         self,
         records: Iterable[RecordProtocol],
         *,
-        dataset: TDataset = None,
+        dataset: str | None = None,
         identity: TIdentity = None,
     ) -> None:
         # TODO: Review performance compared to a custom implementation for save_many
@@ -150,7 +149,7 @@ class LocalCache:
         self,
         keys: Iterable[KeyProtocol] | None,
         *,
-        dataset: TDataset = None,
+        dataset: str | None = None,
         identity: TIdentity | None = None,
     ) -> None:
         # Validate the dataset and if necessary convert to delimited string
