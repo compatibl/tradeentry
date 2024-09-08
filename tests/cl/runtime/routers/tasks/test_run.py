@@ -13,8 +13,10 @@
 # limitations under the License.
 
 import pytest
+from fastapi import FastAPI
+
 from cl.runtime.context.context import Context
-from cl.runtime.routers.server import app
+from cl.runtime.routers.tasks import tasks_router
 from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseItem
 from cl.runtime.routers.tasks.run_request import RunRequest
 from cl.runtime.routers.tasks.run_response_item import RunResponseItem
@@ -97,9 +99,11 @@ def test_api():
     with Context() as context:
         context.data_source.save_one(stub_handlers)
 
-        with TestClient(app) as client:
+        test_app = FastAPI()
+        test_app.include_router(tasks_router.router, prefix="/tasks", tags=["Tasks"])
+        with TestClient(test_app) as test_client:
             for request in simple_requests + save_to_db_requests:
-                response = client.post("/tasks/run", json=request)
+                response = test_client.post("/tasks/run", json=request)
                 assert response.status_code == 200
                 result = response.json()
 
@@ -121,7 +125,7 @@ def test_api():
                 # clear existing records
                 context.data_source.delete_many(expected_keys)
 
-                client.post("/tasks/run", json=request)
+                test_client.post("/tasks/run", json=request)
 
                 actual_records = list(context.data_source.load_many(expected_keys))
                 assert actual_records == expected_records

@@ -13,9 +13,11 @@
 # limitations under the License.
 
 import pytest
+from fastapi import FastAPI
+
+from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
 from cl.runtime.routers.entity.list_panels_response_item import ListPanelsResponseItem
-from cl.runtime.routers.server import app
 from fastapi.testclient import TestClient
 
 requests = [
@@ -57,7 +59,9 @@ def test_method():
 def test_api():
     """Test REST API for /entity/list_panels route."""
 
-    with TestClient(app) as client:
+    test_app = FastAPI()
+    test_app.include_router(entity_router.router, prefix="/entity", tags=["Entity"])
+    with TestClient(test_app) as test_client:
         for request in requests:
             # Split request headers and query
             request_headers = {"user": request.get("user")}
@@ -68,7 +72,7 @@ def test_api():
             request_params = {k: v for k, v in request_params.items() if v is not None}
 
             # Get response
-            response = client.get("/entity/list_panels", headers=request_headers, params=request_params)
+            response = test_client.get("/entity/list_panels", headers=request_headers, params=request_params)
             assert response.status_code == 200
             result = response.json()
 

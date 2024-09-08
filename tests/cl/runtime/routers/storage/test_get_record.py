@@ -15,7 +15,9 @@
 import json
 import os
 import pytest
-from cl.runtime.routers.server import app
+from fastapi import FastAPI
+
+from cl.runtime.routers.storage import storage_router
 from cl.runtime.routers.storage.record_request import RecordRequest
 from cl.runtime.routers.storage.record_response import RecordResponse
 from fastapi.testclient import TestClient
@@ -50,7 +52,9 @@ def test_method():
 def test_api():
     """Test REST API for /storage/record route."""
 
-    with TestClient(app) as client:
+    test_app = FastAPI()
+    test_app.include_router(storage_router.router, prefix="/storage", tags=["Storage"])
+    with TestClient(test_app) as test_client:
         for request in requests:
             # Split request headers and query
             request_headers = {"user": request.get("user")}
@@ -61,7 +65,7 @@ def test_api():
             request_params = {k: v for k, v in request_params.items() if v is not None}
 
             # Get response
-            response = client.get("/storage/record", headers=request_headers, params=request_params)
+            response = test_client.get("/storage/record", headers=request_headers, params=request_params)
             assert response.status_code == 200
             result = response.json()
 

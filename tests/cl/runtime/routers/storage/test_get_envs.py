@@ -13,7 +13,9 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.routers.server import app
+from fastapi import FastAPI
+
+from cl.runtime.routers.storage import storage_router
 from cl.runtime.routers.storage.env_response import EnvResponse
 from cl.runtime.routers.user_request import UserRequest
 from fastapi.testclient import TestClient
@@ -49,9 +51,11 @@ def test_method():
 def test_api():
     """Test REST API for /storage/get_envs route."""
 
-    with TestClient(app) as client:
+    test_app = FastAPI()
+    test_app.include_router(storage_router.router, prefix="/storage", tags=["Storage"])
+    with TestClient(test_app) as test_client:
         for request in requests:
-            response = client.get("/storage/get_envs", headers=request)
+            response = test_client.get("/storage/get_envs", headers=request)
             assert response.status_code == 200
             result = response.json()
 

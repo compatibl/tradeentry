@@ -13,10 +13,12 @@
 # limitations under the License.
 
 import pytest
+from fastapi import FastAPI
+
 from cl.runtime import Context
+from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.entity.panel_request import PanelRequest
 from cl.runtime.routers.entity.panel_response_util import PanelResponseUtil
-from cl.runtime.routers.server import app
 from cl.runtime.serialization.string_serializer import StringSerializer
 from fastapi.testclient import TestClient
 from stubs.cl.runtime.decorators.stub_viewers import StubViewers
@@ -70,7 +72,9 @@ def test_api():
     with Context() as context:
         context.data_source.save_one(stub_viewers)
 
-        with TestClient(app) as client:
+        test_app = FastAPI()
+        test_app.include_router(entity_router.router, prefix="/entity", tags=["Entity"])
+        with TestClient(test_app) as test_client:
             for request, expected_result in zip(requests, expected_results):
                 # Split request headers and query
                 request_headers = {"user": request.get("user")}
@@ -85,7 +89,7 @@ def test_api():
                 request_params = {k: v for k, v in request_params.items() if v is not None}
 
                 # Get response
-                response = client.get("/entity/panel", headers=request_headers, params=request_params)
+                response = test_client.get("/entity/panel", headers=request_headers, params=request_params)
                 assert response.status_code == 200
                 result = response.json()
 

@@ -13,9 +13,11 @@
 # limitations under the License.
 
 import pytest
+from fastapi import FastAPI
+
+from cl.runtime.routers.auth import auth_router
 from cl.runtime.routers.auth.me_response import MeResponse
 from cl.runtime.routers.auth.me_response import UserRequest
-from cl.runtime.routers.server import app
 from fastapi.testclient import TestClient
 from typing import Any
 from typing import Dict
@@ -56,9 +58,11 @@ def test_method():
 def test_api():
     """Test REST API for /auth/me route."""
 
-    with TestClient(app) as client:
+    test_app = FastAPI()
+    test_app.include_router(auth_router.router, prefix="/auth", tags=["Authorization"])
+    with TestClient(test_app) as test_client:
         for request in requests:
-            response = client.get("/auth/me", headers=request)
+            response = test_client.get("/auth/me", headers=request)
             assert response.status_code == 200
             result = response.json()
 

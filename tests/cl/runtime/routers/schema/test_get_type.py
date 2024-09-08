@@ -15,9 +15,11 @@
 import json
 import os
 import pytest
+from fastapi import FastAPI
+
+from cl.runtime.routers.schema import schema_router
 from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
-from cl.runtime.routers.server import app
 from cl.runtime.testing.regression_guard import RegressionGuard
 from fastapi.testclient import TestClient
 
@@ -41,7 +43,9 @@ def test_method():
 def test_api():
     """Test REST API for /schema/typeV2 route."""
 
-    with TestClient(app) as client:
+    test_app = FastAPI()
+    test_app.include_router(schema_router.router, prefix="/schema", tags=["Schema"])
+    with TestClient(test_app) as test_client:
         for request in requests:
             # Split request headers and query
             request_headers = {"user": request.get("user")}
@@ -52,7 +56,7 @@ def test_api():
             request_params = {k: v for k, v in request_params.items() if v is not None}
 
             # Get response
-            response = client.get("/schema/typeV2", headers=request_headers, params=request_params)
+            response = test_client.get("/schema/typeV2", headers=request_headers, params=request_params)
             assert response.status_code == 200
             result = response.json()
 

@@ -13,8 +13,10 @@
 # limitations under the License.
 
 import pytest
+from fastapi import FastAPI
+
+from cl.runtime.routers.schema import schema_router
 from cl.runtime.routers.schema.types_response_item import TypesResponseItem
-from cl.runtime.routers.server import app
 from cl.runtime.routers.user_request import UserRequest
 from fastapi.testclient import TestClient
 
@@ -44,9 +46,11 @@ def test_method():
 def test_api():
     """Test REST API for /schema/types route."""
 
-    with TestClient(app) as client:
+    test_app = FastAPI()
+    test_app.include_router(schema_router.router, prefix="/schema", tags=["Schema"])
+    with TestClient(test_app) as test_client:
         for request in requests:
-            response = client.get("/schema/types", headers=request)
+            response = test_client.get("/schema/types", headers=request)
             assert response.status_code == 200
             result = response.json()
 

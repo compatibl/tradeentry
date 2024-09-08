@@ -14,11 +14,11 @@
 
 import base64
 import pytest
+from fastapi import FastAPI
+
 from cl.runtime.context.context import Context
-from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.primitive.datetime_util import DatetimeUtil
-from cl.runtime.primitive.ordered_uuid import OrderedUuid
-from cl.runtime.routers.server import app
+from cl.runtime.routers.tasks import tasks_router
 from cl.runtime.routers.tasks.run_response_item import handler_queue
 from cl.runtime.routers.tasks.task_result_request import TaskResultRequest
 from cl.runtime.routers.tasks.task_result_response_item import TaskResultResponseItem
@@ -93,9 +93,11 @@ def test_api():
         context.data_source.save_many(tasks)
         context.data_source.save_many(task_runs)
 
-        with TestClient(app) as client:
+        test_app = FastAPI()
+        test_app.include_router(tasks_router.router, prefix="/tasks", tags=["Tasks"])
+        with TestClient(test_app) as test_client:
             for request in requests:
-                response = client.post("/tasks/run/result", json=request)
+                response = test_client.post("/tasks/run/result", json=request)
                 assert response.status_code == 200
 
                 result = response.json()

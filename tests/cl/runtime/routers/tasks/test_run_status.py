@@ -13,10 +13,11 @@
 # limitations under the License.
 
 import pytest
+from fastapi import FastAPI
+
 from cl.runtime.context.context import Context
-from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.primitive.datetime_util import DatetimeUtil
-from cl.runtime.routers.server import app
+from cl.runtime.routers.tasks import tasks_router
 from cl.runtime.routers.tasks.run_response_item import handler_queue
 from cl.runtime.routers.tasks.task_status_request import TaskStatusRequest
 from cl.runtime.routers.tasks.task_status_response_item import TaskStatusResponseItem
@@ -84,9 +85,11 @@ def test_api():
         context.data_source.save_one(task)
         context.data_source.save_many(task_runs)
 
-        with TestClient(app) as client:
+        test_app = FastAPI()
+        test_app.include_router(tasks_router.router, prefix="/tasks", tags=["Tasks"])
+        with TestClient(test_app) as test_client:
             for request in requests:
-                response = client.post("/tasks/run/status", json=request)
+                response = test_client.post("/tasks/run/status", json=request)
                 assert response.status_code == 200
 
                 result = response.json()
