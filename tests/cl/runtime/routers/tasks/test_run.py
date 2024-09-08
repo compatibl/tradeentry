@@ -82,9 +82,6 @@ def test_method():
         for request, expected_records in zip(save_to_db_requests, expected_records_in_db):
             expected_keys = [rec.get_key() for rec in expected_records]
 
-            # clear existing records
-            context.data_source.delete_many(expected_keys)
-
             request_object = RunRequest(**request)
             RunResponseItem.run_tasks(request_object)
 
@@ -121,9 +118,6 @@ def test_api():
 
             for request, expected_records in zip(save_to_db_requests, expected_records_in_db):
                 expected_keys = [rec.get_key() for rec in expected_records]
-
-                # clear existing records
-                context.data_source.delete_many(expected_keys)
 
                 test_client.post("/tasks/run", json=request)
 
