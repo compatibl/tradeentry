@@ -15,11 +15,10 @@
 import json
 import os
 import pytest
-from fastapi import FastAPI
-
 from cl.runtime.routers.storage import storage_router
 from cl.runtime.routers.storage.record_request import RecordRequest
 from cl.runtime.routers.storage.record_response import RecordResponse
+from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 requests = [

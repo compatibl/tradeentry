@@ -14,10 +14,7 @@
 
 import os
 import uvicorn
-from starlette.staticfiles import StaticFiles
 from cl.runtime.context.context import Context
-from cl.runtime.settings.preload_settings import PreloadSettings
-from cl.runtime.settings.settings import Settings
 from cl.runtime.routers.auth import auth_router
 from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.health import health_router
@@ -25,8 +22,11 @@ from cl.runtime.routers.schema import schema_router
 from cl.runtime.routers.storage import storage_router
 from cl.runtime.routers.tasks import tasks_router
 from cl.runtime.settings.api_settings import ApiSettings
+from cl.runtime.settings.preload_settings import PreloadSettings
+from cl.runtime.settings.settings import Settings
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
+from starlette.staticfiles import StaticFiles
 from stubs.cl.runtime.config.stub_runtime_config import StubRuntimeConfig  # TODO: Remove after refactoring
 
 # Server

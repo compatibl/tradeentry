@@ -106,26 +106,26 @@ def test_basic_operations():
     data_source = SqliteDataSource(data_source_id="default")
 
     try:
-        # load from non-existing tables
+        # Load from non-existing tables
         loaded_records = list(data_source.load_many(sample_keys))
         assert loaded_records == [None] * len(samples)
 
         data_source.save_many(samples)
 
-        # load many for all keys
+        # Load many for all keys
         loaded_records = list(data_source.load_many(sample_keys))
         assert loaded_records == samples
 
-        # load one by one for all keys
+        # Load one by one for all keys
         loaded_records = [data_source.load_one(key) for key in sample_keys]
         assert loaded_records == samples
 
-        # delete first and last key
+        # Delete first and last key
         data_source.delete_many([sample_keys[0], sample_keys[-1]])
         loaded_records = list(data_source.load_many(sample_keys))
         assert loaded_records == [None, *samples[1:-1], None]
 
-        # delete all keys
+        # Delete all keys
         data_source.delete_many(sample_keys)
         loaded_records = list(data_source.load_many(sample_keys))
         assert loaded_records == [None] * len(samples)

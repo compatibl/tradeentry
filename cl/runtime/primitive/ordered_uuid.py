@@ -14,7 +14,8 @@
 
 import datetime as dt
 import uuid_utils
-from typing import Iterable, cast
+from typing import Iterable
+from typing import cast
 from uuid import UUID
 
 

@@ -13,11 +13,10 @@
 # limitations under the License.
 
 import pytest
-from fastapi import FastAPI
-
 from cl.runtime.routers.auth import auth_router
 from cl.runtime.routers.auth.me_response import MeResponse
 from cl.runtime.routers.auth.me_response import UserRequest
+from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from typing import Any
 from typing import Dict

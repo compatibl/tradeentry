@@ -12,14 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import sys
-
 import asyncio
 import pytest
+import sys
 from cl.runtime.routers.health import health_router
-from fastapi import FastAPI
 from cl.runtime.routers.health.health_response import HealthResponse
 from cl.runtime.routers.user_request import UserRequest
+from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 requests = [{}, {"user": "TestUser"}]

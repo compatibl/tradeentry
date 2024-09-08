@@ -13,13 +13,12 @@
 # limitations under the License.
 
 import pytest
-from fastapi import FastAPI
-
 from cl.runtime import Context
 from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.entity.panel_request import PanelRequest
 from cl.runtime.routers.entity.panel_response_util import PanelResponseUtil
 from cl.runtime.serialization.string_serializer import StringSerializer
+from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from stubs.cl.runtime.decorators.stub_viewers import StubViewers
 

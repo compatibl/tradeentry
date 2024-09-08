@@ -13,14 +13,13 @@
 # limitations under the License.
 
 import pytest
-from fastapi import FastAPI
-
 from cl.runtime.context.context import Context
 from cl.runtime.routers.tasks import tasks_router
 from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseItem
 from cl.runtime.routers.tasks.run_request import RunRequest
 from cl.runtime.routers.tasks.run_response_item import RunResponseItem
 from cl.runtime.serialization.string_serializer import StringSerializer
+from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers

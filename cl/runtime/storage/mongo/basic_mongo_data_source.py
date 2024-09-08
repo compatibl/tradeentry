@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from bson import UuidRepresentation
-
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol

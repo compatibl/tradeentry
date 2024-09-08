@@ -13,8 +13,6 @@
 # limitations under the License.
 
 import pytest
-from fastapi import FastAPI
-
 from cl.runtime.context.context import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.routers.tasks import tasks_router
@@ -25,6 +23,7 @@ from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.tasks.instance_method_task import InstanceMethodTask
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_status import TaskStatus
+from fastapi import FastAPI
 from starlette.testclient import TestClient
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
