@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from bson import UuidRepresentation
+
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
@@ -52,10 +54,15 @@ class BasicMongoDataSource(DataSource):
     def __post_init__(self) -> None:
         """Initialize private attributes."""
 
+        client = MongoClient(
+            self.client_uri,
+            uuidRepresentation="standard",
+        )
+
         # TODO: Implement dispose logic
         # Use setattr to initialize attributes in a frozen object
         if self._client is None:
-            object.__setattr__(self, "_client", MongoClient(self.client_uri))
+            object.__setattr__(self, "_client", client)
         object.__setattr__(self, "_db", self._client[self.db_name])
 
     def load_one(
