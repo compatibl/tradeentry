@@ -84,7 +84,7 @@ def test_method():
             request_object = RunRequest(**request)
             RunResponseItem.run_tasks(request_object)
 
-            actual_records = list(Context.load_many(expected_keys))
+            actual_records = list(Context.load_many(StubDataclassRecord, expected_keys))
             assert actual_records == expected_records
 
 
@@ -120,7 +120,7 @@ def test_api():
 
                 test_client.post("/tasks/run", json=request)
 
-                actual_records = list(Context.load_many(expected_keys))
+                actual_records = list(Context.load_many(StubDataclassRecord, expected_keys))
                 assert actual_records == expected_records
 
 

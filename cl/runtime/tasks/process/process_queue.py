@@ -16,6 +16,7 @@ import multiprocessing
 from cl.runtime import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.records.protocols import is_record
+from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
 from cl.runtime.tasks.task_run import TaskRun
@@ -30,7 +31,7 @@ def execute_task(task_id: str) -> None:
     with Context():
         # Load task object
         task_key = TaskKey(task_id=task_id)
-        task = Context.load_one(task_key)
+        task = Context.load_one(Task, task_key)
         task.execute()
 
 

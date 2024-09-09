@@ -133,7 +133,7 @@ class RecordResponse(BaseModel):
         else:
             deserialized_key = key_serializer.deserialize_key(request.key, record_type.get_key_type())
 
-        record = data_source.load_one(deserialized_key)
+        record = data_source.load_one(record_type, deserialized_key)
 
         # TODO: Optimize speed using dacite or similar library
 

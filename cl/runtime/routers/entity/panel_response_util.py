@@ -59,7 +59,7 @@ class PanelResponseUtil(BaseModel):
 
         # Load record from the data source
         data_source = current_or_default_data_source()
-        record = data_source.load_one(key_obj, dataset=request.dataset)
+        record = data_source.load_one(type_, key_obj, dataset=request.dataset)
         if record is None:
             raise RuntimeError(
                 f"Record with type {request.type} and key {request.key} is not found in dataset {request.dataset}."

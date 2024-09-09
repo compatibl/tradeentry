@@ -26,6 +26,8 @@ from typing import ClassVar
 from typing import Iterable
 from typing import Type
 
+from cl.runtime.storage.protocols import TRecord
+
 
 @dataclass(slots=True, kw_only=True)
 class DataSource(ABC):
@@ -40,16 +42,18 @@ class DataSource(ABC):
     @abstractmethod
     def load_one(
         self,
-        record_or_key: KeyProtocol | None,
+        record_type: Type[TRecord],
+        record_or_key: TRecord | KeyProtocol | tuple | str | None,
         *,
         dataset: str | None = None,
         identity: str | None = None,
-    ) -> RecordProtocol | None:
+    ) -> TRecord | None:
         """
-        Load a single record using a key. If record is passed instead of a key, it is returned without DB lookup.
+        Load a single record using a key (if a record is passed instead of a key, it is returned without DB lookup)
 
         Args:
-            record_or_key: Record or key (records are returned without DB lookup)
+            record_type: Record type to load, error if the result does not match this type
+            record_or_key: Record (returned without lookup) or key in object, tuple or string format
             dataset: If specified, append to the root dataset of the data source
             identity: Identity token for database access and row-level security
         """
@@ -57,16 +61,19 @@ class DataSource(ABC):
     @abstractmethod
     def load_many(
         self,
-        records_or_keys: Iterable[KeyProtocol | None] | None,
+        record_type: Type[TRecord],
+        records_or_keys: Iterable[TRecord | KeyProtocol | tuple | str | None] | None,
         *,
         dataset: str | None = None,
         identity: str | None = None,
-    ) -> Iterable[RecordProtocol | None] | None:
+    ) -> Iterable[TRecord | None] | None:
         """
-        Load records using a list of records or keys (records are returned without DB lookup).
+        Load records using a list of keys (if a record is passed instead of a key, it is returned without DB lookup),
+        the result must have the same order as 'records_or_keys'.
 
         Args:
-            records_or_keys: Iterable of records or keys (records are returned without DB lookup).
+            record_type: Record type to load, error if the result does not match this type
+            records_or_keys: Records (returned without lookup) or keys in object, tuple or string format
             dataset: If specified, append to the root dataset of the data source
             identity: Identity token for database access and row-level security
         """
@@ -74,16 +81,16 @@ class DataSource(ABC):
     @abstractmethod
     def load_all(
         self,
-        record_type: Type[RecordProtocol],
+        record_type: Type[TRecord],
         *,
         dataset: str | None = None,
         identity: str | None = None,
-    ) -> Iterable[RecordProtocol]:
+    ) -> Iterable[TRecord | None] | None:
         """
-        Load all records of the specified type.
+        Load all records of the specified type and its subtypes (excludes other types in the same DB table).
 
         Args:
-            record_type: Type of the record to load.
+            record_type: Type of the records to load
             dataset: If specified, append to the root dataset of the data source
             identity: Identity token for database access and row-level security
         """

@@ -21,6 +21,7 @@ from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
 from cl.runtime.settings.settings import Settings
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.data_source_types import TQuery
+from cl.runtime.storage.protocols import TRecord
 from cl.runtime.storage.sql.sqlite_schema_manager import SqliteSchemaManager
 from collections import defaultdict
 from dataclasses import dataclass
@@ -113,21 +114,22 @@ class SqliteDataSource(DataSource):
 
     def load_one(
         self,
-        record_or_key: KeyProtocol | None,
+        record_type: Type[TRecord],
+        record_or_key: TRecord | KeyProtocol | None,
         *,
         dataset: str | None = None,
         identity: str | None = None,
-    ) -> RecordProtocol | None:
-        return next(iter(self.load_many([record_or_key], dataset=dataset, identity=identity)))
+    ) -> TRecord | None:
+        return next(iter(self.load_many(record_type, [record_or_key], dataset=dataset, identity=identity)))
 
-    # TODO (Roman): maybe return mapping {key: record} in load_many
     def load_many(
         self,
-        records_or_keys: Iterable[KeyProtocol | None] | None,
+        record_type: Type[TRecord],
+        records_or_keys: Iterable[TRecord | KeyProtocol | tuple | str | None] | None,
         *,
         dataset: str | None = None,
         identity: str | None = None,
-    ) -> Iterable[RecordProtocol | None] | None:
+    ) -> Iterable[TRecord | None] | None:
         serializer = FlatDictSerializer()
 
         # it is important to preserve the original order of records_or_keys.
@@ -194,23 +196,11 @@ class SqliteDataSource(DataSource):
 
     def load_all(
         self,
-        record_type: Type[RecordProtocol],
+        record_type: Type[TRecord],
         *,
         dataset: str | None = None,
         identity: str | None = None,
-    ) -> Iterable[RecordProtocol]:
-        raise NotImplementedError()
-
-    def load_by_query(
-        self,
-        query: TQuery,
-        *,
-        dataset: str | None = None,
-        identity: str | None = None,
-    ) -> Iterable[RecordProtocol]:
-        raise NotImplementedError
-
-    def load_all(self, record_type: Type[RecordProtocol]) -> Iterable[RecordProtocol]:
+    ) -> Iterable[TRecord | None] | None:
         serializer = FlatDictSerializer()
 
         table_name: str = self._schema_manager.table_name_for_type(record_type)
@@ -235,6 +225,15 @@ class SqliteDataSource(DataSource):
             # TODO (Roman): select only needed columns on db side.
             data = {reversed_columns_mapping[k]: v for k, v in data.items() if v is not None}
             yield serializer.deserialize_data(data)
+
+    def load_by_query(
+        self,
+        query: TQuery,
+        *,
+        dataset: str | None = None,
+        identity: str | None = None,
+    ) -> Iterable[RecordProtocol]:
+        raise NotImplementedError()
 
     def save_one(
         self,

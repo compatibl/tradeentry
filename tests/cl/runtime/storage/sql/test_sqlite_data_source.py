@@ -51,7 +51,7 @@ def test_smoke():
 
     data_source.save_many([record, record])
 
-    loaded_records = list(data_source.load_many([record.get_key()]))
+    loaded_records = list(data_source.load_many(StubDataclassRecord, [record.get_key()]))
     assert len(loaded_records) == 1
     assert loaded_records[0] == record
 
@@ -78,7 +78,7 @@ def test_complex_records():
         data_source.save_many(samples)
 
         sample_keys = [sample.get_key() for sample in samples]
-        loaded_records = list(data_source.load_many(sample_keys))
+        loaded_records = [data_source.load_one(type(key), key) for key in sample_keys]
 
         assert loaded_records == samples
 
@@ -106,28 +106,25 @@ def test_basic_operations():
     data_source = SqliteDataSource(data_source_id="default")
 
     try:
-        # Load from non-existing tables
-        loaded_records = list(data_source.load_many(sample_keys))
+        # Load from empty tables
+        loaded_records = [data_source.load_one(type(key), key) for key in sample_keys]
         assert loaded_records == [None] * len(samples)
 
+        # Populate tables
         data_source.save_many(samples)
 
-        # Load many for all keys
-        loaded_records = list(data_source.load_many(sample_keys))
+        # Load one by one for all keys because each type is different
+        loaded_records = [data_source.load_one(type(key), key) for key in sample_keys]
         assert loaded_records == samples
 
-        # Load one by one for all keys
-        loaded_records = [data_source.load_one(key) for key in sample_keys]
-        assert loaded_records == samples
-
-        # Delete first and last key
+        # Delete first and last record
         data_source.delete_many([sample_keys[0], sample_keys[-1]])
-        loaded_records = list(data_source.load_many(sample_keys))
+        loaded_records = [data_source.load_one(type(key), key) for key in sample_keys]
         assert loaded_records == [None, *samples[1:-1], None]
 
-        # Delete all keys
+        # Delete all records
         data_source.delete_many(sample_keys)
-        loaded_records = list(data_source.load_many(sample_keys))
+        loaded_records = [data_source.load_one(type(key), key) for key in sample_keys]
         assert loaded_records == [None] * len(samples)
 
     finally:
@@ -141,18 +138,18 @@ def test_record_upsert():
         # create sample and save
         sample = StubDataclassRecord()
         data_source.save_one(sample)
-        loaded_record = data_source.load_one(sample.get_key())
+        loaded_record = data_source.load_one(StubDataclassRecord, sample.get_key())
         assert loaded_record == sample
 
         # create sample with the same key and save
         override_sample = StubDataclassDerivedRecord()
         data_source.save_one(override_sample)
-        loaded_record = data_source.load_one(sample.get_key())
+        loaded_record = data_source.load_one(StubDataclassDerivedRecord, sample.get_key())
         assert loaded_record == override_sample
 
         override_sample = StubDataclassDerivedFromDerivedRecord()
         data_source.save_one(override_sample)
-        loaded_record = data_source.load_one(sample.get_key())
+        loaded_record = data_source.load_one(StubDataclassDerivedFromDerivedRecord, sample.get_key())
         assert loaded_record == override_sample
 
     finally:
@@ -218,7 +215,7 @@ def test_performance():
 
         start_time = time.time()
         for key in sample_keys:
-            data_source.load_one(key)
+            data_source.load_one(type(key), key)
         end_time = time.time()
         print(f"Load many one by one: {end_time - start_time}s.")
 
@@ -231,7 +228,7 @@ def test_singleton():
     data_source = SqliteDataSource(data_source_id="default")
     try:
         data_source.save_one(singleton_sample)
-        loaded_sample = data_source.load_one(singleton_sample.get_key())
+        loaded_sample = data_source.load_one(StubDataclassSingleton, singleton_sample.get_key())
         assert loaded_sample == singleton_sample
 
         other_singleton_sample = StubDataclassSingleton(str_field="other")

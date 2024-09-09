@@ -28,15 +28,18 @@ def test_smoke():
     key = record.get_key()
 
     # Test saving and loading
-    dataset = ["Sample"]
-    cache.save_many([record], dataset=dataset)
-    loaded_records = cache.load_many([record, key, None], dataset=dataset)
+    dataset = None  # TODO: Support datasets "\\sample_dataset"
 
-    # Convert to list
-    loaded_records = list(loaded_records)
-    assert loaded_records[0] == record
-    assert loaded_records[1] == record
+    # Save a single record
+    cache.save_many([record], dataset=dataset)
+
+    loaded_records = cache.load_many(StubDataclassRecord, [record, key, None], dataset=dataset)
+    assert loaded_records[0] is record  # Same object is returned without lookup
+    assert loaded_records[1] is record  # In case of local cache only, also the same object
     assert loaded_records[2] is None
+
+    assert cache.load_one(StubDataclassRecord, record) is record  # Same object is returned without lookup
+    assert cache.load_one(StubDataclassRecord, key) is record  # In case of local cache only, also the same object
 
 
 if __name__ == "__main__":

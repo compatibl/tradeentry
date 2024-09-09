@@ -54,7 +54,7 @@ class InstanceMethodTask(CallableTask):
         key = key_serializer.deserialize_key(self.key_str, key_type)
 
         # Load record from storage
-        record = Context.load_one(key)
+        record = Context.load_one(key_type, key)  # TODO: Require record type?
 
         # Convert the name to snake_case and get method callable
         method_name = self.normalize_method_name(self.method_name)

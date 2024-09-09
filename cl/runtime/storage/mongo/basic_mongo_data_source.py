@@ -29,6 +29,8 @@ from typing import Iterable
 from typing import Type
 from typing import cast
 
+from cl.runtime.storage.protocols import TRecord
+
 # TODO: Revise and consider making fields of the data source
 data_serializer = DictSerializer()
 key_serializer = StringSerializer()
@@ -66,11 +68,12 @@ class BasicMongoDataSource(DataSource):
 
     def load_one(
         self,
-        record_or_key: KeyProtocol | None,
+        record_type: Type[TRecord],
+        record_or_key: TRecord | KeyProtocol | None,
         *,
         dataset: str | None = None,
         identity: str | None = None,
-    ) -> RecordProtocol | None:
+    ) -> TRecord | None:
         if record_or_key is None or getattr(record_or_key, "get_key", None) is not None:
             # Record or None, return without lookup
             return cast(RecordProtocol, record_or_key)
@@ -102,22 +105,23 @@ class BasicMongoDataSource(DataSource):
 
     def load_many(
         self,
-        records_or_keys: Iterable[KeyProtocol | None] | None,
+        record_type: Type[TRecord],
+        records_or_keys: Iterable[TRecord | KeyProtocol | tuple | str | None] | None,
         *,
         dataset: str | None = None,
         identity: str | None = None,
-    ) -> Iterable[RecordProtocol | None] | None:
-        # TODO: Review performance compared to a custom implementation for load_many
-        result = [self.load_one(x) for x in records_or_keys]
+    ) -> Iterable[TRecord | None] | None:
+        # TODO: Implement directly for better performance
+        result = [self.load_one(record_type, x, dataset=dataset, identity=identity) for x in records_or_keys]
         return result
 
     def load_all(
         self,
-        record_type: Type[RecordProtocol],
+        record_type: Type[TRecord],
         *,
         dataset: str | None = None,
         identity: str | None = None,
-    ) -> Iterable[RecordProtocol]:
+    ) -> Iterable[TRecord | None] | None:
         raise NotImplementedError()
 
     def load_by_query(

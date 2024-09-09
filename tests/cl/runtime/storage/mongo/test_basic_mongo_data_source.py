@@ -31,13 +31,17 @@ def test_smoke():
         record = StubDataclassRecord()
         key = record.get_key()
 
-        # Test saving and loading
+        # Save a single record
         data_source.save_many([record])
-        loaded_records = data_source.load_many([record, key, None])
 
-        assert loaded_records[0] == record
-        assert loaded_records[1] == record
+        # Load using record or key
+        loaded_records = data_source.load_many(StubDataclassRecord, [record, key, None])
+        assert loaded_records[0] is record  # Same object is returned without lookup
+        assert loaded_records[1] == record  # Not the same object but equal
         assert loaded_records[2] is None
+
+        assert data_source.load_one(StubDataclassRecord, record) is record  # Same object is returned without lookup
+        assert data_source.load_one(StubDataclassRecord, key) == record  # Not the same object but equal
 
 
 if __name__ == "__main__":

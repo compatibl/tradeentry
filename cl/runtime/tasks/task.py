@@ -18,6 +18,7 @@ from cl.runtime.context.context import Context
 from cl.runtime.decorators.handler_decorator import handler
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.tasks.task_key import TaskKey
+from cl.runtime.tasks.task_queue import TaskQueue
 from cl.runtime.tasks.task_queue_key import TaskQueueKey
 from cl.runtime.tasks.task_run_key import TaskRunKey
 from dataclasses import dataclass
@@ -51,6 +52,6 @@ class Task(TaskKey, RecordMixin[TaskKey], ABC):
     @handler
     def submit(self, queue: TaskQueueKey) -> TaskRunKey:
         """Submit task to this queue (all further access to the run is provided via the returned TaskRunKey)."""
-        queue_obj = Context.load_one(queue)  # TODO: Optimize in case of repeated calls
+        queue_obj = Context.load_one(TaskQueue, queue)  # TODO: Optimize in case of repeated calls
         task_run_key = queue_obj.submit_task(self)
         return task_run_key
