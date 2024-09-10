@@ -34,9 +34,16 @@ def test_method(celery_start_test_workers):
     """Smoke test."""
 
     with Context():
-        task = _create_task(f"test_celery_queue.test_method")
+        task_id = f"test_celery_queue.test_method"
+        queue_id = f"test_celery_queue.test_method"
+        task = _create_task(task_id)
         Context.save_one(task)
-        result_task = execute_task.delay(task.task_id)
+
+        # Call the 'execute_task' method in-process
+        execute_task(task_id, queue_id)
+
+        # Submit the 'execute_task' method to Celery queue
+        result_task = execute_task.delay(task_id, queue_id)
         result_task.get(timeout=2)
 
 
@@ -44,10 +51,12 @@ def test_api(celery_start_test_workers):
     """Smoke test."""
 
     with Context():
-        task = _create_task(f"test_celery_queue.test_api")
-
-        queue = CeleryQueue()
-        task_run_key = queue.submit_task(task)
+        task_id = f"test_celery_queue.test_method"
+        queue_id = f"test_celery_queue.test_method"
+        task = _create_task(task_id)
+        queue = CeleryQueue(queue_id=queue_id)
+        Context.save_one(queue)
+        queue.submit_task(task)
         pass
 
 

@@ -13,10 +13,11 @@
 # limitations under the License.
 
 import multiprocessing
-import platform
 from dataclasses import dataclass
-from typing import Final, List, Optional, cast
+from typing import Final
 from celery import Celery
+from cl.runtime.primitive.datetime_util import DatetimeUtil
+
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.records.protocols import is_record
 from cl.runtime import Context
@@ -44,30 +45,45 @@ celery_app.conf.task_track_started = True
 
 
 @celery_app.task
-def execute_task(task_id: str, task_run_id_str: str) -> None:
+def execute_task(task_id: str, queue_id: str) -> None:
     """Invoke execute method of the specified task."""
 
     with Context():
-        # Load task object
-        task_key = TaskKey(task_id=task_id)
-        task = Context.load_one(Task, task_key)
-        task.execute()
+
+        # Create task run identifier and save its timestamp
+        task_run_id = OrderedUuid.create_one()
+        submit_time = OrderedUuid.datetime_of(task_run_id)
+
+        # Create a task run record in Pending state
+        task_run = TaskRun()
+        task_run.task_run_id = task_run_id
+        task_run.queue = queue_id
+        task_run.task = TaskKey(task_id=task_id)
+        task_run.submit_time = submit_time
+        task_run.update_time = submit_time
+        task_run.status = TaskStatus.Pending
+        Context.save_one(task_run)
+
+        try:
+            # Load and execute the task object
+            task_key = TaskKey(task_id=task_id)
+            task = Context.load_one(Task, task_key)
+            task.execute()
+        except Exception as e:  # noqa
+            print(e)
+            # Update task run record to report task failure
+            task_run.update_time = DatetimeUtil.now()
+            task_run.status = TaskStatus.Failed
+            task_run.result = str(e)
+            Context.save_one(task_run)
+        else:
+            # Update task run record to report task completion
+            task_run.update_time = DatetimeUtil.now()
+            task_run.status = TaskStatus.Completed
+            Context.save_one(task_run)
 
 
-@celery_app.task
-def completed_task(task_id: str, task_run_id_str: str) -> None:
-    raise RuntimeError()
-    with Context():
-        print(f"Completed {task_id}")
-
-
-@celery_app.task
-def error_task(task_id: str, task_run_id_str: str) -> None:
-    with Context():
-        print(f"Error {task_id}")
-
-
-def celery_start_workers(worker_name: Optional[str] = None, queue_names: Optional[List[str]] = None) -> None:
+def celery_start_workers() -> None:
 
     # Celery doesn't support prefork on Windows
     # pool = "solo" if platform.system() != 'Linux' else "prefork"
@@ -87,7 +103,7 @@ def celery_start_workers(worker_name: Optional[str] = None, queue_names: Optiona
     )
 
 
-def celery_start_workers_process(worker_name: Optional[str] = None, queue_names: Optional[List[str]] = None) -> None:
+def celery_start_workers_process() -> None:
 
     # Start Celery workers (will exit when the current process exits)
     worker_process = multiprocessing.Process(target=celery_start_workers, daemon=True)
@@ -121,43 +137,18 @@ class CeleryQueue(TaskQueue):
     def resume_all(self) -> None:
         """Resume starting new runs and send resume command to existing runs."""
 
-    def submit_task(self, task: TaskKey) -> TaskRunKey:
+    def submit_task(self, task: TaskKey) -> None:
         """Submit task to this queue (all further access to the run is provided via the returned TaskRunKey)."""
 
         # Save task if provided as record rather than key
-        if is_record(task):
-            Context.save_one(task)
-
-        # Create task run identifier and save its timestamp
-        task_run_id = OrderedUuid.create_one()
-        task_run_id_str = str(task_run_id)
-        submit_time = OrderedUuid.datetime_of(task_run_id)
-
-        # Task parameters for Celery
-        kwargs = {"task_run_id_str": task_run_id_str}
+        # TODO: if is_record(task):
+        Context.save_one(task)
 
         # Create Celery task signatures
-        execute_task_signature = execute_task.s(task.task_id, task_run_id_str)
-        completed_task_signature = completed_task.s(task.task_id, task_run_id_str)
-        error_task_signature = error_task.s(task.task_id, task_run_id_str)
+        execute_task_signature = execute_task.s(task.task_id, self.queue_id)
 
         # Submit task to Celery with completed and error links
         execute_task_signature.apply_async(
             retry=False,  # Do not retry in case the task fails
-            # ignore_result=True,  # TODO: Do not publish to the Celery result backend
-            link=completed_task_signature,
-            link_error=error_task_signature,
+            ignore_result=True,  # TODO: Do not publish to the Celery result backend
         )
-
-        # Save task run record
-        task_run = TaskRun()
-        task_run.task_run_id = task_run_id
-        task_run.queue = self.get_key()
-        task_run.task = task
-        task_run.submit_time = submit_time
-        task_run.update_time = submit_time
-        task_run.status = TaskStatus.Completed  # TODO: Update after the task is actually completed
-        Context.save_one(task_run)
-
-        return task_run.get_key()
-

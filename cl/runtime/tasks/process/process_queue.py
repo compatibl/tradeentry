@@ -62,7 +62,7 @@ class ProcessQueue(TaskQueue):
     def resume_all(self) -> None:
         """Resume starting new runs and send resume command to existing runs."""
 
-    def submit_task(self, task: TaskKey) -> TaskRunKey:
+    def submit_task(self, task: TaskKey) -> None:
         """Submit task to this queue (all further access to the run is provided via the returned TaskRunKey)."""
 
         # Record the task submission time
@@ -85,5 +85,3 @@ class ProcessQueue(TaskQueue):
         task_run.update_time = submit_time
         task_run.status = TaskStatus.Completed  # TODO: Update after the task is actually completed
         Context.save_one(task_run)
-
-        return task_run.get_key()

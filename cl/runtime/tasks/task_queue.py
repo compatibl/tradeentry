@@ -57,5 +57,5 @@ class TaskQueue(TaskQueueKey, ABC):
         """Resume starting new runs and send resume command to existing runs."""
 
     @abstractmethod
-    def submit_task(self, task: TaskKey) -> TaskRunKey:
+    def submit_task(self, task: TaskKey) -> None:
         """Submit task to this queue (all further access to the run is provided via the returned TaskRunKey)."""
