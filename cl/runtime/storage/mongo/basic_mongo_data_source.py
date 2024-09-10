@@ -20,6 +20,7 @@ from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.data_source_types import TQuery
+from cl.runtime.storage.protocols import TRecord
 from dataclasses import dataclass
 from dataclasses import field
 from itertools import groupby
@@ -28,8 +29,6 @@ from pymongo.database import Database
 from typing import Iterable
 from typing import Type
 from typing import cast
-
-from cl.runtime.storage.protocols import TRecord
 
 # TODO: Revise and consider making fields of the data source
 data_serializer = DictSerializer()
@@ -138,7 +137,9 @@ class BasicMongoDataSource(DataSource):
         for serialized_record in serialized_records:
             del serialized_record["_id"]
             del serialized_record["_key"]
-            record = data_serializer.deserialize_data(serialized_record)   # TODO: Convert to comprehension for performance
+            record = data_serializer.deserialize_data(
+                serialized_record
+            )  # TODO: Convert to comprehension for performance
             result.append(record)
         return result
 

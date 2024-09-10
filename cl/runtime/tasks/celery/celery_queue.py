@@ -13,24 +13,22 @@
 # limitations under the License.
 
 import multiprocessing
-from dataclasses import dataclass
-from typing import Final
 from celery import Celery
-from cl.runtime.records.protocols import is_record
-
-from cl.runtime.primitive.datetime_util import DatetimeUtil
-
-from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime import Context
+from cl.runtime.primitive.datetime_util import DatetimeUtil
+from cl.runtime.primitive.ordered_uuid import OrderedUuid
+from cl.runtime.records.protocols import is_record
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_status import TaskStatus
+from dataclasses import dataclass
+from typing import Final
 
 CELERY_MAX_WORKERS = 4
 
-CELERY_RUN_COMMAND_QUEUE: Final[str] = 'run_command'
+CELERY_RUN_COMMAND_QUEUE: Final[str] = "run_command"
 CELERY_MAX_RETRIES: Final[int] = 3
 CELERY_TIME_LIMIT: Final[int] = 3600 * 2  # TODO: 2 hours (configure)
 
@@ -48,7 +46,6 @@ def execute_task(task_id: str, queue_id: str) -> None:
     """Invoke execute method of the specified task."""
 
     with Context():
-
         # Create task run identifier and save its timestamp
         task_run_uuid = OrderedUuid.create_one()
         task_run_id = str(task_run_uuid)
@@ -83,22 +80,20 @@ def execute_task(task_id: str, queue_id: str) -> None:
 
 
 def celery_start_workers() -> None:
-
     celery_app.worker_main(
         argv=[
-            '-A',
-            'cl.runtime.tasks.celery.celery_queue',
-            'worker',
-            '--loglevel=info',
-            f'--autoscale={CELERY_MAX_WORKERS},1',
-            f'--pool=solo',  # One concurrent task per worker, do not switch to prefork (not supported on Windows)
-            f'--concurrency=1',  # Use only for prefork, one concurrent task per worker (similar to solo)
+            "-A",
+            "cl.runtime.tasks.celery.celery_queue",
+            "worker",
+            "--loglevel=info",
+            f"--autoscale={CELERY_MAX_WORKERS},1",
+            f"--pool=solo",  # One concurrent task per worker, do not switch to prefork (not supported on Windows)
+            f"--concurrency=1",  # Use only for prefork, one concurrent task per worker (similar to solo)
         ],
     )
 
 
 def celery_start_workers_process() -> None:
-
     # Start Celery workers (will exit when the current process exits)
     worker_process = multiprocessing.Process(target=celery_start_workers, daemon=True)
     worker_process.start()

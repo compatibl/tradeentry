@@ -16,10 +16,10 @@ import pytest
 from cl.runtime.tasks.celery.celery_queue import celery_start_workers_process
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def celery_start_test_workers():
     print("Starting test celery workers.")
-    celery_start_workers_process()   # TODO: Make test celery a separate queue
+    celery_start_workers_process()  # TODO: Make test celery a separate queue
     yield
     # TODO: Do we need to explicitly shut down
     print("\nStopping test celery workers.")

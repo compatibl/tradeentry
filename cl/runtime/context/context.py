@@ -12,16 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.protocols import KeyProtocol, RecordProtocol
 from cl.runtime.context.null_progress import NullProgress
 from cl.runtime.context.protocols import ProgressProtocol
 from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.protocols import KeyProtocol
+from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.storage.data_source import DataSource
-from cl.runtime.storage.protocols import DataSourceProtocol, TRecord
+from cl.runtime.storage.protocols import DataSourceProtocol
+from cl.runtime.storage.protocols import TRecord
 from dataclasses import dataclass
 from logging import Logger
-from typing import ClassVar, Iterable, Type
+from typing import ClassVar
+from typing import Iterable
 from typing import List
+from typing import Type
 
 # Use in case progress is not specified
 null_progress = NullProgress()

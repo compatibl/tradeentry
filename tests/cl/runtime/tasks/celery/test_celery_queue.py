@@ -13,9 +13,9 @@
 # limitations under the License.
 
 import pytest
-
 from cl.runtime import Context
-from cl.runtime.tasks.celery.celery_queue import execute_task, CeleryQueue
+from cl.runtime.tasks.celery.celery_queue import CeleryQueue
+from cl.runtime.tasks.celery.celery_queue import execute_task
 from cl.runtime.tasks.static_method_task import StaticMethodTask
 from cl.runtime.tasks.task import Task
 from cl.runtime.testing.celery_testing import celery_start_test_workers

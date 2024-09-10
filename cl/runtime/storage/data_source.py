@@ -21,12 +21,11 @@ from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.storage.data_source_types import TQuery
+from cl.runtime.storage.protocols import TRecord
 from dataclasses import dataclass
 from typing import ClassVar
 from typing import Iterable
 from typing import Type
-
-from cl.runtime.storage.protocols import TRecord
 
 
 @dataclass(slots=True, kw_only=True)
