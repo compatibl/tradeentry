@@ -3,7 +3,7 @@
 
 # Refer to the ContextSettings class for documentation
 runtime_context_packages = ["cl.runtime", "stubs.cl.runtime"]  # TODO: Prefix or glob pattern
-runtime_context_data_source_class = "cl.runtime.storage.sql.sqlite_data_source.SqliteDataSource"  # TODO: Deprecated
+runtime_context_data_source_class = "cl.runtime.storage.mongo.basic_mongo_data_source.BasicMongoDataSource"  # TODO: Deprecated
 runtime_context_data_source_id = "Runtime Default"
 runtime_context_db_name = "Dev;Runtime;V2"
 
