@@ -12,32 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Any
+from typing import Any, TypeGuard
 from typing import Protocol
 from typing import Type
-
-
-def is_record(type_or_obj: Any) -> bool:
-    """Check if type or object is a key (supports RecordProtocol) based on the presence of 'get_key' attribute."""
-    return hasattr(type_or_obj, "get_key")
-
-
-def is_key(type_or_obj: Any) -> bool:
-    """
-    Check if type or object is a key (supports KeyProtocol) but not a record (does not support RecordProtocol)
-    based on the presence of 'get_key_type' attribute and the absence of 'get_key' attribute.
-    """
-    return hasattr(type_or_obj, "get_key_type") and not hasattr(type_or_obj, "get_key")
-
-
-def has_init(type_or_obj: Any) -> bool:
-    """Check if type or object requires initialization (InitProtocol) based on the presence of 'init' attribute."""
-    return hasattr(type_or_obj, "init")
-
-
-def has_validate(type_or_obj: Any) -> bool:
-    """Check if type or object supports validation (ValidateProtocol) based on the presence of 'validate' attribute."""
-    return hasattr(type_or_obj, "validate")
 
 
 class KeyProtocol(Protocol):
@@ -67,3 +44,26 @@ class ValidateProtocol:
 
     def validate(self) -> None:
         """Confirm that previously set fields correspond to a valid object state."""
+
+
+def is_record(type_or_obj: Any) -> TypeGuard[RecordProtocol]:
+    """Check if type or object is a key (supports RecordProtocol) based on the presence of 'get_key' attribute."""
+    return hasattr(type_or_obj, "get_key")
+
+
+def is_key(type_or_obj: Any) -> TypeGuard[KeyProtocol]:
+    """
+    Check if type or object is a key (supports KeyProtocol) but not a record (does not support RecordProtocol)
+    based on the presence of 'get_key_type' attribute and the absence of 'get_key' attribute.
+    """
+    return hasattr(type_or_obj, "get_key_type") and not hasattr(type_or_obj, "get_key")
+
+
+def has_init(type_or_obj: Any) -> TypeGuard[InitProtocol]:
+    """Check if type or object requires initialization (InitProtocol) based on the presence of 'init' attribute."""
+    return hasattr(type_or_obj, "init")
+
+
+def has_validate(type_or_obj: Any) -> TypeGuard[ValidateProtocol]:
+    """Check if type or object supports validation (ValidateProtocol) based on the presence of 'validate' attribute."""
+    return hasattr(type_or_obj, "validate")
