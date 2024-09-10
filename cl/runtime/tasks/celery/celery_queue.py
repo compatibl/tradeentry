@@ -16,6 +16,8 @@ import multiprocessing
 from dataclasses import dataclass
 from typing import Final
 from celery import Celery
+from cl.runtime.records.protocols import is_record
+
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
@@ -133,8 +135,8 @@ class CeleryQueue(TaskQueue):
         """Submit task to this queue (all further access to the run is provided via the returned TaskRunKey)."""
 
         # Save task if provided as record rather than key
-        # TODO: if is_record(task):
-        Context.save_one(task)
+        if is_record(task):
+            Context.save_one(task)
 
         # Create Celery task signatures
         execute_task_signature = execute_task.s(task.task_id, self.queue_id)

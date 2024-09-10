@@ -13,26 +13,21 @@
 # limitations under the License.
 
 from __future__ import annotations
-
-import base64
 import traceback
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseItem
 from cl.runtime.routers.tasks.run_request import RunRequest
 from cl.runtime.schema.schema import Schema
-from cl.runtime.serialization.string_serializer import StringSerializer
+from cl.runtime.tasks.celery.celery_queue import CeleryQueue
 from cl.runtime.tasks.instance_method_task import InstanceMethodTask
-from cl.runtime.tasks.process.process_queue import ProcessQueue
 from cl.runtime.tasks.static_method_task import StaticMethodTask
 from cl.runtime.tasks.task_status import TaskStatus
 from pydantic import BaseModel
 from typing import List
-from typing import Type
 
-# TODO: Make it possible to configure the queue to use
-handler_queue = ProcessQueue(queue_id="Handler Queue")
+# TODO: Make it possible to configure the queue to use for handler execution
+handler_queue = CeleryQueue(queue_id="Handler Queue")
 
 
 class RunResponseItem(BaseModel):
