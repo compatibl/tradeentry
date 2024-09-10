@@ -57,7 +57,7 @@ class TaskRun(TaskRunKey, RecordMixin[TaskRunKey]):
     def __post_init__(self):
         # Automatically generate time-ordered unique task run identifier in UUIDv7 format if not yet specified
         if self.task_run_id is None:
-            self.task_run_id = OrderedUuid.create_one()
+            self.task_run_id = str(OrderedUuid.create_one())
 
     def get_key(self) -> TaskRunKey:
         return TaskRunKey(task_run_id=self.task_run_id)

@@ -19,13 +19,11 @@ from celery import Celery
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
-from cl.runtime.records.protocols import is_record
 from cl.runtime import Context
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
 from cl.runtime.tasks.task_run import TaskRun
-from cl.runtime.tasks.task_run_key import TaskRunKey
 from cl.runtime.tasks.task_status import TaskStatus
 
 CELERY_MAX_WORKERS = 4
@@ -44,15 +42,16 @@ celery_app = Celery(
 celery_app.conf.task_track_started = True
 
 
-@celery_app.task
+@celery_app.task(max_retries=0)  # Do not retry failed tasks
 def execute_task(task_id: str, queue_id: str) -> None:
     """Invoke execute method of the specified task."""
 
     with Context():
 
         # Create task run identifier and save its timestamp
-        task_run_id = OrderedUuid.create_one()
-        submit_time = OrderedUuid.datetime_of(task_run_id)
+        task_run_uuid = OrderedUuid.create_one()
+        task_run_id = str(task_run_uuid)
+        submit_time = OrderedUuid.datetime_of(task_run_uuid)
 
         # Create a task run record in Pending state
         task_run = TaskRun()
@@ -85,11 +84,6 @@ def execute_task(task_id: str, queue_id: str) -> None:
 
 def celery_start_workers() -> None:
 
-    # Celery doesn't support prefork on Windows
-    # pool = "solo" if platform.system() != 'Linux' else "prefork"
-    pool = "solo"  # One concurrent task per worker
-    concurrency = 1  # Only applies in case of prefork, but not in case of solo
-
     celery_app.worker_main(
         argv=[
             '-A',
@@ -97,8 +91,8 @@ def celery_start_workers() -> None:
             'worker',
             '--loglevel=info',
             f'--autoscale={CELERY_MAX_WORKERS},1',
-            f'--pool={pool}',
-            f'--concurrency={concurrency}',  # Use only in case of prefork
+            f'--pool=solo',  # One concurrent task per worker, do not switch to prefork (not supported on Windows)
+            f'--concurrency=1',  # Use only for prefork, one concurrent task per worker (similar to solo)
         ],
     )
 

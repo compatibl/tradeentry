@@ -46,7 +46,7 @@ class TaskStatusResponseItem(BaseModel):
     def get_task_statuses(cls, request: TaskStatusRequest) -> List[TaskStatusResponseItem]:
         """Get status for tasks in request."""
 
-        task_run_keys = [TaskRunKey(task_run_id=UUID(x)) for x in request.task_run_ids]
+        task_run_keys = [TaskRunKey(task_run_id=x) for x in request.task_run_ids]  # TODO: Update if task_run_id is UUID
         task_runs = cast(Iterable[TaskRun], Context.load_many(TaskRun, task_run_keys))
 
         response_items = [

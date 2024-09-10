@@ -29,8 +29,8 @@ class TaskRunKey(KeyMixin):
         - This record must never be modified by the task itself
     """
 
-    task_run_id: UUID = missing()
-    """Time-ordered unique task run identifier in UUIDv7 format."""
+    task_run_id: str = missing()  # TODO: Use UUID when fully supported
+    """Time-ordered unique task run identifier in UUIDv7 string format."""
 
     @classmethod
     def get_key_type(cls) -> Type:

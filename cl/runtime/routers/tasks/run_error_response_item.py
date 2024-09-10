@@ -18,6 +18,8 @@ from pydantic import BaseModel
 
 
 class RunErrorResponseItem(BaseModel):
+    """Data type for a single item in the response list for the /tasks/run route in case of an error."""
+
     task_run_id: str | None = missing()
     """Task run id."""
 
