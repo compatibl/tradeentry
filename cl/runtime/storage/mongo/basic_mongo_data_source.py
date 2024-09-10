@@ -122,7 +122,25 @@ class BasicMongoDataSource(DataSource):
         dataset: str | None = None,
         identity: str | None = None,
     ) -> Iterable[TRecord | None] | None:
-        raise NotImplementedError()
+        # Confirm dataset and identity are both None
+        if dataset is not None:
+            raise RuntimeError("BasicMongo data source type does not support datasets.")
+        if identity is not None:
+            raise RuntimeError("BasicMongo data source type does not support row-level security.")
+
+        # Key, get collection name from key type by removing Key suffix if present
+        key_type = record_type.get_key_type()
+        collection_name = key_type.__name__  # TODO: Decision on short alias
+        collection = self._db[collection_name]
+
+        serialized_records = collection.find()  # TODO: Filter by derived type
+        result = []
+        for serialized_record in serialized_records:
+            del serialized_record["_id"]
+            del serialized_record["_key"]
+            record = data_serializer.deserialize_data(serialized_record)   # TODO: Convert to comprehension for performance
+            result.append(record)
+        return result
 
     def load_by_query(
         self,
