@@ -31,7 +31,7 @@ def _create_task(task_id: str) -> Task:
 
 
 def test_method(celery_start_test_workers):
-    """Smoke test."""
+    """Test calling 'execute_task' method in-process."""
 
     with Context():
         task_id = f"test_celery_queue.test_method"
@@ -39,20 +39,16 @@ def test_method(celery_start_test_workers):
         task = _create_task(task_id)
         Context.save_one(task)
 
-        # Call the 'execute_task' method in-process
+        # Call 'execute_task' method in-process
         execute_task(task_id, queue_id)
-
-        # Submit the 'execute_task' method to Celery queue
-        result_task = execute_task.delay(task_id, queue_id)
-        result_task.get(timeout=2)
 
 
 def test_api(celery_start_test_workers):
-    """Smoke test."""
+    """Test submitting task for execution out of process."""
 
     with Context():
-        task_id = f"test_celery_queue.test_method"
-        queue_id = f"test_celery_queue.test_method"
+        task_id = f"test_celery_queue.test_api"
+        queue_id = f"test_celery_queue.test_api"
         task = _create_task(task_id)
         queue = CeleryQueue(queue_id=queue_id)
         Context.save_one(queue)

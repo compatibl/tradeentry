@@ -35,7 +35,6 @@ CELERY_TIME_LIMIT: Final[int] = 3600 * 2  # TODO: 2 hours (configure)
 celery_app = Celery(
     "worker",
     broker="mongodb://localhost:27017/celery",
-    backend="mongodb://localhost:27017/celery",
     broker_connection_retry_on_startup=True,
 )
 
@@ -69,7 +68,6 @@ def execute_task(task_id: str, queue_id: str) -> None:
             task = Context.load_one(Task, task_key)
             task.execute()
         except Exception as e:  # noqa
-            print(e)
             # Update task run record to report task failure
             task_run.update_time = DatetimeUtil.now()
             task_run.status = TaskStatus.Failed
