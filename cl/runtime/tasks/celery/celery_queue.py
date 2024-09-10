@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import multiprocessing
 import platform
 from typing import Final, List, Optional
 from celery import Celery
@@ -38,7 +39,7 @@ def celery_callable():
     return 10
 
 
-def start_worker(worker_name: Optional[str] = None, queue_names: Optional[List[str]] = None) -> None:
+def celery_start_workers(worker_name: Optional[str] = None, queue_names: Optional[List[str]] = None) -> None:
 
     # Celery doesn't support Windows
     pool = "solo" if platform.system() != 'Linux' else "prefork"
@@ -55,6 +56,8 @@ def start_worker(worker_name: Optional[str] = None, queue_names: Optional[List[s
     )
 
 
-if __name__ == '__main__':  # TODO: Replace by CeleryQueue
-    start_worker()
+def celery_start_workers_process(worker_name: Optional[str] = None, queue_names: Optional[List[str]] = None) -> None:
 
+    # Start Celery workers (will exit when the current process exits)
+    worker_process = multiprocessing.Process(target=celery_start_workers, daemon=True)
+    worker_process.start()

@@ -13,17 +13,13 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.tasks.celery.celery_queue import celery_callable
-from cl.runtime.testing.celery_testing import celery_start_test_workers
+from cl.runtime.tasks.celery.celery_queue import celery_start_workers_process
 
 
-def test_smoke(celery_start_test_workers):
-    """Smoke test."""
-    result_task = celery_callable.delay()
-    result = result_task.get(timeout=10)
-    assert result == 10
-
-
-if __name__ == "__main__":
-    pytest.main([__file__])
-
+@pytest.fixture(scope='session')
+def celery_start_test_workers():
+    print("Starting test celery workers.")
+    celery_start_workers_process()   # TODO: Make test celery a separate queue
+    yield
+    # TODO: Do we need to explicitly shut down
+    print("\nStopping test celery workers.")

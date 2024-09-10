@@ -27,6 +27,7 @@ from cl.runtime.settings.settings import Settings
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from starlette.staticfiles import StaticFiles
+from cl.runtime.tasks.celery.celery_queue import celery_start_workers_process
 from stubs.cl.runtime.config.stub_runtime_config import StubRuntimeConfig  # TODO: Remove after refactoring
 
 # Server
@@ -59,6 +60,10 @@ server_app.include_router(tasks_router.router, prefix="/tasks", tags=["Tasks"])
 
 if __name__ == "__main__":
     with Context():
+
+        # Start Celery workers (will exit when the current process exits)
+        celery_start_workers_process()
+
         # TODO: Temporary workaround before full configuration workflow is supported
         config = StubRuntimeConfig()
         config.config_id = "Stub Runtime Config"
