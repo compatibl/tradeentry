@@ -13,17 +13,43 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.tasks.celery.celery_queue import celery_callable
+
+from cl.runtime import Context
+from cl.runtime.tasks.celery.celery_queue import execute_task, CeleryQueue
+from cl.runtime.tasks.static_method_task import StaticMethodTask
+from cl.runtime.tasks.task import Task
 from cl.runtime.testing.celery_testing import celery_start_test_workers
+from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
 
-def test_smoke(celery_start_test_workers):
+def _create_task(task_id: str) -> Task:
+    """Create a test task."""
+
+    method_callable = StubHandlers.static_handler_1a
+    result = StaticMethodTask.create(task_id="abc", record_type=StubHandlers, method_callable=method_callable)
+    return result
+
+
+def test_method(celery_start_test_workers):
     """Smoke test."""
-    result_task = celery_callable.delay()
-    result = result_task.get(timeout=10)
-    assert result == 10
+
+    with Context():
+        task = _create_task(f"test_celery_queue.test_method")
+        Context.save_one(task)
+        result_task = execute_task.delay(task.task_id)
+        result_task.get(timeout=2)
+
+
+def test_api(celery_start_test_workers):
+    """Smoke test."""
+
+    with Context():
+        task = _create_task(f"test_celery_queue.test_api")
+
+        queue = CeleryQueue()
+        task_run_key = queue.submit_task(task)
+        pass
 
 
 if __name__ == "__main__":
     pytest.main([__file__])
-

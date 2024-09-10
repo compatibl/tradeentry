@@ -37,7 +37,7 @@ def execute_task(task_id: str) -> None:
 
 @dataclass(slots=True, kw_only=True)
 class ProcessQueue(TaskQueue):
-    """Spawns a new process for each task, processes are not reused between tasks."""
+    """Starts a new process for each task, processes are not reused between tasks."""
 
     # max_workers: int = missing()  # TODO: Implement support for max_workers
     """The maximum number of processes running concurrently."""
