@@ -21,6 +21,9 @@ from cl.runtime.routers.tasks.run_response_item import RunResponseItem
 from cl.runtime.serialization.string_serializer import StringSerializer
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
+
+from cl.runtime.tasks.task_run_key import TaskRunKey
+from cl.runtime.testing.celery_testing import check_task_run_completion
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
@@ -63,6 +66,7 @@ def test_method():
     # TODO: Use UnitTestContext instead
     with Context():
         Context.save_one(stub_handlers)
+        # StubHandlers().handler_save_to_db()
 
         for request in simple_requests + save_to_db_requests:
             request_object = RunRequest(**request)
@@ -82,8 +86,11 @@ def test_method():
             expected_keys = [rec.get_key() for rec in expected_records]
 
             request_object = RunRequest(**request)
-            RunResponseItem.run_tasks(request_object)
-
+            response_items = RunResponseItem.run_tasks(request_object)
+            [
+                check_task_run_completion(TaskRunKey(task_run_id=response_item.task_run_id))
+                for response_item in response_items
+            ]
             actual_records = list(Context.load_many(StubDataclassRecord, expected_keys))
             assert actual_records == expected_records
 

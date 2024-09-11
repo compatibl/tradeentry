@@ -12,14 +12,41 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import datetime as dt
+import time
+
 import pytest
-from cl.runtime.tasks.celery.celery_queue import celery_start_workers_process
+
+from cl.runtime import Context
+from cl.runtime.primitive.datetime_util import DatetimeUtil
+
+from cl.runtime.tasks.celery.celery_queue import celery_start_queue, celery_delete_existing_tasks
+from cl.runtime.tasks.task_run import TaskRun
+from cl.runtime.tasks.task_run_key import TaskRunKey
+from cl.runtime.tasks.task_status import TaskStatus
 
 
 @pytest.fixture(scope="session")
 def celery_start_test_workers():
-    print("Starting test celery workers.")
-    celery_start_workers_process()  # TODO: Make test celery a separate queue
+    print("Starting celery workers, will delete the existing tasks.")
+    # celery_delete_existing_tasks()
+    celery_start_queue()  # TODO: Make test celery a separate queue
     yield
-    # TODO: Do we need to explicitly shut down
-    print("\nStopping test celery workers.")
+    # celery_delete_existing_tasks()
+    print("Stopping celery workers and cleaning up tasks.")
+
+
+def check_task_run_completion(task_run_key: TaskRunKey) -> None:
+    """Check for completion of the task run, allowing for the delay in queue execution with the specified timeout."""
+
+    timeout_sec = 10
+    start_datetime = DatetimeUtil.now()
+    while DatetimeUtil.now() < start_datetime + dt.timedelta(seconds=timeout_sec):
+        task_run = Context.load_one(TaskRun, task_run_key)
+        if task_run is not None and task_run.status == TaskStatus.Completed:
+            # Test success, task has been completed
+            return
+        time.sleep(1)  # Sleep for 1 second to reduce CPU load
+
+    # Test failure
+    raise RuntimeError(f"Task has not been completed after {timeout_sec} sec.")

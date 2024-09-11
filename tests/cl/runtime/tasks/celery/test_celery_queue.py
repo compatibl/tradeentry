@@ -27,7 +27,7 @@ from cl.runtime.tasks.static_method_task import StaticMethodTask
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_status import TaskStatus
-from cl.runtime.testing.celery_testing import celery_start_test_workers
+from cl.runtime.testing.celery_testing import celery_start_test_workers, check_task_run_completion
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
 
@@ -70,21 +70,9 @@ def test_api(celery_start_test_workers):
         queue = CeleryQueue(queue_id=queue_id)
         Context.save_one(queue)
 
-        # Submit task
+        # Submit task and check for its completion
         task_run_key = queue.submit_task(task)
-
-        # Check task completion
-        timeout_sec = 10
-        start_datetime = DatetimeUtil.now()
-        while DatetimeUtil.now() < start_datetime + dt.timedelta(seconds=timeout_sec):
-            time.sleep(1)  # Sleep for 1 second to reduce CPU load
-            task_run = Context.load_one(TaskRun, task_run_key)
-            if task_run is not None and task_run.status == TaskStatus.Completed:
-                # Test success, task has been completed
-                return
-
-        # Test failure
-        raise RuntimeError(f"Task has not been completed after {timeout_sec} sec.")
+        check_task_run_completion(task_run_key)
 
 
 if __name__ == "__main__":
