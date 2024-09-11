@@ -33,6 +33,9 @@ class CsvFileReader(Reader):
     """Absolute path to the CSV file including extension."""
 
     def read(self) -> None:
+        # Get current context
+        context = Context.current()
+
         with open(self.file_path, mode="r") as file:
             # The reader is an iterable of row dicts
             csv_reader = csv.DictReader(file)
@@ -42,7 +45,7 @@ class CsvFileReader(Reader):
 
             # Save records to the specified data source
             if records:
-                Context.save_many(records)
+                context.save_many(records)
 
     def _deserialize_row(self, row_dict: Dict[str, Any]) -> RecordProtocol:
         """Deserialize row into a record."""

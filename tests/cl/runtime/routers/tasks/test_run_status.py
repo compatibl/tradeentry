@@ -58,9 +58,9 @@ def test_method():
     """Test coroutine for /tasks/run/status route."""
 
     # TODO: Use UnitTestContext instead
-    with Context():
-        Context.save_one(task)
-        Context.save_many(task_runs)
+    with Context() as context:
+        context.save_one(task)
+        context.save_many(task_runs)
 
         for request in requests:
             request_object = TaskStatusRequest(**request)
@@ -80,9 +80,9 @@ def test_api():
     """Test REST API for /tasks/run/status route."""
 
     # TODO: Use UnitTestContext instead
-    with Context():
-        Context.save_one(task)
-        Context.save_many(task_runs)
+    with Context() as context:
+        context.save_one(task)
+        context.save_many(task_runs)
 
         test_app = FastAPI()
         test_app.include_router(tasks_router.router, prefix="/tasks", tags=["Tasks"])

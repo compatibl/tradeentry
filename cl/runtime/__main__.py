@@ -24,7 +24,8 @@ from cl.runtime.routers.tasks import tasks_router
 from cl.runtime.settings.api_settings import ApiSettings
 from cl.runtime.settings.preload_settings import PreloadSettings
 from cl.runtime.settings.settings import Settings
-from cl.runtime.tasks.celery.celery_queue import celery_start_queue, celery_delete_existing_tasks
+from cl.runtime.tasks.celery.celery_queue import celery_delete_existing_tasks
+from cl.runtime.tasks.celery.celery_queue import celery_start_queue
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from starlette.staticfiles import StaticFiles
@@ -60,7 +61,6 @@ server_app.include_router(tasks_router.router, prefix="/tasks", tags=["Tasks"])
 
 if __name__ == "__main__":
     with Context():
-
         # Start Celery workers (will exit when the current process exits)
         celery_delete_existing_tasks()
         celery_start_queue()

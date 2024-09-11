@@ -13,11 +13,7 @@
 # limitations under the License.
 
 import multiprocessing
-from uuid import UUID
-
 from celery import Celery
-from pymongo import MongoClient
-
 from cl.runtime import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
@@ -29,7 +25,9 @@ from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
 from cl.runtime.tasks.task_status import TaskStatus
 from dataclasses import dataclass
+from pymongo import MongoClient
 from typing import Final
+from uuid import UUID
 
 CELERY_MAX_WORKERS = 4
 
@@ -53,7 +51,7 @@ celery_app.conf.task_track_started = True
 def execute_task(task_run_id: str, task_id: str, queue_id: str) -> None:
     """Invoke execute method of the specified task."""
 
-    with Context():
+    with Context() as context:
         # Get timestamp from task_run_id
         task_run_uuid = UUID(task_run_id)
         submit_time = OrderedUuid.datetime_of(task_run_uuid)
@@ -66,24 +64,24 @@ def execute_task(task_run_id: str, task_id: str, queue_id: str) -> None:
         task_run.submit_time = submit_time
         task_run.update_time = submit_time
         task_run.status = TaskStatus.Pending
-        Context.save_one(task_run)
+        context.save_one(task_run)
 
         try:
             # Load and execute the task object
             task_key = TaskKey(task_id=task_id)
-            task = Context.load_one(Task, task_key)
+            task = context.load_one(Task, task_key)
             task.execute()
         except Exception as e:  # noqa
             # Update task run record to report task failure
             task_run.update_time = DatetimeUtil.now()
             task_run.status = TaskStatus.Failed
             task_run.result = str(e)
-            Context.save_one(task_run)
+            context.save_one(task_run)
         else:
             # Update task run record to report task completion
             task_run.update_time = DatetimeUtil.now()
             task_run.status = TaskStatus.Completed
-            Context.save_one(task_run)
+            context.save_one(task_run)
 
 
 def celery_start_queue_callable() -> None:
@@ -140,10 +138,12 @@ class CeleryQueue(TaskQueue):
         """Resume starting new runs and send resume command to existing runs."""
 
     def submit_task(self, task: TaskKey) -> TaskRunKey:
+        # Get current context
+        context = Context.current()
 
         # Save task if provided as record rather than key
         if is_record(task):
-            Context.save_one(task)
+            context.save_one(task)
 
         # Create task run identifier and convert to string
         task_run_uuid = OrderedUuid.create_one()

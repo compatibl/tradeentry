@@ -12,14 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import time
-
-import pytest
 import datetime as dt
-
-from cl.runtime.primitive.datetime_util import DatetimeUtil
-
+import pytest
+import time
 from cl.runtime import Context
+from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.tasks.celery.celery_queue import CeleryQueue
 from cl.runtime.tasks.celery.celery_queue import execute_task
@@ -27,7 +24,8 @@ from cl.runtime.tasks.static_method_task import StaticMethodTask
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_status import TaskStatus
-from cl.runtime.testing.celery_testing import celery_start_test_workers, check_task_run_completion
+from cl.runtime.testing.celery_testing import celery_start_test_workers
+from cl.runtime.testing.celery_testing import check_task_run_completion
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
 
@@ -42,13 +40,12 @@ def _create_task(task_id: str) -> Task:
 def test_method(celery_start_test_workers):
     """Test calling 'execute_task' method in-process."""
 
-    with Context():
-
+    with Context() as context:
         # Create task
         task_id = f"test_celery_queue.test_method"
         queue_id = f"test_celery_queue.test_method"
         task = _create_task(task_id)
-        Context.save_one(task)
+        context.save_one(task)
 
         # Create task run identifier and convert to string
         task_run_uuid = OrderedUuid.create_one()
@@ -61,14 +58,13 @@ def test_method(celery_start_test_workers):
 def test_api(celery_start_test_workers):
     """Test submitting task for execution out of process."""
 
-    with Context():
-
+    with Context() as context:
         # Create task
         task_id = f"test_celery_queue.test_api"
         queue_id = f"test_celery_queue.test_api"
         task = _create_task(task_id)
         queue = CeleryQueue(queue_id=queue_id)
-        Context.save_one(queue)
+        context.save_one(queue)
 
         # Submit task and check for its completion
         task_run_key = queue.submit_task(task)

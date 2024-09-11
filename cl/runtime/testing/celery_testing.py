@@ -13,14 +13,12 @@
 # limitations under the License.
 
 import datetime as dt
-import time
-
 import pytest
-
+import time
 from cl.runtime import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil
-
-from cl.runtime.tasks.celery.celery_queue import celery_start_queue, celery_delete_existing_tasks
+from cl.runtime.tasks.celery.celery_queue import celery_delete_existing_tasks
+from cl.runtime.tasks.celery.celery_queue import celery_start_queue
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
 from cl.runtime.tasks.task_status import TaskStatus
@@ -39,10 +37,13 @@ def celery_start_test_workers():
 def check_task_run_completion(task_run_key: TaskRunKey) -> None:
     """Check for completion of the task run, allowing for the delay in queue execution with the specified timeout."""
 
+    # Get current context
+    context = Context.current()
+
     timeout_sec = 10
     start_datetime = DatetimeUtil.now()
     while DatetimeUtil.now() < start_datetime + dt.timedelta(seconds=timeout_sec):
-        task_run = Context.load_one(TaskRun, task_run_key)
+        task_run = context.load_one(TaskRun, task_run_key)
         if task_run is not None and task_run.status == TaskStatus.Completed:
             # Test success, task has been completed
             return

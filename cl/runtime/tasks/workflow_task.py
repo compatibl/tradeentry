@@ -29,8 +29,11 @@ class WorkflowTask(Task):
     """Tasks run in parallel in the order of phases, however each phase waits until its prerequisites are completed."""
 
     def execute(self) -> None:
+        # Get current context
+        context = Context.current()
+
         # Check that phases do not specify prerequisites
-        phases = Context.load_many(WorkflowPhase, self.phases)  # TODO: Error message if not found
+        phases = context.load_many(WorkflowPhase, self.phases)  # TODO: Error message if not found
         if any(phase.prerequisites is not None for phase in phases):
             # TODO: Support checking for prerequisites
             raise RuntimeError("Checking for prerequisites is not yet supported.")

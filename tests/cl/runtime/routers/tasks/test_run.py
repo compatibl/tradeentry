@@ -19,11 +19,10 @@ from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseIte
 from cl.runtime.routers.tasks.run_request import RunRequest
 from cl.runtime.routers.tasks.run_response_item import RunResponseItem
 from cl.runtime.serialization.string_serializer import StringSerializer
-from fastapi import FastAPI
-from fastapi.testclient import TestClient
-
 from cl.runtime.tasks.task_run_key import TaskRunKey
 from cl.runtime.testing.celery_testing import check_task_run_completion
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
@@ -64,9 +63,8 @@ def test_method():
     """Test coroutine for /tasks/run route."""
 
     # TODO: Use UnitTestContext instead
-    with Context():
-        Context.save_one(stub_handlers)
-        # StubHandlers().handler_save_to_db()
+    with Context() as context:
+        context.save_one(stub_handlers)
 
         for request in simple_requests + save_to_db_requests:
             request_object = RunRequest(**request)
@@ -91,7 +89,7 @@ def test_method():
                 check_task_run_completion(TaskRunKey(task_run_id=response_item.task_run_id))
                 for response_item in response_items
             ]
-            actual_records = list(Context.load_many(StubDataclassRecord, expected_keys))
+            actual_records = list(context.load_many(StubDataclassRecord, expected_keys))
             assert actual_records == expected_records
 
 
@@ -99,8 +97,8 @@ def test_api():
     """Test REST API for /tasks/run route."""
 
     # TODO: Use UnitTestContext instead
-    with Context():
-        Context.save_one(stub_handlers)
+    with Context() as context:
+        context.save_one(stub_handlers)
 
         test_app = FastAPI()
         test_app.include_router(tasks_router.router, prefix="/tasks", tags=["Tasks"])
@@ -127,7 +125,7 @@ def test_api():
 
                 test_client.post("/tasks/run", json=request)
 
-                actual_records = list(Context.load_many(StubDataclassRecord, expected_keys))
+                actual_records = list(context.load_many(StubDataclassRecord, expected_keys))
                 assert actual_records == expected_records
 
 

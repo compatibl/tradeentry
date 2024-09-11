@@ -52,7 +52,10 @@ class Task(TaskKey, RecordMixin[TaskKey], ABC):
     @handler
     def submit(self, queue: TaskQueueKey) -> TaskRunKey:
         """Submit task to the specified queue."""
-        queue_obj = Context.load_one(TaskQueue, queue)  # TODO: Optimize for multiple calls
+
+        # Get current context
+        context = Context.current()
+
+        queue_obj = context.load_one(TaskQueue, queue)  # TODO: Optimize for multiple calls
         task_run_key = queue_obj.submit_task(self)
         return task_run_key
-

@@ -28,10 +28,10 @@ from dataclasses import dataclass
 def execute_task(task_id: str) -> None:
     """Invoke execute method of the specified task."""
 
-    with Context():
+    with Context() as context:
         # Load task object
         task_key = TaskKey(task_id=task_id)
-        task = Context.load_one(Task, task_key)
+        task = context.load_one(Task, task_key)
         task.execute()
 
 
@@ -63,13 +63,15 @@ class ProcessQueue(TaskQueue):
         """Resume starting new runs and send resume command to existing runs."""
 
     def submit_task(self, task: TaskKey) -> TaskRunKey:
+        # Get current context
+        context = Context.current()
 
         # Record the task submission time
         submit_time = DatetimeUtil.now()
 
         # Save task if provided as record rather than key
         if is_record(task):
-            Context.save_one(task)
+            context.save_one(task)
 
         # Spawn a daemon process that will exit when this process exits
         # TODO: Make asynchronous
@@ -84,7 +86,6 @@ class ProcessQueue(TaskQueue):
         task_run.submit_time = submit_time
         task_run.update_time = submit_time
         task_run.status = TaskStatus.Completed  # TODO: Update after the task is actually completed
-        Context.save_one(task_run)
+        context.save_one(task_run)
 
         return task_run.get_key()
-

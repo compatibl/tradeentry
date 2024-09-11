@@ -103,9 +103,8 @@ class Context:
         # Return False to propagate exception to the caller
         return False
 
-    @classmethod
     def load_one(
-        cls,
+        self,
         record_type: Type[TRecord],
         record_or_key: TRecord | KeyProtocol | None,
         *,
@@ -121,16 +120,15 @@ class Context:
             dataset: If specified, append to the root dataset of the data source
             identity: Identity token for database access and row-level security
         """
-        return Context.current().data_source.load_one(
+        return self.data_source.load_one(
             record_type,
             record_or_key,
             dataset=dataset,
             identity=identity,
         )
 
-    @classmethod
     def load_many(
-        cls,
+        self,
         record_type: Type[TRecord],
         records_or_keys: Iterable[TRecord | KeyProtocol | tuple | str | None] | None,
         *,
@@ -147,16 +145,15 @@ class Context:
             dataset: If specified, append to the root dataset of the data source
             identity: Identity token for database access and row-level security
         """
-        return Context.current().data_source.load_many(
+        return self.data_source.load_many(
             record_type,
             records_or_keys,
             dataset=dataset,
             identity=identity,
         )
 
-    @classmethod
     def load_all(
-        cls,
+        self,
         record_type: Type[TRecord],
         *,
         dataset: str | None = None,
@@ -170,15 +167,14 @@ class Context:
             dataset: If specified, append to the root dataset of the data source
             identity: Identity token for database access and row-level security
         """
-        return Context.current().data_source.load_all(
+        return self.data_source.load_all(
             record_type,
             dataset=dataset,
             identity=identity,
         )
 
-    @classmethod
     def save_one(
-        cls,
+        self,
         record: RecordProtocol | None,
         *,
         dataset: str | None = None,
@@ -192,15 +188,14 @@ class Context:
             dataset: Target dataset as a delimited string, list of levels, or None
             identity: Identity token for database access and row-level security
         """
-        Context.current().data_source.save_one(
+        self.data_source.save_one(
             record,
             dataset=dataset,
             identity=identity,
         )
 
-    @classmethod
     def save_many(
-        cls,
+        self,
         records: Iterable[RecordProtocol],
         *,
         dataset: str | None = None,
@@ -214,15 +209,14 @@ class Context:
             dataset: Target dataset as a delimited string, list of levels, or None
             identity: Identity token for database access and row-level security
         """
-        Context.current().data_source.save_many(
+        self.data_source.save_many(
             records,
             dataset=dataset,
             identity=identity,
         )
 
-    @classmethod
     def delete_many(
-        cls,
+        self,
         keys: Iterable[KeyProtocol] | None,
         *,
         dataset: str | None = None,
@@ -236,17 +230,16 @@ class Context:
             dataset: Target dataset as a delimited string, list of levels, or None
             identity: Identity token for database access and row-level security
         """
-        Context.current().data_source.delete_many(
+        self.data_source.delete_many(
             keys,
             dataset=dataset,
             identity=identity,
         )
 
-    @classmethod
-    def delete_all(cls) -> None:
+    def delete_all(self) -> None:
         """
         Permanently delete (drop) all records and schema without the possibility of recovery.
         Error if data source identifier does not match the temp_db pattern in settings.
         """
         # TODO(High): Add a check for temp DB name pattern
-        Context.current().data_source.delete_all()
+        self.data_source.delete_all()

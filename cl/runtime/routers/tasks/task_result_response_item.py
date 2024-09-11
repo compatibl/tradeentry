@@ -50,8 +50,11 @@ class TaskResultResponseItem(BaseModel):
     def get_task_results(cls, request: TaskResultRequest) -> List[TaskResultResponseItem]:
         """Get results for tasks in request."""
 
+        # Get current context
+        context = Context.current()
+
         task_run_keys = [TaskRunKey(task_run_id=x) for x in request.task_run_ids]  # TODO: Use =UUID(x)
-        task_runs = cast(Iterable[TaskRun], Context.load_many(TaskRun, task_run_keys))
+        task_runs = cast(Iterable[TaskRun], context.load_many(TaskRun, task_run_keys))
 
         response_items = [
             TaskResultResponseItem(

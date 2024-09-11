@@ -49,6 +49,7 @@ class PreloadSettings(Settings):
     def preload(self) -> None:
         """Preload from the specified directory paths."""
 
+        # Get current context
         context = Context.current()
 
         # Preload CSV data

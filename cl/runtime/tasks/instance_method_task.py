@@ -47,14 +47,17 @@ class InstanceMethodTask(CallableTask):
     def execute(self) -> Any:
         """Invoke the specified class instance method handler."""
 
+        # Get current context
+        context = Context.current()
+
         # Save self to ensure the worker process loads the same record
-        Context.save_one(self)
+        context.save_one(self)
 
         key_type = ClassInfo.get_class_type(self.key_type_str)
         key = key_serializer.deserialize_key(self.key_str, key_type)
 
         # Load record from storage
-        record = Context.load_one(key_type, key)  # TODO: Require record type?
+        record = context.load_one(key_type, key)  # TODO: Require record type?
 
         # Convert the name to snake_case and get method callable
         method_name = self.normalize_method_name(self.method_name)
