@@ -77,24 +77,8 @@ class RunResponseItem(BaseModel):
                     method_name=request.method,
                 )
 
+            # Submit task and record its task_run_id
             task_run_key = handler_queue.submit_task(handler_task)
-
-            try:
-                # submit task and convert run_id to string
-                run_id_as_str = str(task_run_key.task_run_id)
-            except Exception as exc:
-                # add error response item if failed to submit task. errors in handler execution handle task runner.
-                _traceback = traceback.format_exc()
-                response_items.append(
-                    RunErrorResponseItem(
-                        name="HandlerExecutionException",
-                        status_code=TaskStatus.Failed,
-                        message=str(exc),
-                        stack_trace=_traceback,
-                    )
-                )
-            else:
-                # add success response item with submitted task_run_id
-                response_items.append(RunResponseItem(key=serialized_key, task_run_id=run_id_as_str))
+            response_items.append(RunResponseItem(key=serialized_key, task_run_id=task_run_key.task_run_id))
 
         return response_items

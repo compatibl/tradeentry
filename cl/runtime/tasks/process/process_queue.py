@@ -62,8 +62,7 @@ class ProcessQueue(TaskQueue):
     def resume_all(self) -> None:
         """Resume starting new runs and send resume command to existing runs."""
 
-    def submit_task(self, task: TaskKey) -> None:
-        """Submit task to this queue (all further access to the run is provided via the returned TaskRunKey)."""
+    def submit_task(self, task: TaskKey) -> TaskRunKey:
 
         # Record the task submission time
         submit_time = DatetimeUtil.now()
@@ -73,6 +72,7 @@ class ProcessQueue(TaskQueue):
             Context.save_one(task)
 
         # Spawn a daemon process that will exit when this process exits
+        # TODO: Make asynchronous
         worker_process = multiprocessing.Process(target=execute_task, args=(task.task_id,))
         worker_process.start()
         worker_process.join()
@@ -85,3 +85,6 @@ class ProcessQueue(TaskQueue):
         task_run.update_time = submit_time
         task_run.status = TaskStatus.Completed  # TODO: Update after the task is actually completed
         Context.save_one(task_run)
+
+        return task_run.get_key()
+

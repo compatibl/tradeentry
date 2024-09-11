@@ -12,12 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import time
+
 import pytest
+import datetime as dt
+
+from cl.runtime.primitive.datetime_util import DatetimeUtil
+
 from cl.runtime import Context
+from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.tasks.celery.celery_queue import CeleryQueue
 from cl.runtime.tasks.celery.celery_queue import execute_task
 from cl.runtime.tasks.static_method_task import StaticMethodTask
 from cl.runtime.tasks.task import Task
+from cl.runtime.tasks.task_run import TaskRun
+from cl.runtime.tasks.task_status import TaskStatus
 from cl.runtime.testing.celery_testing import celery_start_test_workers
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
@@ -34,26 +43,48 @@ def test_method(celery_start_test_workers):
     """Test calling 'execute_task' method in-process."""
 
     with Context():
+
+        # Create task
         task_id = f"test_celery_queue.test_method"
         queue_id = f"test_celery_queue.test_method"
         task = _create_task(task_id)
         Context.save_one(task)
 
+        # Create task run identifier and convert to string
+        task_run_uuid = OrderedUuid.create_one()
+        task_run_id = str(task_run_uuid)
+
         # Call 'execute_task' method in-process
-        execute_task(task_id, queue_id)
+        execute_task(task_run_id, task_id, queue_id)
 
 
 def test_api(celery_start_test_workers):
     """Test submitting task for execution out of process."""
 
     with Context():
+
+        # Create task
         task_id = f"test_celery_queue.test_api"
         queue_id = f"test_celery_queue.test_api"
         task = _create_task(task_id)
         queue = CeleryQueue(queue_id=queue_id)
         Context.save_one(queue)
-        queue.submit_task(task)
-        pass
+
+        # Submit task
+        task_run_key = queue.submit_task(task)
+
+        # Check task completion
+        timeout_sec = 10
+        start_datetime = DatetimeUtil.now()
+        while DatetimeUtil.now() < start_datetime + dt.timedelta(seconds=timeout_sec):
+            time.sleep(1)  # Sleep for 1 second to reduce CPU load
+            task_run = Context.load_one(TaskRun, task_run_key)
+            if task_run is not None and task_run.status == TaskStatus.Completed:
+                # Test success, task has been completed
+                return
+
+        # Test failure
+        raise RuntimeError(f"Task has not been completed after {timeout_sec} sec.")
 
 
 if __name__ == "__main__":

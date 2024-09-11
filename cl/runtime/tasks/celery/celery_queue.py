@@ -13,6 +13,8 @@
 # limitations under the License.
 
 import multiprocessing
+from uuid import UUID
+
 from celery import Celery
 from cl.runtime import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil
@@ -22,6 +24,7 @@ from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
 from cl.runtime.tasks.task_run import TaskRun
+from cl.runtime.tasks.task_run_key import TaskRunKey
 from cl.runtime.tasks.task_status import TaskStatus
 from dataclasses import dataclass
 from typing import Final
@@ -42,13 +45,12 @@ celery_app.conf.task_track_started = True
 
 
 @celery_app.task(max_retries=0)  # Do not retry failed tasks
-def execute_task(task_id: str, queue_id: str) -> None:
+def execute_task(task_run_id: str, task_id: str, queue_id: str) -> None:
     """Invoke execute method of the specified task."""
 
     with Context():
-        # Create task run identifier and save its timestamp
-        task_run_uuid = OrderedUuid.create_one()
-        task_run_id = str(task_run_uuid)
+        # Get timestamp from task_run_id
+        task_run_uuid = UUID(task_run_id)
         submit_time = OrderedUuid.datetime_of(task_run_uuid)
 
         # Create a task run record in Pending state
@@ -126,18 +128,23 @@ class CeleryQueue(TaskQueue):
     def resume_all(self) -> None:
         """Resume starting new runs and send resume command to existing runs."""
 
-    def submit_task(self, task: TaskKey) -> None:
-        """Submit task to this queue (all further access to the run is provided via the returned TaskRunKey)."""
+    def submit_task(self, task: TaskKey) -> TaskRunKey:
 
         # Save task if provided as record rather than key
         if is_record(task):
             Context.save_one(task)
 
-        # Create Celery task signatures
-        execute_task_signature = execute_task.s(task.task_id, self.queue_id)
+        # Create task run identifier and convert to string
+        task_run_uuid = OrderedUuid.create_one()
+        task_run_id = str(task_run_uuid)
+
+        # Pass parameters to the Celery task signature
+        execute_task_signature = execute_task.s(task_run_id, task.task_id, self.queue_id)
 
         # Submit task to Celery with completed and error links
         execute_task_signature.apply_async(
             retry=False,  # Do not retry in case the task fails
             ignore_result=True,  # TODO: Do not publish to the Celery result backend
         )
+
+        return TaskRunKey(task_run_id=task_run_id)
