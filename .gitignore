@@ -13,6 +13,7 @@ syntax: glob
 *.idea
 *.py[cod]
 *.so
+logs/
 build/
 dist/
 wwwroot/
