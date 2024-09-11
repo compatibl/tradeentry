@@ -29,10 +29,10 @@ from cl.runtime.tasks.task_status import TaskStatus
 @pytest.fixture(scope="session")
 def celery_start_test_workers():
     print("Starting celery workers, will delete the existing tasks.")
-    # celery_delete_existing_tasks()
+    celery_delete_existing_tasks()
     celery_start_queue()  # TODO: Make test celery a separate queue
     yield
-    # celery_delete_existing_tasks()
+    celery_delete_existing_tasks()
     print("Stopping celery workers and cleaning up tasks.")
 
 

@@ -16,6 +16,8 @@ import multiprocessing
 from uuid import UUID
 
 from celery import Celery
+from pymongo import MongoClient
+
 from cl.runtime import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
@@ -35,9 +37,12 @@ CELERY_RUN_COMMAND_QUEUE: Final[str] = "run_command"
 CELERY_MAX_RETRIES: Final[int] = 3
 CELERY_TIME_LIMIT: Final[int] = 3600 * 2  # TODO: 2 hours (configure)
 
+celery_mongo_server_uri = "mongodb://localhost:27017/"  # TODO: Check that server URI ends in slash
+celery_mongo_database = "celery"  # TODO: Changing DB name stops Celery queue from working, investigate
+
 celery_app = Celery(
     "worker",
-    broker="mongodb://localhost:27017/celery",
+    broker=f"{celery_mongo_server_uri}{celery_mongo_database}",
     broker_connection_retry_on_startup=True,
 )
 
@@ -81,7 +86,7 @@ def execute_task(task_run_id: str, task_id: str, queue_id: str) -> None:
             Context.save_one(task_run)
 
 
-def celery_start_workers() -> None:
+def celery_start_queue_callable() -> None:
     celery_app.worker_main(
         argv=[
             "-A",
@@ -95,9 +100,15 @@ def celery_start_workers() -> None:
     )
 
 
-def celery_start_workers_process() -> None:
-    # Start Celery workers (will exit when the current process exits)
-    worker_process = multiprocessing.Process(target=celery_start_workers, daemon=True)
+def celery_delete_existing_tasks() -> None:
+    """Delete the existing Celery tasks (will exit when the current process exits)."""
+    client = MongoClient(celery_mongo_server_uri)
+    client.drop_database(celery_mongo_database)
+
+
+def celery_start_queue() -> None:
+    """Start Celery workers (will exit when the current process exits)."""
+    worker_process = multiprocessing.Process(target=celery_start_queue_callable, daemon=True)
     worker_process.start()
 
 
