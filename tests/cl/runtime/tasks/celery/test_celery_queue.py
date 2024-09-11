@@ -24,8 +24,8 @@ from cl.runtime.tasks.static_method_task import StaticMethodTask
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_status import TaskStatus
-from cl.runtime.testing.celery_testing import celery_start_test_workers
-from cl.runtime.testing.celery_testing import check_task_run_completion
+from cl.runtime.testing.celery_fixtures import celery_start_test_workers
+from cl.runtime.testing.celery_fixtures import check_task_run_completion
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
 
