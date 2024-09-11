@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from cl.runtime.settings.log_setup import LogFilter, log_handler, log_settings
 from cl.runtime.context.null_progress import NullProgress
 from cl.runtime.context.protocols import ProgressProtocol
 from cl.runtime.records.dataclasses_extensions import field
@@ -21,20 +22,14 @@ from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.protocols import DataSourceProtocol
 from cl.runtime.storage.protocols import TRecord
 from dataclasses import dataclass
-from logging import Logger
 from typing import ClassVar
 from typing import Iterable
 from typing import List
 from typing import Type
+import logging
 
 # Use in case progress is not specified
 null_progress = NullProgress()
-
-
-def current_or_default_logger() -> Logger:
-    """Return logger of the current context or None if current progress is not set."""
-    # TODO: Specify default logger
-    return context.logger if (context := Context.current()) is not None else None
 
 
 def current_or_default_data_source() -> DataSourceProtocol:
@@ -58,9 +53,6 @@ class Context:
 
     __context_stack: ClassVar[List["Context"]] = []  # TODO: Set using ContextVars
     """New current context is pushed to the context stack using 'with Context(...)' clause."""
-
-    logger: Logger | None = field(default_factory=lambda: current_or_default_logger())
-    """Return the logger provided by the context."""
 
     data_source: DataSourceProtocol | None = field(default_factory=lambda: current_or_default_data_source())
     """Return the default data source of the context or None if not set."""
@@ -102,6 +94,14 @@ class Context:
 
         # Return False to propagate exception to the caller
         return False
+
+    def get_logger(self, name: str) -> logging.Logger:
+        """Get logger for the specified name, invoke with __name__ as the argument."""
+        logger = logging.getLogger(name)
+        logger.addFilter(LogFilter())
+        logger.setLevel(log_settings.level)
+        logger.addHandler(log_handler)
+        return logger
 
     def load_one(
         self,
