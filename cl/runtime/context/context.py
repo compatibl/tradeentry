@@ -54,6 +54,9 @@ class Context:
     __context_stack: ClassVar[List["Context"]] = []  # TODO: Set using ContextVars
     """New current context is pushed to the context stack using 'with Context(...)' clause."""
 
+    context_id: str = "default"
+    """Unique context identifier."""
+
     data_source: DataSourceProtocol | None = field(default_factory=lambda: current_or_default_data_source())
     """Return the default data source of the context or None if not set."""
 
