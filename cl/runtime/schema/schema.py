@@ -36,13 +36,15 @@ from typing import cast
 from typing_extensions import Self
 
 
-def is_key_or_record(data_type):
-    """Return true if the type is a record based on the presence of 'get_key_type' method."""
+def is_key_record_or_enum(data_type):
+    """Return true if the type is a key or record based on the presence of 'get_key_type' method or an enum."""
     return (
         inspect.isclass(data_type)
-        and hasattr(data_type, "get_key_type")
-        and not inspect.isabstract(data_type)
-        and not data_type.__name__.endswith("Mixin")
+        and
+        (
+                (hasattr(data_type, "get_key_type") and not data_type.__name__.endswith("Mixin"))
+                or issubclass(data_type, Enum)
+        )
     )
 
 
@@ -106,7 +108,9 @@ class Schema:
 
             # Get record types by iterating over modules
             record_types = set(
-                record_type for module in modules for name, record_type in inspect.getmembers(module, is_key_or_record)
+                record_type for module in modules
+                for name, record_type
+                in inspect.getmembers(module, is_key_record_or_enum)
             )
 
             # Ensure names are unique
