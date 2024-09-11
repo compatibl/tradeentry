@@ -14,7 +14,6 @@
 
 import pytest
 from cl.runtime.context.context import Context
-from cl.runtime.schema.schema import Schema
 from cl.runtime.tasks.process.process_queue import ProcessQueue
 from cl.runtime.tasks.static_method_task import StaticMethodTask
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers

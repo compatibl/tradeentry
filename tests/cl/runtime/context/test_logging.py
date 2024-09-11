@@ -14,9 +14,10 @@
 
 import pytest
 from cl.runtime.context.context import Context
+from cl.runtime.testing.pytest_fixtures import log_fixture
 
 
-def test_smoke():
+def test_smoke(log_fixture):
     """Smoke test."""
 
     with Context() as context:

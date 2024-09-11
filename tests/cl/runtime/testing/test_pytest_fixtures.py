@@ -13,13 +13,13 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.testing.pytest_util import get_caller_name
+from cl.runtime.testing.pytest_fixtures import get_caller_name
 
 
 def test_get_caller_name():
     """Test for get_caller_name method."""
 
-    assert get_caller_name(caller_file=__file__) == "test_pytest_util"
+    assert get_caller_name(caller_file=__file__) == "test_pytest_fixtures"
 
 
 if __name__ == "__main__":

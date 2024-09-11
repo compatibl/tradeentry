@@ -12,12 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import datetime as dt
 import multiprocessing
 from celery import Celery
 from cl.runtime import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.records.protocols import is_record
+from cl.runtime.settings.log_settings import LogSettings
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
@@ -48,8 +50,21 @@ celery_app.conf.task_track_started = True
 
 
 @celery_app.task(max_retries=0)  # Do not retry failed tasks
-def execute_task(task_run_id: str, task_id: str, queue_id: str) -> None:
+def execute_task(
+        task_run_id: str,
+        task_id: str,
+        queue_id: str,
+        log_file_format: str,
+        log_file_prefix: str,
+        log_file_timestamp: dt.datetime,
+) -> None:
     """Invoke execute method of the specified task."""
+
+    # Copy log settings from the caller process
+    log_settings = LogSettings.instance()
+    log_settings.filename_format = log_file_format
+    log_settings.filename_prefix = log_file_prefix
+    log_settings.filename_timestamp = log_file_timestamp
 
     with Context() as context:
         # Get timestamp from task_run_id
@@ -150,7 +165,15 @@ class CeleryQueue(TaskQueue):
         task_run_id = str(task_run_uuid)
 
         # Pass parameters to the Celery task signature
-        execute_task_signature = execute_task.s(task_run_id, task.task_id, self.queue_id)
+        log_settings = LogSettings.instance()
+        execute_task_signature = execute_task.s(
+            task_run_id,
+            task.task_id,
+            self.queue_id,
+            log_settings.filename_format,
+            log_settings.filename_prefix,
+            log_settings.filename_timestamp,
+        )
 
         # Submit task to Celery with completed and error links
         execute_task_signature.apply_async(

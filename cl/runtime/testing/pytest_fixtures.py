@@ -15,8 +15,10 @@
 import os
 import pytest
 
+from cl.runtime.settings.log_settings import LogSettings
 
-def get_caller_name(*, caller_file: str) -> str:
+
+def get_caller_name(*, caller_file: str) -> str:  # TODO: Use __name__ instead, review use
     """
     Get caller script name without extension from its __file__ variable.
 
@@ -29,16 +31,18 @@ def get_caller_name(*, caller_file: str) -> str:
     return file_name
 
 
-@pytest.fixture(scope="function")
-def pytest_local_dir(request):
-    """
-    Pytest fixture to be used as follows:
+@pytest.fixture(scope="session", autouse=True)
+def log_fixture(request):
+    """Pytest session fixture to set log file prefix for test execution."""
 
-    test_method(pytest_local_dir)
+    # Set log file prefix
+    log_settings = LogSettings.instance()
+    log_settings.filename_prefix = "tests"
 
-    This fixture makes test module directory the default for pytest file I/O,
-    so that test input and output files can be saved next to test .py file.
-    """
+
+@pytest.fixture(scope="module", autouse=True)
+def local_dir_fixture(request):
+    """Pytest module fixture to make test module directory the local directory during test execution."""
 
     # Change test working directory to the directory of test source
     # so output files are placed next to the test module

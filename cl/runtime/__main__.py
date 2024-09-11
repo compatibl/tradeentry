@@ -22,6 +22,7 @@ from cl.runtime.routers.schema import schema_router
 from cl.runtime.routers.storage import storage_router
 from cl.runtime.routers.tasks import tasks_router
 from cl.runtime.settings.api_settings import ApiSettings
+from cl.runtime.settings.log_settings import LogSettings
 from cl.runtime.settings.preload_settings import PreloadSettings
 from cl.runtime.settings.settings import Settings
 from cl.runtime.tasks.celery.celery_queue import celery_delete_existing_tasks
@@ -60,6 +61,11 @@ server_app.include_router(entity_router.router, prefix="/entity", tags=["Entity"
 server_app.include_router(tasks_router.router, prefix="/tasks", tags=["Tasks"])
 
 if __name__ == "__main__":
+
+    # Set log file prefix
+    log_settings = LogSettings.instance()
+    log_settings.filename_prefix = "tests"
+
     with Context():
         # Start Celery workers (will exit when the current process exits)
         celery_delete_existing_tasks()

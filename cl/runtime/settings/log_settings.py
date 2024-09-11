@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import datetime as dt
+from cl.runtime.primitive.datetime_util import DatetimeUtil
+
 from cl.runtime.settings.settings import Settings
 from dataclasses import dataclass
 
@@ -19,6 +22,19 @@ from dataclasses import dataclass
 @dataclass(slots=True, kw_only=True)
 class LogSettings(Settings):
     """Runtime REST API settings."""
+
+    filename_format: str = "prefix-timestamp"
+    """
+    Log filename format, the choices are:
+    - prefix: Prefix only
+    - prefix-timestamp: Prefix followed by UTC timestamp to millisecond precision in dash-delimited format
+    """
+
+    filename_prefix: str = "default"
+    """Log filename prefix."""
+
+    filename_timestamp: dt.datetime = DatetimeUtil.now()
+    """Timestamp to use for log file, set to the time of program launch if not specified in settings."""
 
     level: str = "info"
     """Log level using logging module conventions (lower, upper or mixed case can be used)."""

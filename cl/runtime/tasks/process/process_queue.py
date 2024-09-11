@@ -12,10 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import datetime as dt
 import multiprocessing
 from cl.runtime import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.records.protocols import is_record
+from cl.runtime.settings.log_settings import LogSettings
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
@@ -25,8 +27,19 @@ from cl.runtime.tasks.task_status import TaskStatus
 from dataclasses import dataclass
 
 
-def execute_task(task_id: str) -> None:
+def execute_task(
+        task_id: str,
+        log_file_format: str,
+        log_file_prefix: str,
+        log_file_timestamp: dt.datetime,
+) -> None:
     """Invoke execute method of the specified task."""
+
+    # Copy log settings from the caller process
+    log_settings = LogSettings.instance()
+    log_settings.filename_format = log_file_format
+    log_settings.filename_prefix = log_file_prefix
+    log_settings.filename_timestamp = log_file_timestamp
 
     with Context() as context:
         # Load task object
@@ -75,7 +88,15 @@ class ProcessQueue(TaskQueue):
 
         # Spawn a daemon process that will exit when this process exits
         # TODO: Make asynchronous
-        worker_process = multiprocessing.Process(target=execute_task, args=(task.task_id,))
+        log_settings = LogSettings.instance()
+        worker_process = multiprocessing.Process(
+            target=execute_task,
+            args=(
+                task.task_id,
+                log_settings.filename_format,
+                log_settings.filename_prefix,
+                log_settings.filename_timestamp,
+            ))
         worker_process.start()
         worker_process.join()
 

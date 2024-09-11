@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.settings.log_setup import LogFilter, log_handler, log_settings
+from cl.runtime.settings.log_setup import LogFilter, get_log_file_handler, get_log_level
 from cl.runtime.context.null_progress import NullProgress
 from cl.runtime.context.protocols import ProgressProtocol
 from cl.runtime.records.dataclasses_extensions import field
@@ -100,10 +100,15 @@ class Context:
 
     def get_logger(self, name: str) -> logging.Logger:
         """Get logger for the specified name, invoke with __name__ as the argument."""
+
+        # Get log level and file handler
+        log_level = get_log_level()
+        log_file_handler = get_log_file_handler()
+
         logger = logging.getLogger(name)
         logger.addFilter(LogFilter())
-        logger.setLevel(log_settings.level)
-        logger.addHandler(log_handler)
+        logger.setLevel(log_level)
+        logger.addHandler(log_file_handler)
         return logger
 
     def load_one(

@@ -25,7 +25,8 @@ from cl.runtime.tasks.task_status import TaskStatus
 
 
 @pytest.fixture(scope="session")
-def celery_start_test_workers():
+def celery_test_queue_fixture():
+    """Pytest session fixture to start Celery test queue for test execution."""
     print("Starting celery workers, will delete the existing tasks.")
     celery_delete_existing_tasks()
     celery_start_queue()  # TODO: Make test celery a separate queue
@@ -34,6 +35,7 @@ def celery_start_test_workers():
     print("Stopping celery workers and cleaning up tasks.")
 
 
+# TODO: Move this check out of testing?
 def check_task_run_completion(task_run_key: TaskRunKey) -> None:
     """Check for completion of the task run, allowing for the delay in queue execution with the specified timeout."""
 

@@ -20,7 +20,7 @@ from cl.runtime.routers.tasks.run_request import RunRequest
 from cl.runtime.routers.tasks.run_response_item import RunResponseItem
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.tasks.task_run_key import TaskRunKey
-from cl.runtime.testing.celery_fixtures import check_task_run_completion
+from cl.runtime.testing.celery_fixtures import check_task_run_completion, celery_test_queue_fixture
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from stubs.cl.runtime import StubDataclassRecord
@@ -29,7 +29,6 @@ from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 stub_handlers = StubHandlers()
 key_serializer = StringSerializer()
 key_str = key_serializer.serialize_key(stub_handlers.get_key())
-
 
 simple_requests = [
     {
@@ -59,7 +58,7 @@ save_to_db_requests = [
 expected_records_in_db = [[StubDataclassRecord(id="saved_from_handler")]]
 
 
-def test_method():
+def test_method(celery_test_queue_fixture):
     """Test coroutine for /tasks/run route."""
 
     # TODO: Use UnitTestContext instead
@@ -93,7 +92,7 @@ def test_method():
             assert actual_records == expected_records
 
 
-def test_api():
+def test_api(celery_test_queue_fixture):
     """Test REST API for /tasks/run route."""
 
     # TODO: Use UnitTestContext instead

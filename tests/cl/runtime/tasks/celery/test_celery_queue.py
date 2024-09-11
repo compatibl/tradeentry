@@ -12,19 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import datetime as dt
 import pytest
-import time
 from cl.runtime import Context
-from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
+from cl.runtime.settings.log_settings import LogSettings
 from cl.runtime.tasks.celery.celery_queue import CeleryQueue
 from cl.runtime.tasks.celery.celery_queue import execute_task
 from cl.runtime.tasks.static_method_task import StaticMethodTask
 from cl.runtime.tasks.task import Task
-from cl.runtime.tasks.task_run import TaskRun
-from cl.runtime.tasks.task_status import TaskStatus
-from cl.runtime.testing.celery_fixtures import celery_start_test_workers
+from cl.runtime.testing.celery_fixtures import celery_test_queue_fixture
 from cl.runtime.testing.celery_fixtures import check_task_run_completion
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
@@ -37,7 +33,7 @@ def _create_task(task_id: str) -> Task:
     return result
 
 
-def test_method(celery_start_test_workers):
+def test_method(celery_test_queue_fixture):
     """Test calling 'execute_task' method in-process."""
 
     with Context() as context:
@@ -52,10 +48,18 @@ def test_method(celery_start_test_workers):
         task_run_id = str(task_run_uuid)
 
         # Call 'execute_task' method in-process
-        execute_task(task_run_id, task_id, queue_id)
+        log_settings = LogSettings.instance()
+        execute_task(
+            task_run_id,
+            task_id,
+            queue_id,
+            log_settings.filename_format,
+            log_settings.filename_prefix,
+            log_settings.filename_timestamp,
+        )
 
 
-def test_api(celery_start_test_workers):
+def test_api(celery_test_queue_fixture):
     """Test submitting task for execution out of process."""
 
     with Context() as context:
