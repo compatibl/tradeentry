@@ -15,10 +15,14 @@
 import datetime as dt
 import multiprocessing
 from celery import Celery
+from cl.runtime.storage.data_source_types import TDataDict
+from orjson import orjson
+
 from cl.runtime import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.records.protocols import is_record
+from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.settings.log_settings import LogSettings
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
@@ -48,6 +52,9 @@ celery_app = Celery(
 
 celery_app.conf.task_track_started = True
 
+context_serializer = DictSerializer()
+"""Serializer for the context parameter of 'execute_task' method."""
+
 
 @celery_app.task(max_retries=0)  # Do not retry failed tasks
 def execute_task(
@@ -57,6 +64,7 @@ def execute_task(
         log_file_format: str,
         log_file_prefix: str,
         log_file_timestamp: dt.datetime,
+        context_data: TDataDict,
 ) -> None:
     """Invoke execute method of the specified task."""
 
@@ -67,7 +75,8 @@ def execute_task(
     log_settings.filename_prefix = log_file_prefix
     log_settings.filename_timestamp = log_file_timestamp
 
-    with Context() as context:
+    # Deserialize context from 'context_data' parameter to run with the same settings as the caller context
+    with context_serializer.deserialize_data(context_data) as context:
         # Get timestamp from task_run_id
         task_run_uuid = UUID(task_run_id)
         submit_time = OrderedUuid.datetime_of(task_run_uuid)
@@ -167,6 +176,7 @@ class CeleryQueue(TaskQueue):
 
         # Pass parameters to the Celery task signature
         log_settings = LogSettings.instance()
+        context_data = context_serializer.serialize_data(context)
         execute_task_signature = execute_task.s(
             task_run_id,
             task.task_id,
@@ -174,6 +184,7 @@ class CeleryQueue(TaskQueue):
             log_settings.filename_format,
             log_settings.filename_prefix,
             log_settings.filename_timestamp,
+            context_data,
         )
 
         # Submit task to Celery with completed and error links

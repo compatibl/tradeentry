@@ -15,6 +15,7 @@
 import pytest
 from cl.runtime import Context
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
+from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.settings.log_settings import LogSettings
 from cl.runtime.tasks.celery.celery_queue import CeleryQueue
 from cl.runtime.tasks.celery.celery_queue import execute_task
@@ -23,6 +24,9 @@ from cl.runtime.tasks.task import Task
 from cl.runtime.testing.celery_fixtures import celery_test_queue_fixture
 from cl.runtime.testing.celery_fixtures import check_task_run_completion
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
+
+context_serializer = DictSerializer()
+"""Serializer for the context parameter of 'execute_task' method."""
 
 
 def _create_task(task_id: str) -> Task:
@@ -49,6 +53,7 @@ def test_method(celery_test_queue_fixture):
 
         # Call 'execute_task' method in-process
         log_settings = LogSettings.instance()
+        context_data = context_serializer.serialize_data(context)
         execute_task(
             task_run_id,
             task_id,
@@ -56,6 +61,7 @@ def test_method(celery_test_queue_fixture):
             log_settings.filename_format,
             log_settings.filename_prefix,
             log_settings.filename_timestamp,
+            context_data,
         )
 
 
