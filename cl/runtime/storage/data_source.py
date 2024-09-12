@@ -16,10 +16,14 @@ from __future__ import annotations
 
 from abc import ABC
 from abc import abstractmethod
+
+from cl.runtime.records.record_mixin import RecordMixin
+
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.settings.context_settings import ContextSettings
+from cl.runtime.storage.data_source_key import DataSourceKey
 from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.protocols import TRecord
 from dataclasses import dataclass
@@ -29,14 +33,14 @@ from typing import Type
 
 
 @dataclass(slots=True, kw_only=True)
-class DataSource(ABC):
-    """Abstract base class for polymorphic data storage with dataset isolation."""
+class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
+    """Polymorphic data storage with dataset isolation."""
 
     # TODO: Do not store here, instead get from settings once during the initial Context construction
     __default: ClassVar[DataSource | None] = None
 
-    data_source_id: str
-    """Unique data source identifier."""
+    def get_key(self) -> DataSourceKey:
+        return DataSourceKey(data_source_id=self.data_source_id)
 
     @abstractmethod
     def load_one(

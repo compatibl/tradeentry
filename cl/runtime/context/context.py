@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from cl.runtime.records.record_mixin import RecordMixin
+from cl.runtime.context.context_key import ContextKey
 from cl.runtime.settings.log_setup import LogFilter, get_log_file_handler, get_log_level
 from cl.runtime.context.null_progress import NullProgress
 from cl.runtime.context.protocols import ProgressProtocol
@@ -19,6 +21,7 @@ from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.storage.data_source import DataSource
+from cl.runtime.storage.data_source_key import DataSourceKey
 from cl.runtime.storage.protocols import DataSourceProtocol
 from cl.runtime.storage.protocols import TRecord
 from dataclasses import dataclass
@@ -48,7 +51,7 @@ def current_or_default_progress() -> ProgressProtocol:
 
 
 @dataclass(slots=True, kw_only=True, frozen=True)
-class Context:
+class Context(ContextKey, RecordMixin[ContextKey]):
     """Protocol implemented by context objects providing logging, data source, dataset, and progress reporting."""
 
     __context_stack: ClassVar[List["Context"]] = []  # TODO: Set using ContextVars
@@ -57,7 +60,7 @@ class Context:
     context_id: str = "default"
     """Unique context identifier."""
 
-    data_source: DataSourceProtocol | None = field(default_factory=lambda: current_or_default_data_source())
+    data_source: DataSourceKey | None = field(default_factory=lambda: current_or_default_data_source())
     """Return the default data source of the context or None if not set."""
 
     dataset: str = field(default_factory=lambda: current_or_default_dataset())
@@ -65,6 +68,9 @@ class Context:
 
     progress: ProgressProtocol = field(default_factory=lambda: current_or_default_progress())
     """Progress reporting interface of the context, set to NullProgress if not specified."""
+
+    def get_key(self) -> ContextKey:
+        return ContextKey(context_id=self.context_id)
 
     @classmethod
     def current(cls):
