@@ -28,9 +28,15 @@ from typing import Iterable
 from typing import List
 from typing import Type
 from typing_extensions import Self
+from cl.runtime.testing.pytest_util import PytestUtil
 
-# Load dotenv first (override priority is envvars, dotenv, Dynaconf)
+# Load dotenv first (the priority order is envvars first, then dotenv, then settings.toml and .secrets.toml)
 load_dotenv()
+
+# Select Dynaconf test environment when invoked from the pytest test runner
+is_inside_pytest = PytestUtil.is_inside_pytest()
+if is_inside_pytest:
+    os.environ['CL_SETTINGS_ENV'] = "test"
 
 _all_settings = Dynaconf(
     environments=True,

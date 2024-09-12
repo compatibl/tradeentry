@@ -62,10 +62,6 @@ server_app.include_router(tasks_router.router, prefix="/tasks", tags=["Tasks"])
 
 if __name__ == "__main__":
 
-    # Set log file prefix
-    log_settings = LogSettings.instance()
-    log_settings.filename_prefix = "tests"
-
     with Context():
         # Start Celery workers (will exit when the current process exits)
         celery_delete_existing_tasks()

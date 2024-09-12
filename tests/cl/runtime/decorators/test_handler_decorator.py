@@ -13,12 +13,11 @@
 # limitations under the License.
 
 import pytest
-
 from cl.runtime import Context
-from cl.runtime.testing.pytest_fixtures import log_fixture
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
-def test_smoke(log_fixture):
+
+def test_smoke():
     """Smoke test."""
 
     with Context():

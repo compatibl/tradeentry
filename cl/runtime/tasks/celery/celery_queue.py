@@ -61,6 +61,7 @@ def execute_task(
     """Invoke execute method of the specified task."""
 
     # Copy log settings from the caller process
+    # TODO: Copy to context, not to settings, make settings frozen
     log_settings = LogSettings.instance()
     log_settings.filename_format = log_file_format
     log_settings.filename_prefix = log_file_prefix

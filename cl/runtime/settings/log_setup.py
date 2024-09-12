@@ -23,7 +23,6 @@ from cl.runtime.settings.settings import Settings
 log_timestamp = DatetimeUtil.now()
 
 
-
 def get_log_level() -> str:
     """Get log level from settings."""
 
