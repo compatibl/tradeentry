@@ -12,20 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import pytest
+from cl.runtime.testing.pytest_util import PytestUtil
 
 
-@pytest.fixture(scope="module")
-def local_dir_fixture(request):
-    """Pytest module fixture to make test module directory the local directory during test execution."""
+def test_is_inside_pytest():
+    """Test get_caller_name method."""
+    assert PytestUtil.is_inside_pytest() is True
 
-    # Change test working directory to the directory of test source
-    # so output files are placed next to the test module
-    os.chdir(request.fspath.dirname)
 
-    # Back to the test
-    yield
+def test_get_current_pytest():
+    """Test get_caller_name method."""
 
-    # Change directory back before exiting the text
-    os.chdir(request.config.invocation_dir)
+    assert PytestUtil.get_current_pytest()  # TODO: Add assert for the result to the test
+
+
+def test_get_caller_name():
+    """Test get_caller_name method."""
+
+    assert PytestUtil.get_caller_name(caller_file=__file__) == "test_pytest_util"
+
+
+if __name__ == "__main__":
+    pytest.main([__file__])

@@ -12,14 +12,34 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
 import pytest
-from cl.runtime.testing.pytest_fixtures import get_caller_name
+from cl.runtime.testing.pytest_fixtures import local_dir_fixture
 
 
-def test_get_caller_name():
-    """Test for get_caller_name method."""
+def _normalize_path(path: str) -> str:
+    """Normalize path to a standard form for comparison."""
+    # Expand user directory (e.g., ~/ on Unix-like systems)
+    path = os.path.expanduser(path)
+    # Resolve any symbolic links and normalize the path
+    path = os.path.realpath(path)
+    # Convert to absolute path
+    path = os.path.abspath(path)
+    return path
 
-    assert get_caller_name(caller_file=__file__) == "test_pytest_fixtures"
+
+def test_local_dir_fixture(local_dir_fixture):
+    """Test that local_dir_fixture makes current working directory the same as the test directory."""
+
+    # Get directories
+    current_dir = os.getcwd()  # Current working directory
+    test_dir = os.path.dirname(os.path.abspath(__file__))  # Directory where this test is located
+
+    # Normalize for comparison and compare
+    current_dir = _normalize_path(current_dir)
+    test_dir = _normalize_path(test_dir)
+    assert current_dir == test_dir
 
 
 if __name__ == "__main__":
