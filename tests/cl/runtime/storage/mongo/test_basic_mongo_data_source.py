@@ -22,26 +22,24 @@ from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubD
 def test_smoke():
     """Smoke test."""
 
-    with Context():
-        data_source = BasicMongoDataSource(
-            _client=mongomock.MongoClient(), data_source_id="default", db_name="Dev;Runtime;V2"
-        )
+    # TODO: Do not hardcode DB name
+    with Context(data_source=BasicMongoDataSource(data_source_id="default", db_name="Dev;Runtime;V2")) as context:
 
         # Create test record and populate with sample data
         record = StubDataclassRecord()
         key = record.get_key()
 
         # Save a single record
-        data_source.save_many([record])
+        context.save_many([record])
 
         # Load using record or key
-        loaded_records = data_source.load_many(StubDataclassRecord, [record, key, None])
+        loaded_records = context.load_many(StubDataclassRecord, [record, key, None])
         assert loaded_records[0] is record  # Same object is returned without lookup
         assert loaded_records[1] == record  # Not the same object but equal
         assert loaded_records[2] is None
 
-        assert data_source.load_one(StubDataclassRecord, record) is record  # Same object is returned without lookup
-        assert data_source.load_one(StubDataclassRecord, key) == record  # Not the same object but equal
+        assert context.load_one(StubDataclassRecord, record) is record  # Same object is returned without lookup
+        assert context.load_one(StubDataclassRecord, key) == record  # Not the same object but equal
 
 
 if __name__ == "__main__":

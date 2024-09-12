@@ -22,17 +22,19 @@ from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.protocols import TRecord
 from dataclasses import dataclass
-from dataclasses import field
 from itertools import groupby
 from pymongo import MongoClient
 from pymongo.database import Database
-from typing import Iterable
+from typing import Iterable, Dict
 from typing import Type
 from typing import cast
 
 # TODO: Revise and consider making fields of the data source
 data_serializer = DictSerializer()
 key_serializer = StringSerializer()
+
+_db_dict: Dict[int, Database] = {}
+"""Dict of Database instances with id(data_source) key stored outside the class to avoid serializing them."""
 
 
 @dataclass(slots=True, kw_only=True)
@@ -44,26 +46,6 @@ class BasicMongoDataSource(DataSource):
 
     client_uri: str = "mongodb://localhost:27017/"
     """MongoDB client URI, defaults to mongodb://localhost:27017/"""
-
-    _client: MongoClient = None
-    """MongoDB client, tests must specify mongomock.MongoClient."""
-
-    _db: Database = field(default=None, init=False)
-    """MongoDB database."""
-
-    def __post_init__(self) -> None:
-        """Initialize private attributes."""
-
-        client = MongoClient(
-            self.client_uri,
-            uuidRepresentation="standard",
-        )
-
-        # TODO: Implement dispose logic
-        # Use setattr to initialize attributes in a frozen object
-        if self._client is None:
-            object.__setattr__(self, "_client", client)
-        object.__setattr__(self, "_db", self._client[self.db_name])
 
     def load_one(
         self,
@@ -87,7 +69,8 @@ class BasicMongoDataSource(DataSource):
             # Key, get collection name from key type by removing Key suffix if present
             key_type = record_or_key.get_key_type()
             collection_name = key_type.__name__  # TODO: Decision on short alias
-            collection = self._db[collection_name]
+            db = self._get_db()
+            collection = db[collection_name]
 
             serialized_key = key_serializer.serialize_key(record_or_key)
             serialized_record = collection.find_one({"_key": serialized_key})
@@ -130,7 +113,8 @@ class BasicMongoDataSource(DataSource):
         # Key, get collection name from key type by removing Key suffix if present
         key_type = record_type.get_key_type()
         collection_name = key_type.__name__  # TODO: Decision on short alias
-        collection = self._db[collection_name]
+        db = self._get_db()
+        collection = db[collection_name]
 
         serialized_records = collection.find()  # TODO: Filter by derived type
         result = []
@@ -173,7 +157,8 @@ class BasicMongoDataSource(DataSource):
         # Get collection name from key type by removing Key suffix if present
         key_type = record.get_key_type()
         collection_name = key_type.__name__  # TODO: Decision on short alias
-        collection = self._db[collection_name]
+        db = self._get_db()
+        collection = db[collection_name]
 
         # Serialize record data and key
         serialized_key = key_serializer.serialize_key(record)
@@ -217,3 +202,16 @@ class BasicMongoDataSource(DataSource):
 
     def delete_all(self) -> None:
         raise NotImplementedError()
+
+    def _get_db(self) -> Database:
+        """Get PyMongo database object."""
+        if (result := _db_dict.get(id(self), None)) is None:
+            # Create if it does not exist
+            client = MongoClient(
+                self.client_uri,
+                uuidRepresentation="standard",
+            )
+            # TODO: Implement dispose logic
+            result = client[self.db_name]
+            _db_dict[id(self)] = result
+        return result

@@ -32,6 +32,12 @@ from typing import Iterable
 from typing import Tuple
 from typing import Type
 
+_connection_dict: Dict[int, sqlite3.Connection] = {}
+"""Dict of Connection instances with id(data_source) key stored outside the class to avoid serializing them."""
+
+_schema_manager_dict: Dict[int, SqliteSchemaManager] = {}
+"""Dict of SqliteSchemaManager instances with id(data_source) key stored outside the class to avoid serializing them."""
+
 
 def dict_factory(cursor, row):
     """sqlite3 row factory to return result as dictionary."""
@@ -45,12 +51,6 @@ class SqliteDataSource(DataSource):
 
     db_name: str = None
     """Db name used to open sqlite connection."""
-
-    _connection: sqlite3.Connection = None
-    """Sqlite connection."""
-
-    _schema_manager: SqliteSchemaManager = None
-    """Sqlite schema manager."""
 
     def __post_init__(self) -> None:
         """Initialize private attributes."""
@@ -66,11 +66,6 @@ class SqliteDataSource(DataSource):
                 # Create the directory if does not exist
                 os.makedirs(db_dir)
             self.db_name = os.path.join(db_dir, "runtime.db")
-
-        # TODO (Roman): check behavior in multithreading datasource usage
-        self._connection = sqlite3.connect(self.db_name, check_same_thread=False)
-        self._connection.row_factory = dict_factory
-        self._schema_manager = SqliteSchemaManager(sqlite_connection=self._connection)
 
     def batch_size(self) -> int:
         pass
@@ -131,6 +126,7 @@ class SqliteDataSource(DataSource):
         identity: str | None = None,
     ) -> Iterable[TRecord | None] | None:
         serializer = FlatDictSerializer()
+        schema_manager = self._get_schema_manager()
 
         # it is important to preserve the original order of records_or_keys.
         # itertools.groupby works just like that and does not violate the order.
@@ -148,20 +144,20 @@ class SqliteDataSource(DataSource):
                     yield from keys_group
                     continue
 
-                table_name = self._schema_manager.table_name_for_type(key_type)
+                table_name = schema_manager.table_name_for_type(key_type)
 
                 # if keys_group don't support "in" or "len" operator convert it to tuple
                 if not hasattr(keys_group, "__contains__") or not hasattr(keys_group, "__len__"):
                     keys_group = tuple(keys_group)
 
                 # return None for all keys in group if table doesn't exist
-                existing_tables = self._schema_manager.existing_tables()
+                existing_tables = schema_manager.existing_tables()
                 if table_name not in existing_tables:
                     yield from (None for _ in range(len(keys_group)))
                     continue
 
-                key_fields = self._schema_manager.get_primary_keys(key_type)
-                columns_mapping = self._schema_manager.get_columns_mapping(key_type)
+                key_fields = schema_manager.get_primary_keys(key_type)
+                columns_mapping = schema_manager.get_columns_mapping(key_type)
 
                 # if keys_group don't support "in" or "len" operator convert it to tuple
                 sql_statement = f'SELECT * FROM "{table_name}"'
@@ -173,7 +169,7 @@ class SqliteDataSource(DataSource):
                 # serialize keys to tuple
                 query_values = self._serialize_keys_to_flat_tuple(keys_group, key_fields, serializer)
 
-                cursor = self._connection.cursor()
+                cursor = self._get_connection().cursor()
                 cursor.execute(sql_statement, query_values)
 
                 reversed_columns_mapping = {v: k for k, v in columns_mapping.items()}
@@ -202,23 +198,24 @@ class SqliteDataSource(DataSource):
         identity: str | None = None,
     ) -> Iterable[TRecord | None] | None:
         serializer = FlatDictSerializer()
+        schema_manager = self._get_schema_manager()
 
-        table_name: str = self._schema_manager.table_name_for_type(record_type)
+        table_name: str = schema_manager.table_name_for_type(record_type)
 
         # if table doesn't exist return empty list
-        if table_name not in self._schema_manager.existing_tables():
+        if table_name not in schema_manager.existing_tables():
             return list()
 
         # get subtypes for record_type and use them in match condition
-        subtype_names = tuple(self._schema_manager.get_subtype_names(record_type))
+        subtype_names = tuple(schema_manager.get_subtype_names(record_type))
         value_placeholders = ", ".join(["?"] * len(subtype_names))
         sql_statement = f'SELECT * FROM "{table_name}" WHERE _type in ({value_placeholders});'
 
         reversed_columns_mapping = {
-            v: k for k, v in self._schema_manager.get_columns_mapping(record_type.get_key_type()).items()
+            v: k for k, v in schema_manager.get_columns_mapping(record_type.get_key_type()).items()
         }
 
-        cursor = self._connection.cursor()
+        cursor = self._get_connection().cursor()
         cursor.execute(sql_statement, subtype_names)
 
         for data in cursor.fetchall():
@@ -252,6 +249,7 @@ class SqliteDataSource(DataSource):
         identity: str | None = None,
     ) -> None:
         serializer = FlatDictSerializer()
+        schema_manager = self._get_schema_manager()
 
         grouped_records = defaultdict(list)
 
@@ -274,19 +272,19 @@ class SqliteDataSource(DataSource):
                 for k in all_fields
             )
 
-            columns_mapping = self._schema_manager.get_columns_mapping(key_type)
+            columns_mapping = schema_manager.get_columns_mapping(key_type)
             quoted_columns = [f'"{columns_mapping[field]}"' for field in all_fields]
             columns_str = ", ".join(quoted_columns)
 
             value_placeholders = ", ".join([f"({', '.join(['?']*len(all_fields))})" for _ in range(len(records_group))])
 
-            table_name = self._schema_manager.table_name_for_type(key_type)
+            table_name = schema_manager.table_name_for_type(key_type)
 
             primary_keys = [
-                columns_mapping[primary_key] for primary_key in self._schema_manager.get_primary_keys(key_type)
+                columns_mapping[primary_key] for primary_key in schema_manager.get_primary_keys(key_type)
             ]
 
-            self._schema_manager.create_table(
+            schema_manager.create_table(
                 table_name, columns_mapping.values(), if_not_exists=True, primary_keys=primary_keys
             )
 
@@ -300,10 +298,11 @@ class SqliteDataSource(DataSource):
                 #  key fields.
                 self.delete_many((rec.get_key() for rec in records_group))
 
-            cursor = self._connection.cursor()
+            connection = self._get_connection()
+            cursor = connection.cursor()
             cursor.execute(sql_statement, sql_values)
 
-            self._connection.commit()
+            connection.commit()
 
     def delete_many(
         self,
@@ -313,22 +312,22 @@ class SqliteDataSource(DataSource):
         identity: str | None = None,
     ) -> None:
         serializer = FlatDictSerializer()
-
-        grouped_keys = defaultdict(list)
+        schema_manager = self._get_schema_manager()
 
         # TODO (Roman): improve grouping
+        grouped_keys = defaultdict(list)
         for key in keys:
             grouped_keys[key.get_key_type()].append(key)
 
         for key_type, keys_group in grouped_keys.items():
-            table_name = self._schema_manager.table_name_for_type(key_type)
+            table_name = schema_manager.table_name_for_type(key_type)
 
-            existing_tables = self._schema_manager.existing_tables()
+            existing_tables = schema_manager.existing_tables()
             if table_name not in existing_tables:
                 continue
 
-            key_fields = self._schema_manager.get_primary_keys(key_type)
-            columns_mapping = self._schema_manager.get_columns_mapping(key_type)
+            key_fields = schema_manager.get_primary_keys(key_type)
+            columns_mapping = schema_manager.get_columns_mapping(key_type)
 
             # if keys_group don't support "in" or "len" operator convert it to tuple
             if not hasattr(keys_group, "__contains__") or not hasattr(keys_group, "__len__"):
@@ -343,19 +342,18 @@ class SqliteDataSource(DataSource):
             query_values = self._serialize_keys_to_flat_tuple(keys_group, key_fields, serializer)
 
             # perform delete query
-            cursor = self._connection.cursor()
+            connection = self._get_connection()
+            cursor = connection.cursor()
             cursor.execute(sql_statement, query_values)
-            self._connection.commit()
+            connection.commit()
 
     def delete_all(self) -> None:
         # Run in a loop because tables that depend on a foreign key can not be deleted before related tables
+        connection = self._get_connection()
         while True:
-            if not self._connection:
-                raise RuntimeError("Attempting to delete data when no open connection exists.")
 
-            cursor = self._connection.cursor()
-
-            # delete tables
+            # Delete tables
+            cursor = connection.cursor()
             delete_all_tables = [
                 str(next(iter(x.values())))
                 for x in cursor.execute(
@@ -382,7 +380,31 @@ class SqliteDataSource(DataSource):
                 break
 
         # Close connection
-        if self._connection:
-            self._connection.close()
+        self._close_connection()
 
-        # TODO (Roman): Delete db file
+        # TODO: Delete db file
+
+    def _get_connection(self) -> sqlite3.Connection:
+        """Get PyMongo database object."""
+        if (result := _connection_dict.get(id(self), None)) is None:
+            # TODO: Implement dispose logic
+            result = sqlite3.connect(self.db_name, check_same_thread=False)
+            result.row_factory = dict_factory
+            _connection_dict[id(self)] = result
+        return result
+
+    def _close_connection(self) -> None:
+        """Get PyMongo database object."""
+        if (result := _connection_dict.get(id(self), None)) is not None:
+            # TODO: Restore when each pytest uses its own DB result.close()
+            # TODO: Restore when each pytest uses its own DB del _connection_dict[id(self)]
+            pass
+
+    def _get_schema_manager(self) -> SqliteSchemaManager:
+        """Get PyMongo database object."""
+        if (result := _schema_manager_dict.get(id(self), None)) is None:
+            # TODO: Implement dispose logic
+            connection = self._get_connection()
+            result = SqliteSchemaManager(sqlite_connection=connection)
+            _schema_manager_dict[id(self)] = result
+        return result

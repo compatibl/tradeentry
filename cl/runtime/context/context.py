@@ -66,8 +66,8 @@ class Context(ContextKey, RecordMixin[ContextKey]):
     dataset: str = field(default_factory=lambda: current_or_default_dataset())
     """Default dataset of the context, set to None if not specified"""
 
-    progress: ProgressProtocol = field(default_factory=lambda: current_or_default_progress())
-    """Progress reporting interface of the context, set to NullProgress if not specified."""
+    # TODO: progress: ProgressProtocol = field(default_factory=lambda: current_or_default_progress())
+    # """Progress reporting interface of the context, set to NullProgress if not specified."""
 
     def get_key(self) -> ContextKey:
         return ContextKey(context_id=self.context_id)
