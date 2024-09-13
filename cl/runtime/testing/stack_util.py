@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
 import inflection
 import inspect
 from typing import cast
@@ -19,6 +21,26 @@ from typing import cast
 
 class StackUtil:
     """Utilities for stack introspection."""
+
+    @classmethod
+    def is_inside_test(cls, *, test_module_pattern: str | None = None) -> bool:
+        """
+        Return True if invoked from a test, detection is based on test module pattern.
+
+        Args:
+            test_module_pattern: Glob pattern to identify the test module, defaults to 'test_*.py'
+        """
+
+        if test_module_pattern is not None:
+            # TODO: test_module_pattern custom patterns
+            raise RuntimeError("Custom test module patterns are not yet supported.")
+
+        stack = inspect.stack()
+        for frame_info in stack:
+            filename = os.path.basename(frame_info.filename)
+            if filename.startswith("test_") and filename.endswith(".py"):
+                return True
+        return False
 
     @classmethod
     def get_base_path(  # TODO: Refactor to return tuple of dir and name and rename method after refactoring

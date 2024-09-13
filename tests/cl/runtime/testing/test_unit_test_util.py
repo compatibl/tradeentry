@@ -16,11 +16,6 @@ import pytest
 from cl.runtime.testing.unit_test_util import UnitTestUtil
 
 
-def test_is_inside_test():
-    """Test is_inside_test method."""
-    assert UnitTestUtil.is_inside_test() is True
-
-
 def test_get_test_name_in_function():
     """Test get_test_name in a test function."""
     assert UnitTestUtil.get_test_name() == "test_unit_test_util.test_get_test_name_in_function"

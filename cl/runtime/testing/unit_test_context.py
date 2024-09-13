@@ -15,6 +15,7 @@
 from cl.runtime.context.context import Context
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.settings.context_settings import ContextSettings
+from cl.runtime.settings.settings import is_inside_test
 from cl.runtime.testing.unit_test_util import UnitTestUtil
 from dataclasses import dataclass
 
@@ -32,13 +33,16 @@ class UnitTestContext(Context):
     def __post_init__(self):
         """Configure for use inside a test runner."""
 
-        # Get test name in 'module.test_function' or 'module.TestClass.test_method' format if running inside a test
-        test_name = UnitTestUtil.get_test_name(allow_missing=True)
-        if test_name is not None:
+        # TODO: Ensure child Context has the same fields as parent context, except where explicitly overridden
+
+        # Check if we are inside a test only if context_id is not set to avoid overriding deserialized data
+        if self.context_id is None and is_inside_test is not None:
+
             # Create a new data source for every test
             context_settings = ContextSettings.instance()
             data_source_type = ClassInfo.get_class_type(context_settings.data_source_class)
 
-            # TODO: Add code to obtain from preloads if only key is specified
+            # Get test name in 'module.test_function' or 'module.TestClass.test_method' format inside a test
+            test_name = UnitTestUtil.get_test_name()
             self.data_source = data_source_type(data_source_id=test_name)
             self.context_id = self.data_source.data_source_id

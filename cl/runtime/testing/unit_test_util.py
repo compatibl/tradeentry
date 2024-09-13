@@ -27,18 +27,6 @@ class UnitTestUtil:
     """
 
     @classmethod
-    def is_inside_test(cls) -> bool:
-        """
-        Detects if pytest or unittest package is imported (but currently not other test packages).
-
-        Notes:
-            - This method works even during the initial module import when alternative methods such as
-              stack introspection or checking for environment variables fail
-            - This makes it suitable for configuring settings during import
-        """
-        return "pytest" in sys.modules or "unittest" in sys.modules
-
-    @classmethod
     def get_test_name(
         cls,
         *,

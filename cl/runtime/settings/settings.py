@@ -17,7 +17,8 @@ from __future__ import annotations
 import os
 from abc import ABC
 from abc import abstractmethod
-from cl.runtime.testing.unit_test_util import UnitTestUtil
+
+from cl.runtime.testing.stack_util import StackUtil
 from dataclasses import MISSING
 from dataclasses import dataclass
 from dotenv import find_dotenv
@@ -33,10 +34,12 @@ from typing_extensions import Self
 # Load dotenv first (the priority order is envvars first, then dotenv, then settings.toml and .secrets.toml)
 load_dotenv()
 
+# Determine if we are inside a test and store the result in a global variable for performance
+is_inside_test = StackUtil.is_inside_test()
+
 # Select Dynaconf test environment when invoked from the pytest or UnitTest test runner.
 # Other runners not detected automatically, in which case the Dynaconf environment must be
 # configured in settings explicitly.
-is_inside_test = UnitTestUtil.is_inside_test()
 if is_inside_test:
     os.environ["CL_SETTINGS_ENV"] = "test"
 
