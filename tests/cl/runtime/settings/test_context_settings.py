@@ -20,8 +20,7 @@ def test_smoke():
     """Test ContextSettings class."""
 
     context_settings = ContextSettings.instance()
-    assert context_settings.data_source_id == "Runtime Default"
-    assert context_settings.db_name == "Dev;Runtime;V2"
+    assert context_settings.data_source_id == "dev.runtime.default"
 
 
 if __name__ == "__main__":

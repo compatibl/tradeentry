@@ -21,17 +21,17 @@ def test_is_inside_test():
     assert UnitTestUtil.is_inside_test() is True
 
 
-def test_get_test_id_in_function():
-    """Test get_test_id in a test function."""
-    assert UnitTestUtil.get_test_id() == "test_pytest_util.test_get_test_id_in_function"
+def test_get_test_name_in_function():
+    """Test get_test_name in a test function."""
+    assert UnitTestUtil.get_test_name() == "test_pytest_util.test_get_test_name_in_function"
 
 
 class TestClass:
     """Stub pytest class."""
 
-    def test_get_test_id_in_method(self):
-        """Test get_test_id in a test method."""
-        assert UnitTestUtil.get_test_id() == "test_pytest_util.test_class.test_get_test_id_in_method"
+    def test_get_test_name_in_method(self):
+        """Test get_test_name in a test method."""
+        assert UnitTestUtil.get_test_name() == "test_pytest_util.test_class.test_get_test_name_in_method"
 
 
 if __name__ == "__main__":

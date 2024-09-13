@@ -16,6 +16,7 @@ import mongomock
 import pytest
 from cl.runtime.context.context import Context
 from cl.runtime.storage.mongo.basic_mongo_data_source import BasicMongoDataSource
+from cl.runtime.testing.unit_test_context import UnitTestContext
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecord
 
 
@@ -23,7 +24,8 @@ def test_smoke():
     """Smoke test."""
 
     # TODO: Do not hardcode DB name
-    with Context(data_source=BasicMongoDataSource(data_source_id="default", db_name="Dev;Runtime;V2")) as context:
+    data_source = BasicMongoDataSource()
+    with UnitTestContext(data_source=data_source) as context:
         # Create test record and populate with sample data
         record = StubDataclassRecord()
         key = record.get_key()

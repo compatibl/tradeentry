@@ -39,19 +39,32 @@ class UnitTestUtil:
         return "pytest" in sys.modules or "unittest" in sys.modules
 
     @classmethod
-    def get_test_name(cls, *, test_function_pattern: str | None = None) -> str | None:
+    def get_test_name(
+            cls,
+            *,
+            allow_missing: bool = False,
+            test_function_pattern: str | None = None,
+    ) -> str | None:
         """
         Return dot-delimited test name in 'module.test_function' or 'module.TestClass.test_method' format
         by searching the stack frame for 'test_' or a custom test function name pattern.
 
         Args:
+            allow_missing: If True, return None if path is not found (e.g. when not running inside a test)
             test_function_pattern: Glob pattern to identify the test function or method in stack frame,
             defaults to 'test_*'
         """
         
         # Perform stack introspection
-        base_path = StackUtil.get_base_path(test_function_pattern=test_function_pattern)
+        base_path = StackUtil.get_base_path(
+            allow_missing=allow_missing,
+            test_function_pattern=test_function_pattern,
+        )
 
-        # Result is the last token in path
-        result = os.path.basename(base_path)
-        return result
+        if base_path is not None:
+            # Result is the last token in path
+            result = os.path.basename(base_path)
+            return result
+        else:
+            # Not running inside a test, return None (if allow_missing=True, get_base_path would already raise an error)
+            return None

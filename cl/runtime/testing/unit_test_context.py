@@ -13,7 +13,11 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+
+from cl.runtime.records.class_info import ClassInfo
+
 from cl.runtime.context.context import Context
+from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.testing.pytest_util import UnitTestUtil
 
 
@@ -30,8 +34,13 @@ class UnitTestContext(Context):
     def __post_init__(self):
         """Configure for use inside a test runner."""
 
-        # Context identifier in 'module.test_function' or 'module.TestClass.test_method' format
-        self.context_id = UnitTestUtil.get_test_name()
+        # Get test name in 'module.test_function' or 'module.TestClass.test_method' format if running inside a test
+        test_name = UnitTestUtil.get_test_name(allow_missing=True)
+        if test_name is not None:
+            # Create a new data source for every test
+            context_settings = ContextSettings.instance()
+            data_source_type = ClassInfo.get_class_type(context_settings.data_source_class)
 
-        # Matching dataset identifier
-        self.data_source.data_source_id = self.context_id
+            # TODO: Add code to obtain from preloads if only key is specified
+            self.data_source = data_source_type(data_source_id=test_name)
+            self.context_id = self.data_source.data_source_id

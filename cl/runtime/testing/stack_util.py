@@ -24,13 +24,15 @@ class StackUtil:
     def get_base_path(  # TODO: Refactor to return tuple of dir and name and rename method after refactoring
             cls,
             *,
-            test_function_pattern: str | None = None
+            allow_missing: bool = False,
+            test_function_pattern: str | None = None,
     ) -> str:
         """
         Return test_module.test_function or test_module.test_class.test_function by searching the stack frame
         for 'test_' or a custom test function name pattern.
 
         Args:
+            allow_missing: If True, return None if path is not found (e.g. when not running inside a test)
             test_function_pattern: Glob pattern to identify the test function or method in stack frame,
             defaults to 'test_*'
         """
@@ -60,6 +62,10 @@ class StackUtil:
                     result = f"{module_file_without_ext}.{class_name}.{test_name}"
                 return result
 
-        # If the end of the frame is reached and no function or method starting from test_ is found,
-        # the function was not called from inside a test or a custom match pattern is required
-        raise RuntimeError("Regression guard must be created inside a function or method that starts from 'test_'.")
+        if allow_missing:
+            # Return None if path is not found (e.g. when not running inside a test)
+            return None
+        else:
+            # If the end of the frame is reached and no function or method starting from test_ is found,
+            # the function was not called from inside a test or a custom match pattern is required
+            raise RuntimeError("Not invoked inside a function or method that starts from 'test_'.")

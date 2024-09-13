@@ -18,6 +18,7 @@ from cl.runtime.context.context import Context
 from cl.runtime.file.csv_dir_reader import CsvDirReader
 from cl.runtime.settings.settings import Settings
 from cl.runtime.storage.local.local_cache import LocalCache
+from cl.runtime.testing.unit_test_context import UnitTestContext
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassRecordKey
@@ -30,8 +31,7 @@ def test_smoke():
     dir_path = os.path.join(project_root, "preload/stubs/cl/runtime/csv")
 
     # Create a new instance of local cache for the test
-    data_source = LocalCache()
-    with Context(data_source=data_source):
+    with UnitTestContext() as context:
         dir_reader = CsvDirReader(dir_path=dir_path)
         dir_reader.read()
 
@@ -39,11 +39,11 @@ def test_smoke():
         # TODO: Check count using load_all or count method of DataSource when created
         for i in range(1, 2):
             key = StubDataclassRecordKey(id=f"base_id_{i}")
-            record = data_source.load_one(StubDataclassRecord, key)
+            record = context.load_one(StubDataclassRecord, key)
             assert record == StubDataclassRecord(id=f"base_id_{i}")
         for i in range(1, 2):
             key = StubDataclassRecordKey(id=f"derived_id_{i}")
-            record = data_source.load_one(StubDataclassRecord, key)
+            record = context.load_one(StubDataclassRecord, key)
             assert record == StubDataclassDerivedRecord(
                 id=f"derived_id_{i}", derived_field=f"test_derived_field_value_{i}"
             )

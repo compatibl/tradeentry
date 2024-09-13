@@ -24,6 +24,8 @@ from cl.runtime.testing.celery_fixtures import celery_test_queue_fixture
 from cl.runtime.testing.celery_fixtures import check_task_run_completion
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
+
+from cl.runtime.testing.unit_test_context import UnitTestContext
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
@@ -62,8 +64,7 @@ expected_records_in_db = [[StubDataclassRecord(id="saved_from_handler")]]
 def test_method(celery_test_queue_fixture):
     """Test coroutine for /tasks/run route."""
 
-    # TODO: Use UnitTestContext instead
-    with Context() as context:
+    with UnitTestContext() as context:
         context.save_one(stub_handlers)
 
         for request in simple_requests + save_to_db_requests:
@@ -97,7 +98,7 @@ def test_api(celery_test_queue_fixture):
     """Test REST API for /tasks/run route."""
 
     # TODO: Use UnitTestContext instead
-    with Context() as context:
+    with UnitTestContext() as context:
         context.save_one(stub_handlers)
 
         test_app = FastAPI()
@@ -124,7 +125,12 @@ def test_api(celery_test_queue_fixture):
                 expected_keys = [rec.get_key() for rec in expected_records]
 
                 test_client.post("/tasks/run", json=request)
-
+                request_object = RunRequest(**request)
+                response_items = RunResponseItem.run_tasks(request_object)
+                [
+                    check_task_run_completion(TaskRunKey(task_run_id=response_item.task_run_id))
+                    for response_item in response_items
+                ]
                 actual_records = list(context.load_many(StubDataclassRecord, expected_keys))
                 assert actual_records == expected_records
 
