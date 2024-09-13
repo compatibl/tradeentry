@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from cl.runtime.log.log import Log
+from cl.runtime.log.log_key import LogKey
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.context.context_key import ContextKey
-from cl.runtime.settings.log_setup import LogFilter, get_log_file_handler, get_log_level
 from cl.runtime.context.null_progress import NullProgress
 from cl.runtime.context.protocols import ProgressProtocol
 from cl.runtime.records.dataclasses_extensions import field
@@ -59,6 +60,9 @@ class Context(ContextKey, RecordMixin[ContextKey]):
 
     context_id: str = "default"
     """Unique context identifier."""
+
+    log: LogKey = field(default_factory=lambda: Log.default())
+    """Log of the context, default log is used if not specified."""
 
     data_source: DataSourceKey | None = field(default_factory=lambda: current_or_default_data_source())
     """Return the default data source of the context or None if not set."""
@@ -106,16 +110,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
 
     def get_logger(self, name: str) -> logging.Logger:
         """Get logger for the specified name, invoke with __name__ as the argument."""
-
-        # Get log level and file handler
-        log_level = get_log_level()
-        log_file_handler = get_log_file_handler()
-
-        logger = logging.getLogger(name)
-        logger.addFilter(LogFilter())
-        logger.setLevel(log_level)
-        logger.addHandler(log_file_handler)
-        return logger
+        return self.log.get_logger(name)
 
     def load_one(
         self,
