@@ -43,9 +43,6 @@ _db_dict: Dict[int, Database] = {}
 class BasicMongoDataSource(DataSource):
     """MongoDB data source without datasets."""
 
-    db_name: str = missing()
-    """Database name must be unique for each DB client."""
-
     client_uri: str = "mongodb://localhost:27017/"
     """MongoDB client URI, defaults to mongodb://localhost:27017/"""
 
@@ -214,6 +211,15 @@ class BasicMongoDataSource(DataSource):
                 uuidRepresentation="standard",
             )
             # TODO: Implement dispose logic
-            result = client[self.db_name]
+            db_name = self._get_db_name()
+            result = client[db_name]
             _db_dict[id(self)] = result
+        return result
+
+    def _get_db_name(self) -> str:
+        """Get PyMongo database name from data_source_id, applying the appropriate formatting conventions."""
+        result = self.data_source_id.replace(".", ";")
+        db_name_bytes = len(result.encode('utf-8'))
+        if db_name_bytes >= 64:
+            raise RuntimeError(f"MongoDB does not support DB name {result} because it has {db_name_bytes}>=64 bytes.")
         return result

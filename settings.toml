@@ -8,8 +8,7 @@ runtime_log_filename_prefix = "main"
 # Refer to ContextSettings class for documentation
 runtime_context_packages = ["cl.runtime", "stubs.cl.runtime"]  # TODO: Prefix or glob pattern
 runtime_context_data_source_class = "cl.runtime.storage.mongo.basic_mongo_data_source.BasicMongoDataSource"  # TODO: Deprecated
-runtime_context_data_source_id = "Runtime Default"
-runtime_context_db_name = "Dev;Runtime;V2"
+runtime_context_data_source_id = "dev.runtime.default"
 
 # Refer to ApiSettings class for documentation
 runtime_api_host_name = "localhost"

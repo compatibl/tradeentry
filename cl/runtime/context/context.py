@@ -58,9 +58,6 @@ class Context(ContextKey, RecordMixin[ContextKey]):
     __context_stack: ClassVar[List["Context"]] = []  # TODO: Set using ContextVars
     """New current context is pushed to the context stack using 'with Context(...)' clause."""
 
-    context_id: str = "default"
-    """Unique context identifier."""
-
     log: LogKey = field(default_factory=lambda: Log.default())
     """Log of the context, default log is used if not specified."""
 

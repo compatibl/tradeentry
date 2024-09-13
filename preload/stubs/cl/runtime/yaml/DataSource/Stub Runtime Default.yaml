@@ -1,2 +1,0 @@
-_type: cl.runtime.SqliteDataSource
-db_name: ":memory:"

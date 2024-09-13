@@ -181,8 +181,7 @@ class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
             # Load from configuration if not set
             context_settings = ContextSettings.instance()  # TODO: Refactor to place this inside Context
             data_source_type = ClassInfo.get_class_type(context_settings.data_source_class)
-            DataSource.__default = data_source_type(
-                data_source_id=context_settings.data_source_id,
-                db_name=context_settings.db_name,
-            )
+            # TODO: Add code to obtain from preloads if only key is specified
+            DataSource.__default = data_source_type(data_source_id=context_settings.data_source_id)
+
         return DataSource.__default

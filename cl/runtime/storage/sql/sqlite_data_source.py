@@ -49,24 +49,6 @@ def dict_factory(cursor, row):
 class SqliteDataSource(DataSource):
     """Sqlite data source without dataset and mile wide table for inheritance."""
 
-    db_name: str = None
-    """Db name used to open sqlite connection."""
-
-    def __post_init__(self) -> None:
-        """Initialize private attributes."""
-
-        # TODO: Implement dispose logic
-        # Use setattr to initialize attributes in a frozen object
-
-        # Set default DB if db_name is not specified
-        if self.db_name is None:
-            project_root = Settings.get_project_root()
-            db_dir = os.path.join(project_root, "db")
-            if not os.path.exists(db_dir):
-                # Create the directory if does not exist
-                os.makedirs(db_dir)
-            self.db_name = os.path.join(db_dir, "runtime.db")
-
     def batch_size(self) -> int:
         pass
 
@@ -385,7 +367,8 @@ class SqliteDataSource(DataSource):
         """Get PyMongo database object."""
         if (result := _connection_dict.get(id(self), None)) is None:
             # TODO: Implement dispose logic
-            result = sqlite3.connect(self.db_name, check_same_thread=False)
+            db_file = self._get_db_file()
+            result = sqlite3.connect(db_file, check_same_thread=False)
             result.row_factory = dict_factory
             _connection_dict[id(self)] = result
         return result
@@ -405,3 +388,15 @@ class SqliteDataSource(DataSource):
             result = SqliteSchemaManager(sqlite_connection=connection)
             _schema_manager_dict[id(self)] = result
         return result
+
+    def _get_db_file(self) -> str:
+        """Get PyMongo database name from data_source_id, applying the appropriate formatting conventions."""
+        filename = self.data_source_id.replace(".", ";")
+        project_root = Settings.get_project_root()
+        db_dir = os.path.join(project_root, "db")
+        if not os.path.exists(db_dir):
+            # Create the directory if does not exist
+            os.makedirs(db_dir)
+        result = os.path.join(db_dir, f"{filename}.db")
+        return result
+
