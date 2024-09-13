@@ -31,6 +31,7 @@ from typing import cast
 
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
+from cl.runtime.testing.stack_util import StackUtil
 
 supported_extensions = ["txt"]
 """The list of supported output file extensions (formats)."""
@@ -85,14 +86,19 @@ class RegressionGuard:
     ext: str
     """Output file extension, defaults to '.txt'"""
 
-    def __init__(self, *, ext: str = None, channel: str | Iterable[str] | None = None, test_pattern: str | None = None):
+    def __init__(
+            self,
+            *,
+            ext: str = None,
+            channel: str | Iterable[str] | None = None,
+            test_function_pattern: str | None = None):
         """
         Initialize the regression guard, optionally specifying channel.
 
         Args:
             ext: File extension without the dot prefix, defaults to 'txt'
             channel: Dot-delimited string or an iterable of dot-delimited tokens added to the current channel
-            test_pattern: Glob pattern to identify the test function or method in stack frame, defaults to 'test_*'
+            test_function_pattern: Glob pattern to identify the test function or method in stack frame, defaults to 'test_*'
         """
 
         # Convert channel to string from other types
@@ -109,7 +115,7 @@ class RegressionGuard:
                 error_channel_not_primitive_type()
 
         # Find base path by examining call stack
-        base_path = self._get_base_path(test_pattern)
+        base_path = StackUtil.get_base_path(test_function_pattern=test_function_pattern)
 
         # Add channel to base path if specified
         if channel is not None and channel != "":
@@ -355,42 +361,3 @@ class RegressionGuard:
     def _get_diff_path(self) -> str:
         """The diff between received and expected is written to 'channel.diff.ext' located next to the unit test."""
         return f"{self.output_path}.diff.{self.ext}"
-
-    @classmethod
-    def _get_base_path(cls, test_pattern: str | None = None) -> str:
-        """
-        Return test_module.test_function or test_module.test_class.test_function  by searching the stack frame
-        for 'test_' or a custom test function name pattern.
-
-        Args:
-            test_pattern: Glob pattern to identify the test function or method in stack frame, defaults to 'test_*'
-        """
-
-        if test_pattern is not None:
-            # TODO: Support custom patterns
-            raise RuntimeError("Custom test function or method name patterns are not yet supported.")
-
-        stack = inspect.stack()
-        for frame_info in stack:
-            if frame_info.function.startswith("test_"):
-                frame_globals = frame_info.frame.f_globals
-                module_file = frame_globals["__file__"]
-                test_name = frame_info.function
-                cls_instance = frame_info.frame.f_locals.get("self", None)
-                class_name = cast(type, cls_instance).__class__.__name__ if cls_instance else None
-
-                if module_file.endswith(".py"):
-                    module_file_without_ext = module_file.removesuffix(".py")
-                else:
-                    raise RuntimeError(f"Test module file {module_file} does not end with '.py'.")
-
-                if class_name is None:
-                    result = f"{module_file_without_ext}.{test_name}"
-                else:
-                    class_name = inflection.underscore(class_name)
-                    result = f"{module_file_without_ext}.{class_name}.{test_name}"
-                return result
-
-        # If the end of the frame is reached and no function or method starting from test_ is found,
-        # the function was not called from inside a test or a custom match pattern is required
-        raise RuntimeError("Regression guard must be created inside a function or method that starts from 'test_'.")
