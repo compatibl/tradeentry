@@ -22,7 +22,6 @@ from cl.runtime.routers.schema import schema_router
 from cl.runtime.routers.storage import storage_router
 from cl.runtime.routers.tasks import tasks_router
 from cl.runtime.settings.api_settings import ApiSettings
-from cl.runtime.settings.log_settings import LogSettings
 from cl.runtime.settings.preload_settings import PreloadSettings
 from cl.runtime.settings.settings import Settings
 from cl.runtime.tasks.celery.celery_queue import celery_delete_existing_tasks

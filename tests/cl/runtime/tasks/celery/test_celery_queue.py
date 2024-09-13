@@ -16,7 +16,6 @@ import pytest
 from cl.runtime import Context
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.serialization.dict_serializer import DictSerializer
-from cl.runtime.settings.log_settings import LogSettings
 from cl.runtime.tasks.celery.celery_queue import CeleryQueue
 from cl.runtime.tasks.celery.celery_queue import execute_task
 from cl.runtime.tasks.static_method_task import StaticMethodTask
@@ -52,7 +51,6 @@ def test_method(celery_test_queue_fixture):
         task_run_id = str(task_run_uuid)
 
         # Call 'execute_task' method in-process
-        log_settings = LogSettings.instance()
         context_data = context_serializer.serialize_data(context)
         execute_task(
             task_run_id,
