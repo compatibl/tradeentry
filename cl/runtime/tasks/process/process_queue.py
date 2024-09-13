@@ -113,6 +113,7 @@ class ProcessQueue(TaskQueue):
         # Create task run identifier and convert to string
         task_run_uuid = OrderedUuid.create_one()
         task_run_id = str(task_run_uuid)
+        submit_time = OrderedUuid.datetime_of(task_run_uuid)
 
         # Save task if provided as record rather than key
         if is_record(task):

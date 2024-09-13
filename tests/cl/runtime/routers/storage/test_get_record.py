@@ -12,30 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import json
-import os
 import pytest
+from cl.runtime import Context
 from cl.runtime.routers.storage import storage_router
 from cl.runtime.routers.storage.record_request import RecordRequest
 from cl.runtime.routers.storage.record_response import RecordResponse
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
-requests = [
-    {"type": "StubDataclassRecord", "key": "A0"},
-]
-
-expected_result_file_path = os.path.abspath(__file__).replace(".py", ".expected.json")
-with open(expected_result_file_path, "r", encoding="utf-8") as file:
-    expected_result = json.load(file)
+from cl.runtime.testing.regression_guard import RegressionGuard
+from stubs.cl.runtime import StubDataclassRecord
 
 
 def test_method():
     """Test coroutine for /storage/record route."""
 
-    for request in requests:
+    with Context() as context:
+
+        # Save test record
+        record = StubDataclassRecord(id=__name__)
+        context.save_one(record)
+
         # Run the coroutine wrapper added by the FastAPI decorator and get the result
-        request_obj = RecordRequest(**request)
+        request_obj = RecordRequest(type="StubDataclassRecord", key=record.id)
         result = RecordResponse.get_record(request_obj)
 
         # Check if the result is a RecordResponse instance
@@ -44,20 +42,31 @@ def test_method():
         # Check if there are only "schema" and "data"
         assert [x.strip("_") for x in dict(result).keys()] == ["schema", "data"]
 
-        # Check if each item in the result is a valid RecordResponse instance
-        assert result == RecordResponse(**expected_result)
+        # Check result
+        guard = RegressionGuard()
+        guard.write(result)
+        guard.verify()
 
 
 def test_api():
     """Test REST API for /storage/record route."""
 
-    test_app = FastAPI()
-    test_app.include_router(storage_router.router, prefix="/storage", tags=["Storage"])
-    with TestClient(test_app) as test_client:
-        for request in requests:
+    with Context() as context:
+
+        test_app = FastAPI()
+        test_app.include_router(storage_router.router, prefix="/storage", tags=["Storage"])
+        with TestClient(test_app) as test_client:
+
+            # Save test record
+            record = StubDataclassRecord(id=__name__)
+            context.save_one(record)
+
+            # Request parameters
+            request_obj = RecordRequest(type="StubDataclassRecord", key=record.id)
+
             # Split request headers and query
-            request_headers = {"user": request.get("user")}
-            request_params = {"type": request.get("type"), "key": request.get("key"), "dataset": request.get("dataset")}
+            request_headers = {"user": request_obj.user}
+            request_params = {"type": request_obj.type, "key": request_obj.key, "dataset": request_obj.dataset}
 
             # Eliminate empty keys
             request_headers = {k: v for k, v in request_headers.items() if v is not None}
@@ -69,7 +78,9 @@ def test_api():
             result = response.json()
 
             # Check result
-            assert result == expected_result
+            guard = RegressionGuard()
+            guard.write(result)
+            guard.verify()
 
 
 if __name__ == "__main__":

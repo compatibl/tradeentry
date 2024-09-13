@@ -12,11 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
 import logging
 from abc import ABC
 from abc import abstractmethod
+
+from typing_extensions import Self
+
 from cl.runtime.log.log_filter import LogFilter
 from cl.runtime.log.log_key import LogKey
 from cl.runtime.records.class_info import ClassInfo
@@ -33,7 +34,7 @@ class Log(LogKey, RecordMixin[LogKey], ABC):
     """A target for log messages."""
 
     # TODO: Do not store here, instead get from settings once during the initial Context construction
-    __default: ClassVar[Log | None] = None
+    __default: ClassVar[Self | None] = None
 
     level: str = LogSettings.instance().level
     """Log level using logging module conventions (lower, upper or mixed case can be used)."""
@@ -42,7 +43,7 @@ class Log(LogKey, RecordMixin[LogKey], ABC):
         return LogKey(log_id=self.log_id)
 
     @classmethod
-    def default(cls) -> Log:
+    def default(cls) -> Self:
         """Default log is initialized from settings and cannot be modified in code."""
 
         if Log.__default is None:

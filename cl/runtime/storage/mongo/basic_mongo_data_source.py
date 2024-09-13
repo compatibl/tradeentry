@@ -31,6 +31,7 @@ from typing import Type
 from typing import cast
 
 # TODO: Revise and consider making fields of the data source
+# TODO: Review and consider alternative names, e.g. DataSerializer or RecordSerializer
 data_serializer = DictSerializer()
 key_serializer = StringSerializer()
 
