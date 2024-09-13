@@ -14,10 +14,15 @@
 
 import datetime as dt
 import multiprocessing
+from uuid import UUID
+
+from cl.runtime.primitive.ordered_uuid import OrderedUuid
+from cl.runtime.serialization.dict_serializer import DictSerializer
+from cl.runtime.storage.data_source_types import TDataDict
+
 from cl.runtime import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.records.protocols import is_record
-from cl.runtime.settings.log_settings import LogSettings
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
@@ -26,27 +31,50 @@ from cl.runtime.tasks.task_run_key import TaskRunKey
 from cl.runtime.tasks.task_status import TaskStatus
 from dataclasses import dataclass
 
+context_serializer = DictSerializer()
+"""Serializer for the context parameter of 'execute_task' method."""
+
 
 def execute_task(
+        task_run_id: str,
         task_id: str,
-        log_file_format: str,
-        log_file_prefix: str,
-        log_file_timestamp: dt.datetime,
+        queue_id: str,
+        context_data: TDataDict,
 ) -> None:
     """Invoke execute method of the specified task."""
 
-    # Copy log settings from the caller process
-    # TODO: Copy to context, not to settings, make settings frozen
-    log_settings = LogSettings.instance()
-    log_settings.filename_format = log_file_format
-    log_settings.filename_prefix = log_file_prefix
-    log_settings.filename_timestamp = log_file_timestamp
+    # Deserialize context from 'context_data' parameter to run with the same settings as the caller context
+    with context_serializer.deserialize_data(context_data) as context:
+        # Get timestamp from task_run_id
+        task_run_uuid = UUID(task_run_id)
+        submit_time = OrderedUuid.datetime_of(task_run_uuid)
 
-    with Context() as context:
-        # Load task object
-        task_key = TaskKey(task_id=task_id)
-        task = context.load_one(Task, task_key)
-        task.execute()
+        # Create a task run record in Pending state
+        task_run = TaskRun()
+        task_run.task_run_id = task_run_id
+        task_run.queue = queue_id
+        task_run.task = TaskKey(task_id=task_id)
+        task_run.submit_time = submit_time
+        task_run.update_time = submit_time
+        task_run.status = TaskStatus.Pending
+        context.save_one(task_run)
+
+        try:
+            # Load and execute the task object
+            task_key = TaskKey(task_id=task_id)
+            task = context.load_one(Task, task_key)
+            task.execute()
+        except Exception as e:  # noqa
+            # Update task run record to report task failure
+            task_run.update_time = DatetimeUtil.now()
+            task_run.status = TaskStatus.Failed
+            task_run.result = str(e)
+            context.save_one(task_run)
+        else:
+            # Update task run record to report task completion
+            task_run.update_time = DatetimeUtil.now()
+            task_run.status = TaskStatus.Completed
+            context.save_one(task_run)
 
 
 @dataclass(slots=True, kw_only=True)
@@ -77,11 +105,17 @@ class ProcessQueue(TaskQueue):
         """Resume starting new runs and send resume command to existing runs."""
 
     def submit_task(self, task: TaskKey) -> TaskRunKey:
+
         # Get current context
         context = Context.current()
 
-        # Record the task submission time
-        submit_time = DatetimeUtil.now()
+        # Save task if provided as record rather than key
+        if is_record(task):
+            context.save_one(task)
+
+        # Create task run identifier and convert to string
+        task_run_uuid = OrderedUuid.create_one()
+        task_run_id = str(task_run_uuid)
 
         # Save task if provided as record rather than key
         if is_record(task):
@@ -89,14 +123,14 @@ class ProcessQueue(TaskQueue):
 
         # Spawn a daemon process that will exit when this process exits
         # TODO: Make asynchronous
-        log_settings = LogSettings.instance()
+        context_data = context_serializer.serialize_data(context)
         worker_process = multiprocessing.Process(
             target=execute_task,
             args=(
+                task_run_id,
                 task.task_id,
-                log_settings.filename_format,
-                log_settings.filename_prefix,
-                log_settings.filename_timestamp,
+                self.queue_id,
+                context_data,
             ))
         worker_process.start()
         worker_process.join()

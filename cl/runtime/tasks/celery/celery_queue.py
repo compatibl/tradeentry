@@ -23,7 +23,6 @@ from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.records.protocols import is_record
 from cl.runtime.serialization.dict_serializer import DictSerializer
-from cl.runtime.settings.log_settings import LogSettings
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
@@ -61,19 +60,9 @@ def execute_task(
         task_run_id: str,
         task_id: str,
         queue_id: str,
-        log_file_format: str,
-        log_file_prefix: str,
-        log_file_timestamp: dt.datetime,
         context_data: TDataDict,
 ) -> None:
     """Invoke execute method of the specified task."""
-
-    # Copy log settings from the caller process
-    # TODO: Copy to context, not to settings, make settings frozen
-    log_settings = LogSettings.instance()
-    log_settings.filename_format = log_file_format
-    log_settings.filename_prefix = log_file_prefix
-    log_settings.filename_timestamp = log_file_timestamp
 
     # Deserialize context from 'context_data' parameter to run with the same settings as the caller context
     with context_serializer.deserialize_data(context_data) as context:
@@ -175,15 +164,11 @@ class CeleryQueue(TaskQueue):
         task_run_id = str(task_run_uuid)
 
         # Pass parameters to the Celery task signature
-        log_settings = LogSettings.instance()
         context_data = context_serializer.serialize_data(context)
         execute_task_signature = execute_task.s(
             task_run_id,
             task.task_id,
             self.queue_id,
-            log_settings.filename_format,
-            log_settings.filename_prefix,
-            log_settings.filename_timestamp,
             context_data,
         )
 

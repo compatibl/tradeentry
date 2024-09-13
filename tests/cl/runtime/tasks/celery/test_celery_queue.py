@@ -58,9 +58,6 @@ def test_method(celery_test_queue_fixture):
             task_run_id,
             task_id,
             queue_id,
-            log_settings.filename_format,
-            log_settings.filename_prefix,
-            log_settings.filename_timestamp,
             context_data,
         )
 
