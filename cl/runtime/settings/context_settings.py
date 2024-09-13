@@ -49,11 +49,13 @@ class ContextSettings(Settings):
             raise RuntimeError(f"{type(self).__name__} field 'packages' must be a string or an iterable of strings.")
 
         if not isinstance(self.log_class, str):
-            raise RuntimeError(f"{type(self).__name__} field 'log_class' must be a string "
-                               f"in module.ClassName format.")
+            raise RuntimeError(
+                f"{type(self).__name__} field 'log_class' must be a string " f"in module.ClassName format."
+            )
         if not isinstance(self.data_source_class, str):
-            raise RuntimeError(f"{type(self).__name__} field 'data_source_class' must be a string "
-                               f"in module.ClassName format.")
+            raise RuntimeError(
+                f"{type(self).__name__} field 'data_source_class' must be a string " f"in module.ClassName format."
+            )
         if not isinstance(self.data_source_id, str):
             raise RuntimeError(f"{type(self).__name__} field 'context_id' must be a string.")
 

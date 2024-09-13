@@ -29,8 +29,8 @@ class UnitTestUtil:
     @classmethod
     def is_inside_test(cls) -> bool:
         """
-        Detects if pytest or unittest package is imported (but currently not other test packages). 
-        
+        Detects if pytest or unittest package is imported (but currently not other test packages).
+
         Notes:
             - This method works even during the initial module import when alternative methods such as
               stack introspection or checking for environment variables fail
@@ -40,10 +40,10 @@ class UnitTestUtil:
 
     @classmethod
     def get_test_name(
-            cls,
-            *,
-            allow_missing: bool = False,
-            test_function_pattern: str | None = None,
+        cls,
+        *,
+        allow_missing: bool = False,
+        test_function_pattern: str | None = None,
     ) -> str | None:
         """
         Return dot-delimited test name in 'module.test_function' or 'module.TestClass.test_method' format
@@ -54,7 +54,7 @@ class UnitTestUtil:
             test_function_pattern: Glob pattern to identify the test function or method in stack frame,
             defaults to 'test_*'
         """
-        
+
         # Perform stack introspection
         base_path = StackUtil.get_base_path(
             allow_missing=allow_missing,

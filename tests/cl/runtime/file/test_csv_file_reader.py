@@ -14,7 +14,6 @@
 
 import os
 import pytest
-from cl.runtime.testing.unit_test_context import UnitTestContext
 from cl.runtime.file.csv_file_reader import CsvFileReader
 from cl.runtime.settings.settings import Settings
 from cl.runtime.storage.local.local_cache import LocalCache

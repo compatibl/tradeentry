@@ -13,8 +13,8 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.testing.unit_test_context import UnitTestContext
 from cl.runtime.tasks.instance_method_task import InstanceMethodTask
+from cl.runtime.testing.unit_test_context import UnitTestContext
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
 

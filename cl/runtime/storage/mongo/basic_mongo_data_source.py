@@ -219,7 +219,7 @@ class BasicMongoDataSource(DataSource):
     def _get_db_name(self) -> str:
         """Get PyMongo database name from data_source_id, applying the appropriate formatting conventions."""
         result = self.data_source_id.replace(".", ";")
-        db_name_bytes = len(result.encode('utf-8'))
+        db_name_bytes = len(result.encode("utf-8"))
         if db_name_bytes >= 64:
             raise RuntimeError(f"MongoDB does not support DB name {result} because it has {db_name_bytes}>=64 bytes.")
         return result

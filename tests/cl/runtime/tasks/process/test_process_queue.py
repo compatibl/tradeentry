@@ -13,9 +13,9 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.testing.unit_test_context import UnitTestContext
 from cl.runtime.tasks.process.process_queue import ProcessQueue
 from cl.runtime.tasks.static_method_task import StaticMethodTask
+from cl.runtime.testing.unit_test_context import UnitTestContext
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
 

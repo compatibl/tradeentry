@@ -22,10 +22,10 @@ class StackUtil:
 
     @classmethod
     def get_base_path(  # TODO: Refactor to return tuple of dir and name and rename method after refactoring
-            cls,
-            *,
-            allow_missing: bool = False,
-            test_function_pattern: str | None = None,
+        cls,
+        *,
+        allow_missing: bool = False,
+        test_function_pattern: str | None = None,
     ) -> str:
         """
         Return test_module.test_function or test_module.test_class.test_function by searching the stack frame

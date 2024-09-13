@@ -399,4 +399,3 @@ class SqliteDataSource(DataSource):
             os.makedirs(db_dir)
         result = os.path.join(db_dir, f"{filename}.db")
         return result
-

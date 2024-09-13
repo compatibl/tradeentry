@@ -17,10 +17,9 @@ from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.entity.panel_request import PanelRequest
 from cl.runtime.routers.entity.panel_response_util import PanelResponseUtil
 from cl.runtime.serialization.string_serializer import StringSerializer
+from cl.runtime.testing.unit_test_context import UnitTestContext
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
-from cl.runtime.testing.unit_test_context import UnitTestContext
 from stubs.cl.runtime.decorators.stub_viewers import StubViewers
 
 # create stub with viewers

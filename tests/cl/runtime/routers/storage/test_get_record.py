@@ -13,13 +13,13 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.testing.unit_test_context import UnitTestContext
 from cl.runtime.routers.storage import storage_router
 from cl.runtime.routers.storage.record_request import RecordRequest
 from cl.runtime.routers.storage.record_response import RecordResponse
+from cl.runtime.testing.regression_guard import RegressionGuard
+from cl.runtime.testing.unit_test_context import UnitTestContext
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from cl.runtime.testing.regression_guard import RegressionGuard
 from stubs.cl.runtime import StubDataclassRecord
 
 
@@ -27,7 +27,6 @@ def test_method():
     """Test coroutine for /storage/record route."""
 
     with UnitTestContext() as context:
-
         # Save test record
         record = StubDataclassRecord(id=__name__)
         context.save_one(record)
@@ -52,11 +51,9 @@ def test_api():
     """Test REST API for /storage/record route."""
 
     with UnitTestContext() as context:
-
         test_app = FastAPI()
         test_app.include_router(storage_router.router, prefix="/storage", tags=["Storage"])
         with TestClient(test_app) as test_client:
-
             # Save test record
             record = StubDataclassRecord(id=__name__)
             context.save_one(record)

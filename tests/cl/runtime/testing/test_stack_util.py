@@ -13,9 +13,7 @@
 # limitations under the License.
 
 import os
-
 import pytest
-
 from cl.runtime.testing.stack_util import StackUtil
 
 
@@ -24,7 +22,6 @@ def test_get_base_path_in_function():
     result = StackUtil.get_base_path()
     assert os.path.dirname(result) == os.path.dirname(__file__)
     assert os.path.basename(result) == "test_stack_util.test_get_base_path_in_function"
-
 
 
 class TestClass:

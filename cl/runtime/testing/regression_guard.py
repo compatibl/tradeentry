@@ -18,20 +18,19 @@ import inflection
 import inspect
 import os
 import yaml
-from typing_extensions import Self
-
-from cl.runtime.records.protocols import is_record, is_key
+from cl.runtime.records.protocols import is_key
+from cl.runtime.records.protocols import is_record
 from cl.runtime.schema.field_decl import primitive_types
+from cl.runtime.serialization.dict_serializer import DictSerializer
+from cl.runtime.serialization.string_serializer import StringSerializer
+from cl.runtime.testing.stack_util import StackUtil
 from dataclasses import dataclass
 from typing import Any
 from typing import ClassVar
 from typing import Dict
 from typing import Iterable
 from typing import cast
-
-from cl.runtime.serialization.dict_serializer import DictSerializer
-from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.testing.stack_util import StackUtil
+from typing_extensions import Self
 
 supported_extensions = ["txt"]
 """The list of supported output file extensions (formats)."""
@@ -87,11 +86,8 @@ class RegressionGuard:
     """Output file extension, defaults to '.txt'"""
 
     def __init__(
-            self,
-            *,
-            ext: str = None,
-            channel: str | Iterable[str] | None = None,
-            test_function_pattern: str | None = None):
+        self, *, ext: str = None, channel: str | Iterable[str] | None = None, test_function_pattern: str | None = None
+    ):
         """
         Initialize the regression guard, optionally specifying channel.
 
