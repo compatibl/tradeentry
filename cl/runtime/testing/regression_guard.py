@@ -12,26 +12,34 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
 import difflib
 import filecmp
 import inflection
 import inspect
 import os
 import yaml
+from typing_extensions import Self
+
+from cl.runtime.records.protocols import is_record, is_key
 from cl.runtime.schema.field_decl import primitive_types
 from dataclasses import dataclass
-from dataclasses import field
 from typing import Any
 from typing import ClassVar
 from typing import Dict
 from typing import Iterable
-from typing import List
-from typing import Set
 from typing import cast
 
+from cl.runtime.serialization.dict_serializer import DictSerializer
+from cl.runtime.serialization.string_serializer import StringSerializer
+
 supported_extensions = ["txt"]
+"""The list of supported output file extensions (formats)."""
+
+key_serializer = StringSerializer()
+"""Serializer for keys."""
+
+data_serializer = DictSerializer()
+"""Serializer for records."""
 
 
 def error_channel_not_primitive_type() -> Any:
@@ -59,10 +67,10 @@ class RegressionGuard:
         - File extension 'ext' is determined based on the verify method(s) called
     """
 
-    __guard_dict: ClassVar[Dict[str, RegressionGuard]] = {}  # TODO: Set using ContextVars
+    __guard_dict: ClassVar[Dict[str, Self]] = {}  # TODO: Set using ContextVars
     """Dictionary of existing guards indexed by the combination of output_dir and ext."""
 
-    __delegate_to: RegressionGuard | None
+    __delegate_to: Self | None
     """Delegate all function calls to this regression guard if set."""
 
     __verified: bool
@@ -315,6 +323,10 @@ class RegressionGuard:
             return str(value) + "\n"
         elif value_type == dict:
             return yaml.dump(value, default_flow_style=False, sort_keys=False) + "\n"
+        elif is_record(value_type):
+            return data_serializer.serialize_data(value)
+        elif is_key(value_type):
+            return key_serializer.serialize_data(value)
         elif hasattr(value_type, "__iter__"):
             return "\n".join(map(self._format_txt, value)) + "\n"
         else:
