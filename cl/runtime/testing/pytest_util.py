@@ -14,31 +14,44 @@
 
 import os
 import sys
+from cl.runtime.testing.stack_util import StackUtil
 
 
-class PytestUtil:
-    """Pytest-related utilities that do not import pytest module and therefore can be invoked from non-test code."""
+class UnitTestUtil:
+    """
+    Utilities for both pytest and unittest.
+
+    Notes:
+        - The name UnitTestUtil was selected to avoid Test prefix and does not indicate it is for unittest package only
+        - This module not itself import pytest or unittest package and therefore can be used in non-test code
+    """
 
     @classmethod
-    def is_inside_pytest(cls) -> bool:
-        """Return true if invoked by the pytest test runner."""
-        return "pytest" in sys.modules
+    def is_inside_test(cls) -> bool:
+        """
+        Detects if pytest or unittest package is imported (but currently not other test packages). 
+        
+        Notes:
+            - This method works even during the initial module import when alternative methods such as
+              stack introspection or checking for environment variables fail
+            - This makes it suitable for configuring settings during import
+        """
+        return "pytest" in sys.modules or "unittest" in sys.modules
 
     @classmethod
-    def get_current_pytest(cls) -> str | None:
-        """Return the current pytest or None if not invoked by the pytest test runner."""
-        result = os.getenv("PYTEST_CURRENT_TEST", None)
+    def get_test_name(cls, *, test_function_pattern: str | None = None) -> str | None:
+        """
+        Return dot-delimited test name in 'module.test_function' or 'module.TestClass.test_method' format
+        by searching the stack frame for 'test_' or a custom test function name pattern.
+
+        Args:
+            test_function_pattern: Glob pattern to identify the test function or method in stack frame,
+            defaults to 'test_*'
+        """
+        
+        # Perform stack introspection
+        base_path = StackUtil.get_base_path(test_function_pattern=test_function_pattern)
+
+        # Result is the last token in path
+        result = os.path.basename(base_path)
         return result
-
-    @classmethod
-    def get_caller_name(cls, *, caller_file: str) -> str:  # TODO: Use __name__ instead, review use
-        """
-        Get caller script name without extension from its __file__ variable.
-
-        Use to make test input and output files begin from the prefix
-        based on test .py file name.
-        """
-
-        file_path, file_name_with_ext = os.path.split(caller_file)
-        file_name, file_ext = os.path.splitext(file_name_with_ext)
-        return file_name

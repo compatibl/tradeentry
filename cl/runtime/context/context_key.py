@@ -18,7 +18,7 @@ from dataclasses import dataclass
 from typing import Type
 
 
-@dataclass(slots=True, kw_only=True, frozen=True)
+@dataclass(slots=True, kw_only=True)
 class ContextKey(KeyMixin):
     """Polymorphic data storage with dataset isolation."""
 

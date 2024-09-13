@@ -51,7 +51,7 @@ def current_or_default_progress() -> ProgressProtocol:
     return context.progress if (context := Context.current()) is not None else null_progress
 
 
-@dataclass(slots=True, kw_only=True, frozen=True)
+@dataclass(slots=True, kw_only=True)
 class Context(ContextKey, RecordMixin[ContextKey]):
     """Protocol implemented by context objects providing logging, data source, dataset, and progress reporting."""
 
@@ -64,7 +64,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
     log: LogKey = field(default_factory=lambda: Log.default())
     """Log of the context, default log is used if not specified."""
 
-    data_source: DataSourceKey | None = field(default_factory=lambda: current_or_default_data_source())
+    data_source: DataSourceKey = field(default_factory=lambda: current_or_default_data_source())
     """Return the default data source of the context or None if not set."""
 
     dataset: str = field(default_factory=lambda: current_or_default_dataset())

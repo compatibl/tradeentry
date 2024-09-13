@@ -13,25 +13,15 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.testing.pytest_util import UnitTestUtil
+from cl.runtime.testing.unit_test_context import UnitTestContext
 
 
-def test_is_inside_test():
-    """Test is_inside_test method."""
-    assert UnitTestUtil.is_inside_test() is True
+def test_smoke():
+    """Test get_base_path in a test function."""
 
-
-def test_get_test_id_in_function():
-    """Test get_test_id in a test function."""
-    assert UnitTestUtil.get_test_id() == "test_pytest_util.test_get_test_id_in_function"
-
-
-class TestClass:
-    """Stub pytest class."""
-
-    def test_get_test_id_in_method(self):
-        """Test get_test_id in a test method."""
-        assert UnitTestUtil.get_test_id() == "test_pytest_util.test_class.test_get_test_id_in_method"
+    with UnitTestContext() as context:
+        assert context.context_id == "test_unit_test_context.test_smoke"
+        assert context.data_source.data_source_id == context.context_id
 
 
 if __name__ == "__main__":
