@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime import Context
+from cl.runtime.testing.unit_test_context import UnitTestContext
 from cl.runtime.tasks.static_method_task import StaticMethodTask
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
@@ -21,7 +21,7 @@ from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 def test_create():
     """Test 'test_create' method."""
 
-    with Context():
+    with UnitTestContext():
         sample_inputs = [
             (StubHandlers, StubHandlers.class_handler_1a),
             (StubHandlers, StubHandlers.static_handler_1a),

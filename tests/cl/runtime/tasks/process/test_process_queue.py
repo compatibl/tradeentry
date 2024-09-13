@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.context.context import Context
+from cl.runtime.testing.unit_test_context import UnitTestContext
 from cl.runtime.tasks.process.process_queue import ProcessQueue
 from cl.runtime.tasks.static_method_task import StaticMethodTask
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
@@ -22,7 +22,7 @@ from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 def test_smoke():
     """Smoke test."""
 
-    with Context() as context:
+    with UnitTestContext() as context:
         obj = StubHandlers(stub_id="abc")
         context.save_one(obj)
 

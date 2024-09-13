@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.context.context import Context
+from cl.runtime.testing.unit_test_context import UnitTestContext
 from cl.runtime.routers.tasks import tasks_router
 from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseItem
 from cl.runtime.routers.tasks.run_request import RunRequest

@@ -14,7 +14,7 @@
 
 import base64
 import pytest
-from cl.runtime.context.context import Context
+from cl.runtime.testing.unit_test_context import UnitTestContext
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.routers.tasks import tasks_router
 from cl.runtime.routers.tasks.run_response_item import handler_queue
@@ -66,7 +66,7 @@ def test_method():
     """Test coroutine for /tasks/run/result route."""
 
     # TODO: Use UnitTestContext instead
-    with Context() as context:
+    with UnitTestContext() as context:
         context.save_many(tasks)
         context.save_many(task_runs)
 
@@ -88,7 +88,7 @@ def test_api():
     """Test REST API for /tasks/run/result route."""
 
     # TODO: Use UnitTestContext instead
-    with Context() as context:
+    with UnitTestContext() as context:
         context.save_many(tasks)
         context.save_many(task_runs)
 

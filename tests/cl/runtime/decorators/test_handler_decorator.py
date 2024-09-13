@@ -13,14 +13,14 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime import Context
+from cl.runtime.testing.unit_test_context import UnitTestContext
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
 
 def test_smoke():
     """Smoke test."""
 
-    with Context():
+    with UnitTestContext():
         # Instance method handlers
         obj = StubHandlers()
         obj.instance_handler_1a()

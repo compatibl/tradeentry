@@ -13,13 +13,13 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.context.context import Context
+from cl.runtime.testing.unit_test_context import UnitTestContext
 
 
 def test_smoke():
     """Smoke test."""
 
-    with Context() as context:
+    with UnitTestContext() as context:
         # Get context logger
         logger = context.get_logger(__name__)
 

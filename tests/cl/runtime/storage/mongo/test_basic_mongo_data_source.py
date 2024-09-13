@@ -14,7 +14,7 @@
 
 import mongomock
 import pytest
-from cl.runtime.context.context import Context
+from cl.runtime.testing.unit_test_context import UnitTestContext
 from cl.runtime.storage.mongo.basic_mongo_data_source import BasicMongoDataSource
 from cl.runtime.testing.unit_test_context import UnitTestContext
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecord

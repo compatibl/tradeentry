@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime import Context
+from cl.runtime.testing.unit_test_context import UnitTestContext
 from cl.runtime.tasks.instance_method_task import InstanceMethodTask
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
@@ -21,7 +21,7 @@ from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 def test_smoke():
     """Test 'test_create' method."""
 
-    with Context() as context:
+    with UnitTestContext() as context:
         records = [
             StubHandlers(stub_id="abc"),
         ]

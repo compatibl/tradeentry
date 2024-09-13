@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime import Context
+from cl.runtime.testing.unit_test_context import UnitTestContext
 from cl.runtime import LocalCache
 from cl.runtime.settings.aliases.package_alias import PackageAlias
 

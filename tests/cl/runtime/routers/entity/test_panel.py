@@ -13,13 +13,14 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime import Context
 from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.entity.panel_request import PanelRequest
 from cl.runtime.routers.entity.panel_response_util import PanelResponseUtil
 from cl.runtime.serialization.string_serializer import StringSerializer
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
+
+from cl.runtime.testing.unit_test_context import UnitTestContext
 from stubs.cl.runtime.decorators.stub_viewers import StubViewers
 
 # create stub with viewers
@@ -53,7 +54,7 @@ def test_method():
     """Test coroutine for /entity/panel route."""
 
     # TODO: Use UnitTestContext instead
-    with Context() as context:
+    with UnitTestContext() as context:
         context.save_one(stub_viewers)
 
         for request, expected_result in zip(requests, expected_results):
@@ -68,7 +69,7 @@ def test_api():
     """Test REST API for /entity/panel route."""
 
     # TODO: Use UnitTestContext instead
-    with Context() as context:
+    with UnitTestContext() as context:
         context.save_one(stub_viewers)
 
         test_app = FastAPI()

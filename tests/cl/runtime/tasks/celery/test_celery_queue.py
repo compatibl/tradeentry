@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime import Context
+from cl.runtime.testing.unit_test_context import UnitTestContext
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.tasks.celery.celery_queue import CeleryQueue
@@ -39,7 +39,7 @@ def _create_task(task_id: str) -> Task:
 def test_method(celery_test_queue_fixture):
     """Test calling 'execute_task' method in-process."""
 
-    with Context() as context:
+    with UnitTestContext() as context:
         # Create task
         task_id = f"test_celery_queue.test_method"
         queue_id = f"test_celery_queue.test_method"
@@ -63,7 +63,7 @@ def test_method(celery_test_queue_fixture):
 def test_api(celery_test_queue_fixture):
     """Test submitting task for execution out of process."""
 
-    with Context() as context:
+    with UnitTestContext() as context:
         # Create task
         task_id = f"test_celery_queue.test_api"
         queue_id = f"test_celery_queue.test_api"
