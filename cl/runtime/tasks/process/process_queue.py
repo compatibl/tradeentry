@@ -14,15 +14,12 @@
 
 import datetime as dt
 import multiprocessing
-from uuid import UUID
-
-from cl.runtime.primitive.ordered_uuid import OrderedUuid
-from cl.runtime.serialization.dict_serializer import DictSerializer
-from cl.runtime.storage.data_source_types import TDataDict
-
 from cl.runtime import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil
+from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.records.protocols import is_record
+from cl.runtime.serialization.dict_serializer import DictSerializer
+from cl.runtime.storage.data_source_types import TDataDict
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
@@ -30,16 +27,17 @@ from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
 from cl.runtime.tasks.task_status import TaskStatus
 from dataclasses import dataclass
+from uuid import UUID
 
 context_serializer = DictSerializer()
 """Serializer for the context parameter of 'execute_task' method."""
 
 
 def execute_task(
-        task_run_id: str,
-        task_id: str,
-        queue_id: str,
-        context_data: TDataDict,
+    task_run_id: str,
+    task_id: str,
+    queue_id: str,
+    context_data: TDataDict,
 ) -> None:
     """Invoke execute method of the specified task."""
 
@@ -105,7 +103,6 @@ class ProcessQueue(TaskQueue):
         """Resume starting new runs and send resume command to existing runs."""
 
     def submit_task(self, task: TaskKey) -> TaskRunKey:
-
         # Get current context
         context = Context.current()
 
@@ -131,7 +128,8 @@ class ProcessQueue(TaskQueue):
                 task.task_id,
                 self.queue_id,
                 context_data,
-            ))
+            ),
+        )
         worker_process.start()
         worker_process.join()
 

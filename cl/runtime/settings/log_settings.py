@@ -14,7 +14,6 @@
 
 import datetime as dt
 from cl.runtime.primitive.datetime_util import DatetimeUtil
-
 from cl.runtime.settings.settings import Settings
 from dataclasses import dataclass
 
@@ -46,10 +45,11 @@ class LogSettings(Settings):
         self.level = self.level.upper()
         valid_levels = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
         if self.level not in valid_levels:
-            raise RuntimeError(f"Invalid log level: {self.level}, permitted values are: {', '.join(valid_levels)}. "
-                               f"Lower, upper or mixed case can be used.")
+            raise RuntimeError(
+                f"Invalid log level: {self.level}, permitted values are: {', '.join(valid_levels)}. "
+                f"Lower, upper or mixed case can be used."
+            )
 
     @classmethod
     def get_prefix(cls) -> str:
         return "runtime_log"
-

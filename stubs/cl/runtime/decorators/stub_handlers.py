@@ -14,7 +14,8 @@
 
 import datetime as dt
 import inspect
-from cl.runtime.context.context import current_or_default_data_source, Context
+from cl.runtime.context.context import Context
+from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.decorators.handler_decorator import handler
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.dataclasses_extensions import missing

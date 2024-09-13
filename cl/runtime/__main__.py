@@ -61,7 +61,6 @@ server_app.include_router(entity_router.router, prefix="/entity", tags=["Entity"
 server_app.include_router(tasks_router.router, prefix="/tasks", tags=["Tasks"])
 
 if __name__ == "__main__":
-
     with Context():
         # Start Celery workers (will exit when the current process exits)
         celery_delete_existing_tasks()

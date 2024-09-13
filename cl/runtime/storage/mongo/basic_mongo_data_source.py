@@ -25,7 +25,8 @@ from dataclasses import dataclass
 from itertools import groupby
 from pymongo import MongoClient
 from pymongo.database import Database
-from typing import Iterable, Dict
+from typing import Dict
+from typing import Iterable
 from typing import Type
 from typing import cast
 

@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import os
-
 import pytest
 from cl.runtime.testing.pytest_fixtures import local_dir_fixture
 

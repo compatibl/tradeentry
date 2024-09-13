@@ -15,14 +15,12 @@
 import datetime as dt
 import multiprocessing
 from celery import Celery
-from cl.runtime.storage.data_source_types import TDataDict
-from orjson import orjson
-
 from cl.runtime import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.records.protocols import is_record
 from cl.runtime.serialization.dict_serializer import DictSerializer
+from cl.runtime.storage.data_source_types import TDataDict
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
@@ -30,6 +28,7 @@ from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
 from cl.runtime.tasks.task_status import TaskStatus
 from dataclasses import dataclass
+from orjson import orjson
 from pymongo import MongoClient
 from typing import Final
 from uuid import UUID
@@ -57,10 +56,10 @@ context_serializer = DictSerializer()
 
 @celery_app.task(max_retries=0)  # Do not retry failed tasks
 def execute_task(
-        task_run_id: str,
-        task_id: str,
-        queue_id: str,
-        context_data: TDataDict,
+    task_run_id: str,
+    task_id: str,
+    queue_id: str,
+    context_data: TDataDict,
 ) -> None:
     """Invoke execute method of the specified task."""
 

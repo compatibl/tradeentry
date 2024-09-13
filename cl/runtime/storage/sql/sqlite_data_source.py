@@ -280,9 +280,7 @@ class SqliteDataSource(DataSource):
 
             table_name = schema_manager.table_name_for_type(key_type)
 
-            primary_keys = [
-                columns_mapping[primary_key] for primary_key in schema_manager.get_primary_keys(key_type)
-            ]
+            primary_keys = [columns_mapping[primary_key] for primary_key in schema_manager.get_primary_keys(key_type)]
 
             schema_manager.create_table(
                 table_name, columns_mapping.values(), if_not_exists=True, primary_keys=primary_keys
@@ -351,7 +349,6 @@ class SqliteDataSource(DataSource):
         # Run in a loop because tables that depend on a foreign key can not be deleted before related tables
         connection = self._get_connection()
         while True:
-
             # Delete tables
             cursor = connection.cursor()
             delete_all_tables = [

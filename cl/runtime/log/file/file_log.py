@@ -14,15 +14,13 @@
 
 import logging
 import os
-from typing import Iterable
-
-from cl.runtime.primitive.datetime_util import DatetimeUtil
-from concurrent_log_handler import ConcurrentRotatingFileHandler
 from cl.runtime.log.log import Log
-from dataclasses import dataclass
-
+from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.settings.log_settings import LogSettings
 from cl.runtime.settings.settings import Settings
+from concurrent_log_handler import ConcurrentRotatingFileHandler
+from dataclasses import dataclass
+from typing import Iterable
 
 
 def _get_log_filename() -> str:
@@ -39,13 +37,15 @@ def _get_log_filename() -> str:
             # UTC timestamp to millisecond precision for the log file name
             log_timestamp = DatetimeUtil.now()
             # Serialize assuming millisecond precision
-            log_timestamp_str = log_timestamp.strftime(
-                "%Y-%m-%d-%H-%M-%S") + f"-{int(round(log_timestamp.microsecond / 1000)):03d}"
+            log_timestamp_str = (
+                log_timestamp.strftime("%Y-%m-%d-%H-%M-%S") + f"-{int(round(log_timestamp.microsecond / 1000)):03d}"
+            )
             result = f"{log_settings.filename_prefix}-{log_timestamp_str}.log"
         case _:
             valid_choices = ["prefix", "prefix-timestamp"]
-            raise RuntimeError(f"Unknown log filename format: {log_filename_format}, "
-                               f"valid choices are {', '.join(valid_choices)}")
+            raise RuntimeError(
+                f"Unknown log filename format: {log_filename_format}, " f"valid choices are {', '.join(valid_choices)}"
+            )
 
     # Create log directory and filename relative to project root
     project_root = Settings.get_project_root()
@@ -80,12 +80,12 @@ class FileLog(Log):
         file_log_handler = ConcurrentRotatingFileHandler(
             self.filename,
             maxBytes=max_log_file_size_bytes,
-            backupCount=0  # Do not create backup files because each file has a timestamp
+            backupCount=0,  # Do not create backup files because each file has a timestamp
         )
 
         # Configure the logging format
         file_log_formatter = logging.Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s - %(message)s - %(custom_field)s'
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s - %(custom_field)s"
         )
         file_log_handler.setFormatter(file_log_formatter)
 

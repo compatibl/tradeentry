@@ -27,7 +27,7 @@ class PytestUtil:
     @classmethod
     def get_current_pytest(cls) -> str | None:
         """Return the current pytest or None if not invoked by the pytest test runner."""
-        result = os.getenv('PYTEST_CURRENT_TEST', None)
+        result = os.getenv("PYTEST_CURRENT_TEST", None)
         return result
 
     @classmethod

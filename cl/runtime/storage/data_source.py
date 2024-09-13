@@ -16,12 +16,10 @@ from __future__ import annotations
 
 from abc import ABC
 from abc import abstractmethod
-
-from cl.runtime.records.record_mixin import RecordMixin
-
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.storage.data_source_key import DataSourceKey
 from cl.runtime.storage.data_source_types import TQuery

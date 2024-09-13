@@ -12,15 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.log.log import Log
-from cl.runtime.log.log_key import LogKey
-from cl.runtime.records.record_mixin import RecordMixin
+import logging
 from cl.runtime.context.context_key import ContextKey
 from cl.runtime.context.null_progress import NullProgress
 from cl.runtime.context.protocols import ProgressProtocol
+from cl.runtime.log.log import Log
+from cl.runtime.log.log_key import LogKey
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.data_source_key import DataSourceKey
 from cl.runtime.storage.protocols import DataSourceProtocol
@@ -30,7 +31,6 @@ from typing import ClassVar
 from typing import Iterable
 from typing import List
 from typing import Type
-import logging
 
 # Use in case progress is not specified
 null_progress = NullProgress()

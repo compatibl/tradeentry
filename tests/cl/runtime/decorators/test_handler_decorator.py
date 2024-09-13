@@ -21,7 +21,6 @@ def test_smoke():
     """Smoke test."""
 
     with Context():
-
         # Instance method handlers
         obj = StubHandlers()
         obj.instance_handler_1a()

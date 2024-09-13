@@ -24,7 +24,6 @@ def test_smoke():
 
     # TODO: Do not hardcode DB name
     with Context(data_source=BasicMongoDataSource(data_source_id="default", db_name="Dev;Runtime;V2")) as context:
-
         # Create test record and populate with sample data
         record = StubDataclassRecord()
         key = record.get_key()

@@ -20,7 +20,8 @@ from cl.runtime.routers.tasks.run_request import RunRequest
 from cl.runtime.routers.tasks.run_response_item import RunResponseItem
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.tasks.task_run_key import TaskRunKey
-from cl.runtime.testing.celery_fixtures import check_task_run_completion, celery_test_queue_fixture
+from cl.runtime.testing.celery_fixtures import celery_test_queue_fixture
+from cl.runtime.testing.celery_fixtures import check_task_run_completion
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from stubs.cl.runtime import StubDataclassRecord

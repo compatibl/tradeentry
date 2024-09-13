@@ -17,16 +17,15 @@ from __future__ import annotations
 import logging
 from abc import ABC
 from abc import abstractmethod
-
 from cl.runtime.log.log_filter import LogFilter
-from cl.runtime.records.record_mixin import RecordMixin
-from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.log.log_key import LogKey
-from dataclasses import dataclass
-from typing import ClassVar, Iterable
-
+from cl.runtime.records.class_info import ClassInfo
+from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.settings.log_settings import LogSettings
+from dataclasses import dataclass
+from typing import ClassVar
+from typing import Iterable
 
 
 @dataclass(slots=True, kw_only=True)

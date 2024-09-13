@@ -20,7 +20,6 @@ def test_smoke():
     """Smoke test."""
 
     with Context() as context:
-
         # Get context logger
         logger = context.get_logger(__name__)
 
