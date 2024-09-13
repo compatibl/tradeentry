@@ -15,7 +15,7 @@
 from cl.runtime.context.context import Context
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.settings.context_settings import ContextSettings
-from cl.runtime.testing.pytest_util import UnitTestUtil
+from cl.runtime.testing.unit_test_util import UnitTestUtil
 from dataclasses import dataclass
 
 

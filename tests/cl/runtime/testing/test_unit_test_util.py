@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.testing.pytest_util import UnitTestUtil
+from cl.runtime.testing.unit_test_util import UnitTestUtil
 
 
 def test_is_inside_test():
@@ -23,7 +23,7 @@ def test_is_inside_test():
 
 def test_get_test_name_in_function():
     """Test get_test_name in a test function."""
-    assert UnitTestUtil.get_test_name() == "test_pytest_util.test_get_test_name_in_function"
+    assert UnitTestUtil.get_test_name() == "test_unit_test_util.test_get_test_name_in_function"
 
 
 class TestClass:
@@ -31,7 +31,7 @@ class TestClass:
 
     def test_get_test_name_in_method(self):
         """Test get_test_name in a test method."""
-        assert UnitTestUtil.get_test_name() == "test_pytest_util.test_class.test_get_test_name_in_method"
+        assert UnitTestUtil.get_test_name() == "test_unit_test_util.test_class.test_get_test_name_in_method"
 
 
 if __name__ == "__main__":

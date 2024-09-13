@@ -17,7 +17,7 @@ from __future__ import annotations
 import os
 from abc import ABC
 from abc import abstractmethod
-from cl.runtime.testing.pytest_util import UnitTestUtil
+from cl.runtime.testing.unit_test_util import UnitTestUtil
 from dataclasses import MISSING
 from dataclasses import dataclass
 from dotenv import find_dotenv
