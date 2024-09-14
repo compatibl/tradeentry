@@ -14,7 +14,11 @@
 
 import pytest
 import time
+
+from cl.runtime.records.class_info import ClassInfo
+
 from cl.runtime.storage.sql.sqlite_data_source import SqliteDataSource
+from cl.runtime.testing.unit_test_context import UnitTestContext
 from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassDictFields
@@ -46,199 +50,179 @@ def _assert_equals_iterable_without_ordering(iterable: Iterable[Any], other_iter
 
 
 def test_smoke():
-    data_source = SqliteDataSource(data_source_id="default")
-    record = StubDataclassRecord()
+    data_source_class = ClassInfo.get_class_path(SqliteDataSource)
+    with UnitTestContext(data_source_class=data_source_class) as context:
+        record = StubDataclassRecord()
+        context.save_many([record, record])
 
-    data_source.save_many([record, record])
-
-    loaded_records = list(data_source.load_many(StubDataclassRecord, [record.get_key()]))
-    assert len(loaded_records) == 1
-    assert loaded_records[0] == record
+        loaded_records = list(context.load_many(StubDataclassRecord, [record.get_key()]))
+        assert len(loaded_records) == 1
+        assert loaded_records[0] == record
 
 
 def test_complex_records():
-    samples = [
-        StubDataclassRecord(id="abc1"),
-        StubDataclassNestedFields(primitive="abc2"),
-        StubDataclassDerivedRecord(id="abc3"),
-        StubDataclassDerivedFromDerivedRecord(id="abc4"),
-        StubDataclassOtherDerivedRecord(id="abc5"),
-        StubDataclassListFields(id="abc6"),
-        StubDataclassOptionalFields(id="abc7"),
-        StubDataclassDictFields(id="abc8"),
-        StubDataclassDictListFields(id="abc9"),
-        StubDataclassListDictFields(id="abc10"),
-        StubDataclassPrimitiveFields(key_str_field="abc11"),
-        StubDataclassSingleton(),
-    ]
+    data_source_class = ClassInfo.get_class_path(SqliteDataSource)
+    with UnitTestContext(data_source_class=data_source_class) as context:
+        samples = [
+            StubDataclassRecord(id="abc1"),
+            StubDataclassNestedFields(primitive="abc2"),
+            StubDataclassDerivedRecord(id="abc3"),
+            StubDataclassDerivedFromDerivedRecord(id="abc4"),
+            StubDataclassOtherDerivedRecord(id="abc5"),
+            StubDataclassListFields(id="abc6"),
+            StubDataclassOptionalFields(id="abc7"),
+            StubDataclassDictFields(id="abc8"),
+            StubDataclassDictListFields(id="abc9"),
+            StubDataclassListDictFields(id="abc10"),
+            StubDataclassPrimitiveFields(key_str_field="abc11"),
+            StubDataclassSingleton(),
+        ]
 
-    data_source = SqliteDataSource(data_source_id="default")
-
-    try:
-        data_source.save_many(samples)
+        context.save_many(samples)
 
         sample_keys = [sample.get_key() for sample in samples]
-        loaded_records = [data_source.load_one(type(key), key) for key in sample_keys]
+        loaded_records = [context.load_one(type(key), key) for key in sample_keys]
 
         assert loaded_records == samples
-
-    finally:
-        data_source.delete_all()
 
 
 def test_basic_operations():
-    samples = [
-        StubDataclassRecord(id="abc1"),
-        StubDataclassNestedFields(primitive="abc2"),
-        StubDataclassDerivedRecord(id="abc3"),
-        StubDataclassDerivedFromDerivedRecord(id="abc4"),
-        StubDataclassOtherDerivedRecord(id="abc5"),
-        StubDataclassListFields(id="abc6"),
-        StubDataclassOptionalFields(id="abc7"),
-        StubDataclassDictFields(id="abc8"),
-        StubDataclassDictListFields(id="abc9"),
-        StubDataclassListDictFields(id="abc10"),
-        StubDataclassPrimitiveFields(key_str_field="abc11"),
-    ]
+    data_source_class = ClassInfo.get_class_path(SqliteDataSource)
+    with UnitTestContext(data_source_class=data_source_class) as context:
+        samples = [
+            StubDataclassRecord(id="abc1"),
+            StubDataclassNestedFields(primitive="abc2"),
+            StubDataclassDerivedRecord(id="abc3"),
+            StubDataclassDerivedFromDerivedRecord(id="abc4"),
+            StubDataclassOtherDerivedRecord(id="abc5"),
+            StubDataclassListFields(id="abc6"),
+            StubDataclassOptionalFields(id="abc7"),
+            StubDataclassDictFields(id="abc8"),
+            StubDataclassDictListFields(id="abc9"),
+            StubDataclassListDictFields(id="abc10"),
+            StubDataclassPrimitiveFields(key_str_field="abc11"),
+        ]
 
-    sample_keys = [x.get_key() for x in samples]
+        sample_keys = [x.get_key() for x in samples]
 
-    data_source = SqliteDataSource(data_source_id="default")
-
-    try:
         # Load from empty tables
-        loaded_records = [data_source.load_one(type(key), key) for key in sample_keys]
+        loaded_records = [context.load_one(type(key), key) for key in sample_keys]
         assert loaded_records == [None] * len(samples)
 
         # Populate tables
-        data_source.save_many(samples)
+        context.save_many(samples)
 
         # Load one by one for all keys because each type is different
-        loaded_records = [data_source.load_one(type(key), key) for key in sample_keys]
+        loaded_records = [context.load_one(type(key), key) for key in sample_keys]
         assert loaded_records == samples
 
         # Delete first and last record
-        data_source.delete_many([sample_keys[0], sample_keys[-1]])
-        loaded_records = [data_source.load_one(type(key), key) for key in sample_keys]
+        context.delete_many([sample_keys[0], sample_keys[-1]])
+        loaded_records = [context.load_one(type(key), key) for key in sample_keys]
         assert loaded_records == [None, *samples[1:-1], None]
 
         # Delete all records
-        data_source.delete_many(sample_keys)
-        loaded_records = [data_source.load_one(type(key), key) for key in sample_keys]
+        context.delete_many(sample_keys)
+        loaded_records = [context.load_one(type(key), key) for key in sample_keys]
         assert loaded_records == [None] * len(samples)
-
-    finally:
-        data_source.delete_all()
 
 
 def test_record_upsert():
-    data_source = SqliteDataSource(data_source_id="default")
-
-    try:
+    data_source_class = ClassInfo.get_class_path(SqliteDataSource)
+    with UnitTestContext(data_source_class=data_source_class) as context:
         # create sample and save
         sample = StubDataclassRecord()
-        data_source.save_one(sample)
-        loaded_record = data_source.load_one(StubDataclassRecord, sample.get_key())
+        context.save_one(sample)
+        loaded_record = context.load_one(StubDataclassRecord, sample.get_key())
         assert loaded_record == sample
 
         # create sample with the same key and save
         override_sample = StubDataclassDerivedRecord()
-        data_source.save_one(override_sample)
-        loaded_record = data_source.load_one(StubDataclassDerivedRecord, sample.get_key())
+        context.save_one(override_sample)
+        loaded_record = context.load_one(StubDataclassDerivedRecord, sample.get_key())
         assert loaded_record == override_sample
 
         override_sample = StubDataclassDerivedFromDerivedRecord()
-        data_source.save_one(override_sample)
-        loaded_record = data_source.load_one(StubDataclassDerivedFromDerivedRecord, sample.get_key())
+        context.save_one(override_sample)
+        loaded_record = context.load_one(StubDataclassDerivedFromDerivedRecord, sample.get_key())
         assert loaded_record == override_sample
-
-    finally:
-        data_source.delete_all()
 
 
 def test_load_all():
-    base_samples = [
-        StubDataclassRecord(id="base1"),
-        StubDataclassRecord(id="base2"),
-        StubDataclassRecord(id="base3"),
-    ]
+    data_source_class = ClassInfo.get_class_path(SqliteDataSource)
+    with UnitTestContext(data_source_class=data_source_class) as context:
+        base_samples = [
+            StubDataclassRecord(id="base1"),
+            StubDataclassRecord(id="base2"),
+            StubDataclassRecord(id="base3"),
+        ]
 
-    derived_samples = [
-        StubDataclassDerivedRecord(id="derived1"),
-        StubDataclassDerivedFromDerivedRecord(id="derived2"),
-    ]
+        derived_samples = [
+            StubDataclassDerivedRecord(id="derived1"),
+            StubDataclassDerivedFromDerivedRecord(id="derived2"),
+        ]
 
-    other_derived_samples = [
-        StubDataclassOtherDerivedRecord(id="derived3"),
-    ]
+        other_derived_samples = [
+            StubDataclassOtherDerivedRecord(id="derived3"),
+        ]
 
-    all_samples = base_samples + derived_samples + other_derived_samples
-    data_source = SqliteDataSource(data_source_id="default")
+        all_samples = base_samples + derived_samples + other_derived_samples
 
-    try:
-        data_source.save_many(all_samples)
+        context.save_many(all_samples)
 
-        loaded_records = data_source.load_all(StubDataclassRecord)
+        loaded_records = context.load_all(StubDataclassRecord)
         assert _assert_equals_iterable_without_ordering(all_samples, loaded_records)
 
-        loaded_records = data_source.load_all(StubDataclassDerivedRecord)
+        loaded_records = context.load_all(StubDataclassDerivedRecord)
         assert _assert_equals_iterable_without_ordering(derived_samples, loaded_records)
-
-    finally:
-        data_source.delete_all()
 
 
 @pytest.mark.skip("Performance test.")
 def test_performance():
-    n = 1000
-    samples = [StubDataclassPrimitiveFields(key_str_field=f"key{i}") for i in range(n)]
-    sample_keys = [sample.get_key() for sample in samples]
-    data_source = SqliteDataSource(data_source_id="default")
-    try:
+    data_source_class = ClassInfo.get_class_path(SqliteDataSource)
+    with UnitTestContext(data_source_class=data_source_class) as context:
+        n = 1000
+        samples = [StubDataclassPrimitiveFields(key_str_field=f"key{i}") for i in range(n)]
+        sample_keys = [sample.get_key() for sample in samples]
+
         print(f">>> Test stub type: {StubDataclassPrimitiveFields.__name__}, {n=}.")
         start_time = time.time()
-        data_source.save_many(samples)
+        context.save_many(samples)
         end_time = time.time()
 
         print(f"Save many bulk: {end_time - start_time}s.")
 
         start_time = time.time()
         for sample in samples:
-            data_source.save_one(sample)
+            context.save_one(sample)
         end_time = time.time()
         print(f"Save many one by one: {end_time - start_time}s.")
 
         start_time = time.time()
-        list(data_source.load_many(sample_keys))
+        list(context.load_many(sample_keys))
         end_time = time.time()
         print(f"Load many bulk: {end_time - start_time}s.")
 
         start_time = time.time()
         for key in sample_keys:
-            data_source.load_one(type(key), key)
+            context.load_one(type(key), key)
         end_time = time.time()
         print(f"Load many one by one: {end_time - start_time}s.")
 
-    finally:
-        data_source.delete_all()
-
 
 def test_singleton():
-    singleton_sample = StubDataclassSingleton()
-    data_source = SqliteDataSource(data_source_id="default")
-    try:
-        data_source.save_one(singleton_sample)
-        loaded_sample = data_source.load_one(StubDataclassSingleton, singleton_sample.get_key())
+    data_source_class = ClassInfo.get_class_path(SqliteDataSource)
+    with UnitTestContext(data_source_class=data_source_class) as context:
+        singleton_sample = StubDataclassSingleton()
+        context.save_one(singleton_sample)
+        loaded_sample = context.load_one(StubDataclassSingleton, singleton_sample.get_key())
         assert loaded_sample == singleton_sample
 
         other_singleton_sample = StubDataclassSingleton(str_field="other")
-        data_source.save_one(other_singleton_sample)
-        all_records = list(data_source.load_all(other_singleton_sample.__class__))
+        context.save_one(other_singleton_sample)
+        all_records = list(context.load_all(other_singleton_sample.__class__))
         assert len(all_records) == 1
         assert all_records[0] == other_singleton_sample
-
-    finally:
-        data_source.delete_all()
 
 
 if __name__ == "__main__":

@@ -32,6 +32,9 @@ class UnitTestContext(Context):
         - This module not itself import pytest or unittest package
     """
 
+    data_source_class: str | None = None
+    """Override for the data source class in module.ClassName format."""
+
     def __post_init__(self):
         """Configure fields that were not specified in constructor."""
 
@@ -56,9 +59,14 @@ class UnitTestContext(Context):
         log_type = ClassInfo.get_class_type(context_settings.log_class)
         self.log = log_type(log_id=self.context_id)
 
-        # Create a new data source for every test, set data_source_id to context_id
+        # Use data source class from settings unless this class provides an override
+        if self.data_source_class is not None:
+            data_source_class = self.data_source_class
+        else:
+            data_source_class = context_settings.data_source_class
 
-        data_source_type = ClassInfo.get_class_type(context_settings.data_source_class)
+        # Create a new data source for every test, set data_source_id to context_id
+        data_source_type = ClassInfo.get_class_type(data_source_class)
         self.data_source = data_source_type(data_source_id=self.context_id)
 
         # Root dataset
