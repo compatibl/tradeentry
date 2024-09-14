@@ -16,8 +16,9 @@ import logging
 from cl.runtime.context.context_key import ContextKey
 from cl.runtime.log.log_key import LogKey
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.protocols import KeyProtocol, is_key
+from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.records.protocols import is_key
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.storage.data_source_key import DataSourceKey
 from cl.runtime.storage.protocols import TRecord
@@ -83,8 +84,10 @@ class Context(ContextKey, RecordMixin[ContextKey]):
         if len(cls.__context_stack) > 0:
             return cls.__context_stack[-1]
         else:
-            raise RuntimeError("Current context is not set, use 'with' clause with a root context type to set." +
-                               root_context_types_str)
+            raise RuntimeError(
+                "Current context is not set, use 'with' clause with a root context type to set."
+                + root_context_types_str
+            )
 
     def __enter__(self):
         """Supports 'with' operator for resource disposal."""
@@ -261,10 +264,12 @@ class Context(ContextKey, RecordMixin[ContextKey]):
     def _root_context_field_not_set_error(self, field_name: str) -> None:
         """Error message about a Context field not set."""
         if type(self) is not Context:
-            raise RuntimeError(f"""
+            raise RuntimeError(
+                f"""
 Field '{field_name}' of the context class '{type(self).__name__}' is not set.
 The context in the outermost 'with' clause (root context) must set all fields
 of the Context class. Inside the 'with' clause, these fields will be populated
 from the current context.
 """
-                               + root_context_types_str)
+                + root_context_types_str
+            )

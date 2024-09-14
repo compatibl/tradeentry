@@ -17,7 +17,6 @@ from __future__ import annotations
 import os
 from abc import ABC
 from abc import abstractmethod
-
 from cl.runtime.testing.stack_util import StackUtil
 from dataclasses import MISSING
 from dataclasses import dataclass

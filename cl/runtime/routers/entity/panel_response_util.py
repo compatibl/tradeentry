@@ -14,9 +14,7 @@
 
 import ast
 import dataclasses
-
 from cl.runtime.context.context import Context
-
 from cl.runtime.routers.entity.panel_request import PanelRequest
 from cl.runtime.routers.response_util import to_legacy_dict
 from cl.runtime.routers.response_util import to_record_dict

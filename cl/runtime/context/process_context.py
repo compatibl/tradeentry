@@ -32,8 +32,9 @@ class ProcessContext(Context):
 
         # Check we are not inside a test
         if is_inside_test:
-            raise RuntimeError(f"'{type(self).__name__}' is used inside a test, "
-                               f"use '{UnitTestContext.__name__}' instead.")
+            raise RuntimeError(
+                f"'{type(self).__name__}' is used inside a test, " f"use '{UnitTestContext.__name__}' instead."
+            )
 
         # Get context settings
         context_settings = ContextSettings.instance()
