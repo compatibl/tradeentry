@@ -174,6 +174,10 @@ class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
         specified in Dynaconf data source settings ('DataSourceSettings' class).
         """
 
+    @abstractmethod
+    def close_connection(self) -> None:
+        """Close database connection to releasing resource locks."""
+
     @classmethod
     def default(cls) -> DataSource:
         """Default data source is initialized from settings and cannot be modified in code."""

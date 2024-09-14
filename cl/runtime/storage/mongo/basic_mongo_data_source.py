@@ -223,17 +223,24 @@ class BasicMongoDataSource(DataSource):
         client = self._get_client()
         client.drop_database(db_name)
 
+    def close_connection(self) -> None:
+        if (client := _client_dict.get(self.client_uri, None)) is not None:
+            # Close connection
+            client.close()
+            # Remove client from dictionary so connection can be reopened on next access
+            del _client_dict[self.client_uri]
+
     def _get_client(self) -> MongoClient:
         """Get PyMongo client object."""
-        if (result := _client_dict.get(self.client_uri, None)) is None:
+        if (client := _client_dict.get(self.client_uri, None)) is None:
             # Create if it does not exist
-            result = MongoClient(
+            client = MongoClient(
                 self.client_uri,
                 uuidRepresentation="standard",
             )
             # TODO: Implement dispose logic
-            _client_dict[self.client_uri] = result
-        return result
+            _client_dict[self.client_uri] = client
+        return client
 
     def _get_db(self) -> Database:
         """Get PyMongo database object."""

@@ -332,62 +332,38 @@ class SqliteDataSource(DataSource):
             connection.commit()
 
     def delete_all_and_drop(self) -> None:
-        # Check that data_source_id and db_name both match temp_db_prefix
+        # Check that data_source_id matches temp_db_prefix
         Context.error_if_not_temp_db(self.data_source_id)
-        # TODO: Enable when db_name is separate from data_source_id Context.error_if_not_temp_db(db_name)
-
-        # TODO: Replace by deleting DB file when DB files are separate
-        connection = self._get_connection()
-        # Run in a loop because of restrictions on deleting a table with foreign keys
-        while True:
-            # Delete tables
-            cursor = connection.cursor()
-            delete_all_tables = [
-                str(next(iter(x.values())))
-                for x in cursor.execute(
-                    "select 'drop table ' || name || ';' from sqlite_master where type = 'table';",
-                ).fetchall()
-            ]
-
-            for delete_statement in delete_all_tables:
-                cursor.execute(delete_statement)
-
-            # Delete indexes
-            delete_all_indexes = [
-                str(next(iter(x.values())))
-                for x in cursor.execute(
-                    "select 'drop index ' || name || ';' from sqlite_master where type = 'index';",
-                ).fetchall()
-            ]
-
-            for delete_statement in delete_all_indexes:
-                cursor.execute(delete_statement)
-
-            # Stop when nothing else to delete
-            if len(delete_all_tables) == 0 and len(delete_all_indexes) == 0:
-                break
 
         # Close connection
-        self._close_connection()
+        self.close_connection()
 
-        # TODO: Delete db file
+        # Check that filename also matches temp_db_prefix. It should normally match data_source_id
+        # we already checked, but given the critical importance of this check will check db_filename
+        # as well in case this approach changes later.
+        db_file_path = self._get_db_file()
+        db_filename = os.path.basename(db_file_path)
+        Context.error_if_not_temp_db(db_filename)
+
+        # Delete database file if exists, all checks gave been performed
+        if os.path.exists(db_file_path):
+            os.remove(db_file_path)
+
+    def close_connection(self) -> None:
+        if (connection := _connection_dict.get(id(self), None)) is not None:
+            connection.close()
+            del _connection_dict[id(self)]
+            pass
 
     def _get_connection(self) -> sqlite3.Connection:
         """Get PyMongo database object."""
-        if (result := _connection_dict.get(id(self), None)) is None:
+        if (connection := _connection_dict.get(id(self), None)) is None:
             # TODO: Implement dispose logic
             db_file = self._get_db_file()
-            result = sqlite3.connect(db_file, check_same_thread=False)
-            result.row_factory = dict_factory
-            _connection_dict[id(self)] = result
-        return result
-
-    def _close_connection(self) -> None:
-        """Get PyMongo database object."""
-        if (result := _connection_dict.get(id(self), None)) is not None:
-            # TODO: Restore when each pytest uses its own DB result.close()
-            # TODO: Restore when each pytest uses its own DB del _connection_dict[id(self)]
-            pass
+            connection = sqlite3.connect(db_file, check_same_thread=False)
+            connection.row_factory = dict_factory
+            _connection_dict[id(self)] = connection
+        return connection
 
     def _get_schema_manager(self) -> SqliteSchemaManager:
         """Get PyMongo database object."""
@@ -399,7 +375,7 @@ class SqliteDataSource(DataSource):
         return result
 
     def _get_db_file(self) -> str:
-        """Get database name from data_source_id, applying the appropriate formatting conventions."""
+        """Get database file path from data_source_id, applying the appropriate formatting conventions."""
 
         # Check that data_source_id is a valid filename
         filename = self.data_source_id
