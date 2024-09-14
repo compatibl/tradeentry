@@ -209,13 +209,14 @@ class SqliteDataSource(DataSource):
             data = {reversed_columns_mapping[k]: v for k, v in data.items() if v is not None}
             yield serializer.deserialize_data(data)
 
-    def load_by_query(
+    def load_filter(
         self,
-        query: TQuery,
+        record_type: Type[TRecord],
+        record_filter: TRecord,
         *,
         dataset: str | None = None,
         identity: str | None = None,
-    ) -> Iterable[RecordProtocol]:
+    ) -> Iterable[TRecord]:
         raise NotImplementedError()
 
     def save_one(

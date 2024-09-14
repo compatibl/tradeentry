@@ -38,7 +38,7 @@ class DataSourceProtocol(Protocol):
         Load a single record using a key (if a record is passed instead of a key, it is returned without DB lookup)
 
         Args:
-            record_type: Record type to load, error if the result does not match this type
+            record_type: Record type to load, error if the result is not this type or its subclass
             record_or_key: Record (returned without lookup) or key in object, tuple or string format
             dataset: If specified, append to the root dataset of the data source
             identity: Identity token for database access and row-level security
@@ -57,7 +57,7 @@ class DataSourceProtocol(Protocol):
         the result must have the same order as 'records_or_keys'.
 
         Args:
-            record_type: Record type to load, error if the result does not match this type
+            record_type: Record type to load, error if the result is not this type or its subclass
             records_or_keys: Records (returned without lookup) or keys in object, tuple or string format
             dataset: If specified, append to the root dataset of the data source
             identity: Identity token for database access and row-level security
@@ -79,20 +79,20 @@ class DataSourceProtocol(Protocol):
             identity: Identity token for database access and row-level security
         """
 
-    def load_by_query(
+    def load_filter(
         self,
-        query: TQuery,
+        record_type: Type[TRecord],
+        record_filter: TRecord,
         *,
         dataset: str | None = None,
         identity: str | None = None,
-    ) -> Iterable[RecordProtocol]:
+    ) -> Iterable[TRecord]:
         """
-        Load records based on the query.
+        Load records where values of those fields that are set in the filter match the filter.
 
         Args:
-            query: Tuple of (TYPE, CONDITIONS_DICT, ORDER_DICT) where TYPE and its descendants will be
-                returned by the query based on NoSQL query conditions and order in MongoDB format.
-                Keys in CONDITIONS_DICT and ORDER_DICT must match the fields of TYPE.
+            record_type: Record type to load, error if the result is not this type or its subclass
+            record_filter: Instance of 'record_type' whose fields are used for the query
             dataset: If specified, append to the root dataset of the data source
             identity: Identity token for database access and row-level security
         """

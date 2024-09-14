@@ -125,7 +125,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
 
     def get_logger(self, name: str) -> logging.Logger:
         """Get logger for the specified name, invoke with __name__ as the argument."""
-        return self.log.get_logger(name)
+        return self.log.get_logger(name)  # noqa
 
     def load_one(
         self,
@@ -139,12 +139,12 @@ class Context(ContextKey, RecordMixin[ContextKey]):
         Load a single record using a key (if a record is passed instead of a key, it is returned without DB lookup)
 
         Args:
-            record_type: Record type to load, error if the result does not match this type
+            record_type: Record type to load, error if the result is not this type or its subclass
             record_or_key: Record (returned without lookup) or key in object, tuple or string format
             dataset: If specified, append to the root dataset of the data source
             identity: Identity token for database access and row-level security
         """
-        return self.data_source.load_one(
+        return self.data_source.load_one(  # noqa
             record_type,
             record_or_key,
             dataset=dataset,
@@ -164,12 +164,12 @@ class Context(ContextKey, RecordMixin[ContextKey]):
         the result must have the same order as 'records_or_keys'.
 
         Args:
-            record_type: Record type to load, error if the result does not match this type
+            record_type: Record type to load, error if the result is not this type or its subclass
             records_or_keys: Records (returned without lookup) or keys in object, tuple or string format
             dataset: If specified, append to the root dataset of the data source
             identity: Identity token for database access and row-level security
         """
-        return self.data_source.load_many(
+        return self.data_source.load_many(  # noqa
             record_type,
             records_or_keys,
             dataset=dataset,
@@ -191,8 +191,32 @@ class Context(ContextKey, RecordMixin[ContextKey]):
             dataset: If specified, append to the root dataset of the data source
             identity: Identity token for database access and row-level security
         """
-        return self.data_source.load_all(
+        return self.data_source.load_all(  # noqa
             record_type,
+            dataset=dataset,
+            identity=identity,
+        )
+
+    def load_filter(
+        self,
+        record_type: Type[TRecord],
+        record_filter: TRecord,
+        *,
+        dataset: str | None = None,
+        identity: str | None = None,
+    ) -> Iterable[TRecord]:
+        """
+        Load records where values of those fields that are set in the filter match the filter.
+
+        Args:
+            record_type: Record type to load, error if the result is not this type or its subclass
+            record_filter: Instance of 'record_type' whose fields are used for the query
+            dataset: If specified, append to the root dataset of the data source
+            identity: Identity token for database access and row-level security
+        """
+        return self.data_source.load_filter(  # noqa
+            record_type,
+            record_filter,
             dataset=dataset,
             identity=identity,
         )
@@ -212,7 +236,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
             dataset: Target dataset as a delimited string, list of levels, or None
             identity: Identity token for database access and row-level security
         """
-        self.data_source.save_one(
+        self.data_source.save_one(  # noqa
             record,
             dataset=dataset,
             identity=identity,
@@ -233,7 +257,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
             dataset: Target dataset as a delimited string, list of levels, or None
             identity: Identity token for database access and row-level security
         """
-        self.data_source.save_many(
+        self.data_source.save_many(  # noqa
             records,
             dataset=dataset,
             identity=identity,
@@ -254,7 +278,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
             dataset: Target dataset as a delimited string, list of levels, or None
             identity: Identity token for database access and row-level security
         """
-        self.data_source.delete_many(
+        self.data_source.delete_many(  # noqa
             keys,
             dataset=dataset,
             identity=identity,

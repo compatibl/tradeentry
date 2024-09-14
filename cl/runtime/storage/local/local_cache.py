@@ -95,14 +95,14 @@ class LocalCache:
     ) -> Iterable[TRecord | None] | None:
         raise NotImplementedError()
 
-    def load_by_query(
+    def load_filter(
         self,
-        query: TQuery,
+        record_type: Type[TRecord],
+        record_filter: TRecord,
         *,
         dataset: str | None = None,
         identity: str | None = None,
-    ) -> Iterable[RecordProtocol]:
-        # Validate the dataset and if necessary convert to delimited string
+    ) -> Iterable[TRecord]:
         raise NotImplementedError()
 
     def save_one(

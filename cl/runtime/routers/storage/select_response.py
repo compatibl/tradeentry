@@ -59,7 +59,7 @@ class SelectResponse(BaseModel):
         # Get data source from the current context
         data_source = Context.current().data_source
 
-        # TODO (Roman): replace temporary load_all to load_by_query
+        # TODO (Roman): replace temporary load_all to load_filter
         if not hasattr(data_source, "load_all"):
             raise RuntimeError(
                 f"Currently data source need to implement load_all() method for select records by type. "
