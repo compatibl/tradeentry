@@ -137,15 +137,14 @@ class DataSourceProtocol(Protocol):
         identity: str | None = None,
     ) -> None:
         """
-        Delete records using an iterable of keys.
+        IMPORTANT: !!! DESTRUCTIVE - THIS WILL PERMANENTLY DELETE ALL RECORDS WITHOUT THE POSSIBILITY OF RECOVERY
 
-        Args:
-            keys: Iterable of keys.
-            dataset: Target dataset as a delimited string, list of levels, or None
-            identity: Identity token for database access and row-level security
+        Notes:
+            This method will not run unless both data_source_id and database start with 'temp_db_prefix'
+            specified using Dynaconf and stored in 'DataSourceSettings' class
         """
 
-    def delete_all_and_drop(self) -> None:
+    def delete_all_and_drop_db(self) -> None:
         """
         IMPORTANT: THIS WILL PERMANENTLY DELETE ALL RECORDS WITHOUT THE POSSIBILITY OF RECOVERY,
         unless stopped due to either data_source_id or database name not matching 'temp_db_prefix'

@@ -330,7 +330,7 @@ class SqliteDataSource(DataSource):
             cursor.execute(sql_statement, query_values)
             connection.commit()
 
-    def delete_all_and_drop(self) -> None:
+    def delete_all_and_drop_db(self) -> None:
         # Check that data_source_id matches temp_db_prefix
         Context.error_if_not_temp_db(self.data_source_id)
 

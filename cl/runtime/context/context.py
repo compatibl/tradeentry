@@ -283,15 +283,17 @@ class Context(ContextKey, RecordMixin[ContextKey]):
             identity=identity,
         )
 
-    def delete_all_and_drop(self) -> None:
+    def delete_all_and_drop_db(self) -> None:
         """
-        IMPORTANT: THIS WILL PERMANENTLY DELETE ALL RECORDS WITHOUT THE POSSIBILITY OF RECOVERY,
-        unless stopped due to either data_source_id or database name not matching 'temp_db_prefix'
-        specified in Dynaconf data source settings ('DataSourceSettings' class).
+        IMPORTANT: !!! DESTRUCTIVE - THIS WILL PERMANENTLY DELETE ALL RECORDS WITHOUT THE POSSIBILITY OF RECOVERY
+
+        Notes:
+            This method will not run unless both data_source_id and database start with 'temp_db_prefix'
+            specified using Dynaconf and stored in 'DataSourceSettings' class
         """
         # Additional check in context in case a custom data source implementation does not check it
         self.error_if_not_temp_db(self.data_source.data_source_id)
-        self.data_source.delete_all_and_drop()  # noqa
+        self.data_source.delete_all_and_drop_db()  # noqa
 
     def _root_context_field_not_set_error(self, field_name: str) -> None:
         """Error message about a Context field not set."""

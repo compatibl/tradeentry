@@ -82,7 +82,7 @@ class UnitTestContext(Context):
         if not self.is_deserialized:
             # Delete all existing data in temp data source and drop DB in case it was not cleaned up
             # due to abnormal termination of the previous test run
-            self.data_source.delete_all_and_drop()  # noqa
+            self.data_source.delete_all_and_drop_db()  # noqa
 
         return self
 
@@ -92,7 +92,7 @@ class UnitTestContext(Context):
         # Do not execute this code on deserialized context instances (e.g. when they are passed to a task queue)
         if not self.is_deserialized:
             # Delete all data in temp data source and drop DB to clean up
-            self.data_source.delete_all_and_drop()  # noqa
+            self.data_source.delete_all_and_drop_db()  # noqa
 
         # Call '__exit__' method of base last
         return Context.__exit__(self, exc_type, exc_val, exc_tb)

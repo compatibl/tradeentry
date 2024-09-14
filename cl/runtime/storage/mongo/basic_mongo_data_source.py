@@ -237,7 +237,7 @@ class BasicMongoDataSource(DataSource):
         # Validate the dataset and if necessary convert to delimited string
         raise NotImplementedError()
 
-    def delete_all_and_drop(self) -> None:
+    def delete_all_and_drop_db(self) -> None:
         # Check that data_source_id and db_name both match temp_db_prefix
         db_name = self._get_db_name()
         Context.error_if_not_temp_db(self.data_source_id)
