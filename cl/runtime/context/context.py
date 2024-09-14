@@ -50,8 +50,8 @@ class Context(ContextKey, RecordMixin[ContextKey]):
     dataset: str = missing()
     """Dataset of the context, 'Context.current().dataset' is used if not specified."""
 
-    is_constructed: bool = False  # TODO: Replace by skipping __post_init__ in deserializer
-    """The '__post_init__' method uses this flag to determine if the object is already constructed."""
+    is_deserialized: bool = False
+    """Use this flag to determine if this context instance has been deserialized from data."""
 
     __context_stack: ClassVar[List["Context"]] = []  # TODO: Set using ContextVars
     """New current context is pushed to the context stack using 'with Context(...)' clause."""
@@ -59,22 +59,19 @@ class Context(ContextKey, RecordMixin[ContextKey]):
     def __post_init__(self):
         """Set fields to their values in 'Context.current()' if not specified."""
 
-        # Use is_constructed flag to present invoking __post_init__ in deserializer when the fields are already set
-        if self.is_constructed:
-            return
-        else:
-            self.is_constructed = True
+        # Do not execute this code on deserialized context instances (e.g. when they are passed to a task queue)
+        if not self.is_deserialized:
 
-        # Set fields that are not specified to their values from 'Context.current()'
-        if self.log is None:
-            self._root_context_field_not_set_error("log")
-            self.log = Context.current().log
-        if self.data_source is None:
-            self._root_context_field_not_set_error("data_source")
-            self.data_source = Context.current().data_source
-        if self.dataset is None:
-            self._root_context_field_not_set_error("dataset")
-            self.dataset = Context.current().dataset
+            # Set fields that are not specified to their values from 'Context.current()'
+            if self.log is None:
+                self._root_context_field_not_set_error("log")
+                self.log = Context.current().log
+            if self.data_source is None:
+                self._root_context_field_not_set_error("data_source")
+                self.data_source = Context.current().data_source
+            if self.dataset is None:
+                self._root_context_field_not_set_error("dataset")
+                self.dataset = Context.current().dataset
 
         # Replace fields that are set as keys by records from storage
         # First, load 'data_source' field of this context using 'Context.current()'

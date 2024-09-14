@@ -38,39 +38,61 @@ class UnitTestContext(Context):
     def __post_init__(self):
         """Configure fields that were not specified in constructor."""
 
-        # Check if the object is being deserialized, in which case fields should be obtained from serialized data
-        if self.is_constructed:
-            return
-        else:
-            self.is_constructed = True
+        # Do not execute this code on deserialized context instances (e.g. when they are passed to a task queue)
+        if not self.is_deserialized:
 
-        # Confirm we are inside a test, error otherwise
-        if not is_inside_test:
-            raise RuntimeError(f"UnitTestContext created outside a test.")
+            # Confirm we are inside a test, error otherwise
+            if not is_inside_test:
+                raise RuntimeError(f"UnitTestContext created outside a test.")
 
-        # Get test name in 'module.test_function' or 'module.TestClass.test_method' format inside a test
-        context_settings = ContextSettings.instance()
-        test_name = UnitTestUtil.get_test_name()
+            # Get test name in 'module.test_function' or 'module.TestClass.test_method' format inside a test
+            context_settings = ContextSettings.instance()
+            test_name = UnitTestUtil.get_test_name()
 
-        # Use test name in dot-delimited format for context_id
-        self.context_id = test_name
+            # Use test name in dot-delimited format for context_id
+            self.context_id = test_name
 
-        # TODO: Set log field here explicitly instead of relying on implicit detection of test environment
-        log_type = ClassInfo.get_class_type(context_settings.log_class)
-        self.log = log_type(log_id=self.context_id)
+            # TODO: Set log field here explicitly instead of relying on implicit detection of test environment
+            log_type = ClassInfo.get_class_type(context_settings.log_class)
+            self.log = log_type(log_id=self.context_id)
 
-        # Use data source class from settings unless this class provides an override
-        if self.data_source_class is not None:
-            data_source_class = self.data_source_class
-        else:
-            data_source_class = context_settings.data_source_class
+            # Use data source class from settings unless this class provides an override
+            if self.data_source_class is not None:
+                data_source_class = self.data_source_class
+            else:
+                data_source_class = context_settings.data_source_class
 
-        # Use 'temp' followed by test name converted to semicolon-delimited format for data_source_id
-        data_source_id = "temp;" + test_name.replace(".", ";")
+            # Use 'temp' followed by test name converted to semicolon-delimited format for data_source_id
+            data_source_id = "temp;" + test_name.replace(".", ";")
 
-        # Instantiate a new data source object for every test
-        data_source_type = ClassInfo.get_class_type(data_source_class)
-        self.data_source = data_source_type(data_source_id=data_source_id)
+            # Instantiate a new data source object for every test
+            data_source_type = ClassInfo.get_class_type(data_source_class)
+            self.data_source = data_source_type(data_source_id=data_source_id)
 
-        # Root dataset
-        self.dataset = DatasetUtil.root()
+            # Root dataset
+            self.dataset = DatasetUtil.root()
+
+    def __enter__(self):
+        """Supports 'with' operator for resource disposal."""
+
+        # Call '__enter__' method of base first
+        Context.__enter__(self)
+
+        # Do not execute this code on deserialized context instances (e.g. when they are passed to a task queue)
+        if not self.is_deserialized:
+            # Delete all existing data in temp data source and drop DB in case it was not cleaned up
+            # due to abnormal termination of the previous test run
+            self.data_source.delete_all_and_drop()  # noqa
+
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Supports 'with' operator for resource disposal."""
+
+        # Do not execute this code on deserialized context instances (e.g. when they are passed to a task queue)
+        if not self.is_deserialized:
+            # Delete all data in temp data source and drop DB to clean up
+            self.data_source.delete_all_and_drop()  # noqa
+
+        # Call '__exit__' method of base last
+        return Context.__exit__(self, exc_type, exc_val, exc_tb)

@@ -30,31 +30,28 @@ class ProcessContext(Context):
     def __post_init__(self):
         """Configure context."""
 
-        # Check if the object is being deserialized, in which case fields should be obtained from serialized data
-        if self.is_constructed:
-            return
-        else:
-            self.is_constructed = True
+        # Do not execute this code on deserialized context instances (e.g. when they are passed to a task queue)
+        if not self.is_deserialized:
 
-        # Confirm we are not inside a test, error otherwise
-        if is_inside_test:
-            raise RuntimeError(
-                f"'{type(self).__name__}' is used inside a test, " f"use '{UnitTestContext.__name__}' instead."
-            )
+            # Confirm we are not inside a test, error otherwise
+            if is_inside_test:
+                raise RuntimeError(
+                    f"'{type(self).__name__}' is used inside a test, " f"use '{UnitTestContext.__name__}' instead."
+                )
 
-        # Get context settings
-        context_settings = ContextSettings.instance()
+            # Get context settings
+            context_settings = ContextSettings.instance()
 
-        # Use data_source_id from settings for context_id
-        self.context_id = context_settings.data_source_id
+            # Use data_source_id from settings for context_id
+            self.context_id = context_settings.data_source_id
 
-        # Create the log class specified in settings
-        log_type = ClassInfo.get_class_type(context_settings.log_class)
-        self.log = log_type(log_id=self.context_id)
+            # Create the log class specified in settings
+            log_type = ClassInfo.get_class_type(context_settings.log_class)
+            self.log = log_type(log_id=self.context_id)
 
-        # Create the data source class specified in settings
-        data_source_type = ClassInfo.get_class_type(context_settings.data_source_class)
-        self.data_source = data_source_type(data_source_id=self.context_id)
+            # Create the data source class specified in settings
+            data_source_type = ClassInfo.get_class_type(context_settings.data_source_class)
+            self.data_source = data_source_type(data_source_id=self.context_id)
 
-        # Root dataset
-        self.dataset = DatasetUtil.root()
+            # Root dataset
+            self.dataset = DatasetUtil.root()

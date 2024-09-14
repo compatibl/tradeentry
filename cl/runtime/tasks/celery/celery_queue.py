@@ -63,6 +63,9 @@ def execute_task(
 ) -> None:
     """Invoke execute method of the specified task."""
 
+    # Set is_deserialized flag in context data, will be used to skip some of the initialization code
+    context_data["is_deserialized"] = True
+
     # Deserialize context from 'context_data' parameter to run with the same settings as the caller context
     with context_serializer.deserialize_data(context_data) as context:
         # Get timestamp from task_run_id
