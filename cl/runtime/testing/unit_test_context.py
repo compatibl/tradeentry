@@ -47,10 +47,11 @@ class UnitTestContext(Context):
 
             # Get test name in 'module.test_function' or 'module.TestClass.test_method' format inside a test
             context_settings = ContextSettings.instance()
-            test_name = UnitTestUtil.get_test_name()
 
-            # Use test name in dot-delimited format for context_id
-            self.context_id = test_name
+            # Use test name in dot-delimited format for context_id unless specified by the caller
+            if self.context_id is None:
+                test_name = UnitTestUtil.get_test_name()
+                self.context_id = test_name
 
             # TODO: Set log field here explicitly instead of relying on implicit detection of test environment
             log_type = ClassInfo.get_class_type(context_settings.log_class)
@@ -62,8 +63,8 @@ class UnitTestContext(Context):
             else:
                 data_source_class = context_settings.data_source_class
 
-            # Use 'temp' followed by test name converted to semicolon-delimited format for data_source_id
-            data_source_id = "temp;" + test_name.replace(".", ";")
+            # Use 'temp' followed by context_id converted to semicolon-delimited format for data_source_id
+            data_source_id = "temp;" + self.context_id.replace(".", ";")
 
             # Instantiate a new data source object for every test
             data_source_type = ClassInfo.get_class_type(data_source_class)
