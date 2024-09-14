@@ -30,7 +30,13 @@ class ProcessContext(Context):
     def __post_init__(self):
         """Configure context."""
 
-        # Check we are not inside a test
+        # Check if the object is being deserialized, in which case fields should be obtained from serialized data
+        if self.is_constructed:
+            return
+        else:
+            self.is_constructed = True
+
+        # Confirm we are not inside a test, error otherwise
         if is_inside_test:
             raise RuntimeError(
                 f"'{type(self).__name__}' is used inside a test, " f"use '{UnitTestContext.__name__}' instead."

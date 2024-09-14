@@ -33,9 +33,15 @@ class UnitTestContext(Context):
     """
 
     def __post_init__(self):
-        """Configure context for use inside a test runner (all fields must be set, error otherwise)."""
+        """Configure fields that were not specified in constructor."""
 
-        # Check we are inside a test
+        # Check if the object is being deserialized, in which case fields should be obtained from serialized data
+        if self.is_constructed:
+            return
+        else:
+            self.is_constructed = True
+
+        # Confirm we are inside a test, error otherwise
         if not is_inside_test:
             raise RuntimeError(f"UnitTestContext created outside a test.")
 

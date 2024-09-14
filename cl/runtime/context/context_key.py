@@ -23,7 +23,7 @@ class ContextKey(KeyMixin):
     """Polymorphic data storage with dataset isolation."""
 
     context_id: str = missing()
-    """Context identifier will be set to data_source.data_source_id in __post_init__ if not specified."""
+    """Unique context identifier."""
 
     @classmethod
     def get_key_type(cls) -> Type:

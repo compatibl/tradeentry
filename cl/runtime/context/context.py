@@ -40,9 +40,6 @@ The following root context types can be used in the outermost 'with' clause:
 class Context(ContextKey, RecordMixin[ContextKey]):
     """Protocol implemented by context objects providing logging, data source, dataset, and progress reporting."""
 
-    __context_stack: ClassVar[List["Context"]] = []  # TODO: Set using ContextVars
-    """New current context is pushed to the context stack using 'with Context(...)' clause."""
-
     log: LogKey = missing()
     """Log of the context, 'Context.current().log' is used if not specified."""
 
@@ -52,8 +49,20 @@ class Context(ContextKey, RecordMixin[ContextKey]):
     dataset: str = missing()
     """Dataset of the context, 'Context.current().dataset' is used if not specified."""
 
+    is_constructed: bool = False  # TODO: Replace by skipping __post_init__ in deserializer
+    """The '__post_init__' method uses this flag to determine if the object is already constructed."""
+
+    __context_stack: ClassVar[List["Context"]] = []  # TODO: Set using ContextVars
+    """New current context is pushed to the context stack using 'with Context(...)' clause."""
+
     def __post_init__(self):
         """Set fields to their values in 'Context.current()' if not specified."""
+
+        # Use is_constructed flag to present invoking __post_init__ in deserializer when the fields are already set
+        if self.is_constructed:
+            return
+        else:
+            self.is_constructed = True
 
         # Set fields that are not specified to their values from 'Context.current()'
         if self.log is None:
