@@ -61,8 +61,10 @@ server_app.include_router(tasks_router.router, prefix="/tasks", tags=["Tasks"])
 
 if __name__ == "__main__":
     with ProcessContext():
-        # Start Celery workers (will exit when the current process exits)
+        # TODO: This only works for the Mongo celery backend
         celery_delete_existing_tasks()
+
+        # Start Celery workers (will exit when the current process exits)
         celery_start_queue()
 
         # TODO: Temporary workaround before full configuration workflow is supported
