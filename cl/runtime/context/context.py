@@ -22,7 +22,8 @@ from cl.runtime.records.protocols import is_key
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.storage.data_source_key import DataSourceKey
-from cl.runtime.storage.protocols import TRecord, TKey
+from cl.runtime.storage.protocols import TKey
+from cl.runtime.storage.protocols import TRecord
 from dataclasses import dataclass
 from typing import ClassVar
 from typing import Iterable

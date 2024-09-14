@@ -19,7 +19,8 @@ from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.dataset_util import DatasetUtil
-from cl.runtime.storage.protocols import TRecord, TKey
+from cl.runtime.storage.protocols import TKey
+from cl.runtime.storage.protocols import TRecord
 from dataclasses import dataclass
 from dataclasses import field
 from typing import ClassVar

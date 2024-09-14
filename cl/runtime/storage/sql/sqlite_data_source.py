@@ -22,7 +22,8 @@ from cl.runtime.records.protocols import is_key
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
 from cl.runtime.settings.settings import Settings
 from cl.runtime.storage.data_source import DataSource
-from cl.runtime.storage.protocols import TRecord, TKey
+from cl.runtime.storage.protocols import TKey
+from cl.runtime.storage.protocols import TRecord
 from cl.runtime.storage.sql.sqlite_schema_manager import SqliteSchemaManager
 from collections import defaultdict
 from dataclasses import dataclass

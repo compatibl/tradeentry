@@ -24,7 +24,8 @@ from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.mongo.mongo_filter_serializer import MongoFilterSerializer
-from cl.runtime.storage.protocols import TRecord, TKey
+from cl.runtime.storage.protocols import TKey
+from cl.runtime.storage.protocols import TRecord
 from dataclasses import dataclass
 from itertools import groupby
 from pymongo import MongoClient
