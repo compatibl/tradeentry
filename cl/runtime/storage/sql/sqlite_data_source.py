@@ -22,7 +22,6 @@ from cl.runtime.records.protocols import is_key
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
 from cl.runtime.settings.settings import Settings
 from cl.runtime.storage.data_source import DataSource
-from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.protocols import TRecord, TKey
 from cl.runtime.storage.sql.sqlite_schema_manager import SqliteSchemaManager
 from collections import defaultdict
@@ -34,11 +33,11 @@ from typing import Iterable
 from typing import Tuple
 from typing import Type
 
-_connection_dict: Dict[int, sqlite3.Connection] = {}
-"""Dict of Connection instances with id(data_source) key stored outside the class to avoid serializing them."""
+_connection_dict: Dict[str, sqlite3.Connection] = {}
+"""Dict of Connection instances with data_source_id key stored outside the class to avoid serialization."""
 
-_schema_manager_dict: Dict[int, SqliteSchemaManager] = {}
-"""Dict of SqliteSchemaManager instances with id(data_source) key stored outside the class to avoid serializing them."""
+_schema_manager_dict: Dict[str, SqliteSchemaManager] = {}
+"""Dict of SqliteSchemaManager instances with data_source_id key key stored outside the class to avoid serialization."""
 
 
 def dict_factory(cursor, row):
@@ -359,28 +358,31 @@ class SqliteDataSource(DataSource):
             os.remove(db_file_path)
 
     def close_connection(self) -> None:
-        if (connection := _connection_dict.get(id(self), None)) is not None:
+        if (connection := _connection_dict.get(self.data_source_id, None)) is not None:
+            # Close connection
             connection.close()
-            del _connection_dict[id(self)]
+            # Remove from dictionary so connection can be reopened on next access
+            del _connection_dict[self.data_source_id]
+            del _schema_manager_dict[self.data_source_id]
             pass
 
     def _get_connection(self) -> sqlite3.Connection:
         """Get PyMongo database object."""
-        if (connection := _connection_dict.get(id(self), None)) is None:
+        if (connection := _connection_dict.get(self.data_source_id, None)) is None:
             # TODO: Implement dispose logic
             db_file = self._get_db_file()
             connection = sqlite3.connect(db_file, check_same_thread=False)
             connection.row_factory = dict_factory
-            _connection_dict[id(self)] = connection
+            _connection_dict[self.data_source_id] = connection
         return connection
 
     def _get_schema_manager(self) -> SqliteSchemaManager:
         """Get PyMongo database object."""
-        if (result := _schema_manager_dict.get(id(self), None)) is None:
+        if (result := _schema_manager_dict.get(self.data_source_id, None)) is None:
             # TODO: Implement dispose logic
             connection = self._get_connection()
             result = SqliteSchemaManager(sqlite_connection=connection)
-            _schema_manager_dict[id(self)] = result
+            _schema_manager_dict[self.data_source_id] = result
         return result
 
     def _get_db_file(self) -> str:
