@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import re
 import pymongo
 from bson import UuidRepresentation
 from cl.runtime.context.context import Context
@@ -32,6 +33,12 @@ from typing import Dict
 from typing import Iterable
 from typing import Type
 from typing import cast
+
+invalid_db_name_symbols = r'/\\. "$*<>:|?'
+"""Invalid MongoDB database name symbols."""
+
+invalid_db_name_regex = re.compile(f"[{invalid_db_name_symbols}]")
+"""Precompiled regex to check for invalid MongoDB database name symbols."""
 
 # TODO: Revise and consider making fields of the data source
 # TODO: Review and consider alternative names, e.g. DataSerializer or RecordSerializer
@@ -241,9 +248,24 @@ class BasicMongoDataSource(DataSource):
         return result
 
     def _get_db_name(self) -> str:
-        """Get PyMongo database name from data_source_id, applying the appropriate formatting conventions."""
-        result = self.data_source_id.replace(".", ";")
-        db_name_bytes = len(result.encode("utf-8"))
-        if db_name_bytes >= 64:
-            raise RuntimeError(f"MongoDB does not support DB name {result} because it has {db_name_bytes}>=64 bytes.")
+        """Database is from data_source_id, check validity before returning."""
+        result = self.data_source_id
+        self.check_data_source_id(result)
         return result
+
+    @classmethod
+    def check_data_source_id(cls, data_source_id: str) -> None:
+        """Check that data_source_id follows MongoDB database name restrictions, error message otherwise."""
+
+        # Check for invalid characters in MongoDB name
+        if invalid_db_name_regex.search(data_source_id):
+            raise RuntimeError(f"MongoDB data_source_id='{data_source_id}' is not valid because it contains "
+                               f"special characters from this list: {invalid_db_name_symbols}")
+
+        # Check for maximum byte length of less than 64 (use Unicode bytes, not string chars to count)
+        max_bytes = 63
+        actual_bytes = len(data_source_id.encode("utf-8"))
+        if actual_bytes > max_bytes:
+            raise RuntimeError(f"MongoDB does not support data_source_id='{data_source_id}' because "
+                               f"it has {actual_bytes} bytes, exceeding the maximum of {max_bytes}.")
+

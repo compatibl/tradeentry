@@ -16,6 +16,7 @@ import os
 import sqlite3
 
 from cl.runtime.context.context import Context
+from cl.runtime.file.file_util import FileUtil
 
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
@@ -398,10 +399,14 @@ class SqliteDataSource(DataSource):
         return result
 
     def _get_db_file(self) -> str:
-        """Get PyMongo database name from data_source_id, applying the appropriate formatting conventions."""
-        filename = self.data_source_id.replace(".", ";")
+        """Get database name from data_source_id, applying the appropriate formatting conventions."""
+
+        # Check that data_source_id is a valid filename
+        filename = self.data_source_id
+        FileUtil.check_valid_filename(filename)
+
         project_root = Settings.get_project_root()
-        db_dir = os.path.join(project_root, "db")
+        db_dir = os.path.join(project_root, "databases")
         if not os.path.exists(db_dir):
             # Create the directory if does not exist
             os.makedirs(db_dir)

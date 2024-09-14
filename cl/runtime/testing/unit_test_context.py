@@ -52,7 +52,7 @@ class UnitTestContext(Context):
         context_settings = ContextSettings.instance()
         test_name = UnitTestUtil.get_test_name()
 
-        # Use test name for context_id
+        # Use test name in dot-delimited format for context_id
         self.context_id = test_name
 
         # TODO: Set log field here explicitly instead of relying on implicit detection of test environment
@@ -65,9 +65,12 @@ class UnitTestContext(Context):
         else:
             data_source_class = context_settings.data_source_class
 
-        # Create a new data source for every test, set data_source_id to context_id
+        # Use 'temp' followed by test name converted to semicolon-delimited format for data_source_id
+        data_source_id = "temp;" + test_name.replace(".", ";")
+
+        # Instantiate a new data source object for every test
         data_source_type = ClassInfo.get_class_type(data_source_class)
-        self.data_source = data_source_type(data_source_id=self.context_id)
+        self.data_source = data_source_type(data_source_id=data_source_id)
 
         # Root dataset
         self.dataset = DatasetUtil.root()
