@@ -167,10 +167,11 @@ class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
         """
 
     @abstractmethod
-    def delete_all(self) -> None:
+    def delete_all_and_drop(self) -> None:
         """
-        Permanently delete (drop) the database without the possibility of recovery.
-        Error if data source identifier does not match the temp_db pattern in settings.
+        IMPORTANT: THIS WILL PERMANENTLY DELETE ALL RECORDS WITHOUT THE POSSIBILITY OF RECOVERY,
+        unless stopped due to either data_source_id or database name not matching 'temp_db_prefix'
+        specified in Dynaconf data source settings ('DataSourceSettings' class).
         """
 
     @classmethod
@@ -185,3 +186,4 @@ class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
             DataSource.__default = data_source_type(data_source_id=context_settings.data_source_id)
 
         return DataSource.__default
+

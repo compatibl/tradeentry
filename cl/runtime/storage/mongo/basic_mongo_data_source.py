@@ -12,7 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import pymongo
 from bson import UuidRepresentation
+from cl.runtime.context.context import Context
+
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
@@ -35,8 +38,11 @@ from typing import cast
 data_serializer = DictSerializer()
 key_serializer = StringSerializer()
 
-_db_dict: Dict[int, Database] = {}
-"""Dict of Database instances with id(data_source) key stored outside the class to avoid serializing them."""
+_client_dict: Dict[str, MongoClient] = {}
+"""Dict of MongoClient instances with client_uri key stored outside the class to avoid serializing them."""
+
+_db_dict: Dict[str, Database] = {}
+"""Dict of Database instances with client_uri.database_name key stored outside the class to avoid serializing them."""
 
 
 @dataclass(slots=True, kw_only=True)
@@ -199,21 +205,39 @@ class BasicMongoDataSource(DataSource):
         # Validate the dataset and if necessary convert to delimited string
         raise NotImplementedError()
 
-    def delete_all(self) -> None:
-        raise NotImplementedError()
+    def delete_all_and_drop(self) -> None:
+        # Check that data_source_id and db_name both match temp_db_prefix
+        db_name = self._get_db_name()
+        Context.error_if_not_temp_db(self.data_source_id)
+        Context.error_if_not_temp_db(db_name)
 
-    def _get_db(self) -> Database:
-        """Get PyMongo database object."""
-        if (result := _db_dict.get(id(self), None)) is None:
+        # Drop the entire database without possibility of recovery, this
+        # relies on the temp_db_prefix check above to prevent unintended use
+        client = self._get_client()
+        client.drop_database(db_name)
+
+    def _get_client(self) -> MongoClient:
+        """Get PyMongo client object."""
+        if (result := _client_dict.get(self.client_uri, None)) is None:
             # Create if it does not exist
-            client = MongoClient(
+            result = MongoClient(
                 self.client_uri,
                 uuidRepresentation="standard",
             )
             # TODO: Implement dispose logic
-            db_name = self._get_db_name()
+            _client_dict[self.client_uri] = result
+        return result
+
+    def _get_db(self) -> Database:
+        """Get PyMongo database object."""
+        db_name = self._get_db_name()
+        db_key = f"{self.client_uri}.{db_name}"
+        if (result := _db_dict.get(db_key, None)) is None:
+            # Create if it does not exist
+            client = self._get_client()
+            # TODO: Implement dispose logic
             result = client[db_name]
-            _db_dict[id(self)] = result
+            _db_dict[db_key] = result
         return result
 
     def _get_db_name(self) -> str:

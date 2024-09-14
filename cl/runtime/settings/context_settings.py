@@ -24,7 +24,7 @@ class ContextSettings(Settings):
     packages: List[str]
     """List of packages to load in dot-delimited module prefix format, for example 'cl.runtime'."""
 
-    log_class: str = "cl.runtime.log.file.file_log.FileLog"
+    log_class: str = "cl.runtime.log.file.file_log.FileLog"   # TODO: Deprecated, switch to class-specific fields
     """Default log class in module.ClassName format."""
 
     data_source_class: str  # TODO: Deprecated, switch to class-specific fields
@@ -32,6 +32,12 @@ class ContextSettings(Settings):
 
     data_source_id: str
     """Default data source identifier, if 'data_source_class' is a key it will be obtained from preloads."""
+
+    data_source_temp_db_prefix: str = "temp;"
+    """
+    IMPORTANT: DELETING ALL RECORDS AND DROPPING THE DATABASE FROM CODE IS PERMITTED
+    when both data_source_id and database name start with this prefix.
+    """
 
     def __post_init__(self):
         """Perform validation and type conversions."""

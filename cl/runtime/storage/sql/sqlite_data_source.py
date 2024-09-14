@@ -14,6 +14,9 @@
 
 import os
 import sqlite3
+
+from cl.runtime.context.context import Context
+
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key
@@ -327,9 +330,14 @@ class SqliteDataSource(DataSource):
             cursor.execute(sql_statement, query_values)
             connection.commit()
 
-    def delete_all(self) -> None:
-        # Run in a loop because tables that depend on a foreign key can not be deleted before related tables
+    def delete_all_and_drop(self) -> None:
+        # Check that data_source_id and db_name both match temp_db_prefix
+        Context.error_if_not_temp_db(self.data_source_id)
+        # TODO: Enable when db_name is separate from data_source_id Context.error_if_not_temp_db(db_name)
+
+        # TODO: Replace by deleting DB file when DB files are separate
         connection = self._get_connection()
+        # Run in a loop because of restrictions on deleting a table with foreign keys
         while True:
             # Delete tables
             cursor = connection.cursor()

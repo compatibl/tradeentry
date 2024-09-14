@@ -178,6 +178,8 @@ class Settings(ABC):
                     f"Settings sources searched in the order of priority:\n{settings_sources_str}"
                 )
 
+            # TODO: Add a check for nested complex types in settings, if these are present deserialization will fail
+            # TODO: Can custom deserializer that removes trailing and leading _ can be used without cyclic reference?
             result = cls(**settings_dict)
 
             # Cache the result

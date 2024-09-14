@@ -20,6 +20,7 @@ from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key
 from cl.runtime.records.record_mixin import RecordMixin
+from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.storage.data_source_key import DataSourceKey
 from cl.runtime.storage.protocols import TRecord
 from dataclasses import dataclass
@@ -262,13 +263,15 @@ class Context(ContextKey, RecordMixin[ContextKey]):
             identity=identity,
         )
 
-    def delete_all(self) -> None:
+    def delete_all_and_drop(self) -> None:
         """
-        Permanently delete (drop) all records and schema without the possibility of recovery.
-        Error if data source identifier does not match the temp_db pattern in settings.
+        IMPORTANT: THIS WILL PERMANENTLY DELETE ALL RECORDS WITHOUT THE POSSIBILITY OF RECOVERY,
+        unless stopped due to either data_source_id or database name not matching 'temp_db_prefix'
+        specified in Dynaconf data source settings ('DataSourceSettings' class).
         """
-        # TODO(High): Add a check for temp DB name pattern
-        self.data_source.delete_all()
+        # Additional check in context in case a custom data source implementation does not check it
+        self.error_if_not_temp_db(self.data_source.data_source_id)
+        self.data_source.delete_all_and_drop()  # noqa
 
     def _root_context_field_not_set_error(self, field_name: str) -> None:
         """Error message about a Context field not set."""
@@ -282,3 +285,13 @@ from the current context.
 """
                 + root_context_types_str
             )
+
+    @classmethod
+    def error_if_not_temp_db(cls, data_source_id_or_database_name: str) -> None:
+        """Confirm that data source id or database name matches temp_db_prefix, error otherwise."""
+        context_settings = ContextSettings.instance()
+        temp_db_prefix = context_settings.data_source_temp_db_prefix
+        if not data_source_id_or_database_name.startswith(temp_db_prefix):
+            raise RuntimeError(f"Destructive action on database not permitted because data_source_id or database name "
+                               f"'{data_source_id_or_database_name}' does not match temp_db_prefix '{temp_db_prefix}' "
+                               f"specified in Dynaconf data source settings ('DataSourceSettings' class).")
