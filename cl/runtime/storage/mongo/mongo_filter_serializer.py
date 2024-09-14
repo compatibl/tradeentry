@@ -16,7 +16,9 @@ from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.serialization.dict_serializer import _get_class_hierarchy_slots  # TODO: Move to ClassInfo
 from cl.runtime.storage.data_source_types import TDataDict
 from dataclasses import dataclass
-from typing import Dict, Any, ClassVar
+from typing import Any
+from typing import ClassVar
+from typing import Dict
 from typing import Type
 
 
@@ -37,9 +39,7 @@ class MongoFilterSerializer:
         all_slots = _get_class_hierarchy_slots(data.__class__)
         # Serialize slot values in the order of declaration except those that are None
         result = {
-            k: v
-            if v.__class__.__name__ in self.primitive_type_names
-            else self._not_primitive_field_error(data, k, v)
+            k: v if v.__class__.__name__ in self.primitive_type_names else self._not_primitive_field_error(data, k, v)
             for k in all_slots
             if (v := getattr(data, k)) is not None
         }
@@ -48,6 +48,9 @@ class MongoFilterSerializer:
     @classmethod
     def _not_primitive_field_error(cls, data: RecordProtocol, k: str, v: Any) -> None:
         """Error indicating only primitive field names are supported."""
-        raise RuntimeError(f"Field '{k}' in '{data.__class__.__name__}' has type '{type(v)}'. This field cannot "
-                           f"be used in a database filter because it is not one of the supported primitive types: " +
-                           ", ".join(f"'{cls.primitive_type_names}'") + ".")
+        raise RuntimeError(
+            f"Field '{k}' in '{data.__class__.__name__}' has type '{type(v)}'. This field cannot "
+            f"be used in a database filter because it is not one of the supported primitive types: "
+            + ", ".join(f"'{cls.primitive_type_names}'")
+            + "."
+        )

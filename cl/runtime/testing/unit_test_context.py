@@ -40,7 +40,6 @@ class UnitTestContext(Context):
 
         # Do not execute this code on deserialized context instances (e.g. when they are passed to a task queue)
         if not self.is_deserialized:
-
             # Confirm we are inside a test, error otherwise
             if not is_inside_test:
                 raise RuntimeError(f"UnitTestContext created outside a test.")

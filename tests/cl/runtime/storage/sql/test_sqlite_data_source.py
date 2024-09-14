@@ -14,9 +14,7 @@
 
 import pytest
 import time
-
 from cl.runtime.records.class_info import ClassInfo
-
 from cl.runtime.storage.sql.sqlite_data_source import SqliteDataSource
 from cl.runtime.testing.unit_test_context import UnitTestContext
 from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord

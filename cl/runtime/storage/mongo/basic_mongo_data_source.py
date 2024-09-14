@@ -12,11 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import re
 import pymongo
+import re
 from bson import UuidRepresentation
 from cl.runtime.context.context import Context
-
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
@@ -292,13 +291,16 @@ class BasicMongoDataSource(DataSource):
 
         # Check for invalid characters in MongoDB name
         if invalid_db_name_regex.search(data_source_id):
-            raise RuntimeError(f"MongoDB data_source_id='{data_source_id}' is not valid because it contains "
-                               f"special characters from this list: {invalid_db_name_symbols}")
+            raise RuntimeError(
+                f"MongoDB data_source_id='{data_source_id}' is not valid because it contains "
+                f"special characters from this list: {invalid_db_name_symbols}"
+            )
 
         # Check for maximum byte length of less than 64 (use Unicode bytes, not string chars to count)
         max_bytes = 63
         actual_bytes = len(data_source_id.encode("utf-8"))
         if actual_bytes > max_bytes:
-            raise RuntimeError(f"MongoDB does not support data_source_id='{data_source_id}' because "
-                               f"it has {actual_bytes} bytes, exceeding the maximum of {max_bytes}.")
-
+            raise RuntimeError(
+                f"MongoDB does not support data_source_id='{data_source_id}' because "
+                f"it has {actual_bytes} bytes, exceeding the maximum of {max_bytes}."
+            )

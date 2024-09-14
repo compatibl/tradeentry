@@ -190,4 +190,3 @@ class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
             DataSource.__default = data_source_type(data_source_id=context_settings.data_source_id)
 
         return DataSource.__default
-

@@ -14,7 +14,6 @@
 
 import pytest
 from cl.runtime.records.class_info import ClassInfo
-
 from cl.runtime.storage.mongo.basic_mongo_data_source import BasicMongoDataSource
 from cl.runtime.testing.unit_test_context import UnitTestContext
 from stubs.cl.runtime import StubDataclassDerivedRecord
@@ -25,7 +24,6 @@ def test_check_data_source_id():
     """Test '_get_db_name' method."""
 
     with UnitTestContext() as context:
-
         # Check for length
         BasicMongoDataSource.check_data_source_id("a" * 63)
         with pytest.raises(RuntimeError):
@@ -73,9 +71,9 @@ def test_load_filter():
     with UnitTestContext(data_source_class=data_source_class) as context:
         # Create test record and populate with sample data
         offset = 0
-        matching_records = [StubDataclassDerivedRecord(id=str(offset+i), derived_field="a") for i in range(2)]
+        matching_records = [StubDataclassDerivedRecord(id=str(offset + i), derived_field="a") for i in range(2)]
         offset = len(matching_records)
-        non_matching_records = [StubDataclassDerivedRecord(id=str(offset+i), derived_field="b") for i in range(2)]
+        non_matching_records = [StubDataclassDerivedRecord(id=str(offset + i), derived_field="b") for i in range(2)]
         context.save_many(matching_records + non_matching_records)
 
         filter_obj = StubDataclassDerivedRecord(id=None, derived_field="a")

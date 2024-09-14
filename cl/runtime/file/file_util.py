@@ -35,15 +35,19 @@ class FileUtil:
     def check_valid_filename(cls, filename: str) -> None:
         """Error if invalid symbols are present in filename (do not use for path with directory separators)."""
         if invalid_filename_regex.search(filename):
-            raise RuntimeError(f"Filename '{filename}' is not valid because it contains special characters "
-                               f"from this list: {invalid_filename_symbols}")
+            raise RuntimeError(
+                f"Filename '{filename}' is not valid because it contains special characters "
+                f"from this list: {invalid_filename_symbols}"
+            )
 
     @classmethod
     def check_valid_path(cls, path: str) -> None:
         """Error if invalid symbols are present in directory or file path (directory separators are allowed)."""
         if invalid_path_regex.search(path):
-            raise RuntimeError(f"Directory or file path '{path}' is not valid because it contains special characters "
-                               f"from this list: {invalid_path_symbols}")
+            raise RuntimeError(
+                f"Directory or file path '{path}' is not valid because it contains special characters "
+                f"from this list: {invalid_path_symbols}"
+            )
 
     @classmethod
     def has_extension(cls, path: str, ext: str | None) -> bool:
@@ -72,14 +76,18 @@ class FileUtil:
             # Report error
             if ext is not None:
                 if actual_ext is not None:
-                    raise RuntimeError(f"Filename or path '{path}' has extension '{actual_ext}' which does not match "
-                                       f"the expected extension '{ext}'.")
+                    raise RuntimeError(
+                        f"Filename or path '{path}' has extension '{actual_ext}' which does not match "
+                        f"the expected extension '{ext}'."
+                    )
                 else:
                     raise RuntimeError(
-                        f"Filename or path '{path}' has no extension while extension '{ext}' should be present.")
+                        f"Filename or path '{path}' has no extension while extension '{ext}' should be present."
+                    )
             else:
                 raise RuntimeError(
-                    f"Filename or path '{path}' has extension '{actual_ext}' while no extension should be present.")
+                    f"Filename or path '{path}' has extension '{actual_ext}' while no extension should be present."
+                )
 
     @classmethod
     def normalize_ext(cls, ext: str) -> str | None:

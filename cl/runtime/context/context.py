@@ -61,7 +61,6 @@ class Context(ContextKey, RecordMixin[ContextKey]):
 
         # Do not execute this code on deserialized context instances (e.g. when they are passed to a task queue)
         if not self.is_deserialized:
-
             # Set fields that are not specified to their values from 'Context.current()'
             if self.log is None:
                 self._root_context_field_not_set_error("log")
@@ -313,6 +312,8 @@ from the current context.
         context_settings = ContextSettings.instance()
         temp_db_prefix = context_settings.data_source_temp_db_prefix
         if not data_source_id_or_database_name.startswith(temp_db_prefix):
-            raise RuntimeError(f"Destructive action on database not permitted because data_source_id or database name "
-                               f"'{data_source_id_or_database_name}' does not match temp_db_prefix '{temp_db_prefix}' "
-                               f"specified in Dynaconf data source settings ('DataSourceSettings' class).")
+            raise RuntimeError(
+                f"Destructive action on database not permitted because data_source_id or database name "
+                f"'{data_source_id_or_database_name}' does not match temp_db_prefix '{temp_db_prefix}' "
+                f"specified in Dynaconf data source settings ('DataSourceSettings' class)."
+            )

@@ -24,7 +24,7 @@ class ContextSettings(Settings):
     packages: List[str]
     """List of packages to load in dot-delimited module prefix format, for example 'cl.runtime'."""
 
-    log_class: str = "cl.runtime.log.file.file_log.FileLog"   # TODO: Deprecated, switch to class-specific fields
+    log_class: str = "cl.runtime.log.file.file_log.FileLog"  # TODO: Deprecated, switch to class-specific fields
     """Default log class in module.ClassName format."""
 
     data_source_class: str  # TODO: Deprecated, switch to class-specific fields

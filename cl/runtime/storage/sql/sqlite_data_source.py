@@ -14,10 +14,8 @@
 
 import os
 import sqlite3
-
 from cl.runtime.context.context import Context
 from cl.runtime.file.file_util import FileUtil
-
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key
