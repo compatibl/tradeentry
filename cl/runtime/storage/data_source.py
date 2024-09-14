@@ -23,7 +23,7 @@ from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.storage.data_source_key import DataSourceKey
 from cl.runtime.storage.data_source_types import TQuery
-from cl.runtime.storage.protocols import TRecord
+from cl.runtime.storage.protocols import TRecord, TKey
 from dataclasses import dataclass
 from typing import ClassVar
 from typing import Iterable
@@ -146,6 +146,25 @@ class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
         Args:
             records: Iterable of records.
             dataset: Target dataset as a delimited string, list of levels, or None
+            identity: Identity token for database access and row-level security
+        """
+
+    @abstractmethod
+    def delete_one(
+        self,
+        key_type: Type[TKey],
+        key: TKey | KeyProtocol | tuple | str | None,
+        *,
+        dataset: str | None = None,
+        identity: str | None = None,
+    ) -> None:
+        """
+        Delete one record for the specified key type using its key in one of several possible formats.
+
+        Args:
+            key_type: Key type to delete, used to determine the database table
+            key: Key in object, tuple or string format
+            dataset: If specified, append to the root dataset of the data source
             identity: Identity token for database access and row-level security
         """
 

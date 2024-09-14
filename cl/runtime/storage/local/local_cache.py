@@ -19,7 +19,7 @@ from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.dataset_util import DatasetUtil
-from cl.runtime.storage.protocols import TRecord
+from cl.runtime.storage.protocols import TRecord, TKey
 from dataclasses import dataclass
 from dataclasses import field
 from typing import ClassVar
@@ -138,6 +138,16 @@ class LocalCache:
     ) -> None:
         # TODO: Review performance compared to a custom implementation for save_many
         [self.save_one(x) for x in records]
+
+    def delete_one(
+        self,
+        key_type: Type[TKey],
+        key: TKey | KeyProtocol | tuple | str | None,
+        *,
+        dataset: str | None = None,
+        identity: str | None = None,
+    ) -> None:
+        raise NotImplementedError()
 
     def delete_many(
         self,

@@ -23,7 +23,7 @@ from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
 from cl.runtime.settings.settings import Settings
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.data_source_types import TQuery
-from cl.runtime.storage.protocols import TRecord
+from cl.runtime.storage.protocols import TRecord, TKey
 from cl.runtime.storage.sql.sqlite_schema_manager import SqliteSchemaManager
 from collections import defaultdict
 from dataclasses import dataclass
@@ -286,6 +286,16 @@ class SqliteDataSource(DataSource):
             cursor.execute(sql_statement, sql_values)
 
             connection.commit()
+
+    def delete_one(
+        self,
+        key_type: Type[TKey],
+        key: TKey | KeyProtocol | tuple | str | None,
+        *,
+        dataset: str | None = None,
+        identity: str | None = None,
+    ) -> None:
+        raise NotImplementedError()
 
     def delete_many(
         self,

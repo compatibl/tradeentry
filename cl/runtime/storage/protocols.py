@@ -21,6 +21,7 @@ from typing import Type
 from typing import TypeVar
 
 TRecord = TypeVar("TRecord")
+TKey = TypeVar("TKey")
 
 
 class DataSourceProtocol(Protocol):
@@ -126,6 +127,24 @@ class DataSourceProtocol(Protocol):
         Args:
             records: Iterable of records.
             dataset: Target dataset as a delimited string, list of levels, or None
+            identity: Identity token for database access and row-level security
+        """
+
+    def delete_one(
+        self,
+        key_type: Type[TKey],
+        key: TKey | KeyProtocol | tuple | str | None,
+        *,
+        dataset: str | None = None,
+        identity: str | None = None,
+    ) -> None:
+        """
+        Delete one record for the specified key type using its key in one of several possible formats.
+
+        Args:
+            key_type: Key type to delete, used to determine the database table
+            key: Key in object, tuple or string format
+            dataset: If specified, append to the root dataset of the data source
             identity: Identity token for database access and row-level security
         """
 

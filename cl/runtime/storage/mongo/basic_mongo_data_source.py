@@ -24,7 +24,7 @@ from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.mongo.mongo_filter_serializer import MongoFilterSerializer
-from cl.runtime.storage.protocols import TRecord
+from cl.runtime.storage.protocols import TRecord, TKey
 from dataclasses import dataclass
 from itertools import groupby
 from pymongo import MongoClient
@@ -226,6 +226,16 @@ class BasicMongoDataSource(DataSource):
         # Process separately for each base type
         for key_type, data_for_key_type in grouped_data:
             pass
+
+    def delete_one(
+        self,
+        key_type: Type[TKey],
+        key: TKey | KeyProtocol | tuple | str | None,
+        *,
+        dataset: str | None = None,
+        identity: str | None = None,
+    ) -> None:
+        raise NotImplementedError()
 
     def delete_many(
         self,
