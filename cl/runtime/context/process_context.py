@@ -18,40 +18,34 @@ from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.settings.settings import is_inside_test
 from cl.runtime.storage.dataset_util import DatasetUtil
+from cl.runtime.testing.unit_test_context import UnitTestContext
 from cl.runtime.testing.unit_test_util import UnitTestUtil
 from dataclasses import dataclass
 
 
 @dataclass(slots=True, kw_only=True)
-class UnitTestContext(Context):
-    """
-    Utilities for both pytest and unittest.
-
-    Notes:
-        - The name UnitTestUtil was selected to avoid Test prefix and does not indicate it is for unittest package only
-        - This module not itself import pytest or unittest package
-    """
+class ProcessContext(Context):
+    """Context for a standalone process."""
 
     def __post_init__(self):
-        """Configure context for use inside a test runner (all fields must be set, error otherwise)."""
+        """Configure context."""
 
-        # Check we are inside a test
-        if not is_inside_test:
-            raise RuntimeError(f"UnitTestContext created outside a test.")
+        # Check we are not inside a test
+        if is_inside_test:
+            raise RuntimeError(f"'{type(self).__name__}' is used inside a test, "
+                               f"use '{UnitTestContext.__name__}' instead.")
 
-        # Get test name in 'module.test_function' or 'module.TestClass.test_method' format inside a test
+        # Get context settings
         context_settings = ContextSettings.instance()
-        test_name = UnitTestUtil.get_test_name()
 
-        # Use test name for context_id
-        self.context_id = test_name
+        # Use data_source_id from settings for context_id
+        self.context_id = context_settings.data_source_id
 
-        # TODO: Set log field here explicitly instead of relying on implicit detection of test environment
+        # Create the log class specified in settings
         log_type = ClassInfo.get_class_type(context_settings.log_class)
         self.log = log_type(log_id=self.context_id)
 
-        # Create a new data source for every test, set data_source_id to context_id
-
+        # Create the data source class specified in settings
         data_source_type = ClassInfo.get_class_type(context_settings.data_source_class)
         self.data_source = data_source_type(data_source_id=self.context_id)
 

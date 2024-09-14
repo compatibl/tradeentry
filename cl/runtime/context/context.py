@@ -14,17 +14,12 @@
 
 import logging
 from cl.runtime.context.context_key import ContextKey
-from cl.runtime.context.null_progress import NullProgress
-from cl.runtime.context.protocols import ProgressProtocol
-from cl.runtime.log.log import Log
 from cl.runtime.log.log_key import LogKey
-from cl.runtime.records.dataclasses_extensions import field
-from cl.runtime.records.protocols import KeyProtocol
+from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.records.protocols import KeyProtocol, is_key
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.data_source_key import DataSourceKey
-from cl.runtime.storage.protocols import DataSourceProtocol
 from cl.runtime.storage.protocols import TRecord
 from dataclasses import dataclass
 from typing import ClassVar
@@ -32,23 +27,12 @@ from typing import Iterable
 from typing import List
 from typing import Type
 
-# Use in case progress is not specified
-null_progress = NullProgress()
-
-
-def current_or_default_data_source() -> DataSourceProtocol:
-    """Return data source of the current context or the default data source if current progress is not set."""
-    return context.data_source if (context := Context.current()) is not None else DataSource.default()
-
-
-def current_or_default_dataset() -> str:
-    """Return dataset of the current context or None if current progress is not set."""
-    return context.dataset if (context := Context.current()) is not None else None
-
-
-def current_or_default_progress() -> ProgressProtocol:
-    """Return progress API of the current context or NullProgress if current progress is not set."""
-    return context.progress if (context := Context.current()) is not None else null_progress
+root_context_types_str = """
+The following root context types can be used in the outermost 'with' clause:
+    - ProcessContext: Context for launching a process, use in __main__
+    - HandlerContext: Context for invoking a handler
+    - UnitTestContext: Context for running unit tests
+"""
 
 
 @dataclass(slots=True, kw_only=True)
@@ -58,17 +42,37 @@ class Context(ContextKey, RecordMixin[ContextKey]):
     __context_stack: ClassVar[List["Context"]] = []  # TODO: Set using ContextVars
     """New current context is pushed to the context stack using 'with Context(...)' clause."""
 
-    log: LogKey = field(default_factory=lambda: Log.default())
-    """Log of the context, default log is used if not specified."""
+    log: LogKey = missing()
+    """Log of the context, 'Context.current().log' is used if not specified."""
 
-    data_source: DataSourceKey = field(default_factory=lambda: current_or_default_data_source())
-    """Return the default data source of the context or None if not set."""
+    data_source: DataSourceKey = missing()
+    """Data source of the context, 'Context.current().data_source' is used if not specified."""
 
-    dataset: str = field(default_factory=lambda: current_or_default_dataset())
-    """Default dataset of the context, set to None if not specified"""
+    dataset: str = missing()
+    """Dataset of the context, 'Context.current().dataset' is used if not specified."""
 
-    # TODO: progress: ProgressProtocol = field(default_factory=lambda: current_or_default_progress())
-    # """Progress reporting interface of the context, set to NullProgress if not specified."""
+    def __post_init__(self):
+        """Set fields to their values in 'Context.current()' if not specified."""
+
+        # Set fields that are not specified to their values from 'Context.current()'
+        if self.log is None:
+            self._root_context_field_not_set_error("log")
+            self.log = Context.current().log
+        if self.data_source is None:
+            self._root_context_field_not_set_error("data_source")
+            self.data_source = Context.current().data_source
+        if self.dataset is None:
+            self._root_context_field_not_set_error("dataset")
+            self.dataset = Context.current().dataset
+
+        # Replace fields that are set as keys by records from storage
+        # First, load 'data_source' field of this context using 'Context.current()'
+        if is_key(self.data_source):
+            self.data_source = Context.current().load_one(DataSourceKey, self.data_source)
+
+        # After this all remaining fields can be loaded using data source from this context
+        if is_key(self.log):
+            self.log = self.load_one(LogKey, self.log)
 
     def get_key(self) -> ContextKey:
         return ContextKey(context_id=self.context_id)
@@ -76,7 +80,11 @@ class Context(ContextKey, RecordMixin[ContextKey]):
     @classmethod
     def current(cls):
         """Return the current context or None if not set."""
-        return cls.__context_stack[-1] if len(cls.__context_stack) > 0 else None
+        if len(cls.__context_stack) > 0:
+            return cls.__context_stack[-1]
+        else:
+            raise RuntimeError("Current context is not set, use 'with' clause with a root context type to set." +
+                               root_context_types_str)
 
     def __enter__(self):
         """Supports 'with' operator for resource disposal."""
@@ -249,3 +257,14 @@ class Context(ContextKey, RecordMixin[ContextKey]):
         """
         # TODO(High): Add a check for temp DB name pattern
         self.data_source.delete_all()
+
+    def _root_context_field_not_set_error(self, field_name: str) -> None:
+        """Error message about a Context field not set."""
+        if type(self) is not Context:
+            raise RuntimeError(f"""
+Field '{field_name}' of the context class '{type(self).__name__}' is not set.
+The context in the outermost 'with' clause (root context) must set all fields
+of the Context class. Inside the 'with' clause, these fields will be populated
+from the current context.
+"""
+                               + root_context_types_str)

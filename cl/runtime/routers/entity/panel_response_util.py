@@ -14,7 +14,9 @@
 
 import ast
 import dataclasses
-from cl.runtime.context.context import current_or_default_data_source
+
+from cl.runtime.context.context import Context
+
 from cl.runtime.routers.entity.panel_request import PanelRequest
 from cl.runtime.routers.response_util import to_legacy_dict
 from cl.runtime.routers.response_util import to_record_dict
@@ -57,8 +59,10 @@ class PanelResponseUtil(BaseModel):
         serializer = StringSerializer()
         key_obj = serializer.deserialize_key(data=request.key, type_=type_)
 
+        # Get data source from the current context
+        data_source = Context.current().data_source
+
         # Load record from the data source
-        data_source = current_or_default_data_source()
         record = data_source.load_one(type_, key_obj, dataset=request.dataset)
         if record is None:
             raise RuntimeError(

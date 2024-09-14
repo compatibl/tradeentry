@@ -11,11 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from cl.runtime.context.context import Context
 
 from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.backend.core.user_key import UserKey
 from cl.runtime.config.config import Config
-from cl.runtime.context.context import current_or_default_data_source
 from dataclasses import dataclass
 from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
 from stubs.cl.runtime import StubDataclassDerivedRecord
@@ -40,8 +40,8 @@ class StubRuntimeConfig(Config):
     def configure(self) -> None:
         """Populate the current or default data source with stub records."""
 
-        # Get current or default data source based on settings
-        data_source = current_or_default_data_source()
+        # Get data source from the current context
+        data_source = Context.current().data_source
 
         # Save self
         data_source.save_one(self)

@@ -19,7 +19,6 @@ import inflection
 from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.backend.core.ui_app_state_key import UiAppStateKey
 from cl.runtime.backend.core.user_key import UserKey
-from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
@@ -29,6 +28,7 @@ from cl.runtime.schema.schema import Schema
 from cl.runtime.schema.type_decl import pascalize
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.serialization.ui_dict_serializer import UiDictSerializer
+from cl.runtime import Context
 from pydantic import BaseModel
 from pydantic import Field
 from typing import Any
@@ -123,8 +123,10 @@ class RecordResponse(BaseModel):
             # TODO: Use after module is specified
             record_type = ClassInfo.get_class_type(f"{key_module}.{key_class}")
 
-        # load record from storage
-        data_source = current_or_default_data_source()
+        # Get data source from the current context
+        data_source = Context.current().data_source
+
+        # Load record from storage
         key_serializer = StringSerializer()
 
         # TODO (Roman): UiAppState record request from FE should have key in proper format where user is embedded key

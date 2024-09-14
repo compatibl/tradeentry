@@ -14,7 +14,7 @@
 
 import os
 import uvicorn
-from cl.runtime.context.context import Context
+from cl.runtime.context.process_context import ProcessContext
 from cl.runtime.routers.auth import auth_router
 from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.health import health_router
@@ -60,7 +60,7 @@ server_app.include_router(entity_router.router, prefix="/entity", tags=["Entity"
 server_app.include_router(tasks_router.router, prefix="/tasks", tags=["Tasks"])
 
 if __name__ == "__main__":
-    with Context():
+    with ProcessContext():
         # Start Celery workers (will exit when the current process exits)
         celery_delete_existing_tasks()
         celery_start_queue()

@@ -15,7 +15,8 @@
 from __future__ import annotations
 
 import inflection
-from cl.runtime.context.context import current_or_default_data_source
+from cl.runtime.context.context import Context
+
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
@@ -56,7 +57,8 @@ class SelectResponse(BaseModel):
         record_class = request.type_
         record_type = ClassInfo.get_class_type(f"{record_module}.{record_class}")
 
-        data_source = current_or_default_data_source()
+        # Get data source from the current context
+        data_source = Context.current().data_source
 
         # TODO (Roman): replace temporary load_all to load_by_query
         if not hasattr(data_source, "load_all"):

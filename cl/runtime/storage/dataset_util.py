@@ -32,6 +32,11 @@ class DatasetUtil:
     _two_sep = "\\\\"
 
     @classmethod
+    def root(cls) -> str:
+        """Root dataset consists of a single separator."""
+        return cls._sep
+
+    @classmethod
     def to_levels(cls, dataset: str) -> List[str]:
         """Convert the dataset from any input format to a list of levels and perform validation."""
 

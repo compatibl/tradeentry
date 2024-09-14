@@ -14,21 +14,24 @@
 
 import pytest
 from cl.runtime.context.context import Context
+from cl.runtime.testing.unit_test_context import UnitTestContext
 
 
-def test_smoke():
-    """Smoke test."""
+def test_context_manager():
+    """Test for using 'with' clause."""
 
-    # TODO: Check that calling Context.current() here raises an error if called here
+    # Check that calling Context.current() here raises if called before entering 'with'
+    with pytest.raises(RuntimeError):
+        Context.current()
 
-    with Context() as current_context_1:
+    with UnitTestContext() as current_context_1:
         # Check that current context is set inside 'with Context(...)' clause
         assert Context.current() is current_context_1
 
         # Check that creating a context object but not using it in 'with Context()'
         # clause does not change the current context
         other_context = Context()
-        # Still the same current context
+        assert Context.current() is not other_context
         assert Context.current() is current_context_1
 
         with Context() as current_context_2:
@@ -38,7 +41,9 @@ def test_smoke():
         # After exiting the second 'with' clause, the previous current context is restored
         assert Context.current() is current_context_1
 
-    # TODO: Check that calling Context.current() here raises an error if called here
+    # Check that calling Context.current() here raises if called after exiting 'with'
+    with pytest.raises(RuntimeError):
+        Context.current()
 
 
 if __name__ == "__main__":

@@ -15,7 +15,6 @@
 import datetime as dt
 import inspect
 from cl.runtime.context.context import Context
-from cl.runtime.context.context import current_or_default_data_source
 from cl.runtime.decorators.handler_decorator import handler
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.dataclasses_extensions import missing
@@ -197,6 +196,6 @@ class StubHandlers(StubHandlersKey, RecordMixin[StubHandlersKey]):
     @handler
     def handler_save_to_db(self):
         log_method_info(__name__)
-        data_source = current_or_default_data_source()
+        data_source = Context.current().data_source
         stub = StubDataclassRecord(id="saved_from_handler")
         data_source.save_one(stub)
