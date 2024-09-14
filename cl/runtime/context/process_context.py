@@ -49,9 +49,12 @@ class ProcessContext(Context):
             log_type = ClassInfo.get_class_type(context_settings.log_class)
             self.log = log_type(log_id=self.context_id)
 
+            # Use context_id converted to semicolon-delimited format for data_source_id
+            data_source_id = self.context_id.replace(".", ";")
+
             # Create the data source class specified in settings
             data_source_type = ClassInfo.get_class_type(context_settings.data_source_class)
-            self.data_source = data_source_type(data_source_id=self.context_id)
+            self.data_source = data_source_type(data_source_id=data_source_id)
 
             # Root dataset
             self.dataset = DatasetUtil.root()
