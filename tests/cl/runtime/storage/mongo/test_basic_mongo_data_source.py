@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import mongomock
 import pytest
 from cl.runtime.records.class_info import ClassInfo
 
 from cl.runtime.storage.mongo.basic_mongo_data_source import BasicMongoDataSource
 from cl.runtime.testing.unit_test_context import UnitTestContext
+from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecord
 
 
@@ -64,6 +64,24 @@ def test_check_data_source_id():
             BasicMongoDataSource.check_data_source_id("abc\\xyz")
         with pytest.raises(RuntimeError):
             BasicMongoDataSource.check_data_source_id("abc/xyz")
+
+
+def test_load_filter():
+    """Test 'load_filter' method."""
+
+    data_source_class = ClassInfo.get_class_path(BasicMongoDataSource)
+    with UnitTestContext(data_source_class=data_source_class) as context:
+        # Create test record and populate with sample data
+        offset = 0
+        matching_records = [StubDataclassDerivedRecord(id=str(offset+i), derived_field="a") for i in range(2)]
+        offset = len(matching_records)
+        non_matching_records = [StubDataclassDerivedRecord(id=str(offset+i), derived_field="b") for i in range(2)]
+        context.save_many(matching_records + non_matching_records)
+
+        filter_obj = StubDataclassDerivedRecord(id=None, derived_field="a")
+        loaded_records = context.load_filter(StubDataclassDerivedRecord, filter_obj)
+        assert len(loaded_records) == len(matching_records)
+        assert all(x.derived_field == filter_obj.derived_field for x in loaded_records)
 
 
 def test_smoke():

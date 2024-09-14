@@ -100,7 +100,7 @@ class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
     def load_filter(
         self,
         record_type: Type[TRecord],
-        record_filter: TRecord,
+        filter_obj: TRecord,
         *,
         dataset: str | None = None,
         identity: str | None = None,
@@ -110,7 +110,7 @@ class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
 
         Args:
             record_type: Record type to load, error if the result is not this type or its subclass
-            record_filter: Instance of 'record_type' whose fields are used for the query
+            filter_obj: Instance of 'record_type' whose fields are used for the query
             dataset: If specified, append to the root dataset of the data source
             identity: Identity token for database access and row-level security
         """

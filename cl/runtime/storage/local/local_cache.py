@@ -98,7 +98,7 @@ class LocalCache:
     def load_filter(
         self,
         record_type: Type[TRecord],
-        record_filter: TRecord,
+        filter_obj: TRecord,
         *,
         dataset: str | None = None,
         identity: str | None = None,

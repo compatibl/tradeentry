@@ -24,6 +24,7 @@ from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.data_source_types import TQuery
+from cl.runtime.storage.mongo.mongo_filter_serializer import MongoFilterSerializer
 from cl.runtime.storage.protocols import TRecord
 from dataclasses import dataclass
 from itertools import groupby
@@ -44,6 +45,7 @@ invalid_db_name_regex = re.compile(f"[{invalid_db_name_symbols}]")
 # TODO: Review and consider alternative names, e.g. DataSerializer or RecordSerializer
 data_serializer = DictSerializer()
 key_serializer = StringSerializer()
+filter_serializer = MongoFilterSerializer()
 
 _client_dict: Dict[str, MongoClient] = {}
 """Dict of MongoClient instances with client_uri key stored outside the class to avoid serializing them."""
@@ -142,12 +144,36 @@ class BasicMongoDataSource(DataSource):
     def load_filter(
         self,
         record_type: Type[TRecord],
-        record_filter: TRecord,
+        filter_obj: TRecord,
         *,
         dataset: str | None = None,
         identity: str | None = None,
     ) -> Iterable[TRecord]:
-        raise NotImplementedError()
+        # Confirm dataset and identity are both None
+        if dataset is not None:
+            raise RuntimeError("BasicMongo data source type does not support datasets.")
+        if identity is not None:
+            raise RuntimeError("BasicMongo data source type does not support row-level security.")
+
+        # Key, get collection name from key type by removing Key suffix if present
+        key_type = record_type.get_key_type()
+        collection_name = key_type.__name__  # TODO: Decision on short alias
+        db = self._get_db()
+        collection = db[collection_name]
+
+        # Convert filter object to a dictionary
+        filter_dict = filter_serializer.serialize_filter(filter_obj)
+
+        serialized_records = collection.find(filter_dict)  # TODO: Filter by derived type
+        result = []
+        for serialized_record in serialized_records:
+            del serialized_record["_id"]
+            del serialized_record["_key"]
+            record = data_serializer.deserialize_data(
+                serialized_record
+            )  # TODO: Convert to comprehension for performance
+            result.append(record)
+        return result
 
     def save_one(
         self,
