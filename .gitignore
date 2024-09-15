@@ -1,7 +1,10 @@
 # Using glob syntax
 syntax: glob
 
+**/.env
 **/.mypy_cache
+**/.pytest_cache
+**/.secrets.*
 **/__pycache__
 **/venv
 *.db
@@ -10,8 +13,10 @@ syntax: glob
 *.idea
 *.py[cod]
 *.so
+logs/
 build/
 dist/
+wwwroot/
 
 # Using regexp syntax
 syntax: regexp
