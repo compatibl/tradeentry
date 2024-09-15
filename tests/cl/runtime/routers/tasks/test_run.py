@@ -20,10 +20,10 @@ from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseIte
 from cl.runtime.routers.tasks.run_request import RunRequest
 from cl.runtime.routers.tasks.run_response_item import RunResponseItem
 from cl.runtime.serialization.string_serializer import StringSerializer
+from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
-from cl.runtime.testing.celery_fixtures import celery_test_queue_fixture
-from cl.runtime.testing.celery_fixtures import check_task_run_completion
-from cl.runtime.testing.unit_test_context import UnitTestContext
+from cl.runtime.testing.pytest.pytest_fixtures import celery_test_queue_fixture
+from cl.runtime.context.testing_context import TestingContext
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
@@ -62,7 +62,7 @@ expected_records_in_db = [[StubDataclassRecord(id="saved_from_handler")]]
 def test_method(celery_test_queue_fixture):
     """Test coroutine for /tasks/run route."""
 
-    with UnitTestContext() as context:
+    with TestingContext() as context:
         context.save_one(stub_handlers)
 
         for request in simple_requests + save_to_db_requests:
@@ -85,7 +85,7 @@ def test_method(celery_test_queue_fixture):
             request_object = RunRequest(**request)
             response_items = RunResponseItem.run_tasks(request_object)
             [
-                check_task_run_completion(TaskRunKey(task_run_id=response_item.task_run_id))
+                TaskRun.block_until_completion(TaskRunKey(task_run_id=response_item.task_run_id))
                 for response_item in response_items
             ]
             actual_records = list(context.load_many(StubDataclassRecord, expected_keys))
@@ -95,8 +95,8 @@ def test_method(celery_test_queue_fixture):
 def test_api(celery_test_queue_fixture):
     """Test REST API for /tasks/run route."""
 
-    # TODO: Use UnitTestContext instead
-    with UnitTestContext() as context:
+    # TODO: Use TestingContext instead
+    with TestingContext() as context:
         context.save_one(stub_handlers)
 
         test_app = FastAPI()
@@ -126,7 +126,7 @@ def test_api(celery_test_queue_fixture):
                 request_object = RunRequest(**request)
                 response_items = RunResponseItem.run_tasks(request_object)
                 [
-                    check_task_run_completion(TaskRunKey(task_run_id=response_item.task_run_id))
+                    TaskRun.block_until_completion(TaskRunKey(task_run_id=response_item.task_run_id))
                     for response_item in response_items
                 ]
                 actual_records = list(context.load_many(StubDataclassRecord, expected_keys))

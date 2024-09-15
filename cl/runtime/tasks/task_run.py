@@ -13,7 +13,11 @@
 # limitations under the License.
 
 import datetime as dt
+import time
 from dataclasses import dataclass
+
+from cl.runtime import Context
+from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
@@ -61,3 +65,20 @@ class TaskRun(TaskRunKey, RecordMixin[TaskRunKey]):
 
     def get_key(self) -> TaskRunKey:
         return TaskRunKey(task_run_id=self.task_run_id)
+
+    @classmethod
+    def block_until_completion(cls, task_run_key: TaskRunKey, timeout_sec: int = 10) -> None:
+        """Block execution until completion of the specified task run, does not use async/await yet."""
+
+        context = Context.current()
+        start_datetime = DatetimeUtil.now()
+        while DatetimeUtil.now() < start_datetime + dt.timedelta(seconds=timeout_sec):
+            task_run = context.load_one(TaskRun, task_run_key)
+            if task_run is not None and task_run.status == TaskStatus.Completed:
+                # Test success, task has been completed
+                return
+            # TODO: Refactor to use queue-specific push communication rather than heartbeat
+            time.sleep(1)  # Sleep for 1 second to reduce CPU load
+
+        # Test failure
+        raise RuntimeError(f"Task has not been completed after {timeout_sec} sec.")

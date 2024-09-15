@@ -14,14 +14,14 @@
 
 import pytest
 from cl.runtime.tasks.instance_method_task import InstanceMethodTask
-from cl.runtime.testing.unit_test_context import UnitTestContext
+from cl.runtime.context.testing_context import TestingContext
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
 
 def test_smoke():
     """Test 'test_create' method."""
 
-    with UnitTestContext() as context:
+    with TestingContext() as context:
         records = [
             StubHandlers(stub_id="abc"),
         ]

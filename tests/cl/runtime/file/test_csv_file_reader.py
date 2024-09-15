@@ -17,7 +17,7 @@ import os
 from cl.runtime.file.csv_file_reader import CsvFileReader
 from cl.runtime.settings.settings import Settings
 from cl.runtime.storage.local.local_cache import LocalCache
-from cl.runtime.testing.unit_test_context import UnitTestContext
+from cl.runtime.context.testing_context import TestingContext
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassRecordKey
@@ -30,7 +30,7 @@ def test_smoke():
     file_path = os.path.join(project_root, "preload/stubs/cl/runtime/csv/StubDataclassDerivedRecord.csv")
 
     # Create a new instance of local cache for the test
-    with UnitTestContext() as context:
+    with TestingContext() as context:
         # TODO: Change the API not to take record type or make it optional
         file_reader = CsvFileReader(record_type=StubDataclassDerivedRecord, file_path=file_path)
         file_reader.read()

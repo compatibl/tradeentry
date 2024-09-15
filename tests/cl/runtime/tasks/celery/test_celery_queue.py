@@ -19,9 +19,9 @@ from cl.runtime.tasks.celery.celery_queue import CeleryQueue
 from cl.runtime.tasks.celery.celery_queue import execute_task
 from cl.runtime.tasks.static_method_task import StaticMethodTask
 from cl.runtime.tasks.task import Task
-from cl.runtime.testing.celery_fixtures import celery_test_queue_fixture
-from cl.runtime.testing.celery_fixtures import check_task_run_completion
-from cl.runtime.testing.unit_test_context import UnitTestContext
+from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.tasks.task_run import TaskRun
+from cl.runtime.testing.pytest.pytest_fixtures import celery_test_queue_fixture
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
 context_serializer = DictSerializer()
@@ -39,7 +39,7 @@ def _create_task(task_id: str) -> Task:
 def test_method(celery_test_queue_fixture):
     """Test calling 'execute_task' method in-process."""
 
-    with UnitTestContext() as context:
+    with TestingContext() as context:
         # Create task
         task_id = f"test_celery_queue.test_method"
         queue_id = f"test_celery_queue.test_method"
@@ -63,7 +63,7 @@ def test_method(celery_test_queue_fixture):
 def test_api(celery_test_queue_fixture):
     """Test submitting task for execution out of process."""
 
-    with UnitTestContext() as context:
+    with TestingContext() as context:
         # Create task
         task_id = f"test_celery_queue.test_api"
         queue_id = f"test_celery_queue.test_api"
@@ -73,7 +73,7 @@ def test_api(celery_test_queue_fixture):
 
         # Submit task and check for its completion
         task_run_key = queue.submit_task(task)
-        check_task_run_completion(task_run_key)
+        TaskRun.block_until_completion(task_run_key)
 
 
 if __name__ == "__main__":

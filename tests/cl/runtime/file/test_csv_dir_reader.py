@@ -17,7 +17,7 @@ import os
 from cl.runtime.file.csv_dir_reader import CsvDirReader
 from cl.runtime.settings.settings import Settings
 from cl.runtime.storage.local.local_cache import LocalCache
-from cl.runtime.testing.unit_test_context import UnitTestContext
+from cl.runtime.context.testing_context import TestingContext
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassRecordKey
@@ -30,7 +30,7 @@ def test_smoke():
     dir_path = os.path.join(project_root, "preload/stubs/cl/runtime/csv")
 
     # Create a new instance of local cache for the test
-    with UnitTestContext() as context:
+    with TestingContext() as context:
         dir_reader = CsvDirReader(dir_path=dir_path)
         dir_reader.read()
 

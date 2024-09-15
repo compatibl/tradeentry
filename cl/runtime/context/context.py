@@ -34,7 +34,7 @@ root_context_types_str = """
 The following root context types can be used in the outermost 'with' clause:
     - ProcessContext: Context for launching a process, use in __main__
     - HandlerContext: Context for invoking a handler
-    - UnitTestContext: Context for running unit tests
+    - TestingContext: Context for running unit tests
 """
 
 

@@ -15,7 +15,7 @@
 import pytest
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.storage.mongo.basic_mongo_data_source import BasicMongoDataSource
-from cl.runtime.testing.unit_test_context import UnitTestContext
+from cl.runtime.context.testing_context import TestingContext
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecord
 
@@ -23,7 +23,7 @@ from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubD
 def test_check_data_source_id():
     """Test '_get_db_name' method."""
 
-    with UnitTestContext() as context:
+    with TestingContext() as context:
         # Check for length
         BasicMongoDataSource.check_data_source_id("a" * 63)
         with pytest.raises(RuntimeError):
@@ -68,7 +68,7 @@ def test_load_filter():
     """Test 'load_filter' method."""
 
     data_source_class = ClassInfo.get_class_path(BasicMongoDataSource)
-    with UnitTestContext(data_source_class=data_source_class) as context:
+    with TestingContext(data_source_class=data_source_class) as context:
         # Create test record and populate with sample data
         offset = 0
         matching_records = [StubDataclassDerivedRecord(id=str(offset + i), derived_field="a") for i in range(2)]
@@ -87,7 +87,7 @@ def test_smoke():
 
     # TODO: Do not hardcode DB name
     data_source_class = ClassInfo.get_class_path(BasicMongoDataSource)
-    with UnitTestContext(data_source_class=data_source_class) as context:
+    with TestingContext(data_source_class=data_source_class) as context:
         # Create test record and populate with sample data
         record = StubDataclassRecord()
         key = record.get_key()

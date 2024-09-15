@@ -19,16 +19,16 @@ from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.settings.settings import is_inside_test
 from cl.runtime.storage.dataset_util import DatasetUtil
-from cl.runtime.testing.unit_test_util import UnitTestUtil
+from cl.runtime.testing.testing_util import TestingUtil
 
 
 @dataclass(slots=True, kw_only=True)
-class UnitTestContext(Context):
+class TestingContext(Context):
     """
     Utilities for both pytest and unittest.
 
     Notes:
-        - The name UnitTestUtil was selected to avoid Test prefix and does not indicate it is for unittest package only
+        - The name TestingUtil was selected to avoid Test prefix and does not indicate it is for unittest package only
         - This module not itself import pytest or unittest package
     """
 
@@ -42,14 +42,14 @@ class UnitTestContext(Context):
         if not self.is_deserialized:
             # Confirm we are inside a test, error otherwise
             if not is_inside_test:
-                raise RuntimeError(f"UnitTestContext created outside a test.")
+                raise RuntimeError(f"TestingContext created outside a test.")
 
             # Get test name in 'module.test_function' or 'module.TestClass.test_method' format inside a test
             context_settings = ContextSettings.instance()
 
             # Use test name in dot-delimited format for context_id unless specified by the caller
             if self.context_id is None:
-                test_name = UnitTestUtil.get_test_name()
+                test_name = TestingUtil.get_test_name()
                 self.context_id = test_name
 
             # TODO: Set log field here explicitly instead of relying on implicit detection of test environment

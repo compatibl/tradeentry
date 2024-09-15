@@ -14,7 +14,7 @@
 
 import pytest
 import os
-from cl.runtime.testing.pytest_fixtures import local_dir_fixture
+from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
 
 
 def _normalize_path(path: str) -> str:

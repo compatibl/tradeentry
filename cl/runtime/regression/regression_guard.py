@@ -30,7 +30,7 @@ from cl.runtime.records.protocols import is_record
 from cl.runtime.schema.field_decl import primitive_types
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.testing.stack_util import StackUtil
+from cl.runtime.regression.stack_util import StackUtil
 
 supported_extensions = ["txt"]
 """The list of supported output file extensions (formats)."""

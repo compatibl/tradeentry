@@ -15,7 +15,7 @@
 import pytest
 from cl.runtime import LocalCache
 from cl.runtime.settings.aliases.package_alias import PackageAlias
-from cl.runtime.testing.unit_test_context import UnitTestContext
+from cl.runtime.context.testing_context import TestingContext
 
 
 @pytest.mark.skip("Temporarily disabled during refactoring.")  # TODO: Switch to new classes and enable

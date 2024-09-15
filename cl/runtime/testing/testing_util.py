@@ -13,16 +13,15 @@
 # limitations under the License.
 
 import os
-import sys
-from cl.runtime.testing.stack_util import StackUtil
+from cl.runtime.regression.stack_util import StackUtil
 
 
-class UnitTestUtil:
+class TestingUtil:
     """
     Utilities for both pytest and unittest.
 
     Notes:
-        - The name UnitTestUtil was selected to avoid Test prefix and does not indicate it is for unittest package only
+        - The name TestingUtil was selected to avoid Test prefix and does not indicate it is for unittest package only
         - This module not itself import pytest or unittest package and therefore can be used in non-test code
     """
 

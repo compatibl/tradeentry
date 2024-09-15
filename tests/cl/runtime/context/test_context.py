@@ -14,7 +14,7 @@
 
 import pytest
 from cl.runtime.context.context import Context
-from cl.runtime.testing.unit_test_context import UnitTestContext
+from cl.runtime.context.testing_context import TestingContext
 
 
 def test_context_manager():
@@ -24,7 +24,7 @@ def test_context_manager():
     with pytest.raises(RuntimeError):
         Context.current()
 
-    with UnitTestContext() as current_context_1:
+    with TestingContext() as current_context_1:
         # Check that current context is set inside 'with Context(...)' clause
         assert Context.current() is current_context_1
 

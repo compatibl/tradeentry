@@ -25,7 +25,7 @@ from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.tasks.instance_method_task import InstanceMethodTask
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_status import TaskStatus
-from cl.runtime.testing.unit_test_context import UnitTestContext
+from cl.runtime.context.testing_context import TestingContext
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
 
@@ -65,8 +65,8 @@ requests = [
 def test_method():
     """Test coroutine for /tasks/run/result route."""
 
-    # TODO: Use UnitTestContext instead
-    with UnitTestContext() as context:
+    # TODO: Use TestingContext instead
+    with TestingContext() as context:
         context.save_many(tasks)
         context.save_many(task_runs)
 
@@ -87,8 +87,8 @@ def test_method():
 def test_api():
     """Test REST API for /tasks/run/result route."""
 
-    # TODO: Use UnitTestContext instead
-    with UnitTestContext() as context:
+    # TODO: Use TestingContext instead
+    with TestingContext() as context:
         context.save_many(tasks)
         context.save_many(task_runs)
 

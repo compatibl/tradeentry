@@ -18,7 +18,7 @@ from typing import Any
 from typing import Iterable
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.storage.sql.sqlite_data_source import SqliteDataSource
-from cl.runtime.testing.unit_test_context import UnitTestContext
+from cl.runtime.context.testing_context import TestingContext
 from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassDictFields
@@ -49,7 +49,7 @@ def _assert_equals_iterable_without_ordering(iterable: Iterable[Any], other_iter
 
 def test_smoke():
     data_source_class = ClassInfo.get_class_path(SqliteDataSource)
-    with UnitTestContext(data_source_class=data_source_class) as context:
+    with TestingContext(data_source_class=data_source_class) as context:
         record = StubDataclassRecord()
         context.save_many([record, record])
 
@@ -60,7 +60,7 @@ def test_smoke():
 
 def test_complex_records():
     data_source_class = ClassInfo.get_class_path(SqliteDataSource)
-    with UnitTestContext(data_source_class=data_source_class) as context:
+    with TestingContext(data_source_class=data_source_class) as context:
         samples = [
             StubDataclassRecord(id="abc1"),
             StubDataclassNestedFields(primitive="abc2"),
@@ -86,7 +86,7 @@ def test_complex_records():
 
 def test_basic_operations():
     data_source_class = ClassInfo.get_class_path(SqliteDataSource)
-    with UnitTestContext(data_source_class=data_source_class) as context:
+    with TestingContext(data_source_class=data_source_class) as context:
         samples = [
             StubDataclassRecord(id="abc1"),
             StubDataclassNestedFields(primitive="abc2"),
@@ -127,7 +127,7 @@ def test_basic_operations():
 
 def test_record_upsert():
     data_source_class = ClassInfo.get_class_path(SqliteDataSource)
-    with UnitTestContext(data_source_class=data_source_class) as context:
+    with TestingContext(data_source_class=data_source_class) as context:
         # create sample and save
         sample = StubDataclassRecord()
         context.save_one(sample)
@@ -148,7 +148,7 @@ def test_record_upsert():
 
 def test_load_all():
     data_source_class = ClassInfo.get_class_path(SqliteDataSource)
-    with UnitTestContext(data_source_class=data_source_class) as context:
+    with TestingContext(data_source_class=data_source_class) as context:
         base_samples = [
             StubDataclassRecord(id="base1"),
             StubDataclassRecord(id="base2"),
@@ -178,7 +178,7 @@ def test_load_all():
 @pytest.mark.skip("Performance test.")
 def test_performance():
     data_source_class = ClassInfo.get_class_path(SqliteDataSource)
-    with UnitTestContext(data_source_class=data_source_class) as context:
+    with TestingContext(data_source_class=data_source_class) as context:
         n = 1000
         samples = [StubDataclassPrimitiveFields(key_str_field=f"key{i}") for i in range(n)]
         sample_keys = [sample.get_key() for sample in samples]
@@ -210,7 +210,7 @@ def test_performance():
 
 def test_singleton():
     data_source_class = ClassInfo.get_class_path(SqliteDataSource)
-    with UnitTestContext(data_source_class=data_source_class) as context:
+    with TestingContext(data_source_class=data_source_class) as context:
         singleton_sample = StubDataclassSingleton()
         context.save_one(singleton_sample)
         loaded_sample = context.load_one(StubDataclassSingleton, singleton_sample.get_key())

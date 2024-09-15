@@ -13,13 +13,13 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.testing.unit_test_context import UnitTestContext
+from cl.runtime.context.testing_context import TestingContext
 
 
 def test_smoke():
     """Test get_base_path in a test function."""
 
-    with UnitTestContext() as context:
+    with TestingContext() as context:
         assert context.context_id == "test_unit_test_context.test_smoke"
         assert context.data_source.data_source_id == "temp;" + context.context_id.replace(".", ";")
 
