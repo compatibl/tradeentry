@@ -20,11 +20,10 @@ from cl.convince.llm.anthropic_llm import AnthropicLlm
 def test_smoke():
     """Test AnthropicLlm class."""
 
-    llms = [
-        AnthropicLlm(llm_id="claude-3-haiku-20240307"),
-    ]
-
     with TestingContext():
+        llms = [
+            AnthropicLlm(llm_id="claude-3-haiku-20240307"),
+        ]
         for llm in llms:
             assert "4" in llm.completion("2 times 2?")
 

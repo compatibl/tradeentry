@@ -20,11 +20,10 @@ from cl.convince.llm.openai_llm import OpenaiLlm
 def test_smoke():
     """Test OpenaiLlm class."""
 
-    llms = [
-        OpenaiLlm(llm_id="gpt-4o-mini"),
-    ]
-
     with TestingContext():
+        llms = [
+            OpenaiLlm(llm_id="gpt-4o-mini"),
+        ]
         for llm in llms:
             assert "4" in llm.completion("2 times 2?")
 

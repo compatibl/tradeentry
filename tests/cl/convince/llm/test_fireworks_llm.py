@@ -20,11 +20,10 @@ from cl.convince.llm.fireworks_llm import FireworksLlm
 def test_smoke():
     """Test FireworksLlm class."""
 
-    llms = [
-        FireworksLlm(llm_id="llama-v3-8b-instruct"),
-    ]
-
     with TestingContext():
+        llms = [
+            FireworksLlm(llm_id="llama-v3-8b-instruct"),
+        ]
         for llm in llms:
             assert "4" in llm.completion("2 times 2?")
 
