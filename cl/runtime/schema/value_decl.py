@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.primitive.primitive_util import PrimitiveUtil
-from cl.runtime.records.dataclasses_extensions import missing
 from dataclasses import dataclass
 from typing import Literal
 from typing import Type
 from typing_extensions import Self
+from cl.runtime.primitive.primitive_util import PrimitiveUtil
+from cl.runtime.records.dataclasses_extensions import missing
 
 PrimitiveTypeLiteral = Literal["String", "Double", "Bool", "Int", "Long", "Date", "Time", "DateTime", "UUID", "Binary"]
 

@@ -14,13 +14,13 @@
 
 import logging
 import os
+from dataclasses import dataclass
+from typing import Iterable
+from concurrent_log_handler import ConcurrentRotatingFileHandler
 from cl.runtime.log.log import Log
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.settings.log_settings import LogSettings
 from cl.runtime.settings.settings import Settings
-from concurrent_log_handler import ConcurrentRotatingFileHandler
-from dataclasses import dataclass
-from typing import Iterable
 
 
 def _get_log_filename() -> str:

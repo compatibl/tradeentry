@@ -13,10 +13,10 @@
 # limitations under the License.
 
 import datetime as dt
-import uuid_utils
 from typing import Iterable
 from typing import cast
 from uuid import UUID
+import uuid_utils
 
 
 def _get_uuid7() -> UUID:

@@ -13,9 +13,9 @@
 # limitations under the License.
 
 from abc import abstractmethod
-from cl.runtime.records.protocols import KeyProtocol
 from typing import Generic
 from typing import TypeVar
+from cl.runtime.records.protocols import KeyProtocol
 
 TKey = TypeVar("TKey", bound=KeyProtocol)
 

@@ -12,15 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from enum import Enum
+from typing import Any
+from typing import List
+from typing_extensions import Dict
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.dict_serializer import _get_class_hierarchy_slots
 from cl.runtime.serialization.string_serializer import StringSerializer
-from enum import Enum
-from typing import Any
-from typing import List
-from typing_extensions import Dict
 
 
 class UiDictSerializer(DictSerializer):

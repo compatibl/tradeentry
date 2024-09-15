@@ -14,6 +14,10 @@
 
 import ast
 import dataclasses
+from typing import Any
+from typing import Dict
+from typing import List
+from pydantic import BaseModel
 from cl.runtime.context.context import Context
 from cl.runtime.routers.entity.panel_request import PanelRequest
 from cl.runtime.routers.response_util import to_legacy_dict
@@ -21,10 +25,6 @@ from cl.runtime.routers.response_util import to_record_dict
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.string_serializer import StringSerializer
-from pydantic import BaseModel
-from typing import Any
-from typing import Dict
-from typing import List
 
 PanelResponseData = Dict[str, Any] | List[Dict[str, Any]] | None
 

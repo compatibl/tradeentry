@@ -14,6 +14,9 @@
 
 import os
 import uvicorn
+from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
+from starlette.staticfiles import StaticFiles
 from cl.runtime.context.process_context import ProcessContext
 from cl.runtime.routers.auth import auth_router
 from cl.runtime.routers.entity import entity_router
@@ -26,9 +29,6 @@ from cl.runtime.settings.preload_settings import PreloadSettings
 from cl.runtime.settings.settings import Settings
 from cl.runtime.tasks.celery.celery_queue import celery_delete_existing_tasks
 from cl.runtime.tasks.celery.celery_queue import celery_start_queue
-from fastapi import FastAPI
-from starlette.middleware.cors import CORSMiddleware
-from starlette.staticfiles import StaticFiles
 from stubs.cl.runtime.config.stub_runtime_config import StubRuntimeConfig  # TODO: Remove after refactoring
 
 # Server

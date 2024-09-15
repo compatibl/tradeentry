@@ -13,10 +13,10 @@
 # limitations under the License.
 
 import pytest
+from typing import cast
 from cl.runtime.records.generic_key import GenericKey
 from cl.runtime.records.generic_record import GenericRecord
 from cl.runtime.view.view_key import ViewKey
-from typing import cast
 
 
 @pytest.mark.skip("Generic keys and records are not yet supported.")

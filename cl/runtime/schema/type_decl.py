@@ -13,10 +13,25 @@
 # limitations under the License.
 
 from __future__ import annotations
-
 import ast
 import dataclasses
 import inspect
+from dataclasses import asdict
+from dataclasses import dataclass
+from enum import Enum
+from itertools import tee
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Literal
+from typing import Optional
+from typing import Set
+from typing import Type
+from typing import get_type_hints
+from inflection import camelize
+from inflection import titleize
+from memoization import cached
+from typing_extensions import Self
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.key_util import KeyUtil
 from cl.runtime.records.record_mixin import RecordMixin
@@ -26,22 +41,6 @@ from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from cl.runtime.schema.type_kind import TypeKind
-from dataclasses import asdict
-from dataclasses import dataclass
-from enum import Enum
-from inflection import camelize
-from inflection import titleize
-from itertools import tee
-from memoization import cached
-from typing import Any
-from typing import Dict
-from typing import List
-from typing import Literal
-from typing import Optional
-from typing import Set
-from typing import Type
-from typing import get_type_hints
-from typing_extensions import Self
 
 DisplayKindLiteral = Literal["Basic", "Singleton", "Dashboard"]
 

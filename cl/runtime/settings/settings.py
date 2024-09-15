@@ -13,22 +13,21 @@
 # limitations under the License.
 
 from __future__ import annotations
-
 import os
 from abc import ABC
 from abc import abstractmethod
-from cl.runtime.testing.stack_util import StackUtil
 from dataclasses import MISSING
 from dataclasses import dataclass
-from dotenv import find_dotenv
-from dotenv import load_dotenv
-from dynaconf import Dynaconf
 from typing import ClassVar
 from typing import Dict
 from typing import Iterable
 from typing import List
 from typing import Type
+from dotenv import find_dotenv
+from dotenv import load_dotenv
+from dynaconf import Dynaconf
 from typing_extensions import Self
+from cl.runtime.testing.stack_util import StackUtil
 
 # Load dotenv first (the priority order is envvars first, then dotenv, then settings.toml and .secrets.toml)
 load_dotenv()

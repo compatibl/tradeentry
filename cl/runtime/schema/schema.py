@@ -13,19 +13,11 @@
 # limitations under the License.
 
 from __future__ import annotations
-
 import importlib
 import inspect
-from cl.runtime.records.class_info import ClassInfo
-from cl.runtime.records.protocols import KeyProtocol
-from cl.runtime.schema.type_decl import TypeDecl
-from cl.runtime.schema.type_decl import pascalize
-from cl.runtime.schema.type_decl_key import TypeDeclKey
-from cl.runtime.settings.context_settings import ContextSettings
 from collections import Counter
 from collections import defaultdict
 from enum import Enum
-from memoization import cached
 from pkgutil import walk_packages
 from types import ModuleType
 from typing import Dict
@@ -33,7 +25,14 @@ from typing import Iterable
 from typing import List
 from typing import Type
 from typing import cast
+from memoization import cached
 from typing_extensions import Self
+from cl.runtime.records.class_info import ClassInfo
+from cl.runtime.records.protocols import KeyProtocol
+from cl.runtime.schema.type_decl import TypeDecl
+from cl.runtime.schema.type_decl import pascalize
+from cl.runtime.schema.type_decl_key import TypeDeclKey
+from cl.runtime.settings.context_settings import ContextSettings
 
 
 def is_key_record_or_enum(data_type):

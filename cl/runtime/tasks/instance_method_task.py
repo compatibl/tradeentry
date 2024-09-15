@@ -13,6 +13,10 @@
 # limitations under the License.
 
 import inspect
+from dataclasses import dataclass
+from typing import Any
+from typing import Callable
+from typing_extensions import Self
 from cl.runtime import ClassInfo
 from cl.runtime.context.context import Context
 from cl.runtime.records.dataclasses_extensions import missing
@@ -22,10 +26,6 @@ from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.tasks.callable_task import CallableTask
 from cl.runtime.tasks.task_key import TaskKey
-from dataclasses import dataclass
-from typing import Any
-from typing import Callable
-from typing_extensions import Self
 
 key_serializer = StringSerializer()
 param_dict_serializer = DictSerializer()  # TODO: Support complex params

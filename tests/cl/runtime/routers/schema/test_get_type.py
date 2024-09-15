@@ -12,15 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import pytest
 import json
 import os
-import pytest
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
 from cl.runtime.routers.schema import schema_router
 from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
 from cl.runtime.testing.regression_guard import RegressionGuard
-from fastapi import FastAPI
-from fastapi.testclient import TestClient
 
 requests = [{"name": "UiAppState"}, {"name": "UiAppState", "user": "TestUser"}]
 

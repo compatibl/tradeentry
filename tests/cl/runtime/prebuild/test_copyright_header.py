@@ -13,8 +13,8 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.prebuild.copyright_header import check_copyright_header
 from pathlib import Path
+from cl.runtime.prebuild.copyright_header import check_copyright_header
 
 
 def test_init_files():

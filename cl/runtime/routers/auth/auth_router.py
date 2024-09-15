@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import List
+from fastapi import APIRouter
+from fastapi import Header
 from cl.runtime.routers.auth.auth_types_response import AuthTypesResponseItem
 from cl.runtime.routers.auth.me_response import MeResponse
 from cl.runtime.routers.user_request import UserRequest
-from fastapi import APIRouter
-from fastapi import Header
-from typing import List
 
 AuthTypesResponse = List[AuthTypesResponseItem]
 router = APIRouter()

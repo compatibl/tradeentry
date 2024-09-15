@@ -13,12 +13,12 @@
 # limitations under the License.
 
 import os
+from dataclasses import dataclass
+from typing import List
 from cl.runtime.context.context import Context
 from cl.runtime.file.csv_dir_reader import CsvDirReader
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.settings.settings import Settings
-from dataclasses import dataclass
-from typing import List
 
 
 @dataclass(slots=True, kw_only=True)

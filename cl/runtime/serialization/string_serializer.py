@@ -14,6 +14,13 @@
 
 import base64
 import datetime as dt
+from enum import Enum
+from typing import Any
+from typing import Dict
+from typing import Iterator
+from typing import List
+from typing import Type
+from uuid import UUID
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.schema.schema import Schema
 
@@ -22,13 +29,6 @@ from cl.runtime.serialization.dict_serializer import alias_dict
 from cl.runtime.serialization.dict_serializer import get_type_dict
 from cl.runtime.serialization.string_value_parser import StringValueCustomType
 from cl.runtime.serialization.string_value_parser import StringValueParser
-from enum import Enum
-from typing import Any
-from typing import Dict
-from typing import Iterator
-from typing import List
-from typing import Type
-from uuid import UUID
 
 primitive_type_names = ["NoneType", "str", "float", "int", "bool", "date", "time", "datetime", "bytes", "UUID"]
 """Detect primitive type by checking if class name is in this list."""

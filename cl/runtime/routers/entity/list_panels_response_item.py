@@ -13,13 +13,12 @@
 # limitations under the License.
 
 from __future__ import annotations
-
+from typing import List
+from pydantic import BaseModel
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.schema import Schema
-from pydantic import BaseModel
-from typing import List
 
 
 class ListPanelsResponseItem(BaseModel):

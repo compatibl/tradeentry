@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.protocols import KeyProtocol
-from cl.runtime.records.protocols import RecordProtocol
-from cl.runtime.storage.data_source_types import TQuery
 from typing import Iterable
 from typing import Protocol
 from typing import Type
 from typing import TypeVar
+from cl.runtime.records.protocols import KeyProtocol
+from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.storage.data_source_types import TQuery
 
 TRecord = TypeVar("TRecord")
 TKey = TypeVar("TKey")

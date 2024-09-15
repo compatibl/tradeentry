@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.routers.health.health_response import HealthResponse
-from cl.runtime.routers.user_request import UserRequest
 from fastapi import APIRouter
 from fastapi import Header
+from cl.runtime.routers.health.health_response import HealthResponse
+from cl.runtime.routers.user_request import UserRequest
 
 router = APIRouter()
 

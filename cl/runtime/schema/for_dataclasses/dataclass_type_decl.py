@@ -13,16 +13,16 @@
 # limitations under the License.
 
 import dataclasses
+from dataclasses import dataclass
+from typing import Set
+from typing import Type
+from typing import get_type_hints
+from memoization import cached
+from typing_extensions import Self
 from cl.runtime.schema.element_decl import ElementDecl
 from cl.runtime.schema.for_dataclasses.dataclass_field_decl import DataclassFieldDecl
 from cl.runtime.schema.type_decl import TypeDecl
 from cl.runtime.schema.type_decl import for_type_key_maker
-from dataclasses import dataclass
-from memoization import cached
-from typing import Set
-from typing import Type
-from typing import get_type_hints
-from typing_extensions import Self
 
 
 @dataclass(slots=True, kw_only=True)

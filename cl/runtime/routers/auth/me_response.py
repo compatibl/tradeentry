@@ -13,10 +13,9 @@
 # limitations under the License.
 
 from __future__ import annotations
-
-from cl.runtime.routers.user_request import UserRequest
-from pydantic import BaseModel
 from typing import List
+from pydantic import BaseModel
+from cl.runtime.routers.user_request import UserRequest
 
 
 class MeResponse(BaseModel):

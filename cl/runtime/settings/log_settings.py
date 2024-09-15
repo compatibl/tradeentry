@@ -13,9 +13,9 @@
 # limitations under the License.
 
 import datetime as dt
+from dataclasses import dataclass
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.settings.settings import Settings
-from dataclasses import dataclass
 
 
 @dataclass(slots=True, kw_only=True)

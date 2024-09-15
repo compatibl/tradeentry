@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.schema.module_decl_key import ModuleDeclKey
-from dataclasses import dataclass
 
 
 @dataclass(slots=True, kw_only=True)

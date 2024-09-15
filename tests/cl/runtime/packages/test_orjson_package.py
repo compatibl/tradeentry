@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import orjson
 import pytest
+import orjson
 from stubs.cl.runtime.records.stub_dict_util import StubDictUtil
 
 

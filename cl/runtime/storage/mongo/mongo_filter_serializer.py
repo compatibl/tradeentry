@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.protocols import RecordProtocol
-from cl.runtime.serialization.dict_serializer import _get_class_hierarchy_slots  # TODO: Move to ClassInfo
-from cl.runtime.storage.data_source_types import TDataDict
 from dataclasses import dataclass
 from typing import Any
 from typing import ClassVar
 from typing import Dict
 from typing import Type
+from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.serialization.dict_serializer import _get_class_hierarchy_slots  # TODO: Move to ClassInfo
+from cl.runtime.storage.data_source_types import TDataDict
 
 
 @dataclass(slots=True, kw_only=True)

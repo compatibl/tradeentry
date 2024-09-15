@@ -13,9 +13,13 @@
 # limitations under the License.
 
 from __future__ import annotations
-
 import dataclasses
+from typing import Any
+from typing import Dict
+from typing import List
 import inflection
+from pydantic import BaseModel
+from pydantic import Field
 from cl.runtime import Context
 from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.backend.core.ui_app_state_key import UiAppStateKey
@@ -29,11 +33,6 @@ from cl.runtime.schema.schema import Schema
 from cl.runtime.schema.type_decl import pascalize
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.serialization.ui_dict_serializer import UiDictSerializer
-from pydantic import BaseModel
-from pydantic import Field
-from typing import Any
-from typing import Dict
-from typing import List
 
 RecordResponseSchema = Dict[str, Any]
 RecordResponseData = Dict[str, Any]

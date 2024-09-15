@@ -13,8 +13,14 @@
 # limitations under the License.
 
 from __future__ import annotations
-
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Tuple
+from typing import Type
 import inflection
+from pydantic import BaseModel
+from pydantic import Field
 from cl.runtime.context.context import Context
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.routers.schema.type_request import TypeRequest
@@ -24,13 +30,6 @@ from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.serialization.ui_dict_serializer import UiDictSerializer
 from cl.runtime.storage.data_source_types import TPrimitive
-from pydantic import BaseModel
-from pydantic import Field
-from typing import Any
-from typing import Dict
-from typing import List
-from typing import Tuple
-from typing import Type
 
 SelectResponseSchema = Dict[str, Any]
 SelectResponseData = List[Dict[str, Any]]

@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.records.key_mixin import KeyMixin
-from cl.runtime.storage.data_source_types import TDataField
 from typing import Dict
 from typing import Type
+from cl.runtime.records.key_mixin import KeyMixin
+from cl.runtime.storage.data_source_types import TDataField
 
 
 class StubCustomBaseKey(KeyMixin):

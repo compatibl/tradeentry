@@ -14,9 +14,9 @@
 
 from abc import ABC
 from abc import abstractmethod
+from dataclasses import dataclass
 from cl.runtime.config.config_key import ConfigKey
 from cl.runtime.records.record_mixin import RecordMixin
-from dataclasses import dataclass
 
 
 @dataclass(slots=True, kw_only=True)

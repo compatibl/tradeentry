@@ -13,8 +13,8 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.prebuild.init_files import check_init_files
 from pathlib import Path
+from cl.runtime.prebuild.init_files import check_init_files
 
 
 def test_init_files():

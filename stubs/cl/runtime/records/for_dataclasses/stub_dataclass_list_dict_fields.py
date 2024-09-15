@@ -13,9 +13,11 @@
 # limitations under the License.
 
 import datetime as dt
+from dataclasses import dataclass
+from typing import Dict
+from typing import List
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.dataclasses_extensions import missing
-from dataclasses import dataclass
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_data import StubDataclassData
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_derived_record import StubDataclassDerivedRecord
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_list_fields import stub_dataclass_data_list_factory
@@ -29,8 +31,6 @@ from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_list_fields import 
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_list_fields import stub_dataclass_str_list_factory
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecord
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecordKey
-from typing import Dict
-from typing import List
 
 
 def stub_dataclass_str_list_dict_factory() -> Dict[str, List[str]]:

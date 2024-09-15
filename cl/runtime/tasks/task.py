@@ -14,6 +14,7 @@
 
 from abc import ABC
 from abc import abstractmethod
+from dataclasses import dataclass
 from cl.runtime.context.context import Context
 from cl.runtime.decorators.handler_decorator import handler
 from cl.runtime.records.record_mixin import RecordMixin
@@ -21,7 +22,6 @@ from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
 from cl.runtime.tasks.task_queue_key import TaskQueueKey
 from cl.runtime.tasks.task_run_key import TaskRunKey
-from dataclasses import dataclass
 
 
 @dataclass(slots=True, kw_only=True)

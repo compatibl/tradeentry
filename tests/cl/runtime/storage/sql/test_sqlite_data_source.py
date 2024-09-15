@@ -14,6 +14,8 @@
 
 import pytest
 import time
+from typing import Any
+from typing import Iterable
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.storage.sql.sqlite_data_source import SqliteDataSource
 from cl.runtime.testing.unit_test_context import UnitTestContext
@@ -29,8 +31,6 @@ from stubs.cl.runtime import StubDataclassOtherDerivedRecord
 from stubs.cl.runtime import StubDataclassPrimitiveFields
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassSingleton
-from typing import Any
-from typing import Iterable
 
 
 def _assert_equals_iterable_without_ordering(iterable: Iterable[Any], other_iterable: Iterable[Any]) -> bool:

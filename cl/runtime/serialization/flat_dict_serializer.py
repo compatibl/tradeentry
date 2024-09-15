@@ -15,12 +15,12 @@
 import base64
 import datetime as dt
 import json
+from typing import List
+from uuid import UUID
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_value_parser import StringValueCustomType
 from cl.runtime.serialization.string_value_parser import StringValueParser
 from cl.runtime.storage.data_source_types import TDataDict
-from typing import List
-from uuid import UUID
 
 
 class FlatDictSerializer(DictSerializer):

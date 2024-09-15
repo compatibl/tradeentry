@@ -13,8 +13,8 @@
 # limitations under the License.
 
 import datetime as dt
-from cl.runtime.storage.data_source_types import TDataDict
 from uuid import UUID
+from cl.runtime.storage.data_source_types import TDataDict
 
 
 class StubDictUtil:

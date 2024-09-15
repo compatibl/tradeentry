@@ -13,13 +13,13 @@
 # limitations under the License.
 
 import pytest
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
 from cl.runtime.routers.storage import storage_router
 from cl.runtime.routers.storage.record_request import RecordRequest
 from cl.runtime.routers.storage.record_response import RecordResponse
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.runtime.testing.unit_test_context import UnitTestContext
-from fastapi import FastAPI
-from fastapi.testclient import TestClient
 from stubs.cl.runtime import StubDataclassRecord
 
 

@@ -13,11 +13,11 @@
 # limitations under the License.
 
 import inspect
-from cl.runtime.schema.field_decl import FieldDecl
 from dataclasses import Field
 from dataclasses import dataclass
 from typing import Type
 from typing_extensions import Self
+from cl.runtime.schema.field_decl import FieldDecl
 
 
 @dataclass(slots=True, kw_only=True)

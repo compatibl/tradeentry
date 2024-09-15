@@ -13,11 +13,11 @@
 # limitations under the License.
 
 import pytest
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
 from cl.runtime.routers.schema import schema_router
 from cl.runtime.routers.schema.types_response_item import TypesResponseItem
 from cl.runtime.routers.user_request import UserRequest
-from fastapi import FastAPI
-from fastapi.testclient import TestClient
 
 requests = [{}, {"user": "TestUser"}]
 

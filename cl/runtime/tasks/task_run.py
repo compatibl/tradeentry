@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import datetime as dt
+from dataclasses import dataclass
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
@@ -20,7 +21,6 @@ from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue_key import TaskQueueKey
 from cl.runtime.tasks.task_run_key import TaskRunKey
 from cl.runtime.tasks.task_status import TaskStatus
-from dataclasses import dataclass
 
 
 @dataclass(slots=True, kw_only=True)

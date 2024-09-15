@@ -15,14 +15,13 @@
 # TODO (Roman): use ui serialization, probably this file will be deprecated
 
 from __future__ import annotations
-
 import dataclasses
-from cl.runtime.schema.field_decl import primitive_types  # TODO: Move definition to a separate module
-from cl.runtime.schema.type_decl import pascalize
 from enum import Enum
 from typing import Any
 from typing import Dict
 from typing import List
+from cl.runtime.schema.field_decl import primitive_types  # TODO: Move definition to a separate module
+from cl.runtime.schema.type_decl import pascalize
 
 
 def to_record_dict(node):  # TODO: Apply type hints

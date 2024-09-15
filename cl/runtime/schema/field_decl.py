@@ -15,15 +15,15 @@
 import datetime as dt
 import types
 import typing
-from cl.runtime.records.class_info import ClassInfo
-from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.schema.field_kind import FieldKind
 from dataclasses import dataclass
 from enum import Enum
 from typing import Literal
 from typing import Type
-from typing_extensions import Self
 from uuid import UUID
+from typing_extensions import Self
+from cl.runtime.records.class_info import ClassInfo
+from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.schema.field_kind import FieldKind
 
 primitive_types = (str, float, bool, int, dt.date, dt.time, dt.datetime, UUID, bytes)
 """Tuple of primitive types."""

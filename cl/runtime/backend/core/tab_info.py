@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
+from typing import Tuple
 from cl.runtime.backend.core.base_type_info import BaseTypeInfo
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.dataclasses_extensions import missing
-from dataclasses import dataclass
-from typing import Tuple
 
 
 @dataclass(slots=True, kw_only=True)

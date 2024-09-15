@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import datetime as dt
 import pytest
-from cl.runtime.primitive.time_util import TimeUtil
+import datetime as dt
 from typing import List
 from typing import Tuple
 from zoneinfo import ZoneInfo
+from cl.runtime.primitive.time_util import TimeUtil
 
 
 def get_valid_samples() -> List[Tuple[int, str]]:

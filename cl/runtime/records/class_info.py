@@ -15,10 +15,10 @@
 import sys
 from abc import ABC
 from importlib import import_module
-from memoization import cached  # TODO: Replace cached package by custom caching for better performance
 from typing import List
 from typing import Tuple
 from typing import Type
+from memoization import cached  # TODO: Replace cached package by custom caching for better performance
 
 
 class ClassInfo(ABC):

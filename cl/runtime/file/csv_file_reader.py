@@ -13,13 +13,13 @@
 # limitations under the License.
 
 import csv
-from cl.runtime import Context
-from cl.runtime.file.reader import Reader
-from cl.runtime.records.protocols import RecordProtocol
 from dataclasses import dataclass
 from typing import Any
 from typing import Dict
 from typing import Type
+from cl.runtime import Context
+from cl.runtime.file.reader import Reader
+from cl.runtime.records.protocols import RecordProtocol
 
 
 @dataclass(slots=True, kw_only=True)

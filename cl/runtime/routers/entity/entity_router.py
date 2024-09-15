@@ -12,16 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import Any
+from typing import Dict
+from typing import List
+from fastapi import APIRouter
+from fastapi import Header
+from fastapi import Query
 from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
 from cl.runtime.routers.entity.list_panels_response_item import ListPanelsResponseItem
 from cl.runtime.routers.entity.panel_request import PanelRequest
 from cl.runtime.routers.entity.panel_response_util import PanelResponseUtil
-from fastapi import APIRouter
-from fastapi import Header
-from fastapi import Query
-from typing import Any
-from typing import Dict
-from typing import List
 
 ListPanelsResponse = List[ListPanelsResponseItem]
 PanelResponseDataItem = Dict[str, Any]

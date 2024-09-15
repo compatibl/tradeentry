@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.primitive.float_util import FloatUtil
 from typing import List
+from cl.runtime.primitive.float_util import FloatUtil
 
 
 class StubFloatUtil:

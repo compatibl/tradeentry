@@ -14,6 +14,14 @@
 
 import os
 import sqlite3
+from collections import defaultdict
+from dataclasses import dataclass
+from itertools import groupby
+from typing import Any
+from typing import Dict
+from typing import Iterable
+from typing import Tuple
+from typing import Type
 from cl.runtime.context.context import Context
 from cl.runtime.file.file_util import FileUtil
 from cl.runtime.records.protocols import KeyProtocol
@@ -25,14 +33,6 @@ from cl.runtime.storage.data_source import DataSource
 from cl.runtime.storage.protocols import TKey
 from cl.runtime.storage.protocols import TRecord
 from cl.runtime.storage.sql.sqlite_schema_manager import SqliteSchemaManager
-from collections import defaultdict
-from dataclasses import dataclass
-from itertools import groupby
-from typing import Any
-from typing import Dict
-from typing import Iterable
-from typing import Tuple
-from typing import Type
 
 _connection_dict: Dict[str, sqlite3.Connection] = {}
 """Dict of Connection instances with data_source_id key stored outside the class to avoid serialization."""

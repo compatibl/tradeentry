@@ -13,11 +13,10 @@
 # limitations under the License.
 
 from __future__ import annotations
-
-from cl.runtime.storage.protocols import DataSourceProtocol
 from logging import Logger
 from typing import ClassVar
 from typing import Protocol
+from cl.runtime.storage.protocols import DataSourceProtocol
 
 
 class ProgressProtocol(Protocol):

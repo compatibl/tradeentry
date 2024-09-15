@@ -13,14 +13,6 @@
 # limitations under the License.
 
 from __future__ import annotations
-
-from cl.runtime.records.protocols import KeyProtocol
-from cl.runtime.records.protocols import RecordProtocol
-from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.storage.data_source_types import TQuery
-from cl.runtime.storage.dataset_util import DatasetUtil
-from cl.runtime.storage.protocols import TKey
-from cl.runtime.storage.protocols import TRecord
 from dataclasses import dataclass
 from dataclasses import field
 from typing import ClassVar
@@ -29,6 +21,13 @@ from typing import Iterable
 from typing import Type
 from typing import cast
 from typing_extensions import Self
+from cl.runtime.records.protocols import KeyProtocol
+from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.serialization.string_serializer import StringSerializer
+from cl.runtime.storage.data_source_types import TQuery
+from cl.runtime.storage.dataset_util import DatasetUtil
+from cl.runtime.storage.protocols import TKey
+from cl.runtime.storage.protocols import TRecord
 
 key_serializer = StringSerializer()
 """Serializer for keys used in cache lookup."""

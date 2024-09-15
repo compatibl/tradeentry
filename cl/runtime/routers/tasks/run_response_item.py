@@ -13,8 +13,9 @@
 # limitations under the License.
 
 from __future__ import annotations
-
 import traceback
+from typing import List
+from pydantic import BaseModel
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseItem
@@ -24,8 +25,6 @@ from cl.runtime.tasks.celery.celery_queue import CeleryQueue
 from cl.runtime.tasks.instance_method_task import InstanceMethodTask
 from cl.runtime.tasks.static_method_task import StaticMethodTask
 from cl.runtime.tasks.task_status import TaskStatus
-from pydantic import BaseModel
-from typing import List
 
 # TODO: Make it possible to configure the queue to use for handler execution
 handler_queue = CeleryQueue(queue_id="Handler Queue")

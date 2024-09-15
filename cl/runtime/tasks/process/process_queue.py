@@ -14,6 +14,8 @@
 
 import datetime as dt
 import multiprocessing
+from dataclasses import dataclass
+from uuid import UUID
 from cl.runtime import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
@@ -26,8 +28,6 @@ from cl.runtime.tasks.task_queue import TaskQueue
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
 from cl.runtime.tasks.task_status import TaskStatus
-from dataclasses import dataclass
-from uuid import UUID
 
 context_serializer = DictSerializer()
 """Serializer for the context parameter of 'execute_task' method."""

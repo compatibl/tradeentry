@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from pydantic import BaseModel
 from typing import Dict
+from pydantic import BaseModel
 
 
 class SelectRequest(BaseModel):

@@ -13,17 +13,17 @@
 # limitations under the License.
 
 import sys
-from cl.runtime.serialization.sentinel_type import sentinel_value
-from cl.runtime.storage.data_source_types import TDataDict
 from collections import Counter
 from dataclasses import dataclass
 from enum import Enum
-from inflection import camelize
 from typing import Dict
 from typing import List
 from typing import Tuple
 from typing import Type
 from typing import cast
+from inflection import camelize
+from cl.runtime.serialization.sentinel_type import sentinel_value
+from cl.runtime.storage.data_source_types import TDataDict
 
 # TODO: Initialize from settings
 alias_dict: Dict[Type, str] = dict()

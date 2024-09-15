@@ -13,10 +13,10 @@
 # limitations under the License.
 
 import re
-from cl.runtime.records.protocols import is_key
 from enum import Enum
 from enum import IntEnum
 from typing import Any
+from cl.runtime.records.protocols import is_key
 
 
 class StringValueCustomType(IntEnum):

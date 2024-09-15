@@ -12,16 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.decorators.viewer_decorator import viewer
-from cl.runtime.records.record_mixin import RecordMixin
 from dataclasses import dataclass
 from logging import getLogger
-from stubs.cl.runtime import StubDataclassDerivedRecord
-from stubs.cl.runtime import StubDataclassRecordKey
-from stubs.cl.runtime.decorators.stub_viewers_key import StubViewersKey
 from typing import List
 from typing import Optional
 from typing_extensions import Self
+from cl.runtime.decorators.viewer_decorator import viewer
+from cl.runtime.records.record_mixin import RecordMixin
+from stubs.cl.runtime import StubDataclassDerivedRecord
+from stubs.cl.runtime import StubDataclassRecordKey
+from stubs.cl.runtime.decorators.stub_viewers_key import StubViewersKey
 
 _logger = getLogger(__name__)
 

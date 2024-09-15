@@ -12,9 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import pymongo
 import re
+from dataclasses import dataclass
+from itertools import groupby
+from typing import Dict
+from typing import Iterable
+from typing import Type
+from typing import cast
+import pymongo
 from bson import UuidRepresentation
+from pymongo import MongoClient
+from pymongo.database import Database
 from cl.runtime.context.context import Context
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import KeyProtocol
@@ -26,14 +34,6 @@ from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.mongo.mongo_filter_serializer import MongoFilterSerializer
 from cl.runtime.storage.protocols import TKey
 from cl.runtime.storage.protocols import TRecord
-from dataclasses import dataclass
-from itertools import groupby
-from pymongo import MongoClient
-from pymongo.database import Database
-from typing import Dict
-from typing import Iterable
-from typing import Type
-from typing import cast
 
 invalid_db_name_symbols = r'/\\. "$*<>:|?'
 """Invalid MongoDB database name symbols."""

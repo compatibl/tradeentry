@@ -14,7 +14,12 @@
 
 import datetime as dt
 import multiprocessing
+from dataclasses import dataclass
+from typing import Final
+from uuid import UUID
 from celery import Celery
+from orjson import orjson
+from pymongo import MongoClient
 from cl.runtime import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
@@ -27,11 +32,6 @@ from cl.runtime.tasks.task_queue import TaskQueue
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
 from cl.runtime.tasks.task_status import TaskStatus
-from dataclasses import dataclass
-from orjson import orjson
-from pymongo import MongoClient
-from typing import Final
-from uuid import UUID
 
 CELERY_MAX_WORKERS = 4
 

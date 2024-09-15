@@ -13,11 +13,11 @@
 # limitations under the License.
 
 import pytest
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
 from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
 from cl.runtime.routers.entity.list_panels_response_item import ListPanelsResponseItem
-from fastapi import FastAPI
-from fastapi.testclient import TestClient
 
 requests = [
     {"type": "StubViewers"},

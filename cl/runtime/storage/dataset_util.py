@@ -13,12 +13,12 @@
 # limitations under the License.
 
 import datetime as dt
-from cl.runtime.primitive.date_util import DateUtil
-from cl.runtime.primitive.datetime_util import DatetimeUtil
-from cl.runtime.storage.data_source_types import TPrimitive
 from typing import Iterable
 from typing import List
 from urllib.parse import unquote
+from cl.runtime.primitive.date_util import DateUtil
+from cl.runtime.primitive.datetime_util import DatetimeUtil
+from cl.runtime.storage.data_source_types import TPrimitive
 
 
 class DatasetUtil:

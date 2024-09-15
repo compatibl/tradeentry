@@ -13,13 +13,12 @@
 # limitations under the License.
 
 from __future__ import annotations
-
+from dataclasses import dataclass
+from typing import TYPE_CHECKING
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
-from dataclasses import dataclass
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_cyclic_a_key import StubDataclassCyclicAKey
-from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_cyclic_b import StubDataclassCyclicB

@@ -14,23 +14,23 @@
 
 import difflib
 import filecmp
-import inflection
 import inspect
 import os
-import yaml
-from cl.runtime.records.protocols import is_key
-from cl.runtime.records.protocols import is_record
-from cl.runtime.schema.field_decl import primitive_types
-from cl.runtime.serialization.dict_serializer import DictSerializer
-from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.testing.stack_util import StackUtil
 from dataclasses import dataclass
 from typing import Any
 from typing import ClassVar
 from typing import Dict
 from typing import Iterable
 from typing import cast
+import inflection
+import yaml
 from typing_extensions import Self
+from cl.runtime.records.protocols import is_key
+from cl.runtime.records.protocols import is_record
+from cl.runtime.schema.field_decl import primitive_types
+from cl.runtime.serialization.dict_serializer import DictSerializer
+from cl.runtime.serialization.string_serializer import StringSerializer
+from cl.runtime.testing.stack_util import StackUtil
 
 supported_extensions = ["txt"]
 """The list of supported output file extensions (formats)."""

@@ -13,13 +13,13 @@
 # limitations under the License.
 
 import inspect
-from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.tasks.callable_task import CallableTask
-from cl.runtime.tasks.task_key import TaskKey
 from dataclasses import dataclass
 from typing import Callable
 from typing import Type
 from typing_extensions import Self
+from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.tasks.callable_task import CallableTask
+from cl.runtime.tasks.task_key import TaskKey
 
 
 @dataclass(slots=True, kw_only=True)

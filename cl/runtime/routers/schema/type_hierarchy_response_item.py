@@ -13,14 +13,13 @@
 # limitations under the License.
 
 from __future__ import annotations
-
 import inspect
+from typing import List
+from inflection import titleize
+from pydantic import BaseModel
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.schema.type_hierarchy_request import TypeHierarchyRequest
 from cl.runtime.schema.schema import Schema
-from inflection import titleize
-from pydantic import BaseModel
-from typing import List
 
 
 class TypeHierarchyResponseItem(BaseModel):

@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import datetime as dt
 import pytest
+import datetime as dt
 import time
 from cl.runtime import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil

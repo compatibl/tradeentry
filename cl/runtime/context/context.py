@@ -13,6 +13,11 @@
 # limitations under the License.
 
 import logging
+from dataclasses import dataclass
+from typing import ClassVar
+from typing import Iterable
+from typing import List
+from typing import Type
 from cl.runtime.context.context_key import ContextKey
 from cl.runtime.log.log_key import LogKey
 from cl.runtime.records.dataclasses_extensions import missing
@@ -24,11 +29,6 @@ from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.storage.data_source_key import DataSourceKey
 from cl.runtime.storage.protocols import TKey
 from cl.runtime.storage.protocols import TRecord
-from dataclasses import dataclass
-from typing import ClassVar
-from typing import Iterable
-from typing import List
-from typing import Type
 
 root_context_types_str = """
 The following root context types can be used in the outermost 'with' clause:

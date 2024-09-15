@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.runtime.settings.settings import Settings
 from dataclasses import dataclass
 from typing import List
+from cl.runtime.settings.settings import Settings
 
 
 @dataclass(slots=True, kw_only=True)

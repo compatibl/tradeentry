@@ -13,11 +13,11 @@
 # limitations under the License.
 
 import os
+from dataclasses import dataclass
 from cl.runtime.file.csv_file_reader import CsvFileReader
 from cl.runtime.file.reader import Reader
 from cl.runtime.schema.schema import Schema
 from cl.runtime.storage.protocols import DataSourceProtocol
-from dataclasses import dataclass
 
 
 @dataclass(slots=True, kw_only=True)

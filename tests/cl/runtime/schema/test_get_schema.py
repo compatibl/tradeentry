@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import pytest
 import dataclasses
 import json
 import os
-import pytest
 from cl.runtime.schema.for_dataclasses.dataclass_type_decl import DataclassTypeDecl
 from cl.runtime.testing.regression_guard import RegressionGuard
 from stubs.cl.runtime import StubDataclassListFields
