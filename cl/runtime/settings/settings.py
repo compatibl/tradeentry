@@ -29,7 +29,7 @@ from dynaconf import Dynaconf
 from typing_extensions import Self
 from cl.runtime.testing.stack_util import StackUtil
 
-# Load dotenv first (the priority order is envvars first, then dotenv, then settings.toml and .secrets.toml)
+# Load dotenv first (the priority order is envvars first, then dotenv, then settings.yaml and .secrets.yaml)
 load_dotenv()
 
 # Determine if we are inside a test and store the result in a global variable for performance
@@ -46,7 +46,7 @@ _all_settings = Dynaconf(
     envvar_prefix="CL",
     env_switcher="CL_SETTINGS_ENV",
     envvar="CL_SETTINGS_FILE",
-    settings_files=["settings.toml", ".secrets.toml"],
+    settings_files=["settings.yaml", ".secrets.yaml"],
     dotenv_override=True,
 )
 """

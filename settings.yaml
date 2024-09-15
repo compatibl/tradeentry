@@ -1,25 +1,27 @@
-# Default environment is used if no environment is specified
-[default]
+# Default environment
+default:
+    # Documented in LogSettings class
+    runtime_log_level: info
+    runtime_log_filename_prefix: main
 
-# Refer to LogSettings class for documentation
-runtime_log_level = "info"
-runtime_log_filename_prefix = "main"
+    # Documented in ContextSettings class
+    runtime_context_packages:
+        - cl.runtime
+        - stubs.cl.runtime
+    runtime_context_data_source_class: cl.runtime.storage.mongo.basic_mongo_data_source.BasicMongoDataSource
+    runtime_context_data_source_id: dev.runtime.default
 
-# Refer to ContextSettings class for documentation
-runtime_context_packages = ["cl.runtime", "stubs.cl.runtime"]  # TODO: Prefix or glob pattern
-runtime_context_data_source_class = "cl.runtime.storage.mongo.basic_mongo_data_source.BasicMongoDataSource"  # TODO: Deprecated
-runtime_context_data_source_id = "dev.runtime.default"
+    # Documented in ApiSettings class
+    runtime_api_host_name: localhost
+    runtime_api_host_ip: 127.0.0.1
+    runtime_api_port: 7008
 
-# Refer to ApiSettings class for documentation
-runtime_api_host_name = "localhost"
-runtime_api_host_ip = "127.0.0.1"
-runtime_api_port = 7008
-
-# Refer to PreloadSettings class for documentation
-runtime_preload_dirs = ["preload/cl", "preload/stubs"]
+    # Documented in PreloadSettings class
+    runtime_preload_dirs:
+        - preload/cl
+        - preload/stubs
 
 # Test environment
-[test]
-
-# Refer to LogSettings class for documentation
-runtime_log_filename_prefix = "tests"
+test:
+    # Documented in LogSettings class
+    runtime_log_filename_prefix: tests
