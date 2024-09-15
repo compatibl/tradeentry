@@ -114,11 +114,9 @@ class DictSerializer:
             all_slots = _get_class_hierarchy_slots(data.__class__)
             # Serialize slot values in the order of declaration except those that are None
             result = {
-                k
-                if not self.pascalize_keys
-                else camelize(k, uppercase_first_letter=True): v
-                if v.__class__.__name__ in self.primitive_type_names
-                else self.serialize_data(v)
+                k if not self.pascalize_keys else camelize(k, uppercase_first_letter=True): (
+                    v if v.__class__.__name__ in self.primitive_type_names else self.serialize_data(v)
+                )
                 for k in all_slots
                 if (not select_fields or k in select_fields) and (v := getattr(data, k)) is not None
             }

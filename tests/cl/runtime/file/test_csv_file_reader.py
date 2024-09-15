@@ -14,10 +14,10 @@
 
 import pytest
 import os
+from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.file.csv_file_reader import CsvFileReader
 from cl.runtime.settings.settings import Settings
 from cl.runtime.storage.local.local_cache import LocalCache
-from cl.runtime.context.testing_context import TestingContext
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassRecordKey

@@ -16,6 +16,7 @@ import pytest
 import base64
 from fastapi import FastAPI
 from starlette.testclient import TestClient
+from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.routers.tasks import tasks_router
 from cl.runtime.routers.tasks.run_response_item import handler_queue
@@ -25,7 +26,6 @@ from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.tasks.instance_method_task import InstanceMethodTask
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_status import TaskStatus
-from cl.runtime.context.testing_context import TestingContext
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
 

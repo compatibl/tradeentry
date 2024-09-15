@@ -15,6 +15,7 @@
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
+from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.routers.tasks import tasks_router
 from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseItem
 from cl.runtime.routers.tasks.run_request import RunRequest
@@ -23,7 +24,6 @@ from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
 from cl.runtime.testing.pytest.pytest_fixtures import celery_test_queue_fixture
-from cl.runtime.context.testing_context import TestingContext
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 

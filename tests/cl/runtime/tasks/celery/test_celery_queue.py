@@ -13,13 +13,13 @@
 # limitations under the License.
 
 import pytest
+from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.tasks.celery.celery_queue import CeleryQueue
 from cl.runtime.tasks.celery.celery_queue import execute_task
 from cl.runtime.tasks.static_method_task import StaticMethodTask
 from cl.runtime.tasks.task import Task
-from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.testing.pytest.pytest_fixtures import celery_test_queue_fixture
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers

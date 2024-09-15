@@ -119,9 +119,11 @@ class StringSerializer:
 
         key_slots = data.get_key_type().__slots__
         result = ";".join(
-            self._serialize_key_token(v)  # TODO: Apply rules depending on the specific primitive type
-            if (v := getattr(data, k)).__class__.__name__ in primitive_type_names or isinstance(v, Enum)
-            else self.serialize_key(v, add_type_prefix=True)
+            (
+                self._serialize_key_token(v)  # TODO: Apply rules depending on the specific primitive type
+                if (v := getattr(data, k)).__class__.__name__ in primitive_type_names or isinstance(v, Enum)
+                else self.serialize_key(v, add_type_prefix=True)
+            )
             for k in key_slots
         )
 

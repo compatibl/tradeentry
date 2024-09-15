@@ -15,7 +15,6 @@
 import datetime as dt
 import time
 from dataclasses import dataclass
-
 from cl.runtime import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid

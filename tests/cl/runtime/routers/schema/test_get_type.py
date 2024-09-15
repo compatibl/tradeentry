@@ -17,10 +17,10 @@ import json
 import os
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
+from cl.runtime.regression.regression_guard import RegressionGuard
 from cl.runtime.routers.schema import schema_router
 from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
-from cl.runtime.regression.regression_guard import RegressionGuard
 
 requests = [{"name": "UiAppState"}, {"name": "UiAppState", "user": "TestUser"}]
 

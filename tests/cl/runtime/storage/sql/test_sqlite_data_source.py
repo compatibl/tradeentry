@@ -16,9 +16,9 @@ import pytest
 import time
 from typing import Any
 from typing import Iterable
+from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.storage.sql.sqlite_data_source import SqliteDataSource
-from cl.runtime.context.testing_context import TestingContext
 from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassDictFields

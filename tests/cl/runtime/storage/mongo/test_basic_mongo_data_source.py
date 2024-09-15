@@ -13,9 +13,9 @@
 # limitations under the License.
 
 import pytest
+from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.storage.mongo.basic_mongo_data_source import BasicMongoDataSource
-from cl.runtime.context.testing_context import TestingContext
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecord
 
