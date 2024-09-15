@@ -19,7 +19,12 @@ setuptools.setup(
     project_urls={
         'Source Code': 'https://github.com/compatibl/convince',
     },
-    packages=setuptools.find_packages(include=('convince', 'convince.*'), exclude=('tests', 'tests.*')),
+    packages=setuptools.find_namespace_packages(
+        where='.',
+        include=['cl.convince', 'cl.convince.*'],
+        exclude=['tests', 'tests.*']
+    ),
+    package_dir={'': '.'},
     classifiers=[
         # Alpha - will attempt to avoid breaking changes but they remain possible
         'Development Status :: 3 - Alpha',
@@ -37,6 +42,7 @@ setuptools.setup(
         # Runs on Python 3.10 and later releases
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
 
         # Operating system
         'Operating System :: OS Independent',

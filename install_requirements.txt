@@ -1,0 +1,4 @@
+anthropic>=0.34.2
+fireworks-ai>=0.15.1
+runtime>=2.0.5
+openai>=1.45.0
