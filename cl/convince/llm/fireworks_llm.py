@@ -17,9 +17,6 @@ import fireworks.client  # noqa
 from cl.convince.llm.llm import Llm
 from cl.convince.settings.fireworks_settings import FireworksSettings
 
-fireworks.client.api_key = FireworksSettings.instance().api_key
-"""Fireworks API key."""
-
 
 @dataclass(slots=True, kw_only=True)
 class FireworksLlm(Llm):
@@ -35,6 +32,7 @@ class FireworksLlm(Llm):
 
 {query}<|eot_id|>
 <|start_header_id|>assistant<|end_header_id|>"""
+        fireworks.client.api_key = FireworksSettings.instance().api_key
         response = fireworks.client.Completion.create(model=f"accounts/fireworks/models/{model_name}", prompt=prompt)
         result = response.choices[0].text
         return result

@@ -13,11 +13,11 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from typing import ClassVar
+
 from openai import OpenAI
 from cl.convince.llm.llm import Llm
 from cl.convince.settings.openai_settings import OpenaiSettings
-
-_client = OpenAI(api_key=OpenaiSettings.instance().api_key)
 
 
 @dataclass(slots=True, kw_only=True)
@@ -27,12 +27,25 @@ class OpenaiLlm(Llm):
     model_name: str | None = None
     """Model name in OpenAI format including version if any, defaults to 'llm_id'."""
 
+    _client: ClassVar[OpenAI] = None
+    """OpenAI client instance."""
+
     def completion(self, query: str) -> str:
 
         model_name = self.model_name if self.model_name is not None else self.llm_id
         messages = [{"role": "user", "content": query}]
 
-        response = _client.chat.completions.create(model=model_name, messages=messages)
+        client = self._get_client()
+        response = client.chat.completions.create(model=model_name, messages=messages)
 
         result = response.choices[0].message.content
         return result
+
+    @classmethod
+    def _get_client(cls) -> OpenAI:
+        """Instantiate and cache the OpenAI client instance."""
+        if cls._client is None:
+            cls._client = OpenAI(
+                api_key=OpenaiSettings.instance().api_key,
+            )
+        return cls._client

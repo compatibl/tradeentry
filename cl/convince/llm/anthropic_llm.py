@@ -13,14 +13,10 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from typing import ClassVar
 from anthropic import Anthropic
 from cl.convince.llm.llm import Llm
 from cl.convince.settings.anthropic_settings import AnthropicSettings
-
-_client = Anthropic(api_key=AnthropicSettings.instance().api_key)
-
-api_key = AnthropicSettings.instance().api_key
-"""Anthropic API key."""
 
 
 @dataclass(slots=True, kw_only=True)
@@ -33,11 +29,15 @@ class AnthropicLlm(Llm):
     max_tokens: int = 1024
     """Maximum number of tokens the model will generate in response to the query."""
 
+    _client: ClassVar[Anthropic] = None
+    """Anthropic client instance."""
+
     def completion(self, query: str) -> str:
 
         model_name = self.model_name if self.model_name is not None else self.llm_id
         messages = [{"role": "user", "content": query}]
-        response = _client.messages.create(
+        client = self._get_client()
+        response = client.messages.create(
             model=model_name,
             messages=messages,
             max_tokens=self.max_tokens,
@@ -46,3 +46,13 @@ class AnthropicLlm(Llm):
             raise RuntimeError(f"More than one response message received for query: {query}: {str(response)}")
         result = response.content[0].text
         return result
+
+    @classmethod
+    def _get_client(cls) -> Anthropic:
+        """Instantiate and cache the Anthropic client instance."""
+        if cls._client is None:
+            cls._client = Anthropic(
+                api_key=AnthropicSettings.instance().api_key,
+            )
+        return cls._client
+

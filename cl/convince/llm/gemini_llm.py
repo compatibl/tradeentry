@@ -13,12 +13,9 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-import google.generativeai as gemini
+import google.generativeai as gemini  # noqa
 from cl.convince.llm.llm import Llm
 from cl.convince.settings.gemini_settings import GeminiSettings
-
-# Configure Gemini API key
-gemini.configure(api_key=GeminiSettings.instance().api_key)
 
 
 @dataclass(slots=True, kw_only=True)
@@ -32,6 +29,7 @@ class GeminiLlm(Llm):
 
         model_name = self.model_name if self.model_name is not None else self.llm_id
 
+        gemini.configure(api_key=GeminiSettings.instance().api_key)
         model = gemini.GenerativeModel(model_name=model_name)
         response = model.generate_content(query)
 
