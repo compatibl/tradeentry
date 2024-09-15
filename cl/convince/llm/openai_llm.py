@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.convince.llm.llm import Llm
-from cl.convince.settings.openai_settings import OpenaiSettings
 from dataclasses import dataclass
 from openai import OpenAI
+from cl.convince.llm.llm import Llm
+from cl.convince.settings.openai_settings import OpenaiSettings
 
 _client = OpenAI(api_key=OpenaiSettings.instance().api_key)
 

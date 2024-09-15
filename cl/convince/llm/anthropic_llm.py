@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 from anthropic import Anthropic
 from cl.convince.llm.llm import Llm
 from cl.convince.settings.anthropic_settings import AnthropicSettings
-from dataclasses import dataclass
 
 _client = Anthropic(api_key=AnthropicSettings.instance().api_key)
 

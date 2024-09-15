@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 import google.generativeai as gemini
 from cl.convince.llm.llm import Llm
 from cl.convince.settings.gemini_settings import GeminiSettings
-from dataclasses import dataclass
 
 # Configure Gemini API key
 gemini.configure(api_key=GeminiSettings.instance().api_key)

@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 import fireworks.client  # noqa
 from cl.convince.llm.llm import Llm
 from cl.convince.settings.fireworks_settings import FireworksSettings
-from dataclasses import dataclass
 
 fireworks.client.api_key = FireworksSettings.instance().api_key
 """Fireworks API key."""

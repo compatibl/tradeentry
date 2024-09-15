@@ -14,9 +14,9 @@
 
 from abc import ABC
 from abc import abstractmethod
+from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.convince.llm.llm_key import LlmKey
-from dataclasses import dataclass
 
 
 @dataclass(slots=True, kw_only=True)
