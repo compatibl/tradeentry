@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.testing.unit_test_context import UnitTestContext
+from cl.runtime.context.testing_context import TestingContext
 from cl.convince.llm.openai_llm import OpenaiLlm
 
 
@@ -24,7 +24,7 @@ def test_smoke():
         OpenaiLlm(llm_id="gpt-4o-mini"),
     ]
 
-    with UnitTestContext():
+    with TestingContext():
         for llm in llms:
             assert "4" in llm.completion("2 times 2?")
 

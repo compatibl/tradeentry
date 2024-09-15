@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.testing.unit_test_context import UnitTestContext
+from cl.runtime.context.testing_context import TestingContext
 from cl.convince.llm.gemini_llm import GeminiLlm
 
 
@@ -24,7 +24,7 @@ def test_smoke():
         GeminiLlm(llm_id="gemini-1.5-flash"),
     ]
 
-    with UnitTestContext():
+    with TestingContext():
         for llm in llms:
             assert "4" in llm.completion("2 times 2?")
 
