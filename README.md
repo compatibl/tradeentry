@@ -1,4 +1,4 @@
-# Convince Package
+# CompatibL Convince Package (Community Edition)
 ![GitHub](https://img.shields.io/github/license/compatibl/convince)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/convince)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/convince)

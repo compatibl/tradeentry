@@ -1,0 +1,25 @@
+# Default environment is used if no environment is specified
+[default]
+
+# Refer to LogSettings class for documentation
+runtime_log_level = "info"
+runtime_log_filename_prefix = "main"
+
+# Refer to ContextSettings class for documentation
+runtime_context_packages = ["cl.runtime", "cl.convince", "stubs.cl.runtime", "stubs.cl.convince"]
+runtime_context_data_source_class = "cl.runtime.storage.mongo.basic_mongo_data_source.BasicMongoDataSource"
+runtime_context_data_source_id = "temp.convince.default"
+
+# Refer to ApiSettings class for documentation
+runtime_api_host_name = "localhost"
+runtime_api_host_ip = "127.0.0.1"
+runtime_api_port = 7008
+
+# Refer to PreloadSettings class for documentation
+runtime_preload_dirs = ["preload/cl", "preload/stubs"]
+
+# Test environment
+[test]
+
+# Refer to LogSettings class for documentation
+runtime_log_filename_prefix = "tests"
