@@ -13,6 +13,8 @@
 # limitations under the License.
 
 import os
+from pathlib import Path
+
 import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
@@ -75,9 +77,8 @@ if __name__ == "__main__":
         # Preload data
         PreloadSettings.instance().preload()
 
-        # TODO: Make it possible to override wwwroot directory location in settings
-        project_root = Settings.get_project_root()
-        wwwroot_dir = os.path.join(project_root, "wwwroot")
+        # Find wwwroot directory relative to the location of __main__ rather than project root
+        wwwroot_dir = Path(__file__).parents[2] / "wwwroot"
 
         if os.path.exists(wwwroot_dir):
             # Launch UI if ui_path is found
