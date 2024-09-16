@@ -13,22 +13,33 @@
 # limitations under the License.
 
 from __future__ import annotations
-from typing import Iterable
+from typing import Iterable, Dict
 from typing import List
 from typing import cast
-from uuid import UUID
 from pydantic import BaseModel
 from cl.runtime import Context
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.tasks.task_status_request import TaskStatusRequest
+from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
+
+
+LEGACY_TASK_STATUS_NAMES_MAP: Dict[str, str] = {
+    "Pending": "Submitted",
+    "Running": "Running",
+    "Paused": "Paused",
+    "Completed": "Completed",
+    "Failed": "Failed",
+    "Cancelled": "Cancelled",
+}
+"""Status name to legacy status name map according to ui convention."""
 
 
 class TaskStatusResponseItem(BaseModel):
     """Data type for a single item in the response list for the /tasks/run/status route."""
 
-    status_code: int
+    status_code: str
     """Task status code."""
 
     task_run_id: str
@@ -51,12 +62,16 @@ class TaskStatusResponseItem(BaseModel):
         task_run_keys = [TaskRunKey(task_run_id=x) for x in request.task_run_ids]  # TODO: Update if task_run_id is UUID
         task_runs = cast(Iterable[TaskRun], context.load_many(TaskRun, task_run_keys))
 
-        response_items = [
-            TaskStatusResponseItem(
-                status_code=task_run.status,
-                task_run_id=str(task_run.task_run_id),
-                key=task_run.task.task_id,
+        response_items = []
+        for task_run in task_runs:
+            task_obj = context.load_one(Task, task_run.task)
+
+            response_items.append(
+                TaskStatusResponseItem(
+                    status_code=LEGACY_TASK_STATUS_NAMES_MAP.get(task_run.status.name),
+                    task_run_id=str(task_run.task_run_id),
+                    key=task_obj.key_str if hasattr(task_obj, "key_str") else None,
+                ),
             )
-            for task_run in task_runs
-        ]
+
         return response_items

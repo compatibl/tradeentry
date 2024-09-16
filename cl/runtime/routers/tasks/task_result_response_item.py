@@ -13,17 +13,15 @@
 # limitations under the License.
 
 from __future__ import annotations
-import base64
 from typing import Any
 from typing import Iterable
 from typing import List
 from typing import cast
-from uuid import UUID
 from pydantic import BaseModel
 from cl.runtime import Context
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.tasks.task_result_request import TaskResultRequest
-from cl.runtime.serialization.string_serializer import StringSerializer
+from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
 
@@ -55,12 +53,16 @@ class TaskResultResponseItem(BaseModel):
         task_run_keys = [TaskRunKey(task_run_id=x) for x in request.task_run_ids]  # TODO: Use =UUID(x)
         task_runs = cast(Iterable[TaskRun], context.load_many(TaskRun, task_run_keys))
 
-        response_items = [
-            TaskResultResponseItem(
-                result=task_run.result,  # TODO: Use bytes for the response?
-                task_run_id=str(task_run.task_run_id),
-                key=task_run.task.task_id,
+        response_items = []
+        for task_run in task_runs:
+            task_obj = context.load_one(Task, task_run.task)
+
+            response_items.append(
+                TaskResultResponseItem(
+                    result=task_run.result,  # TODO: Use bytes for the response?
+                    task_run_id=str(task_run.task_run_id),
+                    key=task_obj.key_str if hasattr(task_obj, "key_str") else None,
+                ),
             )
-            for task_run in task_runs
-        ]
+
         return response_items
