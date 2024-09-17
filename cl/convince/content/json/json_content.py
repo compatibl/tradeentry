@@ -17,7 +17,7 @@ from dataclasses import dataclass
 
 from typing_extensions import Self
 
-from convince.content.content import Content
+from cl.convince.content.content import Content
 from runtime.records.dataclasses_extensions import missing
 
 
