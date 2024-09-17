@@ -14,9 +14,13 @@
 
 from abc import ABC
 from dataclasses import dataclass
-from cl.convince.entry.entry import Entry
+from cl.runtime.records.record_mixin import RecordMixin
+from cl.tradeentry.formats.schedule.date_key import DateKey
 
 
 @dataclass(slots=True, kw_only=True)
-class Leg(Entry, ABC):
-    """Single leg of a trade that does not represent a complete trade on its own."""
+class Date(DateKey, RecordMixin[DateKey], ABC):
+    """Maps a date string specified by the user to a calendar date."""
+
+    def get_key(self) -> DateKey:
+        return DateKey(date_id=self.date_id)

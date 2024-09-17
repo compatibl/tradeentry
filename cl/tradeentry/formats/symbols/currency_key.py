@@ -12,11 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
 from dataclasses import dataclass
-from cl.convince.entry.entry import Entry
+from typing import Type
+from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class Leg(Entry, ABC):
-    """Single leg of a trade that does not represent a complete trade on its own."""
+class CurrencyKey(KeyMixin):
+    """Maps currency string specified by the user to the ISO three-letter currency code."""
+
+    currency_id: str = missing()
+    """Currency string specified by the user (this is not the ISO three-letter currency code)."""
+
+    @classmethod
+    def get_key_type(cls) -> Type:
+        return CurrencyKey

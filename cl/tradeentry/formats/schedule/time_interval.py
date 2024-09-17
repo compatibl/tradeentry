@@ -12,11 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
 from dataclasses import dataclass
-from cl.convince.entry.entry import Entry
+from cl.runtime.records.record_mixin import RecordMixin
+from cl.tradeentry.formats.schedule.time_interval_key import TimeIntervalKey
 
 
 @dataclass(slots=True, kw_only=True)
-class Leg(Entry, ABC):
-    """Single leg of a trade that does not represent a complete trade on its own."""
+class TimeInterval(TimeIntervalKey, RecordMixin[TimeIntervalKey]):
+    """Time interval string and its precise meaning."""
+
+    def get_key(self) -> TimeIntervalKey:
+        return TimeIntervalKey(time_interval_id=self.time_interval_id)

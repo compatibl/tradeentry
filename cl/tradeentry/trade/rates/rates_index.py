@@ -14,7 +14,7 @@
 
 from abc import ABC
 from dataclasses import dataclass
-from convince.entry.entry import Entry
+from cl.convince.entry.entry import Entry
 
 
 @dataclass(slots=True, kw_only=True)

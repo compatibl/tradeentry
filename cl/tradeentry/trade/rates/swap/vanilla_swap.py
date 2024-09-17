@@ -12,7 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import datetime as dt
 from dataclasses import dataclass
+
+from cl.tradeentry.formats.rates.fixed_rate_key import FixedRateKey
+from cl.tradeentry.formats.schedule.date_key import DateKey
+from cl.tradeentry.formats.schedule.time_interval_key import TimeIntervalKey
+from cl.tradeentry.formats.symbols.currency_key import CurrencyKey
 from cl.tradeentry.trade.rates.rates_index import RatesIndex
 from cl.tradeentry.trade.trade import Trade
 
@@ -21,15 +27,17 @@ from cl.tradeentry.trade.trade import Trade
 class VanillaSwap(Trade):
     """Vanilla fixed for floating swap."""
 
-    maturity_time: str | None = None
-    """Time interval between spot date and unadjusted maturity date in standardized string format."""
+    maturity_date: DateKey | None = None
+    """Maturity as unadjusted date."""
 
-    ccy: str | None = None
-    """Currency in ISO three-letter format."""
+    maturity_time: TimeIntervalKey | None = None
+    """Time interval between spot date and unadjusted maturity date."""
+
+    ccy: CurrencyKey | None = None
+    """Currency of the swap."""
 
     float_index: RatesIndex | None = None
     """Interest rate index used by the floating leg."""
 
-    fixed_rate: float | None = None
-    """Fixed rate in number format, or breakeven fixed rate if not specified."""
-
+    fixed_rate: FixedRateKey | None = None
+    """Fixed rate (breakeven rate is assumed if not specified)."""

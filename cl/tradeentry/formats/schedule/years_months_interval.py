@@ -12,11 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
+import datetime as dt
 from dataclasses import dataclass
-from cl.convince.entry.entry import Entry
+from cl.tradeentry.formats.schedule.time_interval import TimeInterval
 
 
 @dataclass(slots=True, kw_only=True)
-class Leg(Entry, ABC):
-    """Single leg of a trade that does not represent a complete trade on its own."""
+class YearsMonthsInterval(TimeInterval):
+    """Time interval string and its precise meaning."""
+
+    def get_time_delta(self, query: str) -> dt.timedelta:
+        """Return self as dt.timedelta object."""
+        raise NotImplementedError()
+

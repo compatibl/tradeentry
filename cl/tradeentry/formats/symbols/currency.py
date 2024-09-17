@@ -14,9 +14,13 @@
 
 from abc import ABC
 from dataclasses import dataclass
-from cl.convince.entry.entry import Entry
+from cl.runtime.records.record_mixin import RecordMixin
+from cl.tradeentry.formats.symbols.currency_key import CurrencyKey
 
 
 @dataclass(slots=True, kw_only=True)
-class Leg(Entry, ABC):
-    """Single leg of a trade that does not represent a complete trade on its own."""
+class Currency(CurrencyKey, RecordMixin[CurrencyKey], ABC):
+    """Maps currency string specified by the user to the ISO three-letter currency code."""
+
+    def get_key(self) -> CurrencyKey:
+        return CurrencyKey(currency_id=self.currency_id)

@@ -14,6 +14,9 @@
 
 import datetime as dt
 from dataclasses import dataclass
+
+from cl.tradeentry.formats.schedule.date_key import DateKey
+from cl.tradeentry.formats.schedule.time_interval_key import TimeIntervalKey
 from cl.tradeentry.trade.leg import Leg
 
 
@@ -21,20 +24,26 @@ from cl.tradeentry.trade.leg import Leg
 class SwapLeg(Leg):
     """Swap leg."""
 
-    start_date: dt.date | None = None
+    start_date: DateKey | None = None
     """Accrual start as unadjusted date."""
 
-    start_time: str | None = None
-    """Time interval between spot date and unadjusted start date in standardized string format."""
+    start_time: TimeIntervalKey | None = None
+    """Time interval between spot date and unadjusted start date."""
 
-    maturity_date: dt.date | None = None
+    first_payment_date: DateKey | None = None
+    """First payment date as unadjusted date."""
+
+    first_payment_time: TimeIntervalKey | None = None
+    """Time interval between spot date and unadjusted first payment date."""
+
+    maturity_date: DateKey | None = None
     """Maturity as unadjusted date."""
 
-    maturity_time: str | None = None
-    """Time interval between spot date and unadjusted maturity date in standardized string format."""
+    maturity_time: TimeIntervalKey | None = None
+    """Time interval between spot date and unadjusted maturity date."""
 
-    maturity_length: str | None = None
-    """Time interval between unadjusted start date and unadjusted maturity date in standardized string format."""
+    maturity_length: TimeIntervalKey | None = None
+    """Time interval between unadjusted start date and unadjusted maturity date."""
 
-    pay_freq: str | None = None
-    """Payment frequency in standardized string format."""
+    payment_freq: str | None = None
+    """Payment frequency."""

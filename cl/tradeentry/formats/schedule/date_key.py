@@ -12,11 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
 from dataclasses import dataclass
-from cl.convince.entry.entry import Entry
+from typing import Type
+from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class Leg(Entry, ABC):
-    """Single leg of a trade that does not represent a complete trade on its own."""
+class DateKey(KeyMixin):
+    """Maps a date string specified by the user to a calendar date."""
+
+    date_id: str = missing()
+    """Date string specified by the user (this is not necessarily the date in ISO format)."""
+
+    @classmethod
+    def get_key_type(cls) -> Type:
+        return DateKey

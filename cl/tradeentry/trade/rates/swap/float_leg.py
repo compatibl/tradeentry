@@ -23,7 +23,7 @@ class FloatLeg(SwapLeg):
     """A series of interest rate payments with a floating coupon based on an interest rate index.."""
 
     float_freq: str | None = None
-    """Frequency at which floating interest accrues in standardized string format."""
+    """Frequency at which floating interest accrues."""
 
     float_index: RatesIndex | None = None
     """Interest rate index at which the interest accrues (with a possible spread)."""
