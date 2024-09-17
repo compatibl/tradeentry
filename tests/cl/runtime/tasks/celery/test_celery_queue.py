@@ -20,7 +20,9 @@ from cl.runtime.tasks.celery.celery_queue import CeleryQueue
 from cl.runtime.tasks.celery.celery_queue import execute_task
 from cl.runtime.tasks.static_method_task import StaticMethodTask
 from cl.runtime.tasks.task import Task
+from cl.runtime.tasks.task_queue_key import TaskQueueKey
 from cl.runtime.tasks.task_run import TaskRun
+from cl.runtime.tasks.task_status import TaskStatus
 from cl.runtime.testing.pytest.pytest_fixtures import celery_test_queue_fixture
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
@@ -50,12 +52,24 @@ def test_method(celery_test_queue_fixture):
         task_run_uuid = OrderedUuid.create_one()
         task_run_id = str(task_run_uuid)
 
+        submit_time = OrderedUuid.datetime_of(task_run_uuid)
+
+        # Create a task run record in Pending state
+        task_run = TaskRun()
+        task_run.task_run_id = task_run_id
+        task_run.queue = TaskQueueKey(queue_id='test_queue')
+        task_run.task = task
+        task_run.submit_time = submit_time
+        task_run.update_time = submit_time
+        task_run.status = TaskStatus.Pending
+
+        # Save task run record which means task is submitted
+        context.save_one(task_run)
+
         # Call 'execute_task' method in-process
         context_data = context_serializer.serialize_data(context)
         execute_task(
             task_run_id,
-            task_id,
-            queue_id,
             context_data,
         )
 

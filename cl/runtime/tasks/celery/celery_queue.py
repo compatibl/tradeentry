@@ -23,7 +23,7 @@ from pymongo import MongoClient
 from cl.runtime import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
-from cl.runtime.records.protocols import is_record
+from cl.runtime.records.protocols import is_record, is_key
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.storage.data_source_types import TDataDict
 from cl.runtime.tasks.task import Task
@@ -57,8 +57,6 @@ context_serializer = DictSerializer()
 @celery_app.task(max_retries=0)  # Do not retry failed tasks
 def execute_task(
     task_run_id: str,
-    task_id: str,
-    queue_id: str,
     context_data: TDataDict,
 ) -> None:
     """Invoke execute method of the specified task."""
@@ -68,23 +66,13 @@ def execute_task(
 
     # Deserialize context from 'context_data' parameter to run with the same settings as the caller context
     with context_serializer.deserialize_data(context_data) as context:
-        # Get timestamp from task_run_id
-        task_run_uuid = UUID(task_run_id)
-        submit_time = OrderedUuid.datetime_of(task_run_uuid)
-
-        # Create a task run record in Pending state
-        task_run = TaskRun()
-        task_run.task_run_id = task_run_id
-        task_run.queue = queue_id
-        task_run.task = TaskKey(task_id=task_id)
-        task_run.submit_time = submit_time
-        task_run.update_time = submit_time
-        task_run.status = TaskStatus.Pending
-        context.save_one(task_run)
 
         try:
+            task_run_key = TaskRunKey(task_run_id=task_run_id)
+            task_run = context.load_one(TaskRun, task_run_key)
+
             # Load and execute the task object
-            task_key = TaskKey(task_id=task_id)
+            task_key = task_run.task
             task = context.load_one(Task, task_key)
             task.execute()
         except Exception as e:  # noqa
@@ -165,12 +153,24 @@ class CeleryQueue(TaskQueue):
         task_run_uuid = OrderedUuid.create_one()
         task_run_id = str(task_run_uuid)
 
+        # Get timestamp from task_run_id
+        task_run_uuid = UUID(task_run_id)
+        submit_time = OrderedUuid.datetime_of(task_run_uuid)
+
+        # Create a task run record in Pending state
+        task_run = TaskRun()
+        task_run.task_run_id = task_run_id
+        task_run.queue = self.queue_id
+        task_run.task = task if is_key(task) else task.get_key()
+        task_run.submit_time = submit_time
+        task_run.update_time = submit_time
+        task_run.status = TaskStatus.Pending
+        context.save_one(task_run)
+
         # Pass parameters to the Celery task signature
         context_data = context_serializer.serialize_data(context)
         execute_task_signature = execute_task.s(
             task_run_id,
-            task.task_id,
-            self.queue_id,
             context_data,
         )
 
@@ -180,4 +180,4 @@ class CeleryQueue(TaskQueue):
             ignore_result=True,  # TODO: Do not publish to the Celery result backend
         )
 
-        return TaskRunKey(task_run_id=task_run_id)
+        return task_run.get_key()
