@@ -24,4 +24,3 @@ class Experiment(ExperimentKey, RecordMixin[ExperimentKey], ABC):
 
     def get_key(self) -> ExperimentKey:
         return ExperimentKey(experiment_id=self.experiment_id)
-
