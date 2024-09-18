@@ -26,7 +26,7 @@ class AnthropicLlm(Llm):
     model_name: str | None = None
     """Model name in Anthropic format including version if any, defaults to 'llm_id'."""
 
-    max_tokens: int = 1024
+    max_tokens: int = 4096
     """Maximum number of tokens the model will generate in response to the query."""
 
     _client: ClassVar[Anthropic] = None
