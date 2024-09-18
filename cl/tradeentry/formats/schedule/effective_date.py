@@ -12,29 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import datetime as dt
 from dataclasses import dataclass
-
-from cl.tradeentry.formats.buy_sell_key import BuySellKey
-from cl.tradeentry.formats.schedule.date_key import DateKey
+from cl.runtime.records.record_mixin import RecordMixin
 from cl.tradeentry.formats.schedule.effective_date_key import EffectiveDateKey
-from cl.tradeentry.formats.schedule.maturity_date_key import MaturityDateKey
-from cl.tradeentry.formats.schedule.time_interval_key import TimeIntervalKey
-from cl.tradeentry.trades.leg import Leg
 
 
 @dataclass(slots=True, kw_only=True)
-class SwapLeg(Leg):
-    """Swap leg."""
-
-    buy_sell: BuySellKey | None = None
-    """String representation of the Buy or Sell flag in the format specified by the user."""
-
-    effective_date: EffectiveDateKey | None = None
+class EffectiveDate(EffectiveDateKey, RecordMixin[EffectiveDateKey]):
     """Trade or leg effective date defined as unadjusted date or time interval relative to another date."""
 
-    maturity_date: MaturityDateKey | None = None
-    """Trade or leg maturity date defined as unadjusted date or time interval relative to another date."""
-
-    payment_frequency: str | None = None
-    """Payment frequency."""
+    def get_key(self) -> EffectiveDateKey:
+        return EffectiveDateKey(effective_date_id=self.effective_date_id)
