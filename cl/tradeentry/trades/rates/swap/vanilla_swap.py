@@ -19,8 +19,8 @@ from cl.tradeentry.formats.rates.fixed_rate_key import FixedRateKey
 from cl.tradeentry.formats.schedule.date_key import DateKey
 from cl.tradeentry.formats.schedule.time_interval_key import TimeIntervalKey
 from cl.tradeentry.formats.symbols.currency_key import CurrencyKey
-from cl.tradeentry.trade.rates.rates_index import RatesIndex
-from cl.tradeentry.trade.trade import Trade
+from cl.tradeentry.trades.rates.rates_index import RatesIndex
+from cl.tradeentry.trades.trade import Trade
 
 
 @dataclass(slots=True, kw_only=True)

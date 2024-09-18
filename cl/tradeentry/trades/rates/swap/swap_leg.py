@@ -17,7 +17,7 @@ from dataclasses import dataclass
 
 from cl.tradeentry.formats.schedule.date_key import DateKey
 from cl.tradeentry.formats.schedule.time_interval_key import TimeIntervalKey
-from cl.tradeentry.trade.leg import Leg
+from cl.tradeentry.trades.leg import Leg
 
 
 @dataclass(slots=True, kw_only=True)
