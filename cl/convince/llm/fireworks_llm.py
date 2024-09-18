@@ -25,6 +25,9 @@ class FireworksLlm(Llm):
     model_name: str | None = None
     """Model name in Fireworks format including version if any, defaults to 'llm_id'."""
 
+    max_tokens: int = 4096
+    """Maximum number of tokens the model will generate in response to the query."""
+
     def completion(self, query: str) -> str:
 
         model_name = self.model_name if self.model_name is not None else self.llm_id
@@ -33,6 +36,7 @@ class FireworksLlm(Llm):
 {query}<|eot_id|>
 <|start_header_id|>assistant<|end_header_id|>"""
         fireworks.client.api_key = FireworksSettings.instance().api_key
-        response = fireworks.client.Completion.create(model=f"accounts/fireworks/models/{model_name}", prompt=prompt)
+        response = fireworks.client.Completion.create(model=f"accounts/fireworks/models/{model_name}", prompt=prompt,
+                                                      max_tokens=self.max_tokens)
         result = response.choices[0].text
         return result
