@@ -19,18 +19,14 @@ from typing import Dict
 from typing import Iterable
 from typing import Type
 from typing import cast
-import pymongo
-from bson import UuidRepresentation
 from pymongo import MongoClient
 from pymongo.database import Database
 from cl.runtime.context.context import Context
-from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.storage.data_source import DataSource
-from cl.runtime.storage.data_source_types import TQuery
 from cl.runtime.storage.mongo.mongo_filter_serializer import MongoFilterSerializer
 from cl.runtime.storage.protocols import TKey
 from cl.runtime.storage.protocols import TRecord
@@ -236,7 +232,21 @@ class BasicMongoDataSource(DataSource):
         dataset: str | None = None,
         identity: str | None = None,
     ) -> None:
-        raise NotImplementedError()
+        # Confirm dataset and identity are both None
+        if dataset is not None:
+            raise RuntimeError("BasicMongo data source type does not support datasets.")
+        if identity is not None:
+            raise RuntimeError("BasicMongo data source type does not support row-level security.")
+
+        # Get collection name from key type by removing Key suffix if present
+        collection_name = key_type.__name__  # TODO: Decision on short alias
+        db = self._get_db()
+        collection = db[collection_name]
+
+        serialized_key = key_serializer.serialize_key(key)
+
+        delete_filter = {'_key': serialized_key}
+        collection.delete_one(delete_filter)
 
     def delete_many(
         self,
@@ -245,8 +255,8 @@ class BasicMongoDataSource(DataSource):
         dataset: str | None = None,
         identity: str | None = None,
     ) -> None:
-        # Validate the dataset and if necessary convert to delimited string
-        raise NotImplementedError()
+        for key in keys:
+            self.delete_one(type(key), key, dataset=dataset, identity=identity)
 
     def delete_all_and_drop_db(self) -> None:
         # Check that data_source_id and db_name both match temp_db_prefix
