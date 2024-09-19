@@ -12,28 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import numpy as np
-import pandas as pd
-import pytest
-
-from cl.runtime.plots.bar.bar_plot import BarPlot
-from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
+from dataclasses import dataclass
+from typing import Type
+from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.records.key_mixin import KeyMixin
 
 
-def test_smoke(local_dir_fixture):
-    data = pd.Series({
-        'Model 1': 85.5,
-        'Model 2': 92,
-        'Model 3': 70,
-        'Model 4': 83.7
-    })
+@dataclass(slots=True, kw_only=True)
+class BarPlotStyleKey(KeyMixin):
+    """Color and layout options for BarPlot."""
 
-    fig = BarPlot.create_figure(
-        data=data,
-        ticks=np.arange(0, 101, 10)
-    )
-    fig.write_image("test_bar_plot.test_smoke.png")
+    style_id: str = missing()
+    """Unique bar plot style identifier."""
 
-
-if __name__ == "__main__":
-    pytest.main([__file__])
+    @classmethod
+    def get_key_type(cls) -> Type:
+        return BarPlotStyleKey

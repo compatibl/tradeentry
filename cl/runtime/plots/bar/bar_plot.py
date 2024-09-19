@@ -11,21 +11,38 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-from typing import Optional
+from dataclasses import dataclass
+from typing import Optional, List
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 
+from cl.runtime.plots.bar.bar_plot_style import BarPlotStyle
+from cl.runtime.plots.bar.bar_plot_style_key import BarPlotStyleKey
+from cl.runtime.plots.plot import Plot
+from cl.runtime.records.dataclasses_extensions import missing, field
 
-class BarPlot:
-    layout_background = {
-        'paper_bgcolor': 'rgba(255,255,255,1)',
-        'plot_bgcolor': 'rgba(255,255,255,1)',
-    }
+_layout_background = {
+    'paper_bgcolor': 'rgba(255,255,255,1)',
+    'plot_bgcolor': 'rgba(255,255,255,1)',
+}
 
-    @staticmethod
-    def create(
+
+@dataclass(slots=True, kw_only=True)
+class BarPlot(Plot):
+    
+    labels: List[str] = missing()
+    """List of bar labels."""
+    
+    values: List[str] = missing()
+    """List of bar values in the same order as labels."""
+
+    style: BarPlotStyleKey = field(default_factory=lambda: BarPlotStyle())
+    """Color and layout options."""
+
+    @classmethod
+    def create_figure(
+            cls,
             data: pd.Series,
             ticks: Optional[np.ndarray] = None,
             x_text: Optional[str] = 'Experiment',
@@ -40,7 +57,7 @@ class BarPlot:
         fig = go.Figure(data=bars)
 
         # Set white background
-        fig.update_layout(BarPlot.layout_background)
+        fig.update_layout(_layout_background)
 
         # Custom ticks if provided
         if ticks is not None:
