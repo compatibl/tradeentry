@@ -15,6 +15,8 @@
 from dataclasses import dataclass
 from typing import List
 import plotly.graph_objects as go
+
+from cl.runtime import Context
 from cl.runtime.plots.bar.bar_plot_style import BarPlotStyle
 from cl.runtime.plots.bar.bar_plot_style_key import BarPlotStyleKey
 from cl.runtime.plots.plot import Plot
@@ -38,6 +40,9 @@ class BarPlot(Plot):
     """Color and layout options."""
 
     def create_figure(self) -> go.Figure:
+        # load style object
+        style = Context.current().load_one(BarPlotStyle, self.style)
+
         bars = go.Bar(x=self.labels, y=self.values)
 
         # Combine both heatmaps into one figure
@@ -47,23 +52,23 @@ class BarPlot(Plot):
         fig.update_layout(_layout_background)
 
         # Custom ticks if provided
-        if self.style.ticks is not None:
-            y_min = min(self.style.ticks)
-            y_max = max(self.style.ticks)
+        if style.ticks is not None:
+            y_min = min(style.ticks)
+            y_max = max(style.ticks)
 
             for value in [y_min, y_max]:
                 fig.add_hline(y=value, opacity=0, showlegend=False)
 
-            fig.update_layout(yaxis=dict(tickvals=self.style.ticks))
+            fig.update_layout(yaxis=dict(tickvals=style.ticks))
 
         # add custom xaxis title
         fig.add_annotation(
             dict(
-                font=dict(color=self.style.axis_label_font_color, size=self.style.axis_label_font_size),
+                font=dict(color=style.axis_label_font_color, size=style.axis_label_font_size),
                 x=0.5,
                 y=-0.15,
                 showarrow=False,
-                text=self.style.x_label,
+                text=style.x_label,
                 xref="paper",
                 yref="paper",
             )
@@ -72,11 +77,11 @@ class BarPlot(Plot):
         # add custom yaxis title
         fig.add_annotation(
             dict(
-                font=dict(color=self.style.axis_label_font_color, size=self.style.axis_label_font_size),
+                font=dict(color=style.axis_label_font_color, size=style.axis_label_font_size),
                 x=-0.35,
                 y=0.5,
                 showarrow=False,
-                text=self.style.y_label,
+                text=style.y_label,
                 textangle=-90,
                 xref="paper",
                 yref="paper",

@@ -14,21 +14,23 @@
 
 import pytest
 
+from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.plots.bar.bar_plot import BarPlot
 from cl.runtime.plots.bar.bar_plot_style import BarPlotStyle
 from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
 
 
 def test_smoke(local_dir_fixture):
-    bar_plot_style = BarPlotStyle()
-    bar_plot_style.ticks = list(range(0, 101, 10))
+    with TestingContext() as context:
+        bar_plot_style = BarPlotStyle()
+        bar_plot_style.ticks = list(range(0, 101, 10))
 
-    bar_plot = BarPlot()
-    bar_plot.labels = ["Model 1", "Model 2", "Model 3", "Model 4"]
-    bar_plot.values = [85.5, 92, 70, 83.7]
-    bar_plot.style = bar_plot_style
+        bar_plot = BarPlot()
+        bar_plot.labels = ["Model 1", "Model 2", "Model 3", "Model 4"]
+        bar_plot.values = [85.5, 92, 70, 83.7]
+        bar_plot.style = bar_plot_style
 
-    fig = bar_plot.create_figure()
+        fig = bar_plot.create_figure()
     fig.write_image("test_bar_plot.test_smoke.png")
 
 

@@ -15,6 +15,8 @@
 import pytest
 from pathlib import Path
 import pandas as pd
+
+from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.plots.heat_map.confusion_matrix_plot import YELLOW_TO_WHITE
 from cl.runtime.plots.heat_map.confusion_matrix_plot import ConfusionMatrixPlot
 from cl.runtime.plots.matrix_util import MatrixUtil
@@ -68,11 +70,12 @@ def test_white_to_yellow(local_dir_fixture):
 def test_white_to_red(local_dir_fixture):
     raw_data = pd.read_csv(Path(__file__).resolve().parent / "./test_confusion_matrix_plot.csv")
 
-    matrix_plot = ConfusionMatrixPlot()
-    matrix_plot.actual = raw_data["True Category"].values.tolist()
-    matrix_plot.predicted = raw_data["Predicted"].values.tolist()
+    with TestingContext() as context:
+        matrix_plot = ConfusionMatrixPlot()
+        matrix_plot.actual = raw_data["True Category"].values.tolist()
+        matrix_plot.predicted = raw_data["Predicted"].values.tolist()
 
-    fig = matrix_plot.create_figure()
+        fig = matrix_plot.create_figure()
     fig.write_image("test_confusion_matrix_plot.test_white_to_red.png")
 
 

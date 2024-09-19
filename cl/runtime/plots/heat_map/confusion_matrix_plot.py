@@ -20,6 +20,7 @@ import pandas as pd
 import plotly.graph_objects as go
 from plotly.express.colors import sequential as colorscale
 
+from cl.runtime import Context
 from cl.runtime.plots.heat_map.confusion_matrix_plot_style import ConfusionMatrixPlotStyle
 from cl.runtime.plots.heat_map.confusion_matrix_plot_style_key import ConfusionMatrixPlotStyleKey
 from cl.runtime.plots.matrix_util import MatrixUtil
@@ -60,6 +61,9 @@ class ConfusionMatrixPlot(Plot):
     """Color and layout options."""
 
     def create_figure(self) -> go.Figure:
+        # load style object
+        style = Context.current().load_one(ConfusionMatrixPlotStyle, self.style)
+
         # TODO: consider moving
         data, annotation_text = self._create_confusion_matrix()
 
@@ -103,11 +107,11 @@ class ConfusionMatrixPlot(Plot):
         # add custom xaxis title
         fig.add_annotation(
             dict(
-                font=dict(color=self.style.axis_label_font_color, size=self.style.axis_label_font_size),
+                font=dict(color=style.axis_label_font_color, size=style.axis_label_font_size),
                 x=0.5,
                 y=-0.15,
                 showarrow=False,
-                text=self.style.x_label,
+                text=style.x_label,
                 xref="paper",
                 yref="paper",
             )
@@ -116,11 +120,11 @@ class ConfusionMatrixPlot(Plot):
         # add custom yaxis title
         fig.add_annotation(
             dict(
-                font=dict(color=self.style.axis_label_font_color, size=self.style.axis_label_font_size),
+                font=dict(color=style.axis_label_font_color, size=style.axis_label_font_size),
                 x=-0.35,
                 y=0.5,
                 showarrow=False,
-                text=self.style.y_label,
+                text=style.y_label,
                 textangle=-90,
                 xref="paper",
                 yref="paper",
