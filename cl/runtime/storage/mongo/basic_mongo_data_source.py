@@ -247,7 +247,7 @@ class BasicMongoDataSource(DataSource):
 
         serialized_key = key_serializer.serialize_key(key)
 
-        delete_filter = {'_key': serialized_key}
+        delete_filter = {"_key": serialized_key}
         collection.delete_one(delete_filter)
 
     def delete_many(

@@ -12,20 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import pytest
 from pathlib import Path
 import numpy as np
 import pandas as pd
-import pytest
+from cl.runtime.plots.heat_map.confusion_matrix_plot import YELLOW_TO_WHITE
+from cl.runtime.plots.heat_map.confusion_matrix_plot import ConfusionMatrixPlot
 from cl.runtime.plots.matrix_util import MatrixUtil
-from cl.runtime.plots.heat_map.confusion_matrix_plot import ConfusionMatrixPlot, YELLOW_TO_WHITE
 from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
 
 
 def test_absolute(local_dir_fixture):
-    raw_data = pd.read_csv(Path(__file__).resolve().parent / './test_confusion_matrix_plot.csv')
+    raw_data = pd.read_csv(Path(__file__).resolve().parent / "./test_confusion_matrix_plot.csv")
 
     data_confusion_matrix = MatrixUtil.create_confusion_matrix(
-        data=raw_data, true_column_name='True Category', predicted_column_name='Predicted'
+        data=raw_data, true_column_name="True Category", predicted_column_name="Predicted"
     )
     data_confusion_matrix_percent = MatrixUtil.convert_confusion_matrix_to_percent(data=data_confusion_matrix)
     annotation_text = MatrixUtil.create_confusion_matrix_labels(data=data_confusion_matrix)
@@ -35,10 +36,10 @@ def test_absolute(local_dir_fixture):
 
 
 def test_percent(local_dir_fixture):
-    raw_data = pd.read_csv(Path(__file__).resolve().parent / './test_confusion_matrix_plot.csv')
+    raw_data = pd.read_csv(Path(__file__).resolve().parent / "./test_confusion_matrix_plot.csv")
 
     data_confusion_matrix = MatrixUtil.create_confusion_matrix(
-        data=raw_data, true_column_name='True Category', predicted_column_name='Predicted'
+        data=raw_data, true_column_name="True Category", predicted_column_name="Predicted"
     )
     data_confusion_matrix_percent = MatrixUtil.convert_confusion_matrix_to_percent(data=data_confusion_matrix)
     annotation_text = MatrixUtil.create_confusion_matrix_labels(data=data_confusion_matrix, in_percent=True)
@@ -48,10 +49,10 @@ def test_percent(local_dir_fixture):
 
 
 def test_white_to_yellow(local_dir_fixture):
-    raw_data = pd.read_csv(Path(__file__).resolve().parent / './test_confusion_matrix_plot.csv')
+    raw_data = pd.read_csv(Path(__file__).resolve().parent / "./test_confusion_matrix_plot.csv")
 
     data_confusion_matrix = MatrixUtil.create_confusion_matrix(
-        data=raw_data, true_column_name='True Category', predicted_column_name='Predicted'
+        data=raw_data, true_column_name="True Category", predicted_column_name="Predicted"
     )
     data_confusion_matrix_percent = MatrixUtil.convert_confusion_matrix_to_percent(data=data_confusion_matrix)
     annotation_text = MatrixUtil.create_confusion_matrix_labels(data=data_confusion_matrix, in_percent=True)
@@ -60,16 +61,16 @@ def test_white_to_yellow(local_dir_fixture):
         data=data_confusion_matrix_percent,
         annotation_text=annotation_text,
         diag_colorscale=YELLOW_TO_WHITE,
-        diag_text_color_threshold=1
+        diag_text_color_threshold=1,
     )
     fig.write_image("test_confusion_matrix_plot.test_white_to_yellow.png")
 
 
 def test_white_to_red(local_dir_fixture):
-    raw_data = pd.read_csv(Path(__file__).resolve().parent / './test_confusion_matrix_plot.csv')
+    raw_data = pd.read_csv(Path(__file__).resolve().parent / "./test_confusion_matrix_plot.csv")
 
     data_confusion_matrix = MatrixUtil.create_confusion_matrix(
-        data=raw_data, true_column_name='True Category', predicted_column_name='Predicted'
+        data=raw_data, true_column_name="True Category", predicted_column_name="Predicted"
     )
     data_confusion_matrix_percent = MatrixUtil.convert_confusion_matrix_to_percent(data=data_confusion_matrix)
     diag_mask = np.eye(data_confusion_matrix_percent.shape[0], dtype=bool)
@@ -77,10 +78,7 @@ def test_white_to_red(local_dir_fixture):
     data_confusion_matrix_error_percent.values[diag_mask] = 100 - np.diag(data_confusion_matrix_percent)
     annotation_text = MatrixUtil.create_confusion_matrix_labels(data=data_confusion_matrix, in_percent=True)
 
-    fig = ConfusionMatrixPlot.create_figure(
-        data=data_confusion_matrix_error_percent,
-        annotation_text=annotation_text
-    )
+    fig = ConfusionMatrixPlot.create_figure(data=data_confusion_matrix_error_percent, annotation_text=annotation_text)
     fig.write_image("test_confusion_matrix_plot.test_white_to_red.png")
 
 

@@ -23,7 +23,8 @@ from pymongo import MongoClient
 from cl.runtime import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
-from cl.runtime.records.protocols import is_record, is_key
+from cl.runtime.records.protocols import is_key
+from cl.runtime.records.protocols import is_record
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.storage.data_source_types import TDataDict
 from cl.runtime.tasks.task import Task

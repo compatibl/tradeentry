@@ -12,21 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Optional
-
+from typing import List
+from typing import Optional
 import pandas as pd
-
 from sklearn.metrics import confusion_matrix
 
 
 class MatrixUtil:
 
     @staticmethod
-    def create_confusion_matrix(
-            data: pd.DataFrame,
-            true_column_name: str,
-            predicted_column_name: str
-    ) -> pd.DataFrame:
+    def create_confusion_matrix(data: pd.DataFrame, true_column_name: str, predicted_column_name: str) -> pd.DataFrame:
         categories = data[true_column_name].unique().tolist()
         data_confusion_matrix = confusion_matrix(
             y_true=data[true_column_name], y_pred=data[predicted_column_name], labels=categories
@@ -49,8 +44,8 @@ class MatrixUtil:
 
         if in_percent:
             data_percent = data.values / data.values.sum(axis=1) * 100
-            annotation_text = [[f'{y:.2f}%' if y != 0 else '' for y in x] for x in data_percent]
+            annotation_text = [[f"{y:.2f}%" if y != 0 else "" for y in x] for x in data_percent]
         else:
-            annotation_text = [[str(y) if y != 0 else '' for y in x] for x in data.values]
+            annotation_text = [[str(y) if y != 0 else "" for y in x] for x in data.values]
 
         return annotation_text

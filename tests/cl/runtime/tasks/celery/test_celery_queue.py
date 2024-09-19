@@ -57,7 +57,7 @@ def test_method(celery_test_queue_fixture):
         # Create a task run record in Pending state
         task_run = TaskRun()
         task_run.task_run_id = task_run_id
-        task_run.queue = TaskQueueKey(queue_id='test_queue')
+        task_run.queue = TaskQueueKey(queue_id="test_queue")
         task_run.task = task
         task_run.submit_time = submit_time
         task_run.update_time = submit_time

@@ -22,10 +22,10 @@ from cl.runtime.records.record_mixin import RecordMixin
 class BarPlotStyle(BarPlotStyleKey, RecordMixin[BarPlotStyleKey], ABC):
     """Color and layout options for BarPlot."""
 
-    axis_origin: float = 0.
+    axis_origin: float = 0.0
     """Origin of axis (defaults to zero if not specified)."""
 
-    axis_min: float = 0.
+    axis_min: float = 0.0
     """Lower limit of axis range (defaults to zero if not specified). Data outside the range is permitted."""
 
     axis_max: float | None = None
