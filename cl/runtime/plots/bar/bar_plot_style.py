@@ -14,7 +14,10 @@
 
 from abc import ABC
 from dataclasses import dataclass
+from typing import List, Any, Dict
+
 from cl.runtime.plots.bar.bar_plot_style_key import BarPlotStyleKey
+from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.record_mixin import RecordMixin
 
 
@@ -30,6 +33,25 @@ class BarPlotStyle(BarPlotStyleKey, RecordMixin[BarPlotStyleKey], ABC):
 
     axis_max: float | None = None
     """Upper limit of axis (maximum data value is used when not specified). Data outside the range is permitted."""
+
+    ticks: List[float] | None = None
+    """Custom x-axis ticks."""
+
+    x_label: str | None = "Experiment"
+    """x-axis label."""
+
+    y_label: str | None = "Value"
+    """y-axis label."""
+
+    axis_label_font_size: int = 14
+    """Axis labels font size."""
+
+    axis_label_font_color: str = 'black'
+    """Axis labels font color."""
+
+    layout_background: Dict[str, Any] = field(default_factory=lambda: {
+        "paper_bgcolor": "rgba(255,255,255,1)", "plot_bgcolor": "rgba(255,255,255,1)"
+    })
 
     def get_key(self) -> BarPlotStyleKey:
         return BarPlotStyleKey(style_id=self.style_id)

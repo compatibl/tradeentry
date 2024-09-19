@@ -14,18 +14,11 @@
 
 from dataclasses import dataclass
 from typing import List
-from typing import Optional
-import numpy as np
 import plotly.graph_objects as go
 from cl.runtime.plots.bar.bar_plot_style import BarPlotStyle
 from cl.runtime.plots.bar.bar_plot_style_key import BarPlotStyleKey
 from cl.runtime.plots.plot import Plot
 from cl.runtime.records.dataclasses_extensions import field
-
-_layout_background = {
-    "paper_bgcolor": "rgba(255,255,255,1)",
-    "plot_bgcolor": "rgba(255,255,255,1)",
-}
 
 
 @dataclass(slots=True, kw_only=True)
@@ -40,38 +33,33 @@ class BarPlot(Plot):
     style: BarPlotStyleKey = field(default_factory=lambda: BarPlotStyle())
     """Color and layout options."""
 
-    def create_figure(
-        self,
-        ticks: Optional[np.ndarray] = None,
-        x_text: Optional[str] = "Experiment",
-        y_text: Optional[str] = "Value",
-    ) -> go.Figure:
+    def create_figure(self) -> go.Figure:
         bars = go.Bar(x=self.labels, y=self.values)
 
         # Combine both heatmaps into one figure
         fig = go.Figure(data=bars)
 
         # Set white background
-        fig.update_layout(_layout_background)
+        fig.update_layout(self.style.layout_background)
 
         # Custom ticks if provided
-        if ticks is not None:
-            y_min = np.nanmin(ticks)
-            y_max = np.nanmax(ticks)
+        if self.style.ticks is not None:
+            y_min = min(self.style.ticks)
+            y_max = max(self.style.ticks)
 
             for value in [y_min, y_max]:
                 fig.add_hline(y=value, opacity=0, showlegend=False)
 
-            fig.update_layout(yaxis=dict(tickvals=ticks))
+            fig.update_layout(yaxis=dict(tickvals=self.style.ticks))
 
         # add custom xaxis title
         fig.add_annotation(
             dict(
-                font=dict(color="black", size=14),
+                font=dict(color=self.style.axis_label_font_color, size=self.style.axis_label_font_size),
                 x=0.5,
                 y=-0.15,
                 showarrow=False,
-                text=x_text,
+                text=self.style.x_label,
                 xref="paper",
                 yref="paper",
             )
@@ -80,11 +68,11 @@ class BarPlot(Plot):
         # add custom yaxis title
         fig.add_annotation(
             dict(
-                font=dict(color="black", size=14),
+                font=dict(color=self.style.axis_label_font_color, size=self.style.axis_label_font_size),
                 x=-0.35,
                 y=0.5,
                 showarrow=False,
-                text=y_text,
+                text=self.style.y_label,
                 textangle=-90,
                 xref="paper",
                 yref="paper",
