@@ -17,7 +17,7 @@ import numpy as np
 import pandas as pd
 import pytest
 from cl.runtime.plots.matrix_util import MatrixUtil
-from cl.runtime.plots.confusion_matrix_plot import ConfusionMatrixPlot, YELLOW_TO_WHITE
+from cl.runtime.plots.heat_map.confusion_matrix_plot import ConfusionMatrixPlot, YELLOW_TO_WHITE
 from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
 
 
@@ -77,7 +77,7 @@ def test_white_to_red(local_dir_fixture):
     data_confusion_matrix_error_percent.values[diag_mask] = 100 - np.diag(data_confusion_matrix_percent)
     annotation_text = MatrixUtil.create_confusion_matrix_labels(data=data_confusion_matrix, in_percent=True)
 
-    fig = ConfusionMatrixPlot.plot_matrix(
+    fig = ConfusionMatrixPlot.create_figure(
         data=data_confusion_matrix_error_percent,
         annotation_text=annotation_text
     )

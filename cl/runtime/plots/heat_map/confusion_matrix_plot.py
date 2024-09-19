@@ -11,13 +11,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+from dataclasses import dataclass
 from typing import List, Optional
 
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 from plotly.express.colors import sequential as colorscale
+
+from cl.runtime.plots.plot import Plot
+from cl.runtime.records.dataclasses_extensions import missing
 
 WHITE_TO_RED_COLORSCALE = ['rgb(255,255,255)'] + colorscale.Reds
 
@@ -33,15 +36,25 @@ YELLOW_TO_WHITE = [
     'rgb(255,255,255)',  # White
 ]
 
+_layout_background = {
+    'paper_bgcolor': 'rgba(255,255,255,1)',
+    'plot_bgcolor': 'rgba(255,255,255,1)',
+}
 
-class ConfusionMatrixPlot:
-    layout_background = {
-        'paper_bgcolor': 'rgba(255,255,255,1)',
-        'plot_bgcolor': 'rgba(255,255,255,1)',
-    }
 
-    @staticmethod
-    def plot_matrix(
+@dataclass(slots=True, kw_only=True)
+class ConfusionMatrixPlot(Plot):
+    """Confusion matrix visualization for a categorical experiment."""
+
+    actual: List[str] = missing()
+    """List of actual categories."""
+
+    predicted: List[str] = missing()
+    """List of predicted categories in the same order as actual categories."""
+
+    @classmethod
+    def create_figure(
+            cls,
             data: pd.DataFrame,
             annotation_text: Optional[List[List[str]]] = None,
             matrix_colorscale: Optional[List[str]] = WHITE_TO_RED_COLORSCALE,
@@ -84,7 +97,7 @@ class ConfusionMatrixPlot:
         fig.update_layout(xaxis=dict(side='top'))
 
         # Set white background
-        fig.update_layout(ConfusionMatrixPlot.layout_background)
+        fig.update_layout(_layout_background)
 
         # add custom xaxis title
         fig.add_annotation(dict(font=dict(color="black", size=14),
@@ -175,7 +188,7 @@ class ConfusionMatrixPlot:
         fig.update_layout(xaxis=dict(side='top'))
 
         # Set white background
-        fig.update_layout(ConfusionMatrixPlot.layout_background)
+        fig.update_layout(_layout_background)
 
         # add custom xaxis title
         fig.add_annotation(dict(font=dict(color="black", size=14),
