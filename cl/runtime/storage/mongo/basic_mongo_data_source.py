@@ -199,7 +199,9 @@ class BasicMongoDataSource(DataSource):
         serialized_record = data_serializer.serialize_data(record)
 
         # Use update_one with upsert=True to insert if not present or update if present
-        collection.update_one({"_key": serialized_key}, {"$set": serialized_record}, upsert=True)
+        # TODO (Roman): update_one does not affect fields not presented in record. Changed to replace_one
+        serialized_record["_key"] = serialized_key
+        collection.replace_one({"_key": serialized_key}, serialized_record, upsert=True)
 
     def save_many(
         self,
