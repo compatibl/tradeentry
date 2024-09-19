@@ -14,10 +14,9 @@
 
 from abc import ABC
 from dataclasses import dataclass
-from typing import List, Any, Dict
+from typing import List
 
 from cl.runtime.plots.bar.bar_plot_style_key import BarPlotStyleKey
-from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.record_mixin import RecordMixin
 
 
@@ -48,10 +47,6 @@ class BarPlotStyle(BarPlotStyleKey, RecordMixin[BarPlotStyleKey], ABC):
 
     axis_label_font_color: str = 'black'
     """Axis labels font color."""
-
-    layout_background: Dict[str, Any] = field(default_factory=lambda: {
-        "paper_bgcolor": "rgba(255,255,255,1)", "plot_bgcolor": "rgba(255,255,255,1)"
-    })
 
     def get_key(self) -> BarPlotStyleKey:
         return BarPlotStyleKey(style_id=self.style_id)

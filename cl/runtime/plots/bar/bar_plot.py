@@ -20,10 +20,14 @@ from cl.runtime.plots.bar.bar_plot_style_key import BarPlotStyleKey
 from cl.runtime.plots.plot import Plot
 from cl.runtime.records.dataclasses_extensions import field
 
+_layout_background = {
+    "paper_bgcolor": "rgba(255,255,255,1)",
+    "plot_bgcolor": "rgba(255,255,255,1)",
+}
+
 
 @dataclass(slots=True, kw_only=True)
 class BarPlot(Plot):
-
     labels: List[str] = field()
     """List of bar labels."""
 
@@ -40,7 +44,7 @@ class BarPlot(Plot):
         fig = go.Figure(data=bars)
 
         # Set white background
-        fig.update_layout(self.style.layout_background)
+        fig.update_layout(_layout_background)
 
         # Custom ticks if provided
         if self.style.ticks is not None:
