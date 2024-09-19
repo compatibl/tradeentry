@@ -30,14 +30,4 @@ if __name__ == '__main__':
     root_paths = [project_path / x for x in relative_paths]
 
     # Create __init__.py files in subdirectories under each element of source_paths
-    files_with_copyright_header_error, files_with_trailing_line_error = check_copyright_header(root_paths, fix_trailing_blank_line=True)
-
-    if files_with_copyright_header_error:
-        raise RuntimeError("Invalid copyright header in file(s):\n" +
-              "".join([f"    {file}\n" for file in files_with_copyright_header_error]))
-    elif files_with_trailing_line_error:
-        print("Adding a missing blank line after copyright header in file(s):\n" +
-              "".join([f"    {file}\n" for file in files_with_trailing_line_error]))
-    else:
-        print("Verified copyright header and trailing blank line under directory root(s):\n" +
-              "".join([f"    {root_path}\n" for root_path in root_paths]))
+    check_copyright_header(root_paths, fix_trailing_blank_line=True)

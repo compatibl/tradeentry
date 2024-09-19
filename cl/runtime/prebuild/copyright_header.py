@@ -26,13 +26,11 @@ def check_copyright_header(
     include_patterns: List[str] | None = None,
     exclude_patterns: List[str] | None = None,
     fix_trailing_blank_line: bool = False,
-) -> Tuple[List[str], List[str]]:
+    verbose: bool = False,
+) -> None:
     """
-    Check that the specified copyright header is present in all files with the specified glob filename pattern.
-
-    Returns:
-        Tuple of size two where the elements are the list of files with copyright header error and the
-        list of files with trailing line error.
+    Check that the specified copyright header is present and followed by a blank line in all files with
+    the specified glob filename pattern.
 
     Args:
         root_paths: List of root directories under which files matching the pattern will be checked
@@ -40,6 +38,7 @@ def check_copyright_header(
         include_patterns: Optional list of filename glob patterns to include, use the defaults in code if not specified
         exclude_patterns: Optional list of filename glob patterns to exclude, use the defaults in code if not specified
         fix_trailing_blank_line: If specified, add a trailing blank line after the copyright header if missing
+        verbose: Print messages about fixes to stdout if specified
     """
 
     # Use the project contributors Apache header if not specified by the caller
@@ -107,4 +106,15 @@ def check_copyright_header(
                     with open(file_path, "w") as file:
                         file.write(updated_text)
 
-    return files_with_copyright_header_error, files_with_trailing_line_error
+    if files_with_copyright_header_error:
+        raise RuntimeError("Invalid copyright header in file(s):\n" +
+              "".join([f"    {file}\n" for file in files_with_copyright_header_error]))
+    elif files_with_trailing_line_error:
+        files_with_trailing_line_msg = "missing blank line(s) after copyright header in file(s):\n" + "".join([f"    {file}\n" for file in files_with_trailing_line_error])
+        if not fix_trailing_blank_line:
+            raise RuntimeError(f"Found {files_with_trailing_line_msg}")
+        elif verbose:
+            print(f"Fixed {files_with_trailing_line_msg}")
+    elif verbose:
+        print("Verified copyright header and trailing blank line under directory root(s):\n" +
+              "".join([f"    {root_path}\n" for root_path in root_paths]))
