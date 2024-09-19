@@ -14,15 +14,16 @@
 
 import pytest
 import numpy as np
-import pandas as pd
 from cl.runtime.plots.bar.bar_plot import BarPlot
 from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
 
 
 def test_smoke(local_dir_fixture):
-    data = pd.Series({"Model 1": 85.5, "Model 2": 92, "Model 3": 70, "Model 4": 83.7})
+    bar_plot = BarPlot()
+    bar_plot.labels = ["Model 1", "Model 2", "Model 3", "Model 4"]
+    bar_plot.values = [85.5, 92, 70, 83.7]
 
-    fig = BarPlot.create_figure(data=data, ticks=np.arange(0, 101, 10))
+    fig = bar_plot.create_figure(ticks=np.arange(0, 101, 10))
     fig.write_image("test_bar_plot.test_smoke.png")
 
 

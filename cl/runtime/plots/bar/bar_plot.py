@@ -16,13 +16,11 @@ from dataclasses import dataclass
 from typing import List
 from typing import Optional
 import numpy as np
-import pandas as pd
 import plotly.graph_objects as go
 from cl.runtime.plots.bar.bar_plot_style import BarPlotStyle
 from cl.runtime.plots.bar.bar_plot_style_key import BarPlotStyleKey
 from cl.runtime.plots.plot import Plot
 from cl.runtime.records.dataclasses_extensions import field
-from cl.runtime.records.dataclasses_extensions import missing
 
 _layout_background = {
     "paper_bgcolor": "rgba(255,255,255,1)",
@@ -33,24 +31,22 @@ _layout_background = {
 @dataclass(slots=True, kw_only=True)
 class BarPlot(Plot):
 
-    labels: List[str] = missing()
+    labels: List[str] = field()
     """List of bar labels."""
 
-    values: List[str] = missing()
+    values: List[float] = field()
     """List of bar values in the same order as labels."""
 
     style: BarPlotStyleKey = field(default_factory=lambda: BarPlotStyle())
     """Color and layout options."""
 
-    @classmethod
     def create_figure(
-        cls,
-        data: pd.Series,
+        self,
         ticks: Optional[np.ndarray] = None,
         x_text: Optional[str] = "Experiment",
         y_text: Optional[str] = "Value",
     ) -> go.Figure:
-        bars = go.Bar(x=data.index, y=data)
+        bars = go.Bar(x=self.labels, y=self.values)
 
         # Combine both heatmaps into one figure
         fig = go.Figure(data=bars)
