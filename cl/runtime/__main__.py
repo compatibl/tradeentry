@@ -24,6 +24,7 @@ from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.health import health_router
 from cl.runtime.routers.schema import schema_router
 from cl.runtime.routers.storage import storage_router
+from cl.runtime.routers.app import app_router
 from cl.runtime.routers.tasks import tasks_router
 from cl.runtime.settings.api_settings import ApiSettings
 from cl.runtime.settings.preload_settings import PreloadSettings
@@ -53,6 +54,7 @@ server_app.add_middleware(
 )
 
 # Routers
+server_app.include_router(app_router.router, prefix="", tags=["App"])
 server_app.include_router(health_router.router, prefix="", tags=["Health Check"])
 server_app.include_router(auth_router.router, prefix="/auth", tags=["Authorization"])
 server_app.include_router(schema_router.router, prefix="/schema", tags=["Schema"])
@@ -77,7 +79,7 @@ if __name__ == "__main__":
         PreloadSettings.instance().preload()
 
         # Find wwwroot directory relative to the location of __main__ rather than project root
-        wwwroot_dir = Path(__file__).parents[2] / "wwwroot"
+        wwwroot_dir = Settings.get_static_files_path()
 
         if os.path.exists(wwwroot_dir):
             # Launch UI if ui_path is found

@@ -18,6 +18,7 @@ from abc import ABC
 from abc import abstractmethod
 from dataclasses import MISSING
 from dataclasses import dataclass
+from pathlib import Path
 from typing import ClassVar
 from typing import Dict
 from typing import Iterable
@@ -80,6 +81,10 @@ _dotenv_file_path = find_dotenv_output if (find_dotenv_output := find_dotenv()) 
 
 _dotenv_dir_path = os.path.dirname(_dotenv_file_path) if _dotenv_file_path is not None else None
 """Absolute path to .env directory if found, None otherwise."""
+
+# TODO (Roman): make _main_path unrelated to __file__
+_main_path = Path(__file__).parents[1].joinpath("__main__.py")
+"""Path to __main__.py file as entrypoint of program."""
 
 
 @dataclass(slots=True, kw_only=True)
@@ -204,6 +209,16 @@ class Settings(ABC):
                 f"Cannot resolve relative preload path value {path} for {field_name} when "
                 "neither .env nor dynaconf settings file is present to use as project root."
             )
+
+    @classmethod
+    def get_main_path(cls) -> Path:
+        """Returns path to __main__.py file."""
+        return _main_path
+
+    @classmethod
+    def get_static_files_path(cls) -> Path:
+        """Returns path to wwwroot directory containing ui static files."""
+        return cls.get_main_path().parents[2] / "wwwroot"
 
     @classmethod
     def normalize_paths(cls, field_name: str, field_value: Iterable[str] | str) -> List[str]:
