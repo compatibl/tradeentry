@@ -15,6 +15,8 @@
 # TODO (Roman): use ui serialization, probably this file will be deprecated
 
 from __future__ import annotations
+
+import base64
 import dataclasses
 from enum import Enum
 from typing import Any
@@ -28,7 +30,9 @@ def to_record_dict(node):  # TODO: Apply type hints
     """Recursively apply record dictionary conventions to the argument dictionary."""
 
     node_type = type(node)
-    if node_type in primitive_types:
+    if node_type is bytes:
+        return base64.b64encode(node).decode()
+    elif node_type in primitive_types:
         # Primitive type, serialize as string
         # TODO: Apply custom formatting
         result = str(node)

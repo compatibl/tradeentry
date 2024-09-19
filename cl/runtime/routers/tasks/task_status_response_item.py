@@ -13,8 +13,7 @@
 # limitations under the License.
 
 from __future__ import annotations
-from typing import Dict
-from typing import Iterable
+from typing import Iterable, Dict
 from typing import List
 from typing import cast
 from pydantic import BaseModel
@@ -24,6 +23,7 @@ from cl.runtime.routers.tasks.task_status_request import TaskStatusRequest
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
+
 
 LEGACY_TASK_STATUS_NAMES_MAP: Dict[str, str] = {
     "Pending": "Submitted",
