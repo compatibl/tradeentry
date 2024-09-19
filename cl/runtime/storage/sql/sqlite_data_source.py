@@ -295,7 +295,8 @@ class SqliteDataSource(DataSource):
         dataset: str | None = None,
         identity: str | None = None,
     ) -> None:
-        raise NotImplementedError()
+        # TODO (Yauheni): Add implementation independent from delete_many()
+        self.delete_many([key], dataset=dataset, identity=identity)
 
     def delete_many(
         self,
