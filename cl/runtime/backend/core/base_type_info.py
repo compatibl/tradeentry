@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.dataclasses_extensions import missing
 
 
@@ -29,3 +28,4 @@ class BaseTypeInfo:
 
     label: str = missing()
     """Label of type."""
+

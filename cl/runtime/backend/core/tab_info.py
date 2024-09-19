@@ -13,9 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from typing import Tuple
 from cl.runtime.backend.core.base_type_info import BaseTypeInfo
-from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.dataclasses_extensions import missing
 
 
@@ -23,8 +21,10 @@ from cl.runtime.records.dataclasses_extensions import missing
 class TabInfo:
     """Tab info."""
 
+    # TODO (Roman): support aliases
     type_: BaseTypeInfo = missing()
     """Type."""
 
     # key: Tuple | None = missing()  # TODO: Add generic key support
     """Key."""
+
