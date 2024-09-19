@@ -22,6 +22,8 @@ from typing import Tuple
 from typing import Type
 from typing import cast
 from inflection import camelize
+
+from cl.runtime.records.protocols import is_key, is_record
 from cl.runtime.serialization.sentinel_type import sentinel_value
 from cl.runtime.storage.data_source_types import TDataDict
 
@@ -218,5 +220,8 @@ class DictSerializer:
                 return [
                     v if v.__class__.__name__ in self.primitive_type_names else self.deserialize_data(v) for v in data
                 ]
+
+        elif is_key(data) or is_record(data):
+            return data
         else:
             raise RuntimeError(f"Cannot deserialize data of type '{type(data)}'.")
