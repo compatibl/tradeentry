@@ -15,13 +15,15 @@
 from typing import Any
 from typing import Dict
 from typing import List
-from fastapi import APIRouter
+from fastapi import APIRouter, Body
 from fastapi import Header
 from fastapi import Query
 from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
 from cl.runtime.routers.entity.list_panels_response_item import ListPanelsResponseItem
 from cl.runtime.routers.entity.panel_request import PanelRequest
 from cl.runtime.routers.entity.panel_response_util import PanelResponseUtil
+from cl.runtime.routers.entity.save_request import SaveRequest
+from cl.runtime.routers.entity.save_response import SaveResponse
 
 ListPanelsResponse = List[ListPanelsResponseItem]
 PanelResponseDataItem = Dict[str, Any]
@@ -51,3 +53,22 @@ async def get_panel(
 ):
     """Return panel content by its displayed name."""
     return PanelResponseUtil.get_content(PanelRequest(type=type, panel_id=panel_id, key=key, dataset=dataset))
+
+
+@router.post('/save', response_model=SaveResponse)
+async def save(
+    record_in_dict: Dict = Body(..., description="Dict representation of the record to be saved/updated."),
+    old_record_key: str = Query(None, description="Optional key of the record to be updated"),
+    dataset: str = Query(None, description="Dataset string"),
+    user: str = Header(None, description="User identifier or identity token"),
+) -> SaveResponse:
+    """Save panel content."""
+
+    return SaveResponse.save_entity(
+        SaveRequest(
+            record_dict=record_in_dict,
+            old_record_key=old_record_key,
+            dataset=dataset,
+            user=user,
+        ),
+    )
