@@ -69,16 +69,11 @@ def test_white_to_yellow(local_dir_fixture):
 def test_white_to_red(local_dir_fixture):
     raw_data = pd.read_csv(Path(__file__).resolve().parent / "./test_confusion_matrix_plot.csv")
 
-    data_confusion_matrix = MatrixUtil.create_confusion_matrix(
-        data=raw_data, true_column_name="True Category", predicted_column_name="Predicted"
-    )
-    data_confusion_matrix_percent = MatrixUtil.convert_confusion_matrix_to_percent(data=data_confusion_matrix)
-    diag_mask = np.eye(data_confusion_matrix_percent.shape[0], dtype=bool)
-    data_confusion_matrix_error_percent = data_confusion_matrix_percent.copy()
-    data_confusion_matrix_error_percent.values[diag_mask] = 100 - np.diag(data_confusion_matrix_percent)
-    annotation_text = MatrixUtil.create_confusion_matrix_labels(data=data_confusion_matrix, in_percent=True)
+    matrix_plot = ConfusionMatrixPlot()
+    matrix_plot.actual = raw_data["True Category"].values.tolist()
+    matrix_plot.predicted = raw_data["Predicted"].values.tolist()
 
-    fig = ConfusionMatrixPlot.create_figure(data=data_confusion_matrix_error_percent, annotation_text=annotation_text)
+    fig = matrix_plot.create_figure()
     fig.write_image("test_confusion_matrix_plot.test_white_to_red.png")
 
 

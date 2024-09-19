@@ -13,14 +13,18 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from typing import List
+from typing import List, Tuple
 from typing import Optional
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 from plotly.express.colors import sequential as colorscale
+
+from cl.runtime.plots.heat_map.confusion_matrix_plot_style import ConfusionMatrixPlotStyle
+from cl.runtime.plots.heat_map.confusion_matrix_plot_style_key import ConfusionMatrixPlotStyleKey
+from cl.runtime.plots.matrix_util import MatrixUtil
 from cl.runtime.plots.plot import Plot
-from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.records.dataclasses_extensions import field
 
 WHITE_TO_RED_COLORSCALE = ["rgb(255,255,255)"] + colorscale.Reds
 
@@ -46,28 +50,25 @@ _layout_background = {
 class ConfusionMatrixPlot(Plot):
     """Confusion matrix visualization for a categorical experiment."""
 
-    actual: List[str] = missing()
+    actual: List[str] = field()
     """List of actual categories."""
 
-    predicted: List[str] = missing()
+    predicted: List[str] = field()
     """List of predicted categories in the same order as actual categories."""
 
-    @classmethod
-    def create_figure(
-        cls,
-        data: pd.DataFrame,
-        annotation_text: Optional[List[List[str]]] = None,
-        matrix_colorscale: Optional[List[str]] = WHITE_TO_RED_COLORSCALE,
-        text_color_threshold: Optional[float] = 0.5,
-        x_text: Optional[str] = "Predicted",
-        y_text: Optional[str] = "Real value",
-    ) -> go.Figure:
+    style: ConfusionMatrixPlotStyleKey = field(default_factory=lambda: ConfusionMatrixPlotStyle())
+    """Color and layout options."""
+
+    def create_figure(self) -> go.Figure:
+        # TODO: consider moving
+        data, annotation_text = self._create_confusion_matrix()
+
         # Create heatmap
         heatmap = go.Heatmap(
             z=data,
             x=data.index.tolist(),
             y=data.columns.tolist(),
-            colorscale=matrix_colorscale,  # Set the colorscale
+            colorscale=WHITE_TO_RED_COLORSCALE,  # Set the colorscale
             showscale=False,  # Hide the colorbar
             hoverinfo="skip",  # Hide hover text
         )
@@ -85,7 +86,7 @@ class ConfusionMatrixPlot(Plot):
                     x=j,
                     y=i,
                     showarrow=False,
-                    font=dict(color="black" if normalized_data[i, j] <= text_color_threshold else "white"),
+                    font=dict(color="black" if normalized_data[i, j] <= 0.5 else "white"),
                 )
                 for j in range(data.shape[1])
                 for i in range(data.shape[0])
@@ -102,11 +103,11 @@ class ConfusionMatrixPlot(Plot):
         # add custom xaxis title
         fig.add_annotation(
             dict(
-                font=dict(color="black", size=14),
+                font=dict(color=self.style.axis_label_font_color, size=self.style.axis_label_font_size),
                 x=0.5,
                 y=-0.15,
                 showarrow=False,
-                text=x_text,
+                text=self.style.x_label,
                 xref="paper",
                 yref="paper",
             )
@@ -115,11 +116,11 @@ class ConfusionMatrixPlot(Plot):
         # add custom yaxis title
         fig.add_annotation(
             dict(
-                font=dict(color="black", size=14),
+                font=dict(color=self.style.axis_label_font_color, size=self.style.axis_label_font_size),
                 x=-0.35,
                 y=0.5,
                 showarrow=False,
-                text=y_text,
+                text=self.style.y_label,
                 textangle=-90,
                 xref="paper",
                 yref="paper",
@@ -127,6 +128,20 @@ class ConfusionMatrixPlot(Plot):
         )
 
         return fig
+
+    def _create_confusion_matrix(self) -> Tuple[pd.DataFrame, List[List[str]]]:
+        raw_data = pd.DataFrame({"Actual": self.actual, "Predicted": self.predicted})
+
+        data_confusion_matrix = MatrixUtil.create_confusion_matrix(
+            data=raw_data, true_column_name="Actual", predicted_column_name="Predicted"
+        )
+        data_confusion_matrix_percent = MatrixUtil.convert_confusion_matrix_to_percent(data=data_confusion_matrix)
+        diag_mask = np.eye(data_confusion_matrix_percent.shape[0], dtype=bool)
+        data_confusion_matrix_error_percent = data_confusion_matrix_percent.copy()
+        data_confusion_matrix_error_percent.values[diag_mask] = 100 - np.diag(data_confusion_matrix_percent)
+        annotation_text = MatrixUtil.create_confusion_matrix_labels(data=data_confusion_matrix, in_percent=True)
+
+        return data_confusion_matrix_error_percent, annotation_text
 
     @staticmethod
     def plot_confusion_matrix(
