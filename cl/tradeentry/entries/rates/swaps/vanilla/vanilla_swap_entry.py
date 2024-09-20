@@ -15,8 +15,8 @@
 from dataclasses import dataclass
 from cl.tradeentry.entries.fixed_rate_entry_key import FixedRateEntryKey
 from cl.tradeentry.entries.pay_receive_fixed_entry_key import PayReceiveFixedEntryKey
-from cl.tradeentry.entries.rates.rates_index_entry_key import RatesIndexEntryKey
 from cl.tradeentry.entries.rates.rates_effective_date_entry_key import RatesEffectiveDateEntryKey
+from cl.tradeentry.entries.rates.rates_index_entry_key import RatesIndexEntryKey
 from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import RatesMaturityDateEntryKey
 from cl.tradeentry.entries.trade_entry import TradeEntry
 

@@ -22,4 +22,3 @@ class FixedLegEntry(SwapLegEntry):
 
     fixed_rate: float | None = None
     """Fixed rate in number format, or breakeven fixed rate if not specified."""
-

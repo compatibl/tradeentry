@@ -24,4 +24,3 @@ class YearsMonthsEntry(TenorEntry):
     def get_time_delta(self, query: str) -> dt.timedelta:
         """Return self as dt.timedelta object."""
         raise NotImplementedError()
-

@@ -12,19 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
-
 import pytest
 import datetime as dt
-
+from typing import List
 from dateutil.relativedelta import relativedelta
-
 from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.regression.regression_guard import RegressionGuard
 from cl.convince.llm.anthropic_llm import AnthropicLlm
 from cl.convince.llm.fireworks_llm import FireworksLlm
 from cl.convince.llm.gemini_llm import GeminiLlm
 from cl.convince.llm.openai_llm import OpenaiLlm
-from cl.runtime.regression.regression_guard import RegressionGuard
 
 llms = [
     AnthropicLlm(llm_id="claude-3-haiku-20240307"),
@@ -39,7 +36,7 @@ def _test_extract_format(text: str, field_names: List[str]) -> None:
 
     with TestingContext():
 
-        prompt = (f"""
+        prompt = f"""
 Convert trade definition example provided in the following text to Python interpolated
 string format by identifying specific values of fields from the provided list of fields
 by their names in curly brackets.
@@ -49,7 +46,7 @@ Example:
 * Sample fields: ```buy_or_sell, call_or_put, symbol, expiry```
 * Sample output: ```{{expiry}} {{symbol}} call ATM```
 Text: ```{text}``` Fields: ```{', '.join(field_names)} Your output: 
-""")
+"""
         run_count = 1
 
         for llm in llms:

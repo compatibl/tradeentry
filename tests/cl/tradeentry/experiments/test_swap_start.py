@@ -14,15 +14,13 @@
 
 import pytest
 import datetime as dt
-
 from dateutil.relativedelta import relativedelta
-
 from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.regression.regression_guard import RegressionGuard
 from cl.convince.llm.anthropic_llm import AnthropicLlm
 from cl.convince.llm.fireworks_llm import FireworksLlm
 from cl.convince.llm.gemini_llm import GeminiLlm
 from cl.convince.llm.openai_llm import OpenaiLlm
-from cl.runtime.regression.regression_guard import RegressionGuard
 
 llms = [
     AnthropicLlm(llm_id="claude-3-haiku-20240307"),
@@ -37,13 +35,15 @@ def _test_swap_start(text: str):
 
     with TestingContext():
 
-        prompt = (f"We need to determine the accrual start date (the start date when the interest begins accruing, "
-                  f"which may not be the same as payment date) of this trade or leg. "
-                  f"Given the following text, reply with JSON that has the following keys only where "
-                  f"value is true if we need to know this field in addition to the text to answer this question, "
-                  f"and false if we do not need it. "
-                  f"Keys: 'payment_frequency', 'floating_frequency', 'pays_in_arrears', 'currency', 'maturity_date'. "
-                  f"Text: {text}")
+        prompt = (
+            f"We need to determine the accrual start date (the start date when the interest begins accruing, "
+            f"which may not be the same as payment date) of this trade or leg. "
+            f"Given the following text, reply with JSON that has the following keys only where "
+            f"value is true if we need to know this field in addition to the text to answer this question, "
+            f"and false if we do not need it. "
+            f"Keys: 'payment_frequency', 'floating_frequency', 'pays_in_arrears', 'currency', 'maturity_date'. "
+            f"Text: {text}"
+        )
         run_count = 1
 
         for llm in llms:
@@ -51,7 +51,7 @@ def _test_swap_start(text: str):
 
                 result = llm.completion(prompt)
 
-                answers = {'???', '1m', '3m', '6m', '12m'}
+                answers = {"???", "1m", "3m", "6m", "12m"}
                 is_allowed_value_yn = "Y" if result in answers else "N"
                 is_trimmed_allowed_value_yn = "Y" if result.strip() in answers else "N"
 
