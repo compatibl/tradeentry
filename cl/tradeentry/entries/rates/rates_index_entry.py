@@ -12,11 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
 from dataclasses import dataclass
-from cl.convince.entry.entry import Entry
+from cl.runtime.records.record_mixin import RecordMixin
+from cl.tradeentry.entries.rates.swaps.swap_index_entry_key import RatesIndexEntryKey
 
 
 @dataclass(slots=True, kw_only=True)
-class RatesIndexEntry(Entry, ABC):
-    """Interest rate index."""
+class RatesIndexEntry(RatesIndexEntryKey, RecordMixin[RatesIndexEntryKey]):
+    """Swap interest rate index or currency (in case of currency, default index for the currency is used)."""
+
+    def get_key(self) -> RatesIndexEntryKey:
+        return RatesIndexEntryKey(swap_index_id=self.swap_index_id)
