@@ -18,10 +18,12 @@ from typing import Iterable
 from typing import List
 from typing import Tuple
 
+from cl.runtime.settings.settings import Settings
 
-def check_copyright_header(
-    root_paths: Iterable[str],
+
+def check_copyright_headers(
     *,
+    source_dirs: List[str] | None = None,
     copyright_header: str | None = None,
     include_patterns: List[str] | None = None,
     exclude_patterns: List[str] | None = None,
@@ -33,13 +35,23 @@ def check_copyright_header(
     the specified glob filename pattern.
 
     Args:
-        root_paths: List of root directories under which files matching the pattern will be checked
+        source_dirs: Directories under which files will be checked
         copyright_header: Optional copyright header, defaults to project contributors Apache header
         include_patterns: Optional list of filename glob patterns to include, use the defaults in code if not specified
         exclude_patterns: Optional list of filename glob patterns to exclude, use the defaults in code if not specified
         fix_trailing_blank_line: If specified, add a trailing blank line after the copyright header if missing
         verbose: Print messages about fixes to stdout if specified
     """
+
+    if source_dirs is None:
+        # Default to checking namespace 'cl'
+        source_dirs = ["cl/", "stubs/cl/", "tests/cl"]
+    
+    # Project root assuming the script is located in project_root/scripts
+    project_root = Settings.get_project_root()
+
+    # Absolute paths to source directories
+    root_paths = [os.path.normpath(os.path.join(project_root, source_dir)) for source_dir in source_dirs]
 
     # Use the project contributors Apache header if not specified by the caller
     if copyright_header is None:

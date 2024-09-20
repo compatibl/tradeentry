@@ -12,27 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-
 import pytest
-from pathlib import Path
-from cl.runtime.prebuild.copyright_header import check_copyright_header
+from cl.runtime.prebuild.copyright_header import check_copyright_headers
 
 
 def test_copyright_headers():
     """Prebuild test to check that the specified copyright header is present in all code directories."""
 
-    # Project root assuming the script is located in project_root/scripts
-    project_root = Path(__file__).parents[4]
-
-    # Relative paths to source directories
-    relative_paths = ["cl", "stubs", "tests"]
-
-    # Absolute paths to source directories
-    root_paths = [os.path.join(project_root, x) for x in relative_paths]
-
-    # Get the list of missing init files are present without fixing the problem
-    check_copyright_header(root_paths)
+    # Get the list files where copyright header is missing, incorrect, or not followed by a blank line
+    check_copyright_headers()
 
 
 if __name__ == "__main__":

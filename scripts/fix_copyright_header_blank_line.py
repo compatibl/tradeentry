@@ -14,20 +14,10 @@
 
 from pathlib import Path
 
-from cl.runtime.prebuild.copyright_header import check_copyright_header
+from cl.runtime.prebuild.copyright_header import check_copyright_headers
 
 # Check copyright headers and fix missing trailing blank line
 # All other copyright header errors cause an exception
 if __name__ == '__main__':
-
-    # Project root assuming the script is located in project_root/scripts
-    project_path = Path(__file__).parent.parent
-
-    # Relative source root paths
-    relative_paths = ["cl", "stubs", "tests"]
-
-    # Absolute source root paths
-    root_paths = [project_path / x for x in relative_paths]
-
     # Create __init__.py files in subdirectories under each element of source_paths
-    check_copyright_header(root_paths, fix_trailing_blank_line=True)
+    check_copyright_headers(fix_trailing_blank_line=True, verbose=True)
