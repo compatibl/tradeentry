@@ -13,13 +13,18 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime import RecordMixin
-from cl.tradeentry.entries.rates.rates_leg_entry_key import RatesLegEntryKey
+from typing import Type
+from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class RatesLegEntry(RatesLegEntryKey, RecordMixin[RatesLegEntryKey]):
+class RatesLegEntryKey(KeyMixin):
     """Interest rate leg entry."""
 
-    def get_key(self) -> RatesLegEntryKey:
-        return RatesLegEntryKey(entry_id=self.entry_id)
+    entry_id: str = missing()
+    """Text for which the meaning is recorded."""
+
+    @classmethod
+    def get_key_type(cls) -> Type:
+        return RatesLegEntryKey
