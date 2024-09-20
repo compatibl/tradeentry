@@ -16,20 +16,34 @@ import os
 from typing import Iterable
 from typing import List
 
+from cl.runtime.settings.settings import Settings
 
-def check_init_files(root_paths: Iterable[str], *, apply_fix: bool) -> List[str]:
+
+def check_init_files(
+        *,
+        source_dirs: List[str] | None = None,
+        apply_fix: bool,
+        verbose: bool = False,
+        ) -> None:
     """
     Check that __init__.py is present in all subdirectories of 'root_path'.
     Optionally create when missing.
 
-    Returns:
-        List of missing absolute paths or None if all files are present.
-        The list is returned for information purposes even when apply_fix = True.
-
     Args:
-        root_paths: List of root directories
-        apply_fix: If True, create an empty __init__.py file when missing.
+        source_dirs: Directories under which files will be checked
+        apply_fix: If True, create an empty __init__.py file when missing
+        verbose: Print messages about fixes to stdout if specified
     """
+
+    if source_dirs is None:
+        # Default to checking namespace 'cl'
+        source_dirs = ["cl/", "stubs/cl/"]
+
+    # Project root assuming the script is located in project_root/scripts
+    project_root = Settings.get_project_root()
+
+    # Absolute paths to source directories
+    root_paths = [os.path.normpath(os.path.join(project_root, source_dir)) for source_dir in source_dirs]
 
     missing_files = []
 
@@ -48,5 +62,12 @@ def check_init_files(root_paths: Iterable[str], *, apply_fix: bool) -> List[str]
                         with open(init_file_path, "w") as f:
                             pass
 
-    # Return the list of absolute paths for the missing files
-    return missing_files
+    if missing_files:
+        missing_files_msg = "__init__.py file(s):\n" + "".join([f"    {missing_file}\n" for missing_file in missing_files])
+        if not apply_fix:
+            raise RuntimeError(f"Found missing {missing_files_msg}")
+        elif verbose:
+            print(f"Created {missing_files_msg}")
+    elif verbose:
+        print("Verified that all __init__.py files are present under directory root(s):\n" +
+              "".join([f"    {root_path}\n" for root_path in root_paths]))

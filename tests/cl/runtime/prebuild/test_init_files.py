@@ -20,20 +20,8 @@ from cl.runtime.prebuild.init_files import check_init_files
 def test_init_files():
     """Prebuild test to check that __init__.py is present in all code directories."""
 
-    # Project root assuming the script is located in project_root/scripts
-    project_root = Path(__file__).parents[4]
-
-    # Relative paths to source directories
-    relative_paths = ["cl", "stubs"]
-
-    # Absolute paths to source directories
-    root_paths = [project_root / x for x in relative_paths]
-
-    # Get the list of missing init files are present without fixing the problem
-    missing_files = check_init_files(root_paths, apply_fix=False)
-
-    # Confirm that there are no missing files
-    assert not missing_files
+    # Check that init files are present in each source directory except for tests, report an error if not found
+    check_init_files(apply_fix=False)
 
 
 if __name__ == "__main__":
