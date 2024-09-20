@@ -14,12 +14,12 @@
 
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.rates.rates_fixed_rate_entry_key import RatesFixedRateEntryKey
+from cl.tradeentry.entries.fixed_rate_entry_key import FixedRateEntryKey
 
 
 @dataclass(slots=True, kw_only=True)
-class RatesFixedRateEntry(RatesFixedRateEntryKey, RecordMixin[RatesFixedRateEntryKey]):
+class FixedRateEntry(FixedRateEntryKey, RecordMixin[FixedRateEntryKey]):
     """Fixed interest rate string and its precise meaning."""
 
-    def get_key(self) -> RatesFixedRateEntryKey:
-        return RatesFixedRateEntryKey(fixed_rate_id=self.fixed_rate_id)
+    def get_key(self) -> FixedRateEntryKey:
+        return FixedRateEntryKey(fixed_rate_id=self.fixed_rate_id)

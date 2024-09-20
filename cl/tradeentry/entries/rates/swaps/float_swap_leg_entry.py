@@ -14,7 +14,7 @@
 
 from dataclasses import dataclass
 
-from cl.tradeentry.entries.rates.swaps.swap_index_entry import RatesIndexEntry
+from cl.tradeentry.entries.rates.rates_index_entry import RatesIndexEntry
 from cl.tradeentry.entries.rates.swaps.swap_leg_entry import SwapLegEntry
 
 

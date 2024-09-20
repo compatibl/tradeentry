@@ -13,9 +13,9 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.tradeentry.entries.rates.rates_fixed_rate_entry_key import RatesFixedRateEntryKey
-from cl.tradeentry.entries.rates.rates_pay_or_receive_fixed_entry_key import RatesPayOrReceiveFixedEntryKey
-from cl.tradeentry.entries.rates.swaps.swap_index_entry_key import RatesIndexEntryKey
+from cl.tradeentry.entries.fixed_rate_entry_key import FixedRateEntryKey
+from cl.tradeentry.entries.pay_receive_fixed_entry_key import PayReceiveFixedEntryKey
+from cl.tradeentry.entries.rates.rates_index_entry_key import RatesIndexEntryKey
 from cl.tradeentry.entries.rates.rates_effective_date_entry_key import RatesEffectiveDateEntryKey
 from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import RatesMaturityDateEntryKey
 from cl.tradeentry.entries.trade_entry import TradeEntry
@@ -25,7 +25,7 @@ from cl.tradeentry.entries.trade_entry import TradeEntry
 class VanillaSwapEntry(TradeEntry):
     """Vanilla fixed for floating swap."""
 
-    pay_receive_fixed: RatesPayOrReceiveFixedEntryKey | None = None
+    pay_receive_fixed: PayReceiveFixedEntryKey | None = None
     """String representation of the PayFixed or ReceiveFixed flag in the format specified by the user."""
 
     effective_date: RatesEffectiveDateEntryKey | None = None
@@ -37,5 +37,5 @@ class VanillaSwapEntry(TradeEntry):
     float_index: RatesIndexEntryKey | None = None
     """Swap interest rate index or currency (in case of currency, default index for the currency is used)."""
 
-    fixed_rate: RatesFixedRateEntryKey | None = None
+    fixed_rate: FixedRateEntryKey | None = None
     """Fixed rate (breakeven rate is assumed if not specified)."""

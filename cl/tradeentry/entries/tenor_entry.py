@@ -14,7 +14,7 @@
 
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.rates.rates_tenor_entry_key import TenorEntryKey
+from cl.tradeentry.entries.tenor_entry_key import TenorEntryKey
 
 
 @dataclass(slots=True, kw_only=True)

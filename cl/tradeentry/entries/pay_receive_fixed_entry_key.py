@@ -19,7 +19,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class RatesPayOrReceiveFixedEntryKey(KeyMixin):
+class PayReceiveFixedEntryKey(KeyMixin):
     """String representation of the PayFixed or ReceiveFixed flag in the format specified by the user."""
 
     pay_receive_fixed_id: str = missing()
@@ -27,4 +27,4 @@ class RatesPayOrReceiveFixedEntryKey(KeyMixin):
 
     @classmethod
     def get_key_type(cls) -> Type:
-        return RatesPayOrReceiveFixedEntryKey
+        return PayReceiveFixedEntryKey

@@ -15,7 +15,7 @@
 import datetime as dt
 from dataclasses import dataclass
 
-from cl.tradeentry.entries.rates.rates_pay_or_receive_entry_key import RatesPayOrReceiveEntryKey
+from cl.tradeentry.entries.pay_receive_entry_key import PayReceiveEntryKey
 from cl.tradeentry.entries.rates.rates_effective_date_entry_key import RatesEffectiveDateEntryKey
 from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import RatesMaturityDateEntryKey
 from cl.tradeentry.entries.rates.rates_leg_entry import RatesLegEntry
@@ -25,7 +25,7 @@ from cl.tradeentry.entries.rates.rates_leg_entry import RatesLegEntry
 class SwapLegEntry(RatesLegEntry):
     """Swap leg."""
 
-    buy_sell: RatesPayOrReceiveEntryKey | None = None
+    buy_sell: PayReceiveEntryKey | None = None
     """String representation of the Buy or Sell flag in the format specified by the user."""
 
     effective_date: RatesEffectiveDateEntryKey | None = None
