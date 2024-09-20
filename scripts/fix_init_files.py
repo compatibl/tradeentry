@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from pathlib import Path
 from cl.runtime.prebuild.init_files import check_init_files
 
 if __name__ == '__main__':

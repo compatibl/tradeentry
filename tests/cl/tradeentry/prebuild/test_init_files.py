@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import pytest
-from pathlib import Path
 from cl.runtime.prebuild.init_files import check_init_files
 
 
