@@ -22,7 +22,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 class PayReceiveEntryKey(KeyMixin):
     """String representation of the Buy or Sell flag in the format specified by the user."""
 
-    buy_sell_id: str = missing()
+    pay_receive_id: str = missing()
     """String representation of the Buy or Sell flag in the format specified by the user."""
 
     @classmethod

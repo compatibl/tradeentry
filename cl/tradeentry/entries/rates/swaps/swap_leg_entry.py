@@ -25,7 +25,7 @@ from cl.tradeentry.entries.rates.rates_leg_entry import RatesLegEntry
 class SwapLegEntry(RatesLegEntry):
     """Swap leg."""
 
-    buy_sell: PayReceiveEntryKey | None = None
+    pay_receive: PayReceiveEntryKey | None = None
     """String representation of the Buy or Sell flag in the format specified by the user."""
 
     effective_date: RatesEffectiveDateEntryKey | None = None
