@@ -13,11 +13,18 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from typing import List
+
+from cl.runtime.records.dataclasses_extensions import missing
+from cl.tradeentry.entries.rates.rates_leg_entry_key import RatesLegEntryKey
 from cl.tradeentry.entries.trade_entry import TradeEntry
 
 
 @dataclass(slots=True, kw_only=True)
-class SwapTradeEntry(TradeEntry):
-    """Swap trade entry with multiple legs."""
+class SwapEntry(TradeEntry):
+    """Swap consists of two or more rates legs."""
+
+    legs: List[RatesLegEntryKey] = missing()
+    """Swap legs."""
 
 
