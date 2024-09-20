@@ -14,7 +14,7 @@
 
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.formats.schedule.effective_date_key import EffectiveDateKey
+from cl.tradeentry.entries.rates.rates_effective_date_entry_key import EffectiveDateKey
 
 
 @dataclass(slots=True, kw_only=True)

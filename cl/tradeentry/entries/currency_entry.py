@@ -15,7 +15,7 @@
 from abc import ABC
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.formats.symbols.currency_key import CurrencyKey
+from cl.tradeentry.entries.currency_entry_key import CurrencyKey
 
 
 @dataclass(slots=True, kw_only=True)

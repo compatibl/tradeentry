@@ -14,7 +14,7 @@
 
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.formats.rates.fixed_rate_key import FixedRateKey
+from cl.tradeentry.entries.rates.rates_fixed_rate_entry_key import FixedRateKey
 
 
 @dataclass(slots=True, kw_only=True)

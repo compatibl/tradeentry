@@ -13,12 +13,12 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.tradeentry.formats.rates.fixed_rate_key import FixedRateKey
-from cl.tradeentry.formats.rates.swap_index_key import SwapIndexKey
-from cl.tradeentry.formats.rates.pay_receive_fixed_key import PayReceiveFixedKey
-from cl.tradeentry.formats.schedule.effective_date_key import EffectiveDateKey
-from cl.tradeentry.formats.schedule.maturity_date_key import MaturityDateKey
-from cl.tradeentry.trades.trade import Trade
+from cl.tradeentry.entries.rates.rates_fixed_rate_entry_key import FixedRateKey
+from cl.tradeentry.entries.rates.rates_swap_index_entry_key import SwapIndexKey
+from cl.tradeentry.entries.rates.rates_pay_receive_fixed_entry_key import PayReceiveFixedKey
+from cl.tradeentry.entries.rates.rates_effective_date_entry_key import EffectiveDateKey
+from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import MaturityDateKey
+from cl.tradeentry.entries.trade import Trade
 
 
 @dataclass(slots=True, kw_only=True)

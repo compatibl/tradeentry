@@ -22,7 +22,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 class TimeIntervalKey(KeyMixin):
     """Time interval string and its precise meaning."""
 
-    time_interval_id: str = missing()
+    tenor_id: str = missing()
     """Time interval string for which the meaning is recorded."""
 
     @classmethod

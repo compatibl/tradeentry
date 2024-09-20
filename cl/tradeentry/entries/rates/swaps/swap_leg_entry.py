@@ -15,12 +15,10 @@
 import datetime as dt
 from dataclasses import dataclass
 
-from cl.tradeentry.formats.buy_sell_key import BuySellKey
-from cl.tradeentry.formats.schedule.date_key import DateKey
-from cl.tradeentry.formats.schedule.effective_date_key import EffectiveDateKey
-from cl.tradeentry.formats.schedule.maturity_date_key import MaturityDateKey
-from cl.tradeentry.formats.schedule.time_interval_key import TimeIntervalKey
-from cl.tradeentry.trades.leg import Leg
+from cl.tradeentry.entries.rates.rates_leg_pay_or_receive_entry_key import BuySellKey
+from cl.tradeentry.entries.rates.rates_effective_date_entry_key import EffectiveDateKey
+from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import MaturityDateKey
+from cl.tradeentry.entries.rates.rates_leg_entry import Leg
 
 
 @dataclass(slots=True, kw_only=True)

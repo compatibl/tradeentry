@@ -14,7 +14,7 @@
 
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.formats.rates.swap_index_key import SwapIndexKey
+from cl.tradeentry.entries.rates.swaps.swap_index_entry_key import SwapIndexKey
 
 
 @dataclass(slots=True, kw_only=True)

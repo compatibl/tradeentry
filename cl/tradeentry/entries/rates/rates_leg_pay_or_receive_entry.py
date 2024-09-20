@@ -14,7 +14,7 @@
 
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.formats.buy_sell_key import BuySellKey
+from cl.tradeentry.entries.rates.rates_leg_pay_or_receive_entry_key import BuySellKey
 
 
 @dataclass(slots=True, kw_only=True)

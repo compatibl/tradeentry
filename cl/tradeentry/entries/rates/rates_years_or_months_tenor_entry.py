@@ -14,7 +14,7 @@
 
 import datetime as dt
 from dataclasses import dataclass
-from cl.tradeentry.formats.schedule.time_interval import TimeInterval
+from cl.tradeentry.entries.rates.rates_tenor_entry import TimeInterval
 
 
 @dataclass(slots=True, kw_only=True)

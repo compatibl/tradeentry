@@ -15,7 +15,7 @@
 from abc import ABC
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.formats.schedule.date_key import DateKey
+from cl.tradeentry.entries.date_entry_key import DateKey
 
 
 @dataclass(slots=True, kw_only=True)

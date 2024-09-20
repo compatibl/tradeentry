@@ -14,7 +14,7 @@
 
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.formats.schedule.maturity_date_key import MaturityDateKey
+from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import MaturityDateKey
 
 
 @dataclass(slots=True, kw_only=True)
