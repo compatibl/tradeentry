@@ -80,7 +80,7 @@ class SaveResponse(BaseModel):
                 dataset=request.dataset,
             )
             if existing_record is not None:
-                raise ValidationError(f'Record with key {str(record)} already exists.')
+                raise RuntimeError(f"Record with key {str(record)} already exists.")
 
         if request.old_record_key is not None and request.old_record_key != key_serializer.serialize_key(record):
             old_record_key_obj = key_serializer.deserialize_key(request.old_record_key, type(record.get_key()))
