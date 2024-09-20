@@ -12,32 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from pathlib import Path
-
-from cl.runtime.prebuild.copyright_header import check_copyright_header
+from cl.runtime.prebuild.copyright_header import check_copyright_headers
 
 # Check copyright headers and fix missing trailing blank line
 # All other copyright header errors cause an exception
 if __name__ == '__main__':
 
-    # Project root assuming the script is located in project_root/scripts
-    project_path = Path(__file__).parent.parent
-
-    # Relative source root paths
-    relative_paths = ["cl", "stubs", "tests"]
-
-    # Absolute source root paths
-    root_paths = [project_path / x for x in relative_paths]
-
-    # Create __init__.py files in subdirectories under each element of source_paths
-    files_with_copyright_header_error, files_with_trailing_line_error = check_copyright_header(root_paths, fix_trailing_blank_line=True)
-
-    if files_with_copyright_header_error:
-        raise RuntimeError("Invalid copyright header in file(s):\n" +
-              "".join([f"    {file}\n" for file in files_with_copyright_header_error]))
-    elif files_with_trailing_line_error:
-        print("Adding a missing blank line after copyright header in file(s):\n" +
-              "".join([f"    {file}\n" for file in files_with_trailing_line_error]))
-    else:
-        print("Verified copyright header and trailing blank line under directory root(s):\n" +
-              "".join([f"    {root_path}\n" for root_path in root_paths]))
+    # Fix or report errors where copyright header is missing, incorrect, or not followed by a blank line
+    check_copyright_headers(fix_trailing_blank_line=True, verbose=True)
