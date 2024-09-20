@@ -24,6 +24,7 @@ from pymongo.database import Database
 from cl.runtime.context.context import Context
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.storage.data_source import DataSource
@@ -126,7 +127,8 @@ class BasicMongoDataSource(DataSource):
         db = self._get_db()
         collection = db[collection_name]
 
-        serialized_records = collection.find()  # TODO: Filter by derived type
+        subtype_names = list(t.__name__ for t in Schema.get_type_successors(record_type))
+        serialized_records = collection.find({"_type": {"$in": subtype_names}})
         result = []
         for serialized_record in serialized_records:
             del serialized_record["_id"]

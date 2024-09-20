@@ -27,6 +27,7 @@ from cl.runtime.file.file_util import FileUtil
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key
+from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
 from cl.runtime.settings.settings import Settings
 from cl.runtime.storage.data_source import DataSource
@@ -191,7 +192,7 @@ class SqliteDataSource(DataSource):
             return list()
 
         # get subtypes for record_type and use them in match condition
-        subtype_names = tuple(schema_manager.get_subtype_names(record_type))
+        subtype_names = tuple(t.__name__ for t in Schema.get_type_successors(record_type))
         value_placeholders = ", ".join(["?"] * len(subtype_names))
         sql_statement = f'SELECT * FROM "{table_name}" WHERE _type in ({value_placeholders});'
 

@@ -20,7 +20,7 @@ from collections import defaultdict
 from enum import Enum
 from pkgutil import walk_packages
 from types import ModuleType
-from typing import Dict
+from typing import Dict, Set
 from typing import Iterable
 from typing import List
 from typing import Type
@@ -260,3 +260,11 @@ class Schema:
             result.extend(v)
 
         return result
+
+    @classmethod
+    @cached
+    def get_type_successors(cls, record_type: Type) -> Set[Type]:
+        """Returns a set of successors."""
+
+        # TODO)Major): Use ClassInfo.get_inheritance_chain and record base classes in DB so unknow types can also be returned
+        return set(schema_type for schema_type in Schema.get_types() if record_type in schema_type.__mro__)
