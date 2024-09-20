@@ -14,12 +14,12 @@
 
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import MaturityDateKey
+from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import MaturityDateEntryKey
 
 
 @dataclass(slots=True, kw_only=True)
-class MaturityDate(MaturityDateKey, RecordMixin[MaturityDateKey]):
+class MaturityDateEntry(MaturityDateEntryKey, RecordMixin[MaturityDateEntryKey]):
     """Trade or leg maturity date defined as unadjusted date or time interval relative to another date."""
 
-    def get_key(self) -> MaturityDateKey:
-        return MaturityDateKey(maturity_date_id=self.maturity_date_id)
+    def get_key(self) -> MaturityDateEntryKey:
+        return MaturityDateEntryKey(maturity_date_id=self.maturity_date_id)

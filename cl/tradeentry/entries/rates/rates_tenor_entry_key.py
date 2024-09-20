@@ -19,7 +19,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class TimeIntervalKey(KeyMixin):
+class TenorEntryKey(KeyMixin):
     """Time interval string and its precise meaning."""
 
     tenor_id: str = missing()
@@ -27,4 +27,4 @@ class TimeIntervalKey(KeyMixin):
 
     @classmethod
     def get_key_type(cls) -> Type:
-        return TimeIntervalKey
+        return TenorEntryKey

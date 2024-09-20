@@ -12,17 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
-from abc import abstractmethod
 from dataclasses import dataclass
-from typing import Iterable
-from cl.convince.entry.entry import Entry
+from cl.tradeentry.entries.trade_entry import TradeEntry
 
 
 @dataclass(slots=True, kw_only=True)
-class Trade(Entry, ABC):
-    """A complete trade defined directly or via its legs."""
+class SwapTradeEntry(TradeEntry):
+    """Swap trade entry with multiple legs."""
 
-    @abstractmethod
-    def missing_fields(self) -> Iterable[str]:  # TODO: Define via CorrectionsMixin
-        """Return the list of missing fields."""
+

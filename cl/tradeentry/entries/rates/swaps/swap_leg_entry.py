@@ -15,23 +15,23 @@
 import datetime as dt
 from dataclasses import dataclass
 
-from cl.tradeentry.entries.rates.rates_leg_pay_or_receive_entry_key import BuySellKey
-from cl.tradeentry.entries.rates.rates_effective_date_entry_key import EffectiveDateKey
-from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import MaturityDateKey
-from cl.tradeentry.entries.rates.rates_leg_entry import Leg
+from cl.tradeentry.entries.rates.rates_leg_pay_or_receive_entry_key import PayOrReceiveEntryKey
+from cl.tradeentry.entries.rates.rates_effective_date_entry_key import EffectiveDateEntryKey
+from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import MaturityDateEntryKey
+from cl.tradeentry.entries.rates.rates_leg_entry import LegEntry
 
 
 @dataclass(slots=True, kw_only=True)
-class SwapLeg(Leg):
+class SwapLegEntry(LegEntry):
     """Swap leg."""
 
-    buy_sell: BuySellKey | None = None
+    buy_sell: PayOrReceiveEntryKey | None = None
     """String representation of the Buy or Sell flag in the format specified by the user."""
 
-    effective_date: EffectiveDateKey | None = None
+    effective_date: EffectiveDateEntryKey | None = None
     """Trade or leg effective date defined as unadjusted date or time interval relative to another date."""
 
-    maturity_date: MaturityDateKey | None = None
+    maturity_date: MaturityDateEntryKey | None = None
     """Trade or leg maturity date defined as unadjusted date or time interval relative to another date."""
 
     payment_frequency: str | None = None

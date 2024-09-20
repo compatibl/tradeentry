@@ -19,7 +19,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class MaturityDateKey(KeyMixin):
+class MaturityDateEntryKey(KeyMixin):
     """Trade or leg maturity date defined as unadjusted date or time interval relative to another date."""
 
     maturity_date_id: str = missing()
@@ -27,4 +27,4 @@ class MaturityDateKey(KeyMixin):
 
     @classmethod
     def get_key_type(cls) -> Type:
-        return MaturityDateKey
+        return MaturityDateEntryKey

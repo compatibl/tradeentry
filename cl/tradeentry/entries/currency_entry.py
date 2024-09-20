@@ -15,12 +15,12 @@
 from abc import ABC
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.currency_entry_key import CurrencyKey
+from cl.tradeentry.entries.currency_entry_key import CurrencyEntryKey
 
 
 @dataclass(slots=True, kw_only=True)
-class Currency(CurrencyKey, RecordMixin[CurrencyKey], ABC):
+class CurrencyEntry(CurrencyEntryKey, RecordMixin[CurrencyEntryKey], ABC):
     """Maps currency string specified by the user to the ISO three-letter currency code."""
 
-    def get_key(self) -> CurrencyKey:
-        return CurrencyKey(currency_id=self.currency_id)
+    def get_key(self) -> CurrencyEntryKey:
+        return CurrencyEntryKey(currency_id=self.currency_id)

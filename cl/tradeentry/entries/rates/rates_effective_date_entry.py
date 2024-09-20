@@ -14,12 +14,12 @@
 
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.rates.rates_effective_date_entry_key import EffectiveDateKey
+from cl.tradeentry.entries.rates.rates_effective_date_entry_key import EffectiveDateEntryKey
 
 
 @dataclass(slots=True, kw_only=True)
-class EffectiveDate(EffectiveDateKey, RecordMixin[EffectiveDateKey]):
+class EffectiveDateEntry(EffectiveDateEntryKey, RecordMixin[EffectiveDateEntryKey]):
     """Trade or leg effective date defined as unadjusted date or time interval relative to another date."""
 
-    def get_key(self) -> EffectiveDateKey:
-        return EffectiveDateKey(effective_date_id=self.effective_date_id)
+    def get_key(self) -> EffectiveDateEntryKey:
+        return EffectiveDateEntryKey(effective_date_id=self.effective_date_id)

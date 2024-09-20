@@ -13,29 +13,28 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.tradeentry.entries.rates.rates_fixed_rate_entry_key import FixedRateKey
-from cl.tradeentry.entries.rates.rates_swap_index_entry_key import SwapIndexKey
-from cl.tradeentry.entries.rates.rates_pay_receive_fixed_entry_key import PayReceiveFixedKey
-from cl.tradeentry.entries.rates.rates_effective_date_entry_key import EffectiveDateKey
-from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import MaturityDateKey
-from cl.tradeentry.entries.trade import Trade
+from cl.tradeentry.entries.rates.rates_fixed_rate_entry_key import FixedRateEntryKey
+from cl.tradeentry.entries.rates.swaps.swap_index_entry_key import SwapIndexEntryKey
+from cl.tradeentry.entries.rates.rates_effective_date_entry_key import EffectiveDateEntryKey
+from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import MaturityDateEntryKey
+from cl.tradeentry.entries.trade_entry import TradeEntry
 
 
 @dataclass(slots=True, kw_only=True)
-class VanillaSwap(Trade):
+class VanillaSwapEntry(TradeEntry):
     """Vanilla fixed for floating swap."""
 
-    pay_receive_fixed: PayReceiveFixedKey | None = None
+    pay_receive_fixed: RatesPayOrReceiveFixedEntryKey | None = None
     """String representation of the PayFixed or ReceiveFixed flag in the format specified by the user."""
 
-    effective_date: EffectiveDateKey | None = None
+    effective_date: EffectiveDateEntryKey | None = None
     """Trade or leg effective date defined as unadjusted date or time interval relative to another date."""
 
-    maturity_date: MaturityDateKey | None = None
+    maturity_date: MaturityDateEntryKey | None = None
     """Trade or leg maturity date defined as unadjusted date or time interval relative to another date."""
 
-    float_index: SwapIndexKey | None = None
+    float_index: SwapIndexEntryKey | None = None
     """Swap interest rate index or currency (in case of currency, default index for the currency is used)."""
 
-    fixed_rate: FixedRateKey | None = None
+    fixed_rate: FixedRateEntryKey | None = None
     """Fixed rate (breakeven rate is assumed if not specified)."""

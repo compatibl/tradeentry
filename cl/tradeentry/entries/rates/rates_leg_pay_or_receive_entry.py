@@ -14,12 +14,12 @@
 
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.rates.rates_leg_pay_or_receive_entry_key import BuySellKey
+from cl.tradeentry.entries.rates.rates_leg_pay_or_receive_entry_key import PayOrReceiveEntryKey
 
 
 @dataclass(slots=True, kw_only=True)
-class BuySell(BuySellKey, RecordMixin[BuySellKey]):
+class PayOrReceiveEntry(PayOrReceiveEntryKey, RecordMixin[PayOrReceiveEntryKey]):
     """String representation of the Buy or Sell flag in the format specified by the user."""
 
-    def get_key(self) -> BuySellKey:
-        return BuySellKey(buy_sell_id=self.buy_sell_id)
+    def get_key(self) -> PayOrReceiveEntryKey:
+        return PayOrReceiveEntryKey(buy_sell_id=self.buy_sell_id)

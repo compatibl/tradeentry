@@ -13,11 +13,11 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.tradeentry.entries.rates.swaps.swap_leg_entry import SwapLeg
+from cl.tradeentry.entries.rates.swaps.swap_leg_entry import SwapLegEntry
 
 
 @dataclass(slots=True, kw_only=True)
-class FixedLeg(SwapLeg):
+class FixedLegEntry(SwapLegEntry):
     """A series of interest rate payments with fixed coupon."""
 
     fixed_rate: float | None = None

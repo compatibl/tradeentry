@@ -14,12 +14,12 @@
 
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.rates.rates_pay_receive_fixed_entry_key import PayReceiveFixedKey
+from cl.tradeentry.entries.rates.rates_pay_or_receive_fixed_entry_key import RatesPayOrReceiveFixedEntryKey
 
 
 @dataclass(slots=True, kw_only=True)
-class PayReceiveFixed(PayReceiveFixedKey, RecordMixin[PayReceiveFixedKey]):
+class RatesPayOrReceiveFixedEntry(RatesPayOrReceiveFixedEntryKey, RecordMixin[RatesPayOrReceiveFixedEntryKey]):
     """String representation of the PayFixed or ReceiveFixed flag in the format specified by the user."""
 
-    def get_key(self) -> PayReceiveFixedKey:
-        return PayReceiveFixedKey(pay_receive_fixed_id=self.pay_receive_fixed_id)
+    def get_key(self) -> RatesPayOrReceiveFixedEntryKey:
+        return RatesPayOrReceiveFixedEntryKey(pay_receive_fixed_id=self.pay_receive_fixed_id)

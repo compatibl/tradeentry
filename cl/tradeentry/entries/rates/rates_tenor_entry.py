@@ -14,12 +14,12 @@
 
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.rates.rates_tenor_entry_key import TimeIntervalKey
+from cl.tradeentry.entries.rates.rates_tenor_entry_key import TenorEntryKey
 
 
 @dataclass(slots=True, kw_only=True)
-class TimeInterval(TimeIntervalKey, RecordMixin[TimeIntervalKey]):
+class TenorEntry(TenorEntryKey, RecordMixin[TenorEntryKey]):
     """Time interval string and its precise meaning."""
 
-    def get_key(self) -> TimeIntervalKey:
-        return TimeIntervalKey(tenor_id=self.tenor_id)
+    def get_key(self) -> TenorEntryKey:
+        return TenorEntryKey(tenor_id=self.tenor_id)

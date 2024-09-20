@@ -14,11 +14,11 @@
 
 import datetime as dt
 from dataclasses import dataclass
-from cl.tradeentry.entries.rates.rates_tenor_entry import TimeInterval
+from cl.tradeentry.entries.rates.rates_tenor_entry import TenorEntry
 
 
 @dataclass(slots=True, kw_only=True)
-class YearsMonthsInterval(TimeInterval):
+class RatesYearsOrMonthsTenorEntry(TenorEntry):
     """Time interval string and its precise meaning."""
 
     def get_time_delta(self, query: str) -> dt.timedelta:

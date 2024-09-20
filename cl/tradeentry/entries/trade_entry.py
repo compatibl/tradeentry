@@ -15,12 +15,12 @@
 from abc import ABC
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.trade_entry_key import TradeKey
+from cl.tradeentry.entries.trade_entry_key import TradeEntryKey
 
 
 @dataclass(slots=True, kw_only=True)
-class Trade(TradeKey, RecordMixin[TradeKey], ABC):
+class TradeEntry(TradeEntryKey, RecordMixin[TradeEntryKey], ABC):
     """Trade entry text specified by the user."""
 
-    def get_key(self) -> TradeKey:
-        return TradeKey(trade_id=self.trade_id)
+    def get_key(self) -> TradeEntryKey:
+        return TradeEntryKey(trade_id=self.trade_id)

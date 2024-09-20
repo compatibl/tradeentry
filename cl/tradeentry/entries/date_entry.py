@@ -15,12 +15,12 @@
 from abc import ABC
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.date_entry_key import DateKey
+from cl.tradeentry.entries.date_entry_key import DateEntryKey
 
 
 @dataclass(slots=True, kw_only=True)
-class Date(DateKey, RecordMixin[DateKey], ABC):
+class DateEntry(DateEntryKey, RecordMixin[DateEntryKey], ABC):
     """Maps a date string specified by the user to a calendar date."""
 
-    def get_key(self) -> DateKey:
-        return DateKey(date_id=self.date_id)
+    def get_key(self) -> DateEntryKey:
+        return DateEntryKey(date_id=self.date_id)

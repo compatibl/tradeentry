@@ -19,7 +19,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class DateKey(KeyMixin):
+class DateEntryKey(KeyMixin):
     """Maps a date string specified by the user to a calendar date."""
 
     date_id: str = missing()
@@ -27,4 +27,4 @@ class DateKey(KeyMixin):
 
     @classmethod
     def get_key_type(cls) -> Type:
-        return DateKey
+        return DateEntryKey

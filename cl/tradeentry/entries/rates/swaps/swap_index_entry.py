@@ -14,12 +14,12 @@
 
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.rates.swaps.swap_index_entry_key import SwapIndexKey
+from cl.tradeentry.entries.rates.swaps.swap_index_entry_key import SwapIndexEntryKey
 
 
 @dataclass(slots=True, kw_only=True)
-class SwapIndex(SwapIndexKey, RecordMixin[SwapIndexKey]):
+class SwapIndexEntry(SwapIndexEntryKey, RecordMixin[SwapIndexEntryKey]):
     """Swap interest rate index or currency (in case of currency, default index for the currency is used)."""
 
-    def get_key(self) -> SwapIndexKey:
-        return SwapIndexKey(swap_index_id=self.swap_index_id)
+    def get_key(self) -> SwapIndexEntryKey:
+        return SwapIndexEntryKey(swap_index_id=self.swap_index_id)

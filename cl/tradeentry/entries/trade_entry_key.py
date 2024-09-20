@@ -19,7 +19,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class TradeKey(KeyMixin):
+class TradeEntryKey(KeyMixin):
     """Trade entry text specified by the user."""
 
     trade_id: str = missing()
@@ -27,4 +27,4 @@ class TradeKey(KeyMixin):
 
     @classmethod
     def get_key_type(cls) -> Type:
-        return TradeKey
+        return TradeEntryKey
