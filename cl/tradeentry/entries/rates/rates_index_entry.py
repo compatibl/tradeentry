@@ -18,5 +18,5 @@ from cl.convince.entry.entry import Entry
 
 
 @dataclass(slots=True, kw_only=True)
-class SwapIndexEntry(Entry, ABC):
+class RatesIndexEntry(Entry, ABC):
     """Interest rate index."""

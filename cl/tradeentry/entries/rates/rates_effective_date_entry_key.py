@@ -19,7 +19,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class EffectiveDateEntryKey(KeyMixin):
+class RatesEffectiveDateEntryKey(KeyMixin):
     """Trade or leg effective date defined as unadjusted date or time interval relative to another date."""
 
     effective_date_id: str = missing()
@@ -27,4 +27,4 @@ class EffectiveDateEntryKey(KeyMixin):
 
     @classmethod
     def get_key_type(cls) -> Type:
-        return EffectiveDateEntryKey
+        return RatesEffectiveDateEntryKey

@@ -19,7 +19,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class FixedRateEntryKey(KeyMixin):
+class RatesFixedRateEntryKey(KeyMixin):
     """Fixed interest rate string and its precise meaning."""
 
     fixed_rate_id: str = missing()
@@ -27,4 +27,4 @@ class FixedRateEntryKey(KeyMixin):
 
     @classmethod
     def get_key_type(cls) -> Type:
-        return FixedRateEntryKey
+        return RatesFixedRateEntryKey

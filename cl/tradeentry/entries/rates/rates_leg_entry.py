@@ -18,5 +18,5 @@ from cl.convince.entry.entry import Entry
 
 
 @dataclass(slots=True, kw_only=True)
-class LegEntry(Entry, ABC):
+class RatesLegEntry(Entry, ABC):
     """Single leg of a trade that does not represent a complete trade on its own."""

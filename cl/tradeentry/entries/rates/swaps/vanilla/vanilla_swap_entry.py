@@ -13,11 +13,11 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.tradeentry.entries.rates.rates_fixed_rate_entry_key import FixedRateEntryKey
+from cl.tradeentry.entries.rates.rates_fixed_rate_entry_key import RatesFixedRateEntryKey
 from cl.tradeentry.entries.rates.rates_pay_or_receive_fixed_entry_key import RatesPayOrReceiveFixedEntryKey
-from cl.tradeentry.entries.rates.swaps.swap_index_entry_key import SwapIndexEntryKey
-from cl.tradeentry.entries.rates.rates_effective_date_entry_key import EffectiveDateEntryKey
-from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import MaturityDateEntryKey
+from cl.tradeentry.entries.rates.swaps.swap_index_entry_key import RatesIndexEntryKey
+from cl.tradeentry.entries.rates.rates_effective_date_entry_key import RatesEffectiveDateEntryKey
+from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import RatesMaturityDateEntryKey
 from cl.tradeentry.entries.trade_entry import TradeEntry
 
 
@@ -28,14 +28,14 @@ class VanillaSwapEntry(TradeEntry):
     pay_receive_fixed: RatesPayOrReceiveFixedEntryKey | None = None
     """String representation of the PayFixed or ReceiveFixed flag in the format specified by the user."""
 
-    effective_date: EffectiveDateEntryKey | None = None
+    effective_date: RatesEffectiveDateEntryKey | None = None
     """Trade or leg effective date defined as unadjusted date or time interval relative to another date."""
 
-    maturity_date: MaturityDateEntryKey | None = None
+    maturity_date: RatesMaturityDateEntryKey | None = None
     """Trade or leg maturity date defined as unadjusted date or time interval relative to another date."""
 
-    float_index: SwapIndexEntryKey | None = None
+    float_index: RatesIndexEntryKey | None = None
     """Swap interest rate index or currency (in case of currency, default index for the currency is used)."""
 
-    fixed_rate: FixedRateEntryKey | None = None
+    fixed_rate: RatesFixedRateEntryKey | None = None
     """Fixed rate (breakeven rate is assumed if not specified)."""

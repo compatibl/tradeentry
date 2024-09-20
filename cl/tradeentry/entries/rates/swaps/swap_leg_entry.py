@@ -16,22 +16,22 @@ import datetime as dt
 from dataclasses import dataclass
 
 from cl.tradeentry.entries.rates.rates_pay_or_receive_entry_key import RatesPayOrReceiveEntryKey
-from cl.tradeentry.entries.rates.rates_effective_date_entry_key import EffectiveDateEntryKey
-from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import MaturityDateEntryKey
-from cl.tradeentry.entries.rates.rates_leg_entry import LegEntry
+from cl.tradeentry.entries.rates.rates_effective_date_entry_key import RatesEffectiveDateEntryKey
+from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import RatesMaturityDateEntryKey
+from cl.tradeentry.entries.rates.rates_leg_entry import RatesLegEntry
 
 
 @dataclass(slots=True, kw_only=True)
-class SwapLegEntry(LegEntry):
+class SwapLegEntry(RatesLegEntry):
     """Swap leg."""
 
     buy_sell: RatesPayOrReceiveEntryKey | None = None
     """String representation of the Buy or Sell flag in the format specified by the user."""
 
-    effective_date: EffectiveDateEntryKey | None = None
+    effective_date: RatesEffectiveDateEntryKey | None = None
     """Trade or leg effective date defined as unadjusted date or time interval relative to another date."""
 
-    maturity_date: MaturityDateEntryKey | None = None
+    maturity_date: RatesMaturityDateEntryKey | None = None
     """Trade or leg maturity date defined as unadjusted date or time interval relative to another date."""
 
     payment_frequency: str | None = None

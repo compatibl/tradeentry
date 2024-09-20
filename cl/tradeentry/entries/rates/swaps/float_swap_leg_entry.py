@@ -14,18 +14,18 @@
 
 from dataclasses import dataclass
 
-from cl.tradeentry.entries.rates.swaps.swap_index_entry import SwapIndexEntry
+from cl.tradeentry.entries.rates.swaps.swap_index_entry import RatesIndexEntry
 from cl.tradeentry.entries.rates.swaps.swap_leg_entry import SwapLegEntry
 
 
 @dataclass(slots=True, kw_only=True)
-class FloatLegEntry(SwapLegEntry):
+class FloatSwapLegEntry(SwapLegEntry):
     """A series of interest rate payments with a floating coupon based on an interest rate index.."""
 
     float_freq: str | None = None
     """Frequency at which floating interest accrues."""
 
-    float_index: SwapIndexEntry | None = None
+    float_index: RatesIndexEntry | None = None
     """Interest rate index at which the interest accrues (with a possible spread)."""
 
     float_spread: float | None = None

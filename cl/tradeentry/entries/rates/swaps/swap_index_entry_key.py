@@ -19,7 +19,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class SwapIndexEntryKey(KeyMixin):
+class RatesIndexEntryKey(KeyMixin):
     """Swap interest rate index or currency (in case of currency, default index for the currency is used)."""
 
     swap_index_id: str = missing()
@@ -27,4 +27,4 @@ class SwapIndexEntryKey(KeyMixin):
 
     @classmethod
     def get_key_type(cls) -> Type:
-        return SwapIndexEntryKey
+        return RatesIndexEntryKey
