@@ -27,7 +27,7 @@ def test_smoke():
     """Test CsvDirReader class."""
 
     project_root = Settings.get_project_root()
-    dir_path = os.path.join(project_root, "preload/stubs/cl/runtime/csv")
+    dir_path = os.path.join(project_root, "preloads/stubs/cl/runtime/csv")
 
     # Create a new instance of local cache for the test
     with TestingContext() as context:

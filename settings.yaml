@@ -18,8 +18,8 @@ default:
 
     # Documented in PreloadSettings class
     runtime_preload_dirs:
-        - preload/cl
-        - preload/stubs
+        - preloads/cl
+        - preloads/stubs
 
 # Test environment
 test:
