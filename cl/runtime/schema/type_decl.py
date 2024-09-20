@@ -270,6 +270,11 @@ class TypeDecl(TypeDeclKey, RecordMixin[TypeDeclKey]):
             # Add an element for each type hint
             result.elements = []
             for field_name, field_type in type_hints.items():
+
+                # Skip protected fields
+                if field_name.startswith("_"):
+                    continue
+
                 # Field comment (docstring)
                 field_comment = member_comments.get(field_name, None)
 
