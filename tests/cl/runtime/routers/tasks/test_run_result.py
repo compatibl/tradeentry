@@ -25,7 +25,7 @@ from cl.runtime.routers.tasks.task_result_response_item import TaskResultRespons
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.tasks.instance_method_task import InstanceMethodTask
 from cl.runtime.tasks.task_run import TaskRun
-from cl.runtime.tasks.task_status import TaskStatus
+from cl.runtime.tasks.task_status import TaskStatusEnum
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
 
@@ -45,7 +45,7 @@ task_keys_str = [key_serializer.serialize_key(task.get_key()) for task in tasks]
 t = DatetimeUtil.now()
 queue_key = handler_queue.get_key()
 task_runs = [
-    TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatus.Completed, result=b"result")
+    TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatusEnum.Completed, result=b"result")
     for task in tasks
 ]
 

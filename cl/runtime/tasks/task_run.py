@@ -23,7 +23,7 @@ from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue_key import TaskQueueKey
 from cl.runtime.tasks.task_run_key import TaskRunKey
-from cl.runtime.tasks.task_status import TaskStatus
+from cl.runtime.tasks.task_status import TaskStatusEnum
 
 
 @dataclass(slots=True, kw_only=True)
@@ -48,7 +48,7 @@ class TaskRun(TaskRunKey, RecordMixin[TaskRunKey]):
     update_time: dt.datetime = missing()
     """UTC datetime of the latest update to this record."""
 
-    status: TaskStatus = missing()
+    status: TaskStatusEnum = missing()
     """Begins from Pending, continues to Running or Paused, and ends with Completed, Failed, or Cancelled."""
 
     progress: int | None = None
@@ -73,7 +73,7 @@ class TaskRun(TaskRunKey, RecordMixin[TaskRunKey]):
         start_datetime = DatetimeUtil.now()
         while DatetimeUtil.now() < start_datetime + dt.timedelta(seconds=timeout_sec):
             task_run = context.load_one(TaskRun, task_run_key)
-            if task_run is not None and task_run.status == TaskStatus.Completed:
+            if task_run is not None and task_run.status == TaskStatusEnum.Completed:
                 # Test success, task has been completed
                 return
             # TODO: Refactor to use queue-specific push communication rather than heartbeat

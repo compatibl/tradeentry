@@ -27,7 +27,7 @@ from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
-from cl.runtime.tasks.task_status import TaskStatus
+from cl.runtime.tasks.task_status import TaskStatusEnum
 
 context_serializer = DictSerializer()
 """Serializer for the context parameter of 'execute_task' method."""
@@ -57,7 +57,7 @@ def execute_task(
         task_run.task = TaskKey(task_id=task_id)
         task_run.submit_time = submit_time
         task_run.update_time = submit_time
-        task_run.status = TaskStatus.Pending
+        task_run.status = TaskStatusEnum.Pending
         context.save_one(task_run)
 
         try:
@@ -68,13 +68,13 @@ def execute_task(
         except Exception as e:  # noqa
             # Update task run record to report task failure
             task_run.update_time = DatetimeUtil.now()
-            task_run.status = TaskStatus.Failed
+            task_run.status = TaskStatusEnum.Failed
             task_run.result = str(e)
             context.save_one(task_run)
         else:
             # Update task run record to report task completion
             task_run.update_time = DatetimeUtil.now()
-            task_run.status = TaskStatus.Completed
+            task_run.status = TaskStatusEnum.Completed
             context.save_one(task_run)
 
 
@@ -143,7 +143,7 @@ class ProcessQueue(TaskQueue):
         task_run.task = task
         task_run.submit_time = submit_time
         task_run.update_time = submit_time
-        task_run.status = TaskStatus.Completed  # TODO: Update after the task is actually completed
+        task_run.status = TaskStatusEnum.Completed  # TODO: Update after the task is actually completed
         context.save_one(task_run)
 
         return task_run.get_key()

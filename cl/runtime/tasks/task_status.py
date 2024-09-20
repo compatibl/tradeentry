@@ -15,7 +15,7 @@
 from enum import IntEnum
 
 
-class TaskStatus(IntEnum):
+class TaskStatusEnum(IntEnum):
     """
     Indicates task's progress from its initial Pending state through the Running and
     optionally Paused state and ending in one of Completed, Failed, or Cancelled states.

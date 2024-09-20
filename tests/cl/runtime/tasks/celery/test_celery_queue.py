@@ -22,7 +22,7 @@ from cl.runtime.tasks.static_method_task import StaticMethodTask
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_queue_key import TaskQueueKey
 from cl.runtime.tasks.task_run import TaskRun
-from cl.runtime.tasks.task_status import TaskStatus
+from cl.runtime.tasks.task_status import TaskStatusEnum
 from cl.runtime.testing.pytest.pytest_fixtures import celery_test_queue_fixture
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 
@@ -61,7 +61,7 @@ def test_method(celery_test_queue_fixture):
         task_run.task = task
         task_run.submit_time = submit_time
         task_run.update_time = submit_time
-        task_run.status = TaskStatus.Pending
+        task_run.status = TaskStatusEnum.Pending
 
         # Save task run record which means task is submitted
         context.save_one(task_run)
