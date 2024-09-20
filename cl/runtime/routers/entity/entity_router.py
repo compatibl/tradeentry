@@ -18,6 +18,9 @@ from typing import List
 from fastapi import APIRouter, Body
 from fastapi import Header
 from fastapi import Query
+
+from cl.runtime.routers.entity.delete_request import DeleteRequest
+from cl.runtime.routers.entity.delete_response import DeleteResponse
 from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
 from cl.runtime.routers.entity.list_panels_response_item import ListPanelsResponseItem
 from cl.runtime.routers.entity.panel_request import PanelRequest
@@ -68,6 +71,23 @@ async def save(
         SaveRequest(
             record_dict=record_in_dict,
             old_record_key=old_record_key,
+            dataset=dataset,
+            user=user,
+        ),
+    )
+
+
+@router.post('/delete_many', response_model=DeleteResponse)
+async def delete_many(
+    record_keys: List[Dict] = Body(..., description="The list of keys to delete."),
+    dataset: str = Query(None, description="Dataset string"),
+    user: str = Header(None, description="User identifier or identity token"),
+) -> DeleteResponse:
+    """Delete entities."""
+
+    return DeleteResponse.delete_many(
+        DeleteRequest(
+            record_keys=record_keys,
             dataset=dataset,
             user=user,
         ),
