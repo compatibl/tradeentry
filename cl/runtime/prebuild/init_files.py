@@ -51,7 +51,9 @@ def check_init_files(
     for root_path in root_paths:
         # Walk the directory tree
         for dir_path, dir_names, filenames in os.walk(root_path):
-            # Check if there are .py files in the directory
+            # Check for .py files in the directory
+            # This will not check if there are .py files in subdirectories
+            # to avoid adding __init__.py files to namespace package root
             if any(filename.endswith(".py") for filename in filenames):
                 # Check if __init__.py is missing
                 init_file_path = os.path.join(dir_path, "__init__.py")
