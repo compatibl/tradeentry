@@ -22,7 +22,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 class TradeEntryKey(KeyMixin):
     """Trade entry text specified by the user."""
 
-    trade_id: str = missing()
+    entry_id: str = missing()
     """Trade entry text specified by the user."""
 
     @classmethod

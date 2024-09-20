@@ -22,7 +22,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 class PayReceiveFixedEntryKey(KeyMixin):
     """String representation of the PayFixed or ReceiveFixed flag in the format specified by the user."""
 
-    pay_receive_fixed_id: str = missing()
+    entry_id: str = missing()
     """String representation of the PayFixed or ReceiveFixed flag in the format specified by the user."""
 
     @classmethod

@@ -22,4 +22,4 @@ class RatesMaturityDateEntry(RatesMaturityDateEntryKey, RecordMixin[RatesMaturit
     """Trade or leg maturity date defined as unadjusted date or time interval relative to another date."""
 
     def get_key(self) -> RatesMaturityDateEntryKey:
-        return RatesMaturityDateEntryKey(maturity_date_id=self.maturity_date_id)
+        return RatesMaturityDateEntryKey(entry_id=self.entry_id)

@@ -22,7 +22,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 class DateEntryKey(KeyMixin):
     """Maps a date string specified by the user to a calendar date."""
 
-    date_id: str = missing()
+    entry_id: str = missing()
     """Date string specified by the user (this is not necessarily the date in ISO format)."""
 
     @classmethod

@@ -22,4 +22,4 @@ class TenorEntry(TenorEntryKey, RecordMixin[TenorEntryKey]):
     """Time interval string and its precise meaning."""
 
     def get_key(self) -> TenorEntryKey:
-        return TenorEntryKey(tenor_id=self.tenor_id)
+        return TenorEntryKey(entry_id=self.entry_id)

@@ -22,4 +22,4 @@ class RatesEffectiveDateEntry(RatesEffectiveDateEntryKey, RecordMixin[RatesEffec
     """Trade or leg effective date defined as unadjusted date or time interval relative to another date."""
 
     def get_key(self) -> RatesEffectiveDateEntryKey:
-        return RatesEffectiveDateEntryKey(effective_date_id=self.effective_date_id)
+        return RatesEffectiveDateEntryKey(entry_id=self.entry_id)

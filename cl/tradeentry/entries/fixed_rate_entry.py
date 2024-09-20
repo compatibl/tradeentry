@@ -22,4 +22,4 @@ class FixedRateEntry(FixedRateEntryKey, RecordMixin[FixedRateEntryKey]):
     """Fixed interest rate string and its precise meaning."""
 
     def get_key(self) -> FixedRateEntryKey:
-        return FixedRateEntryKey(fixed_rate_id=self.fixed_rate_id)
+        return FixedRateEntryKey(entry_id=self.entry_id)

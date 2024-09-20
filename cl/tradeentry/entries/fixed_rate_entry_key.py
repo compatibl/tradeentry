@@ -22,7 +22,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 class FixedRateEntryKey(KeyMixin):
     """Fixed interest rate string and its precise meaning."""
 
-    fixed_rate_id: str = missing()
+    entry_id: str = missing()
     """Fixed interest rate string for which the meaning is recorded."""
 
     @classmethod

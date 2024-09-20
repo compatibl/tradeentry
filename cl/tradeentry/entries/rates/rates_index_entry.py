@@ -22,4 +22,4 @@ class RatesIndexEntry(RatesIndexEntryKey, RecordMixin[RatesIndexEntryKey]):
     """Swap interest rate index or currency (in case of currency, default index for the currency is used)."""
 
     def get_key(self) -> RatesIndexEntryKey:
-        return RatesIndexEntryKey(swap_index_id=self.swap_index_id)
+        return RatesIndexEntryKey(entry_id=self.entry_id)

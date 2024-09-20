@@ -23,4 +23,4 @@ class CurrencyEntry(CurrencyEntryKey, RecordMixin[CurrencyEntryKey], ABC):
     """Maps currency string specified by the user to the ISO three-letter currency code."""
 
     def get_key(self) -> CurrencyEntryKey:
-        return CurrencyEntryKey(currency_id=self.currency_id)
+        return CurrencyEntryKey(entry_id=self.entry_id)

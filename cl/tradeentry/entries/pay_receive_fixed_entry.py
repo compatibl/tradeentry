@@ -22,4 +22,4 @@ class PayReceiveFixedEntry(PayReceiveFixedEntryKey, RecordMixin[PayReceiveFixedE
     """String representation of the PayFixed or ReceiveFixed flag in the format specified by the user."""
 
     def get_key(self) -> PayReceiveFixedEntryKey:
-        return PayReceiveFixedEntryKey(pay_receive_fixed_id=self.pay_receive_fixed_id)
+        return PayReceiveFixedEntryKey(entry_id=self.entry_id)

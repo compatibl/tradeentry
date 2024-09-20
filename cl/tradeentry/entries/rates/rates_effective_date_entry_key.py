@@ -22,7 +22,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 class RatesEffectiveDateEntryKey(KeyMixin):
     """Trade or leg effective date defined as unadjusted date or time interval relative to another date."""
 
-    effective_date_id: str = missing()
+    entry_id: str = missing()
     """Effective date string or time-interval-based definition for which the meaning is recorded."""
 
     @classmethod

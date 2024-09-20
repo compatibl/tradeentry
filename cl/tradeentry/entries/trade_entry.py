@@ -23,4 +23,4 @@ class TradeEntry(TradeEntryKey, RecordMixin[TradeEntryKey], ABC):
     """Trade entry text specified by the user."""
 
     def get_key(self) -> TradeEntryKey:
-        return TradeEntryKey(trade_id=self.trade_id)
+        return TradeEntryKey(entry_id=self.entry_id)

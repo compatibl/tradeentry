@@ -22,7 +22,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 class RatesMaturityDateEntryKey(KeyMixin):
     """Trade or leg maturity date defined as unadjusted date or time interval relative to another date."""
 
-    maturity_date_id: str = missing()
+    entry_id: str = missing()
     """Maturity date string or time-interval-based definition for which the meaning is recorded."""
 
     @classmethod

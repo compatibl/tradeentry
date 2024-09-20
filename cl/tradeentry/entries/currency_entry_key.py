@@ -22,7 +22,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 class CurrencyEntryKey(KeyMixin):
     """Maps currency string specified by the user to the ISO three-letter currency code."""
 
-    currency_id: str = missing()
+    entry_id: str = missing()
     """CurrencyEntry string specified by the user (this is not the ISO three-letter currency code)."""
 
     @classmethod

@@ -22,4 +22,4 @@ class PayReceiveEntry(PayReceiveEntryKey, RecordMixin[PayReceiveEntryKey]):
     """String representation of the Buy or Sell flag in the format specified by the user."""
 
     def get_key(self) -> PayReceiveEntryKey:
-        return PayReceiveEntryKey(pay_receive_id=self.pay_receive_id)
+        return PayReceiveEntryKey(entry_id=self.entry_id)

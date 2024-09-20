@@ -23,4 +23,4 @@ class DateEntry(DateEntryKey, RecordMixin[DateEntryKey], ABC):
     """Maps a date string specified by the user to a calendar date."""
 
     def get_key(self) -> DateEntryKey:
-        return DateEntryKey(date_id=self.date_id)
+        return DateEntryKey(entry_id=self.entry_id)
