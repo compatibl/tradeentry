@@ -12,12 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from pathlib import Path
-
 from cl.runtime.prebuild.copyright_header import check_copyright_headers
 
 # Check copyright headers and fix missing trailing blank line
 # All other copyright header errors cause an exception
 if __name__ == '__main__':
-    # Create __init__.py files in subdirectories under each element of source_paths
+
+    # Fix or report errors where copyright header is missing, incorrect, or not followed by a blank line
     check_copyright_headers(fix_trailing_blank_line=True, verbose=True)

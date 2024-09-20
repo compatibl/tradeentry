@@ -17,14 +17,5 @@ from cl.runtime.prebuild.init_files import check_init_files
 
 if __name__ == '__main__':
 
-    # Project root assuming the script is located in project_root/scripts
-    project_path = Path(__file__).parent.parent
-
-    # Relative source root paths
-    relative_paths = ["cl", "stubs"]
-
-    # Absolute source root paths
-    root_paths = [project_path / x for x in relative_paths]
-
-    # Create __init__.py files in subdirectories under each element of source_paths
-    missing_files = check_init_files(apply_fix=True, verbose=True)
+    # Create __init__.py files in subdirectories except for tests
+    check_init_files(apply_fix=True, verbose=True)
