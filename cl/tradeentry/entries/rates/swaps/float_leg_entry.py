@@ -19,7 +19,7 @@ from cl.tradeentry.entries.rates.swaps.swap_leg_entry import SwapLegEntry
 
 
 @dataclass(slots=True, kw_only=True)
-class FloatSwapLegEntry(SwapLegEntry):
+class FloatLegEntry(SwapLegEntry):
     """A series of interest rate payments with a floating coupon based on an interest rate index.."""
 
     float_freq: str | None = None
