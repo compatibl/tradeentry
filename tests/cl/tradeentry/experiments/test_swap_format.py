@@ -18,10 +18,10 @@ from typing import List
 from dateutil.relativedelta import relativedelta
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.regression.regression_guard import RegressionGuard
-from cl.convince.llm.anthropic_llm import AnthropicLlm
-from cl.convince.llm.fireworks_llm import FireworksLlm
-from cl.convince.llm.gemini_llm import GeminiLlm
-from cl.convince.llm.openai_llm import OpenaiLlm
+from cl.convince.llms.anthropic_llm import AnthropicLlm
+from cl.convince.llms.fireworks_llm import FireworksLlm
+from cl.convince.llms.gemini_llm import GeminiLlm
+from cl.convince.llms.openai_llm import OpenaiLlm
 
 llms = [
     AnthropicLlm(llm_id="claude-3-haiku-20240307"),
