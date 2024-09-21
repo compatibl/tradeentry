@@ -54,7 +54,7 @@ class TaskRun(TaskRunKey, RecordMixin[TaskRunKey]):
     progress: int | None = None
     """Task progress as percent integer from 0 to 100 when available."""
 
-    result: str | None = None
+    result: str | None = None  # TODO: Review the need for the result field in this record
     """Result converted to string."""
 
     def __post_init__(self):
@@ -66,8 +66,8 @@ class TaskRun(TaskRunKey, RecordMixin[TaskRunKey]):
         return TaskRunKey(task_run_id=self.task_run_id)
 
     @classmethod
-    def block_until_completion(cls, task_run_key: TaskRunKey, timeout_sec: int = 10) -> None:
-        """Block execution until completion of the specified task run, does not use async/await yet."""
+    def wait_for_completion(cls, task_run_key: TaskRunKey, timeout_sec: int = 10) -> None:
+        """Wait for completion of the specified task run before exiting from this method (not async/await)."""
 
         context = Context.current()
         start_datetime = DatetimeUtil.now()

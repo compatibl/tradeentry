@@ -85,7 +85,7 @@ def test_method(celery_test_queue_fixture):
             request_object = RunRequest(**request)
             response_items = RunResponseItem.run_tasks(request_object)
             [
-                TaskRun.block_until_completion(TaskRunKey(task_run_id=response_item.task_run_id))
+                TaskRun.wait_for_completion(TaskRunKey(task_run_id=response_item.task_run_id))
                 for response_item in response_items
             ]
             actual_records = list(context.load_many(StubDataclassRecord, expected_keys))
@@ -126,7 +126,7 @@ def test_api(celery_test_queue_fixture):
                 request_object = RunRequest(**request)
                 response_items = RunResponseItem.run_tasks(request_object)
                 [
-                    TaskRun.block_until_completion(TaskRunKey(task_run_id=response_item.task_run_id))
+                    TaskRun.wait_for_completion(TaskRunKey(task_run_id=response_item.task_run_id))
                     for response_item in response_items
                 ]
                 actual_records = list(context.load_many(StubDataclassRecord, expected_keys))

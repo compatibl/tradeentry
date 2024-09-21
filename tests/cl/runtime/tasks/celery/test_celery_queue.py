@@ -87,7 +87,7 @@ def test_api(celery_test_queue_fixture):
 
         # Submit task and check for its completion
         task_run_key = queue.submit_task(task)
-        TaskRun.block_until_completion(task_run_key)
+        TaskRun.wait_for_completion(task_run_key)
 
 
 if __name__ == "__main__":
