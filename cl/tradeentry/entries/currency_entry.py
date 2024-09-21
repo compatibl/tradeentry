@@ -18,14 +18,15 @@ from dataclasses import dataclass
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.tradeentry.entries.currency_entry_key import CurrencyEntryKey
+from cl.tradeentry.trades.currency_key import CurrencyKey
 
 
 @dataclass(slots=True, kw_only=True)
 class CurrencyEntry(CurrencyEntryKey, RecordMixin[CurrencyEntryKey], ABC):
     """Maps currency string specified by the user to the ISO-4217 three-letter currency code."""
 
-    iso_code: str = missing()  # TODO: Replace by CurrencyKey after updating serializer to support this
-    """ISO-4217 three-letter code for the currency."""
+    currency: CurrencyKey = missing()
+    """Currency key is based on ISO-4217 three-letter code."""
 
     def get_key(self) -> CurrencyEntryKey:
         return CurrencyEntryKey(entry_id=self.entry_id)

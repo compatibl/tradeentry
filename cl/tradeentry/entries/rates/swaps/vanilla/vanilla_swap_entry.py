@@ -35,7 +35,7 @@ class VanillaSwapEntry(TradeEntry):
     """Trade or leg maturity date defined as unadjusted date or time interval relative to another date."""
 
     float_index: RatesIndexEntryKey | None = None
-    """Swap interest rate index or currency (in case of currency, default index for the currency is used)."""
+    """Floating interest rate index or currency (in case of currency, default index for the currency is used)."""
 
     fixed_rate: FixedRateEntryKey | None = None
     """Fixed rate (breakeven rate is assumed if not specified)."""
