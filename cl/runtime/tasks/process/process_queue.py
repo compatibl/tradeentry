@@ -27,7 +27,7 @@ from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
-from cl.runtime.tasks.task_status import TaskStatusEnum
+from cl.runtime.tasks.task_status_enum import TaskStatusEnum
 
 context_serializer = DictSerializer()
 """Serializer for the context parameter of 'execute_task' method."""

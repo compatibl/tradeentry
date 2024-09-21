@@ -24,7 +24,6 @@ from cl.runtime.schema.schema import Schema
 from cl.runtime.tasks.celery.celery_queue import CeleryQueue
 from cl.runtime.tasks.instance_method_task import InstanceMethodTask
 from cl.runtime.tasks.static_method_task import StaticMethodTask
-from cl.runtime.tasks.task_status import TaskStatusEnum
 
 # TODO: Make it possible to configure the queue to use for handler execution
 handler_queue = CeleryQueue(queue_id="Handler Queue")

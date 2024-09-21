@@ -23,7 +23,7 @@ from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue_key import TaskQueueKey
 from cl.runtime.tasks.task_run_key import TaskRunKey
-from cl.runtime.tasks.task_status import TaskStatusEnum
+from cl.runtime.tasks.task_status_enum import TaskStatusEnum
 
 
 @dataclass(slots=True, kw_only=True)
