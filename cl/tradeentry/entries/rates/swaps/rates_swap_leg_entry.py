@@ -14,7 +14,6 @@
 
 import datetime as dt
 from dataclasses import dataclass
-
 from cl.tradeentry.entries.pay_freq_entry_key import PayFreqEntryKey
 from cl.tradeentry.entries.pay_receive_entry_key import PayReceiveEntryKey
 from cl.tradeentry.entries.rates.rates_effective_date_entry_key import RatesEffectiveDateEntryKey

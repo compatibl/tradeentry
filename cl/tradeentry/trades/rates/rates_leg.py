@@ -14,7 +14,6 @@
 
 from abc import ABC
 from dataclasses import dataclass
-
 from cl.runtime import RecordMixin
 from cl.tradeentry.trades.rates.rates_leg_key import RatesLegKey
 

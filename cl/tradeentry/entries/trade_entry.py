@@ -14,7 +14,6 @@
 
 from abc import ABC
 from dataclasses import dataclass
-
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.tradeentry.entries.trade_entry_key import TradeEntryKey
