@@ -22,7 +22,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 class RatesIndexKey(KeyMixin):
     """Floating interest rate index."""
 
-    index_id: str = missing()
+    rates_index_id: str = missing()
     """Floating interest rate index identifier."""
 
     @classmethod

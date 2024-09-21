@@ -14,13 +14,19 @@
 
 from abc import ABC
 from dataclasses import dataclass
+
+from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.tradeentry.entries.trade_entry_key import TradeEntryKey
+from cl.tradeentry.trades.trade_key import TradeKey
 
 
 @dataclass(slots=True, kw_only=True)
 class TradeEntry(TradeEntryKey, RecordMixin[TradeEntryKey], ABC):
     """Trade entry text specified by the user."""
+
+    trade: TradeKey = missing()
+    """Trade specified by the entry."""
 
     def get_key(self) -> TradeEntryKey:
         return TradeEntryKey(entry_id=self.entry_id)

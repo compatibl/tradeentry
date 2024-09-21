@@ -1,8 +1,8 @@
-entry_id, amount ,currency
-10m," 10,000,000.00 ",
-ten million," 10,000,000.00 ",
-$10m," 10,000,000.00 ",USD
- USD 10m ," 10,000,000.00 ",USD
-ten million dollars," 10,000,000.00 ",USD
-€10m," 10,000,000.00 ",EUR
-ten million euro," 10,000,000.00 ",EUR
+entry_id,value,currency
+10m,"10,000,000.00",
+ten million,"10,000,000.00",
+$10m,"10,000,000.00",USD
+ USD 10m ,"10,000,000.00",USD
+ten million dollars,"10,000,000.00",USD
+€10m,"10,000,000.00",EUR
+ten million euro,"10,000,000.00",EUR

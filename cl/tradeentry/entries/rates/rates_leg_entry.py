@@ -14,12 +14,17 @@
 
 from dataclasses import dataclass
 from cl.runtime import RecordMixin
+from cl.runtime.records.dataclasses_extensions import missing
 from cl.tradeentry.entries.rates.rates_leg_entry_key import RatesLegEntryKey
+from cl.tradeentry.trades.rates.rates_leg_key import RatesLegKey
 
 
 @dataclass(slots=True, kw_only=True)
 class RatesLegEntry(RatesLegEntryKey, RecordMixin[RatesLegEntryKey]):
     """Interest rate leg entry."""
+
+    leg: RatesLegKey = missing()
+    """Interest rate leg specified by the entry."""
 
     def get_key(self) -> RatesLegEntryKey:
         return RatesLegEntryKey(entry_id=self.entry_id)

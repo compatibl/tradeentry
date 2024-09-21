@@ -23,8 +23,8 @@ from cl.tradeentry.entries.currency_entry_key import CurrencyEntryKey
 class AmountEntry(AmountEntryKey, RecordMixin[AmountEntryKey]):
     """Amount with or without currency specification."""
 
-    amount: float = missing()
-    """Numerical amount."""
+    value: float = missing()
+    """Numerical value specified by the entry."""
 
     currency: CurrencyEntryKey | None = None
     """Optional currency if specified along with the amount."""
