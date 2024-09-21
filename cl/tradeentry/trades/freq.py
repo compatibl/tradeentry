@@ -19,7 +19,7 @@ from cl.tradeentry.trades.freq_key import FreqKey
 
 
 @dataclass(slots=True, kw_only=True)
-class PayFreq(FreqKey, RecordMixin[FreqKey], ABC):
+class Freq(FreqKey, RecordMixin[FreqKey], ABC):
     """Frequency specification."""
 
     def get_key(self) -> FreqKey:
