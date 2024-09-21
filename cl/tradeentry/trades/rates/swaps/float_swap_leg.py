@@ -20,7 +20,7 @@ from cl.tradeentry.trades.rates.swaps.rates_swap_leg import SwapLeg
 
 
 @dataclass(slots=True, kw_only=True)
-class FloatLeg(SwapLeg):
+class FloatSwapLeg(SwapLeg):
     """A series of interest rate payments with a floating coupon based on an interest rate index.."""
 
     float_freq: str = missing()  # TODO: Consider a less ambiguous name, e.g. accrual_freq

@@ -19,7 +19,7 @@ from cl.tradeentry.trades.rates.swaps.rates_swap_leg import SwapLeg
 
 
 @dataclass(slots=True, kw_only=True)
-class FixedLeg(SwapLeg):
+class FixedSwapLeg(SwapLeg):
     """A series of interest rate payments with fixed coupon."""
 
     fixed_rate_pct: float = missing()

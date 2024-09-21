@@ -17,7 +17,7 @@ from cl.tradeentry.entries.rates.swaps.rates_swap_leg_entry import RatesSwapLegE
 
 
 @dataclass(slots=True, kw_only=True)
-class FixedLegEntry(RatesSwapLegEntry):
+class FixedSwapLegEntry(RatesSwapLegEntry):
     """A series of interest rate payments with fixed coupon."""
 
     fixed_rate: float | None = None
