@@ -14,11 +14,11 @@
 
 from dataclasses import dataclass
 from cl.tradeentry.entries.rates.rates_index_entry import RatesIndexEntry
-from cl.tradeentry.entries.rates.swaps.swap_leg_entry import SwapLegEntry
+from cl.tradeentry.entries.rates.swaps.rates_swap_leg_entry import RatesSwapLegEntry
 
 
 @dataclass(slots=True, kw_only=True)
-class FloatLegEntry(SwapLegEntry):
+class FloatLegEntry(RatesSwapLegEntry):
     """A series of interest rate payments with a floating coupon based on an interest rate index.."""
 
     float_freq: str | None = None

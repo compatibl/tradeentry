@@ -21,7 +21,7 @@ from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import RatesMatur
 
 
 @dataclass(slots=True, kw_only=True)
-class SwapLegEntry(RatesLegEntry):
+class RatesSwapLegEntry(RatesLegEntry):
     """Swap leg."""
 
     pay_receive: PayReceiveEntryKey | None = None

@@ -20,8 +20,8 @@ from cl.tradeentry.entries.trade_entry import TradeEntry
 
 
 @dataclass(slots=True, kw_only=True)
-class SwapEntry(TradeEntry):
-    """Swap consists of two or more rates legs."""
+class RatesSwapEntry(TradeEntry):
+    """Swap consists of two or more legs."""
 
     legs: List[RatesLegEntryKey] = missing()
-    """Swap legs."""
+    """List of swap legs."""
