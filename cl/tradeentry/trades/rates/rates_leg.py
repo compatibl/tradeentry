@@ -15,7 +15,13 @@
 from abc import ABC
 from dataclasses import dataclass
 
+from cl.runtime import RecordMixin
+from cl.tradeentry.trades.rates.rates_leg_key import RatesLegKey
+
 
 @dataclass(slots=True, kw_only=True)
-class RatesSwapLeg(ABC):
+class RatesLeg(RatesLegKey, RecordMixin[RatesLegKey], ABC):
     """Base class for an interest rate leg."""
+
+    def get_key(self) -> RatesLegKey:
+        return RatesLegKey(rates_leg_id=self.rates_leg_id)

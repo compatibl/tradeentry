@@ -16,11 +16,11 @@ import datetime as dt
 from dataclasses import dataclass
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.tradeentry.trades.pay_receive_enum import PayReceiveEnum
-from cl.tradeentry.trades.rates.rates_leg import RatesSwapLeg
+from cl.tradeentry.trades.rates.rates_leg import RatesLeg
 
 
 @dataclass(slots=True, kw_only=True)
-class SwapLeg(RatesSwapLeg):
+class RatesSwapLeg(RatesLeg):
     """Swap leg."""
 
     pay_receive: PayReceiveEnum = missing()

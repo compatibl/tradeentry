@@ -13,16 +13,18 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from typing import List
+from typing import Type
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.tradeentry.trades.rates.rates_leg import RatesSwapLeg
-from cl.tradeentry.trades.rates.rates_leg_key import RatesLegKey
-from cl.tradeentry.trades.trade import Trade
+from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class RatesSwap(Trade):
-    """Interest rate swap consisting of two or more rates legs."""
+class RatesLegKey(KeyMixin):
+    """Base class for an interest rate leg."""
 
-    legs: List[RatesLegKey] = missing()
-    """List of swap legs or their keys."""
+    rates_leg_id: str = missing()
+    """Unique interest rate leg identifier."""
+
+    @classmethod
+    def get_key_type(cls) -> Type:
+        return RatesLegKey
