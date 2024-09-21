@@ -16,10 +16,11 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.entity.save_request import SaveRequest
 from cl.runtime.routers.entity.save_response import SaveResponse
-from cl.runtime.routers.entity import entity_router
-from stubs.cl.runtime import StubDataclassDerivedRecord, StubDataclassRecordKey
+from stubs.cl.runtime import StubDataclassDerivedRecord
+from stubs.cl.runtime import StubDataclassRecordKey
 
 
 def test_method():
@@ -41,13 +42,19 @@ def test_method():
         assert new_record_in_db.derived_field == "test"
 
         # Test updating existing record
-        update_record_payload = {"id": "existing_record", "derived_field": "new_value", "_t": "StubDataclassDerivedRecord"}
+        update_record_payload = {
+            "id": "existing_record",
+            "derived_field": "new_value",
+            "_t": "StubDataclassDerivedRecord",
+        }
         existing_record = StubDataclassDerivedRecord(id="existing_record", derived_field="old_value")
         context.save_one(existing_record)
         update_record_request_obj = SaveRequest(record_dict=update_record_payload, old_record_key="existing_record")
 
         update_record_result = SaveResponse.save_entity(update_record_request_obj)
-        updated_record_in_db = context.load_one(StubDataclassDerivedRecord, StubDataclassRecordKey(id="existing_record"))
+        updated_record_in_db = context.load_one(
+            StubDataclassDerivedRecord, StubDataclassRecordKey(id="existing_record")
+        )
 
         # Check if the result is a SaveResponse instance
         assert isinstance(update_record_result, SaveResponse)

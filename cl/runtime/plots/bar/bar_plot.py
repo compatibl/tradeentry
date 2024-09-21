@@ -15,7 +15,6 @@
 from dataclasses import dataclass
 from typing import List
 import plotly.graph_objects as go
-
 from cl.runtime import Context
 from cl.runtime.plots.bar.bar_plot_style import BarPlotStyle
 from cl.runtime.plots.bar.bar_plot_style_key import BarPlotStyleKey

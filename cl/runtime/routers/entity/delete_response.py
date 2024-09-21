@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from pydantic import BaseModel
-
 from cl.runtime import Context
 from cl.runtime.routers.entity.delete_request import DeleteRequest
 from cl.runtime.serialization.dict_serializer import get_type_dict
@@ -28,18 +27,14 @@ class DeleteResponse(BaseModel):
     """Data type for the /entity/delete_many response."""
 
     @staticmethod
-    def delete_many(request: DeleteRequest) -> 'DeleteResponse':
+    def delete_many(request: DeleteRequest) -> "DeleteResponse":
         """Delete entities."""
         context = Context.current()
         type_dict = get_type_dict()
 
         record_key_dicts = [key.model_dump() for key in request.record_keys]
         deserialized_record_keys = [
-            key_serializer.deserialize_key(
-                key["_key"],
-                type_dict[key["_t"]].get_key_type()
-            )
-            for key in record_key_dicts
+            key_serializer.deserialize_key(key["_key"], type_dict[key["_t"]].get_key_type()) for key in record_key_dicts
         ]
         context.delete_many(deserialized_record_keys, dataset=request.dataset)
 

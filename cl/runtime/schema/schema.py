@@ -20,9 +20,10 @@ from collections import defaultdict
 from enum import Enum
 from pkgutil import walk_packages
 from types import ModuleType
-from typing import Dict, Set
+from typing import Dict
 from typing import Iterable
 from typing import List
+from typing import Set
 from typing import Type
 from typing import cast
 from memoization import cached

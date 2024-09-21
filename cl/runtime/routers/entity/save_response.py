@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from pydantic import BaseModel, ValidationError
-
+from pydantic import BaseModel
+from pydantic import ValidationError
 from cl.runtime import Context
 from cl.runtime.backend.core.base_type_info import BaseTypeInfo
 from cl.runtime.backend.core.tab_info import TabInfo
@@ -38,7 +38,7 @@ class SaveResponse(BaseModel):
         populate_by_name = True
 
     @staticmethod
-    def save_entity(request: SaveRequest) -> 'SaveResponse':
+    def save_entity(request: SaveRequest) -> "SaveResponse":
         """Save entity."""
         context = Context.current()
 
@@ -59,8 +59,9 @@ class SaveResponse(BaseModel):
                 {
                     **{k: v for k, v in item.items() if k != "Type"},
                     "Type_": {**item["Type"], "_t": "BaseTypeInfo"},
-                    "_t": "TabInfo"
-                } for item in opened_tabs
+                    "_t": "TabInfo",
+                }
+                for item in opened_tabs
             ]
 
         # TODO (Roman): align UiTypeState data model and UiTypeState dict from ui

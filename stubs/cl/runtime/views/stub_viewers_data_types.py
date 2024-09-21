@@ -16,7 +16,6 @@ import os.path
 from dataclasses import dataclass
 from logging import getLogger
 from pathlib import Path
-
 from cl.runtime.decorators.viewer_decorator import viewer
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.view.binary_content import BinaryContent
@@ -40,7 +39,7 @@ class StubViewersDataTypes(StubViewersDataTypesKey, RecordMixin[StubViewersDataT
         """Shows a PDF document."""
 
         file_path = os.path.join(os.path.dirname(__file__), "stub_viewers_data_types.pdf")
-        with open(file_path, mode='rb') as file:
+        with open(file_path, mode="rb") as file:
             content = file.read()
         pdf_content = BinaryContent(content=content, content_type=BinaryContentTypeEnum.Pdf)
         return pdf_content

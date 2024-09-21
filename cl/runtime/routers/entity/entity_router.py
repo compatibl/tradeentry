@@ -15,10 +15,10 @@
 from typing import Any
 from typing import Dict
 from typing import List
-from fastapi import APIRouter, Body
+from fastapi import APIRouter
+from fastapi import Body
 from fastapi import Header
 from fastapi import Query
-
 from cl.runtime.routers.entity.delete_request import DeleteRequest
 from cl.runtime.routers.entity.delete_response import DeleteResponse
 from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
@@ -58,7 +58,7 @@ async def get_panel(
     return PanelResponseUtil.get_content(PanelRequest(type=type, panel_id=panel_id, key=key, dataset=dataset))
 
 
-@router.post('/save', response_model=SaveResponse)
+@router.post("/save", response_model=SaveResponse)
 async def save(
     record_in_dict: Dict = Body(..., description="Dict representation of the record to be saved/updated."),
     old_record_key: str = Query(None, description="Optional key of the record to be updated"),
@@ -77,7 +77,7 @@ async def save(
     )
 
 
-@router.post('/delete_many', response_model=DeleteResponse)
+@router.post("/delete_many", response_model=DeleteResponse)
 async def delete_many(
     record_keys: List[Dict] = Body(..., description="The list of keys to delete."),
     dataset: str = Query(None, description="Dataset string"),

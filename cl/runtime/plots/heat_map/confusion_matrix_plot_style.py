@@ -15,7 +15,6 @@
 from abc import ABC
 from dataclasses import dataclass
 from typing import List
-
 from cl.runtime.plots.heat_map.confusion_matrix_plot_style_key import ConfusionMatrixPlotStyleKey
 from cl.runtime.records.record_mixin import RecordMixin
 
@@ -33,7 +32,7 @@ class ConfusionMatrixPlotStyle(ConfusionMatrixPlotStyleKey, RecordMixin[Confusio
     axis_label_font_size: int = 14
     """Axis labels font size."""
 
-    axis_label_font_color: str = 'black'
+    axis_label_font_color: str = "black"
     """Axis labels font color."""
 
     def get_key(self) -> ConfusionMatrixPlotStyleKey:

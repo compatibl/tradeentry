@@ -28,4 +28,3 @@ class BaseTypeInfo:
 
     label: str = missing()
     """Label of type."""
-

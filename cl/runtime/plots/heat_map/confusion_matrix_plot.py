@@ -13,13 +13,13 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from typing import List, Tuple
+from typing import List
 from typing import Optional
+from typing import Tuple
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 from plotly.express.colors import sequential as colorscale
-
 from cl.runtime import Context
 from cl.runtime.plots.heat_map.confusion_matrix_plot_style import ConfusionMatrixPlotStyle
 from cl.runtime.plots.heat_map.confusion_matrix_plot_style_key import ConfusionMatrixPlotStyleKey

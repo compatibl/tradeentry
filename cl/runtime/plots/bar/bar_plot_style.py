@@ -15,7 +15,6 @@
 from abc import ABC
 from dataclasses import dataclass
 from typing import List
-
 from cl.runtime.plots.bar.bar_plot_style_key import BarPlotStyleKey
 from cl.runtime.records.record_mixin import RecordMixin
 
@@ -45,7 +44,7 @@ class BarPlotStyle(BarPlotStyleKey, RecordMixin[BarPlotStyleKey], ABC):
     axis_label_font_size: int = 14
     """Axis labels font size."""
 
-    axis_label_font_color: str = 'black'
+    axis_label_font_color: str = "black"
     """Axis labels font color."""
 
     def get_key(self) -> BarPlotStyleKey:

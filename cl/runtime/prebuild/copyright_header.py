@@ -17,7 +17,6 @@ from fnmatch import fnmatch
 from typing import Iterable
 from typing import List
 from typing import Tuple
-
 from cl.runtime.settings.settings import Settings
 
 
@@ -46,7 +45,7 @@ def check_copyright_headers(
     if source_dirs is None:
         # Default to checking namespace 'cl'
         source_dirs = ["cl/", "stubs/cl/", "tests/cl"]
-    
+
     # Project root assuming the script is located in project_root/scripts
     project_root = Settings.get_project_root()
 
@@ -119,14 +118,20 @@ def check_copyright_headers(
                         file.write(updated_text)
 
     if files_with_copyright_header_error:
-        raise RuntimeError("Invalid copyright header in file(s):\n" +
-              "".join([f"    {file}\n" for file in files_with_copyright_header_error]))
+        raise RuntimeError(
+            "Invalid copyright header in file(s):\n"
+            + "".join([f"    {file}\n" for file in files_with_copyright_header_error])
+        )
     elif files_with_trailing_line_error:
-        files_with_trailing_line_msg = "missing blank line(s) after copyright header in file(s):\n" + "".join([f"    {file}\n" for file in files_with_trailing_line_error])
+        files_with_trailing_line_msg = "missing blank line(s) after copyright header in file(s):\n" + "".join(
+            [f"    {file}\n" for file in files_with_trailing_line_error]
+        )
         if not fix_trailing_blank_line:
             raise RuntimeError(f"Found {files_with_trailing_line_msg}")
         elif verbose:
             print(f"Fixed {files_with_trailing_line_msg}")
     elif verbose:
-        print("Verified copyright header and trailing blank line under directory root(s):\n" +
-              "".join([f"    {root_path}\n" for root_path in root_paths]))
+        print(
+            "Verified copyright header and trailing blank line under directory root(s):\n"
+            + "".join([f"    {root_path}\n" for root_path in root_paths])
+        )

@@ -15,16 +15,15 @@
 import os
 from typing import Iterable
 from typing import List
-
 from cl.runtime.settings.settings import Settings
 
 
 def check_init_files(
-        *,
-        source_dirs: List[str] | None = None,
-        apply_fix: bool,
-        verbose: bool = False,
-        ) -> None:
+    *,
+    source_dirs: List[str] | None = None,
+    apply_fix: bool,
+    verbose: bool = False,
+) -> None:
     """
     Check that __init__.py is present in all subdirectories of 'root_path'.
     Optionally create when missing.
@@ -65,11 +64,15 @@ def check_init_files(
                             pass
 
     if missing_files:
-        missing_files_msg = "__init__.py file(s):\n" + "".join([f"    {missing_file}\n" for missing_file in missing_files])
+        missing_files_msg = "__init__.py file(s):\n" + "".join(
+            [f"    {missing_file}\n" for missing_file in missing_files]
+        )
         if not apply_fix:
             raise RuntimeError(f"Found missing {missing_files_msg}")
         elif verbose:
             print(f"Created {missing_files_msg}")
     elif verbose:
-        print("Verified that all __init__.py files are present under directory root(s):\n" +
-              "".join([f"    {root_path}\n" for root_path in root_paths]))
+        print(
+            "Verified that all __init__.py files are present under directory root(s):\n"
+            + "".join([f"    {root_path}\n" for root_path in root_paths])
+        )

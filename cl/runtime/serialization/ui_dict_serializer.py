@@ -15,16 +15,16 @@
 from enum import Enum
 from typing import Any
 from typing import List
-from typing_extensions import Dict
-
 from inflection import underscore
+from typing_extensions import Dict
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key
 from cl.runtime.schema.element_decl import ElementDecl
 from cl.runtime.schema.type_decl import TypeDecl
-from cl.runtime.serialization.dict_serializer import DictSerializer, get_type_dict
+from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.dict_serializer import _get_class_hierarchy_slots
+from cl.runtime.serialization.dict_serializer import get_type_dict
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.storage.data_source_types import TDataDict
 
@@ -128,15 +128,21 @@ class UiDictSerializer(DictSerializer):
 
                 # Check _t and create TypeDecl object
                 type_dict = get_type_dict()
-                type_ = type_dict.get(short_name) # noqa
+                type_ = type_dict.get(short_name)  # noqa
                 type_decl = TypeDecl.for_type(type_)
 
                 # Construct name to element decl map
-                type_decl_elements = {
-                    # TODO (Roman): remove extra suffix for elements search after introducing field aliases.
-                    #   This is currently needed because ElementDecl removes the _ suffix from the field name.
-                    f"{element.name}{extra_suffix}": element for element in type_decl.elements for extra_suffix in ("", "_")
-                } if type_decl.elements is not None else {}
+                type_decl_elements = (
+                    {
+                        # TODO (Roman): remove extra suffix for elements search after introducing field aliases.
+                        #   This is currently needed because ElementDecl removes the _ suffix from the field name.
+                        f"{element.name}{extra_suffix}": element
+                        for element in type_decl.elements
+                        for extra_suffix in ("", "_")
+                    }
+                    if type_decl.elements is not None
+                    else {}
+                )
 
                 # Create empty result with _type attribute (instead of _t)
                 result = {"_type": short_name}
@@ -154,8 +160,8 @@ class UiDictSerializer(DictSerializer):
                     else:
                         # If element decl is not found for field in data raise RuntimeError
                         raise RuntimeError(
-                            f"Data conflicts with type declaration. Field \"{field_in_snake_case}\" not found "
-                            f"in \"{short_name}\" type elements."
+                            f'Data conflicts with type declaration. Field "{field_in_snake_case}" not found '
+                            f'in "{short_name}" type elements.'
                         )
 
                 return result
@@ -166,16 +172,13 @@ class UiDictSerializer(DictSerializer):
             if (enum := element_decl.enum) is not None:
                 # Get enum type from element decl and convert value to dict supported by DictSerializer
                 enum_type_name = enum.name
-                return {
-                    "_enum": enum_type_name,
-                    "_name": data
-                }
+                return {"_enum": enum_type_name, "_name": data}
 
             elif (key := element_decl.key_) is not None:
                 # Get key type from element decl
                 key_type_name = key.name
                 type_dict = get_type_dict()
-                key_type = type_dict.get(key_type_name) # noqa
+                key_type = type_dict.get(key_type_name)  # noqa
 
                 # Deserialize key from string
                 key_serializer = StringSerializer()
@@ -185,7 +188,7 @@ class UiDictSerializer(DictSerializer):
 
         elif hasattr(data, "__iter__"):
             # Apply ui conversion for each element in iterable
-            return [self.apply_ui_conversion(x, element_decl) for x in data] # noqa
+            return [self.apply_ui_conversion(x, element_decl) for x in data]  # noqa
 
         # Return unchanged data if there is no ui conversion
         return data

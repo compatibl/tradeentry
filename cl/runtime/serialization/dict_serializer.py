@@ -22,8 +22,8 @@ from typing import Tuple
 from typing import Type
 from typing import cast
 from inflection import camelize
-
-from cl.runtime.records.protocols import is_key, is_record
+from cl.runtime.records.protocols import is_key
+from cl.runtime.records.protocols import is_record
 from cl.runtime.serialization.sentinel_type import sentinel_value
 from cl.runtime.storage.data_source_types import TDataDict
 

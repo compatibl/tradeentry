@@ -15,7 +15,6 @@
 # TODO (Roman): use ui serialization, probably this file will be deprecated
 
 from __future__ import annotations
-
 import base64
 import dataclasses
 from enum import Enum

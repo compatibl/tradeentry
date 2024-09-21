@@ -27,4 +27,3 @@ class TabInfo:
 
     # key: Tuple | None = missing()  # TODO: Add generic key support
     """Key."""
-

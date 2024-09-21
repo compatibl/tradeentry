@@ -15,7 +15,6 @@
 import pytest
 from pathlib import Path
 import pandas as pd
-
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.plots.heat_map.confusion_matrix_plot import YELLOW_TO_WHITE
 from cl.runtime.plots.heat_map.confusion_matrix_plot import ConfusionMatrixPlot

@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import pytest
-
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.plots.bar.bar_plot import BarPlot
 from cl.runtime.plots.bar.bar_plot_style import BarPlotStyle

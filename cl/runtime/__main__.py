@@ -14,7 +14,6 @@
 
 import os
 import traceback
-
 import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
@@ -22,12 +21,12 @@ from starlette.responses import Response
 from starlette.staticfiles import StaticFiles
 from cl.runtime import Context
 from cl.runtime.context.process_context import ProcessContext
+from cl.runtime.routers.app import app_router
 from cl.runtime.routers.auth import auth_router
 from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.health import health_router
 from cl.runtime.routers.schema import schema_router
 from cl.runtime.routers.storage import storage_router
-from cl.runtime.routers.app import app_router
 from cl.runtime.routers.tasks import tasks_router
 from cl.runtime.settings.api_settings import ApiSettings
 from cl.runtime.settings.preload_settings import PreloadSettings

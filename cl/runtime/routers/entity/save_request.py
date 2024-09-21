@@ -24,6 +24,7 @@ class RecordDict(BaseModel):
     class Config:
         extra = "allow"
 
+
 class SaveRequest(BaseModel):
     """Request data type for the /entity/save route."""
 

@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import plotly.graph_objects as go
-
 from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.view.binary_content import BinaryContent
 from cl.runtime.view.binary_content_type_enum import BinaryContentTypeEnum
@@ -24,12 +23,12 @@ class PlotLightTheme:
     Constants for light theme.
     """
 
-    BACKGROUND_COLOR = '#FFFFFF'
+    BACKGROUND_COLOR = "#FFFFFF"
     FONT_SIZE = 13
-    FONT_COLOR = '#212121'
-    FONT_FAMILY = 'Roboto'
-    GRID_COLOR = '#DFE8F3'
-    ZERO_LINE_COLOR = '#EBF0F8'
+    FONT_COLOR = "#212121"
+    FONT_FAMILY = "Roboto"
+    GRID_COLOR = "#DFE8F3"
+    ZERO_LINE_COLOR = "#EBF0F8"
 
 
 class PlotDarkTheme:
@@ -37,12 +36,12 @@ class PlotDarkTheme:
     Constants for dark theme.
     """
 
-    BACKGROUND_COLOR = '#212121'
+    BACKGROUND_COLOR = "#212121"
     FONT_SIZE = 13
-    FONT_COLOR = '#bdbdbd'
-    FONT_FAMILY = 'Roboto'
-    GRID_COLOR = '#303030'
-    ZERO_LINE_COLOR = '#494949'
+    FONT_COLOR = "#bdbdbd"
+    FONT_FAMILY = "Roboto"
+    GRID_COLOR = "#303030"
+    ZERO_LINE_COLOR = "#494949"
 
 
 def get_plot_template(dark_theme: bool) -> go.layout.Template:
@@ -74,7 +73,7 @@ def get_plot_content(figure: go.Figure, dark_theme: bool = False, use_app_theme:
     """Creates binary content for plot."""
 
     if use_app_theme:
-        dark_theme = UiAppState.get_current_user_app_theme() == 'Dark'
+        dark_theme = UiAppState.get_current_user_app_theme() == "Dark"
 
     figure.update_layout(template=get_plot_template(dark_theme))
     # Create plot view content

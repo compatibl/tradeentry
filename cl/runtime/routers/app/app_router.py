@@ -13,18 +13,17 @@
 # limitations under the License.
 
 import os
-
 from fastapi import APIRouter
 from starlette import status
-from starlette.responses import RedirectResponse, HTMLResponse
-
+from starlette.responses import HTMLResponse
+from starlette.responses import RedirectResponse
 from cl.runtime.settings.settings import Settings
 
 router = APIRouter()
 
 
 @router.get(
-    path='/',
+    path="/",
     description="Redirect to a specific endpoint for the frontend app to load index.html.",
     response_class=RedirectResponse,
 )
@@ -39,7 +38,7 @@ async def get_app_index_root():
 
 
 @router.get(
-    path='/app{_:path}',
+    path="/app{_:path}",
     description="Get application index.html file ignoring paths after the endpoint paths.",
     response_class=HTMLResponse,
 )
