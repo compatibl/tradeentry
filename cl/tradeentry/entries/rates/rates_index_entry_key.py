@@ -20,7 +20,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 @dataclass(slots=True, kw_only=True)
 class RatesIndexEntryKey(KeyMixin):
-    """Swap interest rate index or currency (in case of currency, default index for the currency is used)."""
+    """Floating interest rate index or currency (in case of currency, default index for the currency is used)."""
 
     entry_id: str = missing()
     """String representation of the index or currency for which the meaning is recorded."""

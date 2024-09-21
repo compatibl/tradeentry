@@ -25,7 +25,7 @@ class FloatSwapLegEntry(RatesSwapLegEntry):
     """Frequency at which floating interest accrues."""
 
     float_index: RatesIndexEntry | None = None
-    """Interest rate index at which the interest accrues ('float_spread' is added to the index fixing)."""
+    """Floating interest rate index at which the interest accrues ('float_spread' is added to the index fixing)."""
 
     float_spread: float | None = None
     """Spread over the interest rate index at which the interest accrues."""

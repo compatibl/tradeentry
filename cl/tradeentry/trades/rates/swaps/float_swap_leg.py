@@ -26,7 +26,7 @@ class FloatSwapLeg(SwapLeg):
     """Frequency at which floating interest accrues."""
 
     float_index: RatesIndex = missing()
-    """Interest rate index at which the interest accrues ('float_spread' is added to the index fixing)."""
+    """Floating interest rate index at which the interest accrues ('float_spread' is added to the index fixing)."""
 
     float_spread_bp: float = missing()
     """Spread over the interest rate index in basis points."""
