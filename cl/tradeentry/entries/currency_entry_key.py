@@ -20,10 +20,10 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 @dataclass(slots=True, kw_only=True)
 class CurrencyEntryKey(KeyMixin):
-    """Maps currency string specified by the user to the ISO three-letter currency code."""
+    """Maps currency string specified by the user to the ISO-4217 three-letter currency code."""
 
     entry_id: str = missing()
-    """CurrencyEntry string specified by the user (this is not the ISO three-letter currency code)."""
+    """Currency entry string specified by the user (may not be the ISO-4217 three-letter currency code)."""
 
     @classmethod
     def get_key_type(cls) -> Type:
