@@ -1,0 +1,2 @@
+trade_id,pay_receive_fixed,effective_date,maturity_date,float_index,fixed_rate_pct
+StubVanillaSwap.1,PayFixed,2024-09-20,2025-09-20,USD-SOFR,3.91
