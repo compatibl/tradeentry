@@ -14,12 +14,17 @@
 
 import datetime as dt
 from dataclasses import dataclass
+
+from cl.runtime.records.dataclasses_extensions import missing
 from cl.tradeentry.entries.tenor_entry import TenorEntry
 
 
 @dataclass(slots=True, kw_only=True)
 class YearsMonthsEntry(TenorEntry):
     """Time interval string and its precise meaning."""
+
+    months: int = missing()
+    """Total number of months (years are converted to months)."""
 
     def get_time_delta(self, query: str) -> dt.timedelta:
         """Return self as dt.timedelta object."""
