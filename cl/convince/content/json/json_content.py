@@ -14,11 +14,9 @@
 
 from abc import abstractmethod
 from dataclasses import dataclass
-
 from typing_extensions import Self
-
-from cl.convince.content.content import Content
 from cl.runtime.records.dataclasses_extensions import missing
+from cl.convince.content.content import Content
 
 
 @dataclass(slots=True, kw_only=True)
@@ -36,5 +34,3 @@ class TextContent(Content):
     @abstractmethod
     def from_str(cls, value: str) -> Self:
         raise NotImplementedError()
-
-

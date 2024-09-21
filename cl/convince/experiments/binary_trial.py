@@ -13,8 +13,8 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.convince.experiments.trial import Trial
 from cl.runtime.records.dataclasses_extensions import missing
+from cl.convince.experiments.trial import Trial
 from cl.convince.experiments.trial_key import TrialKey
 
 

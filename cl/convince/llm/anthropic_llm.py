@@ -55,4 +55,3 @@ class AnthropicLlm(Llm):
                 api_key=AnthropicSettings.instance().api_key,
             )
         return cls._client
-

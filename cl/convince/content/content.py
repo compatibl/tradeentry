@@ -15,9 +15,7 @@
 from abc import ABC
 from abc import abstractmethod
 from dataclasses import dataclass
-
 from typing_extensions import Self
-
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.convince.content.content_key import ContentKey
 

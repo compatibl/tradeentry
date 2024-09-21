@@ -36,7 +36,8 @@ class FireworksLlm(Llm):
 {query}<|eot_id|>
 <|start_header_id|>assistant<|end_header_id|>"""
         fireworks.client.api_key = FireworksSettings.instance().api_key
-        response = fireworks.client.Completion.create(model=f"accounts/fireworks/models/{model_name}", prompt=prompt,
-                                                      max_tokens=self.max_tokens)
+        response = fireworks.client.Completion.create(
+            model=f"accounts/fireworks/models/{model_name}", prompt=prompt, max_tokens=self.max_tokens
+        )
         result = response.choices[0].text
         return result

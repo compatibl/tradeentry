@@ -13,9 +13,9 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.convince.experiments.experiment_key import ExperimentKey
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
+from cl.convince.experiments.experiment_key import ExperimentKey
 from cl.convince.experiments.trial_key import TrialKey
 
 

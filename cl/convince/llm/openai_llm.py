@@ -14,7 +14,6 @@
 
 from dataclasses import dataclass
 from typing import ClassVar
-
 from openai import OpenAI
 from cl.convince.llm.llm import Llm
 from cl.convince.settings.openai_settings import OpenaiSettings

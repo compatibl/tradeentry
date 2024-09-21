@@ -14,15 +14,13 @@
 
 import pytest
 import datetime as dt
-
 from dateutil.relativedelta import relativedelta
-
 from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.regression.regression_guard import RegressionGuard
 from cl.convince.llm.anthropic_llm import AnthropicLlm
 from cl.convince.llm.fireworks_llm import FireworksLlm
 from cl.convince.llm.gemini_llm import GeminiLlm
 from cl.convince.llm.openai_llm import OpenaiLlm
-from cl.runtime.regression.regression_guard import RegressionGuard
 
 llms = [
     AnthropicLlm(llm_id="claude-3-haiku-20240307"),
@@ -37,8 +35,10 @@ def _test_recall(text: str):
 
     with TestingContext():
 
-        prompt = (f"Reply with the following text changing nothing in it at all. "
-                  f"I will check that the text matches exactly. This is a test. Text: {text}")
+        prompt = (
+            f"Reply with the following text changing nothing in it at all. "
+            f"I will check that the text matches exactly. This is a test. Text: {text}"
+        )
         run_count = 1
 
         for llm in llms:
@@ -75,8 +75,7 @@ def test_long_table():
     origin_date = dt.date(2003, 4, 21)
     row_count = 10
     row_list = [
-        f"{origin_date + relativedelta(months=3*i)},{1_000_000 * (i if i > 10 else 10)}"
-        for i in range(row_count)
+        f"{origin_date + relativedelta(months=3*i)},{1_000_000 * (i if i > 10 else 10)}" for i in range(row_count)
     ]
     table = "\n".join(row_list)
     _test_recall(table)

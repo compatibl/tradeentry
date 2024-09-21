@@ -14,9 +14,8 @@
 
 from abc import ABC
 from dataclasses import dataclass
-
-from cl.convince.experiments.experiment import Experiment
 from cl.runtime.records.record_mixin import RecordMixin
+from cl.convince.experiments.experiment import Experiment
 from cl.convince.experiments.experiment_key import ExperimentKey
 
 
