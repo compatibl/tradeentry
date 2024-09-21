@@ -22,7 +22,7 @@ from cl.tradeentry.trades.trade_key import TradeKey
 class Trade(TradeKey, RecordMixin[TradeKey], ABC):
     """A standalone trade or part of a basket or strategy (in the latter case, parent field will be specified)."""
 
-    parent: TradeKey | None = None
+    parent_trade: TradeKey | None = None
     """Specified for trades that are part of a basket or strategy (PV will be aggregated under the parent)."""
 
     def get_key(self) -> TradeKey:

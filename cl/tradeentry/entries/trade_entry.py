@@ -12,20 +12,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.trade_entry_key import TradeEntryKey
+from cl.convince.entries.entry import Entry
+from cl.convince.entries.entry_status_enum import EntryStatusEnum
+from cl.tradeentry.entries.asset_class_entry import AssetClassEntry
+from cl.tradeentry.trades.asset_class_key import AssetClassKey
+from cl.tradeentry.trades.rates.swaps.vanilla.vanilla_swap import VanillaSwap
 from cl.tradeentry.trades.trade_key import TradeKey
 
 
 @dataclass(slots=True, kw_only=True)
-class TradeEntry(TradeEntryKey, RecordMixin[TradeEntryKey], ABC):
-    """Trade entry text specified by the user."""
+class TradeEntry(Entry):
+    """Capture trade from user input."""
 
-    trade: TradeKey = missing()
-    """Trade specified by the entry."""
+    trade: TradeKey | None = None
+    """Trade captured from the entry (populated during processing)."""
 
-    def get_key(self) -> TradeEntryKey:
-        return TradeEntryKey(entry_id=self.entry_id)
+    def process(self) -> None:
+        # Recognize asset class
+        asset_class_entry = AssetClassEntry(entry_text=self.entry_text, parent_entry=self)
+        asset_class_entry.process()
+        if asset_class_entry.entry_status == EntryStatusEnum.Completed:
+            # TODO: Use switch
+            if asset_class_entry.asset_class == AssetClassKey(asset_class_id="Rates"):
+                self.trade = VanillaSwap()
+            else:
+                raise RuntimeError(f"Unknown asset class {asset_class_entry.asset_class.asset_class_id}")

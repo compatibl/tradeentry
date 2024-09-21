@@ -13,13 +13,25 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.asset_class_entry_key import AssetClassEntryKey
+from cl.convince.entries.entry import Entry
+from cl.convince.entries.entry_status_enum import EntryStatusEnum
+from cl.tradeentry.trades.asset_class_key import AssetClassKey
 
 
 @dataclass(slots=True, kw_only=True)
-class AssetClassEntry(AssetClassEntryKey, RecordMixin[AssetClassEntryKey]):
-    """Maps asset class string specified by the user to the standard asset class identifier."""
+class AssetClassEntry(Entry):
+    """Capture asset class from user input for the trade."""
 
-    def get_key(self) -> AssetClassEntryKey:
-        return AssetClassEntryKey(entry_id=self.entry_id)
+    asset_class: AssetClassKey | None = None
+    """Asset class captured from the entry (populated during processing)."""
+
+    def process(self) -> None:
+        # Recognize asset class
+        if self.entry_text == "Swap":
+            self.asset_class = AssetClassKey(asset_class_id="Rates")
+        elif self.entry_text == "VanillaSwap":
+            self.asset_class = AssetClassKey(asset_class_id="Rates")
+        else:
+            raise RuntimeError(f"Cannot extract asset class from {self.entry_text}")
+        self.entry_status = EntryStatusEnum.Completed
+
