@@ -17,6 +17,7 @@ from cl.convince.entries.entry import Entry
 from cl.convince.entries.entry_status_enum import EntryStatusEnum
 from cl.tradeentry.entries.asset_class_entry import AssetClassEntry
 from cl.tradeentry.trades.asset_class_key import AssetClassKey
+from cl.tradeentry.trades.asset_class_keys import AssetClassKeys
 from cl.tradeentry.trades.rates.swaps.vanilla.vanilla_swap import VanillaSwap
 from cl.tradeentry.trades.trade_key import TradeKey
 
@@ -29,12 +30,13 @@ class TradeEntry(Entry):
     """Trade captured from the entry (populated during processing)."""
 
     def process(self) -> None:
-        # Recognize asset class
+        # Recognize trade
+        # TODO: Update to use AI
         asset_class_entry = AssetClassEntry(entry_text=self.entry_text, parent_entry=self)
         asset_class_entry.process()
         if asset_class_entry.entry_status == EntryStatusEnum.Completed:
             # TODO: Use switch
-            if asset_class_entry.asset_class == AssetClassKey(asset_class_id="Rates"):
+            if asset_class_entry.asset_class == AssetClassKeys.rates:
                 self.trade = VanillaSwap()
             else:
                 raise RuntimeError(f"Unknown asset class {asset_class_entry.asset_class.asset_class_id}")

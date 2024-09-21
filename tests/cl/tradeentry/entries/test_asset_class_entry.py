@@ -19,6 +19,7 @@ from cl.convince.llms.fireworks_llm import FireworksLlm
 from cl.convince.llms.gemini_llm import GeminiLlm
 from cl.convince.llms.openai_llm import OpenaiLlm
 from cl.tradeentry.entries.asset_class_entry import AssetClassEntry
+from cl.tradeentry.trades.asset_class_keys import AssetClassKeys
 
 llms = [
     AnthropicLlm(llm_id="claude-3-haiku-20240307"),
@@ -37,7 +38,7 @@ def test_smoke() -> None:
                 llm=llm
             )
             entry.process()
-            assert entry.asset_class.asset_class_id == "Rates"
+            assert entry.asset_class.asset_class_id == AssetClassKeys.rates.asset_class_id
 
 
 if __name__ == "__main__":

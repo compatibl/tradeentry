@@ -16,6 +16,7 @@ from dataclasses import dataclass
 from cl.convince.entries.entry import Entry
 from cl.convince.entries.entry_status_enum import EntryStatusEnum
 from cl.tradeentry.trades.asset_class_key import AssetClassKey
+from cl.tradeentry.trades.asset_class_keys import AssetClassKeys
 
 
 @dataclass(slots=True, kw_only=True)
@@ -27,10 +28,11 @@ class AssetClassEntry(Entry):
 
     def process(self) -> None:
         # Recognize asset class
+        # TODO: Update to use AI
         if self.entry_text == "Swap":
-            self.asset_class = AssetClassKey(asset_class_id="Rates")
+            self.asset_class = AssetClassKeys.rates
         elif self.entry_text == "VanillaSwap":
-            self.asset_class = AssetClassKey(asset_class_id="Rates")
+            self.asset_class = AssetClassKeys.rates
         else:
             raise RuntimeError(f"Cannot extract asset class from {self.entry_text}")
         self.entry_status = EntryStatusEnum.Completed
