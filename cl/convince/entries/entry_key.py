@@ -16,14 +16,23 @@ from dataclasses import dataclass
 from typing import Type
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.key_mixin import KeyMixin
+from cl.runtime.records.protocols import is_record
 
 
 @dataclass(slots=True, kw_only=True)
 class EntryKey(KeyMixin):
-    """A distinct set of data extracted from text using AI."""
+    """Performs comprehension of the specified entry text."""
 
-    entry_id: str = missing()
-    """Unique entry identifier."""
+    entry_type: str = missing()
+    """Type string of the entry class in ClassName format."""
+
+    entry_text: str = missing()
+    """Full text of the entry."""
+
+    def __post_init__(self) -> None:
+        """Populate entry type if not set when called inside a record derived from key, leave blank if this is a key."""
+        if self.entry_type is None and is_record(self):
+            self.entry_type = type(self).__class__.__name__
 
     @classmethod
     def get_key_type(cls) -> Type:
