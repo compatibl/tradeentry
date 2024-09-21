@@ -14,13 +14,13 @@
 
 from abc import ABC
 from dataclasses import dataclass
-from cl.convince.entries.entry import Entry
-from cl.tradeentry.trades.trade_key import TradeKey
+from cl.runtime.records.record_mixin import RecordMixin
+from cl.tradeentry.trades.rates.rates_trade_type_key import RatesTradeTypeKey
 
 
 @dataclass(slots=True, kw_only=True)
-class TradeEntry(Entry, ABC):
-    """Capture trade from user input."""
+class RatesTradeType(RatesTradeTypeKey, RecordMixin[RatesTradeTypeKey], ABC):
+    """Standard interest rate trade type identifier."""
 
-    trade: TradeKey | None = None
-    """Trade captured from the entry (populated during processing)."""
+    def get_key(self) -> RatesTradeTypeKey:
+        return RatesTradeTypeKey(rates_trade_type_id=self.rates_trade_type_id)

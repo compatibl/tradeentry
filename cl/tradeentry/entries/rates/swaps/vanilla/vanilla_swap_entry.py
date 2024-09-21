@@ -19,6 +19,8 @@ from cl.tradeentry.entries.rates.rates_effective_date_entry_key import RatesEffe
 from cl.tradeentry.entries.rates.rates_index_entry_key import RatesIndexEntryKey
 from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import RatesMaturityDateEntryKey
 from cl.tradeentry.entries.trade_entry import TradeEntry
+from cl.tradeentry.trades.pay_receive_fixed_enum import PayReceiveFixedEnum
+from cl.tradeentry.trades.rates.swaps.vanilla.vanilla_swap import VanillaSwap
 
 
 @dataclass(slots=True, kw_only=True)
@@ -39,3 +41,9 @@ class VanillaSwapEntry(TradeEntry):
 
     fixed_rate: FixedRateEntryKey | None = None
     """Fixed rate (breakeven rate is assumed if not specified)."""
+
+    def process(self) -> None:
+        # Recognize trade
+        # TODO: This is a stub, implement
+        self.trade = VanillaSwap()
+        self.trade.pay_receive_fixed = PayReceiveFixedEnum.PayFixed

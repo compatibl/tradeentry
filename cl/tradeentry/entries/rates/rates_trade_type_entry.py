@@ -15,25 +15,25 @@
 from dataclasses import dataclass
 from cl.convince.entries.entry import Entry
 from cl.convince.entries.entry_status_enum import EntryStatusEnum
-from cl.tradeentry.trades.asset_class_key import AssetClassKey
-from cl.tradeentry.trades.asset_class_keys import AssetClassKeys
+from cl.tradeentry.trades.rates.rates_trade_type_key import RatesTradeTypeKey
+from cl.tradeentry.trades.rates.rates_trade_type_keys import RatesTradeTypeKeys
 
 
 @dataclass(slots=True, kw_only=True)
-class AssetClassEntry(Entry):
-    """Capture asset class from user input for the entire trade."""
+class RatesTradeTypeEntry(Entry):
+    """Capture interest rate trade type from user input for the entire trade."""
 
-    asset_class: AssetClassKey | None = None
-    """Asset class captured from the entry (populated during processing)."""
+    rates_trade_type: RatesTradeTypeKey | None = None
+    """Interest rate trade type captured from the entry (populated during processing)."""
 
     def process(self) -> None:
         # Recognize asset class
         # TODO: Update to use AI
-        if self.entry_text == "Swap":
-            self.asset_class = AssetClassKeys.rates
+        if self.entry_text == "FixedForFloatingSwap":
+            self.rates_trade_type = RatesTradeTypeKeys.fixed_for_floating_swap
         elif self.entry_text == "VanillaSwap":
-            self.asset_class = AssetClassKeys.rates
+            self.rates_trade_type = RatesTradeTypeKeys.vanilla_swap
         else:
-            raise RuntimeError(f"Cannot extract asset class from {self.entry_text}")
+            raise RuntimeError(f"Cannot extract rates trade type from {self.entry_text}")
         self.entry_status = EntryStatusEnum.Completed
 

@@ -12,15 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
 from dataclasses import dataclass
-from cl.convince.entries.entry import Entry
-from cl.tradeentry.trades.trade_key import TradeKey
+from typing import Type
+from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class TradeEntry(Entry, ABC):
-    """Capture trade from user input."""
+class RatesTradeTypeKey(KeyMixin):
+    """Standard interest rate trade type identifier."""
 
-    trade: TradeKey | None = None
-    """Trade captured from the entry (populated during processing)."""
+    rates_trade_type_id: str = missing()
+    """Standard interest rate trade type identifier."""
+
+    @classmethod
+    def get_key_type(cls) -> Type:
+        return RatesTradeTypeKey
