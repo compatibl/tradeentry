@@ -13,20 +13,17 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.tradeentry.entries.rates.rates_index_entry_key import RatesIndexEntryKey
+from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.records.record_mixin import RecordMixin
 from cl.tradeentry.entries.rates.rates_spread_entry_key import RatesSpreadEntryKey
-from cl.tradeentry.entries.rates.swaps.rates_swap_leg_entry import RatesSwapLegEntry
 
 
 @dataclass(slots=True, kw_only=True)
-class FloatSwapLegEntry(RatesSwapLegEntry):
-    """A series of interest rate payments with a floating coupon based on an interest rate index.."""
+class RatesSpreadEntry(RatesSpreadEntryKey, RecordMixin[RatesSpreadEntryKey]):
+    """Maps interest rate spread string specified by the user to the numerical value."""
 
-    float_freq: str | None = None
-    """Frequency at which floating interest accrues."""
+    value: float = missing()
+    """Numerical value specified by the entry."""
 
-    float_index: RatesIndexEntryKey | None = None
-    """Floating interest rate index ('float_spread' is added to the index fixing)."""
-
-    float_spread: RatesSpreadEntryKey | None = None
-    """Spread over the interest rate index."""
+    def get_key(self) -> RatesSpreadEntryKey:
+        return RatesSpreadEntryKey(entry_id=self.entry_id)

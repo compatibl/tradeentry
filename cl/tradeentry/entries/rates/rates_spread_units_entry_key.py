@@ -13,20 +13,18 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from typing import Type
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.tradeentry.trades.rates.rates_index import RatesIndex
-from cl.tradeentry.trades.rates.swaps.rates_swap_leg import SwapLeg
+from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class FloatSwapLeg(SwapLeg):
-    """A series of interest rate payments with a floating coupon based on an interest rate index.."""
+class RatesSpreadUnitsEntryKey(KeyMixin):
+    """Maps interest rate spread units string specified by the user to the numerical multiplier."""
 
-    float_freq: str = missing()  # TODO: Consider a less ambiguous name, e.g. accrual_freq
-    """Frequency at which floating interest accrues."""
+    entry_id: str = missing()
+    """Interest rate spread units string specified by the user."""
 
-    float_index: RatesIndex = missing()
-    """Floating interest rate index ('float_spread' is added to the index fixing)."""
-
-    float_spread_bp: float = missing()
-    """Spread over the interest rate index in basis points."""
+    @classmethod
+    def get_key_type(cls) -> Type:
+        return RatesSpreadUnitsEntryKey

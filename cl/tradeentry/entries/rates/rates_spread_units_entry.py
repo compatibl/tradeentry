@@ -12,21 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from abc import ABC
 from dataclasses import dataclass
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.tradeentry.trades.rates.rates_index import RatesIndex
-from cl.tradeentry.trades.rates.swaps.rates_swap_leg import SwapLeg
+from cl.runtime.records.record_mixin import RecordMixin
+from cl.tradeentry.entries.rates.rates_spread_units_entry_key import RatesSpreadUnitsEntryKey
 
 
 @dataclass(slots=True, kw_only=True)
-class FloatSwapLeg(SwapLeg):
-    """A series of interest rate payments with a floating coupon based on an interest rate index.."""
+class RatesSpreadUnitsEntry(RatesSpreadUnitsEntryKey, RecordMixin[RatesSpreadUnitsEntryKey], ABC):
+    """Maps interest rate spread units string specified by the user to the numerical multiplier."""
 
-    float_freq: str = missing()  # TODO: Consider a less ambiguous name, e.g. accrual_freq
-    """Frequency at which floating interest accrues."""
+    multiplier: float = missing()
+    """Numerical multiplier specified by the entry."""
 
-    float_index: RatesIndex = missing()
-    """Floating interest rate index ('float_spread' is added to the index fixing)."""
-
-    float_spread_bp: float = missing()
-    """Spread over the interest rate index in basis points."""
+    def get_key(self) -> RatesSpreadUnitsEntryKey:
+        return RatesSpreadUnitsEntryKey(entry_id=self.entry_id)
