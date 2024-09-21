@@ -14,6 +14,8 @@
 
 import datetime as dt
 from dataclasses import dataclass
+
+from cl.tradeentry.entries.pay_freq_entry_key import PayFreqEntryKey
 from cl.tradeentry.entries.pay_receive_entry_key import PayReceiveEntryKey
 from cl.tradeentry.entries.rates.rates_effective_date_entry_key import RatesEffectiveDateEntryKey
 from cl.tradeentry.entries.rates.rates_leg_entry import RatesLegEntry
@@ -33,5 +35,5 @@ class RatesSwapLegEntry(RatesLegEntry):
     maturity_date: RatesMaturityDateEntryKey | None = None
     """Trade or leg maturity date defined as unadjusted date or time interval relative to another date."""
 
-    payment_frequency: str | None = None
+    pay_freq: PayFreqEntryKey | None = None
     """Payment frequency."""

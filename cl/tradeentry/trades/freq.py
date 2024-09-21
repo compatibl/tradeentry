@@ -12,26 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import datetime as dt
+from abc import ABC
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.records.record_mixin import RecordMixin
 from cl.tradeentry.trades.freq_key import FreqKey
-from cl.tradeentry.trades.pay_receive_enum import PayReceiveEnum
-from cl.tradeentry.trades.rates.rates_leg import RatesLeg
 
 
 @dataclass(slots=True, kw_only=True)
-class RatesSwapLeg(RatesLeg):
-    """Swap leg."""
+class PayFreq(FreqKey, RecordMixin[FreqKey], ABC):
+    """Frequency specification."""
 
-    pay_receive: PayReceiveEnum = missing()
-    """String representation of the Buy or Sell flag in the format specified by the user."""
-
-    effective_date: dt.date = missing()
-    """Effective date."""
-
-    maturity_date: dt.date = missing()
-    """Maturity date."""
-
-    pay_freq: FreqKey = missing()
-    """Payment frequency."""
+    def get_key(self) -> FreqKey:
+        return FreqKey(freq_id=self.freq_id)
