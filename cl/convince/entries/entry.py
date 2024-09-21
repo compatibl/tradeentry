@@ -15,7 +15,7 @@
 from abc import ABC
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.convince.entry.entry_key import EntryKey
+from cl.convince.entries.entry_key import EntryKey
 
 
 @dataclass(slots=True, kw_only=True)

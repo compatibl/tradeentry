@@ -14,7 +14,7 @@
 
 import pytest
 from cl.runtime.context.testing_context import TestingContext
-from cl.convince.llm.anthropic_llm import AnthropicLlm
+from cl.convince.llms.anthropic_llm import AnthropicLlm
 
 
 def test_smoke():

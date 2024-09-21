@@ -14,7 +14,7 @@
 
 import pytest
 from cl.runtime.context.testing_context import TestingContext
-from cl.convince.llm.openai_llm import OpenaiLlm
+from cl.convince.llms.openai_llm import OpenaiLlm
 
 
 def test_smoke():

@@ -14,7 +14,7 @@
 
 import pytest
 from cl.runtime.context.testing_context import TestingContext
-from cl.convince.llm.fireworks_llm import FireworksLlm
+from cl.convince.llms.fireworks_llm import FireworksLlm
 
 
 def test_smoke():

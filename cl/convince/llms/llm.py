@@ -16,7 +16,7 @@ from abc import ABC
 from abc import abstractmethod
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.convince.llm.llm_key import LlmKey
+from cl.convince.llms.llm_key import LlmKey
 
 
 @dataclass(slots=True, kw_only=True)

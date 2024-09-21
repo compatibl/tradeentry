@@ -14,7 +14,7 @@
 
 from dataclasses import dataclass
 import fireworks.client  # noqa
-from cl.convince.llm.llm import Llm
+from cl.convince.llms.llm import Llm
 from cl.convince.settings.fireworks_settings import FireworksSettings
 
 

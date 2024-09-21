@@ -15,7 +15,7 @@
 from dataclasses import dataclass
 from typing import ClassVar
 from anthropic import Anthropic
-from cl.convince.llm.llm import Llm
+from cl.convince.llms.llm import Llm
 from cl.convince.settings.anthropic_settings import AnthropicSettings
 
 

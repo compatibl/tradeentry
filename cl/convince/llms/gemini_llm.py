@@ -14,7 +14,7 @@
 
 from dataclasses import dataclass
 import google.generativeai as gemini  # noqa
-from cl.convince.llm.llm import Llm
+from cl.convince.llms.llm import Llm
 from cl.convince.settings.gemini_settings import GeminiSettings
 
 
