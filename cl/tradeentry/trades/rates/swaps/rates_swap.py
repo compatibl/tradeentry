@@ -15,7 +15,6 @@
 from dataclasses import dataclass
 from typing import List
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.tradeentry.trades.rates.rates_leg import RatesSwapLeg
 from cl.tradeentry.trades.rates.rates_leg_key import RatesLegKey
 from cl.tradeentry.trades.trade import Trade
 

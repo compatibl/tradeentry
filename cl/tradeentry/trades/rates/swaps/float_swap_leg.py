@@ -15,11 +15,11 @@
 from dataclasses import dataclass
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.tradeentry.trades.rates.rates_index import RatesIndex
-from cl.tradeentry.trades.rates.swaps.rates_swap_leg import SwapLeg
+from cl.tradeentry.trades.rates.swaps.rates_swap_leg import RatesSwapLeg
 
 
 @dataclass(slots=True, kw_only=True)
-class FloatSwapLeg(SwapLeg):
+class FloatSwapLeg(RatesSwapLeg):
     """A series of interest rate payments with a floating coupon based on an interest rate index.."""
 
     float_freq: str = missing()  # TODO: Consider a less ambiguous name, e.g. accrual_freq

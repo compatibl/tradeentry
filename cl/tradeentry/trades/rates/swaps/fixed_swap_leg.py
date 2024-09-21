@@ -14,11 +14,11 @@
 
 from dataclasses import dataclass
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.tradeentry.trades.rates.swaps.rates_swap_leg import SwapLeg
+from cl.tradeentry.trades.rates.swaps.rates_swap_leg import RatesSwapLeg
 
 
 @dataclass(slots=True, kw_only=True)
-class FixedSwapLeg(SwapLeg):
+class FixedSwapLeg(RatesSwapLeg):
     """A series of interest rate payments with fixed coupon."""
 
     fixed_rate_pct: float = missing()
