@@ -20,10 +20,10 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 @dataclass(slots=True, kw_only=True)
 class PayReceiveEntryKey(KeyMixin):
-    """String representation of the Buy or Sell flag in the format specified by the user."""
+    """User input to determine if we pay or receive payments or periodic coupons for a trade or leg."""
 
     entry_id: str = missing()
-    """String representation of the Buy or Sell flag in the format specified by the user."""
+    """User input to determine if we pay or receive payments or periodic coupons for a trade or leg."""
 
     @classmethod
     def get_key_type(cls) -> Type:

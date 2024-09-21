@@ -12,19 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
-from typing import Type
-from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.key_mixin import KeyMixin
+from enum import IntEnum
 
 
-@dataclass(slots=True, kw_only=True)
-class PayReceiveFixedEntryKey(KeyMixin):
-    """User input to determine if we pay or receive fixed leg coupons in a fixed-for-floating swap."""
+class PayReceiveFixedEnum(IntEnum):
+    """Determines if we pay or receive fixed leg coupons in a fixed-for-floating swap."""
 
-    entry_id: str = missing()
-    """User input to determine if we pay or receive fixed leg coupons in a fixed-for-floating swap."""
+    PayFixed = 1
+    """We pay fixed leg coupons."""
 
-    @classmethod
-    def get_key_type(cls) -> Type:
-        return PayReceiveFixedEntryKey
+    ReceiveFixed = 2
+    """We receive fixed leg coupons."""
+

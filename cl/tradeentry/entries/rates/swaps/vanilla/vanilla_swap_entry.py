@@ -23,7 +23,7 @@ from cl.tradeentry.entries.trade_entry import TradeEntry
 
 @dataclass(slots=True, kw_only=True)
 class VanillaSwapEntry(TradeEntry):
-    """Vanilla fixed for floating swap."""
+    """Vanilla fixed-for-floating swap."""
 
     pay_receive_fixed: PayReceiveFixedEntryKey | None = None
     """String representation of the PayFixed or ReceiveFixed flag in the format specified by the user."""

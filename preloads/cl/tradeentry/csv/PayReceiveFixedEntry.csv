@@ -1,0 +1,10 @@
+entry_id,value
+pay fixed,PayFixed
+we pay fixed,PayFixed
+long,PayFixed
+buy,PayFixed
+receive fixed,ReceiveFixed
+rec fixed,ReceiveFixed
+we receive fixed,ReceiveFixed
+short,ReceiveFixed
+sell,ReceiveFixed

@@ -13,13 +13,19 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+
+from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.tradeentry.entries.pay_receive_fixed_entry_key import PayReceiveFixedEntryKey
+from cl.tradeentry.trades.pay_receive_fixed_enum import PayReceiveFixedEnum
 
 
 @dataclass(slots=True, kw_only=True)
 class PayReceiveFixedEntry(PayReceiveFixedEntryKey, RecordMixin[PayReceiveFixedEntryKey]):
-    """String representation of the PayFixed or ReceiveFixed flag in the format specified by the user."""
+    """User input to determine if we pay or receive fixed leg coupons in a fixed-for-floating swap."""
+
+    value: PayReceiveFixedEnum = missing()
+    """Enum to determine if we pay or receive fixed leg coupons in a fixed-for-floating swap."""
 
     def get_key(self) -> PayReceiveFixedEntryKey:
         return PayReceiveFixedEntryKey(entry_id=self.entry_id)
