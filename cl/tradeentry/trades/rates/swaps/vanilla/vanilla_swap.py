@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
 import datetime as dt
+from dataclasses import dataclass
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.tradeentry.trades.pay_receive_fixed_enum import PayReceiveFixedEnum
 from cl.tradeentry.trades.rates.rates_index_key import RatesIndexKey

@@ -14,10 +14,8 @@
 
 import os
 import traceback
-
 import uvicorn
 from starlette.staticfiles import StaticFiles
-
 from cl.runtime.__main__ import server_app
 from cl.runtime.context.process_context import ProcessContext
 from cl.runtime.settings.api_settings import ApiSettings

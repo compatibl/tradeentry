@@ -14,7 +14,6 @@
 
 import datetime as dt
 from dataclasses import dataclass
-
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.tradeentry.entries.tenor_entry import TenorEntry
 

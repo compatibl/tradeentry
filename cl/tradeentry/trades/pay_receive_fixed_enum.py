@@ -23,4 +23,3 @@ class PayReceiveFixedEnum(IntEnum):
 
     ReceiveFixed = 2
     """We receive fixed leg coupons."""
-
