@@ -19,7 +19,7 @@ from cl.tradeentry.entries.tenor_entry_key import TenorEntryKey
 
 @dataclass(slots=True, kw_only=True)
 class TenorEntry(TenorEntryKey, RecordMixin[TenorEntryKey]):
-    """Time interval string and its precise meaning."""
+    """Maps tenor entry to the precise tenor specification."""
 
     def get_key(self) -> TenorEntryKey:
         return TenorEntryKey(entry_id=self.entry_id)

@@ -20,7 +20,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 @dataclass(slots=True, kw_only=True)
 class FixedRateEntryKey(KeyMixin):
-    """Fixed interest rate string and its precise meaning."""
+    """Maps fixed interest rate entry to its numerical value."""
 
     entry_id: str = missing()
     """Fixed interest rate string for which the meaning is recorded."""

@@ -20,7 +20,7 @@ from cl.tradeentry.entries.tenor_entry import TenorEntry
 
 @dataclass(slots=True, kw_only=True)
 class YearsMonthsEntry(TenorEntry):
-    """Time interval string and its precise meaning."""
+    """Maps tenor entry in years and months to its precise specification."""
 
     months: int = missing()
     """Total number of months (years are converted to months)."""

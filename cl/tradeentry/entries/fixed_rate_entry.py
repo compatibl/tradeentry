@@ -20,7 +20,7 @@ from cl.tradeentry.entries.fixed_rate_entry_key import FixedRateEntryKey
 
 @dataclass(slots=True, kw_only=True)
 class FixedRateEntry(FixedRateEntryKey, RecordMixin[FixedRateEntryKey]):
-    """Fixed interest rate string and its precise meaning."""
+    """Maps fixed interest rate entry to its numerical value."""
 
     value: float = missing()
     """Numerical value specified by the entry."""

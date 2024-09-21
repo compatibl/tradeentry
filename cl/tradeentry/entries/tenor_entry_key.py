@@ -20,7 +20,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 @dataclass(slots=True, kw_only=True)
 class TenorEntryKey(KeyMixin):
-    """Time interval string and its precise meaning."""
+    """Maps tenor entry to the precise tenor specification."""
 
     entry_id: str = missing()
     """Time interval string for which the meaning is recorded."""
