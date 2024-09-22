@@ -14,15 +14,15 @@
 
 import pytest
 from cl.runtime.context.testing_context import TestingContext
-from cl.convince.llms.openai_llm import OpenaiLlm
+from cl.convince.llms.gpt.gpt_llm import GptLlm
 
 
 def test_smoke():
-    """Test OpenaiLlm class."""
+    """Test GptLlm class."""
 
     with TestingContext():
         llms = [
-            OpenaiLlm(llm_id="gpt-4o-mini"),
+            GptLlm(llm_id="gpt-4o-mini"),
         ]
         for llm in llms:
             assert "4" in llm.completion("2 times 2?")

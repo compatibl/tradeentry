@@ -20,8 +20,8 @@ from cl.convince.settings.anthropic_settings import AnthropicSettings
 
 
 @dataclass(slots=True, kw_only=True)
-class AnthropicLlm(Llm):
-    """Implements Anthropic LLM API."""
+class ClaudeLlm(Llm):
+    """Implements Claude LLM API."""
 
     model_name: str | None = None
     """Model name in Anthropic format including version if any, defaults to 'llm_id'."""

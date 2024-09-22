@@ -14,15 +14,15 @@
 
 import pytest
 from cl.runtime.context.testing_context import TestingContext
-from cl.convince.llms.fireworks_llm import FireworksLlm
+from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
 
 
 def test_smoke():
-    """Test FireworksLlm class."""
+    """Test FireworksLlamaLlm class."""
 
     with TestingContext():
         llms = [
-            FireworksLlm(llm_id="llama-v3-8b-instruct"),
+            FireworksLlamaLlm(llm_id="llama-v3-8b-instruct"),
         ]
         for llm in llms:
             assert "4" in llm.completion("2 times 2?")

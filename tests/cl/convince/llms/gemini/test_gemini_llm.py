@@ -14,7 +14,7 @@
 
 import pytest
 from cl.runtime.context.testing_context import TestingContext
-from cl.convince.llms.gemini_llm import GeminiLlm
+from cl.convince.llms.gemini.gemini_llm import GeminiLlm
 
 
 def test_smoke():

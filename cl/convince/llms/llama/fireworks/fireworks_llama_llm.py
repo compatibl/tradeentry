@@ -19,8 +19,8 @@ from cl.convince.settings.fireworks_settings import FireworksSettings
 
 
 @dataclass(slots=True, kw_only=True)
-class FireworksLlm(Llm):
-    """Implements Fireworks LLM API."""
+class FireworksLlamaLlm(Llm):
+    """Implements LLAMA API running in the Fireworks cloud."""
 
     model_name: str | None = None
     """Model name in Fireworks format including version if any, defaults to 'llm_id'."""

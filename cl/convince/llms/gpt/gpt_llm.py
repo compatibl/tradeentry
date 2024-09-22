@@ -20,8 +20,8 @@ from cl.convince.settings.openai_settings import OpenaiSettings
 
 
 @dataclass(slots=True, kw_only=True)
-class OpenaiLlm(Llm):
-    """Implements OpenAI LLM API."""
+class GptLlm(Llm):
+    """Implements GPT LLM API."""
 
     model_name: str | None = None
     """Model name in OpenAI format including version if any, defaults to 'llm_id'."""

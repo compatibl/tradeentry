@@ -14,15 +14,15 @@
 
 import pytest
 from cl.runtime.context.testing_context import TestingContext
-from cl.convince.llms.anthropic_llm import AnthropicLlm
+from cl.convince.llms.claude.claude_llm import ClaudeLlm
 
 
 def test_smoke():
-    """Test AnthropicLlm class."""
+    """Test ClaudeLlm class."""
 
     with TestingContext():
         llms = [
-            AnthropicLlm(llm_id="claude-3-haiku-20240307"),
+            ClaudeLlm(llm_id="claude-3-haiku-20240307"),
         ]
         for llm in llms:
             assert "4" in llm.completion("2 times 2?")
