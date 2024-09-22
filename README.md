@@ -1,4 +1,4 @@
-# CompatibL Runtime Community Edition
+# CompatibL Runtime Package (Community Edition)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/compatibl/cl-runtime/python-package.yml)
 ![GitHub](https://img.shields.io/github/license/compatibl/cl-runtime)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/cl-runtime)
