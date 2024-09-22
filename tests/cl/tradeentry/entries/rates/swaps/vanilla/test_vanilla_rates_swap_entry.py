@@ -15,20 +15,20 @@ from typing import cast
 
 import pytest
 from cl.runtime.context.testing_context import TestingContext
-from cl.convince.llms.anthropic_llm import AnthropicLlm
-from cl.convince.llms.fireworks_llm import FireworksLlm
-from cl.convince.llms.gemini_llm import GeminiLlm
-from cl.convince.llms.openai_llm import OpenaiLlm
+from cl.convince.llms.claude.claude_llm import ClaudeLlm
+from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
+from cl.convince.llms.gemini.gemini_llm import GeminiLlm
+from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.tradeentry.entries.any_trade_entry import AnyTradeEntry
 from cl.tradeentry.trades.pay_receive_fixed_enum import PayReceiveFixedEnum
 from cl.tradeentry.trades.rates.swaps.vanilla.vanilla_swap import VanillaSwap
 from cl.tradeentry.trades.trade import Trade
 
 llms = [
-    AnthropicLlm(llm_id="claude-3-haiku-20240307"),
-    FireworksLlm(llm_id="llama-v3-8b-instruct"),
+    ClaudeLlm(llm_id="claude-3-haiku-20240307"),
+    FireworksLlamaLlm(llm_id="llama-v3-8b-instruct"),
     GeminiLlm(llm_id="gemini-1.5-flash"),
-    OpenaiLlm(llm_id="gpt-4o-mini"),
+    GptLlm(llm_id="gpt-4o-mini"),
 ]
 
 
