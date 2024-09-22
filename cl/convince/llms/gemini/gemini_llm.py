@@ -35,3 +35,23 @@ class GeminiLlm(Llm):
 
         result = response.text
         return result
+
+    @classmethod
+    def create_prompt_from_messages(cls, messages: list[dict]) -> list[dict[str, str]]:
+        """
+        Having a list of messages in the following format:
+        [
+            {"role": "system", "content": "System Prompt"},
+            {"role": "user", "content": "What is 2 + 2?"},
+            {"role": "assistant", "content": "2+2 is equals to 4"},
+            {"role": "user", "content": "Answer only with resulting number"},
+        ]
+        Returns:
+        [
+            {"role": "system", "parts": ["System Prompt"]},
+            {"role": "user", "parts": ["What is 2 + 2?"]},
+            {"role": "assistant", "parts": ["2+2 is equals to 4"]},
+            {"role": "user", "parts": ["Answer only with resulting number"]},
+        ]
+        """
+        return [{"role": message.role.name, "parts": [message.content]} for message in messages]
