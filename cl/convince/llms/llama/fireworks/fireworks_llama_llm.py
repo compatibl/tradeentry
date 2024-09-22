@@ -14,12 +14,14 @@
 
 from dataclasses import dataclass
 import fireworks.client  # noqa
+
+from cl.convince.llms.llama.llama_llm import LlamaLlm
 from cl.convince.llms.llm import Llm
 from cl.convince.settings.fireworks_settings import FireworksSettings
 
 
 @dataclass(slots=True, kw_only=True)
-class FireworksLlamaLlm(Llm):
+class FireworksLlamaLlm(LlamaLlm):
     """Implements LLAMA API running in the Fireworks cloud."""
 
     model_name: str | None = None
