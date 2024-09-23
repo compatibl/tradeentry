@@ -17,6 +17,7 @@ from dataclasses import dataclass
 from typing import Any
 from typing import Dict
 from typing import Type
+
 from cl.runtime import Context
 from cl.runtime.file.reader import Reader
 from cl.runtime.records.protocols import RecordProtocol
@@ -39,7 +40,7 @@ class CsvFileReader(Reader):
         # Get current context
         context = Context.current()
 
-        with open(self.file_path, mode="r") as file:
+        with open(self.file_path, mode="r", encoding="utf-8") as file:
             # The reader is an iterable of row dicts
             csv_reader = csv.DictReader(file)
 
@@ -56,6 +57,12 @@ class CsvFileReader(Reader):
         # return self.record_type(**row_dict)
         prepared_row = {}
         for k, v in row_dict.items():
+
+            # TODO (Roman): add ability to see difference between an empty string and None.
+            # Replace empty string to None
+            if v is None or v == "":
+                prepared_row[k] = None
+                continue
 
             # Try to convert value from csv to int or float
             try:
