@@ -64,5 +64,15 @@ class OrderedUuid:
     @classmethod
     def datetime_of(cls, value: UUID) -> dt.datetime:
         """Return datetime of a single UUIDv7 value."""
+
+        # Check type
+        if (value_type_name := type(value).__name__) != "UUID":
+            raise RuntimeError(f"Method 'OrderedUuid.datetime_of' received object of '{value_type_name}' "
+                               f"type while 'UUID' was expected.")
+
+        # Check version
+        if value.version != 7:
+            raise RuntimeError(f"Method 'OrderedUuid.datetime_of' received UUID v{value.version} while v7 is expected.")
+
         # Field 'UUID.timestamp' is int milliseconds while 'fromtimestamp' method expects float seconds, divide by 1000
         return dt.datetime.fromtimestamp(uuid_utils.UUID(bytes=value.bytes).timestamp / 1000, dt.timezone.utc)
