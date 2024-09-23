@@ -1,2 +1,2 @@
-Query,Completion
-2 times 2?,2 times 2 equals 4.
+OrderedUuid,Timestamp,Query,Completion
+01921e5a-99f2-7b70-b475-fe98e03f66e3,2024-09-23T10:08:27.122Z,2 times 2?,2 times 2 equals 4.

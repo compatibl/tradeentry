@@ -1,4 +1,4 @@
-Query,Completion
-2 times 2?,"
+OrderedUuid,Timestamp,Query,Completion
+01921e5a-9b57-7890-bc12-8f778e52d6a3,2024-09-23T10:08:27.479Z,2 times 2?,"
 
-2 x 2 = 4"
+4"

@@ -1,3 +1,3 @@
-Query,Completion
-2 times 2?,"2 times 2 is **4**. 
+OrderedUuid,Timestamp,Query,Completion
+01921e5a-9852-7102-8c4f-7aff85d67be1,2024-09-23T10:08:26.706Z,2 times 2?,"2 times 2 is 4. 
 "

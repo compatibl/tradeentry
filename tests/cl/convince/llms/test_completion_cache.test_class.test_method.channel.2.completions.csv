@@ -1,2 +1,2 @@
-Query,Completion
-a,b
+OrderedUuid,Timestamp,Query,Completion
+01921e5e-4f48-7332-83f0-2f855694e7d0,2024-09-23T10:12:30.152Z,a,b
