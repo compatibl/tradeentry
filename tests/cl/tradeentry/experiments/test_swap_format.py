@@ -20,6 +20,8 @@ from cl.convince.llms.claude.claude_llm import ClaudeLlm
 from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
 from cl.convince.llms.gemini.gemini_llm import GeminiLlm
 from cl.convince.llms.gpt.gpt_llm import GptLlm
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_vanilla_swap_entry, \
+    stub_fixed_for_floating_swap_entry
 
 llms = [
     ClaudeLlm(llm_id="claude-3-opus-20240229"),
@@ -73,20 +75,6 @@ Your work will be tested by substituting field values back into the formatted st
 and checking that the resulting string is exactly the same as the output you received.
 """
 
-vanilla_swap_entry = """
-Sell 10y SOFR swap at 3.45%
-"""
-
-fixed_for_floating_swap_entry = """
-Swap Details:
-Notional: 10,000,000,000
-Bank pays: 6M USD Term SOFR, semi-annual, act/360
-Bank receives: USD fixed 3.45%, semi-annual, act/360
-Notional exchange: None
-Start date: 21-Apr-2023
-Tenor: 10 years
-"""
-
 
 def _test_extract_format(text: str, field_names: List[str]) -> None:
     """Test swap format extraction from string."""
@@ -110,7 +98,7 @@ def _test_extract_format(text: str, field_names: List[str]) -> None:
 def test_vanilla():
     """Checks if the model can extract format from an example with brief trade description."""
     _test_extract_format(
-        vanilla_swap_entry,
+        stub_vanilla_swap_entry,
         [
             "pay_or_receive_fixed",
             "start_date",
@@ -130,7 +118,7 @@ def test_vanilla():
 def test_fixed_for_floating():
     """Checks if the model can extract format from an example with more verbose trade description."""
     _test_extract_format(
-        fixed_for_floating_swap_entry,
+        stub_fixed_for_floating_swap_entry,
         [
             "pay_or_receive_fixed",
             "start_date",
