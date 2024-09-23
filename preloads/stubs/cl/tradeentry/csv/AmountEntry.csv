@@ -4,5 +4,5 @@ ten million,10000000.0,
 $10m,10000000.0,"::#dict#{""entry_id"": ""USD"", ""_type"": ""CurrencyEntryKey""}"
  USD 10m ,10000000.0,"::#dict#{""entry_id"": ""USD"", ""_type"": ""CurrencyEntryKey""}"
 ten million dollars,10000000.0,"::#dict#{""entry_id"": ""USD"", ""_type"": ""CurrencyEntryKey""}"
-�10m,10000000.0,"::#dict#{""entry_id"": ""EUR"", ""_type"": ""CurrencyEntryKey""}"
+€10m,10000000.0,"::#dict#{""entry_id"": ""EUR"", ""_type"": ""CurrencyEntryKey""}"
 ten million euro,10000000.0,"::#dict#{""entry_id"": ""EUR"", ""_type"": ""CurrencyEntryKey""}"
