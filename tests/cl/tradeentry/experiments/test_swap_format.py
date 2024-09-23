@@ -15,7 +15,7 @@
 import pytest
 from typing import List
 from cl.runtime.context.testing_context import TestingContext
-from cl.runtime.regression.regression_guard import RegressionGuard
+from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.claude.claude_llm import ClaudeLlm
 from cl.convince.llms.gemini.gemini_llm import GeminiLlm
 from cl.convince.llms.gpt.gpt_llm import GptLlm
