@@ -13,8 +13,6 @@
 # limitations under the License.
 
 import pytest
-import json
-import re
 from typing import Dict
 from typing import List
 from cl.runtime.context.testing_context import TestingContext
@@ -28,6 +26,8 @@ from stubs.cl.tradeentry.experiments.stub_tag_utils import fields_to_text
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_basis_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_floored_swap_entry
+from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json_from_quotes
+
 
 llms = [
     ClaudeLlm(llm_id="claude-3-sonnet-20240229"),
@@ -96,8 +96,11 @@ def _test_formatted_string(fields: List[Dict], trade_description: str):
         for llm in llms:
             for _ in range(run_count):
                 result = llm.completion(prompt)
+                json_result = extract_json_from_quotes(result)
+                if json_result is None:
+                    json_result = "ERROR: can not extract json"
                 guard = RegressionGuard(channel=llm.llm_id)
-                guard.write(result)
+                guard.write(json_result)
 
     guard.verify_all()
 
