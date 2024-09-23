@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+import csv
 import os
 from dataclasses import dataclass
 from typing import Any
@@ -23,6 +23,9 @@ from cl.runtime.testing.stack_util import StackUtil
 
 _supported_extensions = ["csv"]
 """The list of supported output file extensions (formats)."""
+
+_csv_headers = ["Query", "Completion"]
+"""CSV column headers."""
 
 
 def _error_extension_not_supported(ext: str) -> Any:
@@ -38,7 +41,7 @@ class CompletionCache:
     Cache LLM completions for reducing AI cost (disable when testing the LLM itself)
 
     Notes:
-        - After each model call, input and output are recorded in 'completions.channel.csv'
+        - After each model call, input and output are recorded in 'channel.completions.csv'
         - The channel may be based on llm_id or include some of all of the LLM settings or their hash
         - If exactly the same input is subsequently found in the completions file, it is used without calling the LLM
         - To record a new completions file, delete the existing one
@@ -50,8 +53,8 @@ class CompletionCache:
     __delegate_to: Self | None
     """Delegate all function calls to this completion cache if set."""
 
-    output_path: str  # TODO: Make private?
-    """Output path including directory and llm_id."""
+    output_path: str
+    """Output file path including directory and channel."""
 
     ext: str
     """Output file extension (format), defaults to '.csv'"""
@@ -88,16 +91,15 @@ class CompletionCache:
             ext = "csv"
 
         # Add channel to base path if specified
-        output_path = f"{base_path}.{channel}"
+        output_path = f"{base_path}.{channel}.completions.{ext}"
 
-        # Check if completion cache already exists for the same combination of output_path and ext
-        dict_key = f"{output_path}.{ext}"
-        if (existing_dict := self.__cache_dict.get(dict_key, None)) is not None:
+        # Check if completion cache already exists for the same output_path
+        if (existing_dict := self.__cache_dict.get(output_path, None)) is not None:
             # Delegate to the existing guard if found, do not initialize other fields
             self.__delegate_to = existing_dict
         else:
             # Otherwise add self to dictionary
-            self.__cache_dict[dict_key] = self
+            self.__cache_dict[output_path] = self
 
             # Initialize fields
             self.__delegate_to = None
@@ -108,18 +110,24 @@ class CompletionCache:
     def write(self, query: str, completion: str) -> None:
         """Add new completion, will take precedence for lookup but both will be in the completions file."""
 
-        # Delegate to a previously created guard with the same combination of output_path and ext if exists
+        # Delegate to a previously created guard with the same output_path if exists
         if self.__delegate_to is not None:
             self.__delegate_to.write(query, completion)
             return
 
+        is_new = not os.path.exists(self.output_path)
         if self.ext == "csv":
-            with open(self._get_completions_path(), "a") as file:
-                formatted_query = self._format_csv(query)
-                formatted_completion = self._format_csv(completion)
+            with open(self.output_path, mode='a', newline='', encoding='utf-8') as file:
+                writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL, escapechar='\\')
 
-                # Write and flush immediately to ensure all of the output is on disk in the event of exception
-                file.write(f"{formatted_query},{formatted_completion}\n")
+                if is_new:
+                    # Write the headers if the file is new
+                    writer.writerow(_csv_headers)
+
+                # Write the new completion without checking if one already exists
+                writer.writerow([query, completion])
+
+                # Flush immediately to ensure all of the output is on disk in the event of exception
                 file.flush()
 
                 # Add to dictionary
@@ -135,18 +143,31 @@ class CompletionCache:
         if self.__delegate_to is not None:
             return self.lookup(query)
 
-        cache_path = self._get_completions_path()
-        if not os.path.exists(cache_path):
-            # Completion cache file does not exist, return
+        if os.path.exists(self.output_path):
+            with open(self.output_path, mode='r', newline='', encoding='utf-8') as file:
+                reader = csv.reader(file, delimiter=',', quotechar='"', escapechar='\\')
+
+                # Read and validate the headers
+                headers_in_file = next(reader, None)
+                if headers_in_file != _csv_headers:
+                    max_len = 20
+                    headers_in_file = [h if len(max_len) < 10 else f"{h[:max_len]}..." for h in headers_in_file]
+                    headers_in_file_str = ", ".join(headers_in_file)
+                    expected_headers_str = ", ".join(_csv_headers)
+                    raise ValueError(f"Expected column headers in completions cache are {expected_headers_str}. "
+                                     f"Actual headers: {headers_in_file_str}.")
+
+                # Read the data rows
+                row_idx = 0
+                for row in reader:
+                    row_idx = row_idx + 1
+                    if len(row) == 2:
+                        query, completion = row
+                        self.__completion_dict[query] = completion
+                    else:
+                        raise RuntimeError(f"More than two columns in row {row_idx} of completions "
+                                           f"cache '{self.output_path}'.")
+
+        else:
+            # Completion cache file does not exist, return None
             return None
-
-        with open(cache_path, "r") as received_file:
-            received_lines = received_file.readlines()
-
-    def _format_csv(self, value: str) -> str:
-        """Format text for CSV file (escape commas, etc.)."""
-        return value
-
-    def _get_completions_path(self) -> str:
-        """The output is written to 'channel.completions.ext' in 'output_path'."""
-        return f"{self.output_path}.completions.{self.ext}"

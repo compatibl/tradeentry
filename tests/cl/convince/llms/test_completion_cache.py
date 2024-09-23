@@ -22,7 +22,7 @@ def perform_testing(base_path: str, full: bool = False):
     """Stub test function without a class."""
 
     base_name = base_path.rsplit(".", 1)[-1]
-    channels = ["with_channel.1", "with_channel.1", "with_channel.2"]
+    channels = ["channel.1", "channel.1", "channel.2"]
     caches = [CompletionCache(channel=channel) for channel in channels]
     caches[0].write("a", "b")
     caches[1].write("c", "d")
