@@ -52,7 +52,7 @@ def _test_recall(text: str):
                 guard = RegressionGuard(channel=llm.llm_id)
                 guard.write(f"{result},{is_exact_match_yn},{is_trimmed_match_yn}")
 
-        # TODO: guard.verify_all()
+        guard.verify_all()
 
 
 def test_known_phrase():
