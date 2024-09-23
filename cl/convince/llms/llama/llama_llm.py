@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 from abc import ABC
 from dataclasses import dataclass
 from cl.convince.llms.llm import Llm
@@ -19,7 +20,6 @@ from cl.convince.llms.llm import Llm
 @dataclass(slots=True, kw_only=True)
 class LlamaLlm(Llm, ABC):
     """Abstract base to cloud provider implementations of the LLAMA API, includes settings shared by all providers."""
-
 
     @classmethod
     def create_prompt_from_messages_v2(cls, messages: list[dict]) -> str:

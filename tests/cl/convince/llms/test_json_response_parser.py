@@ -42,7 +42,7 @@ def sanitize_unescaped_quotes_and_load_json_str(s: str, strict: bool = False) ->
 
             # find the previous " before e.pos
             prev_quote_index = js_str.rfind('"', 0, curr_pos)
-            if prev_quote_index > 1 and js_str[prev_quote_index - 1] == '\\':
+            if prev_quote_index > 1 and js_str[prev_quote_index - 1] == "\\":
                 # if the previous " is escaped, ignore it
                 prev_pos = curr_pos
                 continue
@@ -68,10 +68,10 @@ def extract_json_content(json_string: str) -> str:
 
         if first_square_bracket != -1 and last_square_bracket != -1:
             # Extract the substring between the square brackets, it is an array
-            return json_string[first_square_bracket: last_square_bracket + 1]
+            return json_string[first_square_bracket : last_square_bracket + 1]
         elif first_square_bracket == -1 and last_square_bracket == -1:
             # Extract the substring between the curly brackets, it is an object
-            return json_string[first_curly_bracket: last_curly_bracket + 1]
+            return json_string[first_curly_bracket : last_curly_bracket + 1]
 
     # Return original string in case one or both opened and closed curly brackets were not found
     return json_string
@@ -84,7 +84,7 @@ def fix_json_format(json_string: str) -> str:
     # in particular, '''json<actual_json>''' wrap.
     fixed_json_string = extract_json_content(json_string)
 
-    temp_str = '__TEMP__'
+    temp_str = "__TEMP__"
 
     # Fix apostrophes and single quotes
     # This regex patterns uses positive lookbehind to ensure that the apostrophe is preceded by a word character
@@ -99,29 +99,29 @@ def fix_json_format(json_string: str) -> str:
     fixed_json_string = re.sub(r"(?<=s)\\'(?=\s)", temp_str, fixed_json_string)  # Its\'_  (_ is space)
 
     # Replace all remaining single quotes with double quotes
-    fixed_json_string = fixed_json_string.replace("\'", "\"")
+    fixed_json_string = fixed_json_string.replace("'", '"')
 
     # Replace {temp_str} back to single quotes
-    fixed_json_string = fixed_json_string.replace(temp_str, "\'")
+    fixed_json_string = fixed_json_string.replace(temp_str, "'")
 
     # Fix boolean and None values
-    fixed_json_string = fixed_json_string.replace('True', 'true')
-    fixed_json_string = fixed_json_string.replace('False', 'false')
-    fixed_json_string = fixed_json_string.replace('"None"', 'None')
+    fixed_json_string = fixed_json_string.replace("True", "true")
+    fixed_json_string = fixed_json_string.replace("False", "false")
+    fixed_json_string = fixed_json_string.replace('"None"', "None")
     # Use the following regex to replace None with "None".
     # `fixed_json_string.replace('"None"', 'None')` won't work,
     # because LLM output value may contain something like: "None of the above"
     fixed_json_string = re.sub(r'(?<="[^"]+":\s*)None', '"None"', fixed_json_string)
 
     # Fix trailing comma before closing brace
-    fixed_json_string = re.sub(r',\s*\}', ' }', fixed_json_string)
+    fixed_json_string = re.sub(r",\s*\}", " }", fixed_json_string)
 
     # Fix unnecessary escaped underscores
-    fixed_json_string = fixed_json_string.replace('\\_', '_')
+    fixed_json_string = fixed_json_string.replace("\\_", "_")
 
-    fixed_json_string = fixed_json_string.replace('\\n', '\n')
+    fixed_json_string = fixed_json_string.replace("\\n", "\n")
 
-    fixed_json_string = fixed_json_string.replace('\\"', '\'')
+    fixed_json_string = fixed_json_string.replace('\\"', "'")
 
     return fixed_json_string
 
@@ -155,8 +155,3 @@ def test_fix_llm_response():
         print(llm_response_dict)
     except json.JSONDecodeError as e:
         print(f"JSON decode error: {e}")
-
-
-
-
-

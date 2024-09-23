@@ -96,8 +96,8 @@ class CompletionCache:
 
         is_new = not os.path.exists(self.output_path)
         if self.ext == "csv":
-            with open(self.output_path, mode='a', newline='', encoding='utf-8') as file:
-                writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL, escapechar='\\')
+            with open(self.output_path, mode="a", newline="", encoding="utf-8") as file:
+                writer = csv.writer(file, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL, escapechar="\\")
 
                 if is_new:
                     # Write the headers if the file is new
@@ -124,8 +124,8 @@ class CompletionCache:
         """Load cache file."""
         if os.path.exists(self.output_path):
             # Populate the dictionary from file if exists but not yet loaded
-            with open(self.output_path, mode='r', newline='', encoding='utf-8') as file:
-                reader = csv.reader(file, delimiter=',', quotechar='"', escapechar='\\')
+            with open(self.output_path, mode="r", newline="", encoding="utf-8") as file:
+                reader = csv.reader(file, delimiter=",", quotechar='"', escapechar="\\")
 
                 # Read and validate the headers
                 headers_in_file = next(reader, None)
@@ -134,8 +134,10 @@ class CompletionCache:
                     headers_in_file = [h if len(max_len) < 10 else f"{h[:max_len]}..." for h in headers_in_file]
                     headers_in_file_str = ", ".join(headers_in_file)
                     expected_headers_str = ", ".join(_csv_headers)
-                    raise ValueError(f"Expected column headers in completions cache are {expected_headers_str}. "
-                                     f"Actual headers: {headers_in_file_str}.")
+                    raise ValueError(
+                        f"Expected column headers in completions cache are {expected_headers_str}. "
+                        f"Actual headers: {headers_in_file_str}."
+                    )
 
                 # Read cached completions
                 row_idx = 0
@@ -145,5 +147,6 @@ class CompletionCache:
                         query, completion = row
                         self.__completion_dict[query] = completion
                     else:
-                        raise RuntimeError(f"More than two columns in row {row_idx} of completions "
-                                           f"cache '{self.output_path}'.")
+                        raise RuntimeError(
+                            f"More than two columns in row {row_idx} of completions " f"cache '{self.output_path}'."
+                        )
