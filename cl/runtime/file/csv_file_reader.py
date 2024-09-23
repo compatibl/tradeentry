@@ -20,6 +20,9 @@ from typing import Type
 from cl.runtime import Context
 from cl.runtime.file.reader import Reader
 from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
+
+serializer = FlatDictSerializer()
 
 
 @dataclass(slots=True, kw_only=True)
@@ -49,4 +52,19 @@ class CsvFileReader(Reader):
 
     def _deserialize_row(self, row_dict: Dict[str, Any]) -> RecordProtocol:
         """Deserialize row into a record."""
-        return self.record_type(**row_dict)
+
+        # return self.record_type(**row_dict)
+        prepared_row = {}
+        for k, v in row_dict.items():
+
+            # Try to convert value from csv to int or float
+            try:
+                prepared_row[k] = int(v)
+            except ValueError:
+                try:
+                    prepared_row[k] = float(v)
+                except ValueError:
+                    prepared_row[k] = v
+
+        prepared_row["_type"] = self.record_type.__name__
+        return serializer.deserialize_data(prepared_row)

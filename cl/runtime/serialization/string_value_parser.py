@@ -123,8 +123,6 @@ class StringValueParser:
             return StringValueCustomType.uuid
         elif value.__class__.__name__ == "bytes":
             return StringValueCustomType.bytes
-        elif hasattr(value, "__iter__"):
-            return StringValueCustomType.list
         elif is_key(value):
             return StringValueCustomType.key
         elif hasattr(value, "__slots__"):
@@ -133,3 +131,5 @@ class StringValueParser:
             return StringValueCustomType.dict
         elif isinstance(value, Enum):
             return StringValueCustomType.enum
+        elif hasattr(value, "__iter__"):
+            return StringValueCustomType.list
