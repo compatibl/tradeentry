@@ -29,3 +29,6 @@ test:
 
   # Documented in LogSettings class
   runtime_log_filename_prefix: tests
+
+  # Documented in PlotlySettings class
+  runtime_plotly_show_limit: 0
