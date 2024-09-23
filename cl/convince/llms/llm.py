@@ -15,6 +15,8 @@
 from abc import ABC
 from abc import abstractmethod
 from dataclasses import dataclass
+
+from cl.convince.llms.completion_cache import CompletionCache
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.convince.llms.llm_key import LlmKey
 
@@ -23,9 +25,32 @@ from cl.convince.llms.llm_key import LlmKey
 class Llm(LlmKey, RecordMixin[LlmKey], ABC):
     """Provides an API for single query and chat completion."""
 
-    @abstractmethod
-    def completion(self, query: str) -> str:
-        """Text-in, text-out single query completion without model-specific tags."""
+    _completion_cache: CompletionCache | None = None
+    """Completion cache is used to return cached LLM responses."""
 
     def get_key(self) -> LlmKey:
         return LlmKey(llm_id=self.llm_id)
+
+    def completion(self, query: str) -> str:
+        """Text-in, text-out single query completion without model-specific tags (uses response caching)."""
+
+        # Create completion cache if does not exist
+        if self._completion_cache is None:
+            self._completion_cache = CompletionCache(channel=self.llm_id)
+
+        # Try to find in completion cache
+        if (result := self._completion_cache.lookup(query)) is not None:
+            # Return cached value if found
+            return result
+        else:
+            # Otherwise make cloud provider call
+            result = self.uncached_completion(query)
+            # Save the result in cache before returning
+            self._completion_cache.write(query, result)
+            return result
+
+    @abstractmethod
+    def uncached_completion(self, query: str) -> str:
+        """Perform completion without CompletionCache lookup, call completion instead."""
+
+

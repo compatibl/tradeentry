@@ -30,7 +30,8 @@ class FireworksLlamaLlm(LlamaLlm):
     max_tokens: int = 4096
     """Maximum number of tokens the model will generate in response to the query."""
 
-    def completion(self, query: str) -> str:
+    def uncached_completion(self, query: str) -> str:
+        """Perform completion without CompletionCache lookup, call completion instead."""
 
         model_name = self.model_name if self.model_name is not None else self.llm_id
         prompt = f"""<|begin_of_text|><|start_header_id|>user<|end_header_id|>

@@ -32,7 +32,8 @@ class ClaudeLlm(Llm):
     _client: ClassVar[Anthropic] = None
     """Anthropic client instance."""
 
-    def completion(self, query: str) -> str:
+    def uncached_completion(self, query: str) -> str:
+        """Perform completion without CompletionCache lookup, call completion instead."""
 
         model_name = self.model_name if self.model_name is not None else self.llm_id
         messages = [{"role": "user", "content": query}]
