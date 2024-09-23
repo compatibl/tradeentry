@@ -22,10 +22,10 @@ from cl.convince.llms.gemini.gemini_llm import GeminiLlm
 from cl.convince.llms.gpt.gpt_llm import GptLlm
 
 llms = [
-    ClaudeLlm(llm_id="claude-3-haiku-20240307"),
+    ClaudeLlm(llm_id="claude-3-opus-20240229"),
     FireworksLlamaLlm(llm_id="llama-v3-70b-instruct"),
-    GeminiLlm(llm_id="gemini-1.5-flash"),
-    GptLlm(llm_id="gpt-4o-mini"),
+    # TODO: API error, investigate GeminiLlm(llm_id="gemini-1.5-pro"),
+    GptLlm(llm_id="gpt-4o"),
 ]
 
 PROMPT_TEMPLATE = """
