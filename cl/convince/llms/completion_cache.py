@@ -47,12 +47,6 @@ class CompletionCache:
         - To record a new completions file, delete the existing one
     """
 
-    __cache_dict: ClassVar[Dict[str, Self]] = {}  # TODO: Set using ContextVars
-    """Dictionary of the existing CompletionCache objects indexed by '{output_dir}.{ext}'."""
-
-    __delegate_to: Self | None
-    """Delegate all function calls to this completion cache if set."""
-
     output_path: str
     """Output file path including directory and channel."""
 
@@ -90,33 +84,16 @@ class CompletionCache:
             # Use txt if not specified
             ext = "csv"
 
-        # Add channel to base path if specified
-        output_path = f"{base_path}.{channel}.completions.{ext}"
+        # Add channel to base path to get output path
+        self.output_path = f"{base_path}.{channel}.completions.{ext}"
+        self.ext = ext
+        self.__completion_dict = {}
 
-        # Check if completion cache already exists for the same output_path
-        if (existing_dict := self.__cache_dict.get(output_path, None)) is not None:
-            # Delegate to the existing guard if found, do not initialize other fields
-            self.__delegate_to = existing_dict
-        else:
-            # Otherwise add self to dictionary
-            self.__cache_dict[output_path] = self
-
-            # Initialize fields
-            self.__delegate_to = None
-            self.output_path = output_path
-            self.ext = ext
-            self.__completion_dict = {}
-
-            # Load cache file from disk
-            self.load_cache_file()
+        # Load cache file from disk
+        self.load_cache_file()
 
     def write(self, query: str, completion: str) -> None:
         """Add new completion, will take precedence for lookup but both will be in the completions file."""
-
-        # Delegate to a previously created guard with the same output_path if exists
-        if self.__delegate_to is not None:
-            self.__delegate_to.write(query, completion)
-            return
 
         is_new = not os.path.exists(self.output_path)
         if self.ext == "csv":
@@ -141,12 +118,6 @@ class CompletionCache:
 
     def lookup(self, query: str) -> str | None:
         """Return completion for the specified query if found, or None otherwise."""
-
-        # Delegate to a previously created guard with the same channel if exists
-        if self.__delegate_to is not None:
-            return self.lookup(query)
-
-        # Lookup in dictionary
         result = self.__completion_dict.get(query, None)
         return result
 

@@ -31,19 +31,40 @@ def perform_testing(base_path: str, full: bool = False):
         if os.path.exists(file_path):
             os.remove(file_path)
 
-    # Perform testing
+    # Perform testing, two of the cache files are duplicates
     caches = [CompletionCache(channel=channel) for channel in channels]
+
+    # Check that none are found befoe writing
     assert all(cache.lookup("a") is None for cache in caches)
+
+    # Write a to all files
     [cache.write("a", "b") for cache in caches]
-    x = [cache.lookup("a") == "b" for cache in caches]
-    # x = caches[0].lookup("a")
-    pass
+
+    # Check that all is found in all
+    assert all(cache.lookup("a") == "b" for cache in caches)
+
+    # Check that e is found in none
+    assert all(cache.lookup("e") is None for cache in caches)
+
+    # Write c to the first file only
+    caches[0].write("c", "d")
+
+    # Check that c is found only in the first one before reload (because the cache file is not read during the run)
+    assert caches[0].lookup("c") == "d"
+    assert caches[1].lookup("c") is None
+    assert caches[2].lookup("c") is None
+
+    # Reload and confirm it is visible to the first two now
+    caches = [CompletionCache(channel=channel) for channel in channels]
+    assert caches[0].lookup("c") == "d"
+    assert caches[1].lookup("c") == "d"
+    assert caches[2].lookup("c") is None
 
 
 def test_function():
     """Stub test function without a class."""
 
-    # Test calling regression guard from a function
+    # Test calling from a function
     perform_testing(f"{module_path}.test_function", full=True)
 
 
@@ -53,7 +74,7 @@ class TestClass:
     def test_method(self):
         """Stub test method inside pytest class."""
 
-        # Test calling regression guard from a method
+        # Test calling from a method
         perform_testing(f"{module_path}.test_class.test_method")
 
 
