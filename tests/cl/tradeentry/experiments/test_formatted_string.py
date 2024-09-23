@@ -110,7 +110,8 @@ def _test_formatted_string(fields: List[Dict], trade_description: str):
                 else:
                     guard_checker.write("ERROR: No input to check")
 
-    guard.verify_all()
+    RegressionGuard.verify_all()
+
 
 def test_vanilla_swap():
     numbered_vanilla_swap = add_line_numbers(stub_vanilla_swap_entry)
