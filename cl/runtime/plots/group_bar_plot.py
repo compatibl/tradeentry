@@ -14,13 +14,15 @@
 
 from dataclasses import dataclass
 from typing import List
-import plotly.graph_objects as go
+
+import numpy as np
+from matplotlib import pyplot as plt
+
 from cl.runtime import Context
-from cl.runtime.plots.bar_plot_style import BarPlotStyle
-from cl.runtime.plots.bar_plot_style_key import BarPlotStyleKey
+from cl.runtime.plots.group_bar_plot_style import GroupBarPlotStyle
+from cl.runtime.plots.group_bar_plot_style_key import GroupBarPlotStyleKey
 from cl.runtime.plots.plot import Plot
-from cl.runtime.plots.plotly_util import PlotlyUtil
-from cl.runtime.records.dataclasses_extensions import field, missing
+from cl.runtime.records.dataclasses_extensions import field
 
 _layout_background = {
     "paper_bgcolor": "rgba(255,255,255,1)",
@@ -32,71 +34,62 @@ _layout_background = {
 class GroupBarPlot(Plot):
     """Base class for the 2D bar plot."""
 
-    title: str = missing()
+    title: str = field()
     """Plot title."""
 
-    bar_labels: List[str] = missing()
+    bar_labels: List[str] = field()
     """List of bar labels."""
 
-    group_labels: List[str] = missing()
+    group_labels: List[str] = field()
     """List of group labels."""
 
-    values: List[float] = missing()
+    values: List[float] = field()
     """List of values in the same order as bar and group labels."""
 
-    style: BarPlotStyleKey = field(default_factory=lambda: BarPlotStyle())
+    style: GroupBarPlotStyleKey = field(default_factory=lambda: GroupBarPlotStyle())
     """Color and layout options."""
 
-    def create_figure(self) -> go.Figure:
+    def create_figure(self) -> plt.Figure:
+
         # Load style object
-        style = Context.current().load_one(BarPlotStyle, self.style)
+        style = Context.current().load_one(GroupBarPlotStyle, self.style)
 
-        bars = go.Bar(x=self.bar_labels, y=self.values)
+        fig = plt.figure()
+        axes = fig.add_subplot()
 
-        # Combine both heatmaps into one figure
-        fig = go.Figure(data=bars)
+        x_ticks = np.arange(len(self.group_labels))
 
-        # Set white background
-        fig.update_layout(_layout_background)
+        if len(self.bar_labels) % 2 != 0:
+            bar_shifts_positive = list(range(1, len(self.bar_labels) // 2 + 1))
+        else:
+            bar_shifts_positive = [x / 2 for x in range(1, len(self.bar_labels) // 2 + 1)]
 
-        # Custom ticks if provided
-        if style.ticks is not None:
-            y_min = min(style.ticks)
-            y_max = max(style.ticks)
+        bar_shifts = [-x for x in reversed(bar_shifts_positive)]
 
-            for value in [y_min, y_max]:
-                fig.add_hline(y=value, opacity=0, showlegend=False)
+        if len(self.bar_labels) % 2 != 0:
+            bar_shifts += [0]
 
-            fig.update_layout(yaxis=dict(tickvals=style.ticks))
+        bar_shifts += bar_shifts_positive
 
-        # add custom xaxis title
-        fig.add_annotation(
-            dict(
-                font=dict(color=style.axis_label_font_color, size=style.axis_label_font_size),
-                x=0.5,
-                y=-0.15,
-                showarrow=False,
-                text=style.x_label,
-                xref="paper",
-                yref="paper",
-            )
-        )
+        space = 1 / (len(self.bar_labels) + 1)
 
-        # add custom yaxis title
-        fig.add_annotation(
-            dict(
-                font=dict(color=style.axis_label_font_color, size=style.axis_label_font_size),
-                x=-0.35,
-                y=0.5,
-                showarrow=False,
-                text=style.y_label,
-                textangle=-90,
-                xref="paper",
-                yref="paper",
-            )
-        )
+        for i, (bar_label, bar_shift) in enumerate(zip(self.bar_labels, bar_shifts)):
+            data = self.values[i * len(self.group_labels): (i + 1) * len(self.group_labels)]
+            axes.bar(x_ticks + space * bar_shift, data, space, label=bar_label)
 
-        # Show if show_limit is not yet reached (configure via settings, default is zero)
-        PlotlyUtil.show_if_below_limit(fig)
+        axes.set_xticks(x_ticks, self.group_labels)
+
+        if style.y_ticks is not None:
+            axes.set_yticks(style.y_ticks)
+
+        if style.x_label is not None:
+            axes.set_xlabel(style.x_label)
+
+        if style.y_label is not None:
+            axes.set_ylabel(style.y_label)
+
+        axes.set_title(self.title)
+
+        axes.legend()
 
         return fig
