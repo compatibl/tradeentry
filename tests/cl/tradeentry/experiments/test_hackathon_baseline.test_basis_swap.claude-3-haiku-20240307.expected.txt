@@ -5,13 +5,13 @@
   "PayOrReceiveFixed": "ReceiveFixed",
   "FloatingSpreadBp": 70,
   "FloatingRateMultiplier": 1,
+  "Underlying": "3M Term SOFR",
+  "Underlying2": "12M Term SOFR",
   "FloatingLegPaymentFrequency": "Quarterly",
   "FixedLegPaymentFrequency": "Annual",
   "Notional": 10000000,
-  "FloatingLegNotional": 10000000,
-  "FixedLegNotional": 10000000,
   "Currency": "USD",
-  "FloatingLegCurrency": "USD",
   "FixedLegCurrency": "USD",
+  "FloatingLegCurrency": "USD",
   "ResetType": "InArrears"
 }

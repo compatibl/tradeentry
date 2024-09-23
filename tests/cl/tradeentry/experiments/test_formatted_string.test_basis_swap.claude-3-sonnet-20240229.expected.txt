@@ -1,57 +1,23 @@
-Here is the JSON output with the requested fields extracted from the trade entry description:
+Here is the JSON output with the fields and their corresponding values extracted from the trade entry description:
 
 ```json
-'''
-{
-    "FloatLegCurrency": [
-        {
-            "data": "USD",
-            "formatted_row": "Notional: {FloatLegCurrency} 10,000,000.00"
-        }
-    ],
-    "FloatLegIndex": [
-        {
-            "data": "3M Term SOFR",
-            "formatted_row": "Client pays {FloatLegIndex} + 70bps (act/360, quarterly)"
-        }
-    ],
-    "FloatLegSpread": [
-        {
-            "data": "70",
-            "formatted_row": "Client pays 3M Term SOFR + {FloatLegSpread}bps (act/360, quarterly)"
-        }
-    ],
-    "FloatLegFrequency": [
-        {
-            "data": "quarterly",
-            "formatted_row": "Client pays 3M Term SOFR + 70bps (act/360, {FloatLegFrequency})"
-        }
-    ],
-    "FloatLegDaycountBasis": [
-        {
-            "data": "act/360",
-            "formatted_row": "Client pays 3M Term SOFR + 70bps ({FloatLegDaycountBasis}, quarterly)"
-        }
-    ],
-    "FixedLegCurrency": "",
-    "FixedLegFixedRate": "",
-    "FixedLegFrequency": "",
-    "FixedLegDaycountBasis": "",
-    "StartDate": [
-        {
-            "data": "10 November 2009",
-            "formatted_row": "Start date: {StartDate}"
-        }
-    ],
-    "NotionalResetDate": "",
-    "NotionalAmount": [
-        {
-            "data": "10,000,000.00",
-            "formatted_row": "Notional: USD {NotionalAmount}"
-        }
-    ]
-}
-'''
+'{"FloatLegCurrency": {"data": "USD", "formatted_row": "Notional: {FloatLegCurrency} 10,000,000.00"},
+  "FloatLegIndex": [{"data": "3M Term SOFR", "formatted_row": "Client pays {FloatLegIndex} + 70bps (act/360, quarterly)"},
+                    {"data": "12M Term SOFR", "formatted_row": "Client receives {FloatLegIndex} (act/360, annual)"}],
+  "FloatLegSpread": {"data": "70", "formatted_row": "Client pays 3M Term SOFR + {FloatLegSpread}bps (act/360, quarterly)"},
+  "FloatLegFrequency": [{"data": "quarterly", "formatted_row": "Client pays 3M Term SOFR + 70bps (act/360, {FloatLegFrequency})"},
+                        {"data": "annual", "formatted_row": "Client receives 12M Term SOFR (act/360, {FloatLegFrequency})"}],
+  "FloatLegDaycountBasis": [{"data": "act/360", "formatted_row": "Client pays 3M Term SOFR + 70bps ({FloatLegDaycountBasis}, quarterly)"},
+                             {"data": "act/360", "formatted_row": "Client receives 12M Term SOFR ({FloatLegDaycountBasis}, annual)"}],
+  "FixedLegCurrency": "",
+  "FixedLegFixedRate": "",
+  "FixedLegFrequency": "",
+  "FixedLegDaycountBasis": "",
+  "StartDate": {"data": "10 November 2009", "formatted_row": "Start date: {StartDate}"},
+  "NotionalResetDate": [],
+  "NotionalAmount": [{"data": "10,000,000.00", "formatted_row": "Notional: USD {NotionalAmount}"}]}'
 ```
 
-Note that the FixedLegCurrency, FixedLegFixedRate, FixedLegFrequency, FixedLegDaycountBasis, and NotionalResetDate fields have empty strings because there is no relevant information for them in the given trade entry description.
+Note:
+- `FloatLegIndex`, `FloatLegFrequency`, and `FloatLegDaycountBasis` have multiple occurrences, so they are returned as lists.
+- `FixedLegCurrency`, `FixedLegFixedRate`, `FixedLegFrequency`, `FixedLegDaycountBasis`, and `NotionalResetDate` have no relevant information in the trade entry, so they are returned as empty strings/lists.

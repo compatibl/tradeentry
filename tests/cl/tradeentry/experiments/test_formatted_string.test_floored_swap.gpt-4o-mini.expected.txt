@@ -10,7 +10,7 @@
     },
     "FloatLegSpread": {
         "data": "",
-        "formatted_row": "4: We pay: 6M USD Term SOFR (floating), semi-annual, act/360"
+        "formatted_row": ""
     },
     "FloatLegFrequency": {
         "data": "semi-annual",
@@ -43,7 +43,7 @@
     "NotionalResetDate": [],
     "NotionalAmount": [
         {
-            "data": 1,
+            "data": 1.0,
             "formatted_row": "3: Notional: {NotionalAmount}bn"
         }
     ]

@@ -6,9 +6,13 @@
   "PayOrReceiveFixed": "ReceiveFixed",
   "FixedRatePercent": 3.45,
   "Underlying": "6M USD Term SOFR",
-  "FloatingLegPaymentFrequency": "Semiannual",
+  "FloatingSpreadBp": 0,
   "FixedLegPaymentFrequency": "Semiannual",
-  "Notional": 1000000000,
-  "Currency": "USD"
+  "FloatingLegPaymentFrequency": "Semiannual",
+  "FixedLegNotional": 1000000000,
+  "FloatingLegNotional": 1000000000,
+  "FixedLegCurrency": "USD",
+  "FloatingLegCurrency": "USD",
+  "ResetType": "InArrears"
 }
 ```

@@ -1,144 +1,129 @@
-Here is the JSON dictionary with the fields and their corresponding values extracted from the trade entry description:
+Here is the JSON dictionary with the requested fields:
 
 '''
 {
-    "FloatLegCurrency": [
-        {
-            "data": "USD",
-            "formatted_row": "Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360"
-        }
-    ],
-    "FloatLegIndex": [
-        {
-            "data": "Term SOFR",
-            "formatted_row": "Party A pays: 6M {FloatLegIndex} (floating), semi-annual, act/360"
-        }
-    ],
-    "FloatLegSpread": [],
-    "FloatLegFrequency": [
-        {
-            "data": "semi-annual",
-            "formatted_row": "Party A pays: 6M USD Term SOFR (floating), {FloatLegFrequency}, act/360"
-        }
-    ],
-    "FloatLegDaycountBasis": [
-        {
-            "data": "act/360",
-            "formatted_row": "Party A pays: 6M USD Term SOFR (floating), semi-annual, {FloatLegDaycountBasis}"
-        }
-    ],
-    "FixedLegCurrency": [
-        {
-            "data": "USD",
-            "formatted_row": "Party A receives: {FixedLegCurrency} fixed 3.20%, semi-annual, act/360"
-        }
-    ],
-    "FixedLegFixedRate": [
-        {
-            "data": "3.20",
-            "formatted_row": "Party A receives: USD fixed {FixedLegFixedRate}%, semi-annual, act/360"
-        }
-    ],
-    "FixedLegFrequency": [
-        {
-            "data": "semi-annual",
-            "formatted_row": "Party A receives: USD fixed 3.20%, {FixedLegFrequency}, act/360"
-        }
-    ],
-    "FixedLegDaycountBasis": [
-        {
-            "data": "act/360",
-            "formatted_row": "Party A receives: USD fixed 3.20%, semi-annual, {FixedLegDaycountBasis}"
-        }
-    ],
-    "StartDate": [
-        {
-            "data": "10 November 2009",
-            "formatted_row": "{StartDate}"
-        }
-    ],
+    "FloatLegCurrency": {
+        "data": "USD",
+        "formatted_row": "3: Party A pays: 6M {FloatLegCurrency} Term SOFR (floating), semi-annual, act/360"
+    },
+    "FloatLegIndex": {
+        "data": "SOFR",
+        "formatted_row": "3: Party A pays: 6M USD Term {FloatLegIndex} (floating), semi-annual, act/360"
+    },
+    "FloatLegSpread": {
+        "data": "",
+        "formatted_row": "3: Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360"
+    },
+    "FloatLegFrequency": {
+        "data": "semi-annual",
+        "formatted_row": "3: Party A pays: 6M USD Term SOFR (floating), {FloatLegFrequency}, act/360"
+    },
+    "FloatLegDaycountBasis": {
+        "data": "act/360",
+        "formatted_row": "3: Party A pays: 6M USD Term SOFR (floating), semi-annual, {FloatLegDaycountBasis}"
+    },
+    "FixedLegCurrency": {
+        "data": "USD",
+        "formatted_row": "4: Party A receives: {FixedLegCurrency} fixed 3.20%, semi-annual, act/360"
+    },
+    "FixedLegFixedRate": {
+        "data": "3.20",
+        "formatted_row": "4: Party A receives: USD fixed {FixedLegFixedRate}%, semi-annual, act/360"
+    },
+    "FixedLegFrequency": {
+        "data": "semi-annual",
+        "formatted_row": "4: Party A receives: USD fixed 3.20%, {FixedLegFrequency}, act/360"
+    },
+    "FixedLegDaycountBasis": {
+        "data": "act/360",
+        "formatted_row": "4: Party A receives: USD fixed 3.20%, semi-annual, {FixedLegDaycountBasis}"
+    },
+    "StartDate": {
+        "data": "10 November 2009",
+        "formatted_row": "6: Start: {StartDate}"
+    },
     "NotionalResetDate": [
         {
             "data": "10-Nov-09",
-            "formatted_row": "Effective From:\t\t{NotionalResetDate}"
+            "formatted_row": "11: Effective From:\t\t{NotionalResetDate}\t\t100,000,000.00"
         },
         {
             "data": "10-May-10",
-            "formatted_row": "Effective From:\t\t{NotionalResetDate}"
+            "formatted_row": "12: {NotionalResetDate}\t\t100,000,000.00"
         },
         {
             "data": "10-Nov-10",
-            "formatted_row": "Effective From:\t\t{NotionalResetDate}"
+            "formatted_row": "13: {NotionalResetDate}\t\t100,000,000.00"
         },
         {
             "data": "10-May-11",
-            "formatted_row": "Effective From:\t\t{NotionalResetDate}"
+            "formatted_row": "14: {NotionalResetDate}\t\t100,000,000.00"
         },
         {
             "data": "10-Nov-11",
-            "formatted_row": "Effective From:\t\t{NotionalResetDate}"
+            "formatted_row": "15: {NotionalResetDate}\t\t90,000,000.00"
         },
         {
             "data": "10-May-12",
-            "formatted_row": "Effective From:\t\t{NotionalResetDate}"
+            "formatted_row": "16: {NotionalResetDate}\t\t80,000,000.00"
         },
         {
             "data": "10-Nov-12",
-            "formatted_row": "Effective From:\t\t{NotionalResetDate}"
+            "formatted_row": "17: {NotionalResetDate}\t\t70,000,000.00"
         },
         {
             "data": "10-May-13",
-            "formatted_row": "Effective From:\t\t{NotionalResetDate}"
+            "formatted_row": "18: {NotionalResetDate}\t\t60,000,000.00"
         },
         {
             "data": "10-Nov-13",
-            "formatted_row": "Effective From:\t\t{NotionalResetDate}"
+            "formatted_row": "19: {NotionalResetDate}\t\t50,000,000.00"
         },
         {
             "data": "10-May-14",
-            "formatted_row": "Effective From:\t\t{NotionalResetDate}"
+            "formatted_row": "20: {NotionalResetDate}\t\t25,000,000.00"
         }
     ],
     "NotionalAmount": [
         {
             "data": "100,000,000.00",
-            "formatted_row": "Notional Amount: ({NotionalAmount})"
+            "formatted_row": "11: Effective From:\t\t10-Nov-09\t\t{NotionalAmount}"
         },
         {
             "data": "100,000,000.00",
-            "formatted_row": "Notional Amount: ({NotionalAmount})"
+            "formatted_row": "12: 10-May-10\t\t{NotionalAmount}"
         },
         {
             "data": "100,000,000.00",
-            "formatted_row": "Notional Amount: ({NotionalAmount})"
+            "formatted_row": "13: 10-Nov-10\t\t{NotionalAmount}" 
         },
         {
             "data": "100,000,000.00",
-            "formatted_row": "Notional Amount: ({NotionalAmount})"
+            "formatted_row": "14: 10-May-11\t\t{NotionalAmount}"
         },
         {
             "data": "90,000,000.00",
-            "formatted_row": "Notional Amount: ({NotionalAmount})"
+            "formatted_row": "15: 10-Nov-11\t\t{NotionalAmount}"
         },
         {
-            "data": "80,000,000.00",
-            "formatted_row": "Notional Amount: ({NotionalAmount})"
+            "data": "80,000,000.00", 
+            "formatted_row": "16: 10-May-12\t\t{NotionalAmount}"
         },
         {
             "data": "70,000,000.00",
-            "formatted_row": "Notional Amount: ({NotionalAmount})"
+            "formatted_row": "17: 10-Nov-12\t\t{NotionalAmount}"
         },
         {
             "data": "60,000,000.00",
-            "formatted_row": "Notional Amount: ({NotionalAmount})"
+            "formatted_row": "18: 10-May-13\t\t{NotionalAmount}"
         },
         {
             "data": "50,000,000.00",
-            "formatted_row": "Notional Amount: ({NotionalAmount})"
+            "formatted_row": "19: 10-Nov-13\t\t{NotionalAmount}"
         },
         {
             "data": "25,000,000.00",
-            "formatted_row": "Notional Amount: ({NotionalAmount})"
+            "formatted_row": "20: 10-May-14\t\t{NotionalAmount}"
         }
     ]
 }
