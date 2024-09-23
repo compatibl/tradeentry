@@ -32,7 +32,7 @@ from cl.runtime.schema.field_decl import primitive_types
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
 
-supported_extensions = ["txt"]
+_supported_extensions = ["txt"]
 """The list of supported output file extensions (formats)."""
 
 key_serializer = StringSerializer()
@@ -42,14 +42,14 @@ data_serializer = DictSerializer()
 """Serializer for records."""
 
 
-def error_channel_not_primitive_type() -> Any:
+def _error_channel_not_primitive_type() -> Any:
     raise RuntimeError("Output channel must be a primitive type or an iterable of primitive types.")
 
 
-def error_extension_not_supported(ext: str) -> Any:
+def _error_extension_not_supported(ext: str) -> Any:
     raise RuntimeError(
         f"Extension {ext} is not supported by RegressionGuard. "
-        f"Supported extensions: {', '.join(supported_extensions)}"
+        f"Supported extensions: {', '.join(_supported_extensions)}"
     )
 
 
@@ -92,7 +92,7 @@ class RegressionGuard:
         Initialize the regression guard, optionally specifying channel.
 
         Args:
-            ext: File extension without the dot prefix, defaults to 'txt'
+            ext: File extension (format) without the dot prefix, defaults to 'txt'
             channel: Dot-delimited string or an iterable of dot-delimited tokens added to the current channel
             test_function_pattern: Glob pattern to identify the test function or method in stack frame, defaults to 'test_*'
         """
@@ -105,10 +105,10 @@ class RegressionGuard:
             elif hasattr(channel, "__iter__"):
                 # TODO: Use specialized conversion for primitive types
                 channel = ".".join(
-                    [str(x) if isinstance(x, primitive_types) else error_channel_not_primitive_type() for x in channel]
+                    [str(x) if isinstance(x, primitive_types) else _error_channel_not_primitive_type() for x in channel]
                 )
             else:
-                error_channel_not_primitive_type()
+                _error_channel_not_primitive_type()
 
         # Find base path by examining call stack
         base_path = StackUtil.get_base_path(test_function_pattern=test_function_pattern)
@@ -122,8 +122,8 @@ class RegressionGuard:
         if ext is not None:
             # Remove dot prefix if specified
             ext = ext.removeprefix(".")
-            if ext not in supported_extensions:
-                error_extension_not_supported(ext)
+            if ext not in _supported_extensions:
+                _error_extension_not_supported(ext)
         else:
             # Use txt if not specified
             ext = "txt"
@@ -174,7 +174,7 @@ class RegressionGuard:
                 file.flush()
         else:
             # Should not be reached here because of a previous check in __init__
-            error_extension_not_supported(self.ext)
+            _error_extension_not_supported(self.ext)
 
     @classmethod
     def verify_all(cls, *, silent: bool = False) -> None:
