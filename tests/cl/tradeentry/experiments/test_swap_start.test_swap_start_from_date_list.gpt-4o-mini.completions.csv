@@ -1,5 +1,5 @@
-Query,Completion
-"We need to determine the accrual start date (the start date when the interest begins accruing, which may not be the same as payment date) of this trade or leg. Given the following text, reply with JSON that has the following keys only where value is true if we need to know this field in addition to the text to answer this question, and false if we do not need it. Keys: 'payment_frequency', 'floating_frequency', 'pays_in_arrears', 'currency', 'maturity_date'. Text: The first payment is on July 15","```json
+OrderedUuid,Timestamp,Query,Completion
+01921e59-6d52-7d23-8c1d-fec59fa4bb68,2024-09-23T10:07:10.162Z,"We need to determine the accrual start date (the start date when the interest begins accruing, which may not be the same as payment date) of this trade or leg. Given the following text, reply with JSON that has the following keys only where value is true if we need to know this field in addition to the text to answer this question, and false if we do not need it. Keys: 'payment_frequency', 'floating_frequency', 'pays_in_arrears', 'currency', 'maturity_date'. Text: The first payment is on July 15","```json
 {
   ""payment_frequency"": false,
   ""floating_frequency"": false,

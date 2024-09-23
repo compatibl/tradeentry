@@ -1,5 +1,5 @@
-Query,Completion
-"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+OrderedUuid,Timestamp,Query,Completion
+01921e58-94c1-79c2-a1fd-83d7f34327bf,2024-09-23T10:06:14.721Z,"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference the row where you find the information.
 
 Here is the input trade entry:
@@ -58,7 +58,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","```json
         ""row"": 6
     },
     ""FloatLegSpread"": {
-        ""data"": ""70"",
+        ""data"": ""0.70"",
         ""row"": 6
     },
     ""FloatLegFrequency"": {
@@ -74,7 +74,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","```json
         ""row"": 5
     },
     ""FixedLegFixedRate"": {
-        ""data"": ""12M Term SOFR"",
+        ""data"": ""0.00"",
         ""row"": 7
     },
     ""FixedLegFrequency"": {
@@ -98,7 +98,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","```json
     ]
 }
 ```"
-"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+01921e58-c38d-7322-aeb5-9bac0325c86f,2024-09-23T10:06:26.701Z,"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference the row where you find the information.
 
 Here is the input trade entry:
@@ -159,8 +159,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","```json
         ""row"": 4
     },
     ""FloatLegSpread"": {
-        ""data"": ""0.0"",
-        ""row"": 9
+        ""data"": """",
+        ""row"": 0
     },
     ""FloatLegFrequency"": {
         ""data"": ""semi-annual"",
@@ -193,13 +193,13 @@ Enclose json in triple single quotes and ensure that it is parsable.","```json
     ""NotionalResetDate"": [],
     ""NotionalAmount"": [
         {
-            ""data"": ""1000000000"",
+            ""data"": ""1"",
             ""row"": 3
         }
     ]
 }
 ```"
-"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+01921e59-23c5-72f0-99e3-56a390bd6716,2024-09-23T10:06:51.333Z,"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference the row where you find the information.
 
 Here is the input trade entry:
@@ -260,14 +260,16 @@ For each field you should do the following:
 
 Generate json dictionary with the field names as keys. The above algorith, describes how to create value for every field.
 
-Enclose json in triple single quotes and ensure that it is parsable.","```json
+Enclose json in triple single quotes and ensure that it is parsable.","Here is the requested JSON dictionary based on the provided trade entry:
+
+```json
 {
     ""FloatLegCurrency"": {
         ""data"": ""USD"",
         ""row"": 3
     },
     ""FloatLegIndex"": {
-        ""data"": ""6M USD Term SOFR"",
+        ""data"": ""SOFR"",
         ""row"": 3
     },
     ""FloatLegSpread"": {

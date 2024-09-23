@@ -1,5 +1,5 @@
-Query,Completion
-"
+OrderedUuid,Timestamp,Query,Completion
+01921e59-3743-7090-b8e4-80077731f78c,2024-09-23T10:06:56.323Z,"
 You are tasked with converting a trade definition example to a Python interpolated string format. 
 Your goal is to identify specific values in the input text that correspond to the provided field names
 and replace them with the appropriate field names in curly brackets.
@@ -47,7 +47,7 @@ and checking that the resulting string is exactly the same as the output you rec
 ","
 
 {pay_or_receive_fixed} {swap_length} {floating_index} swap at {fixed_rate}%"
-"
+01921e59-5251-7ce0-a0e1-58f80cddbdc5,2024-09-23T10:07:03.249Z,"
 You are tasked with converting a trade definition example to a Python interpolated string format. 
 Your goal is to identify specific values in the input text that correspond to the provided field names
 and replace them with the appropriate field names in curly brackets.

@@ -1,5 +1,5 @@
-Query,Completion
-"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+OrderedUuid,Timestamp,Query,Completion
+01921e56-dd54-72b2-9581-44441b0d32d2,2024-09-23T10:04:22.228Z,"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -92,14 +92,16 @@ Enclose json in triple single quotes and ensure that it is parsable.","```json
 ""formatted_row"": ""3: Start date: {StartDate}""
 },
 ""NotionalResetDate"": [],
-""NotionalAmount"": {
+""NotionalAmount"": [
+{
 ""data"": ""10,000,000.00"",
 ""formatted_row"": ""5: Notional: USD {NotionalAmount}""
 }
+]
 }
 '''
 ```"
-"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+01921e57-322d-7e23-bbbe-6b492561978a,2024-09-23T10:04:43.949Z,"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -203,7 +205,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","```json
 }
 '''
 ```"
-"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+01921e57-c5b0-7e12-abbc-9966ec5bdedd,2024-09-23T10:05:21.712Z,"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:

@@ -1,5 +1,5 @@
-Query,Completion
-"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+OrderedUuid,Timestamp,Query,Completion
+01921e58-783c-7ce2-b01a-dd346945dbf4,2024-09-23T10:06:07.420Z,"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference the row where you find the information.
 
 Here is the input trade entry:
@@ -47,7 +47,7 @@ For each field you should do the following:
 
 Generate json dictionary with the field names as keys. The above algorith, describes how to create value for every field.
 
-Enclose json in triple single quotes and ensure that it is parsable.","Here is the JSON dictionary with the fields and their corresponding data and row numbers:
+Enclose json in triple single quotes and ensure that it is parsable.","Here is the JSON dictionary with the requested fields and their corresponding values:
 
 ```json
 '''
@@ -97,18 +97,12 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
 '''
 ```
 
-Explanation:
-
-- FloatLegCurrency: The notional amount is in USD, found on row 5.
-- FloatLegIndex: There are two float leg indexes, 3M Term SOFR on row 6 and 12M Term SOFR on row 7.
-- FloatLegSpread: The spread is 70bps, found on row 6.
-- FloatLegFrequency: The float leg frequency is quarterly, found on row 6.
-- FloatLegDaycountBasis: The float leg day count basis is act/360, found on row 6.
-- FixedLegCurrency, FixedLegFixedRate, FixedLegFrequency, FixedLegDaycountBasis: No relevant information found, hence empty strings and 0.0.
-- StartDate: The start date is 10 November 2009, found on row 3.
-- NotionalResetDate: No information found about notional reset date, hence an empty list.
-- NotionalAmount: The notional amount is 10,000,000.00, found on row 5."
-"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Notes:
+- The FloatLegIndex field has two occurrences, so it is represented as a list of dictionaries.
+- The FixedLeg fields have no relevant information in the trade entry, so they are represented with empty strings and 0.0 as default values.
+- The NotionalResetDate field has no relevant information, so it is represented as an empty list.
+- The NotionalAmount field has one occurrence, so it is represented as a list with one dictionary."
+01921e58-a76a-7541-ac74-9116e42d7ccf,2024-09-23T10:06:19.498Z,"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference the row where you find the information.
 
 Here is the input trade entry:
@@ -158,10 +152,7 @@ For each field you should do the following:
 
 Generate json dictionary with the field names as keys. The above algorith, describes how to create value for every field.
 
-Enclose json in triple single quotes and ensure that it is parsable.","Here is the JSON dictionary with the requested fields and their values:
-
-```json
-'''
+Enclose json in triple single quotes and ensure that it is parsable.","```json
 {
     ""FloatLegCurrency"": {
         ""data"": ""USD"",
@@ -206,19 +197,13 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalResetDate"": [],
     ""NotionalAmount"": [
         {
-            ""data"": ""USD 1bn"",
+            ""data"": ""1bn"",
             ""row"": 3
         }
     ]
 }
-'''
-```
-
-Note:
-- For the `FloatLegSpread` field, there is no relevant data in the given trade entry, so an empty string and 0 are used as the default values.
-- The `NotionalResetDate` field has no relevant data, so an empty list is returned.
-- The `NotionalAmount` field has multiple occurrences, so a list with one dictionary is returned."
-"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+```"
+01921e58-eb16-7000-8102-fd7968db55af,2024-09-23T10:06:36.822Z,"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference the row where you find the information.
 
 Here is the input trade entry:
@@ -279,13 +264,17 @@ For each field you should do the following:
 
 Generate json dictionary with the field names as keys. The above algorith, describes how to create value for every field.
 
-Enclose json in triple single quotes and ensure that it is parsable.","Here is the JSON dictionary with the fields and their corresponding values:
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary with the requested fields and their values:
 
+```json
 '''
 {
-    ""FloatLegCurrency"": ""USD"",
+    ""FloatLegCurrency"": {
+        ""data"": ""USD"",
+        ""row"": 3
+    },
     ""FloatLegIndex"": {
-        ""data"": ""6M USD Term SOFR (floating)"",
+        ""data"": ""6M USD Term SOFR"",
         ""row"": 3
     },
     ""FloatLegSpread"": {
@@ -300,7 +289,10 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
         ""data"": ""act/360"",
         ""row"": 3
     },
-    ""FixedLegCurrency"": ""USD"",
+    ""FixedLegCurrency"": {
+        ""data"": ""USD"",
+        ""row"": 4
+    },
     ""FixedLegFixedRate"": {
         ""data"": ""3.20"",
         ""row"": 4
@@ -402,4 +394,5 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
         }
     ]
 }
-'''"
+'''
+```"

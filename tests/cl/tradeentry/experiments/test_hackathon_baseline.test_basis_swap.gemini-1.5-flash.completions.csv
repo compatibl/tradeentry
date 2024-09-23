@@ -1,5 +1,5 @@
-Query,Completion
-"You will be given the input below in the form of a term sheet describing
+OrderedUuid,Timestamp,Query,Completion
+01921e58-299c-70e1-94bc-11646fd91915,2024-09-23T10:05:47.292Z,"You will be given the input below in the form of a term sheet describing
 some financial instrument.
 Return only JSON with these keys (omit those keys that do not apply):
 * InstrumentType - enum with values: AcceleratedReturnEquityLinkedNote, AutocallableEquityLinkedNote, AutocallableEquityLinkedRangeAccrualNote, AutocallableFixedRateNote, CallableEquityLinkedNote, CallableFixedForFloatingSwap, CallableFixedRateNote, CallableFloatingSpreadNote, KnockOutCommodityLinkedNote, KnockOutEquityLinkedNote, NonCallableCommodityLinkedNote, NonCallableCurrencyLinkedNote, NonCallableEquityLinkedNote, NonCallableFixedForFloatingSwap, NonCallableFixedToFloatingNote, NonCallableFloatingSpreadNote, NonCallableInflationLinkedNote.
@@ -63,20 +63,18 @@ Client receives 12M Term SOFR (act/360, annual)```
   ""InstrumentType"": ""NonCallableFixedForFloatingSwap"",
   ""EffectiveDate"": ""2009-11-10"",
   ""MaturityDate"": ""2010-11-10"",
-  ""PayOrReceiveFixed"": ""PayFixed"",
-  ""FixedRatePercent"": 0.7,
-  ""Underlying"": ""3M Term SOFR"",
-  ""Underlying2"": ""12M Term SOFR"",
-  ""FloatingSpreadBp"": 70,
   ""FixedLegPaymentFrequency"": ""Quarterly"",
   ""FloatingLegPaymentFrequency"": ""Annual"",
   ""FixedLegNotional"": 10000000,
   ""FloatingLegNotional"": 10000000,
   ""FixedLegCurrency"": ""USD"",
-  ""FloatingLegCurrency"": ""USD""
+  ""FloatingLegCurrency"": ""USD"",
+  ""Underlying"": ""3M Term SOFR"",
+  ""Underlying2"": ""12M Term SOFR"",
+  ""FloatingSpreadBp"": 70
 }
 ```"
-"You will be given the input below in the form of a term sheet describing
+01921e58-3f10-7892-b112-a04ce1ab1df8,2024-09-23T10:05:52.784Z,"You will be given the input below in the form of a term sheet describing
 some financial instrument.
 Return only JSON with these keys (omit those keys that do not apply):
 * InstrumentType - enum with values: AcceleratedReturnEquityLinkedNote, AutocallableEquityLinkedNote, AutocallableEquityLinkedRangeAccrualNote, AutocallableFixedRateNote, CallableEquityLinkedNote, CallableFixedForFloatingSwap, CallableFixedRateNote, CallableFloatingSpreadNote, KnockOutCommodityLinkedNote, KnockOutEquityLinkedNote, NonCallableCommodityLinkedNote, NonCallableCurrencyLinkedNote, NonCallableEquityLinkedNote, NonCallableFixedForFloatingSwap, NonCallableFixedToFloatingNote, NonCallableFloatingSpreadNote, NonCallableInflationLinkedNote.
@@ -145,17 +143,14 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)```
   ""PayOrReceiveFixed"": ""ReceiveFixed"",
   ""FixedRatePercent"": 3.45,
   ""Underlying"": ""6M USD Term SOFR"",
-  ""FloatingSpreadBp"": 0,
   ""FixedLegPaymentFrequency"": ""Semiannual"",
   ""FloatingLegPaymentFrequency"": ""Semiannual"",
-  ""FixedLegNotional"": 1000000000,
-  ""FloatingLegNotional"": 1000000000,
+  ""Notional"": 1000000000,
   ""FixedLegCurrency"": ""USD"",
-  ""FloatingLegCurrency"": ""USD"",
-  ""ResetType"": ""InArrears""
+  ""FloatingLegCurrency"": ""USD""
 }
 ```"
-"You will be given the input below in the form of a term sheet describing
+01921e58-553c-7da2-b2c7-767b18deaf23,2024-09-23T10:05:58.460Z,"You will be given the input below in the form of a term sheet describing
 some financial instrument.
 Return only JSON with these keys (omit those keys that do not apply):
 * InstrumentType - enum with values: AcceleratedReturnEquityLinkedNote, AutocallableEquityLinkedNote, AutocallableEquityLinkedRangeAccrualNote, AutocallableFixedRateNote, CallableEquityLinkedNote, CallableFixedForFloatingSwap, CallableFixedRateNote, CallableFloatingSpreadNote, KnockOutCommodityLinkedNote, KnockOutEquityLinkedNote, NonCallableCommodityLinkedNote, NonCallableCurrencyLinkedNote, NonCallableEquityLinkedNote, NonCallableFixedForFloatingSwap, NonCallableFixedToFloatingNote, NonCallableFloatingSpreadNote, NonCallableInflationLinkedNote.
@@ -236,7 +231,6 @@ Effective From:		Notional Amount: (USD)
   ""PayOrReceiveFixed"": ""ReceiveFixed"",
   ""FixedRatePercent"": 3.2,
   ""Underlying"": ""6M USD Term SOFR"",
-  ""FloatingSpreadBp"": 0,
   ""FixedLegPaymentFrequency"": ""Semiannual"",
   ""FloatingLegPaymentFrequency"": ""Semiannual"",
   ""FixedLegNotional"": 100000000,

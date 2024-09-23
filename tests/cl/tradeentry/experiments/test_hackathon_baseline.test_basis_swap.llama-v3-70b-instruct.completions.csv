@@ -1,5 +1,5 @@
-Query,Completion
-"You will be given the input below in the form of a term sheet describing
+OrderedUuid,Timestamp,Query,Completion
+01921e58-25e0-74b2-b86a-24370059587e,2024-09-23T10:05:46.336Z,"You will be given the input below in the form of a term sheet describing
 some financial instrument.
 Return only JSON with these keys (omit those keys that do not apply):
 * InstrumentType - enum with values: AcceleratedReturnEquityLinkedNote, AutocallableEquityLinkedNote, AutocallableEquityLinkedRangeAccrualNote, AutocallableFixedRateNote, CallableEquityLinkedNote, CallableFixedForFloatingSwap, CallableFixedRateNote, CallableFloatingSpreadNote, KnockOutCommodityLinkedNote, KnockOutEquityLinkedNote, NonCallableCommodityLinkedNote, NonCallableCurrencyLinkedNote, NonCallableEquityLinkedNote, NonCallableFixedForFloatingSwap, NonCallableFixedToFloatingNote, NonCallableFloatingSpreadNote, NonCallableInflationLinkedNote.
@@ -100,7 +100,7 @@ Here is the JSON output:
   ""CUSIP"": null
 }
 ```"
-"You will be given the input below in the form of a term sheet describing
+01921e58-3b5f-7d42-ae03-8b8e29fa55ac,2024-09-23T10:05:51.839Z,"You will be given the input below in the form of a term sheet describing
 some financial instrument.
 Return only JSON with these keys (omit those keys that do not apply):
 * InstrumentType - enum with values: AcceleratedReturnEquityLinkedNote, AutocallableEquityLinkedNote, AutocallableEquityLinkedRangeAccrualNote, AutocallableFixedRateNote, CallableEquityLinkedNote, CallableFixedForFloatingSwap, CallableFixedRateNote, CallableFloatingSpreadNote, KnockOutCommodityLinkedNote, KnockOutEquityLinkedNote, NonCallableCommodityLinkedNote, NonCallableCurrencyLinkedNote, NonCallableEquityLinkedNote, NonCallableFixedForFloatingSwap, NonCallableFixedToFloatingNote, NonCallableFloatingSpreadNote, NonCallableInflationLinkedNote.
@@ -181,7 +181,7 @@ Here is the JSON output:
   ""Currency"": ""USD""
 }
 ```"
-"You will be given the input below in the form of a term sheet describing
+01921e58-5155-7f60-9a95-5297d34c611d,2024-09-23T10:05:57.461Z,"You will be given the input below in the form of a term sheet describing
 some financial instrument.
 Return only JSON with these keys (omit those keys that do not apply):
 * InstrumentType - enum with values: AcceleratedReturnEquityLinkedNote, AutocallableEquityLinkedNote, AutocallableEquityLinkedRangeAccrualNote, AutocallableFixedRateNote, CallableEquityLinkedNote, CallableFixedForFloatingSwap, CallableFixedRateNote, CallableFloatingSpreadNote, KnockOutCommodityLinkedNote, KnockOutEquityLinkedNote, NonCallableCommodityLinkedNote, NonCallableCurrencyLinkedNote, NonCallableEquityLinkedNote, NonCallableFixedForFloatingSwap, NonCallableFixedToFloatingNote, NonCallableFloatingSpreadNote, NonCallableInflationLinkedNote.

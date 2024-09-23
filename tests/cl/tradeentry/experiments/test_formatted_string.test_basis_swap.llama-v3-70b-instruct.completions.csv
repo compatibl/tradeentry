@@ -1,5 +1,5 @@
-Query,Completion
-"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+OrderedUuid,Timestamp,Query,Completion
+01921e56-d398-7453-9d47-d5066dca1b2e,2024-09-23T10:04:19.736Z,"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -68,7 +68,7 @@ Here is the generated JSON dictionary:
     ""NotionalAmount"": [{""data"": ""10,000,000.00"", ""formatted_row"": ""5: Notional: USD {NotionalAmount}""}]
 }
 '''"
-"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+01921e57-296a-78d2-9ba5-25b52c78093d,2024-09-23T10:04:41.706Z,"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -139,7 +139,7 @@ Here is the generated JSON dictionary:
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""3: Notional: {NotionalAmount} USD""}]
 }
 '''"
-"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+01921e57-b1fe-7c51-a9f9-30fcab768a4f,2024-09-23T10:05:16.670Z,"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -216,7 +216,7 @@ Here is the generated JSON dictionary:
     ""FixedLegFixedRate"": {""data"": ""3.20%"", ""formatted_row"": ""4: Party A receives: USD fixed {FixedLegFixedRate}, semi-annual, act/360""},
     ""FixedLegFrequency"": {""data"": ""semi-annual"", ""formatted_row"": ""4: Party A receives: USD fixed 3.20%, {FixedLegFrequency}, act/360""},
     ""FixedLegDaycountBasis"": {""data"": ""act/360"", ""formatted_row"": ""4: Party A receives: USD fixed 3.20%, semi-annual, {FixedLegDaycountBasis}""},
-    ""StartDate"": {""data"": ""10 November 2009"", ""formatted_row"": ""6: {StartDate}""},
+    ""StartDate"": {""data"": ""10 November 2009"", ""formatted_row"": ""6: Start: {StartDate}""},
     ""NotionalResetDate"": [
         {""data"": ""10-Nov-09"", ""formatted_row"": ""11: {NotionalResetDate}		100,000,000.00""},
         {""data"": ""10-May-10"", ""formatted_row"": ""12: {NotionalResetDate}		100,000,000.00""},
@@ -242,4 +242,5 @@ Here is the generated JSON dictionary:
         {""data"": ""25,000,000.00"", ""formatted_row"": ""20: 10-May-14		{NotionalAmount}""}
     ]
 }
-'''"
+'''
+"

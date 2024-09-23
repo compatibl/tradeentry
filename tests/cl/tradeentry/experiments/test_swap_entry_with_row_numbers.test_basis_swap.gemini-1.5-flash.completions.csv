@@ -1,5 +1,5 @@
-Query,Completion
-"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+OrderedUuid,Timestamp,Query,Completion
+01921e58-854b-7b01-85d4-0eb2e098c2e3,2024-09-23T10:06:10.763Z,"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference the row where you find the information.
 
 Here is the input trade entry:
@@ -100,7 +100,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","```json
 }
 '''
 ```"
-"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+01921e58-b472-7d40-9932-7beacc979c23,2024-09-23T10:06:22.834Z,"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference the row where you find the information.
 
 Here is the input trade entry:
@@ -203,7 +203,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","```json
 }
 '''
 ```"
-"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+01921e59-05ce-78d3-bf08-6e019cfa7380,2024-09-23T10:06:43.662Z,"You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference the row where you find the information.
 
 Here is the input trade entry:
@@ -272,11 +272,11 @@ Enclose json in triple single quotes and ensure that it is parsable.","```json
 ""row"": 3
 },
 ""FloatLegIndex"": {
-""data"": ""SOFR"",
+""data"": ""Term SOFR"",
 ""row"": 3
 },
 ""FloatLegSpread"": {
-""data"": ""0"",
+""data"": """",
 ""row"": 0
 },
 ""FloatLegFrequency"": {

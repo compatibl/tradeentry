@@ -1,5 +1,5 @@
-Query,Completion
-"You will be given the input below in the form of a term sheet describing
+OrderedUuid,Timestamp,Query,Completion
+01921e58-3003-7120-a941-7749831f475a,2024-09-23T10:05:48.931Z,"You will be given the input below in the form of a term sheet describing
 some financial instrument.
 Return only JSON with these keys (omit those keys that do not apply):
 * InstrumentType - enum with values: AcceleratedReturnEquityLinkedNote, AutocallableEquityLinkedNote, AutocallableEquityLinkedRangeAccrualNote, AutocallableFixedRateNote, CallableEquityLinkedNote, CallableFixedForFloatingSwap, CallableFixedRateNote, CallableFloatingSpreadNote, KnockOutCommodityLinkedNote, KnockOutEquityLinkedNote, NonCallableCommodityLinkedNote, NonCallableCurrencyLinkedNote, NonCallableEquityLinkedNote, NonCallableFixedForFloatingSwap, NonCallableFixedToFloatingNote, NonCallableFloatingSpreadNote, NonCallableInflationLinkedNote.
@@ -60,16 +60,19 @@ Client pays 3M Term SOFR + 70bps (act/360, quarterly)
 Client receives 12M Term SOFR (act/360, annual)```
 ","```json
 {
-  ""InstrumentType"": ""NonCallableFixedForFloatingSwap"",
-  ""EffectiveDate"": ""2009-11-10"",
-  ""MaturityDate"": ""2010-11-10"",
-  ""PayOrReceiveFixed"": ""ReceiveFixed"",
-  ""FloatingSpreadBp"": 70,
-  ""Currency"": ""USD"",
-  ""Notional"": 10000000
+    ""InstrumentType"": ""NonCallableFixedForFloatingSwap"",
+    ""EffectiveDate"": ""2009-11-10"",
+    ""MaturityDate"": ""2010-11-10"",
+    ""PayOrReceiveFixed"": ""ReceiveFixed"",
+    ""FloatingSpreadBp"": 70,
+    ""Notional"": 10000000,
+    ""FixedLegCurrency"": ""USD"",
+    ""FloatingLegCurrency"": ""USD"",
+    ""FixedLegPaymentFrequency"": ""Annual"",
+    ""FloatingLegPaymentFrequency"": ""Quarterly""
 }
 ```"
-"You will be given the input below in the form of a term sheet describing
+01921e58-467a-7a73-a554-d7d1793b64a1,2024-09-23T10:05:54.682Z,"You will be given the input below in the form of a term sheet describing
 some financial instrument.
 Return only JSON with these keys (omit those keys that do not apply):
 * InstrumentType - enum with values: AcceleratedReturnEquityLinkedNote, AutocallableEquityLinkedNote, AutocallableEquityLinkedRangeAccrualNote, AutocallableFixedRateNote, CallableEquityLinkedNote, CallableFixedForFloatingSwap, CallableFixedRateNote, CallableFloatingSpreadNote, KnockOutCommodityLinkedNote, KnockOutEquityLinkedNote, NonCallableCommodityLinkedNote, NonCallableCurrencyLinkedNote, NonCallableEquityLinkedNote, NonCallableFixedForFloatingSwap, NonCallableFixedToFloatingNote, NonCallableFloatingSpreadNote, NonCallableInflationLinkedNote.
@@ -147,7 +150,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)```
   ""ResetType"": ""InArrears""
 }
 ```"
-"You will be given the input below in the form of a term sheet describing
+01921e58-5a67-7f03-9f83-acde80f64f79,2024-09-23T10:05:59.783Z,"You will be given the input below in the form of a term sheet describing
 some financial instrument.
 Return only JSON with these keys (omit those keys that do not apply):
 * InstrumentType - enum with values: AcceleratedReturnEquityLinkedNote, AutocallableEquityLinkedNote, AutocallableEquityLinkedRangeAccrualNote, AutocallableFixedRateNote, CallableEquityLinkedNote, CallableFixedForFloatingSwap, CallableFixedRateNote, CallableFloatingSpreadNote, KnockOutCommodityLinkedNote, KnockOutEquityLinkedNote, NonCallableCommodityLinkedNote, NonCallableCurrencyLinkedNote, NonCallableEquityLinkedNote, NonCallableFixedForFloatingSwap, NonCallableFixedToFloatingNote, NonCallableFloatingSpreadNote, NonCallableInflationLinkedNote.
@@ -226,15 +229,11 @@ Effective From:		Notional Amount: (USD)
   ""EffectiveDate"": ""2009-11-10"",
   ""MaturityDate"": ""2014-05-10"",
   ""PayOrReceiveFixed"": ""ReceiveFixed"",
-  ""FixedRatePercent"": 3.20,
+  ""FixedRatePercent"": 3.2,
   ""Underlying"": ""6M USD Term SOFR"",
-  ""FloatingRateMultiplier"": 1,
+  ""PaymentFrequency"": ""Semiannual"",
   ""FixedLegPaymentFrequency"": ""Semiannual"",
   ""FloatingLegPaymentFrequency"": ""Semiannual"",
-  ""Notional"": null,
-  ""FixedLegNotional"": null,
-  ""FloatingLegNotional"": null,
-  ""FixedLegCurrency"": ""USD"",
-  ""FloatingLegCurrency"": ""USD""
+  ""Notional"": 100000000
 }
 ```"

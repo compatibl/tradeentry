@@ -1,5 +1,5 @@
-Query,Completion
-"
+OrderedUuid,Timestamp,Query,Completion
+01921e59-35bf-7c73-91d3-501e2c2a2710,2024-09-23T10:06:55.935Z,"
 You are tasked with converting a trade definition example to a Python interpolated string format. 
 Your goal is to identify specific values in the input text that correspond to the provided field names
 and replace them with the appropriate field names in curly brackets.
@@ -45,7 +45,7 @@ Make sure your answer contains only the converted text, with no additional expla
 Your work will be tested by substituting field values back into the formatted string you will output
 and checking that the resulting string is exactly the same as the output you received.
 ",{pay_or_receive_fixed} {swap_length} {floating_index} swap at {fixed_rate}
-"
+01921e59-4ef5-7b73-9447-8c836a8a9966,2024-09-23T10:07:02.389Z,"
 You are tasked with converting a trade definition example to a Python interpolated string format. 
 Your goal is to identify specific values in the input text that correspond to the provided field names
 and replace them with the appropriate field names in curly brackets.
@@ -97,8 +97,8 @@ Make sure your answer contains only the converted text, with no additional expla
 Your work will be tested by substituting field values back into the formatted string you will output
 and checking that the resulting string is exactly the same as the output you received.
 ","Notional: 10,000,000,000
-Bank {pay_or_receive_fixed}: 6M {floating_index}, {floating_leg_payment_frequency}, {floating_leg_daycount_basis}
-Bank {pay_or_receive_fixed}: {fixed_leg_payment_currency} fixed {fixed_rate}%, {fixed_leg_payment_frequency}, {fixed_leg_daycount_basis}
+Bank pays: 6M USD Term SOFR, {floating_leg_payment_frequency}, {floating_leg_daycount_basis}
+Bank receives: USD fixed {fixed_rate}%, {fixed_leg_payment_frequency}, {fixed_leg_daycount_basis}
 Notional exchange: None
-Start date: {start_date}
+{start_date}: 10 November 2009
 Tenor: {swap_length}"
