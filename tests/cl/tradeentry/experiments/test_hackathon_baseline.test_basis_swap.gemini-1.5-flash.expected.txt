@@ -1,0 +1,17 @@
+```json
+{
+  "InstrumentType": "NonCallableFixedForFloatingSwap",
+  "EffectiveDate": "2009-11-10",
+  "MaturityDate": "2010-11-10",
+  "PayOrReceiveFixed": "PayFixed",
+  "FixedRatePercent": 0.7,
+  "Underlying": "3M Term SOFR",
+  "FloatingSpreadBp": 70,
+  "FloatingLegPaymentFrequency": "Quarterly",
+  "FixedLegPaymentFrequency": "Annual",
+  "Notional": 10000000,
+  "Currency": "USD",
+  "FloatingLegCurrency": "USD",
+  "FixedLegCurrency": "USD"
+}
+```

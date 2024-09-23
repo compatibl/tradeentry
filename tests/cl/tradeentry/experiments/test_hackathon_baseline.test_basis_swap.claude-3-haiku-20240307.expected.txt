@@ -1,0 +1,17 @@
+{
+  "InstrumentType": "NonCallableFixedForFloatingSwap",
+  "EffectiveDate": "2009-11-10",
+  "MaturityDate": "2010-11-10",
+  "PayOrReceiveFixed": "ReceiveFixed",
+  "FloatingSpreadBp": 70,
+  "FloatingRateMultiplier": 1,
+  "FloatingLegPaymentFrequency": "Quarterly",
+  "FixedLegPaymentFrequency": "Annual",
+  "Notional": 10000000,
+  "FloatingLegNotional": 10000000,
+  "FixedLegNotional": 10000000,
+  "Currency": "USD",
+  "FloatingLegCurrency": "USD",
+  "FixedLegCurrency": "USD",
+  "ResetType": "InArrears"
+}

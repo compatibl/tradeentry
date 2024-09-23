@@ -1,0 +1,19 @@
+{
+  "InstrumentType": "NonCallableFixedForFloatingSwap",
+  "EffectiveDate": "2009-11-10",
+  "MaturityDate": "2014-11-10",
+  "PayOrReceiveFixed": "ReceiveFixed",
+  "FixedRatePercent": 3.45,
+  "Underlying": "USD 6M Term SOFR",
+  "FloatingSpreadBp": 0,
+  "FloatingRateFloorPct": 0,
+  "FixedLegPaymentFrequency": "Semiannual",
+  "FloatingLegPaymentFrequency": "Semiannual",
+  "Notional": 1000000000,
+  "FixedLegNotional": 1000000000,
+  "FloatingLegNotional": 1000000000,
+  "Currency": "USD",
+  "FixedLegCurrency": "USD",
+  "FloatingLegCurrency": "USD",
+  "ResetType": "InArrears"
+}

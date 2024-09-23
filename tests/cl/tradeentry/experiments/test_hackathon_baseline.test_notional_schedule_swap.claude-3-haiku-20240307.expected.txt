@@ -1,0 +1,17 @@
+{
+  "InstrumentType": "CallableFixedForFloatingSwap",
+  "EffectiveDate": "2009-11-10",
+  "MaturityDate": "2014-05-10",
+  "PayOrReceiveFixed": "PayFixed",
+  "FixedRatePercent": 3.2,
+  "Underlying": "6M USD Term SOFR",
+  "FloatingLegPaymentFrequency": "Semiannual",
+  "FixedLegPaymentFrequency": "Semiannual",
+  "Notional": 100000000,
+  "FixedLegNotional": 100000000,
+  "FloatingLegNotional": 100000000,
+  "Currency": "USD",
+  "FixedLegCurrency": "USD",
+  "FloatingLegCurrency": "USD",
+  "ResetType": "InArrears"
+}

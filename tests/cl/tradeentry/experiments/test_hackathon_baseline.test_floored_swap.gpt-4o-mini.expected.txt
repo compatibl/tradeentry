@@ -1,0 +1,18 @@
+```json
+{
+  "InstrumentType": "NonCallableFixedForFloatingSwap",
+  "EffectiveDate": "2009-11-10",
+  "MaturityDate": "2014-11-10",
+  "PayOrReceiveFixed": "ReceiveFixed",
+  "FixedRatePercent": 3.45,
+  "Underlying": "6M USD Term SOFR",
+  "FloatingRateFloorPct": 0,
+  "PaymentFrequency": "Semiannual",
+  "FixedLegPaymentFrequency": "Semiannual",
+  "FloatingLegPaymentFrequency": "Semiannual",
+  "Notional": 1000000000,
+  "FixedLegCurrency": "USD",
+  "FloatingLegCurrency": "USD",
+  "ResetType": "InArrears"
+}
+```
