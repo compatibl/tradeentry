@@ -111,9 +111,9 @@ def test_floored_swap():
     _test_answer_referencing(FIELDS, numbered_floored_swap)
 
 
-def test_notional_schedule_swap():
-    numbered_notional_schedule_swap = add_line_numbers(stub_amortizing_swap_entry)
-    _test_answer_referencing(FIELDS, numbered_notional_schedule_swap)
+def test_amortizing_swap():
+    numbered_amortizing_swap = add_line_numbers(stub_amortizing_swap_entry)
+    _test_answer_referencing(FIELDS, numbered_amortizing_swap)
 
 
 if __name__ == "__main__":

@@ -107,7 +107,7 @@ def test_floored_swap():
     _test_hackathon_baseline(stub_floored_swap_entry)
 
 
-def test_notional_schedule_swap():
+def test_amortizing_swap():
     _test_hackathon_baseline(stub_amortizing_swap_entry)
 
 
