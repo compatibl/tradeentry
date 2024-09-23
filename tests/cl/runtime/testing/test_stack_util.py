@@ -17,8 +17,15 @@ import os
 from cl.runtime.testing.stack_util import StackUtil
 
 
+def test_stack_util():
+    """Method name matches module name, shortened path"""
+    result = StackUtil.get_base_path()
+    assert os.path.dirname(result) == os.path.dirname(__file__)
+    assert os.path.basename(result) == "test_stack_util"
+
+
 def test_get_base_path_in_function():
-    """Test get_base_path in a test function."""
+    """Function name does not match module name, two-token path."""
     result = StackUtil.get_base_path()
     assert os.path.dirname(result) == os.path.dirname(__file__)
     assert os.path.basename(result) == "test_stack_util.test_get_base_path_in_function"
@@ -27,11 +34,33 @@ def test_get_base_path_in_function():
 class TestClass:
     """Stub pytest class."""
 
+    def test_stack_util(self):
+        """Method name matches module name, still three-token path as they are not next to each other."""
+        result = StackUtil.get_base_path()
+        assert os.path.dirname(result) == os.path.dirname(__file__)
+        assert os.path.basename(result) == "test_stack_util.test_class.test_stack_util"
+
     def test_get_base_path_in_method(self):
-        """Test get_base_path in a test method."""
+        """Method name does not match class name or module name, three-token path"""
         result = StackUtil.get_base_path()
         assert os.path.dirname(result) == os.path.dirname(__file__)
         assert os.path.basename(result) == "test_stack_util.test_class.test_get_base_path_in_method"
+
+
+class TestStackUtil:
+    """Stub pytest class with name matching the module."""
+
+    def test_stack_util(self):
+        """All three match, one-token path."""
+        result = StackUtil.get_base_path()
+        assert os.path.dirname(result) == os.path.dirname(__file__)
+        assert os.path.basename(result) == "test_stack_util"
+
+    def test_get_base_path_in_method(self):
+        """Method name does not match class name or module name which match, two-token path"""
+        result = StackUtil.get_base_path()
+        assert os.path.dirname(result) == os.path.dirname(__file__)
+        assert os.path.basename(result) == "test_stack_util.test_get_base_path_in_method"
 
 
 if __name__ == "__main__":

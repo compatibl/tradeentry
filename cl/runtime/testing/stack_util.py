@@ -76,11 +76,30 @@ class StackUtil:
                 else:
                     raise RuntimeError(f"Test module file {module_file} does not end with '.py'.")
 
+                module_dir = os.path.dirname(module_file_without_ext)
+                module_name = os.path.basename(module_file_without_ext)
                 if class_name is None:
-                    result = f"{module_file_without_ext}.{test_name}"
+                    # Remove repeated identical tokens to shorten the path
+                    if module_name != test_name:
+                        result = f"{module_name}.{test_name}"
+                    else:
+                        result = f"{module_name}"
                 else:
+                    # Convert class name to snake_case
                     class_name = inflection.underscore(class_name)
-                    result = f"{module_file_without_ext}.{class_name}.{test_name}"
+
+                    # Remove repeated identical tokens to shorten the path
+                    if module_name != class_name:
+                        if class_name != test_name:
+                            result = f"{module_name}.{class_name}.{test_name}"
+                        else:
+                            result = f"{module_name}.{class_name}"
+                    else:
+                        if module_name != test_name:
+                            result = f"{module_name}.{test_name}"
+                        else:
+                            result = f"{module_name}"
+                result = os.path.join(module_dir, result)
                 return result
 
         if allow_missing:
