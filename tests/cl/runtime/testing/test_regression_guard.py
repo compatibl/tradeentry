@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os
 
 import pytest
 from cl.runtime.testing.regression_guard import RegressionGuard
@@ -21,14 +22,14 @@ module_path = __file__.removesuffix(".py")
 def perform_testing(base_path: str, full: bool = False):
     """Stub test function without a class."""
 
-    base_name = base_path.rsplit(".", 1)[-1]
+    test_str = "perform_testing"
 
     # Guard without channel
     guard_without_channel = RegressionGuard()
     assert guard_without_channel.output_path == base_path
 
     # Write output
-    guard_without_channel.write(base_name)
+    guard_without_channel.write(test_str)
 
     # Verify single guard
     guard_without_channel.verify()
@@ -36,15 +37,12 @@ def perform_testing(base_path: str, full: bool = False):
     # Run additional tests only if full testing is specified
     if full:
         # Test channels
-        for channel in ("with_channel.str", ("with_channel", "tuple")):
-            # First instance of guard, created using tuple or string
-            guard_with_channel_1 = RegressionGuard(channel=channel)
-            channel_str = ".".join(channel) if isinstance(channel, tuple) else channel
-            guard_with_channel_1.write(f"{base_name}.{channel_str}.1")
+        guard_with_channel_1 = RegressionGuard(channel="channel")
+        guard_with_channel_1.write(f"{test_str}.1")
 
-            # Second instance of guard for the same channel, created using string
-            guard_with_channel_2 = RegressionGuard(channel=channel_str)
-            guard_with_channel_2.write(f"{base_name}.{channel_str}.2")
+        # Second instance of guard for the same channel, created using string
+        guard_with_channel_2 = RegressionGuard(channel="channel")
+        guard_with_channel_2.write(f"{test_str}.2")
 
         # Test dict output
         test_dict = {
@@ -72,7 +70,8 @@ def test_function():
     """Stub test function without a class."""
 
     # Test calling regression guard from a function
-    perform_testing(f"{module_path}.test_function", full=True)
+    expected_path = os.path.join(module_path, "test_function")
+    perform_testing(expected_path, full=True)
 
 
 class TestClass:
@@ -82,7 +81,8 @@ class TestClass:
         """Stub test method inside pytest class."""
 
         # Test calling regression guard from a method
-        perform_testing(f"{module_path}.test_class.test_method")
+        expected_path = os.path.join(module_path, "test_class", "test_method")
+        perform_testing(expected_path, full=True)
 
 
 if __name__ == "__main__":

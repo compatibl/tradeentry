@@ -17,7 +17,7 @@ import filecmp
 import inspect
 import os
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Literal
 from typing import ClassVar
 from typing import Dict
 from typing import Iterable
@@ -40,10 +40,6 @@ key_serializer = StringSerializer()
 
 data_serializer = DictSerializer()
 """Serializer for records."""
-
-
-def _error_channel_not_primitive_type() -> Any:
-    raise RuntimeError("Output channel must be a primitive type or an iterable of primitive types.")
 
 
 def _error_extension_not_supported(ext: str) -> Any:
@@ -84,38 +80,33 @@ class RegressionGuard:
 
     ext: str
     """Output file extension (format), defaults to '.txt'"""
+    
+    channel: str | None
+    """Dot-delimited string for the channel or None for no channel."""
 
     def __init__(
-        self, *, ext: str = None, channel: str | Iterable[str] | None = None, test_function_pattern: str | None = None
+            self,
+            *,
+            ext: str = None,
+            channel: str | None = None,
+            test_function_pattern: str | None = None,
     ):
         """
         Initialize the regression guard, optionally specifying channel.
 
         Args:
             ext: File extension (format) without the dot prefix, defaults to 'txt'
-            channel: Dot-delimited string or an iterable of dot-delimited tokens added to the current channel
-            test_function_pattern: Glob pattern to identify the test function or method in stack frame, defaults to 'test_*'
+            channel: Dot-delimited string for the channel or None for no channel
+            test_function_pattern: Glob pattern to identify the test function or method in stack frame,
+                                   defaults to 'test_*'
         """
-
-        # Convert channel to string from other types
-        if channel is not None:
-            if isinstance(channel, primitive_types):  # TODO: Move primitive_types to another module
-                # TODO: Use specialized conversion for primitive types
-                channel = str(channel)
-            elif hasattr(channel, "__iter__"):
-                # TODO: Use specialized conversion for primitive types
-                channel = ".".join(
-                    [str(x) if isinstance(x, primitive_types) else _error_channel_not_primitive_type() for x in channel]
-                )
-            else:
-                _error_channel_not_primitive_type()
 
         # Find base path by examining call stack
         base_path = StackUtil.get_base_path(test_function_pattern=test_function_pattern)
 
-        # Add channel to base path if specified
+        # Make channel the filename prefix with dot delimiter if specified
         if channel is not None and channel != "":
-            output_path = f"{base_path}.{channel}"
+            output_path = os.path.join(base_path, f"{channel}.")
         else:
             output_path = base_path
 
@@ -143,9 +134,10 @@ class RegressionGuard:
             self.__exception_text = None
             self.output_path = output_path
             self.ext = ext
+            self.channel = channel
 
             # Delete the existing received file if exists
-            if os.path.exists(received_path := self._get_received_path()):
+            if os.path.exists(received_path := self._get_file_path("received")):
                 os.remove(received_path)
 
     def write(self, value: Any) -> None:
@@ -163,12 +155,18 @@ class RegressionGuard:
 
         if self.__verified:
             raise RuntimeError(
-                f"Regression output file {self._get_received_path()} is already verified "
+                f"Regression output file {self._get_file_path('received')} is already verified "
                 f"and can no longer be written to."
             )
 
+        received_path = self._get_file_path("received")
+        received_dir = os.path.dirname(received_path)
+        if not os.path.exists(received_dir):
+            # Create the directory if does not exist
+            os.makedirs(received_dir)
+
         if self.ext == "txt":
-            with open(self._get_received_path(), "a") as file:
+            with open(received_path, "a") as file:
                 file.write(self._format_txt(value))
                 # Flush immediately to ensure all of the output is on disk in the event of test exception
                 file.flush()
@@ -240,12 +238,13 @@ class RegressionGuard:
             # Otherwise set 'verified' flag and continue
             self.__verified = True
 
-        received_path = self._get_received_path()
-        expected_path = self._get_expected_path()
-        diff_path = self._get_diff_path()
+        received_path = self._get_file_path("received")
+        expected_path = self._get_file_path("expected")
+        diff_path = self._get_file_path("diff")
 
         if not os.path.exists(received_path):
-            raise RuntimeError(f"Regression test error, received file {received_path} does not exist.")
+            raise RuntimeError(f"Regression guard error, cannot verify because "
+                               f"received file {received_path} does not yet exist.")
 
         if os.path.exists(expected_path):
             # Expected file exists, compare
@@ -346,14 +345,11 @@ class RegressionGuard:
             # Get from this guard
             return self.__exception_text
 
-    def _get_received_path(self) -> str:
-        """The output is written to 'channel.received.ext' located next to the unit test."""
-        return f"{self.output_path}.received.{self.ext}"
-
-    def _get_expected_path(self) -> str:
-        """The output is compared to 'channel.expected.ext' located next to the unit test."""
-        return f"{self.output_path}.expected.{self.ext}"
-
-    def _get_diff_path(self) -> str:
+    def _get_file_path(self, file_type: Literal["received", "expected", "diff"]) -> str:
         """The diff between received and expected is written to 'channel.diff.ext' located next to the unit test."""
-        return f"{self.output_path}.diff.{self.ext}"
+        if self.channel is not None and self.channel != "":
+            result = f"{self.channel}.{file_type}.{self.ext}"
+        else:
+            result = f"{file_type}.{self.ext}"
+        result = os.path.join(self.output_path, result)
+        return result
