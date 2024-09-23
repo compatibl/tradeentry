@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os
 
 import pytest
 from cl.convince.llms.completion_cache import CompletionCache
@@ -22,11 +23,20 @@ def perform_testing(base_path: str, full: bool = False):
     """Stub test function without a class."""
 
     base_name = base_path.rsplit(".", 1)[-1]
+
+    # Test channels, the first two are repeated to test writing from two separate objects
     channels = ["channel.1", "channel.1", "channel.2"]
+
+    # Delete existing test cache files to prevent starting from previous test output
+    base_name = base_path.rsplit(".", 1)[-1]
+    for unique_channel in set(channels):
+        file_path = os.path.join(base_name, f"{unique_channel}.completions.csv")
+        if os.path.exists(file_path):
+            os.remove(file_path)
+
+    # Perform testing
     caches = [CompletionCache(channel=channel) for channel in channels]
-    caches[0].write("a", "b")
-    caches[1].write("c", "d")
-    caches[2].write("a", "b")
+    [cache.write("a", "b") for cache in caches]
 
 
 def test_function():
