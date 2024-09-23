@@ -14,8 +14,8 @@
 
 import pytest
 from cl.runtime.context.testing_context import TestingContext
-from cl.runtime.plots.bar.bar_plot import BarPlot
-from cl.runtime.plots.bar.bar_plot_style import BarPlotStyle
+from cl.runtime.plots.plotly.bar_plot import BarPlot
+from cl.runtime.plots.plotly.bar_plot_style import BarPlotStyle
 from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
 
 

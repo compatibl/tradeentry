@@ -16,8 +16,8 @@ import pytest
 from pathlib import Path
 import pandas as pd
 from cl.runtime.context.testing_context import TestingContext
-from cl.runtime.plots.heat_map.confusion_matrix_plot import YELLOW_TO_WHITE
-from cl.runtime.plots.heat_map.confusion_matrix_plot import ConfusionMatrixPlot
+from cl.runtime.plots.plotly.confusion_matrix_plot import YELLOW_TO_WHITE
+from cl.runtime.plots.plotly.confusion_matrix_plot import ConfusionMatrixPlot
 from cl.runtime.plots.matrix_util import MatrixUtil
 from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
 

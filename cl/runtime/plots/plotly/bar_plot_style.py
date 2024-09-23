@@ -15,7 +15,7 @@
 from abc import ABC
 from dataclasses import dataclass
 from typing import List
-from cl.runtime.plots.bar.bar_plot_style_key import BarPlotStyleKey
+from cl.runtime.plots.plotly.bar_plot_style_key import BarPlotStyleKey
 from cl.runtime.records.record_mixin import RecordMixin
 
 

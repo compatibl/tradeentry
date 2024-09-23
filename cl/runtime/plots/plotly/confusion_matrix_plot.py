@@ -21,8 +21,8 @@ import pandas as pd
 import plotly.graph_objects as go
 from plotly.express.colors import sequential as colorscale
 from cl.runtime import Context
-from cl.runtime.plots.heat_map.confusion_matrix_plot_style import ConfusionMatrixPlotStyle
-from cl.runtime.plots.heat_map.confusion_matrix_plot_style_key import ConfusionMatrixPlotStyleKey
+from cl.runtime.plots.plotly.confusion_matrix_plot_style import ConfusionMatrixPlotStyle
+from cl.runtime.plots.plotly.confusion_matrix_plot_style_key import ConfusionMatrixPlotStyleKey
 from cl.runtime.plots.matrix_util import MatrixUtil
 from cl.runtime.plots.plot import Plot
 from cl.runtime.records.dataclasses_extensions import field
