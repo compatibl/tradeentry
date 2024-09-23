@@ -19,6 +19,7 @@ from cl.runtime import Context
 from cl.runtime.plots.plotly.bar_plot_style import BarPlotStyle
 from cl.runtime.plots.plotly.bar_plot_style_key import BarPlotStyleKey
 from cl.runtime.plots.plot import Plot
+from cl.runtime.plots.plotly.plotly_util import PlotlyUtil
 from cl.runtime.records.dataclasses_extensions import field
 
 _layout_background = {
@@ -29,6 +30,8 @@ _layout_background = {
 
 @dataclass(slots=True, kw_only=True)
 class BarPlot(Plot):
+    """Base class for the 2D bar plot."""
+
     labels: List[str] = field()
     """List of bar labels."""
 
@@ -86,5 +89,8 @@ class BarPlot(Plot):
                 yref="paper",
             )
         )
+
+        # Show if show_limit is not yet reached (configure via settings, default is zero)
+        PlotlyUtil.show_if_below_limit(fig)
 
         return fig

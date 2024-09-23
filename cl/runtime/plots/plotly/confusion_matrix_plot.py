@@ -25,6 +25,7 @@ from cl.runtime.plots.plotly.confusion_matrix_plot_style import ConfusionMatrixP
 from cl.runtime.plots.plotly.confusion_matrix_plot_style_key import ConfusionMatrixPlotStyleKey
 from cl.runtime.plots.matrix_util import MatrixUtil
 from cl.runtime.plots.plot import Plot
+from cl.runtime.plots.plotly.plotly_util import PlotlyUtil
 from cl.runtime.records.dataclasses_extensions import field
 
 WHITE_TO_RED_COLORSCALE = ["rgb(255,255,255)"] + colorscale.Reds
@@ -130,6 +131,9 @@ class ConfusionMatrixPlot(Plot):
                 yref="paper",
             )
         )
+
+        # Show if show_limit is not yet reached (configure via settings, default is zero)
+        PlotlyUtil.show_if_below_limit(fig)
 
         return fig
 
@@ -248,5 +252,8 @@ class ConfusionMatrixPlot(Plot):
                 yref="paper",
             )
         )
+
+        # Show if show_limit is not yet reached (configure via settings, default is zero)
+        PlotlyUtil.show_if_below_limit(fig)
 
         return fig

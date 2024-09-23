@@ -15,6 +15,8 @@
 import plotly.express as px
 import plotly.graph_objects as go
 
+from cl.runtime.plots.plotly.plotly_util import PlotlyUtil
+
 
 def create_multi_line_plot() -> go.Figure:
     """Create a multi-line plot."""
@@ -27,4 +29,8 @@ def create_multi_line_plot() -> go.Figure:
     fig.add_trace(go.Scatter(x=df_data["date"], y=df_data["AAPL"], mode="lines", name="Apple"))
     fig.add_trace(go.Scatter(x=df_data["date"], y=df_data["AMZN"], mode="lines", name="Amazon"))
     fig.update_layout(xaxis_tickformat="%d %B (%a)<br>%Y", title="Stocks")
+
+    # Show if show_limit is not yet reached (configure via settings, default is zero)
+    PlotlyUtil.show_if_below_limit(fig)
+
     return fig
