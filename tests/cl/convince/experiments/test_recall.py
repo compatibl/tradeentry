@@ -16,7 +16,7 @@ import pytest
 import datetime as dt
 from dateutil.relativedelta import relativedelta
 from cl.runtime.context.testing_context import TestingContext
-from cl.runtime.regression.regression_guard import RegressionGuard
+from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.claude.claude_llm import ClaudeLlm
 from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
 from cl.convince.llms.gemini.gemini_llm import GeminiLlm
