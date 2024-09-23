@@ -27,7 +27,7 @@ import yaml
 from typing_extensions import Self
 from cl.runtime.records.protocols import is_key
 from cl.runtime.records.protocols import is_record
-from cl.runtime.regression.stack_util import StackUtil
+from cl.runtime.testing.stack_util import StackUtil
 from cl.runtime.schema.field_decl import primitive_types
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
@@ -83,7 +83,7 @@ class RegressionGuard:
     """Output path including directory and channel."""
 
     ext: str
-    """Output file extension, defaults to '.txt'"""
+    """Output file extension (format), defaults to '.txt'"""
 
     def __init__(
         self, *, ext: str = None, channel: str | Iterable[str] | None = None, test_function_pattern: str | None = None

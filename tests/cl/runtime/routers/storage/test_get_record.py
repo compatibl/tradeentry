@@ -16,7 +16,7 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from cl.runtime.context.testing_context import TestingContext
-from cl.runtime.regression.regression_guard import RegressionGuard
+from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.runtime.routers.storage import storage_router
 from cl.runtime.routers.storage.record_request import RecordRequest
 from cl.runtime.routers.storage.record_response import RecordResponse

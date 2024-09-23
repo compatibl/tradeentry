@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import os
-from cl.runtime.regression.stack_util import StackUtil
+from cl.runtime.testing.stack_util import StackUtil
 
 
 class TestingUtil:

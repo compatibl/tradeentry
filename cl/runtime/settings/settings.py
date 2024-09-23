@@ -28,7 +28,7 @@ from dotenv import find_dotenv
 from dotenv import load_dotenv
 from dynaconf import Dynaconf
 from typing_extensions import Self
-from cl.runtime.regression.stack_util import StackUtil
+from cl.runtime.testing.stack_util import StackUtil
 
 # Load dotenv first (the priority order is envvars first, then dotenv, then settings.yaml and .secrets.yaml)
 load_dotenv()

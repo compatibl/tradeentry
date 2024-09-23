@@ -14,7 +14,7 @@
 
 import pytest
 import os
-from cl.runtime.regression.stack_util import StackUtil
+from cl.runtime.testing.stack_util import StackUtil
 
 
 def test_get_base_path_in_function():

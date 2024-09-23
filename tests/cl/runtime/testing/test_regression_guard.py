@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.regression.regression_guard import RegressionGuard
+from cl.runtime.testing.regression_guard import RegressionGuard
 
 module_path = __file__.removesuffix(".py")
 
