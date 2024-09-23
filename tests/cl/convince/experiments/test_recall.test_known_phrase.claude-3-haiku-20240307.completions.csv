@@ -1,0 +1,23 @@
+Query,Completion
+Reply with the following text changing nothing in it at all. I will check that the text matches exactly. This is a test. Text: A quick brown fox jumps over the lazy dog,A quick brown fox jumps over the lazy dog
+Reply with the following text changing nothing in it at all. I will check that the text matches exactly. This is a test. Text: A quick brownie dog jumps over the lazy dog,A quick brownie dog jumps over the lazy dog
+Reply with the following text changing nothing in it at all. I will check that the text matches exactly. This is a test. Text: AasaREl 3022a1 CEoaS aSpWAmaQ &8(1 pSozar,AasaREl 3022a1 CEoaS aSpWAmaQ &8(1 pSozar
+"Reply with the following text changing nothing in it at all. I will check that the text matches exactly. This is a test. Text: 2003-04-21,10000000
+2003-07-21,10000000
+2003-10-21,10000000
+2004-01-21,10000000
+2004-04-21,10000000
+2004-07-21,10000000
+2004-10-21,10000000
+2005-01-21,10000000
+2005-04-21,10000000
+2005-07-21,10000000","2003-04-21,10000000
+2003-07-21,10000000
+2003-10-21,10000000
+2004-01-21,10000000
+2004-04-21,10000000
+2004-07-21,10000000
+2004-10-21,10000000
+2005-01-21,10000000
+2005-04-21,10000000
+2005-07-21,10000000"
