@@ -17,13 +17,17 @@ import os
 from dataclasses import dataclass
 from typing import Any
 from typing import Dict
+from uuid import UUID
+
+from cl.runtime.primitive.datetime_util import DatetimeUtil
+from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.settings.settings import Settings
 from cl.runtime.testing.stack_util import StackUtil
 
 _supported_extensions = ["csv"]
 """The list of supported output file extensions (formats)."""
 
-_csv_headers = ["Query", "Completion"]
+_csv_headers = ["OrderedUuid", "Timestamp", "Query", "Completion"]
 """CSV column headers."""
 
 
@@ -104,7 +108,11 @@ class CompletionCache:
                     writer.writerow(_csv_headers)
 
                 # Write the new completion without checking if one already exists
-                writer.writerow([query, completion])
+                ordered_uid = OrderedUuid.create_one()
+                timestamp = OrderedUuid.datetime_of(ordered_uid)
+                ordered_uid_str = str(ordered_uid)
+                timestamp_str = DatetimeUtil.to_str(timestamp)
+                writer.writerow([ordered_uid_str, timestamp_str, query, completion])
 
                 # Flush immediately to ensure all of the output is on disk in the event of exception
                 file.flush()
@@ -143,10 +151,10 @@ class CompletionCache:
                 row_idx = 0
                 for row in reader:
                     row_idx = row_idx + 1
-                    if len(row) == 2:
-                        query, completion = row
+                    if len(row) == 4:
+                        _, _, query, completion = row
                         self.__completion_dict[query] = completion
                     else:
                         raise RuntimeError(
-                            f"More than two columns in row {row_idx} of completions " f"cache '{self.output_path}'."
+                            f"Fewer than than 4 columns in row={row_idx} of completions cache file {self.output_path}."
                         )
