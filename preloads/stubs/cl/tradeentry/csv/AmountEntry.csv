@@ -1,8 +1,8 @@
 entry_id,value,currency
-10m,"10,000,000.00",
-ten million,"10,000,000.00",
-$10m,"10,000,000.00",USD
- USD 10m ,"10,000,000.00",USD
-ten million dollars,"10,000,000.00",USD
-€10m,"10,000,000.00",EUR
-ten million euro,"10,000,000.00",EUR
+10m,10000000.0,
+ten million,10000000.0,
+$10m,10000000.0,"::#dict#{""entry_id"": ""USD"", ""_type"": ""CurrencyEntryKey""}"
+ USD 10m ,10000000.0,"::#dict#{""entry_id"": ""USD"", ""_type"": ""CurrencyEntryKey""}"
+ten million dollars,10000000.0,"::#dict#{""entry_id"": ""USD"", ""_type"": ""CurrencyEntryKey""}"
+ï¿½10m,10000000.0,"::#dict#{""entry_id"": ""EUR"", ""_type"": ""CurrencyEntryKey""}"
+ten million euro,10000000.0,"::#dict#{""entry_id"": ""EUR"", ""_type"": ""CurrencyEntryKey""}"

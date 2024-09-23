@@ -1,8 +1,8 @@
-entry_id,iso_code
-eur,EUR
-euro,EUR
-€,EUR
-usd,USD
-dollar,USD
-us dollar,USD
-$,USD
+entry_id,currency
+eur,"::#dict#{""iso_code"": ""EUR"", ""_type"": ""CurrencyKey""}"
+euro,"::#dict#{""iso_code"": ""EUR"", ""_type"": ""CurrencyKey""}"
+ï¿½,"::#dict#{""iso_code"": ""EUR"", ""_type"": ""CurrencyKey""}"
+usd,"::#dict#{""iso_code"": ""USD"", ""_type"": ""CurrencyKey""}"
+dollar,"::#dict#{""iso_code"": ""USD"", ""_type"": ""CurrencyKey""}"
+us dollar,"::#dict#{""iso_code"": ""USD"", ""_type"": ""CurrencyKey""}"
+$,"::#dict#{""iso_code"": ""USD"", ""_type"": ""CurrencyKey""}"

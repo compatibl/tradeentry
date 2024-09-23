@@ -1,10 +1,10 @@
 entry_id,rates_index
-usd-sofr,USD-SOFR
-usd sofr,USD-SOFR
-sofr,USD-SOFR
-usd,USD-SOFR
-eur-eurostr,EUR-EuroSTR
-eur eurostr,EUR-EuroSTR
-eurostr,EUR-EuroSTR
-€str,EUR-EuroSTR
-eur,EUR-EuroSTR
+usd-sofr,"::#dict#{""rates_index_id"": ""USD-SOFR"", ""_type"": ""RatesIndexKey""}"
+usd sofr,"::#dict#{""rates_index_id"": ""USD-SOFR"", ""_type"": ""RatesIndexKey""}"
+sofr,"::#dict#{""rates_index_id"": ""USD-SOFR"", ""_type"": ""RatesIndexKey""}"
+usd,"::#dict#{""rates_index_id"": ""USD-SOFR"", ""_type"": ""RatesIndexKey""}"
+eur-eurostr,"::#dict#{""rates_index_id"": ""EUR-EuroSTR"", ""_type"": ""RatesIndexKey""}"
+eur eurostr,"::#dict#{""rates_index_id"": ""EUR-EuroSTR"", ""_type"": ""RatesIndexKey""}"
+eurostr,"::#dict#{""rates_index_id"": ""EUR-EuroSTR"", ""_type"": ""RatesIndexKey""}"
+ï¿½str,"::#dict#{""rates_index_id"": ""EUR-EuroSTR"", ""_type"": ""RatesIndexKey""}"
+eur,"::#dict#{""rates_index_id"": ""EUR-EuroSTR"", ""_type"": ""RatesIndexKey""}"

@@ -1,6 +1,6 @@
-entry_id,trade
+entry_text,entry_status,trade
 "Start date: Sep 20, 2024
 Tenor: 1Y (12 months)
 Notional: USD 10m
 Fixed rate: 3.91
-We pay fixed",StubVanillaSwap.1
+We pay fixed","::#dict#{""_enum"": ""EntryStatusEnum"", ""_name"": ""Created""}","::#dict#{""trade_id"": ""StubVanillaSwap.1"", ""_type"": ""TradeKey""}"
