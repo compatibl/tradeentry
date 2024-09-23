@@ -1,0 +1,51 @@
+```json
+{
+    "FloatLegCurrency": {
+        "data": "USD",
+        "formatted_row": "5: Notional: {NotionalAmount}"
+    },
+    "FloatLegIndex": {
+        "data": "3M Term SOFR",
+        "formatted_row": "6: Client pays {FloatLegIndex} + 70bps (act/360, quarterly)"
+    },
+    "FloatLegSpread": {
+        "data": 0.70,
+        "formatted_row": "6: Client pays 3M Term SOFR + {FloatLegSpread}bps (act/360, quarterly)"
+    },
+    "FloatLegFrequency": {
+        "data": "quarterly",
+        "formatted_row": "6: Client pays 3M Term SOFR + 70bps (act/360, {FloatLegFrequency})"
+    },
+    "FloatLegDaycountBasis": {
+        "data": "act/360",
+        "formatted_row": "6: Client pays 3M Term SOFR + 70bps ({FloatLegDaycountBasis}, quarterly)"
+    },
+    "FixedLegCurrency": {
+        "data": "USD",
+        "formatted_row": "5: Notional: {NotionalAmount}"
+    },
+    "FixedLegFixedRate": {
+        "data": null,
+        "formatted_row": ""
+    },
+    "FixedLegFrequency": {
+        "data": "annual",
+        "formatted_row": "7: Client receives 12M Term SOFR ({FixedLegFrequency})"
+    },
+    "FixedLegDaycountBasis": {
+        "data": "act/360",
+        "formatted_row": "7: Client receives 12M Term SOFR ({FixedLegDaycountBasis})"
+    },
+    "StartDate": {
+        "data": "10 November 2009",
+        "formatted_row": "3: Start date: {StartDate}"
+    },
+    "NotionalResetDate": [],
+    "NotionalAmount": [
+        {
+            "data": 10000000.00,
+            "formatted_row": "5: Notional: USD {NotionalAmount}"
+        }
+    ]
+}
+```

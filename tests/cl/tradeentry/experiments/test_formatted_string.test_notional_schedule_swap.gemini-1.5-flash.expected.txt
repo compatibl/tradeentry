@@ -1,0 +1,130 @@
+```json
+'''
+{
+"FloatLegCurrency": {
+"data": "USD",
+"formatted_row": "3: Party A pays: {FloatLegCurrency} Term SOFR (floating), semi-annual, act/360"
+},
+"FloatLegIndex": {
+"data": "SOFR",
+"formatted_row": "3: Party A pays: 6M USD {FloatLegIndex} (floating), semi-annual, act/360"
+},
+"FloatLegSpread": {
+"data": "6M",
+"formatted_row": "3: Party A pays: {FloatLegSpread} USD Term SOFR (floating), semi-annual, act/360"
+},
+"FloatLegFrequency": {
+"data": "semi-annual",
+"formatted_row": "3: Party A pays: 6M USD Term SOFR (floating), {FloatLegFrequency}, act/360"
+},
+"FloatLegDaycountBasis": {
+"data": "act/360",
+"formatted_row": "3: Party A pays: 6M USD Term SOFR (floating), semi-annual, {FloatLegDaycountBasis}"
+},
+"FixedLegCurrency": {
+"data": "USD",
+"formatted_row": "4: Party A receives: {FixedLegCurrency} fixed 3.20%, semi-annual, act/360"
+},
+"FixedLegFixedRate": {
+"data": "3.20",
+"formatted_row": "4: Party A receives: USD fixed {FixedLegFixedRate}%, semi-annual, act/360"
+},
+"FixedLegFrequency": {
+"data": "semi-annual",
+"formatted_row": "4: Party A receives: USD fixed 3.20%, {FixedLegFrequency}, act/360"
+},
+"FixedLegDaycountBasis": {
+"data": "act/360",
+"formatted_row": "4: Party A receives: USD fixed 3.20%, semi-annual, {FixedLegDaycountBasis}"
+},
+"StartDate": {
+"data": "10 November 2009",
+"formatted_row": "6: Start: {StartDate}"
+},
+"NotionalResetDate": [
+{
+"data": "10-Nov-09",
+"formatted_row": "11: {NotionalResetDate}		100,000,000.00"
+},
+{
+"data": "10-May-10",
+"formatted_row": "12: {NotionalResetDate}		100,000,000.00"
+},
+{
+"data": "10-Nov-10",
+"formatted_row": "13: {NotionalResetDate}		100,000,000.00"
+},
+{
+"data": "10-May-11",
+"formatted_row": "14: {NotionalResetDate}		100,000,000.00"
+},
+{
+"data": "10-Nov-11",
+"formatted_row": "15: {NotionalResetDate}		90,000,000.00"
+},
+{
+"data": "10-May-12",
+"formatted_row": "16: {NotionalResetDate}		80,000,000.00"
+},
+{
+"data": "10-Nov-12",
+"formatted_row": "17: {NotionalResetDate}		70,000,000.00"
+},
+{
+"data": "10-May-13",
+"formatted_row": "18: {NotionalResetDate}		60,000,000.00"
+},
+{
+"data": "10-Nov-13",
+"formatted_row": "19: {NotionalResetDate}		50,000,000.00"
+},
+{
+"data": "10-May-14",
+"formatted_row": "20: {NotionalResetDate}		25,000,000.00"
+}
+],
+"NotionalAmount": [
+{
+"data": "100,000,000.00",
+"formatted_row": "11: 10-Nov-09		{NotionalAmount}"
+},
+{
+"data": "100,000,000.00",
+"formatted_row": "12: 10-May-10		{NotionalAmount}"
+},
+{
+"data": "100,000,000.00",
+"formatted_row": "13: 10-Nov-10		{NotionalAmount}"
+},
+{
+"data": "100,000,000.00",
+"formatted_row": "14: 10-May-11		{NotionalAmount}"
+},
+{
+"data": "90,000,000.00",
+"formatted_row": "15: 10-Nov-11		{NotionalAmount}"
+},
+{
+"data": "80,000,000.00",
+"formatted_row": "16: 10-May-12		{NotionalAmount}"
+},
+{
+"data": "70,000,000.00",
+"formatted_row": "17: 10-Nov-12		{NotionalAmount}"
+},
+{
+"data": "60,000,000.00",
+"formatted_row": "18: 10-May-13		{NotionalAmount}"
+},
+{
+"data": "50,000,000.00",
+"formatted_row": "19: 10-Nov-13		{NotionalAmount}"
+},
+{
+"data": "25,000,000.00",
+"formatted_row": "20: 10-May-14		{NotionalAmount}"
+}
+]
+}
+'''
+```
