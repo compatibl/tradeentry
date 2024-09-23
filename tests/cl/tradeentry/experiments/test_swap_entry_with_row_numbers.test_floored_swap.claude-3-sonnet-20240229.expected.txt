@@ -1,0 +1,60 @@
+Here is the JSON dictionary with the requested fields and their values:
+
+```json
+'''
+{
+    "FloatLegCurrency": {
+        "data": "USD",
+        "row": 4
+    },
+    "FloatLegIndex": {
+        "data": "6M USD Term SOFR",
+        "row": 4
+    },
+    "FloatLegSpread": {
+        "data": "",
+        "row": 0
+    },
+    "FloatLegFrequency": {
+        "data": "semi-annual",
+        "row": 4
+    },
+    "FloatLegDaycountBasis": {
+        "data": "act/360",
+        "row": 4
+    },
+    "FixedLegCurrency": {
+        "data": "USD",
+        "row": 5
+    },
+    "FixedLegFixedRate": {
+        "data": "3.45",
+        "row": 5
+    },
+    "FixedLegFrequency": {
+        "data": "semi-annual",
+        "row": 5
+    },
+    "FixedLegDaycountBasis": {
+        "data": "act/360",
+        "row": 5
+    },
+    "StartDate": {
+        "data": "10 November 2009",
+        "row": 7
+    },
+    "NotionalResetDate": [],
+    "NotionalAmount": [
+        {
+            "data": "USD 1bn",
+            "row": 3
+        }
+    ]
+}
+'''
+```
+
+Note:
+- For the `FloatLegSpread` field, there is no relevant data in the given trade entry, so an empty string and 0 are used as the default values.
+- The `NotionalResetDate` field has no relevant data, so an empty list is returned.
+- The `NotionalAmount` field has multiple occurrences, so a list with one dictionary is returned.

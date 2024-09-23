@@ -1,0 +1,1 @@
+{pay_or_receive_fixed} {swap_length} {floating_index} swap at {fixed_rate}

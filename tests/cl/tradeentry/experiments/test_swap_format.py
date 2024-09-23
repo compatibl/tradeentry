@@ -92,7 +92,7 @@ def _test_extract_format(text: str, field_names: List[str]) -> None:
                 guard = RegressionGuard(channel=llm.llm_id)
                 guard.write(f"{result}")
 
-        # TODO: guard.verify_all()
+        guard.verify_all()
 
 
 def test_vanilla():

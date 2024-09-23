@@ -1,0 +1,130 @@
+```json
+'''
+{
+"FloatLegCurrency": {
+"data": "USD",
+"row": 3
+},
+"FloatLegIndex": {
+"data": "SOFR",
+"row": 3
+},
+"FloatLegSpread": {
+"data": "0",
+"row": 0
+},
+"FloatLegFrequency": {
+"data": "semi-annual",
+"row": 3
+},
+"FloatLegDaycountBasis": {
+"data": "act/360",
+"row": 3
+},
+"FixedLegCurrency": {
+"data": "USD",
+"row": 4
+},
+"FixedLegFixedRate": {
+"data": "3.20",
+"row": 4
+},
+"FixedLegFrequency": {
+"data": "semi-annual",
+"row": 4
+},
+"FixedLegDaycountBasis": {
+"data": "act/360",
+"row": 4
+},
+"StartDate": {
+"data": "10 November 2009",
+"row": 6
+},
+"NotionalResetDate": [
+{
+"data": "10-Nov-09",
+"row": 11
+},
+{
+"data": "10-May-10",
+"row": 12
+},
+{
+"data": "10-Nov-10",
+"row": 13
+},
+{
+"data": "10-May-11",
+"row": 14
+},
+{
+"data": "10-Nov-11",
+"row": 15
+},
+{
+"data": "10-May-12",
+"row": 16
+},
+{
+"data": "10-Nov-12",
+"row": 17
+},
+{
+"data": "10-May-13",
+"row": 18
+},
+{
+"data": "10-Nov-13",
+"row": 19
+},
+{
+"data": "10-May-14",
+"row": 20
+}
+],
+"NotionalAmount": [
+{
+"data": "100,000,000.00",
+"row": 11
+},
+{
+"data": "100,000,000.00",
+"row": 12
+},
+{
+"data": "100,000,000.00",
+"row": 13
+},
+{
+"data": "100,000,000.00",
+"row": 14
+},
+{
+"data": "90,000,000.00",
+"row": 15
+},
+{
+"data": "80,000,000.00",
+"row": 16
+},
+{
+"data": "70,000,000.00",
+"row": 17
+},
+{
+"data": "60,000,000.00",
+"row": 18
+},
+{
+"data": "50,000,000.00",
+"row": 19
+},
+{
+"data": "25,000,000.00",
+"row": 20
+}
+]
+}
+'''
+```

@@ -1,0 +1,51 @@
+```json
+{
+    "FloatLegCurrency": {
+        "data": "USD",
+        "row": 5
+    },
+    "FloatLegIndex": {
+        "data": "3M Term SOFR",
+        "row": 6
+    },
+    "FloatLegSpread": {
+        "data": "70",
+        "row": 6
+    },
+    "FloatLegFrequency": {
+        "data": "quarterly",
+        "row": 6
+    },
+    "FloatLegDaycountBasis": {
+        "data": "act/360",
+        "row": 6
+    },
+    "FixedLegCurrency": {
+        "data": "USD",
+        "row": 5
+    },
+    "FixedLegFixedRate": {
+        "data": "12M Term SOFR",
+        "row": 7
+    },
+    "FixedLegFrequency": {
+        "data": "annual",
+        "row": 7
+    },
+    "FixedLegDaycountBasis": {
+        "data": "act/360",
+        "row": 7
+    },
+    "StartDate": {
+        "data": "10 November 2009",
+        "row": 3
+    },
+    "NotionalResetDate": [],
+    "NotionalAmount": [
+        {
+            "data": "10000000.00",
+            "row": 5
+        }
+    ]
+}
+```

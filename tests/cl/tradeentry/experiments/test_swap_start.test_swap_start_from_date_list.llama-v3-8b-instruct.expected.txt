@@ -1,0 +1,13 @@
+
+
+Here is the JSON response:
+
+{
+  "payment_frequency": true,
+  "floating_frequency": false,
+  "pays_in_arrears": false,
+  "currency": false,
+  "maturity_date": false
+}
+
+We need to know the payment frequency to determine the accrual start date, since the payment date is given.,N,N

@@ -98,7 +98,7 @@ def _test_answer_referencing(fields: List[Dict], trade_description: str):
                 guard = RegressionGuard(channel=llm.llm_id)
                 guard.write(result)
 
-    # TODO: guard.verify_all()
+    guard.verify_all()
 
 
 def test_basis_swap():

@@ -1,0 +1,3 @@
+```
+Sell {swap_length} {floating_index} swap at {fixed_rate}
+```

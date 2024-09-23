@@ -57,7 +57,7 @@ def _test_swap_freq(text: str):
                 guard = RegressionGuard(channel=llm.llm_id)
                 guard.write(f"{result},{is_allowed_value_yn},{is_trimmed_allowed_value_yn}")
 
-        # TODO: guard.verify_all()
+        guard.verify_all()
 
 
 def test_swap_freq_from_date_list():
