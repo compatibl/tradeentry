@@ -15,7 +15,7 @@
 from abc import ABC
 from dataclasses import dataclass
 from typing import List
-from cl.runtime.plots.plotly.confusion_matrix_plot_style_key import ConfusionMatrixPlotStyleKey
+from cl.runtime.plots.confusion_matrix_plot_style_key import ConfusionMatrixPlotStyleKey
 from cl.runtime.records.record_mixin import RecordMixin
 
 

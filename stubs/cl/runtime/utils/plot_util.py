@@ -15,7 +15,7 @@
 import plotly.express as px
 import plotly.graph_objects as go
 
-from cl.runtime.plots.plotly.plotly_util import PlotlyUtil
+from cl.runtime.plots.plotly_util import PlotlyUtil
 
 
 def create_multi_line_plot() -> go.Figure:
