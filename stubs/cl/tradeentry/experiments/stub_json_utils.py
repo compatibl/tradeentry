@@ -18,7 +18,7 @@ import json
 
 
 def extract_json_from_quotes(text: str) -> Optional[str]:
-    match = json_match = re.search(r'\'\'\'(.*?)\'\'\'', text, re.DOTALL)
+    match = re.search(r'({.*})', text, re.DOTALL)
     if match is None:
         return None
     json_string = match.groups()[0]
