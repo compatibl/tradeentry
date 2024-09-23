@@ -107,9 +107,6 @@ class RecordResponse(BaseModel):
     def get_record(cls, request: RecordRequest) -> RecordResponse:
         """Implements /storage/record route."""
 
-        # Default response when running locally without authorization
-        type_decl_dict = TypeResponseUtil.get_type(TypeRequest(name=request.type, module=request.module, user="root"))
-
         if True:  # TODO: ";" not in request.key:
             # TODO: Use after module is specified
             record_type = Schema.get_type_by_short_name(request.type)
@@ -135,6 +132,15 @@ class RecordResponse(BaseModel):
             deserialized_key = key_serializer.deserialize_key(request.key, record_type.get_key_type())
 
         record = data_source.load_one(record_type, deserialized_key)
+
+        # Get type declarations based on the actual record type
+        type_decl_dict = TypeResponseUtil.get_type(
+            TypeRequest(
+                name=type(record).__name__,
+                module=request.module,
+                user="root",
+            ),
+        )
 
         # TODO: Optimize speed using dacite or similar library
 
