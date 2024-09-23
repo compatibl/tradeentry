@@ -15,7 +15,7 @@
 import re
 from enum import Enum
 from enum import IntEnum
-from typing import Any
+from typing import Any, Dict, Final
 from cl.runtime.records.protocols import is_key
 
 
@@ -62,6 +62,17 @@ class StringValueCustomType(IntEnum):
     """Key type."""
 
 
+CUSTOM_TYPE_VALUE_TO_NAME: Final[Dict[StringValueCustomType, str]] = {
+    StringValueCustomType.dict: "json"
+}
+"""Enum value to name mapping."""
+
+CUSTOM_TYPE_NAME_TO_VALUE: Final[Dict[str, StringValueCustomType]] = {
+    v: k for k, v in CUSTOM_TYPE_VALUE_TO_NAME.items()
+}
+"""Name to enum value mapping. Reversed mapping."""
+
+
 class StringValueParser:
     """Parser for string value representations of custom types."""
 
@@ -72,7 +83,12 @@ class StringValueParser:
         if type_ is None:
             return value
 
-        type_prefix = f"::#{type_.name}#"
+        # Check type name in alias mapping
+        type_name = type_name_alias if (
+            (type_name_alias := CUSTOM_TYPE_VALUE_TO_NAME.get(type_)) is not None
+        ) else type_.name
+
+        type_prefix = f"```{type_name} "
         return type_prefix + value
 
     @classmethod
@@ -82,13 +98,13 @@ class StringValueParser:
             value without type and value type.
 
         Examples:
-            "::#bool#True" -> "True", bool
+            "```bool True" -> "True", bool
             "True" -> "True", None
             "any_string_without_prefix" -> "any_string_without_prefix", None
         """
 
         # check if value starts with type info prefix using regex
-        typed_value_pattern = re.compile("::#(?P<type>.*?)#.*")
+        typed_value_pattern = re.compile("```(?P<type>.*?) .*")
         typed_value_match = typed_value_pattern.match(value)
 
         if typed_value_match:
@@ -96,9 +112,13 @@ class StringValueParser:
             value_custom_type = typed_value_match.group("type")
 
             # remove type prefix from value
-            value_without_prefix = value.removeprefix(f"::#{value_custom_type}#")
+            value_without_prefix = value.removeprefix(f"```{value_custom_type} ")
 
-            value_custom_type = StringValueCustomType[value_custom_type]
+            # Check custom type in alias mapping
+            value_custom_type = custom_type if (
+                    (custom_type := CUSTOM_TYPE_NAME_TO_VALUE.get(value_custom_type)) is not None
+            ) else StringValueCustomType[value_custom_type]
+
             return value_without_prefix, value_custom_type
         else:
             # return unmodified value and custom type None
