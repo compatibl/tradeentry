@@ -107,6 +107,9 @@ class CompletionCache:
             self.ext = ext
             self.__completion_dict = {}
 
+            # Load cache file from disk
+            self.load_cache_file()
+
     def write(self, query: str, completion: str) -> None:
         """Add new completion, will take precedence for lookup but both will be in the completions file."""
 
@@ -143,7 +146,14 @@ class CompletionCache:
         if self.__delegate_to is not None:
             return self.lookup(query)
 
+        # Lookup in dictionary
+        result = self.__completion_dict.get(query, None)
+        return result
+
+    def load_cache_file(self) -> None:
+        """Load cache file."""
         if os.path.exists(self.output_path):
+            # Populate the dictionary from file if exists but not yet loaded
             with open(self.output_path, mode='r', newline='', encoding='utf-8') as file:
                 reader = csv.reader(file, delimiter=',', quotechar='"', escapechar='\\')
 
@@ -157,7 +167,7 @@ class CompletionCache:
                     raise ValueError(f"Expected column headers in completions cache are {expected_headers_str}. "
                                      f"Actual headers: {headers_in_file_str}.")
 
-                # Read the data rows
+                # Read cached completions
                 row_idx = 0
                 for row in reader:
                     row_idx = row_idx + 1
@@ -167,7 +177,3 @@ class CompletionCache:
                     else:
                         raise RuntimeError(f"More than two columns in row {row_idx} of completions "
                                            f"cache '{self.output_path}'.")
-
-        else:
-            # Completion cache file does not exist, return None
-            return None

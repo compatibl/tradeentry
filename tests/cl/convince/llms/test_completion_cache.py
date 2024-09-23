@@ -22,21 +22,22 @@ module_path = __file__.removesuffix(".py")
 def perform_testing(base_path: str, full: bool = False):
     """Stub test function without a class."""
 
-    base_name = base_path.rsplit(".", 1)[-1]
-
     # Test channels, the first two are repeated to test writing from two separate objects
     channels = ["channel.1", "channel.1", "channel.2"]
 
     # Delete existing test cache files to prevent starting from previous test output
-    base_name = base_path.rsplit(".", 1)[-1]
     for unique_channel in set(channels):
-        file_path = os.path.join(base_name, f"{unique_channel}.completions.csv")
+        file_path = f"{base_path}.{unique_channel}.completions.csv"
         if os.path.exists(file_path):
             os.remove(file_path)
 
     # Perform testing
     caches = [CompletionCache(channel=channel) for channel in channels]
+    assert all(cache.lookup("a") is None for cache in caches)
     [cache.write("a", "b") for cache in caches]
+    x = [cache.lookup("a") == "b" for cache in caches]
+    # x = caches[0].lookup("a")
+    pass
 
 
 def test_function():
