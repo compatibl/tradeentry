@@ -107,6 +107,11 @@ class CompletionCache:
                     # Write the headers if the file is new
                     writer.writerow(_csv_headers)
 
+                # NOT ADDING THE VALUE TO COMPLETION DICT HERE IS NOT A BUG
+                # Because we are not adding to the dict here but only writing to a file,
+                # the model will not reuse cached completions within the same session,
+                # preventing incorrect measurement of stability
+
                 # Write the new completion without checking if one already exists
                 ordered_uid = OrderedUuid.create_one()
                 timestamp = OrderedUuid.datetime_of(ordered_uid)
@@ -116,9 +121,6 @@ class CompletionCache:
 
                 # Flush immediately to ensure all of the output is on disk in the event of exception
                 file.flush()
-
-                # Add to dictionary
-                self.__completion_dict[query] = completion
         else:
             # Should not be reached here because of a previous check in __init__
             _error_extension_not_supported(self.ext)
