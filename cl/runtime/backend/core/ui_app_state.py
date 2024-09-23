@@ -15,6 +15,8 @@
 from dataclasses import dataclass
 from typing import List
 from typing import Optional
+
+from cl.runtime import Context
 from cl.runtime.backend.core.app_theme import AppTheme
 from cl.runtime.backend.core.tab_info import TabInfo
 from cl.runtime.backend.core.ui_app_state_key import UiAppStateKey
@@ -52,4 +54,10 @@ class UiAppState(UiAppStateKey, RecordMixin[UiAppStateKey]):
     @classmethod
     def get_current_user_app_theme(cls) -> AppTheme | None:
         """Get current user app theme."""
-        return "Light"  # TODO: Use settings
+
+        default_app_state_key = UiAppStateKey(user=UserKey(username='root'))
+        default_app_state = Context.current().load_one(UiAppStateKey, default_app_state_key)
+        if default_app_state is not None and default_app_state.application_theme is not None:
+            return default_app_state.application_theme
+
+        return 'Light'
