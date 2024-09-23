@@ -27,11 +27,5 @@ class GroupBarPlotStyle(GroupBarPlotStyleKey, RecordMixin[GroupBarPlotStyleKey],
     y_ticks: List[float] | None = None
     """Custom y-axis ticks."""
 
-    x_label: str | None = "Groups"
-    """x-axis label."""
-
-    y_label: str | None = "Value"
-    """y-axis label."""
-
     def get_key(self) -> GroupBarPlotStyleKey:
         return GroupBarPlotStyleKey(style_id=self.style_id)
