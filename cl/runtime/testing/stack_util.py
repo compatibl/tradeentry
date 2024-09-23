@@ -81,9 +81,9 @@ class StackUtil:
                 if class_name is None:
                     # Remove repeated identical tokens to shorten the path
                     if module_name != test_name:
-                        result = f"{module_name}.{test_name}"
+                        result = os.path.join(module_name, test_name)
                     else:
-                        result = f"{module_name}"
+                        result = module_name
                 else:
                     # Convert class name to snake_case
                     class_name = inflection.underscore(class_name)
@@ -91,14 +91,14 @@ class StackUtil:
                     # Remove repeated identical tokens to shorten the path
                     if module_name != class_name:
                         if class_name != test_name:
-                            result = f"{module_name}.{class_name}.{test_name}"
+                            result = os.path.join(module_name, class_name, test_name)
                         else:
-                            result = f"{module_name}.{class_name}"
+                            result = os.path.join(module_name, class_name)
                     else:
                         if module_name != test_name:
-                            result = f"{module_name}.{test_name}"
+                            result = os.path.join(module_name, test_name)
                         else:
-                            result = f"{module_name}"
+                            result = module_name
                 result = os.path.join(module_dir, result)
                 return result
 
