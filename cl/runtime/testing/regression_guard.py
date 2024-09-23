@@ -80,9 +80,6 @@ class RegressionGuard:
 
     ext: str
     """Output file extension (format), defaults to '.txt'"""
-    
-    channel: str | None
-    """Dot-delimited string for the channel or None for no channel."""
 
     def __init__(
             self,
@@ -108,7 +105,7 @@ class RegressionGuard:
         if channel is not None and channel != "":
             output_path = os.path.join(base_path, f"{channel}.")
         else:
-            output_path = base_path
+            output_path = os.path.join(base_path, "")
 
         if ext is not None:
             # Remove dot prefix if specified
@@ -134,7 +131,6 @@ class RegressionGuard:
             self.__exception_text = None
             self.output_path = output_path
             self.ext = ext
-            self.channel = channel
 
             # Delete the existing received file if exists
             if os.path.exists(received_path := self._get_file_path("received")):
@@ -347,9 +343,5 @@ class RegressionGuard:
 
     def _get_file_path(self, file_type: Literal["received", "expected", "diff"]) -> str:
         """The diff between received and expected is written to 'channel.diff.ext' located next to the unit test."""
-        if self.channel is not None and self.channel != "":
-            result = f"{self.channel}.{file_type}.{self.ext}"
-        else:
-            result = f"{file_type}.{self.ext}"
-        result = os.path.join(self.output_path, result)
+        result = f"{self.output_path}{file_type}.{self.ext}"
         return result
