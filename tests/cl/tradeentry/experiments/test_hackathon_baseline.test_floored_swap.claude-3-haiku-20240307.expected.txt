@@ -2,7 +2,7 @@
   "InstrumentType": "NonCallableFixedForFloatingSwap",
   "EffectiveDate": "2009-11-10",
   "MaturityDate": "2014-11-10",
-  "PayOrReceiveFixed": "ReceiveFixed",
+  "PayOrReceiveFixed": "PayFixed",
   "FixedRatePercent": 3.45,
   "Underlying": "6M USD Term SOFR",
   "FloatingRateFloorPct": 0,

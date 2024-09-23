@@ -25,12 +25,12 @@
         "formatted_row": "5: Notional: {NotionalAmount}"
     },
     "FixedLegFixedRate": {
-        "data": null,
-        "formatted_row": "N/A"
+        "data": 0.0,
+        "formatted_row": "7: Client receives {FixedLegFixedRate} (act/360, annual)"
     },
     "FixedLegFrequency": {
         "data": "annual",
-        "formatted_row": "7: Client receives 12M Term SOFR ({FloatLegDaycountBasis}, {FixedLegFrequency})"
+        "formatted_row": "7: Client receives 12M Term SOFR ({FixedLegDaycountBasis}, {FixedLegFrequency})"
     },
     "FixedLegDaycountBasis": {
         "data": "act/360",
@@ -44,7 +44,7 @@
     "NotionalAmount": [
         {
             "data": 10000000.00,
-            "formatted_row": "5: Notional: USD {NotionalAmount}"
+            "formatted_row": "5: Notional: {NotionalAmount}"
         }
     ]
 }

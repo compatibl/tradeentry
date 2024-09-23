@@ -2,15 +2,15 @@
 {
     "FloatLegCurrency": {
         "data": "USD",
-        "formatted_row": "4: We pay: {FloatLegCurrency} 6M USD Term SOFR (floating), semi-annual, act/360"
+        "formatted_row": "4: We pay: 6M {FloatLegIndex} (floating), semi-annual, {FloatLegDaycountBasis}"
     },
     "FloatLegIndex": {
-        "data": "6M USD Term SOFR",
-        "formatted_row": "4: We pay: 6M USD Term SOFR (floating), semi-annual, act/360"
+        "data": "Term SOFR",
+        "formatted_row": "4: We pay: 6M {FloatLegIndex} (floating), semi-annual, {FloatLegDaycountBasis}"
     },
     "FloatLegSpread": {
         "data": "",
-        "formatted_row": ""
+        "formatted_row": "4: We pay: 6M USD Term SOFR (floating), semi-annual, act/360"
     },
     "FloatLegFrequency": {
         "data": "semi-annual",
@@ -22,15 +22,15 @@
     },
     "FixedLegCurrency": {
         "data": "USD",
-        "formatted_row": "5: We receive: {FixedLegCurrency} fixed 3.45%, semi-annual, act/360"
+        "formatted_row": "5: We receive: {FixedLegCurrency} fixed {FixedLegFixedRate}%, semi-annual, {FixedLegDaycountBasis}"
     },
     "FixedLegFixedRate": {
         "data": 3.45,
-        "formatted_row": "5: We receive: USD fixed {FixedLegFixedRate}%, semi-annual, act/360"
+        "formatted_row": "5: We receive: USD fixed {FixedLegFixedRate}%, semi-annual, {FixedLegDaycountBasis}"
     },
     "FixedLegFrequency": {
         "data": "semi-annual",
-        "formatted_row": "5: We receive: USD fixed 3.45%, {FixedLegFrequency}, act/360"
+        "formatted_row": "5: We receive: USD fixed 3.45%, {FixedLegFrequency}, {FixedLegDaycountBasis}"
     },
     "FixedLegDaycountBasis": {
         "data": "act/360",
@@ -43,8 +43,8 @@
     "NotionalResetDate": [],
     "NotionalAmount": [
         {
-            "data": 1.0,
-            "formatted_row": "3: Notional: {NotionalAmount}bn"
+            "data": 1000000000,
+            "formatted_row": "3: Notional: {NotionalAmount} {currency}"
         }
     ]
 }

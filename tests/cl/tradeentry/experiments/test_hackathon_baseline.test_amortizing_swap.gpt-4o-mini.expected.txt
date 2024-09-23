@@ -4,15 +4,11 @@
   "EffectiveDate": "2009-11-10",
   "MaturityDate": "2014-05-10",
   "PayOrReceiveFixed": "ReceiveFixed",
-  "FixedRatePercent": 3.20,
+  "FixedRatePercent": 3.2,
   "Underlying": "6M USD Term SOFR",
-  "FloatingRateMultiplier": 1,
+  "PaymentFrequency": "Semiannual",
   "FixedLegPaymentFrequency": "Semiannual",
   "FloatingLegPaymentFrequency": "Semiannual",
-  "Notional": null,
-  "FixedLegNotional": null,
-  "FloatingLegNotional": null,
-  "FixedLegCurrency": "USD",
-  "FloatingLegCurrency": "USD"
+  "Notional": 100000000
 }
 ```

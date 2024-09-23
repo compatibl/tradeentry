@@ -1,16 +1,18 @@
-```json
+Here is the JSON output with the extracted fields from the trade entry:
+
+'''
 {
     "FloatLegCurrency": {
         "data": "USD",
         "formatted_row": "We pay: 6M {FloatLegCurrency} Term SOFR (floating), semi-annual, act/360"
     },
     "FloatLegIndex": {
-        "data": "Term SOFR",
-        "formatted_row": "We pay: 6M USD {FloatLegIndex} (floating), semi-annual, act/360"
+        "data": "USD Term SOFR",
+        "formatted_row": "We pay: 6M {FloatLegIndex} (floating), semi-annual, act/360"
     },
     "FloatLegSpread": {
-        "data": "0.0",
-        "formatted_row": "We pay: 6M USD Term SOFR (floating) + {FloatLegSpread}, semi-annual, act/360"
+        "data": "",
+        "formatted_row": "We pay: 6M USD Term SOFR (floating), semi-annual, act/360"
     },
     "FloatLegFrequency": {
         "data": "semi-annual",
@@ -22,11 +24,11 @@
     },
     "FixedLegCurrency": {
         "data": "USD",
-        "formatted_row": "We receive: {FixedLegCurrency} fixed 3.45%, semi-annual, act/360"
+        "formatted_row": "{FixedLegCurrency} fixed 3.45%, semi-annual, act/360"
     },
     "FixedLegFixedRate": {
         "data": "3.45",
-        "formatted_row": "We receive: USD fixed {FixedLegFixedRate}%, semi-annual, act/360"
+        "formatted_row": "We receive: {FixedLegFixedRate}%, semi-annual, act/360"
     },
     "FixedLegFrequency": {
         "data": "semi-annual",
@@ -48,9 +50,9 @@
     ],
     "NotionalAmount": [
         {
-            "data": "1bn",
-            "formatted_row": "Notional: USD {NotionalAmount}"
+            "data": "USD 1bn",
+            "formatted_row": "Notional: {NotionalAmount}"
         }
     ]
 }
-```
+'''

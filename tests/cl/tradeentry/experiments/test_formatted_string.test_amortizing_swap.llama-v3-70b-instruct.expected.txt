@@ -13,7 +13,7 @@ Here is the generated JSON dictionary:
     "FixedLegFixedRate": {"data": "3.20%", "formatted_row": "4: Party A receives: USD fixed {FixedLegFixedRate}, semi-annual, act/360"},
     "FixedLegFrequency": {"data": "semi-annual", "formatted_row": "4: Party A receives: USD fixed 3.20%, {FixedLegFrequency}, act/360"},
     "FixedLegDaycountBasis": {"data": "act/360", "formatted_row": "4: Party A receives: USD fixed 3.20%, semi-annual, {FixedLegDaycountBasis}"},
-    "StartDate": {"data": "10 November 2009", "formatted_row": "6: {StartDate}"},
+    "StartDate": {"data": "10 November 2009", "formatted_row": "6: Start: {StartDate}"},
     "NotionalResetDate": [
         {"data": "10-Nov-09", "formatted_row": "11: {NotionalResetDate}		100,000,000.00"},
         {"data": "10-May-10", "formatted_row": "12: {NotionalResetDate}		100,000,000.00"},
@@ -40,3 +40,4 @@ Here is the generated JSON dictionary:
     ]
 }
 '''
+

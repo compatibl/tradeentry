@@ -1,3 +1,5 @@
+Here is the requested JSON dictionary based on the provided trade entry:
+
 ```json
 {
     "FloatLegCurrency": {
@@ -5,7 +7,7 @@
         "row": 3
     },
     "FloatLegIndex": {
-        "data": "6M USD Term SOFR",
+        "data": "SOFR",
         "row": 3
     },
     "FloatLegSpread": {

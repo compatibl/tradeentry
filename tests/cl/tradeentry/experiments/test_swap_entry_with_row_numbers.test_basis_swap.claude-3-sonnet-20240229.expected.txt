@@ -1,4 +1,4 @@
-Here is the JSON dictionary with the fields and their corresponding data and row numbers:
+Here is the JSON dictionary with the requested fields and their corresponding values:
 
 ```json
 '''
@@ -48,14 +48,8 @@ Here is the JSON dictionary with the fields and their corresponding data and row
 '''
 ```
 
-Explanation:
-
-- FloatLegCurrency: The notional amount is in USD, found on row 5.
-- FloatLegIndex: There are two float leg indexes, 3M Term SOFR on row 6 and 12M Term SOFR on row 7.
-- FloatLegSpread: The spread is 70bps, found on row 6.
-- FloatLegFrequency: The float leg frequency is quarterly, found on row 6.
-- FloatLegDaycountBasis: The float leg day count basis is act/360, found on row 6.
-- FixedLegCurrency, FixedLegFixedRate, FixedLegFrequency, FixedLegDaycountBasis: No relevant information found, hence empty strings and 0.0.
-- StartDate: The start date is 10 November 2009, found on row 3.
-- NotionalResetDate: No information found about notional reset date, hence an empty list.
-- NotionalAmount: The notional amount is 10,000,000.00, found on row 5.
+Notes:
+- The FloatLegIndex field has two occurrences, so it is represented as a list of dictionaries.
+- The FixedLeg fields have no relevant information in the trade entry, so they are represented with empty strings and 0.0 as default values.
+- The NotionalResetDate field has no relevant information, so it is represented as an empty list.
+- The NotionalAmount field has one occurrence, so it is represented as a list with one dictionary.

@@ -9,8 +9,8 @@
         "row": 4
     },
     "FloatLegSpread": {
-        "data": "0.0",
-        "row": 9
+        "data": "",
+        "row": 0
     },
     "FloatLegFrequency": {
         "data": "semi-annual",
@@ -43,7 +43,7 @@
     "NotionalResetDate": [],
     "NotionalAmount": [
         {
-            "data": "1000000000",
+            "data": "1",
             "row": 3
         }
     ]

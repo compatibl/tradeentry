@@ -2,7 +2,7 @@
 {
     "FloatLegCurrency": {
         "data": "USD",
-        "formatted_row": "3: Party A pays: 6M {FloatLegCurrency} Term SOFR (floating), semi-annual, act/360"
+        "formatted_row": "3: Party A pays: {FloatLegCurrency} 6M USD Term SOFR (floating), semi-annual, act/360"
     },
     "FloatLegIndex": {
         "data": "Term SOFR",
@@ -10,7 +10,7 @@
     },
     "FloatLegSpread": {
         "data": "",
-        "formatted_row": "4: Party A receives: USD fixed {FloatLegSpread}%, semi-annual, act/360"
+        "formatted_row": "3: Party A pays: 6M USD Term SOFR (floating) {FloatLegSpread}, semi-annual, act/360"
     },
     "FloatLegFrequency": {
         "data": "semi-annual",
@@ -25,7 +25,7 @@
         "formatted_row": "4: Party A receives: {FixedLegCurrency} fixed 3.20%, semi-annual, act/360"
     },
     "FixedLegFixedRate": {
-        "data": 3.20,
+        "data": 3.2,
         "formatted_row": "4: Party A receives: USD fixed {FixedLegFixedRate}%, semi-annual, act/360"
     },
     "FixedLegFrequency": {

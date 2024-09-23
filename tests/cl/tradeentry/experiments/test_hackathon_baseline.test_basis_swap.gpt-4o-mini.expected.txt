@@ -1,11 +1,14 @@
 ```json
 {
-  "InstrumentType": "NonCallableFixedForFloatingSwap",
-  "EffectiveDate": "2009-11-10",
-  "MaturityDate": "2010-11-10",
-  "PayOrReceiveFixed": "ReceiveFixed",
-  "FloatingSpreadBp": 70,
-  "Currency": "USD",
-  "Notional": 10000000
+    "InstrumentType": "NonCallableFixedForFloatingSwap",
+    "EffectiveDate": "2009-11-10",
+    "MaturityDate": "2010-11-10",
+    "PayOrReceiveFixed": "ReceiveFixed",
+    "FloatingSpreadBp": 70,
+    "Notional": 10000000,
+    "FixedLegCurrency": "USD",
+    "FloatingLegCurrency": "USD",
+    "FixedLegPaymentFrequency": "Annual",
+    "FloatingLegPaymentFrequency": "Quarterly"
 }
 ```

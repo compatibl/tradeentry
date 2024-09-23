@@ -9,7 +9,7 @@
         "row": 6
     },
     "FloatLegSpread": {
-        "data": "70",
+        "data": "0.70",
         "row": 6
     },
     "FloatLegFrequency": {
@@ -25,7 +25,7 @@
         "row": 5
     },
     "FixedLegFixedRate": {
-        "data": "12M Term SOFR",
+        "data": "0.00",
         "row": 7
     },
     "FixedLegFrequency": {

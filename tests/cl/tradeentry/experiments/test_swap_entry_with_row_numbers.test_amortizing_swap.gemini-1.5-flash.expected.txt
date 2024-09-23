@@ -6,11 +6,11 @@
 "row": 3
 },
 "FloatLegIndex": {
-"data": "SOFR",
+"data": "Term SOFR",
 "row": 3
 },
 "FloatLegSpread": {
-"data": "0",
+"data": "",
 "row": 0
 },
 "FloatLegFrequency": {

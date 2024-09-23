@@ -42,10 +42,12 @@
 "formatted_row": "3: Start date: {StartDate}"
 },
 "NotionalResetDate": [],
-"NotionalAmount": {
+"NotionalAmount": [
+{
 "data": "10,000,000.00",
 "formatted_row": "5: Notional: USD {NotionalAmount}"
 }
+]
 }
 '''
 ```

@@ -3,11 +3,11 @@
 Here is the JSON response:
 
 {
-  "payment_frequency": true,
+  "payment_frequency": false,
   "floating_frequency": false,
   "pays_in_arrears": false,
   "currency": false,
   "maturity_date": false
 }
 
-We need to know the payment frequency to determine the accrual start date, since the payment date is given.,N,N
+The only relevant information needed to determine the accrual start date is the text itself, which only mentions the payment date, which is July 15. The other fields do not provide any additional information to determine the accrual start date.,N,N

@@ -3,16 +3,14 @@
   "InstrumentType": "NonCallableFixedForFloatingSwap",
   "EffectiveDate": "2009-11-10",
   "MaturityDate": "2010-11-10",
-  "PayOrReceiveFixed": "PayFixed",
-  "FixedRatePercent": 0.7,
-  "Underlying": "3M Term SOFR",
-  "Underlying2": "12M Term SOFR",
-  "FloatingSpreadBp": 70,
   "FixedLegPaymentFrequency": "Quarterly",
   "FloatingLegPaymentFrequency": "Annual",
   "FixedLegNotional": 10000000,
   "FloatingLegNotional": 10000000,
   "FixedLegCurrency": "USD",
-  "FloatingLegCurrency": "USD"
+  "FloatingLegCurrency": "USD",
+  "Underlying": "3M Term SOFR",
+  "Underlying2": "12M Term SOFR",
+  "FloatingSpreadBp": 70
 }
 ```

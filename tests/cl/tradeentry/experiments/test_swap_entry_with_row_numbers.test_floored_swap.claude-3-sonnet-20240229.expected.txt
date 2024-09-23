@@ -1,7 +1,4 @@
-Here is the JSON dictionary with the requested fields and their values:
-
 ```json
-'''
 {
     "FloatLegCurrency": {
         "data": "USD",
@@ -46,15 +43,9 @@ Here is the JSON dictionary with the requested fields and their values:
     "NotionalResetDate": [],
     "NotionalAmount": [
         {
-            "data": "USD 1bn",
+            "data": "1bn",
             "row": 3
         }
     ]
 }
-'''
 ```
-
-Note:
-- For the `FloatLegSpread` field, there is no relevant data in the given trade entry, so an empty string and 0 are used as the default values.
-- The `NotionalResetDate` field has no relevant data, so an empty list is returned.
-- The `NotionalAmount` field has multiple occurrences, so a list with one dictionary is returned.
