@@ -35,7 +35,7 @@ def test_4_groups_2_bars(local_dir_fixture):
         group_bar_plot.style = group_bar_plot_style
 
         fig = group_bar_plot.create_figure()
-    fig.savefig("test_bar_plot.test_4_groups_2_bars.png")
+    fig.savefig("test_group_bar_plot.test_4_groups_2_bars.png")
 
 
 def test_4_groups_5_bars(local_dir_fixture):
@@ -59,7 +59,7 @@ def test_4_groups_5_bars(local_dir_fixture):
 
         fig = group_bar_plot.create_figure()
 
-    fig.savefig("test_bar_plot.test_4_groups_5_bars.png")
+    fig.savefig("test_group_bar_plot.test_4_groups_5_bars.png")
 
 
 if __name__ == "__main__":
