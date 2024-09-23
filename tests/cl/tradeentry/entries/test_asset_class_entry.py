@@ -15,9 +15,9 @@
 import pytest
 from cl.runtime.context.testing_context import TestingContext
 from cl.convince.llms.claude.claude_llm import ClaudeLlm
-from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
 from cl.convince.llms.gemini.gemini_llm import GeminiLlm
 from cl.convince.llms.gpt.gpt_llm import GptLlm
+from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
 from cl.tradeentry.entries.asset_class_entry import AssetClassEntry
 from cl.tradeentry.trades.asset_class_keys import AssetClassKeys
 
@@ -33,10 +33,7 @@ def test_smoke() -> None:
     """Smoke test."""
     with TestingContext():
         for llm in llms:
-            entry = AssetClassEntry(
-                entry_text="Swap",
-                llm=llm
-            )
+            entry = AssetClassEntry(entry_text="Swap", llm=llm)
             entry.process()
             assert entry.asset_class.asset_class_id == AssetClassKeys.rates.asset_class_id
 

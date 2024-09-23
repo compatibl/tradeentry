@@ -16,9 +16,9 @@ import pytest
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.regression.regression_guard import RegressionGuard
 from cl.convince.llms.claude.claude_llm import ClaudeLlm
-from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
 from cl.convince.llms.gemini.gemini_llm import GeminiLlm
 from cl.convince.llms.gpt.gpt_llm import GptLlm
+from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
 
 llms = [
     ClaudeLlm(llm_id="claude-3-haiku-20240307"),

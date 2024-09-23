@@ -17,11 +17,11 @@ from typing import List
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.regression.regression_guard import RegressionGuard
 from cl.convince.llms.claude.claude_llm import ClaudeLlm
-from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
 from cl.convince.llms.gemini.gemini_llm import GeminiLlm
 from cl.convince.llms.gpt.gpt_llm import GptLlm
-from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_vanilla_swap_entry, \
-    stub_fixed_for_floating_swap_entry
+from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_fixed_for_floating_swap_entry
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_vanilla_swap_entry
 
 llms = [
     ClaudeLlm(llm_id="claude-3-opus-20240229"),
@@ -79,9 +79,9 @@ and checking that the resulting string is exactly the same as the output you rec
 def _test_extract_format(text: str, field_names: List[str]) -> None:
     """Test swap format extraction from string."""
 
-    with (TestingContext()):
+    with TestingContext():
 
-        prompt = PROMPT_TEMPLATE.format(text=text, fields=', '.join(field_names))
+        prompt = PROMPT_TEMPLATE.format(text=text, fields=", ".join(field_names))
 
         run_count = 1
 
@@ -103,16 +103,15 @@ def test_vanilla():
             "pay_or_receive_fixed",
             "start_date",
             "maturity_date",
-            "swap_length"
-            "fixed_rate",
+            "swap_length" "fixed_rate",
             "floating_index",
             "fixed_leg_payment_currency",
             "floating_leg_payment_currency",
             "fixed_leg_daycount_basis",
-            "floating_leg_daycount_basis"
-            "fixed_leg_payment_frequency",
+            "floating_leg_daycount_basis" "fixed_leg_payment_frequency",
             "floating_leg_payment_frequency",
-        ])
+        ],
+    )
 
 
 def test_fixed_for_floating():
@@ -123,16 +122,15 @@ def test_fixed_for_floating():
             "pay_or_receive_fixed",
             "start_date",
             "maturity_date",
-            "swap_length"
-            "fixed_rate",
+            "swap_length" "fixed_rate",
             "floating_index",
             "fixed_leg_payment_currency",
             "floating_leg_payment_currency",
             "fixed_leg_daycount_basis",
-            "floating_leg_daycount_basis"
-            "fixed_leg_payment_frequency",
+            "floating_leg_daycount_basis" "fixed_leg_payment_frequency",
             "floating_leg_payment_frequency",
-        ])
+        ],
+    )
 
 
 if __name__ == "__main__":

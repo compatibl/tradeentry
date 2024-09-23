@@ -15,9 +15,9 @@
 import pytest
 from cl.runtime.context.testing_context import TestingContext
 from cl.convince.llms.claude.claude_llm import ClaudeLlm
-from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
 from cl.convince.llms.gemini.gemini_llm import GeminiLlm
 from cl.convince.llms.gpt.gpt_llm import GptLlm
+from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
 from cl.tradeentry.entries.rates.rates_trade_type_entry import RatesTradeTypeEntry
 from cl.tradeentry.trades.rates.rates_trade_type_keys import RatesTradeTypeKeys
 
@@ -33,10 +33,7 @@ def test_smoke() -> None:
     """Smoke test."""
     with TestingContext():
         for llm in llms:
-            entry = RatesTradeTypeEntry(
-                entry_text="VanillaSwap",
-                llm=llm
-            )
+            entry = RatesTradeTypeEntry(entry_text="VanillaSwap", llm=llm)
             entry.process()
             assert entry.rates_trade_type.rates_trade_type_id == RatesTradeTypeKeys.vanilla_swap.rates_trade_type_id
 

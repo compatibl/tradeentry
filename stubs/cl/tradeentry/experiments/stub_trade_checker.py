@@ -13,7 +13,8 @@
 # limitations under the License.
 
 import re
-from typing import List, Dict
+from typing import Dict
+from typing import List
 
 
 class StubTradeChecker:
@@ -22,40 +23,27 @@ class StubTradeChecker:
 
     def check_row(self, _row: str, field: str) -> Dict:
         try:
-            pos = int(_row[:_row.index(':')])
+            pos = int(_row[: _row.index(":")])
         except ValueError:
-            return {
-                "message": "ERROR: can't extract row number",
-                "output_row": _row
-            }
+            return {"message": "ERROR: can't extract row number", "output_row": _row}
         try:
             true_row = self.input_rows[pos - 1]
         except IndexError:
-            return {
-                "message": "ERROR: pos is out of range, check row enumeration",
-                "pos": pos,
-                "row": _row
-            }
+            return {"message": "ERROR: pos is out of range, check row enumeration", "pos": pos, "row": _row}
         try:
-            pos_true = int(true_row[:true_row.index(':')])
+            pos_true = int(true_row[: true_row.index(":")])
         except ValueError:
-            return {
-                "message": "The input row is not indexed, check row enumeration",
-                "input_row": true_row
-            }
+            return {"message": "The input row is not indexed, check row enumeration", "input_row": true_row}
         if pos_true != pos:
             return {
                 "message": "The input and output row positions do not match, check row enumeration",
                 "output_row": _row,
-                "input_row": true_row
+                "input_row": true_row,
             }
 
-        match = re.search(f'(.*?)<{field}>(.*?)</{field}>(.*)', _row)
+        match = re.search(f"(.*?)<{field}>(.*?)</{field}>(.*)", _row)
         if match is None:
-            return {
-                "message": "ERROR: can't find tag pair using regex.",
-                "output_row": _row
-            }
+            return {"message": "ERROR: can't find tag pair using regex.", "output_row": _row}
 
         target_row = "".join(match.groups())
         if true_row != target_row:
@@ -63,21 +51,21 @@ class StubTradeChecker:
                 "message": "ERROR: the rows are not the same",
                 "input_row": true_row,
                 "extracted_row": target_row,
-                "output_row": _row
+                "output_row": _row,
             }
 
         return {}
 
     def field_correctness(self, fields: List[Dict], json_output: Dict, trade_desc: str) -> Dict:
         result = {}
-        field_names_to_pos = {x['name']: i for i, x in enumerate(fields)}
-        trade_desc_rows = trade_desc.split('\n')
+        field_names_to_pos = {x["name"]: i for i, x in enumerate(fields)}
+        trade_desc_rows = trade_desc.split("\n")
 
         for field in json_output:
             if field not in field_names_to_pos:
                 result[field] = {
                     "error_messages": [{"message": "ERROR: There is no such field in the description."}],
-                    "status": "TERRIBLE"
+                    "status": "TERRIBLE",
                 }
                 continue
 
@@ -86,39 +74,33 @@ class StubTradeChecker:
 
             if isinstance(field_output, list):
                 error_messages = []
-                if field_desc['freq'] != 'multiple':
+                if field_desc["freq"] != "multiple":
                     error_messages.append({"message": "ERROR: wrong freq of answer, should be multiple"})
                 for row in field_output:
                     error_message = self.check_row(row, field)
                     if error_message:
                         error_messages.append(error_message)
-                result[field] = {
-                    "error_messages": error_messages,
-                    "status": "BAD" if error_messages else "OK"
-                }
+                result[field] = {"error_messages": error_messages, "status": "BAD" if error_messages else "OK"}
             elif isinstance(field_output, str):
                 error_messages = []
-                if field_desc['freq'] != 'single':
+                if field_desc["freq"] != "single":
                     error_messages.append({"message": "ERROR: wrong freq of answer, should be single"})
                 error_message = self.check_row(field_output, field)
                 if error_message:
                     error_messages.append(error_message)
-                result[field] = {
-                    "error_messages": error_messages,
-                    "status": "BAD" if error_messages else "OK"
-                }
+                result[field] = {"error_messages": error_messages, "status": "BAD" if error_messages else "OK"}
             else:
                 result[field] = {
                     "error_messages": [{"message": "ERROR: The answer is in the wrong format"}],
-                    "status": "TERRIBLE"
+                    "status": "TERRIBLE",
                 }
 
         for field in fields:
-            name = field['name']
+            name = field["name"]
             if name not in json_output:
                 result[name] = {
                     "error_messages": [{"message": "ERROR: Missing required field", "field": name}],
-                    "status": "NOT GOOD"
+                    "status": "NOT GOOD",
                 }
 
         error_count = sum(1 for value in result.values() if value["status"] != "OK")

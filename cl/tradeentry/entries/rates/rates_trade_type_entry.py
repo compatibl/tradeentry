@@ -36,4 +36,3 @@ class RatesTradeTypeEntry(Entry):
         else:
             raise RuntimeError(f"Cannot extract rates trade type from {self.entry_text}")
         self.entry_status = EntryStatusEnum.Completed
-

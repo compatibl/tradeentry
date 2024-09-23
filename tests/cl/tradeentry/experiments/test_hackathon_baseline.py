@@ -13,14 +13,15 @@
 # limitations under the License.
 
 import pytest
-
 from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.regression.regression_guard import RegressionGuard
 from cl.convince.llms.claude.claude_llm import ClaudeLlm
-from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
 from cl.convince.llms.gemini.gemini_llm import GeminiLlm
 from cl.convince.llms.gpt.gpt_llm import GptLlm
-from cl.runtime.regression.regression_guard import RegressionGuard
-from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_basis_swap_entry, stub_floored_swap_entry, stub_amortizing_swap_entry
+from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_basis_swap_entry
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_floored_swap_entry
 
 llms = [
     ClaudeLlm(llm_id="claude-3-haiku-20240307"),

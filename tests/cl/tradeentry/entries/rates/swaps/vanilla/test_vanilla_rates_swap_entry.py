@@ -11,14 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import cast
 
 import pytest
+from typing import cast
 from cl.runtime.context.testing_context import TestingContext
 from cl.convince.llms.claude.claude_llm import ClaudeLlm
-from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
 from cl.convince.llms.gemini.gemini_llm import GeminiLlm
 from cl.convince.llms.gpt.gpt_llm import GptLlm
+from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
 from cl.tradeentry.entries.any_trade_entry import AnyTradeEntry
 from cl.tradeentry.trades.pay_receive_fixed_enum import PayReceiveFixedEnum
 from cl.tradeentry.trades.rates.swaps.vanilla.vanilla_swap import VanillaSwap
@@ -36,10 +36,7 @@ def test_smoke() -> None:
     """Smoke test."""
     with TestingContext():
         for llm in llms:
-            entry = AnyTradeEntry(
-                entry_text="VanillaSwap",
-                llm=llm
-            )
+            entry = AnyTradeEntry(entry_text="VanillaSwap", llm=llm)
             entry.process()
             trade = cast(VanillaSwap, entry.trade)
             assert isinstance(trade, VanillaSwap)

@@ -13,19 +13,21 @@
 # limitations under the License.
 
 import pytest
-
-from typing import Dict, List
 import json
 import re
-
+from typing import Dict
+from typing import List
 from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.regression.regression_guard import RegressionGuard
 from cl.convince.llms.claude.claude_llm import ClaudeLlm
-from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
 from cl.convince.llms.gemini.gemini_llm import GeminiLlm
 from cl.convince.llms.gpt.gpt_llm import GptLlm
-from cl.runtime.regression.regression_guard import RegressionGuard
-from stubs.cl.tradeentry.experiments.stub_tag_utils import fields_to_text, add_line_numbers
-from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_basis_swap_entry, stub_floored_swap_entry, stub_amortizing_swap_entry
+from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
+from stubs.cl.tradeentry.experiments.stub_tag_utils import add_line_numbers
+from stubs.cl.tradeentry.experiments.stub_tag_utils import fields_to_text
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_basis_swap_entry
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_floored_swap_entry
 
 llms = [
     ClaudeLlm(llm_id="claude-3-sonnet-20240229"),
@@ -80,7 +82,7 @@ FIELDS = [
     {"name": "FixedLegDaycountBasis", "type": "string", "freq": "single"},
     {"name": "StartDate", "type": "date", "freq": "single"},
     {"name": "NotionalResetDate", "type": "date", "freq": "multiple"},
-    {"name": "NotionalAmount", "type": "float", "freq": "multiple"}
+    {"name": "NotionalAmount", "type": "float", "freq": "multiple"},
 ]
 
 

@@ -29,5 +29,3 @@ class RatesTradeTypeKeys:
 
     basis_swap: RatesTradeTypeKey = RatesTradeTypeKey(rates_trade_type_id="BasisSwap")
     """Interest rate basis swap where both parties pay floating."""
-
-

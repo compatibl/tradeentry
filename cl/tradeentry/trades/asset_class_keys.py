@@ -32,6 +32,3 @@ class AssetClassKeys:
 
     credit: AssetClassKey = AssetClassKey(asset_class_id="Credit")
     """Credit asset class."""
-
-
-

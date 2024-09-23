@@ -36,4 +36,3 @@ class AssetClassEntry(Entry):
         else:
             raise RuntimeError(f"Cannot extract asset class from {self.entry_text}")
         self.entry_status = EntryStatusEnum.Completed
-

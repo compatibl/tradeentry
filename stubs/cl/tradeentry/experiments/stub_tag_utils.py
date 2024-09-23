@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, List
+from typing import Dict
+from typing import List
 
 
 def fields_to_text(fields: List[Dict]) -> str:
@@ -25,7 +26,7 @@ def fields_to_text(fields: List[Dict]) -> str:
     for desc in fields:
         new_string = f"* {desc['name']}: {desc['type']}, {desc['freq']}"
         strings.append(new_string)
-    return '\n'.join(strings)
+    return "\n".join(strings)
 
 
 def tag_text_with_numbers(text):
@@ -35,7 +36,7 @@ def tag_text_with_numbers(text):
     for i, word in enumerate(words, start=1):
         tagged_words.append(f"<TAG_{i}>{word}</TAG_{i}>")
 
-    return ' '.join(tagged_words)
+    return " ".join(tagged_words)
 
 
 def add_line_numbers(text):
@@ -45,4 +46,4 @@ def add_line_numbers(text):
     for i, line in enumerate(lines, start=1):
         numbered_lines.append(f"{i}: {line}")
 
-    return '\n'.join(numbered_lines)
+    return "\n".join(numbered_lines)
