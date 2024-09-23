@@ -24,8 +24,7 @@ from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaL
 from cl.convince.llms.gemini.gemini_llm import GeminiLlm
 from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.runtime.regression.regression_guard import RegressionGuard
-from utils.trade_checker import TradeChecker
-from utils.tag_utils import fields_to_text, add_line_numbers
+from stubs.cl.tradeentry.experiments.stub_tag_utils import fields_to_text, add_line_numbers
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_basis_swap_entry, stub_floored_swap_entry, stub_amortizing_swap_entry
 
 llms = [
