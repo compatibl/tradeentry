@@ -13,8 +13,6 @@
 # limitations under the License.
 
 import pytest
-import json
-import re
 from typing import Dict
 from typing import List
 from cl.runtime.context.testing_context import TestingContext
@@ -25,9 +23,7 @@ from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
 from stubs.cl.tradeentry.experiments.stub_tag_utils import add_line_numbers
 from stubs.cl.tradeentry.experiments.stub_tag_utils import fields_to_text
-from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry
-from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_basis_swap_entry
-from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_floored_swap_entry
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry, stub_vanilla_swap_entry, stub_floored_swap_entry
 
 llms = [
     ClaudeLlm(llm_id="claude-3-sonnet-20240229"),
@@ -101,9 +97,9 @@ def _test_answer_referencing(fields: List[Dict], trade_description: str):
     guard.verify_all()
 
 
-def test_basis_swap():
-    numbered_basis_swap = add_line_numbers(stub_basis_swap_entry)
-    _test_answer_referencing(FIELDS, numbered_basis_swap)
+def test_vanilla_swap():
+    numbered_vanilla_swap = add_line_numbers(stub_vanilla_swap_entry)
+    _test_answer_referencing(FIELDS, numbered_vanilla_swap)
 
 
 def test_floored_swap():
