@@ -35,30 +35,37 @@ def perform_testing(base_path: str, full: bool = False):
     caches = [CompletionCache(channel=channel) for channel in channels]
 
     # Check that none are found befoe writing
-    assert all(cache.lookup("a") is None for cache in caches)
+    assert all(cache.get("a") is None for cache in caches)
 
     # Write a to all files
-    [cache.write("a", "b") for cache in caches]
+    [cache.add("a", "b") for cache in caches]
 
     # Check that all is found in all
-    assert all(cache.lookup("a") == "b" for cache in caches)
+    assert all(cache.get("a") == "b" for cache in caches)
 
     # Check that e is found in none
-    assert all(cache.lookup("e") is None for cache in caches)
+    assert all(cache.get("e") is None for cache in caches)
 
     # Write c to the first file only
-    caches[0].write("c", "d")
+    caches[0].add("c", "d")
 
     # Check that c is found only in the first one before reload (because the cache file is not read during the run)
-    assert caches[0].lookup("c") == "d"
-    assert caches[1].lookup("c") is None
-    assert caches[2].lookup("c") is None
+    assert caches[0].get("c") == "d"
+    assert caches[1].get("c") is None
+    assert caches[2].get("c") is None
 
     # Reload and confirm it is visible to the first two now
     caches = [CompletionCache(channel=channel) for channel in channels]
-    assert caches[0].lookup("c") == "d"
-    assert caches[1].lookup("c") == "d"
-    assert caches[2].lookup("c") is None
+    assert caches[0].get("c") == "d"
+    assert caches[1].get("c") == "d"
+    assert caches[2].get("c") is None
+
+    # Write another value for "a", the file should have both but the new value is returned by get
+    caches[0].add("a", "bb")
+    caches = [CompletionCache(channel=channel) for channel in channels]
+    assert caches[0].get("a") == "bb"
+    assert caches[1].get("a") == "bb"
+    assert caches[2].get("a") == "b"
 
 
 def test_function():
