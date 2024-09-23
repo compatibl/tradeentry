@@ -11,13 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 import csv
 import os
 from dataclasses import dataclass
 from typing import Any
-from typing import ClassVar
 from typing import Dict
-from typing_extensions import Self
 from cl.runtime.settings.settings import Settings
 from cl.runtime.testing.stack_util import StackUtil
 
@@ -92,8 +91,8 @@ class CompletionCache:
         # Load cache file from disk
         self.load_cache_file()
 
-    def write(self, query: str, completion: str) -> None:
-        """Add new completion, will take precedence for lookup but both will be in the completions file."""
+    def add(self, query: str, completion: str) -> None:
+        """Add to file even if already exits, the latest will take precedence during lookup."""
 
         is_new = not os.path.exists(self.output_path)
         if self.ext == "csv":
@@ -116,8 +115,8 @@ class CompletionCache:
             # Should not be reached here because of a previous check in __init__
             _error_extension_not_supported(self.ext)
 
-    def lookup(self, query: str) -> str | None:
-        """Return completion for the specified query if found, or None otherwise."""
+    def get(self, query: str) -> str | None:
+        """Return completion for the specified query if found and None otherwise."""
         result = self.__completion_dict.get(query, None)
         return result
 

@@ -39,14 +39,14 @@ class Llm(LlmKey, RecordMixin[LlmKey], ABC):
             self._completion_cache = CompletionCache(channel=self.llm_id)
 
         # Try to find in completion cache
-        if (result := self._completion_cache.lookup(query)) is not None:
+        if (result := self._completion_cache.get(query)) is not None:
             # Return cached value if found
             return result
         else:
             # Otherwise make cloud provider call
             result = self.uncached_completion(query)
             # Save the result in cache before returning
-            self._completion_cache.write(query, result)
+            self._completion_cache.add(query, result)
             return result
 
     @abstractmethod
