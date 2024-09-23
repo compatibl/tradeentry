@@ -71,8 +71,8 @@ def test_white_to_red(local_dir_fixture):
 
     with TestingContext() as context:
         matrix_plot = ConfusionMatrixPlot()
-        matrix_plot.actual = raw_data["True Category"].values.tolist()
-        matrix_plot.predicted = raw_data["Predicted"].values.tolist()
+        matrix_plot.expected_categories = raw_data["True Category"].values.tolist()
+        matrix_plot.received_categories = raw_data["Predicted"].values.tolist()
 
         fig = matrix_plot.create_figure()
     fig.write_image("test_confusion_matrix_plot.test_white_to_red.png")

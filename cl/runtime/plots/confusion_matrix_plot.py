@@ -52,11 +52,14 @@ _layout_background = {
 class ConfusionMatrixPlot(Plot):
     """Confusion matrix visualization for a categorical experiment."""
 
-    actual: List[str] = field()
-    """List of actual categories."""
+    title: str = field()
+    """Plot title."""
 
-    predicted: List[str] = field()
-    """List of predicted categories in the same order as actual categories."""
+    received_categories: List[str] = field()
+    """List of received (predicted) categories for each trial."""
+
+    expected_categories: List[str] = field()
+    """List of expected (correct) categories in the same order of trials as received (predicted) categories."""
 
     style: ConfusionMatrixPlotStyleKey = field(default_factory=lambda: ConfusionMatrixPlotStyle())
     """Color and layout options."""
@@ -138,7 +141,7 @@ class ConfusionMatrixPlot(Plot):
         return fig
 
     def _create_confusion_matrix(self) -> Tuple[pd.DataFrame, List[List[str]]]:
-        raw_data = pd.DataFrame({"Actual": self.actual, "Predicted": self.predicted})
+        raw_data = pd.DataFrame({"Actual": self.expected_categories, "Predicted": self.received_categories})
 
         data_confusion_matrix = MatrixUtil.create_confusion_matrix(
             data=raw_data, true_column_name="Actual", predicted_column_name="Predicted"
