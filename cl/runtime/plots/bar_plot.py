@@ -20,7 +20,7 @@ from cl.runtime.plots.bar_plot_style import BarPlotStyle
 from cl.runtime.plots.bar_plot_style_key import BarPlotStyleKey
 from cl.runtime.plots.plot import Plot
 from cl.runtime.plots.plotly_util import PlotlyUtil
-from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import field, missing
 
 _layout_background = {
     "paper_bgcolor": "rgba(255,255,255,1)",
@@ -32,17 +32,20 @@ _layout_background = {
 class BarPlot(Plot):
     """Base class for the 2D bar plot."""
 
-    labels: List[str] = field()
+    title: str = missing()
+    """Plot title."""
+
+    labels: List[str] = missing()
     """List of bar labels."""
 
-    values: List[float] = field()
+    values: List[float] = missing()
     """List of bar values in the same order as labels."""
 
     style: BarPlotStyleKey = field(default_factory=lambda: BarPlotStyle())
     """Color and layout options."""
 
     def create_figure(self) -> go.Figure:
-        # load style object
+        # Load style object
         style = Context.current().load_one(BarPlotStyle, self.style)
 
         bars = go.Bar(x=self.labels, y=self.values)
