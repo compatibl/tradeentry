@@ -27,6 +27,7 @@ from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_s
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_basis_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_floored_swap_entry
 from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json_from_quotes
+from stubs.cl.tradeentry.experiments.stub_trade_checker import StubFormattedStringChecker
 
 
 llms = [
@@ -101,11 +102,17 @@ def _test_formatted_string(fields: List[Dict], trade_description: str):
                     json_result = "ERROR: can not extract json"
                 guard = RegressionGuard(channel=llm.llm_id)
                 guard.write(json_result)
+                guard_checker = RegressionGuard(channel=f"{llm.llm_id}-checker")
+                if isinstance(json_result, Dict):
+                    json_checker_output = StubFormattedStringChecker(trade_description, fields).check_answer(json_result)
+                    guard_checker.write(json_checker_output)
+                else:
+                    guard_checker.write("ERROR: No input to check")
 
     guard.verify_all()
 
 
-def test_basis_swap():
+def test_basis_swap2():
     numbered_basis_swap = add_line_numbers(stub_basis_swap_entry)
     _test_formatted_string(FIELDS, numbered_basis_swap)
 
