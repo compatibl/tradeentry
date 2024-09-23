@@ -14,38 +14,19 @@
 
 from dataclasses import dataclass
 from typing import List
-from typing import Optional
 from typing import Tuple
 import numpy as np
 import pandas as pd
-import plotly.graph_objects as go
-from plotly.express.colors import sequential as colorscale
+from matplotlib import pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
+
 from cl.runtime import Context
 from cl.runtime.plots.confusion_matrix_plot_style import ConfusionMatrixPlotStyle
 from cl.runtime.plots.confusion_matrix_plot_style_key import ConfusionMatrixPlotStyleKey
+from cl.runtime.plots.matplotlib_util import MatplotlibUtil
 from cl.runtime.plots.matrix_util import MatrixUtil
 from cl.runtime.plots.plot import Plot
-from cl.runtime.plots.plotly_util import PlotlyUtil
 from cl.runtime.records.dataclasses_extensions import field
-
-WHITE_TO_RED_COLORSCALE = ["rgb(255,255,255)"] + colorscale.Reds
-
-YELLOW_TO_WHITE = [
-    "rgb(255, 255, 0)",  # Yellow
-    "rgb(255, 255, 51)",  # Light Yellow
-    "rgb(255, 255, 81)",  # Light Lemon Yellow
-    "rgb(255, 255, 102)",  # Pale Yellow
-    "rgb(255, 255, 153)",  # Lemon Yellow
-    "rgb(255, 255, 204)",  # Soft Yellow
-    "rgb(255, 255, 224)",  # Creamy Yellow
-    "rgb(255, 255, 240)",  # Very Light
-    "rgb(255,255,255)",  # White
-]
-
-_layout_background = {
-    "paper_bgcolor": "rgba(255,255,255,1)",
-    "plot_bgcolor": "rgba(255,255,255,1)",
-}
 
 
 @dataclass(slots=True, kw_only=True)
@@ -61,82 +42,35 @@ class ConfusionMatrixPlot(Plot):
     expected_categories: List[str] = field()
     """List of expected (correct) categories in the same order of trials as received (predicted) categories."""
 
+    x_label: str = field(default="Predicted")
+    """x-axis label."""
+
+    y_label: str = field(default="Correct")
+    """y-axis label."""
+
     style: ConfusionMatrixPlotStyleKey = field(default_factory=lambda: ConfusionMatrixPlotStyle())
     """Color and layout options."""
 
-    def create_figure(self) -> go.Figure:
+    def create_figure(self) -> plt.Figure:
         # load style object
         style = Context.current().load_one(ConfusionMatrixPlotStyle, self.style)
 
         # TODO: consider moving
         data, annotation_text = self._create_confusion_matrix()
 
-        # Create heatmap
-        heatmap = go.Heatmap(
-            z=data,
-            x=data.index.tolist(),
-            y=data.columns.tolist(),
-            colorscale=WHITE_TO_RED_COLORSCALE,  # Set the colorscale
-            showscale=False,  # Hide the colorbar
-            hoverinfo="skip",  # Hide hover text
-        )
+        fig, axes = plt.subplots()
 
-        # Combine both heatmaps into one figure
-        fig = go.Figure(data=[heatmap])
+        cmap = LinearSegmentedColormap.from_list('rg', ["g", "y", "r"], N=256)
 
-        if annotation_text is not None:
-            normalized_data = (data / np.nanmax(data)).values
+        im = MatplotlibUtil.heatmap(data.values, data.index.tolist(), data.columns.tolist(), ax=axes, cmap=cmap)
+        MatplotlibUtil.annotate_heatmap(im, labels=annotation_text, textcolors='black', size=style.label_font_size)
 
-            # Create annotations for each element
-            annotations = [
-                go.layout.Annotation(
-                    text=f"<b>{annotation_text[i][j]}</b>" if i == j else annotation_text[i][j],
-                    x=j,
-                    y=i,
-                    showarrow=False,
-                    font=dict(color="black" if normalized_data[i, j] <= 0.5 else "white"),
-                )
-                for j in range(data.shape[1])
-                for i in range(data.shape[0])
-            ]
+        # Set figure and axes labels
+        axes.set_xlabel(self.x_label)
+        axes.set_ylabel(self.y_label)
+        axes.set_title(self.title)
 
-            fig.update_layout(annotations=annotations)
-
-        # Move x-axis to the top
-        fig.update_layout(xaxis=dict(side="top"))
-
-        # Set white background
-        fig.update_layout(_layout_background)
-
-        # add custom xaxis title
-        fig.add_annotation(
-            dict(
-                font=dict(color=style.axis_label_font_color, size=style.axis_label_font_size),
-                x=0.5,
-                y=-0.15,
-                showarrow=False,
-                text=style.x_label,
-                xref="paper",
-                yref="paper",
-            )
-        )
-
-        # add custom yaxis title
-        fig.add_annotation(
-            dict(
-                font=dict(color=style.axis_label_font_color, size=style.axis_label_font_size),
-                x=-0.35,
-                y=0.5,
-                showarrow=False,
-                text=style.y_label,
-                textangle=-90,
-                xref="paper",
-                yref="paper",
-            )
-        )
-
-        # Show if show_limit is not yet reached (configure via settings, default is zero)
-        PlotlyUtil.show_if_below_limit(fig)
+        fig.tight_layout()
 
         return fig
 

@@ -23,17 +23,7 @@ from cl.runtime.records.record_mixin import RecordMixin
 class ConfusionMatrixPlotStyle(ConfusionMatrixPlotStyleKey, RecordMixin[ConfusionMatrixPlotStyleKey], ABC):
     """Color and layout options for ConfusionMatrixPlot."""
 
-    x_label: str | None = "Predicted"
-    """x-axis label."""
-
-    y_label: str | None = "Actual"
-    """y-axis label."""
-
-    axis_label_font_size: int = 14
-    """Axis labels font size."""
-
-    axis_label_font_color: str = "black"
-    """Axis labels font color."""
+    label_font_size: int = 6
 
     def get_key(self) -> ConfusionMatrixPlotStyleKey:
         return ConfusionMatrixPlotStyleKey(style_id=self.style_id)
