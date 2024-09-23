@@ -72,7 +72,7 @@ class CompletionCache:
         # If not found, use base path relative to project root
         if base_path is None:
             project_root = Settings.get_project_root()
-            base_path = os.path.join(project_root, "completions", "completions")
+            base_path = os.path.join(project_root, "completions")
 
         if ext is not None:
             # Remove dot prefix if specified
