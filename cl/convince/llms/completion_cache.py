@@ -18,7 +18,6 @@ from dataclasses import dataclass
 from typing import Any
 from typing import Dict
 from uuid import UUID
-
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.settings.settings import Settings

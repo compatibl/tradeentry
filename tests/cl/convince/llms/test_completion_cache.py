@@ -12,10 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
-
 import pytest
 import os
+from typing import List
 from cl.convince.llms.completion_cache import CompletionCache
 
 module_path = __file__.removesuffix(".py")
