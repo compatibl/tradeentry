@@ -16,7 +16,8 @@ import pytest
 import datetime as dt
 from dateutil.relativedelta import relativedelta
 from cl.runtime.context.testing_context import TestingContext
-from cl.runtime.plots.bar_plot import BarPlot
+from cl.runtime.plots.group_bar_plot import GroupBarPlot
+from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.claude.claude_llm import ClaudeLlm
 from cl.convince.llms.gemini.gemini_llm import GeminiLlm
@@ -29,15 +30,17 @@ llms = [
     GeminiLlm(llm_id="gemini-1.5-flash"),
     GptLlm(llm_id="gpt-4o-mini"),
 ]
-
-
-def test_verbosity():
+def test_verbosity(local_dir_fixture):
     """Test for verbosity."""
 
     with TestingContext():
 
         rep_count = 10
-        prompt = "Reply with the answer for 2 times 2. Your reply must include numerical value for the answer (not words) with no other comments or other text."
+        prompt = ("Reply with the answer for 2 times 2. Your reply must include numerical value for the answer "
+                  "(not words) with no other comments or other text.")
+
+        plot = GroupBarPlot()
+        plot.values = []
         for llm in llms:
             completions = [llm.completion(prompt) for _ in range(rep_count)]
             mult = 100. / rep_count
@@ -49,14 +52,23 @@ def test_verbosity():
                 ("Allow words", mult * sum(1 for x in completions if ("4" in x or "four" in x.lower())))
             ]
 
-            plot = BarPlot()
-            plot.labels = [result[0] for result in results]
-            plot.values = [result[1] for result in results]
-            plot.create_figure()
+            plot.values.extend([result[1] for result in results])
 
-            # guard = RegressionGuard(channel=llm.llm_id)
-            # guard.write(f"{result},{is_exact_match_yn},{is_trimmed_match_yn}")
-            # guard.verify_all()
+            # Apply group labels once
+            if plot.group_labels is None:
+                plot.group_labels = [result[0] for result in results]
+
+        # Apply labels
+        plot.bar_labels = [llm.llm_id for llm in llms]
+        plot.group_labels = [result[1] for result in results]
+
+        # Create and save
+        fig = plot.create_figure()
+        fig.savefig("test_verbosity.test_verbosity.png")
+
+        # guard = RegressionGuard(channel=llm.llm_id)
+        # guard.write(f"{result},{is_exact_match_yn},{is_trimmed_match_yn}")
+        # guard.verify_all()
 
 
 if __name__ == "__main__":
