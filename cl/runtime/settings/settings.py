@@ -211,6 +211,16 @@ class Settings(ABC):
             )
 
     @classmethod
+    def get_databases_path(cls) -> str:
+        """Returns absolute path to dir for databases."""
+        project_root = Settings.get_project_root()
+        db_dir = os.path.join(project_root, "databases")
+        if not os.path.exists(db_dir):
+            # Create the directory if does not exist
+            os.makedirs(db_dir)
+        return db_dir
+
+    @classmethod
     def get_main_path(cls) -> Path:
         """Returns path to __main__.py file."""
         return _main_path

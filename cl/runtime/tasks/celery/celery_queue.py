@@ -14,6 +14,7 @@
 
 import datetime as dt
 import multiprocessing
+import os
 from dataclasses import dataclass
 from typing import Final
 from uuid import UUID
@@ -26,6 +27,8 @@ from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.records.protocols import is_key
 from cl.runtime.records.protocols import is_record
 from cl.runtime.serialization.dict_serializer import DictSerializer
+from cl.runtime.settings.context_settings import ContextSettings
+from cl.runtime.settings.settings import Settings
 from cl.runtime.storage.data_source_types import TDataDict
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
@@ -40,12 +43,17 @@ CELERY_RUN_COMMAND_QUEUE: Final[str] = "run_command"
 CELERY_MAX_RETRIES: Final[int] = 3
 CELERY_TIME_LIMIT: Final[int] = 3600 * 2  # TODO: 2 hours (configure)
 
-celery_mongo_server_uri = "mongodb://localhost:27017/"  # TODO: Check that server URI ends in slash
-celery_mongo_database = "celery"  # TODO: Changing DB name stops Celery queue from working, investigate
+databases_path = Settings.get_databases_path()
+data_source_id = ContextSettings.instance().data_source_id
+
+# Get sqlite file name of celery broker based on data source id in settings
+celery_file = os.path.join(databases_path, f"{data_source_id}.celery")
+
+celery_sqlite_uri = f"sqlalchemy+sqlite:///{celery_file}"
 
 celery_app = Celery(
     "worker",
-    broker=f"{celery_mongo_server_uri}{celery_mongo_database}",
+    broker=celery_sqlite_uri,
     broker_connection_retry_on_startup=True,
 )
 
@@ -105,8 +113,10 @@ def celery_start_queue_callable() -> None:
 
 def celery_delete_existing_tasks() -> None:
     """Delete the existing Celery tasks (will exit when the current process exits)."""
-    client = MongoClient(celery_mongo_server_uri)
-    client.drop_database(celery_mongo_database)
+
+    # Remove sqlite file of celery broker if exists
+    if os.path.exists(celery_file):
+        os.remove(celery_file)
 
 
 def celery_start_queue() -> None:

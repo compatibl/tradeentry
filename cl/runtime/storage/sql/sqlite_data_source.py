@@ -395,10 +395,8 @@ class SqliteDataSource(DataSource):
         filename = self.data_source_id
         FileUtil.check_valid_filename(filename)
 
-        project_root = Settings.get_project_root()
-        db_dir = os.path.join(project_root, "databases")
-        if not os.path.exists(db_dir):
-            # Create the directory if does not exist
-            os.makedirs(db_dir)
+        # Get dir for database
+        db_dir = Settings.get_databases_path()
+
         result = os.path.join(db_dir, f"{filename}.db")
         return result
