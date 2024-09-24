@@ -8,8 +8,8 @@ default:
     runtime_context_packages:
         - cl.runtime
         - stubs.cl.runtime
-    runtime_context_data_source_class: cl.runtime.storage.mongo.basic_mongo_data_source.BasicMongoDataSource
-    runtime_context_data_source_id: dev.runtime.default
+    runtime_context_data_source_class: cl.runtime.storage.sql.sqlite_data_source.SqliteDataSource
+    runtime_context_data_source_id: temp.runtime.default
 
     # Documented in ApiSettings class
     runtime_api_host_name: localhost
