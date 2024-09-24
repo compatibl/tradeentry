@@ -14,10 +14,8 @@
 
 from dataclasses import dataclass
 from typing import List
-
 import numpy as np
 from matplotlib import pyplot as plt
-
 from cl.runtime import Context
 from cl.runtime.plots.group_bar_plot_style import GroupBarPlotStyle
 from cl.runtime.plots.group_bar_plot_style_key import GroupBarPlotStyleKey
@@ -57,7 +55,7 @@ class GroupBarPlot(Plot):
         # Load style object
         style = Context.current().load_one(GroupBarPlotStyle, self.style)
 
-        theme = 'dark_background' if style.dark_theme else 'default'
+        theme = "dark_background" if style.dark_theme else "default"
 
         with plt.style.context(theme):
             fig = plt.figure()
@@ -80,7 +78,7 @@ class GroupBarPlot(Plot):
             space = 1 / (len(self.bar_labels) + 1)
 
             for i, (bar_label, bar_shift) in enumerate(zip(self.bar_labels, bar_shifts)):
-                data = self.values[i * len(self.group_labels): (i + 1) * len(self.group_labels)]
+                data = self.values[i * len(self.group_labels) : (i + 1) * len(self.group_labels)]
                 axes.bar(x_ticks + space * bar_shift, data, space, label=bar_label)
 
             axes.set_xticks(x_ticks, self.group_labels)

@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import pytest
-
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.plots.group_bar_plot_style import GroupBarPlotStyle
@@ -38,8 +37,14 @@ def test_4_groups_2_bars(local_dir_fixture):
         group_bar_plot.bar_labels = ["Metric 1", "Metric 2"]
         group_bar_plot.group_labels = ["Model 1", "Model 2", "Model 3", "Model 4"]
         group_bar_plot.values = [
-            10, 20, 20, 40,  # "Metric 1"
-            20, 30, 25, 30,  # "Metric 2"
+            10,
+            20,
+            20,
+            40,  # "Metric 1"
+            20,
+            30,
+            25,
+            30,  # "Metric 2"
         ]
 
         fig = group_bar_plot.create_figure()
@@ -55,12 +60,26 @@ def test_4_groups_5_bars(local_dir_fixture):
         group_bar_plot.bar_labels = ["Metric 1", "Metric 2", "Metric 3", "Metric 4", "Metric 5"]
         group_bar_plot.group_labels = ["Model 1", "Model 2", "Model 3", "Model 4"]
         group_bar_plot.values = [
-            85.5, 92, 70, 83.7,  # "Metric 1"
-            89, 95.3, 77, 95,  # "Metric 2"
-            81, 93.6, 75, 63.5,  # "Metric 3"
-            85.5, 98.8, 78, 83.7,  # "Metric 4"
-            79.5, 90, 72.4, 81.8,  # "Metric 5"
-
+            85.5,
+            92,
+            70,
+            83.7,  # "Metric 1"
+            89,
+            95.3,
+            77,
+            95,  # "Metric 2"
+            81,
+            93.6,
+            75,
+            63.5,  # "Metric 3"
+            85.5,
+            98.8,
+            78,
+            83.7,  # "Metric 4"
+            79.5,
+            90,
+            72.4,
+            81.8,  # "Metric 5"
         ]
         group_bar_plot.value_ticks = list(range(0, 101, 10))
         group_bar_plot.style = GroupBarPlotStyle(dark_theme=True)

@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-
 from cl.runtime import handler
 from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.backend.core.user_key import UserKey
@@ -107,6 +106,3 @@ class StubRuntimeConfig(Config):
         bar_plot.bar_labels = ["Bar 1", "Bar 2"]
         bar_plot.values = [85.5, 92]
         Context.current().save_one(bar_plot)
-
-
-

@@ -38,7 +38,7 @@ def _create_task(task_id: str) -> Task:
     return result
 
 
-@pytest.mark.skip("Celery tasks lock sqlite db file.") # TODO (Roman): resolve conflict
+@pytest.mark.skip("Celery tasks lock sqlite db file.")  # TODO (Roman): resolve conflict
 def test_method(celery_test_queue_fixture):
     """Test calling 'execute_task' method in-process."""
 
@@ -75,7 +75,7 @@ def test_method(celery_test_queue_fixture):
         )
 
 
-@pytest.mark.skip("Celery tasks lock sqlite db file.") # TODO (Roman): resolve conflict
+@pytest.mark.skip("Celery tasks lock sqlite db file.")  # TODO (Roman): resolve conflict
 def test_api(celery_test_queue_fixture):
     """Test submitting task for execution out of process."""
 

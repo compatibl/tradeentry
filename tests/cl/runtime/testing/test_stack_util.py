@@ -42,14 +42,14 @@ class TestClass:
         """Method name matches module name, still three-token path as they are not next to each other."""
         """Function name does not match module name, two-token path."""
         dir_name = os.path.dirname(__file__)
-        expected_result = os.path.join(dir_name, "test_stack_util", "test_class",  "test_stack_util")
+        expected_result = os.path.join(dir_name, "test_stack_util", "test_class", "test_stack_util")
         result = StackUtil.get_base_dir()
         assert result == expected_result
 
     def test_get_base_path_in_method(self):
         """Method name does not match class name or module name, three-token path"""
         dir_name = os.path.dirname(__file__)
-        expected_result = os.path.join(dir_name, "test_stack_util", "test_class",  "test_get_base_path_in_method")
+        expected_result = os.path.join(dir_name, "test_stack_util", "test_class", "test_get_base_path_in_method")
         result = StackUtil.get_base_dir()
         assert result == expected_result
 

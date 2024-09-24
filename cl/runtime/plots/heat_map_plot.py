@@ -17,7 +17,6 @@ from typing import List
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
-
 from cl.runtime import Context
 from cl.runtime.plots.heat_map_plot_style import HeatMapPlotStyle
 from cl.runtime.plots.heat_map_plot_style_key import HeatMapPlotStyleKey
@@ -59,7 +58,7 @@ class HeatMapPlot(Plot):
         # Load style object
         style = Context.current().load_one(HeatMapPlotStyle, self.style)
 
-        theme = 'dark_background' if style.dark_theme else 'default'
+        theme = "dark_background" if style.dark_theme else "default"
 
         with plt.style.context(theme):
             fig, axes = plt.subplots()
@@ -67,11 +66,11 @@ class HeatMapPlot(Plot):
             shape = (len(self.row_labels), len(self.col_labels))
 
             data = np.abs(
-                np.reshape(np.asarray(self.received_values), shape) - np.reshape(np.asarray(self.expected_values),
-                                                                                 shape)
+                np.reshape(np.asarray(self.received_values), shape)
+                - np.reshape(np.asarray(self.expected_values), shape)
             )
 
-            cmap = LinearSegmentedColormap.from_list('rg', ["g", "y", "r"], N=256)
+            cmap = LinearSegmentedColormap.from_list("rg", ["g", "y", "r"], N=256)
 
             im = MatplotlibUtil.heatmap(data, self.row_labels, self.col_labels, ax=axes, cmap=cmap)
 

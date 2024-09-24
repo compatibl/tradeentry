@@ -22,7 +22,6 @@ from typing import Tuple
 from typing import Type
 from typing import cast
 from inflection import camelize
-
 from cl.runtime.backend.core.base_type_info import BaseTypeInfo
 from cl.runtime.backend.core.tab_info import TabInfo
 from cl.runtime.records.protocols import is_key

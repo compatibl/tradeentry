@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Union
+from typing import List
 from typing import Optional
 from typing import Tuple
+from typing import Union
 import numpy as np
-
 from matplotlib import pyplot as plt
 from matplotlib.image import AxesImage
 
@@ -55,30 +55,28 @@ class MatplotlibUtil:
         ax.set_yticks(np.arange(data.shape[0]), labels=row_labels)
 
         # Let the horizontal axes labeling appear on top.
-        ax.tick_params(top=True, bottom=False,
-                       labeltop=True, labelbottom=False)
+        ax.tick_params(top=True, bottom=False, labeltop=True, labelbottom=False)
 
         # Rotate the tick labels and set their alignment.
-        plt.setp(ax.get_xticklabels(), rotation=-30, ha="right",
-                 rotation_mode="anchor")
+        plt.setp(ax.get_xticklabels(), rotation=-30, ha="right", rotation_mode="anchor")
 
         # Turn spines off and create white grid.
         ax.spines[:].set_visible(False)
 
-        ax.set_xticks(np.arange(data.shape[1] + 1) - .5, minor=True)
-        ax.set_yticks(np.arange(data.shape[0] + 1) - .5, minor=True)
-        ax.grid(which="minor", color="w", linestyle='-', linewidth=3)
+        ax.set_xticks(np.arange(data.shape[1] + 1) - 0.5, minor=True)
+        ax.set_yticks(np.arange(data.shape[0] + 1) - 0.5, minor=True)
+        ax.grid(which="minor", color="w", linestyle="-", linewidth=3)
         ax.tick_params(which="minor", bottom=False, left=False)
 
         return im
 
     @staticmethod
     def annotate_heatmap(
-            im: AxesImage,
-            labels: List[List[str]],
-            textcolors: Union[str, Tuple[str]] = ("black", "white"),
-            threshold: Optional[float] = None,
-            **textkw
+        im: AxesImage,
+        labels: List[List[str]],
+        textcolors: Union[str, Tuple[str]] = ("black", "white"),
+        threshold: Optional[float] = None,
+        **textkw,
     ):
         """
         A function to annotate a heatmap.
@@ -109,8 +107,7 @@ class MatplotlibUtil:
 
         # Set default alignment to center, but allow it to be
         # overwritten by textkw.
-        kw = dict(horizontalalignment="center",
-                  verticalalignment="center")
+        kw = dict(horizontalalignment="center", verticalalignment="center")
         kw.update(textkw)
 
         # Loop over the data and create a `Text` for each "pixel".
@@ -119,8 +116,11 @@ class MatplotlibUtil:
         for i in range(data.shape[0]):
             for j in range(data.shape[1]):
                 kw.update(
-                    color=textcolors[int(im.norm(data[i, j]) < threshold)] if isinstance(textcolors, tuple)
-                    else textcolors,
+                    color=(
+                        textcolors[int(im.norm(data[i, j]) < threshold)]
+                        if isinstance(textcolors, tuple)
+                        else textcolors
+                    ),
                 )
                 text = im.axes.text(j, i, labels[i][j], **kw)
                 texts.append(text)

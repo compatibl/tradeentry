@@ -17,10 +17,11 @@ import filecmp
 import inspect
 import os
 from dataclasses import dataclass
-from typing import Any, Literal
+from typing import Any
 from typing import ClassVar
 from typing import Dict
 from typing import Iterable
+from typing import Literal
 from typing import cast
 import inflection
 import yaml
@@ -82,11 +83,11 @@ class RegressionGuard:
     """Output file extension (format), defaults to '.txt'"""
 
     def __init__(
-            self,
-            *,
-            ext: str = None,
-            channel: str | None = None,
-            test_function_pattern: str | None = None,
+        self,
+        *,
+        ext: str = None,
+        channel: str | None = None,
+        test_function_pattern: str | None = None,
     ):
         """
         Initialize the regression guard, optionally specifying channel.
@@ -239,8 +240,9 @@ class RegressionGuard:
         diff_path = self._get_file_path("diff")
 
         if not os.path.exists(received_path):
-            raise RuntimeError(f"Regression guard error, cannot verify because "
-                               f"received file {received_path} does not yet exist.")
+            raise RuntimeError(
+                f"Regression guard error, cannot verify because " f"received file {received_path} does not yet exist."
+            )
 
         if os.path.exists(expected_path):
             # Expected file exists, compare

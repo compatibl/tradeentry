@@ -14,7 +14,6 @@
 
 from abc import ABC
 from dataclasses import dataclass
-
 from cl.runtime.plots.group_bar_plot_style_key import GroupBarPlotStyleKey
 from cl.runtime.records.record_mixin import RecordMixin
 

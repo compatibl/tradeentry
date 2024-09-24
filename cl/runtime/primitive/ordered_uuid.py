@@ -104,8 +104,10 @@ class OrderedUuid:
 
         # Check type
         if (value_type_name := type(value).__name__) != "UUID":
-            raise RuntimeError(f"Method 'OrderedUuid.datetime_of' received object of '{value_type_name}' "
-                               f"type while 'UUID' was expected.")
+            raise RuntimeError(
+                f"Method 'OrderedUuid.datetime_of' received object of '{value_type_name}' "
+                f"type while 'UUID' was expected."
+            )
 
         # Check version
         if value.version != 7:

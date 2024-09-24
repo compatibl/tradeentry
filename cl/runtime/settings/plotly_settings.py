@@ -31,8 +31,10 @@ class PlotlySettings(Settings):
             self.max_test_plots = int(self.show_limit)
 
         if not isinstance(self.show_limit, int):
-            raise RuntimeError(f"{type(self).__name__} field 'show_limit' must be"
-                               f"an int or a string that can be converted to an int.")
+            raise RuntimeError(
+                f"{type(self).__name__} field 'show_limit' must be"
+                f"an int or a string that can be converted to an int."
+            )
 
     @classmethod
     def get_prefix(cls) -> str:

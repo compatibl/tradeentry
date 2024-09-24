@@ -12,17 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from pathlib import Path
-from typing import Iterable, Tuple, List, Type
-
-import pandas as pd
 import pytest
-
+from pathlib import Path
+from typing import Iterable
+from typing import List
+from typing import Tuple
+from typing import Type
+import pandas as pd
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.file.csv_file_reader import CsvFileReader
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
-
 from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassDictFields
@@ -38,14 +38,13 @@ from stubs.cl.runtime import StubDataclassRecord
 flat_serializer = FlatDictSerializer()
 """Serializer for file serialization."""
 
-stub_entries: List[List[RecordProtocol]] = [ # noqa
+stub_entries: List[List[RecordProtocol]] = [  # noqa
     [StubDataclassRecord(id=f"abc1_n{i}") for i in range(5)],
     [StubDataclassNestedFields(primitive=f"abc2_n{i}") for i in range(5)],
     [StubDataclassDerivedRecord(id=f"abc3_n{i}") for i in range(5)],
     [StubDataclassDerivedFromDerivedRecord(id=f"abc4_n{i}") for i in range(5)],
     [StubDataclassOtherDerivedRecord(id=f"abc5_n{i}") for i in range(5)],
     [StubDataclassOptionalFields(id=f"abc7_n{i}") for i in range(5)],
-    
     # TODO(Roman): Restore after supporting dt.date and dt.time for Mongo
     # [StubDataclassListFields(id=f"abc6_n{i}") for i in range(5)],
     # [StubDataclassDictFields(id=f"abc8_n{i}") for i in range(5)],

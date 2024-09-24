@@ -19,7 +19,6 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
-
 from cl.runtime import Context
 from cl.runtime.plots.confusion_matrix_plot_style import ConfusionMatrixPlotStyle
 from cl.runtime.plots.confusion_matrix_plot_style_key import ConfusionMatrixPlotStyleKey
@@ -58,15 +57,15 @@ class ConfusionMatrixPlot(Plot):
         # TODO: consider moving
         data, annotation_text = self._create_confusion_matrix()
 
-        theme = 'dark_background' if style.dark_theme else 'default'
+        theme = "dark_background" if style.dark_theme else "default"
 
         with plt.style.context(theme):
             fig, axes = plt.subplots()
 
-            cmap = LinearSegmentedColormap.from_list('rg', ["g", "y", "r"], N=256)
+            cmap = LinearSegmentedColormap.from_list("rg", ["g", "y", "r"], N=256)
 
             im = MatplotlibUtil.heatmap(data.values, data.index.tolist(), data.columns.tolist(), ax=axes, cmap=cmap)
-            MatplotlibUtil.annotate_heatmap(im, labels=annotation_text, textcolors='black', size=style.label_font_size)
+            MatplotlibUtil.annotate_heatmap(im, labels=annotation_text, textcolors="black", size=style.label_font_size)
 
             # Set figure and axes labels
             axes.set_xlabel(self.x_label)

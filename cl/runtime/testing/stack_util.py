@@ -43,10 +43,10 @@ class StackUtil:
 
     @classmethod
     def get_base_dir(
-            cls,
-            *,
-            allow_missing: bool = False,
-            test_function_pattern: str | None = None,
+        cls,
+        *,
+        allow_missing: bool = False,
+        test_function_pattern: str | None = None,
     ) -> str:
         """
         Return module_dir/test_module/test_function or module_dir/test_module/test_class/test_method,
@@ -61,9 +61,7 @@ class StackUtil:
             defaults to 'test_*'
         """
         return cls._get_base_dir_or_path(
-            dot_delimited=False,
-            allow_missing=allow_missing,
-            test_function_pattern=test_function_pattern
+            dot_delimited=False, allow_missing=allow_missing, test_function_pattern=test_function_pattern
         )
 
     @classmethod
@@ -86,9 +84,7 @@ class StackUtil:
             defaults to 'test_*'
         """
         return cls._get_base_dir_or_path(
-            dot_delimited=True,
-            allow_missing=allow_missing,
-            test_function_pattern=test_function_pattern
+            dot_delimited=True, allow_missing=allow_missing, test_function_pattern=test_function_pattern
         )
 
     @classmethod

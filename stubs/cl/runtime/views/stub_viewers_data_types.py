@@ -40,4 +40,3 @@ class StubViewersDataTypes(StubViewersDataTypesKey, RecordMixin[StubViewersDataT
             content = file.read()
         pdf_content = BinaryContent(content=content, content_type=BinaryContentTypeEnum.Pdf)
         return pdf_content
-

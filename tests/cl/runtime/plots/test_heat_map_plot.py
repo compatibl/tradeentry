@@ -19,21 +19,49 @@ from cl.runtime.plots.heat_map_plot_style import HeatMapPlotStyle
 from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
 
 expected_values = [
-    85.5, 92, 70, 83.7,  # "Metric 1"
-    89, 95.3, 77, 95,  # "Metric 2"
-    81, 93.6, 75, 63.5,  # "Metric 3"
-    85.5, 98.8, 78, 83.7,  # "Metric 4"
-    79.5, 90, 72.4, 81.8,  # "Metric 5"
-
+    85.5,
+    92,
+    70,
+    83.7,  # "Metric 1"
+    89,
+    95.3,
+    77,
+    95,  # "Metric 2"
+    81,
+    93.6,
+    75,
+    63.5,  # "Metric 3"
+    85.5,
+    98.8,
+    78,
+    83.7,  # "Metric 4"
+    79.5,
+    90,
+    72.4,
+    81.8,  # "Metric 5"
 ]
 
 received_values = [
-    85.5, 94.5, 70.5, 85.2,  # "Metric 1"
-    77, 95.3, 80.4, 75,  # "Metric 2"
-    60, 98, 75, 78.5,  # "Metric 3"
-    86, 95, 75, 60,  # "Metric 4"
-    77.3, 92, 76, 74,  # "Metric 5"
-
+    85.5,
+    94.5,
+    70.5,
+    85.2,  # "Metric 1"
+    77,
+    95.3,
+    80.4,
+    75,  # "Metric 2"
+    60,
+    98,
+    75,
+    78.5,  # "Metric 3"
+    86,
+    95,
+    75,
+    60,  # "Metric 4"
+    77.3,
+    92,
+    76,
+    74,  # "Metric 5"
 ]
 
 

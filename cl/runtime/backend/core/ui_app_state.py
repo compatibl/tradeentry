@@ -15,7 +15,6 @@
 from dataclasses import dataclass
 from typing import List
 from typing import Optional
-
 from cl.runtime import Context
 from cl.runtime.backend.core.app_theme import AppTheme
 from cl.runtime.backend.core.tab_info import TabInfo

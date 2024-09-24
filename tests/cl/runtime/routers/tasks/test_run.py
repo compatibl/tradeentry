@@ -58,7 +58,8 @@ save_to_db_requests = [
 
 expected_records_in_db = [[StubDataclassRecord(id="saved_from_handler")]]
 
-@pytest.mark.skip("Celery tasks lock sqlite db file.") # TODO (Roman): resolve conflict
+
+@pytest.mark.skip("Celery tasks lock sqlite db file.")  # TODO (Roman): resolve conflict
 def test_method(celery_test_queue_fixture):
     """Test coroutine for /tasks/run route."""
 
@@ -92,7 +93,7 @@ def test_method(celery_test_queue_fixture):
             assert actual_records == expected_records
 
 
-@pytest.mark.skip("Celery tasks lock sqlite db file.") # TODO (Roman): resolve conflict
+@pytest.mark.skip("Celery tasks lock sqlite db file.")  # TODO (Roman): resolve conflict
 def test_api(celery_test_queue_fixture):
     """Test REST API for /tasks/run route."""
 

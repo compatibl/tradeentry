@@ -135,13 +135,17 @@ class RecordResponse(BaseModel):
         record = data_source.load_one(record_type, deserialized_key)
 
         # Get type declarations based on the actual record type
-        type_decl_dict = TypeResponseUtil.get_type(
-            TypeRequest(
-                name=type(record).__name__,
-                module=request.module,
-                user="root",
-            ),
-        ) if record is not None else dict() # Handle not found record
+        type_decl_dict = (
+            TypeResponseUtil.get_type(
+                TypeRequest(
+                    name=type(record).__name__,
+                    module=request.module,
+                    user="root",
+                ),
+            )
+            if record is not None
+            else dict()
+        )  # Handle not found record
 
         # TODO: Optimize speed using dacite or similar library
 
