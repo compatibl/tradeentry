@@ -65,7 +65,7 @@ class GroupBarPlot(Plot):
             if len(self.bar_labels) % 2 != 0:
                 bar_shifts_positive = list(range(1, len(self.bar_labels) // 2 + 1))
             else:
-                bar_shifts_positive = [x / 2 for x in range(1, len(self.bar_labels) // 2 + 1)]
+                bar_shifts_positive = [x + 1/2 for x in range(len(self.bar_labels) // 2)]
 
             bar_shifts = [-x for x in reversed(bar_shifts_positive)]
 
