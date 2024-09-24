@@ -20,6 +20,17 @@ from cl.runtime.plots.group_bar_plot_style import GroupBarPlotStyle
 from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
 
 
+def test_single_group(local_dir_fixture):
+    with TestingContext() as context:
+        bar_plot = GroupBarPlot()
+        bar_plot.group_labels = ["Single Group"]
+        bar_plot.bar_labels = ["Bar 1", "Bar 2"]
+        bar_plot.values = [85.5, 92]
+
+        fig = bar_plot.create_figure()
+        fig.savefig("test_group_bar_plot.test_single_group.png")
+
+
 def test_4_groups_2_bars(local_dir_fixture):
     with TestingContext() as context:
         group_bar_plot_style = GroupBarPlotStyle()
