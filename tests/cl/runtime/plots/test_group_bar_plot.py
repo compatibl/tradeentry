@@ -45,6 +45,8 @@ def test_4_groups_5_bars(local_dir_fixture):
 
         group_bar_plot = GroupBarPlot()
         group_bar_plot.title = "Model Comparison"
+        group_bar_plot.bar_axis_label = "Metrics"
+        group_bar_plot.value_axis_label = "Models"
         group_bar_plot.bar_labels = ["Metric 1", "Metric 2", "Metric 3", "Metric 4", "Metric 5"]
         group_bar_plot.group_labels = ["Model 1", "Model 2", "Model 3", "Model 4"]
         group_bar_plot.values = [

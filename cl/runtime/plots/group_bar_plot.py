@@ -41,10 +41,10 @@ class GroupBarPlot(Plot):
     values: List[float] = field()
     """List of values in the same order as bar and group labels."""
 
-    bar_axis_label: str | None = "Groups"
+    bar_axis_label: str | None = None
     """Bar axis label."""
 
-    value_axis_label: str | None = "Value"
+    value_axis_label: str | None = None
     """Value axis label."""
 
     y_ticks: List[float] | None = None

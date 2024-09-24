@@ -21,14 +21,10 @@ from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
 
 def test_smoke(local_dir_fixture):
     with TestingContext() as context:
-        bar_plot_style = GroupBarPlotStyle()
-        bar_plot_style.y_ticks = list(range(0, 101, 10))
-
         bar_plot = GroupBarPlot()
-        bar_plot.group_labels = ["Group 1", "Group 1"]  # TODO: , "Group 2", "Group 2"]
-        bar_plot.bar_labels = ["Bar 11", "Bar 12"]  # TODO: , "Bar 21", "Bar 22"]
-        bar_plot.values = [85.5, 92, 70, 83.7]
-        bar_plot.style = bar_plot_style
+        bar_plot.group_labels = ["Group 1"]
+        bar_plot.bar_labels = ["Bar 1", "Bar 2"]
+        bar_plot.values = [85.5, 92]
 
         fig = bar_plot.create_figure()
         fig.savefig("test_bar_plot.test_smoke.png")
