@@ -97,7 +97,15 @@ class CompletionCache:
     def add(self, query: str, completion: str) -> None:
         """Add to file even if already exits, the latest will take precedence during lookup."""
 
+        # Check if the file already exists
         is_new = not os.path.exists(self.output_path)
+
+        # If file does not exist, create directory if directory does not exist
+        if is_new:
+            output_dir = os.path.dirname(self.output_path)
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir)
+
         if self.ext == "csv":
             with open(self.output_path, mode="a", newline="", encoding="utf-8") as file:
                 writer = csv.writer(file, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL, escapechar="\\")
