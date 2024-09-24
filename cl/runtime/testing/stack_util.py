@@ -42,9 +42,60 @@ class StackUtil:
         return False
 
     @classmethod
-    def get_base_path(  # TODO: Refactor to return tuple of dir and name and rename method after refactoring
+    def get_base_dir(
+            cls,
+            *,
+            allow_missing: bool = False,
+            test_function_pattern: str | None = None,
+    ) -> str:
+        """
+        Return module_dir/test_module/test_function or module_dir/test_module/test_class/test_method,
+        collapsing levels with identical name into one.
+
+        Notes:
+            Implemented by searching the stack frame for 'test_' or a custom test function name pattern.
+
+        Args:
+            allow_missing: If True, return None if path is not found (e.g. when not running inside a test)
+            test_function_pattern: Glob pattern to identify the test function or method in stack frame,
+            defaults to 'test_*'
+        """
+        return cls._get_base_dir_or_path(
+            dot_delimited=False,
+            allow_missing=allow_missing,
+            test_function_pattern=test_function_pattern
+        )
+
+    @classmethod
+    def get_base_path(
         cls,
         *,
+        allow_missing: bool = False,
+        test_function_pattern: str | None = None,
+    ) -> str:
+        """
+        Return module_dir/test_module.test_function or module_dir/test_module.test_class.test_method,
+        collapsing levels with identical name into one.
+
+        Notes:
+            Implemented by searching the stack frame for 'test_' or a custom test function name pattern.
+
+        Args:
+            allow_missing: If True, return None if path is not found (e.g. when not running inside a test)
+            test_function_pattern: Glob pattern to identify the test function or method in stack frame,
+            defaults to 'test_*'
+        """
+        return cls._get_base_dir_or_path(
+            dot_delimited=True,
+            allow_missing=allow_missing,
+            test_function_pattern=test_function_pattern
+        )
+
+    @classmethod
+    def _get_base_dir_or_path(  # TODO: Refactor to return tuple of dir and name and rename method after refactoring
+        cls,
+        *,
+        dot_delimited: bool,
         allow_missing: bool = False,
         test_function_pattern: str | None = None,
     ) -> str:
@@ -53,6 +104,7 @@ class StackUtil:
         for 'test_' or a custom test function name pattern.
 
         Args:
+            dot_delimited: If True, test module, class and method are dot-delimited rather than directory levels
             allow_missing: If True, return None if path is not found (e.g. when not running inside a test)
             test_function_pattern: Glob pattern to identify the test function or method in stack frame,
             defaults to 'test_*'
@@ -76,12 +128,15 @@ class StackUtil:
                 else:
                     raise RuntimeError(f"Test module file {module_file} does not end with '.py'.")
 
+                # Determine delimiter based on dot_delimited flag
+                delim = "." if dot_delimited else os.sep
+
                 module_dir = os.path.dirname(module_file_without_ext)
                 module_name = os.path.basename(module_file_without_ext)
                 if class_name is None:
                     # Remove repeated identical tokens to shorten the path
                     if module_name != test_name:
-                        result = os.path.join(module_name, test_name)
+                        result = delim.join((module_name, test_name))
                     else:
                         result = module_name
                 else:
@@ -91,12 +146,12 @@ class StackUtil:
                     # Remove repeated identical tokens to shorten the path
                     if module_name != class_name:
                         if class_name != test_name:
-                            result = os.path.join(module_name, class_name, test_name)
+                            result = delim.join((module_name, class_name, test_name))
                         else:
-                            result = os.path.join(module_name, class_name)
+                            result = delim.join((module_name, class_name))
                     else:
                         if module_name != test_name:
-                            result = os.path.join(module_name, test_name)
+                            result = delim.join((module_name, test_name))
                         else:
                             result = module_name
                 result = os.path.join(module_dir, result)
