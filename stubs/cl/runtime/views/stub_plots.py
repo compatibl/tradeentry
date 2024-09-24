@@ -11,11 +11,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+import io
 from dataclasses import dataclass
+from pathlib import Path
 
-from cl.runtime import RecordMixin
+import pandas as pd
+
+from cl.runtime import RecordMixin, viewer
+from cl.runtime.plots.confusion_matrix_plot import ConfusionMatrixPlot
 from cl.runtime.records.record_mixin import TKey
+from cl.runtime.view.binary_content import BinaryContent
+from cl.runtime.view.binary_content_type_enum import BinaryContentTypeEnum
 from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
 from stubs.cl.runtime.views.stub_plots_key import StubPlotsKey
 
@@ -26,3 +32,21 @@ class StubPlots(StubPlotsKey, RecordMixin[StubPlotsKey]):
 
     def get_key(self) -> TKey:
         return StubHandlersKey(stub_id=self.stub_id)
+
+    @viewer
+    def confusion_matrix_plot(self):
+        raw_data = pd.read_csv(Path(__file__).resolve().parent / "./test_confusion_matrix_plot.csv")
+        matrix_plot = ConfusionMatrixPlot()
+        matrix_plot.title = "Confusion Matrix"
+        matrix_plot.expected_categories = raw_data["True Category"].values.tolist()
+        matrix_plot.received_categories = raw_data["Predicted"].values.tolist()
+
+        fig = matrix_plot.create_figure()
+
+        buf = io.BytesIO()
+        fig.savefig(buf)
+        buf.seek(0)
+        plot_content = BinaryContent()
+        plot_content.content = buf.read()
+        plot_content.content_type = BinaryContentTypeEnum.Png
+        return plot_content
