@@ -54,6 +54,9 @@ class HandlerDeclareBlockDecl:
                 handler.name = member_name
                 handler.comment = member.__doc__
                 handler.static = (
+                    # The handler is considered static if it is declared as staticmethod or classmethod.
+                    # It does not matter if it is a classmethod or staticmethod from UI perspective
+                    # (they are both considered static)
                     isinstance(inspect.getattr_static(record_type, member_name), staticmethod)
                     or
                     isinstance(inspect.getattr_static(record_type, member_name), classmethod)
