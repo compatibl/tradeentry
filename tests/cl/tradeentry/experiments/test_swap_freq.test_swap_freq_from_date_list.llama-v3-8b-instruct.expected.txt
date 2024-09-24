@@ -1,9 +1,0 @@
-
-
-Here is the JSON response:
-```
-{
-  "pay_freq": "semiannually"
-}
-```
-The payment frequency is "semiannually" because the payment dates are every January 15 and July 15, which is a half-yearly frequency.,N,N

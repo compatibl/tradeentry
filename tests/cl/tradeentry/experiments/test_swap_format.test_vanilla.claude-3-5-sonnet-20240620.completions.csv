@@ -1,5 +1,5 @@
 OrderedUuid,Timestamp,Query,Completion
-01922502-f0e0-7571-8a6e-7e5b102067be,2024-09-24T17:10:02.720Z,"
+01922502-ee6a-7641-ac73-371a9d29cabf,2024-09-24T17:10:02.090Z,"
 You are tasked with converting a trade definition example to a Python interpolated string format. 
 Your goal is to identify specific values in the input text that correspond to the provided field names
 and replace them with the appropriate field names in curly brackets.
@@ -42,10 +42,8 @@ Make sure your answer contains only the converted text, with no additional expla
 
 Your work will be tested by substituting field values back into the formatted string you will output
 and checking that the resulting string is exactly the same as the output you received.
-","
-
-{pay_or_receive_fixed} {swap_length} {floating_index} swap at {fixed_rate}%"
-01922503-00ea-72f3-bc78-73f2ad7a884a,2024-09-24T17:10:06.826Z,"
+",Sell {swap_length}{floating_index} swap at {fixed_rate}
+01922502-fb7f-79d0-8a93-7bb295cf018c,2024-09-24T17:10:05.439Z,"
 You are tasked with converting a trade definition example to a Python interpolated string format. 
 Your goal is to identify specific values in the input text that correspond to the provided field names
 and replace them with the appropriate field names in curly brackets.
@@ -94,16 +92,10 @@ Make sure your answer contains only the converted text, with no additional expla
 
 Your work will be tested by substituting field values back into the formatted string you will output
 and checking that the resulting string is exactly the same as the output you received.
-","
-
-Here is the converted text:
-
-```
-Swap Details:
-Notional: {fixed_leg_payment_currency} {pay_or_receive_fixed},
-Bank pays: {floating_leg_payment_frequency} {floating_index}, {floating_leg_daycount_basis}
-Bank receives: {fixed_leg_payment_currency} fixed {fixed_rate}%, {floating_leg_daycount_basis}
+","Swap Details:
+Notional: 10,000,000,000
+Bank pays: 6M USD Term SOFR, {floating_leg_payment_frequency}, {floating_leg_daycount_basis}
+Bank receives: USD {fixed_rate}%, {fixed_leg_payment_frequency}, {fixed_leg_daycount_basis}
 Notional exchange: None
-Start date: {start_date}
-Tenor: {swap_length}
-```"
+{start_date}: 10 November 2009
+Tenor: 5y"

@@ -1,9 +1,0 @@
-```
-Swap Details:
-Notional: 10,000,000,000
-Bank pays: {floating_index}, semi-annual, {floating_leg_daycount_basis}
-Bank receives: {fixed_leg_payment_currency} fixed {swap_lengthfixed_rate}%, semi-annual, {fixed_leg_daycount_basis}
-Notional exchange: None
-Start date: {start_date}
-Tenor: 5y
-```

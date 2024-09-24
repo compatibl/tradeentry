@@ -1,13 +1,13 @@
 
 
-Here is the converted input text in Python interpolated string format:
+Here is the converted text:
 
 ```
 Swap Details:
-Notional: {swap_length}
+Notional: {fixed_leg_payment_currency} {pay_or_receive_fixed},
 Bank pays: {floating_leg_payment_frequency} {floating_index}, {floating_leg_daycount_basis}
-Bank receives: {fixed_leg_payment_currency} fixed {fixed_rate}%, {fixed_leg_daycount_basis}
+Bank receives: {fixed_leg_payment_currency} fixed {fixed_rate}%, {floating_leg_daycount_basis}
 Notional exchange: None
 Start date: {start_date}
-Tenor: {maturity_date}
+Tenor: {swap_length}
 ```

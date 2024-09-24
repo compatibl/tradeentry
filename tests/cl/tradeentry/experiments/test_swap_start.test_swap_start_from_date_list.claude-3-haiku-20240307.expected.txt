@@ -1,7 +1,0 @@
-{
-  "payment_frequency": true,
-  "floating_frequency": false,
-  "pays_in_arrears": true,
-  "currency": false,
-  "maturity_date": false
-},N,N

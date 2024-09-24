@@ -9,10 +9,11 @@ Here is the JSON output:
   "MaturityDate": "2014-05-10",
   "PayOrReceiveFixed": "ReceiveFixed",
   "FixedRatePercent": 3.20,
-  "Underlying": "6M USD Term SOFR",
-  "FloatingSpreadBp": 0,
+  "Underlying": "USD Term SOFR",
   "PaymentFrequency": "Semiannual",
   "Notional": 100000000.00,
   "Currency": "USD"
 }
 ```
+
+Note: I did not include the notional schedule in the JSON output as it is not one of the specified keys.

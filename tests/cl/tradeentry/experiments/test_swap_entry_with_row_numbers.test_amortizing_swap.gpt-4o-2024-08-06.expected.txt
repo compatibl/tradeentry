@@ -1,0 +1,86 @@
+```json
+{
+    "FloatLegCurrency": {
+        "data": "USD",
+        "row": 2
+    },
+    "FloatLegIndex": {
+        "data": "6M USD Term SOFR",
+        "row": 2
+    },
+    "FloatLegSpread": {
+        "data": "",
+        "row": 0
+    },
+    "FloatLegFrequency": {
+        "data": "semi-annual",
+        "row": 2
+    },
+    "FloatLegDaycountBasis": {
+        "data": "act/360",
+        "row": 2
+    },
+    "FixedLegCurrency": {
+        "data": "USD",
+        "row": 3
+    },
+    "FixedLegFixedRate": {
+        "data": "3.20%",
+        "row": 3
+    },
+    "FixedLegFrequency": {
+        "data": "semi-annual",
+        "row": 3
+    },
+    "FixedLegDaycountBasis": {
+        "data": "act/360",
+        "row": 3
+    },
+    "StartDate": {
+        "data": "10 November 2009",
+        "row": 5
+    },
+    "NotionalAmount": [
+        {
+            "data": "100,000,000.00",
+            "row": 10
+        },
+        {
+            "data": "100,000,000.00",
+            "row": 11
+        },
+        {
+            "data": "100,000,000.00",
+            "row": 12
+        },
+        {
+            "data": "100,000,000.00",
+            "row": 13
+        },
+        {
+            "data": "90,000,000.00",
+            "row": 14
+        },
+        {
+            "data": "80,000,000.00",
+            "row": 15
+        },
+        {
+            "data": "70,000,000.00",
+            "row": 16
+        },
+        {
+            "data": "60,000,000.00",
+            "row": 17
+        },
+        {
+            "data": "50,000,000.00",
+            "row": 18
+        },
+        {
+            "data": "25,000,000.00",
+            "row": 19
+        }
+    ]
+}
+```

@@ -1,0 +1,1 @@
+{'Cap': False, 'Floor': False, 'FirstLegType': 'Floating', 'SecondLegType': 'Fixed'}

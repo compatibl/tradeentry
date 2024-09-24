@@ -1,0 +1,52 @@
+Here's the JSON dictionary with the requested fields and their corresponding values based on the given trade entry:
+
+'''
+{
+  "FloatLegCurrency": {
+    "data": "",
+    "row": 0
+  },
+  "FloatLegIndex": {
+    "data": "SOFR",
+    "row": 1
+  },
+  "FloatLegSpread": {
+    "data": "",
+    "row": 0
+  },
+  "FloatLegFrequency": {
+    "data": "",
+    "row": 0
+  },
+  "FloatLegDaycountBasis": {
+    "data": "",
+    "row": 0
+  },
+  "FixedLegCurrency": {
+    "data": "",
+    "row": 0
+  },
+  "FixedLegFixedRate": {
+    "data": "3.45",
+    "row": 1
+  },
+  "FixedLegFrequency": {
+    "data": "",
+    "row": 0
+  },
+  "FixedLegDaycountBasis": {
+    "data": "",
+    "row": 0
+  },
+  "StartDate": {
+    "data": "",
+    "row": 0
+  },
+  "NotionalAmount": [
+    {
+      "data": "10",
+      "row": 1
+    }
+  ]
+}
+'''

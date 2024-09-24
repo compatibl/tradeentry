@@ -1,5 +1,5 @@
 OrderedUuid,Timestamp,Query,Completion
-01922500-ee6c-7172-a3e1-24665ecae458,2024-09-24T17:07:51.020Z,"You will be given the input below in the form of a term sheet describing
+01922500-f59a-7103-b9c2-dad891e2b772,2024-09-24T17:07:52.858Z,"You will be given the input below in the form of a term sheet describing
 some financial instrument.
 Return only JSON with these keys (omit those keys that do not apply):
 * InstrumentType - enum with values: AcceleratedReturnEquityLinkedNote, AutocallableEquityLinkedNote, AutocallableEquityLinkedRangeAccrualNote, AutocallableFixedRateNote, CallableEquityLinkedNote, CallableFixedForFloatingSwap, CallableFixedRateNote, CallableFloatingSpreadNote, KnockOutCommodityLinkedNote, KnockOutEquityLinkedNote, NonCallableCommodityLinkedNote, NonCallableCurrencyLinkedNote, NonCallableEquityLinkedNote, NonCallableFixedForFloatingSwap, NonCallableFixedToFloatingNote, NonCallableFloatingSpreadNote, NonCallableInflationLinkedNote.
@@ -57,49 +57,19 @@ Tenor: 12 months
 Notional: USD 10,000,000.00
 Client pays 3M Term SOFR + 70bps (act/360, quarterly)
 Client receives 12M Term SOFR (act/360, annual)```
-","
-
-Here is the JSON output:
-
-```
+","```json
 {
-  ""InstrumentType"": ""NonCallableFixedForFloatingSwap"",
   ""EffectiveDate"": ""2009-11-10"",
   ""MaturityDate"": ""2010-11-10"",
-  ""PayOrReceiveFixed"": ""PayFixed"",
-  ""FixedRatePercent"": null,
-  ""Underlying"": ""3M Term SOFR"",
-  ""Underlying2"": ""12M Term SOFR"",
-  ""FloatingSpreadBp"": 70,
-  ""FloatingRateMultiplier"": null,
-  ""FloatingRateCapPct"": null,
-  ""FloatingRateFloorPct"": null,
-  ""PaymentFrequency"": null,
+  ""FloatingLegNotional"": 10000000,
+  ""FloatingLegCurrency"": ""USD"",
+  ""FixedLegCurrency"": ""USD"",
   ""FixedLegPaymentFrequency"": ""Quarterly"",
   ""FloatingLegPaymentFrequency"": ""Annual"",
-  ""Notional"": null,
-  ""FixedLegNotional"": 10000000,
-  ""FloatingLegNotional"": 10000000,
-  ""Currency"": null,
-  ""FixedLegCurrency"": ""USD"",
-  ""FloatingLegCurrency"": ""USD"",
-  ""ResetType"": null,
-  ""ExerciseFrequency"": null,
-  ""ParticipationRatePct"": null,
-  ""CappedValueOfUnderlying"": null,
-  ""CappedReturnPct"": null,
-  ""BufferAmountPct"": null,
-  ""TriggerLevel"": null,
-  ""TriggerLevelPct"": null,
-  ""PrincipalProtected"": null,
-  ""InitialPrice"": null,
-  ""RateUponTriggerPct"": null,
-  ""CpiLagMonths"": null,
-  ""WorstOf"": null,
-  ""CUSIP"": null
+  ""FloatingSpreadBp"": 70
 }
 ```"
-01922501-0d93-75d0-b9bd-1e4f593b1637,2024-09-24T17:07:58.995Z,"You will be given the input below in the form of a term sheet describing
+01922501-18a2-7ed2-86f7-305b5a26ddef,2024-09-24T17:08:01.826Z,"You will be given the input below in the form of a term sheet describing
 some financial instrument.
 Return only JSON with these keys (omit those keys that do not apply):
 * InstrumentType - enum with values: AcceleratedReturnEquityLinkedNote, AutocallableEquityLinkedNote, AutocallableEquityLinkedRangeAccrualNote, AutocallableFixedRateNote, CallableEquityLinkedNote, CallableFixedForFloatingSwap, CallableFixedRateNote, CallableFloatingSpreadNote, KnockOutCommodityLinkedNote, KnockOutEquityLinkedNote, NonCallableCommodityLinkedNote, NonCallableCurrencyLinkedNote, NonCallableEquityLinkedNote, NonCallableFixedForFloatingSwap, NonCallableFixedToFloatingNote, NonCallableFloatingSpreadNote, NonCallableInflationLinkedNote.
@@ -159,27 +129,23 @@ Notional exchange: None
 Start: 10 November 2009
 Tenor: 5 years
 Floor: We sell a USD floor at zero (6M USD Term SOFR)```
-","
-
-Here is the JSON output:
-
-```
+","```json
 {
   ""InstrumentType"": ""NonCallableFixedForFloatingSwap"",
   ""EffectiveDate"": ""2009-11-10"",
   ""MaturityDate"": ""2014-11-10"",
   ""PayOrReceiveFixed"": ""ReceiveFixed"",
   ""FixedRatePercent"": 3.45,
-  ""Underlying"": ""6M USD Term SOFR"",
-  ""FloatingSpreadBp"": 0,
-  ""FloatingRateMultiplier"": 1,
   ""FloatingRateFloorPct"": 0,
-  ""PaymentFrequency"": ""Semiannual"",
-  ""Notional"": 1000000000,
-  ""Currency"": ""USD""
+  ""FixedLegPaymentFrequency"": ""Semiannual"",
+  ""FloatingLegPaymentFrequency"": ""Semiannual"",
+  ""FixedLegNotional"": 1000000000,
+  ""FloatingLegNotional"": 1000000000,
+  ""FixedLegCurrency"": ""USD"",
+  ""FloatingLegCurrency"": ""USD""
 }
 ```"
-01922501-2ac3-7471-8cf6-0c9de0fca704,2024-09-24T17:08:06.467Z,"You will be given the input below in the form of a term sheet describing
+01922501-3247-7260-aa6a-b5e1548c5ae8,2024-09-24T17:08:08.391Z,"You will be given the input below in the form of a term sheet describing
 some financial instrument.
 Return only JSON with these keys (omit those keys that do not apply):
 * InstrumentType - enum with values: AcceleratedReturnEquityLinkedNote, AutocallableEquityLinkedNote, AutocallableEquityLinkedRangeAccrualNote, AutocallableFixedRateNote, CallableEquityLinkedNote, CallableFixedForFloatingSwap, CallableFixedRateNote, CallableFloatingSpreadNote, KnockOutCommodityLinkedNote, KnockOutEquityLinkedNote, NonCallableCommodityLinkedNote, NonCallableCurrencyLinkedNote, NonCallableEquityLinkedNote, NonCallableFixedForFloatingSwap, NonCallableFixedToFloatingNote, NonCallableFloatingSpreadNote, NonCallableInflationLinkedNote.
@@ -250,22 +216,16 @@ Effective From: Notional Amount: (USD)
 10-May-13 60,000,000.00
 10-Nov-13 50,000,000.00
 10-May-14 25,000,000.00```
-","
-
-Here is the JSON output:
-
-```
+","```json
 {
   ""InstrumentType"": ""CallableFixedForFloatingSwap"",
   ""EffectiveDate"": ""2009-11-10"",
-  ""MaturityDate"": ""2014-05-10"",
+  ""MaturityDate"": ""2014-11-10"",
   ""PayOrReceiveFixed"": ""ReceiveFixed"",
-  ""FixedRatePercent"": 3.20,
-  ""Underlying"": ""USD Term SOFR"",
-  ""PaymentFrequency"": ""Semiannual"",
-  ""Notional"": 100000000.00,
-  ""Currency"": ""USD""
+  ""FixedRatePercent"": 3.2,
+  ""FloatingLegPaymentFrequency"": ""Semiannual"",
+  ""FixedLegPaymentFrequency"": ""Semiannual"",
+  ""FloatingLegCurrency"": ""USD"",
+  ""FixedLegCurrency"": ""USD""
 }
-```
-
-Note: I did not include the notional schedule in the JSON output as it is not one of the specified keys."
+```"

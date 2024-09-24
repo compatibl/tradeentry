@@ -1,0 +1,73 @@
+OrderedUuid,Timestamp,Query,Completion
+01922504-7db2-7bc2-85fa-0b142721db11,2024-09-24T17:11:44.306Z,"You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Floating vs Floating Swap
+Start date: 10 November 2009
+Tenor: 12 months
+Notional: USD 10,000,000.00
+Client pays 3M Term SOFR + 70bps (act/360, quarterly)
+Client receives 12M Term SOFR (act/360, annual)
+```
+Request id: a6be452f-a5a9-4dc5-b14d-0c67da28117c","{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Floating""
+}"
+01922504-88c9-7790-b569-27383341fe5a,2024-09-24T17:11:47.145Z,"You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Floored USD IRS Swap
+Notional: USD 1bn
+We pay: 6M USD Term SOFR (floating), semi-annual, act/360
+We receive: USD fixed 3.45%, semi-annual, act/360
+Notional exchange: None
+Start: 10 November 2009
+Tenor: 5 years
+Floor: We sell a USD floor at zero (6M USD Term SOFR)
+```
+Request id: 7eb3c344-03ab-49e5-a264-bd8cda695a58","{
+  ""Cap"": false,
+  ""Floor"": true,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}"
+01922504-9333-7aa3-b7cd-ac50d2d78a15,2024-09-24T17:11:49.811Z,"You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Swap Details:
+Notional: 10,000,000,000
+Bank pays: 6M USD Term SOFR, semi-annual, act/360
+Bank receives: USD fixed 3.45%, semi-annual, act/360
+Notional exchange: None
+Start date: 10 November 2009
+Tenor: 5y
+```
+Request id: 55626974-feaa-4844-8b8a-9847d23ac7b7","{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}"

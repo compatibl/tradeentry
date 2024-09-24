@@ -1,0 +1,95 @@
+OrderedUuid,Timestamp,Query,Completion
+01922504-811f-79c3-aacc-99da3682740d,2024-09-24T17:11:45.183Z,"You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Floating vs Floating Swap
+Start date: 10 November 2009
+Tenor: 12 months
+Notional: USD 10,000,000.00
+Client pays 3M Term SOFR + 70bps (act/360, quarterly)
+Client receives 12M Term SOFR (act/360, annual)
+```
+Request id: a6be452f-a5a9-4dc5-b14d-0c67da28117c","
+
+Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Floating""
+}
+```
+
+Let me know if you need anything else!"
+01922504-8bec-7ab2-b24b-33396b57a113,2024-09-24T17:11:47.948Z,"You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Floored USD IRS Swap
+Notional: USD 1bn
+We pay: 6M USD Term SOFR (floating), semi-annual, act/360
+We receive: USD fixed 3.45%, semi-annual, act/360
+Notional exchange: None
+Start: 10 November 2009
+Tenor: 5 years
+Floor: We sell a USD floor at zero (6M USD Term SOFR)
+```
+Request id: 7eb3c344-03ab-49e5-a264-bd8cda695a58","
+
+Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": true,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+01922504-96fe-7f72-82e3-bd9eabdb943c,2024-09-24T17:11:50.782Z,"You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Swap Details:
+Notional: 10,000,000,000
+Bank pays: 6M USD Term SOFR, semi-annual, act/360
+Bank receives: USD fixed 3.45%, semi-annual, act/360
+Notional exchange: None
+Start date: 10 November 2009
+Tenor: 5y
+```
+Request id: 55626974-feaa-4844-8b8a-9847d23ac7b7","
+
+Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```
+
+Let me know if you need any further assistance!"

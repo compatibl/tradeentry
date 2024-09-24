@@ -1,0 +1,29 @@
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  error_messages:
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: Sell 10y SOFR swap at 3.45%
+  status: BAD
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  error_messages:
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: Sell 10y SOFR swap at 3.45%
+  status: BAD
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+

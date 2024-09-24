@@ -1,0 +1,26 @@
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: {NotionalAmount} not in the formatted_row'
+    formatted_row: '1: Floored USD IRS Swap'
+  status: BAD
+

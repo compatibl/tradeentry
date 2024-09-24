@@ -1,0 +1,21 @@
+
+
+Here is the generated JSON dictionary:
+
+'''
+{
+    "FloatLegCurrency": {"data": "", "row": 0},
+    "FloatLegIndex": {"data": "SOFR", "row": 1},
+    "FloatLegSpread": {"data": "", "row": 0},
+    "FloatLegFrequency": {"data": "", "row": 0},
+    "FloatLegDaycountBasis": {"data": "", "row": 0},
+    "FixedLegCurrency": {"data": "", "row": 0},
+    "FixedLegFixedRate": {"data": "3.45%", "row": 1},
+    "FixedLegFrequency": {"data": "", "row": 0},
+    "FixedLegDaycountBasis": {"data": "", "row": 0},
+    "StartDate": {"data": "", "row": 0},
+    "NotionalAmount": {"data": "10", "row": 1}
+}
+'''
+
+Note: Since the trade entry does not provide explicit information about some fields, the corresponding dictionaries have empty strings and zero row numbers as default values.

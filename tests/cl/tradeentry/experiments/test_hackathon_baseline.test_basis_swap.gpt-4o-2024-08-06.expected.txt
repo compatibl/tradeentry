@@ -1,0 +1,12 @@
+```json
+{
+  "EffectiveDate": "2009-11-10",
+  "MaturityDate": "2010-11-10",
+  "FloatingLegNotional": 10000000,
+  "FloatingLegCurrency": "USD",
+  "FixedLegCurrency": "USD",
+  "FixedLegPaymentFrequency": "Quarterly",
+  "FloatingLegPaymentFrequency": "Annual",
+  "FloatingSpreadBp": 70
+}
+```
