@@ -32,15 +32,6 @@ class GroupBarPlot(Plot):
     title: str = field()
     """Plot title."""
 
-    x_label: str = field(default="Groups")
-    """x-axis label."""
-
-    y_label: str = field(default="Value")
-    """y-axis label."""
-
-    y_ticks: List[float] | None = None
-    """Custom y-axis ticks."""
-
     bar_labels: List[str] = field()
     """List of bar labels."""
 
@@ -49,6 +40,15 @@ class GroupBarPlot(Plot):
 
     values: List[float] = field()
     """List of values in the same order as bar and group labels."""
+
+    bar_axis_label: str | None = "Groups"
+    """Bar axis label."""
+
+    value_axis_label: str | None = "Value"
+    """Value axis label."""
+
+    y_ticks: List[float] | None = None
+    """Custom y-axis ticks."""
 
     style: GroupBarPlotStyleKey = field(default_factory=lambda: GroupBarPlotStyle())
     """Color and layout options."""
@@ -68,7 +68,7 @@ class GroupBarPlot(Plot):
             if len(self.bar_labels) % 2 != 0:
                 bar_shifts_positive = list(range(1, len(self.bar_labels) // 2 + 1))
             else:
-                bar_shifts_positive = [x + 1/2 for x in range(len(self.bar_labels) // 2)]
+                bar_shifts_positive = [x + 1 / 2 for x in range(len(self.bar_labels) // 2)]
 
             bar_shifts = [-x for x in reversed(bar_shifts_positive)]
 
@@ -89,8 +89,8 @@ class GroupBarPlot(Plot):
                 axes.set_yticks(self.y_ticks)
 
             # Set figure and axes labels
-            axes.set_xlabel(self.x_label)
-            axes.set_ylabel(self.y_label)
+            axes.set_xlabel(self.bar_axis_label)
+            axes.set_ylabel(self.value_axis_label)
             axes.set_title(self.title)
 
             # Add legend
