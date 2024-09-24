@@ -15,13 +15,10 @@
 import os.path
 from dataclasses import dataclass
 from logging import getLogger
-from pathlib import Path
 from cl.runtime.decorators.viewer_decorator import viewer
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.view.binary_content import BinaryContent
 from cl.runtime.view.binary_content_type_enum import BinaryContentTypeEnum
-from cl.runtime.view.view_util import get_plot_content
-from stubs.cl.runtime.utils.plot_util import create_multi_line_plot
 from stubs.cl.runtime.views.stub_viewers_data_types_key import StubViewersDataTypesKey
 
 _logger = getLogger(__name__)
@@ -44,10 +41,3 @@ class StubViewersDataTypes(StubViewersDataTypesKey, RecordMixin[StubViewersDataT
         pdf_content = BinaryContent(content=content, content_type=BinaryContentTypeEnum.Pdf)
         return pdf_content
 
-    @viewer
-    def plot_viewer(self) -> BinaryContent:
-        """Shows a Plotly chart."""
-
-        plot = create_multi_line_plot()
-        plot_content = get_plot_content(plot, use_app_theme=True)
-        return plot_content
