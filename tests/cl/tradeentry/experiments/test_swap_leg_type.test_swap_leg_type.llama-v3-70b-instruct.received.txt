@@ -1,0 +1,106 @@
+
+
+Here is the JSON output:
+
+```
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+```
+
+Let me know if you have any questions or need further clarification!
+
+
+Here is the JSON output:
+
+```
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+```
+
+Let me know if you have any questions or need further clarification!
+
+
+Here is the JSON output:
+
+```
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+```
+
+
+Here is the JSON output:
+
+```
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+```
+
+Let me know if you need any further assistance!
+
+
+Here is the JSON output:
+
+```
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+```
+
+
+Here is the JSON output:
+
+```
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+```
+
+
+Here is the JSON output:
+
+```
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+```
+
+Let me know if you need any further assistance!
+
+
+Here is the JSON output:
+
+```
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+```
+
+Let me know if you need any further assistance!

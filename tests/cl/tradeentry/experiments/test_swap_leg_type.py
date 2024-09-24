@@ -11,16 +11,22 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import List
 
 import pytest
 import uuid
+
+from cl.convince.llms.llm import Llm
 from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.plots.group_bar_plot import GroupBarPlot
+from cl.runtime.plots.group_bar_plot_style import GroupBarPlotStyle
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.claude.claude_llm import ClaudeLlm
 from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
+from stubs.cl.tradeentry.experiments.stub_string_utils import sanitize_string
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_floored_swap_entry, stub_basis_swap_entry, \
-    stub_fixed_for_floating_swap_entry
+    stub_fixed_for_floating_swap_entry, stub_amortizing_swap_entry
 from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json
 
 llms = [
@@ -40,40 +46,71 @@ Return only JSON with following keys:
 Description of trade entry:
 ```
 {input_text}
-```
-Request id: {uuid}"""
+```"""
 
 
-def _test_swap_leg_type(trade_description: str):
-    with TestingContext():
-        uuid_num = uuid.uuid4()
-        prompt = PROMPT_TEMPLATE.format(input_text=trade_description, uuid=uuid_num)
-        run_count = 1
+def _create_group_bar_plot(results):
+    group_bar_plot_style = GroupBarPlotStyle()
+    group_bar_plot_style.y_ticks = list(range(0, 101, 10))
+
+    group_bar_plot = GroupBarPlot()
+    group_bar_plot.bar_labels = ["Claude 3.5 Sonnet", "Llama3 70b", "GPT4o"]
+    group_bar_plot.group_labels = ["A", "B", "C", "D"]
+
+    group_bar_plot.values = results
+
+    group_bar_plot.style = group_bar_plot_style
+
+    return group_bar_plot.create_figure()
+
+
+def _is_correct_answer(answer: str, correct_answer: str) -> bool:
+    sanitized_answer = sanitize_string(str(answer))
+    sanitized_correct_answer = sanitize_string(correct_answer)
+
+    return sanitized_answer == sanitized_correct_answer
+
+
+def _test_swap_leg_type(trade_description: str, run_count: int, llm: Llm) -> List[str]:
+
+    prompt = PROMPT_TEMPLATE.format(input_text=trade_description)
+
+    results = []
+    for _ in range(run_count):
+
+        result = llm.completion(prompt)
+
+        guard = RegressionGuard(channel=llm.llm_id)
+        guard.write(result)
+
+        results.append(result)
+
+    return results
+
+
+def test_swap_leg_type():
+    run_count = 2
+    correct_answers = ["{'Cap': False, 'Floor': False, 'FirstLegType': 'Floating', 'SecondLegType': 'Fixed'}",
+                       "{'Cap': False, 'Floor': False, 'FirstLegType': 'Floating', 'SecondLegType': 'Floating'}",
+                       "{'Cap': False, 'Floor': True, 'FirstLegType': 'Floating', 'SecondLegType': 'Fixed'}",
+                       "{'Cap': False, 'Floor': False, 'FirstLegType': 'Floating', 'SecondLegType': 'Fixed'}"]
+
+    trades = [stub_fixed_for_floating_swap_entry, stub_basis_swap_entry, stub_floored_swap_entry, stub_amortizing_swap_entry]
+    plot_values = []
+    with (TestingContext()):
         for llm in llms:
-            for _ in range(run_count):
+            for trade, correct_answer in zip(trades, correct_answers):
+                results = _test_swap_leg_type(trade, run_count, llm)
 
-                result = llm.completion(prompt)
+                correct_answers_count = 0
+                for result in results:
+                    extracted_output = extract_json(result)
+                    correct_answers_count += int(_is_correct_answer(extracted_output, correct_answer))
 
-                json_result = extract_json(result)
-                if json_result is None:
-                    json_result = "ERROR: can not extract json"
+                plot_values.append(round(correct_answers_count / run_count * 100, 2))
 
-                guard = RegressionGuard(channel=llm.llm_id)
-                guard.write(str(json_result))
-
-        RegressionGuard.verify_all()
-
-
-def test_basis_swap():
-    _test_swap_leg_type(stub_basis_swap_entry)
-
-
-def test_floored_swap():
-    _test_swap_leg_type(stub_floored_swap_entry)
-
-
-def test_fixed_for_floating_swap():
-    _test_swap_leg_type(stub_fixed_for_floating_swap_entry)
+        fig = _create_group_bar_plot(plot_values)
+    fig.savefig("test_swap_leg_type.png")
 
 
 if __name__ == "__main__":
