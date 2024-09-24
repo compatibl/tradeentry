@@ -42,45 +42,52 @@ class StubFormattedStringChecker:
         return answer
 
     def check_field_piece(self, field: str, answer: Dict) -> Dict:
-        if not isinstance(answer, Dict):
-            return {
-                "message": f"ERROR: answer is not Dict type",
-                "type": str(type(answer)),
-                "answer": answer
-            }
-        if not answer["data"] and not answer["formatted_row"]:
-            return dict()
+
+        # Check if data or formatted_row are missing in the answer
+        if not answer.get("data"):
+            return {}
+
+        # Check if the data is of string type
         if not isinstance(answer["data"], str):
             return {
-                "message": f"ERROR: answer data is not string type",
+                "message": "ERROR: answer data is not string type",
                 "type": str(type(answer["data"])),
                 "data": answer["data"]
             }
+
+        # Check if field in the formatted_row
         template = '{' + field + '}'
         if template not in answer["formatted_row"]:
             return {
                 "message": f"ERROR: {template} not in the formatted_row",
                 "formatted_row": answer["formatted_row"]
             }
-        target_string = answer["formatted_row"].replace(template, answer["data"])
+
+        # Replace the field with the actual data
+        extracted_string = answer["formatted_row"].replace(template, answer["data"])
+
+        # Attempt to extract the row number
         try:
-            pos = self._extract_row_number(target_string)
+            pos = self._extract_row_number(extracted_string)
         except TypeError:
             return {
                 "message": "ERROR: can't extract row number",
-                "formatted_row": target_string
+                "extracted_row": extracted_string
             }
-        true_string = self.trade_description_rows[pos]
-        if true_string != target_string:
+
+        # Compare the resulting string with the expected input string
+        input_string = self.trade_description_rows[pos]
+        if input_string != extracted_string:
             return {
                 "message": "ERROR: the rows are not the same",
-                "input_row": true_string,
-                "extracted_row": target_string,
+                "input_row": input_string,
+                "extracted_row": extracted_string,
                 "formatted_row": answer["formatted_row"],
             }
-        return dict()
+        return {}
 
     def check_field(self, field: str, answer: Union[List, Dict]) -> List:
+
         if (isinstance(answer, Dict) and self.field_freq[field] == "multiple") or \
                 (isinstance(answer, List) and self.field_freq[field] == "single"):
             return [{
@@ -88,17 +95,32 @@ class StubFormattedStringChecker:
                 "freq": self.field_freq[field],
                 "answer_type": str(type(answer))
             }]
+
+        if 'data' not in answer or 'formatted_row' not in answer:
+            return [{
+                "message": "ERROR: Missing required fields 'data' or 'formatted_row' in answer",
+                "answer": answer
+            }]
+
         if isinstance(answer, Dict):
             error_message = self.check_field_piece(field, answer)
             if error_message:
                 return [error_message]
-        else:
+        elif isinstance(answer, List):
             error_messages = []
             for answer_piece in answer:
                 error_message = self.check_field_piece(field, answer_piece)
                 if error_message:
                     error_messages.append(error_message)
             return error_messages
+        else:
+            return [
+                {
+                    "message": f"ERROR: answer is not Dict or List type",
+                    "type": str(type(answer)),
+                    "answer": answer
+                }
+            ]
 
     def check_answer(self, json_answer: Dict) -> Dict:
         status = dict()
