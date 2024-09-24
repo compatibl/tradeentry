@@ -11,9 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 import os
 import traceback
+import uuid
+from datetime import datetime, timezone
+
 import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
@@ -21,6 +23,9 @@ from starlette.responses import Response
 from starlette.staticfiles import StaticFiles
 from cl.runtime import Context
 from cl.runtime.context.process_context import ProcessContext
+from cl.runtime.log.log_entry import LogEntry
+from cl.runtime.log.log_entry_level_enum import LogEntryLevelEnum
+from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.routers.app import app_router
 from cl.runtime.routers.auth import auth_router
 from cl.runtime.routers.entity import entity_router
@@ -39,21 +44,47 @@ from stubs.cl.runtime.config.stub_runtime_config import StubRuntimeConfig  # TOD
 server_app = FastAPI()
 
 
-# Add RuntimeError exception handler to log errors
-@server_app.exception_handler(RuntimeError)
-async def custom_http_exception_handler(request, exc):
-    # Get context logger using request url as name
+# Universal exception handler function
+async def handle_exception(request, exc, log_level):
+
+    # Get context logger using request URL as name
     logger = Context.current().get_logger(str(request.url))
 
-    # Log exception
+    # Log the exception
     logger.error(repr(exc))
 
     # Output traceback
     traceback.print_exception(exc)
 
+    # Save log entry to the database
+    entry = LogEntry(
+        id=str(uuid.uuid4()),
+        message=str(exc),
+        level=log_level,
+        timestamp=DatetimeUtil.to_iso_int(DatetimeUtil.now())
+    )
+    Context.current().save_one(entry)
+
     # Return 500 response to avoid exception handler multiple calls
-    # TODO: Find a way to avoid recurrent calls without creating 'Internal Server Error' manually
     return Response("Internal Server Error", status_code=500)
+
+
+# Add RuntimeError exception handler
+@server_app.exception_handler(RuntimeError)
+async def http_exception_handler(request, exc):
+    return await handle_exception(request, exc, log_level=LogEntryLevelEnum.ERROR)
+
+
+# Add Warning exception handler
+@server_app.exception_handler(Warning)
+async def http_warning_handler(request, exc):
+    return await handle_exception(request, exc, log_level=LogEntryLevelEnum.WARNING)
+
+
+# Add Warning exception handler
+@server_app.exception_handler(UserWarning)
+async def http_user_error_handler(request, exc):
+    return await handle_exception(request, exc, log_level=LogEntryLevelEnum.USER_ERROR)
 
 
 # Get Runtime settings from Dynaconf
