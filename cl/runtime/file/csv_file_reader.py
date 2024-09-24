@@ -54,7 +54,6 @@ class CsvFileReader(Reader):
     def _deserialize_row(self, row_dict: Dict[str, Any]) -> RecordProtocol:
         """Deserialize row into a record."""
 
-        # return self.record_type(**row_dict)
         prepared_row = {}
         for k, v in row_dict.items():
 
