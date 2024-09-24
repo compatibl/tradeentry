@@ -111,7 +111,6 @@ def test_surrounding_leg():
                 correct_answers_count = 0
                 for result in results:
                     extracted_output = extract_between_backticks(result)
-                    print(_is_correct_answer(extracted_output, trade, correct_answer))
                     correct_answers_count += int(_is_correct_answer(extracted_output, trade, correct_answer))
 
                 plot_values.append(round(correct_answers_count / run_count * 100, 2))
