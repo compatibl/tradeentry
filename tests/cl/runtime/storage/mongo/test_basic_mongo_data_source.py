@@ -20,6 +20,7 @@ from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecord
 
 
+@pytest.mark.skip("Requires MongoDB server.")  # TODO: Switch test to MongoMock
 def test_check_data_source_id():
     """Test '_get_db_name' method."""
 
@@ -64,6 +65,7 @@ def test_check_data_source_id():
             BasicMongoDataSource.check_data_source_id("abc/xyz")
 
 
+@pytest.mark.skip("Requires MongoDB server.")  # TODO: Switch test to MongoMock
 def test_load_filter():
     """Test 'load_filter' method."""
 
@@ -82,6 +84,7 @@ def test_load_filter():
         assert all(x.derived_field == filter_obj.derived_field for x in loaded_records)
 
 
+@pytest.mark.skip("Requires MongoDB server.")  # TODO: Switch test to MongoMock
 def test_smoke():
     """Smoke test."""
 
