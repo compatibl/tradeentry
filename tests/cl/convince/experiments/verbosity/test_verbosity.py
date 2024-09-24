@@ -13,23 +13,14 @@
 # limitations under the License.
 
 import pytest
-import datetime as dt
-from dateutil.relativedelta import relativedelta
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
-from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.claude.claude_llm import ClaudeLlm
 from cl.convince.llms.gemini.gemini_llm import GeminiLlm
 from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
-
-llms = [
-    ClaudeLlm(llm_id="claude-3-haiku-20240307"),
-    FireworksLlamaLlm(llm_id="llama-v3-8b-instruct"),
-    GeminiLlm(llm_id="gemini-1.5-flash"),
-    GptLlm(llm_id="gpt-4o-mini"),
-]
+from stubs.cl.convince.experiments.stub_llms import stub_mini_llms
 
 
 def test_verbosity(local_dir_fixture):
@@ -45,7 +36,7 @@ def test_verbosity(local_dir_fixture):
 
         plot = GroupBarPlot()
         plot.values = []
-        for llm in llms:
+        for llm in stub_mini_llms:
             completions = [llm.completion(prompt) for _ in range(rep_count)]
             mult = 100.0 / rep_count
             results = [
@@ -70,6 +61,7 @@ def test_verbosity(local_dir_fixture):
         fig = plot.create_figure()
         fig.savefig("test_verbosity.test_verbosity.png")
 
+        # TODO: Enable
         # guard = RegressionGuard(channel=llm.llm_id)
         # guard.write(f"{result},{is_exact_match_yn},{is_trimmed_match_yn}")
         # guard.verify_all()
