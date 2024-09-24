@@ -49,6 +49,7 @@ expected_results = [
 ]
 
 
+@pytest.mark.skip("Temporarily skip due to SQLite concurrency issue.")  # TODO: Switch test to MongoMock
 def test_method():
     """Test coroutine for /entity/panel route."""
 
@@ -64,6 +65,7 @@ def test_method():
             assert result == expected_result
 
 
+@pytest.mark.skip("Temporarily skip due to SQLite concurrency issue.")  # TODO: Switch test to MongoMock
 def test_api():
     """Test REST API for /entity/panel route."""
 
