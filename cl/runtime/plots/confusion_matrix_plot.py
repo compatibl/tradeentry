@@ -42,10 +42,10 @@ class ConfusionMatrixPlot(Plot):
     expected_categories: List[str] = field()
     """List of expected (correct) categories in the same order of trials as received (predicted) categories."""
 
-    x_label: str = field(default="Predicted")
+    x_label: str | None = "Predicted"
     """x-axis label."""
 
-    y_label: str = field(default="Correct")
+    y_label: str | None = "Correct"
     """y-axis label."""
 
     style: ConfusionMatrixPlotStyleKey = field(default_factory=lambda: ConfusionMatrixPlotStyle())
