@@ -62,8 +62,45 @@ class OrderedUuid:
         return [cls.create_one() for _ in range(count)]
 
     @classmethod
-    def datetime_of(cls, value: UUID) -> dt.datetime:
+    def to_readable_str(cls, value: UUID) -> dt.datetime:
+        # Validate
+        cls.validate(value)
+
+        # Get the hexadecimal representation of the UUID
+        uuid_hex = value.hex
+
+        # Extract the first 12 hex digits representing the timestamp
+        timestamp_hex = uuid_hex[:12]
+
+        # Convert the hex timestamp to an integer (milliseconds since epoch)
+        timestamp_ms = int(timestamp_hex, 16)
+
+        # Convert milliseconds to a datetime object
+        timestamp = dt.datetime.utcfromtimestamp(timestamp_ms / 1000.0)
+
+        # Format the datetime to ISO 8601 with millisecond precision
+        iso_datetime = timestamp.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
+
+        # Append the remaining part of the UUID
+        remaining_uuid = uuid_hex[12:]
+
+        # Combine the ISO datetime with the remaining UUID part
+        result = f"{iso_datetime}-{remaining_uuid}"
+        return result
+
+    @classmethod
+    def datetime_of(cls, value: UUID) -> dt.datetime:  # TODO: Rename to get_datetime
         """Return datetime of a single UUIDv7 value."""
+
+        # Validate
+        cls.validate(value)
+
+        # Field 'UUID.timestamp' is int milliseconds while 'fromtimestamp' method expects float seconds, divide by 1000
+        return dt.datetime.fromtimestamp(uuid_utils.UUID(bytes=value.bytes).timestamp / 1000, dt.timezone.utc)
+
+    @classmethod
+    def validate(cls, value: UUID) -> None:
+        """Validate that argument is a UUIDv7 value."""
 
         # Check type
         if (value_type_name := type(value).__name__) != "UUID":
@@ -74,5 +111,4 @@ class OrderedUuid:
         if value.version != 7:
             raise RuntimeError(f"Method 'OrderedUuid.datetime_of' received UUID v{value.version} while v7 is expected.")
 
-        # Field 'UUID.timestamp' is int milliseconds while 'fromtimestamp' method expects float seconds, divide by 1000
-        return dt.datetime.fromtimestamp(uuid_utils.UUID(bytes=value.bytes).timestamp / 1000, dt.timezone.utc)
+        # TODO: Check timestamp range here?

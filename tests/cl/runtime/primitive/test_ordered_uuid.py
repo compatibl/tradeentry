@@ -72,5 +72,27 @@ def test_datetime_of():
         assert datetime_result.tzinfo == dt.timezone.utc
 
 
+def test_readable_str():
+    """Test to_datetime_prefixed_str conversion."""
+
+    value = OrderedUuid.create_one()
+
+    # Readable string
+    result = OrderedUuid.to_readable_str(value)
+
+    # Get timestamp independently and convert to ISO str
+    timestamp = OrderedUuid.datetime_of(value)
+    timestamp_str = DatetimeUtil.to_str(timestamp)
+
+    # Confirm match of the first 24 chars
+    result_prefix = result[:24]
+    assert timestamp_str == result_prefix
+
+    # Confirm match of the remaining chars, note that the offset is not the same in UUID string vs readable string
+    value_suffix = "-" + str(value).replace("-", "")[12:]
+    result_suffix = result[24:]
+    assert value_suffix == result_suffix
+
+
 if __name__ == "__main__":
     pytest.main([__file__])
