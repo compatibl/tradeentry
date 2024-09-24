@@ -14,7 +14,6 @@
 
 from abc import ABC
 from dataclasses import dataclass
-from typing import List
 
 from cl.runtime.plots.group_bar_plot_style_key import GroupBarPlotStyleKey
 from cl.runtime.records.record_mixin import RecordMixin
@@ -23,9 +22,6 @@ from cl.runtime.records.record_mixin import RecordMixin
 @dataclass(slots=True, kw_only=True)
 class GroupBarPlotStyle(GroupBarPlotStyleKey, RecordMixin[GroupBarPlotStyleKey], ABC):
     """Color and layout options for GroupBarPlot."""
-
-    y_ticks: List[float] | None = None
-    """Custom y-axis ticks."""
 
     dark_theme: bool = False
 

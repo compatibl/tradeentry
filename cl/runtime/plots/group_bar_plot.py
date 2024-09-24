@@ -38,6 +38,9 @@ class GroupBarPlot(Plot):
     y_label: str = field(default="Value")
     """y-axis label."""
 
+    y_ticks: List[float] | None = None
+    """Custom y-axis ticks."""
+
     bar_labels: List[str] = field()
     """List of bar labels."""
 
@@ -82,8 +85,8 @@ class GroupBarPlot(Plot):
 
             axes.set_xticks(x_ticks, self.group_labels)
 
-            if style.y_ticks is not None:
-                axes.set_yticks(style.y_ticks)
+            if self.y_ticks is not None:
+                axes.set_yticks(self.y_ticks)
 
             # Set figure and axes labels
             axes.set_xlabel(self.x_label)
