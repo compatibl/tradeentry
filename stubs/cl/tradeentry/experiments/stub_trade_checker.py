@@ -44,6 +44,13 @@ class StubFormattedStringChecker:
     def check_field_piece(self, field: str, answer: Dict) -> Dict:
 
         # Check if data or formatted_row are missing in the answer
+        if 'data' not in answer or 'formatted_row' not in answer:
+            return {
+                    "message": "ERROR: Missing required fields 'data' or 'formatted_row' in answer",
+                    "answer": answer
+            }
+
+        # Check if data is empty
         if not answer.get("data"):
             return {}
 
@@ -94,12 +101,6 @@ class StubFormattedStringChecker:
                 "message": "Frequency of the answer is incorrect",
                 "freq": self.field_freq[field],
                 "answer_type": str(type(answer))
-            }]
-
-        if 'data' not in answer or 'formatted_row' not in answer:
-            return [{
-                "message": "ERROR: Missing required fields 'data' or 'formatted_row' in answer",
-                "answer": answer
             }]
 
         if isinstance(answer, Dict):
