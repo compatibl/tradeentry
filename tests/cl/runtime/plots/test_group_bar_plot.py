@@ -57,7 +57,7 @@ def test_4_groups_5_bars(local_dir_fixture):
             79.5, 90, 72.4, 81.8,  # "Metric 5"
 
         ]
-        group_bar_plot.y_ticks = list(range(0, 101, 10))
+        group_bar_plot.value_ticks = list(range(0, 101, 10))
         group_bar_plot.style = group_bar_plot_style
 
         fig = group_bar_plot.create_figure()
