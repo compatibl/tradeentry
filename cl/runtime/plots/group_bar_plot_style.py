@@ -24,6 +24,7 @@ class GroupBarPlotStyle(GroupBarPlotStyleKey, RecordMixin[GroupBarPlotStyleKey],
     """Color and layout options for GroupBarPlot."""
 
     dark_theme: bool = False
+    """If true, image is rendered with dark theme."""
 
     def get_key(self) -> GroupBarPlotStyleKey:
         return GroupBarPlotStyleKey(style_id=self.style_id)

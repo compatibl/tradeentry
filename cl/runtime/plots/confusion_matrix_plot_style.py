@@ -22,9 +22,11 @@ from cl.runtime.records.record_mixin import RecordMixin
 class ConfusionMatrixPlotStyle(ConfusionMatrixPlotStyleKey, RecordMixin[ConfusionMatrixPlotStyleKey], ABC):
     """Color and layout options for ConfusionMatrixPlot."""
 
-    label_font_size: int = 6
-
     dark_theme: bool = False
+    """If true, image is rendered with dark theme."""
+
+    label_font_size: int = 6
+    """Font size of cell labels."""
 
     def get_key(self) -> ConfusionMatrixPlotStyleKey:
         return ConfusionMatrixPlotStyleKey(style_id=self.style_id)

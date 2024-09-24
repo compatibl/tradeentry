@@ -23,6 +23,7 @@ class HeatMapPlotStyle(HeatMapPlotStyleKey, RecordMixin[HeatMapPlotStyleKey], AB
     """Color and layout options for HeatMapPlot."""
 
     dark_theme: bool = False
+    """If true, image is rendered with dark theme."""
 
     def get_key(self) -> HeatMapPlotStyleKey:
         return HeatMapPlotStyleKey(style_id=self.style_id)
