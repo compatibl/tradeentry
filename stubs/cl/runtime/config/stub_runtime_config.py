@@ -13,10 +13,13 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+
+from cl.runtime import handler
 from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.backend.core.user_key import UserKey
 from cl.runtime.config.config import Config
 from cl.runtime.context.context import Context
+from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassDictFields
@@ -38,6 +41,7 @@ from stubs.cl.runtime.views.stub_viewers_data_types import StubViewersDataTypes
 class StubRuntimeConfig(Config):
     """Save stub records to storage."""
 
+    @handler
     def configure(self) -> None:
         """Populate the current or default data source with stub records."""
 
@@ -93,3 +97,16 @@ class StubRuntimeConfig(Config):
 
         # save stubs to db
         data_source.save_many(all_records)
+
+    @handler
+    def configure_plots(self) -> None:
+        """Configure plots."""
+
+        bar_plot = GroupBarPlot()
+        bar_plot.group_labels = ["Single Group"]
+        bar_plot.bar_labels = ["Bar 1", "Bar 2"]
+        bar_plot.values = [85.5, 92]
+        Context.current().save_one(bar_plot)
+
+
+

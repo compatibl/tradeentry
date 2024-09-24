@@ -33,8 +33,6 @@ def test_single_group(local_dir_fixture):
 
 def test_4_groups_2_bars(local_dir_fixture):
     with TestingContext() as context:
-        group_bar_plot_style = GroupBarPlotStyle()
-
         group_bar_plot = GroupBarPlot()
         group_bar_plot.title = "Model Comparison"
         group_bar_plot.bar_labels = ["Metric 1", "Metric 2"]
@@ -43,17 +41,13 @@ def test_4_groups_2_bars(local_dir_fixture):
             10, 20, 20, 40,  # "Metric 1"
             20, 30, 25, 30,  # "Metric 2"
         ]
-        group_bar_plot.style = group_bar_plot_style
 
         fig = group_bar_plot.create_figure()
-    fig.savefig("test_group_bar_plot.test_4_groups_2_bars.png")
+        fig.savefig("test_group_bar_plot.test_4_groups_2_bars.png")
 
 
 def test_4_groups_5_bars(local_dir_fixture):
     with TestingContext() as context:
-        group_bar_plot_style = GroupBarPlotStyle()
-        group_bar_plot_style.dark_theme = True
-
         group_bar_plot = GroupBarPlot()
         group_bar_plot.title = "Model Comparison"
         group_bar_plot.bar_axis_label = "Metrics"
@@ -69,11 +63,10 @@ def test_4_groups_5_bars(local_dir_fixture):
 
         ]
         group_bar_plot.value_ticks = list(range(0, 101, 10))
-        group_bar_plot.style = group_bar_plot_style
+        group_bar_plot.style = GroupBarPlotStyle(dark_theme=True)
 
         fig = group_bar_plot.create_figure()
-
-    fig.savefig("test_group_bar_plot.test_4_groups_5_bars.png")
+        fig.savefig("test_group_bar_plot.test_4_groups_5_bars.png")
 
 
 if __name__ == "__main__":
