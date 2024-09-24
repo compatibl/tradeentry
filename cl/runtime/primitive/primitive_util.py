@@ -44,7 +44,7 @@ class PrimitiveUtil:
     def is_primitive(cls, type_: Type | str) -> bool:
         """Check if the provided type is primitive."""
 
-        type_name = type_.__name__ if inspect._is_type(type_) else type_  # noqa
+        type_name = type_.__name__ if inspect.isclass(type_) else type_  # noqa
         return type_name in cls.primitive_type_map
 
     @classmethod
@@ -52,7 +52,7 @@ class PrimitiveUtil:
     def get_runtime_name(cls, type_: Type | str) -> str:
         """Return type's Runtime name."""
 
-        type_name = type_.__name__ if inspect._is_type(type_) else type_  # noqa
+        type_name = type_.__name__ if inspect.isclass(type_) else type_  # noqa
         if not cls.is_primitive(type_name):
             raise RuntimeError(f"Primitive type {type_name} is not supported.")
         return cls.primitive_type_map.get(type_name)
