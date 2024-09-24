@@ -52,25 +52,28 @@ class ConfusionMatrixPlot(Plot):
     """Color and layout options."""
 
     def create_figure(self) -> plt.Figure:
-        # load style object
+        # Load style object
         style = Context.current().load_one(ConfusionMatrixPlotStyle, self.style)
 
         # TODO: consider moving
         data, annotation_text = self._create_confusion_matrix()
 
-        fig, axes = plt.subplots()
+        theme = 'dark_background' if style.dark_theme else 'default'
 
-        cmap = LinearSegmentedColormap.from_list('rg', ["g", "y", "r"], N=256)
+        with plt.style.context(theme):
+            fig, axes = plt.subplots()
 
-        im = MatplotlibUtil.heatmap(data.values, data.index.tolist(), data.columns.tolist(), ax=axes, cmap=cmap)
-        MatplotlibUtil.annotate_heatmap(im, labels=annotation_text, textcolors='black', size=style.label_font_size)
+            cmap = LinearSegmentedColormap.from_list('rg', ["g", "y", "r"], N=256)
 
-        # Set figure and axes labels
-        axes.set_xlabel(self.x_label)
-        axes.set_ylabel(self.y_label)
-        axes.set_title(self.title)
+            im = MatplotlibUtil.heatmap(data.values, data.index.tolist(), data.columns.tolist(), ax=axes, cmap=cmap)
+            MatplotlibUtil.annotate_heatmap(im, labels=annotation_text, textcolors='black', size=style.label_font_size)
 
-        fig.tight_layout()
+            # Set figure and axes labels
+            axes.set_xlabel(self.x_label)
+            axes.set_ylabel(self.y_label)
+            axes.set_title(self.title)
+
+            fig.tight_layout()
 
         return fig
 

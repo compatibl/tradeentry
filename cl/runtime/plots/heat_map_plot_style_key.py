@@ -12,19 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
 from dataclasses import dataclass
-from cl.runtime.plots.confusion_matrix_plot_style_key import ConfusionMatrixPlotStyleKey
-from cl.runtime.records.record_mixin import RecordMixin
+from typing import Type
+from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class ConfusionMatrixPlotStyle(ConfusionMatrixPlotStyleKey, RecordMixin[ConfusionMatrixPlotStyleKey], ABC):
-    """Color and layout options for ConfusionMatrixPlot."""
+class HeatMapPlotStyleKey(KeyMixin):
+    """Color and layout options for HeatMapPlot."""
 
-    label_font_size: int = 6
+    style_id: str = missing()
+    """Unique confusion matrix plot style identifier."""
 
-    dark_theme: bool = False
-
-    def get_key(self) -> ConfusionMatrixPlotStyleKey:
-        return ConfusionMatrixPlotStyleKey(style_id=self.style_id)
+    @classmethod
+    def get_key_type(cls) -> Type:
+        return HeatMapPlotStyleKey

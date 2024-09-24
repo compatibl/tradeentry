@@ -42,6 +42,7 @@ def test_4_groups_5_bars(local_dir_fixture):
     with TestingContext() as context:
         group_bar_plot_style = GroupBarPlotStyle()
         group_bar_plot_style.y_ticks = list(range(0, 101, 10))
+        group_bar_plot_style.dark_theme = True
 
         group_bar_plot = GroupBarPlot()
         group_bar_plot.title = "Model Comparison"

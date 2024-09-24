@@ -18,6 +18,9 @@ import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 
+from cl.runtime import Context
+from cl.runtime.plots.heat_map_plot_style import HeatMapPlotStyle
+from cl.runtime.plots.heat_map_plot_style_key import HeatMapPlotStyleKey
 from cl.runtime.plots.matplotlib_util import MatplotlibUtil
 from cl.runtime.plots.plot import Plot
 from cl.runtime.records.dataclasses_extensions import field
@@ -48,24 +51,35 @@ class HeatMapPlot(Plot):
     y_label: str = field()
     """y-axis label."""
 
+    style: HeatMapPlotStyleKey = field(default_factory=lambda: HeatMapPlotStyle())
+    """Color and layout options."""
+
     def create_figure(self) -> plt.Figure:
-        fig, axes = plt.subplots()
 
-        shape = (len(self.row_labels), len(self.col_labels))
+        # Load style object
+        style = Context.current().load_one(HeatMapPlotStyle, self.style)
 
-        data = np.abs(
-            np.reshape(np.asarray(self.received_values), shape) - np.reshape(np.asarray(self.expected_values), shape)
-        )
+        theme = 'dark_background' if style.dark_theme else 'default'
 
-        cmap = LinearSegmentedColormap.from_list('rg', ["g", "y", "r"], N=256)
+        with plt.style.context(theme):
+            fig, axes = plt.subplots()
 
-        im = MatplotlibUtil.heatmap(data, self.row_labels, self.col_labels, ax=axes, cmap=cmap)
+            shape = (len(self.row_labels), len(self.col_labels))
 
-        # Set figure and axes labels
-        axes.set_xlabel(self.x_label)
-        axes.set_ylabel(self.y_label)
-        axes.set_title(self.title)
+            data = np.abs(
+                np.reshape(np.asarray(self.received_values), shape) - np.reshape(np.asarray(self.expected_values),
+                                                                                 shape)
+            )
 
-        fig.tight_layout()
+            cmap = LinearSegmentedColormap.from_list('rg', ["g", "y", "r"], N=256)
+
+            im = MatplotlibUtil.heatmap(data, self.row_labels, self.col_labels, ax=axes, cmap=cmap)
+
+            # Set figure and axes labels
+            axes.set_xlabel(self.x_label)
+            axes.set_ylabel(self.y_label)
+            axes.set_title(self.title)
+
+            fig.tight_layout()
 
         return fig

@@ -24,11 +24,6 @@ from cl.runtime.plots.group_bar_plot_style_key import GroupBarPlotStyleKey
 from cl.runtime.plots.plot import Plot
 from cl.runtime.records.dataclasses_extensions import field
 
-_layout_background = {
-    "paper_bgcolor": "rgba(255,255,255,1)",
-    "plot_bgcolor": "rgba(255,255,255,1)",
-}
-
 
 @dataclass(slots=True, kw_only=True)
 class GroupBarPlot(Plot):
@@ -56,44 +51,46 @@ class GroupBarPlot(Plot):
     """Color and layout options."""
 
     def create_figure(self) -> plt.Figure:
-
         # Load style object
         style = Context.current().load_one(GroupBarPlotStyle, self.style)
 
-        fig = plt.figure()
-        axes = fig.add_subplot()
+        theme = 'dark_background' if style.dark_theme else 'default'
 
-        x_ticks = np.arange(len(self.group_labels))
+        with plt.style.context(theme):
+            fig = plt.figure()
+            axes = fig.add_subplot()
 
-        if len(self.bar_labels) % 2 != 0:
-            bar_shifts_positive = list(range(1, len(self.bar_labels) // 2 + 1))
-        else:
-            bar_shifts_positive = [x / 2 for x in range(1, len(self.bar_labels) // 2 + 1)]
+            x_ticks = np.arange(len(self.group_labels))
 
-        bar_shifts = [-x for x in reversed(bar_shifts_positive)]
+            if len(self.bar_labels) % 2 != 0:
+                bar_shifts_positive = list(range(1, len(self.bar_labels) // 2 + 1))
+            else:
+                bar_shifts_positive = [x / 2 for x in range(1, len(self.bar_labels) // 2 + 1)]
 
-        if len(self.bar_labels) % 2 != 0:
-            bar_shifts += [0]
+            bar_shifts = [-x for x in reversed(bar_shifts_positive)]
 
-        bar_shifts += bar_shifts_positive
+            if len(self.bar_labels) % 2 != 0:
+                bar_shifts += [0]
 
-        space = 1 / (len(self.bar_labels) + 1)
+            bar_shifts += bar_shifts_positive
 
-        for i, (bar_label, bar_shift) in enumerate(zip(self.bar_labels, bar_shifts)):
-            data = self.values[i * len(self.group_labels): (i + 1) * len(self.group_labels)]
-            axes.bar(x_ticks + space * bar_shift, data, space, label=bar_label)
+            space = 1 / (len(self.bar_labels) + 1)
 
-        axes.set_xticks(x_ticks, self.group_labels)
+            for i, (bar_label, bar_shift) in enumerate(zip(self.bar_labels, bar_shifts)):
+                data = self.values[i * len(self.group_labels): (i + 1) * len(self.group_labels)]
+                axes.bar(x_ticks + space * bar_shift, data, space, label=bar_label)
 
-        if style.y_ticks is not None:
-            axes.set_yticks(style.y_ticks)
+            axes.set_xticks(x_ticks, self.group_labels)
 
-        # Set figure and axes labels
-        axes.set_xlabel(self.x_label)
-        axes.set_ylabel(self.y_label)
-        axes.set_title(self.title)
+            if style.y_ticks is not None:
+                axes.set_yticks(style.y_ticks)
 
-        # Add legend
-        axes.legend()
+            # Set figure and axes labels
+            axes.set_xlabel(self.x_label)
+            axes.set_ylabel(self.y_label)
+            axes.set_title(self.title)
+
+            # Add legend
+            axes.legend()
 
         return fig

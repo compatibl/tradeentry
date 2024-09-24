@@ -14,17 +14,15 @@
 
 from abc import ABC
 from dataclasses import dataclass
-from cl.runtime.plots.confusion_matrix_plot_style_key import ConfusionMatrixPlotStyleKey
+from cl.runtime.plots.heat_map_plot_style_key import HeatMapPlotStyleKey
 from cl.runtime.records.record_mixin import RecordMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class ConfusionMatrixPlotStyle(ConfusionMatrixPlotStyleKey, RecordMixin[ConfusionMatrixPlotStyleKey], ABC):
-    """Color and layout options for ConfusionMatrixPlot."""
-
-    label_font_size: int = 6
+class HeatMapPlotStyle(HeatMapPlotStyleKey, RecordMixin[HeatMapPlotStyleKey], ABC):
+    """Color and layout options for HeatMapPlot."""
 
     dark_theme: bool = False
 
-    def get_key(self) -> ConfusionMatrixPlotStyleKey:
-        return ConfusionMatrixPlotStyleKey(style_id=self.style_id)
+    def get_key(self) -> HeatMapPlotStyleKey:
+        return HeatMapPlotStyleKey(style_id=self.style_id)
