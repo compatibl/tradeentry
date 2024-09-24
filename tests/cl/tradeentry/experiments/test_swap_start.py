@@ -16,15 +16,13 @@ import pytest
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.claude.claude_llm import ClaudeLlm
-from cl.convince.llms.gemini.gemini_llm import GeminiLlm
 from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
 
 llms = [
-    ClaudeLlm(llm_id="claude-3-haiku-20240307"),
-    FireworksLlamaLlm(llm_id="llama-v3-8b-instruct"),
-    GeminiLlm(llm_id="gemini-1.5-flash"),
-    GptLlm(llm_id="gpt-4o-mini"),
+    ClaudeLlm(llm_id="claude-3-5-sonnet-20240620"),
+    FireworksLlamaLlm(llm_id="llama-v3-70b-instruct"),
+    GptLlm(llm_id="gpt-4o-2024-08-06"),
 ]
 
 

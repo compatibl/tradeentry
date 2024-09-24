@@ -17,7 +17,6 @@ import uuid
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.claude.claude_llm import ClaudeLlm
-from cl.convince.llms.gemini.gemini_llm import GeminiLlm
 from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_floored_swap_entry, stub_basis_swap_entry, \
@@ -25,10 +24,9 @@ from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_floored_swap
 from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json
 
 llms = [
-    ClaudeLlm(llm_id="claude-3-sonnet-20240229"),
+    ClaudeLlm(llm_id="claude-3-5-sonnet-20240620"),
     FireworksLlamaLlm(llm_id="llama-v3-70b-instruct"),
-    GeminiLlm(llm_id="gemini-1.5-flash"),
-    GptLlm(llm_id="gpt-4o-mini"),
+    GptLlm(llm_id="gpt-4o-2024-08-06"),
 ]
 
 PROMPT_TEMPLATE = """You will be given the input below in the form of description of trade entry.

@@ -26,10 +26,9 @@ from stubs.cl.tradeentry.experiments.stub_tag_utils import fields_to_text
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry, stub_vanilla_swap_entry, stub_floored_swap_entry
 
 llms = [
-    ClaudeLlm(llm_id="claude-3-sonnet-20240229"),
+    ClaudeLlm(llm_id="claude-3-5-sonnet-20240620"),
     FireworksLlamaLlm(llm_id="llama-v3-70b-instruct"),
-    GeminiLlm(llm_id="gemini-1.5-flash"),
-    GptLlm(llm_id="gpt-4o-mini"),
+    GptLlm(llm_id="gpt-4o-2024-08-06"),
 ]
 
 PROMPT_TEMPLATE = """You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
