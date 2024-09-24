@@ -71,7 +71,7 @@ class CompletionCache:
             raise RuntimeError("Completion cache channel is empty or None.")
 
         # Find base_path=dir_path/test_module by examining call stack for test function signature test_*
-        base_path = StackUtil.get_base_path(allow_missing=True)
+        base_path = StackUtil.get_base_dir(allow_missing=True)
 
         # If not found, use base path relative to project root
         if base_path is None:
