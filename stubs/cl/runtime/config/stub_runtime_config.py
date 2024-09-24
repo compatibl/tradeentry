@@ -33,6 +33,7 @@ from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassSingleton
 from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
 from stubs.cl.runtime.decorators.stub_viewers import StubViewers
+from stubs.cl.runtime.views.stub_plots import StubPlots
 from stubs.cl.runtime.views.stub_viewers_data_types import StubViewersDataTypes
 
 
@@ -73,6 +74,7 @@ class StubRuntimeConfig(Config):
         stub_viewers_records = [StubViewers(stub_id=f"L{i}") for i in range(10)]
         stub_handlers_records = [StubHandlers(stub_id=f"M{i}") for i in range(10)]
         stub_viewers_data_records = [StubViewersDataTypes(stub_id=f"N{i}") for i in range(10)]
+        stub_plots = [StubPlots(stub_id=f"O{i}") for i in range(10)]
 
         stub_dataclass_singleton_record = [StubDataclassSingleton()]
 
@@ -92,6 +94,7 @@ class StubRuntimeConfig(Config):
             *stub_viewers_records,
             *stub_handlers_records,
             *stub_viewers_data_records,
+            *stub_plots,
         ]
 
         # save stubs to db
