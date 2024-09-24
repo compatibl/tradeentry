@@ -23,10 +23,8 @@ from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
 from stubs.cl.tradeentry.experiments.stub_tag_utils import add_line_numbers
 from stubs.cl.tradeentry.experiments.stub_tag_utils import fields_to_text
-from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry
-from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_basis_swap_entry
-from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_floored_swap_entry
-from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json_from_quotes
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry, stub_vanilla_swap_entry, stub_floored_swap_entry
+from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json
 from stubs.cl.tradeentry.experiments.stub_trade_checker import StubFormattedStringChecker
 
 
@@ -82,7 +80,6 @@ FIELDS = [
     {"name": "FixedLegFrequency", "type": "string", "freq": "single"},
     {"name": "FixedLegDaycountBasis", "type": "string", "freq": "single"},
     {"name": "StartDate", "type": "date", "freq": "single"},
-    {"name": "NotionalResetDate", "type": "date", "freq": "multiple"},
     {"name": "NotionalAmount", "type": "float", "freq": "multiple"},
 ]
 
@@ -96,12 +93,16 @@ def _test_formatted_string(fields: List[Dict], trade_description: str):
         run_count = 1
         for llm in llms:
             for _ in range(run_count):
+
                 result = llm.completion(prompt)
-                json_result = extract_json_from_quotes(result)
+
+                json_result = extract_json(result)
                 if json_result is None:
                     json_result = "ERROR: can not extract json"
+
                 guard = RegressionGuard(channel=llm.llm_id)
-                guard.write(json_result)
+                guard.write(str(json_result))
+
                 guard_checker = RegressionGuard(channel=f"{llm.llm_id}-checker")
                 if isinstance(json_result, Dict):
                     json_checker_output = StubFormattedStringChecker(trade_description, fields).check_answer(json_result)
@@ -111,10 +112,9 @@ def _test_formatted_string(fields: List[Dict], trade_description: str):
 
     guard.verify_all()
 
-
-def test_basis_swap():
-    numbered_basis_swap = add_line_numbers(stub_basis_swap_entry)
-    _test_formatted_string(FIELDS, numbered_basis_swap)
+def test_vanilla_swap():
+    numbered_vanilla_swap = add_line_numbers(stub_vanilla_swap_entry)
+    _test_formatted_string(FIELDS, numbered_vanilla_swap)
 
 
 def test_floored_swap():
