@@ -23,6 +23,7 @@ from pydantic import Field
 from cl.runtime import Context
 from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.backend.core.ui_app_state_key import UiAppStateKey
+from cl.runtime.backend.core.ui_type_state import UiTypeState
 from cl.runtime.backend.core.user_key import UserKey
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.routers.schema.type_request import TypeRequest
@@ -140,7 +141,7 @@ class RecordResponse(BaseModel):
                 module=request.module,
                 user="root",
             ),
-        )
+        ) if record is not None else dict() # Handle not found record
 
         # TODO: Optimize speed using dacite or similar library
 

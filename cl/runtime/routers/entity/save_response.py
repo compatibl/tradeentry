@@ -42,12 +42,6 @@ class SaveResponse(BaseModel):
         """Save entity."""
         context = Context.current()
 
-        # TODO (Roman): include all needed types to type_dict automatically
-        # Add needed Data types to type_dict manually
-        type_dict = get_type_dict()
-        for type_ in (TabInfo, BaseTypeInfo):
-            type_dict[type_.__name__] = type_
-
         # Get ui record and apply ui conversion
         ui_record = request.record_dict.model_dump()
 

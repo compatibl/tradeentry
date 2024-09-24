@@ -22,6 +22,9 @@ from typing import Tuple
 from typing import Type
 from typing import cast
 from inflection import camelize
+
+from cl.runtime.backend.core.base_type_info import BaseTypeInfo
+from cl.runtime.backend.core.tab_info import TabInfo
 from cl.runtime.records.protocols import is_key
 from cl.runtime.records.protocols import is_record
 from cl.runtime.serialization.sentinel_type import sentinel_value
@@ -50,6 +53,12 @@ def get_type_dict() -> Dict[str, Type]:
         from cl.runtime.schema.schema import Schema  # TODO: Refactor to avoid cyclic dependency
 
         _type_dict = Schema.get_type_dict()
+
+        # TODO (Roman): include all needed types to type_dict automatically
+        # Add data types needed for UiAppState deserialization to type_dict manually
+        for type_ in (TabInfo, BaseTypeInfo):
+            _type_dict[type_.__name__] = type_
+
     return _type_dict
 
 
