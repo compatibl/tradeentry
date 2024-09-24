@@ -53,7 +53,11 @@ class HandlerDeclareBlockDecl:
                 handler = HandlerDeclareDecl()
                 handler.name = member_name
                 handler.comment = member.__doc__
-                handler.static = isinstance(inspect.getattr_static(record_type, member_name), staticmethod)
+                handler.static = (
+                    isinstance(inspect.getattr_static(record_type, member_name), staticmethod)
+                    or
+                    isinstance(inspect.getattr_static(record_type, member_name), classmethod)
+                )
 
                 # TODO: Add labels support
                 handler.label = titleize(humanize(member_name))
