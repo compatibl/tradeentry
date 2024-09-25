@@ -62,7 +62,7 @@ class OrderedUuid:
         return [cls.create_one() for _ in range(count)]
 
     @classmethod
-    def to_readable_str(cls, value: UUID) -> dt.datetime:
+    def to_readable_str(cls, value: UUID) -> str:
         # Validate
         cls.validate(value)
 
