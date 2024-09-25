@@ -30,8 +30,10 @@ def _get_simple_prompt(i: int):
 
 
 def _get_extended_prompt(i: int):
-    return (f"Reply with the answer for ```{_get_question(i)}``. Your reply must include numerical value for the answer "
-            f"(not words) with no other comments or other text.")
+    return (
+        f"Reply with the answer for ```{_get_question(i)}``. Your reply must include numerical value for the answer "
+        f"(not words) with no other comments or other text."
+    )
 
 
 def test_verbosity(local_dir_fixture):
@@ -45,11 +47,11 @@ def test_verbosity(local_dir_fixture):
         for llm in stub_mini_llms:
 
             # Calculate
-            simple_sum = sum(llm.completion(_get_simple_prompt(i + 1)) == str(pow(i+1, 2)) for i in range(reps))
-            extended_sum = sum(llm.completion(_get_extended_prompt(i + 1)) == str(pow(i+1, 2)) for i in range(reps))
+            simple_sum = sum(llm.completion(_get_simple_prompt(i + 1)) == str(pow(i + 1, 2)) for i in range(reps))
+            extended_sum = sum(llm.completion(_get_extended_prompt(i + 1)) == str(pow(i + 1, 2)) for i in range(reps))
 
             # Add to plot
-            plot.values.extend([simple_sum/reps, extended_sum/reps])
+            plot.values.extend([simple_sum / reps, extended_sum / reps])
 
         # Apply labels
         plot.bar_labels = [llm.llm_id for llm in stub_mini_llms]

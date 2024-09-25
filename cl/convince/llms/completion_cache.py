@@ -15,9 +15,9 @@
 import csv
 import os
 from dataclasses import dataclass
-from typing import Any, ClassVar
+from typing import Any
+from typing import ClassVar
 from typing import Dict
-
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.settings.settings import Settings
 from cl.runtime.testing.stack_util import StackUtil
@@ -57,7 +57,7 @@ class CompletionCache:
     output_path: str | None = None
     """Path for the cache file where completions are stored."""
 
-    __completion_dict: Dict[str, str] = field(default_factory=lambda: {})   # TODO: Set using ContextVars
+    __completion_dict: Dict[str, str] = field(default_factory=lambda: {})  # TODO: Set using ContextVars
     """Dictionary of completions indexed by query."""
 
     def __post_init__(self):

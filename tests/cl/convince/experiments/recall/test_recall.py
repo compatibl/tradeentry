@@ -12,9 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from random import random, randint, Random
 import pytest
 import datetime as dt
+from random import Random
+from random import randint
+from random import random
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.testing.regression_guard import RegressionGuard

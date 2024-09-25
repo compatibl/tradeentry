@@ -15,9 +15,9 @@
 import pytest
 import os
 from typing import List
-from cl.convince.llms.completion_cache import CompletionCache
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.testing.stack_util import StackUtil
+from cl.convince.llms.completion_cache import CompletionCache
 
 module_path = __file__.removesuffix(".py")
 
