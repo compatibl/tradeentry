@@ -51,7 +51,6 @@ Description of trade entry:
 
 
 def _create_group_bar_plot(results):
-    group_bar_plot_style = GroupBarPlotStyle()
     group_bar_plot = GroupBarPlot()
     group_bar_plot.bar_labels = ["Claude 3.5 Sonnet", "Llama3 70b", "GPT4o"]
     group_bar_plot.group_labels = ["A", "B", "C", "D"]
@@ -72,15 +71,11 @@ def _test_swap_leg_type(trade_description: str, run_count: int, llm: Llm) -> Lis
     prompt = PROMPT_TEMPLATE.format(input_text=trade_description)
 
     results = []
+    guard = RegressionGuard(channel=llm.llm_id)
     for _ in range(run_count):
-
         result = llm.completion(prompt)
-
-        guard = RegressionGuard(channel=llm.llm_id)
         guard.write(result)
-
         results.append(result)
-
     return results
 
 
@@ -109,11 +104,12 @@ def test_swap_leg_type():
                 for result in results:
                     extracted_output = extract_json(result)
                     correct_answers_count += int(_is_correct_answer(extracted_output, correct_answer))
-
                 plot_values.append(round(correct_answers_count / run_count * 100, 2))
 
         fig = _create_group_bar_plot(plot_values)
+
     fig.savefig("test_swap_leg_type.png")
+    RegressionGuard.verify_all()
 
 
 if __name__ == "__main__":
