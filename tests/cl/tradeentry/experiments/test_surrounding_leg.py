@@ -38,11 +38,12 @@ llms = [
 ]
 
 PROMPT_TEMPLATE = """In this text, surround information about each leg in curly brackets. Make no other changes
-to the text. Take into account the following.
+to the text. Take into account the following:
 
 - Only one set of curly brackets per leg should be present, surrounding the information specific to the leg
 - Include information about who pays the leg
 - Do not surround with curly brackets any text that is not specific to a single leg
+- Do not miss any information from the original text
 
 Text: 
 ```
@@ -68,8 +69,7 @@ def _is_correct_answer(answer: str, trade_description: str, correct_answers: Lis
 
     return (
         sanitized_answer.replace("{", "").replace("}", "") == sanitized_trade_description
-        and correct_answers[0] in answer
-        and correct_answers[1] in answer
+        and all(correct_answer in answer for correct_answer in correct_answers)
     )
 
 
@@ -91,20 +91,22 @@ def _test_surrounding_leg(trade_description: str, run_count: int, llm: Llm) -> L
 
 
 def test_surrounding_leg():
-    run_count = 2
+    run_count = 1
     correct_answers = [
         [
             "{Bank pays: 6M USD Term SOFR, semi-annual, act/360}",
             "{Bank receives: USD fixed 3.45%, semi-annual, act/360}",
         ],
-        ["Client pays 3M Term SOFR + 70bps (act/360, quarterly)", "Client receives 12M Term SOFR (act/360, annual)"],
         [
-            "We pay: 6M USD Term SOFR (floating), semi-annual, act/360",
-            "We receive: USD fixed 3.45%, semi-annual, act/360",
+            "{Client pays 3M Term SOFR + 70bps (act/360, quarterly)}",
+            "{Client receives 12M Term SOFR (act/360, annual)}"],
+        [
+            "{We pay: 6M USD Term SOFR (floating), semi-annual, act/360}",
+            "{We receive: USD fixed 3.45%, semi-annual, act/360}"
         ],
         [
-            "Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360",
-            "Party A receives: USD fixed 3.20%, semi-annual, act/360",
+            "{Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360}",
+            "{Party A receives: USD fixed 3.20%, semi-annual, act/360}",
         ],
     ]
     trades = [
@@ -113,11 +115,10 @@ def test_surrounding_leg():
         stub_floored_swap_entry,
         stub_amortizing_swap_entry,
     ]
-    numbered_trades = [add_line_numbers(trade) for trade in trades]
     plot_values = []
     with TestingContext():
         for llm in llms:
-            for trade, correct_answer in zip(numbered_trades, correct_answers):
+            for trade, correct_answer in zip(trades, correct_answers):
                 results = _test_surrounding_leg(trade, run_count, llm)
 
                 correct_answers_count = 0
