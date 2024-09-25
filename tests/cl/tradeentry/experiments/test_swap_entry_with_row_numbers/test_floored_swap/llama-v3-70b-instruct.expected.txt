@@ -1,0 +1,19 @@
+Here is the generated JSON dictionary:
+
+'''
+{
+    "FloatLegCurrency": {"data": "USD", "row": 3},
+    "FloatLegIndex": {"data": "6M USD Term SOFR", "row": 3},
+    "FloatLegSpread": {"data": "", "row": 0},
+    "FloatLegFrequency": {"data": "semi-annual", "row": 3},
+    "FloatLegDaycountBasis": {"data": "act/360", "row": 3},
+    "FixedLegCurrency": {"data": "USD", "row": 4},
+    "FixedLegFixedRate": {"data": "3.45%", "row": 4},
+    "FixedLegFrequency": {"data": "semi-annual", "row": 4},
+    "FixedLegDaycountBasis": {"data": "act/360", "row": 4},
+    "StartDate": {"data": "10 November 2009", "row": 6},
+    "NotionalAmount": [{"data": "1bn", "row": 2}]
+}
+'''
+
+Let me know if this is correct!
