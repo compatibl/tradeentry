@@ -17,16 +17,13 @@ import os
 from dataclasses import dataclass
 from typing import Any
 from typing import Dict
-from uuid import UUID
-from cl.runtime.primitive.datetime_util import DatetimeUtil
-from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.settings.settings import Settings
 from cl.runtime.testing.stack_util import StackUtil
 
 _supported_extensions = ["csv"]
 """The list of supported output file extensions (formats)."""
 
-_csv_headers = ["OrderedUuid", "Timestamp", "Query", "Completion"]
+_csv_headers = ["RequestID", "Query", "Completion"]
 """CSV column headers."""
 
 
@@ -94,7 +91,7 @@ class CompletionCache:
         # Load cache file from disk
         self.load_cache_file()
 
-    def add(self, query: str, completion: str) -> None:
+    def add(self, request_id: str, query: str, completion: str) -> None:
         """Add to file even if already exits, the latest will take precedence during lookup."""
 
         # Check if the file already exists
@@ -120,11 +117,7 @@ class CompletionCache:
                 # preventing incorrect measurement of stability
 
                 # Write the new completion without checking if one already exists
-                ordered_uid = OrderedUuid.create_one()
-                timestamp = OrderedUuid.datetime_of(ordered_uid)
-                ordered_uid_str = str(ordered_uid)
-                timestamp_str = DatetimeUtil.to_str(timestamp)
-                writer.writerow([ordered_uid_str, timestamp_str, query, completion])
+                writer.writerow([request_id, query, completion])
 
                 # Flush immediately to ensure all of the output is on disk in the event of exception
                 file.flush()
@@ -148,7 +141,7 @@ class CompletionCache:
                 headers_in_file = next(reader, None)
                 if headers_in_file != _csv_headers:
                     max_len = 20
-                    headers_in_file = [h if len(max_len) < 10 else f"{h[:max_len]}..." for h in headers_in_file]
+                    headers_in_file = [h if len(h) < max_len else f"{h[:max_len]}..." for h in headers_in_file]
                     headers_in_file_str = ", ".join(headers_in_file)
                     expected_headers_str = ", ".join(_csv_headers)
                     raise ValueError(
@@ -156,14 +149,5 @@ class CompletionCache:
                         f"Actual headers: {headers_in_file_str}."
                     )
 
-                # Read cached completions
-                row_idx = 0
-                for row in reader:
-                    row_idx = row_idx + 1
-                    if len(row) == 4:
-                        _, _, query, completion = row
-                        self.__completion_dict[query] = completion
-                    else:
-                        raise RuntimeError(
-                            f"Fewer than than 4 columns in row={row_idx} of completions cache file {self.output_path}."
-                        )
+                # Read cached completions, ignoring request_id at position 0
+                self.__completion_dict.update({row[1]: row[2] for row in reader})
