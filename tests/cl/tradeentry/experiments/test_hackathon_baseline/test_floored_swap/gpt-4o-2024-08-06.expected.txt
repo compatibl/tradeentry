@@ -1,0 +1,17 @@
+```json
+{
+  "InstrumentType": "NonCallableFixedForFloatingSwap",
+  "EffectiveDate": "2009-11-10",
+  "MaturityDate": "2014-11-10",
+  "PayOrReceiveFixed": "ReceiveFixed",
+  "FixedRatePercent": 3.45,
+  "FloatingSpreadBp": 0,
+  "FloatingRateFloorPct": 0,
+  "FloatingLegPaymentFrequency": "Semiannual",
+  "FixedLegPaymentFrequency": "Semiannual",
+  "FixedLegNotional": 1000000000,
+  "FloatingLegNotional": 1000000000,
+  "FixedLegCurrency": "USD",
+  "FloatingLegCurrency": "USD"
+}
+```

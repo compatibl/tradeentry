@@ -1,0 +1,14 @@
+{
+  "InstrumentType": "NonCallableFloatingSpreadNote",
+  "EffectiveDate": "2009-11-10",
+  "MaturityDate": "2010-11-10",
+  "Underlying": "3M Term SOFR",
+  "Underlying2": "12M Term SOFR",
+  "FloatingSpreadBp": 70,
+  "FixedLegPaymentFrequency": "Annual",
+  "FloatingLegPaymentFrequency": "Quarterly",
+  "FixedLegNotional": 10000000,
+  "FloatingLegNotional": 10000000,
+  "FixedLegCurrency": "USD",
+  "FloatingLegCurrency": "USD"
+}
