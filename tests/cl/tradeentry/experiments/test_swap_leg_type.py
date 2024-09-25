@@ -66,7 +66,7 @@ def _is_correct_answer(answer: str, correct_answer: str) -> bool:
     return sanitized_answer == sanitized_correct_answer
 
 
-def _test_swap_leg_type(trade_description: str, run_count: int, llm: Llm) -> List[str]:
+def _testing_swap_leg_type(trade_description: str, run_count: int, llm: Llm) -> List[str]:
 
     prompt = PROMPT_TEMPLATE.format(input_text=trade_description)
 
@@ -98,7 +98,7 @@ def test_swap_leg_type():
     with TestingContext():
         for llm in llms:
             for trade, correct_answer in zip(trades, correct_answers):
-                results = _test_swap_leg_type(trade, run_count, llm)
+                results = _testing_swap_leg_type(trade, run_count, llm)
 
                 correct_answers_count = 0
                 for result in results:

@@ -81,7 +81,7 @@ FIELDS = [
 ]
 
 
-def _test_answer_referencing(fields: List[Dict], trade_description: str):
+def _testing_answer_referencing(fields: List[Dict], trade_description: str):
     fields_text = fields_to_text(fields)
 
     with TestingContext():
@@ -94,22 +94,23 @@ def _test_answer_referencing(fields: List[Dict], trade_description: str):
                 guard = RegressionGuard(channel=llm.llm_id)
                 guard.write(result)
 
-    RegressionGuard.verify_all()
-
 
 def test_vanilla_swap():
     numbered_vanilla_swap = add_line_numbers(stub_vanilla_swap_entry)
-    _test_answer_referencing(FIELDS, numbered_vanilla_swap)
+    _testing_answer_referencing(FIELDS, numbered_vanilla_swap)
+    RegressionGuard.verify_all()
 
 
 def test_floored_swap():
     numbered_floored_swap = add_line_numbers(stub_floored_swap_entry)
-    _test_answer_referencing(FIELDS, numbered_floored_swap)
+    _testing_answer_referencing(FIELDS, numbered_floored_swap)
+    RegressionGuard.verify_all()
 
 
 def test_amortizing_swap():
     numbered_amortizing_swap = add_line_numbers(stub_amortizing_swap_entry)
-    _test_answer_referencing(FIELDS, numbered_amortizing_swap)
+    _testing_answer_referencing(FIELDS, numbered_amortizing_swap)
+    RegressionGuard.verify_all()
 
 
 if __name__ == "__main__":

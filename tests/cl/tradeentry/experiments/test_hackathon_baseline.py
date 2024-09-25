@@ -84,7 +84,7 @@ Term sheet: ```{input}```
 """
 
 
-def _test_hackathon_baseline(trade_description: str):
+def _testing_hackathon_baseline(trade_description: str):
     prompt = PROMPT_TEMPLATE.format(input=trade_description)
 
     with TestingContext():
@@ -94,19 +94,19 @@ def _test_hackathon_baseline(trade_description: str):
                 result = llm.completion(prompt)
                 guard = RegressionGuard(channel=llm.llm_id)
                 guard.write(result)
-        RegressionGuard.verify_all()
 
 
 def test_basis_swap():
-    _test_hackathon_baseline(stub_basis_swap_entry)
+    _testing_hackathon_baseline(stub_basis_swap_entry)
+    RegressionGuard.verify_all()
 
 
 def test_floored_swap():
-    _test_hackathon_baseline(stub_floored_swap_entry)
+    _testing_hackathon_baseline(stub_floored_swap_entry)
 
 
 def test_amortizing_swap():
-    _test_hackathon_baseline(stub_amortizing_swap_entry)
+    _testing_hackathon_baseline(stub_amortizing_swap_entry)
 
 
 if __name__ == "__main__":
