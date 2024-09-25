@@ -1,0 +1,11 @@
+Here is the converted text:
+
+```
+Swap Details:
+Notional: {fixed_leg_payment_currency} {fixed_leg_payment_frequency}
+Bank pays: {floating_leg_payment_frequency} {floating_index} {floating_leg_daycount_basis}
+Bank receives: {fixed_leg_payment_currency} fixed {fixed_rate}%, {fixed_leg_payment_frequency} {fixed_leg_daycount_basis}
+Notional exchange: None
+Start date: {start_date}
+Tenor: {swap_length}
+```

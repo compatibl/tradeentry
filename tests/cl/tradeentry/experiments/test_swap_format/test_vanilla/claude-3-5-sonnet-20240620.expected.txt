@@ -1,0 +1,1 @@
+{pay_or_receive_fixed} 10y {floating_index} swap at {fixed_rate}

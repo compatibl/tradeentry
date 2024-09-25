@@ -1,0 +1,97 @@
+RequestID,Query,Completion
+2024-09-25T10:29:07.167Z-7353afd84b13a6754459,"You are tasked with converting a trade definition example to a Python interpolated string format. 
+Your goal is to identify specific values in the input text that correspond to the provided field names
+and replace them with the appropriate field names in curly brackets.
+
+Here is the input text:
+```
+Sell 10y SOFR swap at 3.45%
+```
+
+The available fields are:
+```
+pay_or_receive_fixed, start_date, maturity_date, swap_lengthfixed_rate, floating_index, fixed_leg_payment_currency, floating_leg_payment_currency, fixed_leg_daycount_basis, floating_leg_daycount_basisfixed_leg_payment_frequency, floating_leg_payment_frequency
+```
+
+To complete this task, follow these steps:
+1. Analyze the input text and identify which words or phrases correspond to the available fields.
+2. Replace each identified word or phrase with the corresponding available field name in curly brackets,
+   similar to the formatted Python string.
+3. If two of such words of phrases follow each other without space, do not combine available field names
+   under a single set of curly brackets.
+4. Keep any words or phrases that don't match a field name as they are.
+
+Here's an example of how this process works for a different trade type:
+Input text: ""1y AAPL call ATM""
+Available fields: ""buy_or_sell, call_or_put, symbol, expiry""
+Output: ""{expiry} {symbol} {call_or_put} ATM""
+
+Now, convert the given input text using the provided fields by following these guidelines:
+
+1. If a field is not present in the input text, do not include it in the output.
+2. If there are words or phrases in the input text that don't correspond to any field, 
+   treat them as ordinary text even if they seem like parameters.
+3. If an available field is not present but a related field is, do not use your knowledge of finance 
+   to derive one from the other (for example, do not derive currency from index).
+4. However if an available field is not present but another field is that has unambiguous,
+   one-to-one correspondence with the available field it can be returned instead (for example, 
+   effective date instead of start date).
+
+Make sure your answer contains only the converted text, with no additional explanation or commentary.
+
+Your work will be tested by substituting field values back into the formatted string you will output
+and checking that the resulting string is exactly the same as the output you received.",{pay_or_receive_fixed} 10y {floating_index} swap at {fixed_rate}
+2024-09-25T10:29:08.804Z-7051a952f6ff738e9fd1,"You are tasked with converting a trade definition example to a Python interpolated string format. 
+Your goal is to identify specific values in the input text that correspond to the provided field names
+and replace them with the appropriate field names in curly brackets.
+
+Here is the input text:
+```
+Swap Details:
+Notional: 10,000,000,000
+Bank pays: 6M USD Term SOFR, semi-annual, act/360
+Bank receives: USD fixed 3.45%, semi-annual, act/360
+Notional exchange: None
+Start date: 10 November 2009
+Tenor: 5y
+```
+
+The available fields are:
+```
+pay_or_receive_fixed, start_date, maturity_date, swap_lengthfixed_rate, floating_index, fixed_leg_payment_currency, floating_leg_payment_currency, fixed_leg_daycount_basis, floating_leg_daycount_basisfixed_leg_payment_frequency, floating_leg_payment_frequency
+```
+
+To complete this task, follow these steps:
+1. Analyze the input text and identify which words or phrases correspond to the available fields.
+2. Replace each identified word or phrase with the corresponding available field name in curly brackets,
+   similar to the formatted Python string.
+3. If two of such words of phrases follow each other without space, do not combine available field names
+   under a single set of curly brackets.
+4. Keep any words or phrases that don't match a field name as they are.
+
+Here's an example of how this process works for a different trade type:
+Input text: ""1y AAPL call ATM""
+Available fields: ""buy_or_sell, call_or_put, symbol, expiry""
+Output: ""{expiry} {symbol} {call_or_put} ATM""
+
+Now, convert the given input text using the provided fields by following these guidelines:
+
+1. If a field is not present in the input text, do not include it in the output.
+2. If there are words or phrases in the input text that don't correspond to any field, 
+   treat them as ordinary text even if they seem like parameters.
+3. If an available field is not present but a related field is, do not use your knowledge of finance 
+   to derive one from the other (for example, do not derive currency from index).
+4. However if an available field is not present but another field is that has unambiguous,
+   one-to-one correspondence with the available field it can be returned instead (for example, 
+   effective date instead of start date).
+
+Make sure your answer contains only the converted text, with no additional explanation or commentary.
+
+Your work will be tested by substituting field values back into the formatted string you will output
+and checking that the resulting string is exactly the same as the output you received.","Swap Details:
+Notional: 10,000,000,000
+Bank pays: 6M USD Term SOFR, {floating_leg_payment_frequency}, {floating_leg_daycount_basis}
+Bank receives: USD fixed {fixed_rate}%, {fixed_leg_payment_frequency}, {fixed_leg_daycount_basis}
+Notional exchange: None
+{start_date}: 10 November 2009
+Tenor: 5y"
