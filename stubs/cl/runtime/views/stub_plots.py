@@ -20,9 +20,6 @@ import pandas as pd
 from cl.runtime import RecordMixin, viewer
 from cl.runtime.plots.confusion_matrix_plot import ConfusionMatrixPlot
 from cl.runtime.records.record_mixin import TKey
-from cl.runtime.view.binary_content import BinaryContent
-from cl.runtime.view.binary_content_type_enum import BinaryContentTypeEnum
-from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
 from stubs.cl.runtime.views.stub_plots_key import StubPlotsKey
 
 
@@ -31,7 +28,7 @@ class StubPlots(StubPlotsKey, RecordMixin[StubPlotsKey]):
     """Class with plot viewers."""
 
     def get_key(self) -> TKey:
-        return StubHandlersKey(stub_id=self.stub_id)
+        return StubPlotsKey(stub_id=self.stub_id)
 
     @viewer
     def confusion_matrix_plot(self):
@@ -41,12 +38,4 @@ class StubPlots(StubPlotsKey, RecordMixin[StubPlotsKey]):
         matrix_plot.expected_categories = raw_data["True Category"].values.tolist()
         matrix_plot.received_categories = raw_data["Predicted"].values.tolist()
 
-        fig = matrix_plot.create_figure()
-
-        buf = io.BytesIO()
-        fig.savefig(buf)
-        buf.seek(0)
-        plot_content = BinaryContent()
-        plot_content.content = buf.read()
-        plot_content.content_type = BinaryContentTypeEnum.Png
-        return plot_content
+        return matrix_plot.create_figure()

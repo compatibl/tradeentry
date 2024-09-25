@@ -14,9 +14,12 @@
 
 import ast
 import dataclasses
+import io
 from typing import Any
 from typing import Dict
 from typing import List
+
+from matplotlib.figure import Figure
 from pydantic import BaseModel
 from cl.runtime.context.context import Context
 from cl.runtime.routers.entity.panel_request import PanelRequest
@@ -25,6 +28,8 @@ from cl.runtime.routers.response_util import to_record_dict
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.string_serializer import StringSerializer
+from cl.runtime.view.binary_content import BinaryContent
+from cl.runtime.view.binary_content_type_enum import BinaryContentTypeEnum
 
 PanelResponseData = Dict[str, Any] | List[Dict[str, Any]] | None
 
@@ -83,6 +88,18 @@ class PanelResponseUtil(BaseModel):
     @classmethod
     def _get_view_dict(cls, view: Any) -> Dict[str, Any]:
         """Convert value to dict format."""
+
+        # Convert matplotlib Figure to ui format
+        if isinstance(view, Figure):
+            # Save Figure content to buffer
+            buf = io.BytesIO()
+            view.savefig(buf)
+            buf.seek(0)
+
+            # Create BinaryContent with png content type
+            view = BinaryContent()
+            view.content = buf.read()
+            view.content_type = BinaryContentTypeEnum.Png
 
         if isinstance(view, str):
             view_dict = ast.literal_eval(view)
