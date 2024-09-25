@@ -16,11 +16,11 @@ import pytest
 
 from typing import List
 from cl.runtime.context.testing_context import TestingContext
-from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.llm import Llm
 from stubs.cl.convince.experiments.stub_llms import stub_full_llms
 from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json
+from stubs.cl.tradeentry.experiments.stub_plot_utils import create_group_bar_plot
 from stubs.cl.tradeentry.experiments.stub_string_utils import sanitize_string
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_basis_swap_entry
@@ -40,15 +40,6 @@ Description of trade entry:
 ```
 {input_text}
 ```"""
-
-
-def _create_group_bar_plot(results):
-    group_bar_plot = GroupBarPlot()
-    group_bar_plot.bar_labels = [llm.llm_id for llm in stub_full_llms]
-    group_bar_plot.group_labels = ["A", "B", "C", "D"]
-    group_bar_plot.value_ticks = list(range(0, 101, 10))
-    group_bar_plot.values = results
-    return group_bar_plot.create_figure()
 
 
 def _is_correct_answer(answer: str, correct_answer: str) -> bool:
@@ -98,7 +89,9 @@ def test_swap_leg_type():
                     correct_answers_count += int(_is_correct_answer(str(extracted_output), correct_answer))
                 plot_values.append(round(correct_answers_count / run_count * 100, 2))
 
-        fig = _create_group_bar_plot(plot_values)
+        plot_bar_labels = [llm.llm_id for llm in stub_full_llms]
+        plot_group_labels = ["A", "B", "C", "D"]
+        fig = create_group_bar_plot(plot_values, plot_bar_labels, plot_group_labels)
 
     fig.savefig("test_swap_leg_type.png")
     RegressionGuard.verify_all()

@@ -14,12 +14,11 @@
 
 import pytest
 from typing import Dict
-from typing import List
 from cl.runtime.context.testing_context import TestingContext
-from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.regression_guard import RegressionGuard
 from stubs.cl.convince.experiments.stub_llms import stub_full_llms
 from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json
+from stubs.cl.tradeentry.experiments.stub_plot_utils import create_group_bar_plot
 from stubs.cl.tradeentry.experiments.stub_tag_utils import add_line_numbers
 from stubs.cl.tradeentry.experiments.stub_tag_utils import fields_to_text
 from stubs.cl.tradeentry.experiments.stub_trade_checker import StubFormattedStringChecker
@@ -77,16 +76,6 @@ FIELDS = [
 ]
 
 
-def _create_group_bar_plot(results: List[float], group_labels: List[str]):
-
-    group_bar_plot = GroupBarPlot()
-    group_bar_plot.bar_labels = [llm.llm_id for llm in stub_full_llms]
-    group_bar_plot.group_labels = group_labels
-    group_bar_plot.value_ticks = list(range(0, 101, 10))
-    group_bar_plot.values = results
-    return group_bar_plot.create_figure()
-
-
 def _testing_formatted_string(trade_description: str, run_count: int):
     fields_text = fields_to_text(FIELDS)
 
@@ -122,8 +111,9 @@ def _testing_formatted_string(trade_description: str, run_count: int):
             plot_values.extend(list(results.values()))
 
         normalized_plot_values = [round(val / run_count * 100, 2) for val in plot_values]
-        fields_short_names = [field["short_name"] for field in FIELDS]
-        fig = _create_group_bar_plot(normalized_plot_values, fields_short_names)
+        plot_bar_labels = [llm.llm_id for llm in stub_full_llms]
+        plot_group_labels = [field["short_name"] for field in FIELDS]
+        fig = create_group_bar_plot(normalized_plot_values, plot_bar_labels, plot_group_labels)
     return fig
 
 
