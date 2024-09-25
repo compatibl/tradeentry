@@ -119,7 +119,7 @@ def _testing_formatted_string(trade_description: str, run_count: int):
 
 def test_vanilla_swap():
     numbered_vanilla_swap = add_line_numbers(stub_vanilla_swap_entry)
-    fig = _testing_formatted_string(numbered_vanilla_swap, run_count=1)
+    fig = _testing_formatted_string(numbered_vanilla_swap, run_count=50)
     fig.savefig("test_formatted_string_vanilla_swap.png")
     RegressionGuard.verify_all()
 

@@ -1,0 +1,4601 @@
+RequestID,Query,Completion
+2024-09-25T22:06:31.870Z-7000bdfe33f676536434,"TrialID: 0 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:06:36.004Z-76c09f8ae298e99a9e21,"TrialID: 1 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary enclosed in triple single quotes:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:06:40.145Z-7f62afcc10ce874ebf0d,"TrialID: 2 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:06:44.805Z-7d43b72c06424fdbc3a0,"TrialID: 3 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary with the requested fields and their corresponding data, enclosed in triple single quotes:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:06:49.054Z-7ef28eb409f5e60d1de5,"TrialID: 4 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:06:53.067Z-7bc3b9a7acd17133e35e,"TrialID: 5 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary with the requested fields and their corresponding data, enclosed in triple single quotes:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:06:57.345Z-7d41a7a356576ce84958,"TrialID: 6 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:07:01.367Z-7610ae5ec41af4a40f52,"TrialID: 7 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary enclosed in triple single quotes:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:07:05.316Z-7a3192116cc5acc39540,"TrialID: 8 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary with the requested fields, enclosed in triple single quotes:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:07:09.161Z-71409daa336cffd67f0f,"TrialID: 9 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:07:12.939Z-7a91acfd4882d5021e20,"TrialID: 10 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary with the requested fields and their corresponding data, enclosed in triple single quotes:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:07:17.211Z-7e72ae06e21c8cf4359e,"TrialID: 11 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary with the extracted information for each field, enclosed in triple single quotes:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:07:21.161Z-7d73821aecb8ab8072a5,"TrialID: 12 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:07:24.959Z-7612a1d6ecc5e1bb604c,"TrialID: 13 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary with the requested fields and their corresponding data, enclosed in triple single quotes:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:07:29.135Z-7ea28e028e43addeced2,"TrialID: 14 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary with the requested field information:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:07:33.001Z-7f52a72b95cbdcd4fa3e,"TrialID: 15 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary with the requested field information, enclosed in triple single quotes:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:07:37.074Z-79d2a1f10cb520dc565e,"TrialID: 16 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:07:40.775Z-7e4091d076a37c71abde,"TrialID: 17 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:07:44.517Z-7ad3a03e3ff0aaef0d4d,"TrialID: 18 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary enclosed in triple single quotes, based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:07:48.397Z-7621bbffb8c8c25f454f,"TrialID: 19 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary with the requested fields based on the given trade entry:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:07:52.298Z-73539c3e41042e9c4bdc,"TrialID: 20 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:07:56.350Z-7ec1a7dbcfe780d139b9,"TrialID: 21 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:08:00.044Z-7301a0f50bd0399b3646,"TrialID: 22 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary enclosed in triple single quotes:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:08:04.115Z-71638e563f560c876f8e,"TrialID: 23 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary with the requested field information:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:08:08.320Z-7c728040ce92c161c5c4,"TrialID: 24 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:08:11.975Z-75d1a363226a3e407988,"TrialID: 25 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:08:15.801Z-7ac3b7f015c21aadbf67,"TrialID: 26 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary enclosed in triple single quotes:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:08:20.210Z-70919d6d81a10b545f55,"TrialID: 27 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary with the requested fields, enclosed in triple single quotes:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:08:24.373Z-7df093a19f016e551e14,"TrialID: 28 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary with the requested field information, enclosed in triple single quotes:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:08:28.534Z-7f738caa50200ff969fa,"TrialID: 29 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary enclosed in triple single quotes:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:08:32.406Z-7e10b915f62d8ebf5e6a,"TrialID: 30 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary enclosed in triple single quotes:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:08:36.365Z-7a03a6a1799f578654e8,"TrialID: 31 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:08:40.112Z-7840b6df704d62996b13,"TrialID: 32 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:08:43.955Z-7613a16d7aedc5bf2b4a,"TrialID: 33 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary with the extracted information for each field, enclosed in triple single quotes:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:08:47.955Z-7e81a33d80cb6bc3fa0b,"TrialID: 34 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:08:51.738Z-77008d1897c510275a60,"TrialID: 35 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:08:56.035Z-7c6099e8f6c281f70b97,"TrialID: 36 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary enclosed in triple single quotes:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:09:00.137Z-7ca3a3b9c2e2fd4d06a8,"TrialID: 37 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary enclosed in triple single quotes, based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:09:04.266Z-73a28bd797f50a78a2de,"TrialID: 38 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and fields to identify:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:09:08.149Z-7740a0b41202e9e547ad,"TrialID: 39 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:09:12.114Z-7992b266d79e1066c986,"TrialID: 40 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:09:16.029Z-75a390287b7cca718f23,"TrialID: 41 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and fields to identify:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:09:19.849Z-7fc0baaa3857cdc70db3,"TrialID: 42 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary with the requested fields and their corresponding data, enclosed in triple single quotes:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:09:23.893Z-76f1ac186b80a890b5ef,"TrialID: 43 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:09:27.706Z-7262aead1ee038e4c347,"TrialID: 44 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:09:31.583Z-73529f2fe1dc2079fbce,"TrialID: 45 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:09:35.458Z-7890b8c7efdc94bd472c,"TrialID: 46 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and fields to identify:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:09:39.161Z-754292e78bccf3b399f3,"TrialID: 47 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary with the extracted information based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:09:43.051Z-70e280477121404eded1,"TrialID: 48 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON dictionary with the requested fields and their corresponding data, enclosed in triple single quotes:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
+2024-09-25T22:09:47.393Z-7181ab08a0051f47bebd,"TrialID: 49 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+Your task is to find relevant information about the field and reference to place in the row where you found the information.
+
+Here is the input trade entry:
+```
+1: Sell 10y SOFR swap at 3.45%
+```
+
+The description of the fields you need to identify:
+```
+* FloatLegCurrency: string, single
+* FloatLegIndex: string, single
+* FloatLegSpread: float, single
+* FloatLegFrequency: string, single
+* FloatLegDaycountBasis: string, single
+* FixedLegCurrency: string, single
+* FixedLegFixedRate: float, single
+* FixedLegFrequency: string, single
+* FixedLegDaycountBasis: string, single
+* StartDate: date, single
+* NotionalAmount: float, multiple or single
+```
+
+Each field description contain datatype and occurrences type.
+If the occurrences type is single you should look for a single place among that contains the most relevant information about the field.
+If the occurrences type is multiple you should include every place that has information relevant to the field.
+Datatype helps you understand what data you are looking for. However, when you are asked to get the piece of data you should copy it and return as a string always.
+
+For each field you should do the following:
+1. Find all data corresponding to the field in the trade entry.
+2. If the occurrence type is single, then select only one piece of data that is the most relevant, if the occurrence type is multiple, then select all of them.
+3. For every such piece of data create the following dictionary
+{
+    ""data"": <piece of data, string>,
+    ""formatted_row"": <the original row from the description, with the extracted information replaced by the field name in curly brackets>
+}
+4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
+5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
+
+Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
+
+Enclose json in triple single quotes and ensure that it is parsable.","Here's the JSON output based on the given trade entry and field descriptions:
+
+'''
+{
+  ""FloatLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegIndex"": {
+    ""data"": ""SOFR"",
+    ""formatted_row"": ""1: Sell 10y {FloatLegIndex} swap at 3.45%""
+  },
+  ""FloatLegSpread"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FloatLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegCurrency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegFixedRate"": {
+    ""data"": ""3.45"",
+    ""formatted_row"": ""1: Sell 10y SOFR swap at {FixedLegFixedRate}%""
+  },
+  ""FixedLegFrequency"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""FixedLegDaycountBasis"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""StartDate"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  },
+  ""NotionalAmount"": {
+    ""data"": """",
+    ""formatted_row"": """"
+  }
+}
+'''"
