@@ -133,7 +133,7 @@ def test_floored_swap():
 
 def test_amortizing_swap():
     numbered_amortizing_swap = add_line_numbers(stub_amortizing_swap_entry)
-    fig = _testing_formatted_string(numbered_amortizing_swap, run_count=1)
+    fig = _testing_formatted_string(numbered_amortizing_swap, run_count=50)
     fig.savefig("test_formatted_string_amortizing_swap.png")
     RegressionGuard.verify_all()
 

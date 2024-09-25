@@ -1,0 +1,1423 @@
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '3: Party A receives: USD fixed 3.20%, semi-annual, act/360'
+    extracted_row: '3: Party A receives: USD fixed 3.20%%, semi-annual, act/360'
+    formatted_row: '3: Party A receives: USD fixed {FixedLegFixedRate}%, semi-annual,
+      act/360'
+  status: BAD
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '3: Party A receives: USD fixed 3.20%, semi-annual, act/360'
+    extracted_row: '3: Party A receives: USD fixed 3.20%%, semi-annual, act/360'
+    formatted_row: '3: Party A receives: USD fixed {FixedLegFixedRate}%, semi-annual,
+      act/360'
+  status: BAD
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '3: Party A receives: USD fixed 3.20%, semi-annual, act/360'
+    extracted_row: '3: Party A receives: USD fixed 3.20%%, semi-annual, act/360'
+    formatted_row: '3: Party A receives: USD fixed {FixedLegFixedRate}%, semi-annual,
+      act/360'
+  status: BAD
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '3: Party A receives: USD fixed 3.20%, semi-annual, act/360'
+    extracted_row: '3: Party A receives: USD fixed 3.20%%, semi-annual, act/360'
+    formatted_row: '3: Party A receives: USD fixed {FixedLegFixedRate}%, semi-annual,
+      act/360'
+  status: BAD
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '3: Party A receives: USD fixed 3.20%, semi-annual, act/360'
+    extracted_row: '3: Party A receives: USD fixed 3.20%%, semi-annual, act/360'
+    formatted_row: '3: Party A receives: USD fixed {FixedLegFixedRate}%, semi-annual,
+      act/360'
+  status: BAD
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '3: Party A receives: USD fixed 3.20%, semi-annual, act/360'
+    extracted_row: '3: Party A receives: USD fixed 3.20%%, semi-annual, act/360'
+    formatted_row: '3: Party A receives: USD fixed {FixedLegFixedRate}%, semi-annual,
+      act/360'
+  status: BAD
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '3: Party A receives: USD fixed 3.20%, semi-annual, act/360'
+    extracted_row: '3: Party A receives: USD fixed 3.20%%, semi-annual, act/360'
+    formatted_row: '3: Party A receives: USD fixed {FixedLegFixedRate}%, semi-annual,
+      act/360'
+  status: BAD
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '3: Party A receives: USD fixed 3.20%, semi-annual, act/360'
+    extracted_row: '3: Party A receives: USD fixed 3.20%%, semi-annual, act/360'
+    formatted_row: '3: Party A receives: USD fixed {FixedLegFixedRate}%, semi-annual,
+      act/360'
+  status: BAD
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '5: Start: 10 November 2009'
+    extracted_row: '5: 10 November 2009'
+    formatted_row: '5: {StartDate}'
+  status: BAD
+NotionalAmount:
+  status: OK
+
