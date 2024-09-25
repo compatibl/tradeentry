@@ -85,8 +85,8 @@ class StubFormattedStringChecker:
 
     def check_field(self, field: str, answer: Union[List, Dict]) -> List:
 
-        if (isinstance(answer, Dict) and self.field_freq[field] == "multiple") or (
-            isinstance(answer, List) and self.field_freq[field] == "single"
+        if (isinstance(answer, Dict) and "multiple" not in self.field_freq[field]) or (
+            isinstance(answer, List) and "single" not in self.field_freq[field]
         ):
             return [
                 {
