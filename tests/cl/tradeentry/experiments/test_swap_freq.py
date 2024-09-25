@@ -11,48 +11,85 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import List
 
 import pytest
+
+from cl.convince.llms.llm import Llm
 from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.regression_guard import RegressionGuard
 from stubs.cl.convince.experiments.stub_llms import stub_full_llms
+from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json
+
+PROMPT_TEMPLATE = """Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: '???', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. "
+
+Text: 
+```
+{text}
+```"""
 
 
-def _test_swap_freq(text: str):
+def _create_group_bar_plot(results):
+    group_bar_plot = GroupBarPlot()
+    group_bar_plot.bar_labels = [llm.llm_id for llm in stub_full_llms]
+    group_bar_plot.group_labels = ["A", "B", "C"]
+    group_bar_plot.value_ticks = list(range(0, 101, 10))
+    group_bar_plot.values = results
+    return group_bar_plot.create_figure()
+
+
+def _is_correct_answer(answer: dict, correct_answer: str) -> bool:
+    return answer.get('pay_freq') == correct_answer
+
+
+def _test_swap_freq(text: str, run_count: int, llm: Llm) -> List[str]:
     """Test swap frequency extraction from string."""
 
+    prompt = PROMPT_TEMPLATE.format(text=text)
+
+    results = []
+    guard = RegressionGuard(channel=llm.llm_id)
+    for trial_id in range(run_count):
+        result = llm.completion(prompt, trial_id=trial_id)
+        guard.write(result)
+        results.append(result)
+    return results
+
+
+def test_swap_freq():
+    run_count = 2
+    descriptions = [
+        "Payment dates are January 15 and July 15",
+        "Payments will be made on the 3rd of each month starting from January",
+        "Payments are to be made on an annual basis"
+    ]
+    correct_answers = ["6m", "1m", "12m"]
+
+    plot_values = []
     with TestingContext():
-
-        prompt = (
-            f"Trade or leg description contains the following text. "
-            f"What is the payment frequency of this trade or leg? "
-            f"Reply with JSON that has a single key 'pay_freq' whose "
-            f"value must be one of the following strings: "
-            f"'???', '1m', '3m', '6m', '12m'. "
-            f"No other values are allowed. Use 'ambiguous' when the"
-            f"text does not allow you to determine the frequency with certainty. "
-            f"Text: {text}"
-        )
-        run_count = 1
-
         for llm in stub_full_llms:
-            for _ in range(run_count):
+            for trade, correct_answer in zip(descriptions, correct_answers):
+                results = _test_swap_freq(trade, run_count, llm)
 
-                result = llm.completion(prompt)
+                correct_answers_count = 0
+                for result in results:
+                    extracted_output = extract_json(result)
+                    if extracted_output is None:
+                        extracted_output = {}
 
-                answers = {"???", "1m", "3m", "6m", "12m"}
-                is_allowed_value_yn = "Y" if result in answers else "N"
-                is_trimmed_allowed_value_yn = "Y" if result.strip() in answers else "N"
+                    correct_answers_count += int(_is_correct_answer(extracted_output, correct_answer))
+                plot_values.append(round(correct_answers_count / run_count * 100, 2))
 
-                guard = RegressionGuard(channel=llm.llm_id)
-                guard.write(f"{result},{is_allowed_value_yn},{is_trimmed_allowed_value_yn}")
+        fig = _create_group_bar_plot(plot_values)
 
-        guard.verify_all()
-
-
-def test_swap_freq_from_date_list():
-    """From a list of dates, frequency is implicit."""
-    _test_swap_freq("Payment dates are January 15 and July 15")
+    fig.savefig("test_swap_freq.png")
+    RegressionGuard.verify_all()
 
 
 if __name__ == "__main__":
