@@ -16,6 +16,7 @@ import pytest
 from typing import Dict
 from typing import List
 from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.regression_guard import RegressionGuard
 from stubs.cl.convince.experiments.stub_llms import stub_full_llms
 from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json
@@ -55,71 +56,95 @@ For each field you should do the following:
 }}
 4. If the occurrence type is single, then the output should be one dictionary, if the occurrence type is multiple, then the answer should be list of dictionaries.
 5. If there is no piece of data that has relevant information than the generated dictionary should have empty strings as default values.
-6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry.
+6. Make sure that if you put the data into a formatted string, it will match the string in the input trade entry, do nor forgot row number.
 
 Generate json dictionary with the field names as keys. The above algorithm describes how to create value for every field.
 
 Enclose json in triple single quotes and ensure that it is parsable."""
 
 FIELDS = [
-    {"name": "FloatLegCurrency", "type": "string", "freq": "single"},
-    {"name": "FloatLegIndex", "type": "string", "freq": "single"},
-    {"name": "FloatLegSpread", "type": "float", "freq": "single"},
-    {"name": "FloatLegFrequency", "type": "string", "freq": "single"},
-    {"name": "FloatLegDaycountBasis", "type": "string", "freq": "single"},
-    {"name": "FixedLegCurrency", "type": "string", "freq": "single"},
-    {"name": "FixedLegFixedRate", "type": "float", "freq": "single"},
-    {"name": "FixedLegFrequency", "type": "string", "freq": "single"},
-    {"name": "FixedLegDaycountBasis", "type": "string", "freq": "single"},
-    {"name": "StartDate", "type": "date", "freq": "single"},
-    {"name": "NotionalAmount", "type": "float", "freq": "multiple or single"},
+    {"name": "FloatLegCurrency", "type": "string", "freq": "single", "short_name": "FLC"},
+    {"name": "FloatLegIndex", "type": "string", "freq": "single", "short_name": "FLI"},
+    {"name": "FloatLegSpread", "type": "float", "freq": "single", "short_name": "FLS"},
+    {"name": "FloatLegFrequency", "type": "string", "freq": "single", "short_name": "FLF"},
+    {"name": "FloatLegDaycountBasis", "type": "string", "freq": "single", "short_name": "FLB"},
+    {"name": "FixedLegCurrency", "type": "string", "freq": "single", "short_name": "FDC"},
+    {"name": "FixedLegFixedRate", "type": "float", "freq": "single", "short_name": "FDR"},
+    {"name": "FixedLegFrequency", "type": "string", "freq": "single", "short_name": "FDF"},
+    {"name": "FixedLegDaycountBasis", "type": "string", "freq": "single", "short_name": "FDB"},
+    {"name": "StartDate", "type": "date", "freq": "single", "short_name": "SDT"},
+    {"name": "NotionalAmount", "type": "float", "freq": "multiple or single", "short_name": "NA"}
 ]
 
 
-def _testing_formatted_string(fields: List[Dict], trade_description: str):
-    fields_text = fields_to_text(fields)
+def _create_group_bar_plot(results: List[float], group_labels: List[str]):
+
+    group_bar_plot = GroupBarPlot()
+    group_bar_plot.bar_labels = [llm.llm_id for llm in stub_full_llms]
+    group_bar_plot.group_labels = group_labels
+    group_bar_plot.value_ticks = list(range(0, 101, 10))
+    group_bar_plot.values = results
+    return group_bar_plot.create_figure()
+
+
+def _testing_formatted_string(trade_description: str, run_count: int):
+    fields_text = fields_to_text(FIELDS)
 
     with TestingContext():
 
         prompt = PROMPT_TEMPLATE.format(input_text=trade_description, fields=fields_text)
-        run_count = 1
+        field_names = [field["name"] for field in FIELDS]
+        plot_values = []
         for llm in stub_full_llms:
-            for _ in range(run_count):
-
-                result = llm.completion(prompt)
+            results = {field: 0 for field in field_names}
+            for trial_id in range(run_count):
+                result = llm.completion(prompt, trial_id=trial_id)
 
                 json_result = extract_json(result)
-                if json_result is None:
-                    json_result = "ERROR: can not extract json"
-
                 guard = RegressionGuard(channel=llm.llm_id)
-                guard.write(str(json_result))
+                if json_result is not None:
+                    guard.write(str(json_result))
+                else:
+                    guard.write("ERROR: can not extract json")
 
                 guard_checker = RegressionGuard(channel=f"{llm.llm_id}-checker")
                 if isinstance(json_result, Dict):
-                    json_checker_output = StubFormattedStringChecker(trade_description, fields).check_answer(
+                    json_checker_output = StubFormattedStringChecker(trade_description, FIELDS).check_answer(
                         json_result
                     )
+                    for field in field_names:
+                        if json_checker_output[field]["status"] == "OK":
+                            results[field] += 1
                     guard_checker.write(json_checker_output)
                 else:
                     guard_checker.write("ERROR: No input to check")
 
+            plot_values.extend(list(results.values()))
+
+        normalized_plot_values = [round(val / run_count * 100, 2) for val in plot_values]
+        fields_short_names = [field["short_name"] for field in FIELDS]
+        fig = _create_group_bar_plot(normalized_plot_values, fields_short_names)
+    return fig
+
 
 def test_vanilla_swap():
     numbered_vanilla_swap = add_line_numbers(stub_vanilla_swap_entry)
-    _testing_formatted_string(FIELDS, numbered_vanilla_swap)
+    fig = _testing_formatted_string(numbered_vanilla_swap, run_count=1)
+    fig.savefig("test_formatted_string_vanilla_swap.png")
     RegressionGuard.verify_all()
 
 
 def test_floored_swap():
     numbered_floored_swap = add_line_numbers(stub_floored_swap_entry)
-    _testing_formatted_string(FIELDS, numbered_floored_swap)
+    fig = _testing_formatted_string(numbered_floored_swap, run_count=1)
+    fig.savefig("test_formatted_string_floored_swap.png")
     RegressionGuard.verify_all()
 
 
 def test_amortizing_swap():
     numbered_amortizing_swap = add_line_numbers(stub_amortizing_swap_entry)
-    _testing_formatted_string(FIELDS, numbered_amortizing_swap)
+    fig = _testing_formatted_string(numbered_amortizing_swap, run_count=1)
+    fig.savefig("test_formatted_string_amortizing_swap.png")
     RegressionGuard.verify_all()
 
 
