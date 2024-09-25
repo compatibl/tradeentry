@@ -96,10 +96,6 @@ class CompletionCache:
     def add(self, request_id: str, query: str, completion: str, *, trial_id: str | int | None = None) -> None:
         """Add to file even if already exits, the latest will take precedence during lookup."""
 
-        # Add trial_id to the beginning of cached query key
-        if trial_id is not None:
-            query = f"TrialID: {str(trial_id)} {query}"
-
         # Check if the file already exists
         is_new = not os.path.exists(self.output_path)
 
@@ -125,8 +121,14 @@ class CompletionCache:
                 # the model will not reuse cached completions within the same session,
                 # preventing incorrect measurement of stability
 
+                # Get cache key with trial_id, EOL normalization, and stripped leading and trailing whitespace
+                cache_key = self.normalize_key(query, trial_id=trial_id)
+
+                # Normalize EOL character in completion and strip whitespace
+                cached_value = self.normalize_value(completion)
+
                 # Write the new completion without checking if one already exists
-                writer.writerow([request_id, query, completion])
+                writer.writerow([request_id, cache_key, cached_value])
 
                 # Flush immediately to ensure all of the output is on disk in the event of exception
                 file.flush()
@@ -136,12 +138,16 @@ class CompletionCache:
 
     def get(self, query: str, *, trial_id: str | int | None = None) -> str | None:
         """Return completion for the specified query if found and None otherwise."""
-        # Add trial_id to the beginning of cached query key
-        if trial_id is not None:
-            query = f"TrialID: {str(trial_id)} {query}"
+
+        # Get cache key with trial_id, EOL normalization, and stripped leading and trailing whitespace
+        cache_key = self.normalize_key(query, trial_id=trial_id)
 
         # Look up with trial ID
-        result = self.__completion_dict.get(query, None)
+        result = self.__completion_dict.get(cache_key, None)
+
+        if result is not None:
+            # Normalize EOL character in result and strip leading and trailing whitespace
+            result = self.normalize_value(result)
         return result
 
     def load_cache_file(self) -> None:
@@ -165,3 +171,27 @@ class CompletionCache:
 
                 # Read cached completions, ignoring request_id at position 0
                 self.__completion_dict.update({row[1]: row[2] for row in reader})
+
+    @classmethod
+    def normalize_key(cls, query: str, trial_id: str | int | None = None) -> str:
+        """Add trial_id and normalize EOL character and whitespace."""
+
+        # Add trial_id to the beginning of cached query key
+        if trial_id is not None:
+            result = f"TrialID: {str(trial_id)} {query}"
+        else:
+            result = query
+
+        # Normalize EOL character and strip leading and trailing whitespace
+        result = cls.normalize_value(result)
+        return result
+
+    @classmethod
+    def normalize_value(cls, value: str) -> str:
+        """Normalize EOL character and strip leading and trailing whitespace."""
+        # Set EOL based on the OS
+        if os.name == 'nt':
+            result = value.replace("\n", "\r\n").strip()
+        else:
+            result = value.replace("\r\n", "\n").strip()
+        return result

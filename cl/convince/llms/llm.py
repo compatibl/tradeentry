@@ -34,24 +34,15 @@ class Llm(LlmKey, RecordMixin[LlmKey], ABC):
     def completion(self, query: str, *, trial_id: str | int | None = None) -> str:
         """Text-in, text-out single query completion without model-specific tags (uses response caching)."""
 
-        # Remove leading and trailing whitespace including EOL
-        query = query.strip()
+        # Normalize EOL character and remove leading and trailing whitespace in query
+        query = CompletionCache.normalize_value(query)
 
         # Create completion cache if does not exist
         if self._completion_cache is None:
             self._completion_cache = CompletionCache(channel=self.llm_id)
 
-        # Normalize EOL character in query across operating system types to get cache key
-        cache_key = query.replace("\n", "\r\n")
-
-        # Try to find in completion cache by cache_key
-        if (cached_value := self._completion_cache.get(cache_key, trial_id=trial_id)) is not None:
-            # Normalize EOL character in result across operating system types
-            result = cached_value.replace( "\r\n", "\n")
-            return result
-        else:
-            # Otherwise make cloud provider call
-
+        # Try to find in completion cache by cache_key, make cloud provider call only if not found
+        if (result := self._completion_cache.get(query, trial_id=trial_id)) is None:
             # Generate OrderedUuid and convert to readable ordered string in date-hash format
             request_uuid = OrderedUuid.create_one()
             request_id = OrderedUuid.to_readable_str(request_uuid)
@@ -59,13 +50,13 @@ class Llm(LlmKey, RecordMixin[LlmKey], ABC):
             # Invoke LLM by calling the cloud provider API
             result = self.uncached_completion(request_id, query)
 
-            # Remove leading and trailing whitespace including EOL from the result
-            result = result.strip()
-
             # Save the result in cache before returning, request_id is recorded
             # but not taken into account during lookup
             self._completion_cache.add(request_id, query, result, trial_id=trial_id)
-            return result
+
+        # Normalize EOL character and remove leading and trailing whitespace in result
+        result = CompletionCache.normalize_value(result)
+        return result
 
     @abstractmethod
     def uncached_completion(self, request_id: str, query: str) -> str:
