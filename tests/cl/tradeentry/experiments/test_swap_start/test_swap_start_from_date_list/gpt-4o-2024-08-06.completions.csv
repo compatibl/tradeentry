@@ -1,0 +1,10 @@
+RequestID,Query,Completion
+2024-09-25T02:07:17.732Z-7e4080c5972afe891629,"We need to determine the accrual start date (the start date when the interest begins accruing, which may not be the same as payment date) of this trade or leg. Given the following text, reply with JSON that has the following keys only where value is true if we need to know this field in addition to the text to answer this question, and false if we do not need it. Keys: 'payment_frequency', 'floating_frequency', 'pays_in_arrears', 'currency', 'maturity_date'. Text: The first payment is on July 15","```json
+{
+    ""payment_frequency"": true,
+    ""floating_frequency"": false,
+    ""pays_in_arrears"": true,
+    ""currency"": false,
+    ""maturity_date"": false
+}
+```"
