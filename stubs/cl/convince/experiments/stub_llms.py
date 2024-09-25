@@ -23,7 +23,7 @@ stub_mini_llms = [
 """Mini-LLMs for proof of concept tests."""
 
 stub_full_llms = [
-    ClaudeLlm(llm_id="claude-3-sonnet-20240229"),
+    ClaudeLlm(llm_id="claude-3-5-sonnet-20240620"),
     FireworksLlamaLlm(llm_id="llama-v3-70b-instruct"),
     GptLlm(llm_id="gpt-4o"),
 ]
