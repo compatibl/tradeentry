@@ -26,7 +26,7 @@ PROMPT_TEMPLATE = """Trade or leg description contains the following text.
 
 What is the payment frequency of this trade or leg?
 
-Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: '???', '1m', '3m', '6m', '12m'.
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
 No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. "
 
 Text: 
