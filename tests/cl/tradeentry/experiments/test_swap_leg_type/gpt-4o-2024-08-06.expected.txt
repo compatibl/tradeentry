@@ -1,0 +1,64 @@
+```json
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+```
+```json
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+```
+```json
+{
+    "Cap": false,
+    "Floor": false,
+    "FirstLegType": "Floating",
+    "SecondLegType": "Floating"
+}
+```
+```json
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+```
+```json
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+```
+```json
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+```
+```json
+{
+    "Cap": false,
+    "Floor": false,
+    "FirstLegType": "Floating",
+    "SecondLegType": "Fixed"
+}
+```
+```json
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+```
