@@ -52,7 +52,7 @@ def _create_group_bar_plot(results):
 
 
 def _is_correct_answer(answer: str, correct_answer: str) -> bool:
-    sanitized_answer = sanitize_string(str(answer))
+    sanitized_answer = sanitize_string(answer)
     sanitized_correct_answer = sanitize_string(correct_answer)
 
     return sanitized_answer == sanitized_correct_answer
@@ -95,7 +95,7 @@ def test_swap_leg_type():
                 correct_answers_count = 0
                 for result in results:
                     extracted_output = extract_json(result)
-                    correct_answers_count += int(_is_correct_answer(extracted_output, correct_answer))
+                    correct_answers_count += int(_is_correct_answer(str(extracted_output), correct_answer))
                 plot_values.append(round(correct_answers_count / run_count * 100, 2))
 
         fig = _create_group_bar_plot(plot_values)
