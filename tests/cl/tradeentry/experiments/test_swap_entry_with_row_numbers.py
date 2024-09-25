@@ -23,7 +23,9 @@ from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
 from stubs.cl.tradeentry.experiments.stub_tag_utils import add_line_numbers
 from stubs.cl.tradeentry.experiments.stub_tag_utils import fields_to_text
-from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry, stub_vanilla_swap_entry, stub_floored_swap_entry
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_floored_swap_entry
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_vanilla_swap_entry
 
 llms = [
     ClaudeLlm(llm_id="claude-3-5-sonnet-20240620"),

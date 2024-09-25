@@ -20,12 +20,13 @@ from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.claude.claude_llm import ClaudeLlm
 from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
+from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json
 from stubs.cl.tradeentry.experiments.stub_tag_utils import add_line_numbers
 from stubs.cl.tradeentry.experiments.stub_tag_utils import fields_to_text
-from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry, stub_vanilla_swap_entry, stub_floored_swap_entry
-from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json
 from stubs.cl.tradeentry.experiments.stub_trade_checker import StubFormattedStringChecker
-
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_floored_swap_entry
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_vanilla_swap_entry
 
 llms = [
     ClaudeLlm(llm_id="claude-3-5-sonnet-20240620"),
@@ -103,7 +104,9 @@ def _test_formatted_string(fields: List[Dict], trade_description: str):
 
                 guard_checker = RegressionGuard(channel=f"{llm.llm_id}-checker")
                 if isinstance(json_result, Dict):
-                    json_checker_output = StubFormattedStringChecker(trade_description, fields).check_answer(json_result)
+                    json_checker_output = StubFormattedStringChecker(trade_description, fields).check_answer(
+                        json_result
+                    )
                     guard_checker.write(json_checker_output)
                 else:
                     guard_checker.write("ERROR: No input to check")

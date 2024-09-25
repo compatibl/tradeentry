@@ -11,12 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import List
 
 import pytest
 import uuid
-
-from cl.convince.llms.llm import Llm
+from typing import List
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.plots.group_bar_plot_style import GroupBarPlotStyle
@@ -24,10 +22,13 @@ from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.claude.claude_llm import ClaudeLlm
 from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
-from stubs.cl.tradeentry.experiments.stub_string_utils import sanitize_string
-from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_floored_swap_entry, stub_basis_swap_entry, \
-    stub_fixed_for_floating_swap_entry, stub_amortizing_swap_entry
+from cl.convince.llms.llm import Llm
 from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json
+from stubs.cl.tradeentry.experiments.stub_string_utils import sanitize_string
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_basis_swap_entry
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_fixed_for_floating_swap_entry
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_floored_swap_entry
 
 llms = [
     ClaudeLlm(llm_id="claude-3-5-sonnet-20240620"),
@@ -90,14 +91,21 @@ def _test_swap_leg_type(trade_description: str, run_count: int, llm: Llm) -> Lis
 
 def test_swap_leg_type():
     run_count = 2
-    correct_answers = ["{'Cap': False, 'Floor': False, 'FirstLegType': 'Floating', 'SecondLegType': 'Fixed'}",
-                       "{'Cap': False, 'Floor': False, 'FirstLegType': 'Floating', 'SecondLegType': 'Floating'}",
-                       "{'Cap': False, 'Floor': True, 'FirstLegType': 'Floating', 'SecondLegType': 'Fixed'}",
-                       "{'Cap': False, 'Floor': False, 'FirstLegType': 'Floating', 'SecondLegType': 'Fixed'}"]
+    correct_answers = [
+        "{'Cap': False, 'Floor': False, 'FirstLegType': 'Floating', 'SecondLegType': 'Fixed'}",
+        "{'Cap': False, 'Floor': False, 'FirstLegType': 'Floating', 'SecondLegType': 'Floating'}",
+        "{'Cap': False, 'Floor': True, 'FirstLegType': 'Floating', 'SecondLegType': 'Fixed'}",
+        "{'Cap': False, 'Floor': False, 'FirstLegType': 'Floating', 'SecondLegType': 'Fixed'}",
+    ]
 
-    trades = [stub_fixed_for_floating_swap_entry, stub_basis_swap_entry, stub_floored_swap_entry, stub_amortizing_swap_entry]
+    trades = [
+        stub_fixed_for_floating_swap_entry,
+        stub_basis_swap_entry,
+        stub_floored_swap_entry,
+        stub_amortizing_swap_entry,
+    ]
     plot_values = []
-    with (TestingContext()):
+    with TestingContext():
         for llm in llms:
             for trade, correct_answer in zip(trades, correct_answers):
                 results = _test_swap_leg_type(trade, run_count, llm)

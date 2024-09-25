@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Optional
-import re
 import json
+import re
+from typing import Optional
 
 
 def extract_json(text: str) -> Optional[str]:
-    match = re.search(r'({.*})', text, re.DOTALL)
+    match = re.search(r"({.*})", text, re.DOTALL)
     if match is None:
         return None
     json_string = match.groups()[0]
@@ -26,4 +26,3 @@ def extract_json(text: str) -> Optional[str]:
         return json.loads(json_string)
     except json.JSONDecodeError:
         return None
-

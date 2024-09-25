@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Optional
 import re
+from typing import Optional
 
 
 def extract_between_backticks(text: str) -> Optional[str]:
 
-    pattern = r'```(.*?)```'
+    pattern = r"```(.*?)```"
     matches = re.findall(pattern, text, re.DOTALL)
 
     if not matches:
@@ -31,6 +31,4 @@ def sanitize_string(string: str) -> str:
     """
     Removes newlines and extra spaces from a string.
     """
-    return ''.join(string.replace("\n", "").split())
-
-
+    return "".join(string.replace("\n", "").split())

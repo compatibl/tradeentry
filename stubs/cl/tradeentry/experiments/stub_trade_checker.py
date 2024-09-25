@@ -13,28 +13,27 @@
 # limitations under the License.
 
 import re
-from typing import Dict, List, Union
+from typing import Dict
+from typing import List
+from typing import Union
 
 
 class StubFormattedStringChecker:
     def __init__(self, trade_description: str, field_description: List[Dict]):
         self.trade_description_rows = self._get_rows_from_numbered_text(trade_description)
-        self.field_freq = {
-            field["name"]: field["freq"]
-            for field in field_description
-        }
+        self.field_freq = {field["name"]: field["freq"] for field in field_description}
 
     @staticmethod
     def _extract_row_number(row: str) -> int:
         try:
-            row_num = int(row[:row.index(':')])
+            row_num = int(row[: row.index(":")])
         except:
             raise TypeError(f"Can not extract row number for row {row}")
         return row_num
 
     @staticmethod
     def _get_rows_from_numbered_text(text: str) -> Dict:
-        rows = text.split('\n')
+        rows = text.split("\n")
         answer = dict()
         for row in rows:
             row_num = StubFormattedStringChecker._extract_row_number(row)
@@ -44,11 +43,8 @@ class StubFormattedStringChecker:
     def check_field_piece(self, field: str, answer: Dict) -> Dict:
 
         # Check if data or formatted_row are missing in the answer
-        if 'data' not in answer or 'formatted_row' not in answer:
-            return {
-                    "message": "ERROR: Missing required fields 'data' or 'formatted_row' in answer",
-                    "answer": answer
-            }
+        if "data" not in answer or "formatted_row" not in answer:
+            return {"message": "ERROR: Missing required fields 'data' or 'formatted_row' in answer", "answer": answer}
 
         # Check if data is empty
         if not answer.get("data"):
@@ -59,16 +55,13 @@ class StubFormattedStringChecker:
             return {
                 "message": "ERROR: answer data is not string type",
                 "type": str(type(answer["data"])),
-                "data": answer["data"]
+                "data": answer["data"],
             }
 
         # Check if field in the formatted_row
-        template = '{' + field + '}'
+        template = "{" + field + "}"
         if template not in answer["formatted_row"]:
-            return {
-                "message": f"ERROR: {template} not in the formatted_row",
-                "formatted_row": answer["formatted_row"]
-            }
+            return {"message": f"ERROR: {template} not in the formatted_row", "formatted_row": answer["formatted_row"]}
 
         # Replace the field with the actual data
         extracted_string = answer["formatted_row"].replace(template, answer["data"])
@@ -77,10 +70,7 @@ class StubFormattedStringChecker:
         try:
             pos = self._extract_row_number(extracted_string)
         except TypeError:
-            return {
-                "message": "ERROR: can't extract row number",
-                "extracted_row": extracted_string
-            }
+            return {"message": "ERROR: can't extract row number", "extracted_row": extracted_string}
 
         # Compare the resulting string with the expected input string
         input_string = self.trade_description_rows[pos]
@@ -95,13 +85,16 @@ class StubFormattedStringChecker:
 
     def check_field(self, field: str, answer: Union[List, Dict]) -> List:
 
-        if (isinstance(answer, Dict) and self.field_freq[field] == "multiple") or \
-                (isinstance(answer, List) and self.field_freq[field] == "single"):
-            return [{
-                "message": "Frequency of the answer is incorrect",
-                "freq": self.field_freq[field],
-                "answer_type": str(type(answer))
-            }]
+        if (isinstance(answer, Dict) and self.field_freq[field] == "multiple") or (
+            isinstance(answer, List) and self.field_freq[field] == "single"
+        ):
+            return [
+                {
+                    "message": "Frequency of the answer is incorrect",
+                    "freq": self.field_freq[field],
+                    "answer_type": str(type(answer)),
+                }
+            ]
 
         if isinstance(answer, Dict):
             error_message = self.check_field_piece(field, answer)
@@ -115,25 +108,14 @@ class StubFormattedStringChecker:
                     error_messages.append(error_message)
             return error_messages
         else:
-            return [
-                {
-                    "message": f"ERROR: answer is not Dict or List type",
-                    "type": str(type(answer)),
-                    "answer": answer
-                }
-            ]
+            return [{"message": f"ERROR: answer is not Dict or List type", "type": str(type(answer)), "answer": answer}]
 
     def check_answer(self, json_answer: Dict) -> Dict:
         status = dict()
         for field, field_answer in json_answer.items():
             error_messages = self.check_field(field, field_answer)
             if error_messages:
-                status[field] = {
-                    "error_messages": error_messages,
-                    "status": "BAD"
-                }
+                status[field] = {"error_messages": error_messages, "status": "BAD"}
             else:
-                status[field] = {
-                    "status": "OK"
-                }
+                status[field] = {"status": "OK"}
         return status

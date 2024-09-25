@@ -11,12 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import uuid
-from typing import List
 
 import pytest
-
-from cl.convince.llms.llm import Llm
+import uuid
+from typing import List
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.plots.group_bar_plot_style import GroupBarPlotStyle
@@ -24,15 +22,19 @@ from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.claude.claude_llm import ClaudeLlm
 from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
-from stubs.cl.tradeentry.experiments.stub_string_utils import sanitize_string, extract_between_backticks
+from cl.convince.llms.llm import Llm
+from stubs.cl.tradeentry.experiments.stub_string_utils import extract_between_backticks
+from stubs.cl.tradeentry.experiments.stub_string_utils import sanitize_string
 from stubs.cl.tradeentry.experiments.stub_tag_utils import add_line_numbers
-from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_basis_swap_entry, \
-    stub_fixed_for_floating_swap_entry, stub_floored_swap_entry, stub_amortizing_swap_entry
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_basis_swap_entry
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_fixed_for_floating_swap_entry
+from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_floored_swap_entry
 
 llms = [
     ClaudeLlm(llm_id="claude-3-5-sonnet-20240620"),
     FireworksLlamaLlm(llm_id="llama-v3-70b-instruct"),
-    GptLlm(llm_id="gpt-4o-2024-08-06")
+    GptLlm(llm_id="gpt-4o-2024-08-06"),
 ]
 
 PROMPT_TEMPLATE = """In this text, surround information about each leg in curly brackets. Make no other changes
@@ -69,8 +71,11 @@ def _is_correct_answer(answer: str, trade_description: str, correct_answers: Lis
     sanitized_answer = sanitize_string(answer)
     sanitized_trade_description = sanitize_string(trade_description)
 
-    return sanitized_answer.replace("{", "").replace("}", "") == sanitized_trade_description and \
-        correct_answers[0] in answer and correct_answers[1] in answer
+    return (
+        sanitized_answer.replace("{", "").replace("}", "") == sanitized_trade_description
+        and correct_answers[0] in answer
+        and correct_answers[1] in answer
+    )
 
 
 def _test_surrounding_leg(trade_description: str, run_count: int, llm: Llm) -> List[str]:
@@ -92,18 +97,30 @@ def _test_surrounding_leg(trade_description: str, run_count: int, llm: Llm) -> L
 
 def test_surrounding_leg():
     run_count = 2
-    correct_answers = [["{Bank pays: 6M USD Term SOFR, semi-annual, act/360}",
-                       "{Bank receives: USD fixed 3.45%, semi-annual, act/360}"],
-                       ["Client pays 3M Term SOFR + 70bps (act/360, quarterly)",
-                        "Client receives 12M Term SOFR (act/360, annual)"],
-                       ["We pay: 6M USD Term SOFR (floating), semi-annual, act/360",
-                        "We receive: USD fixed 3.45%, semi-annual, act/360"],
-                       ["Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360",
-                        "Party A receives: USD fixed 3.20%, semi-annual, act/360"]]
-    trades = [stub_fixed_for_floating_swap_entry, stub_basis_swap_entry, stub_floored_swap_entry, stub_amortizing_swap_entry]
+    correct_answers = [
+        [
+            "{Bank pays: 6M USD Term SOFR, semi-annual, act/360}",
+            "{Bank receives: USD fixed 3.45%, semi-annual, act/360}",
+        ],
+        ["Client pays 3M Term SOFR + 70bps (act/360, quarterly)", "Client receives 12M Term SOFR (act/360, annual)"],
+        [
+            "We pay: 6M USD Term SOFR (floating), semi-annual, act/360",
+            "We receive: USD fixed 3.45%, semi-annual, act/360",
+        ],
+        [
+            "Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360",
+            "Party A receives: USD fixed 3.20%, semi-annual, act/360",
+        ],
+    ]
+    trades = [
+        stub_fixed_for_floating_swap_entry,
+        stub_basis_swap_entry,
+        stub_floored_swap_entry,
+        stub_amortizing_swap_entry,
+    ]
     numbered_trades = [add_line_numbers(trade) for trade in trades]
     plot_values = []
-    with (TestingContext()):
+    with TestingContext():
         for llm in llms:
             for trade, correct_answer in zip(numbered_trades, correct_answers):
                 results = _test_surrounding_leg(trade, run_count, llm)
