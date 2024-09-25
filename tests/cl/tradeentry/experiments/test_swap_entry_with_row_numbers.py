@@ -17,21 +17,13 @@ from typing import Dict
 from typing import List
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.testing.regression_guard import RegressionGuard
-from cl.convince.llms.claude.claude_llm import ClaudeLlm
-from cl.convince.llms.gemini.gemini_llm import GeminiLlm
-from cl.convince.llms.gpt.gpt_llm import GptLlm
-from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
+from stubs.cl.convince.experiments.stub_llms import stub_full_llms
 from stubs.cl.tradeentry.experiments.stub_tag_utils import add_line_numbers
 from stubs.cl.tradeentry.experiments.stub_tag_utils import fields_to_text
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_floored_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_vanilla_swap_entry
 
-llms = [
-    ClaudeLlm(llm_id="claude-3-5-sonnet-20240620"),
-    FireworksLlamaLlm(llm_id="llama-v3-70b-instruct"),
-    GptLlm(llm_id="gpt-4o-2024-08-06"),
-]
 
 PROMPT_TEMPLATE = """You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference the row where you find the information.
@@ -88,7 +80,7 @@ def _testing_answer_referencing(fields: List[Dict], trade_description: str):
 
         prompt = PROMPT_TEMPLATE.format(input_text=trade_description, fields=fields_text)
         run_count = 1
-        for llm in llms:
+        for llm in stub_full_llms:
             for _ in range(run_count):
                 result = llm.completion(prompt)
                 guard = RegressionGuard(channel=llm.llm_id)

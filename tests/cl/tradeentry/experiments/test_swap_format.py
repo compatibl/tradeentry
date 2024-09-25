@@ -16,17 +16,10 @@ import pytest
 from typing import List
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.testing.regression_guard import RegressionGuard
-from cl.convince.llms.claude.claude_llm import ClaudeLlm
-from cl.convince.llms.gpt.gpt_llm import GptLlm
-from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
+from stubs.cl.convince.experiments.stub_llms import stub_full_llms
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_fixed_for_floating_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_vanilla_swap_entry
 
-llms = [
-    ClaudeLlm(llm_id="claude-3-5-sonnet-20240620"),
-    FireworksLlamaLlm(llm_id="llama-v3-70b-instruct"),
-    GptLlm(llm_id="gpt-4o-2024-08-06"),
-]
 
 PROMPT_TEMPLATE = """
 You are tasked with converting a trade definition example to a Python interpolated string format. 
@@ -83,7 +76,7 @@ def _test_extract_format(text: str, field_names: List[str]) -> None:
 
         run_count = 1
 
-        for llm in llms:
+        for llm in stub_full_llms:
             for _ in range(run_count):
                 result = llm.completion(prompt)
 

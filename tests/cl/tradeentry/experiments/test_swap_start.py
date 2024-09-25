@@ -15,15 +15,7 @@
 import pytest
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.testing.regression_guard import RegressionGuard
-from cl.convince.llms.claude.claude_llm import ClaudeLlm
-from cl.convince.llms.gpt.gpt_llm import GptLlm
-from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
-
-llms = [
-    ClaudeLlm(llm_id="claude-3-5-sonnet-20240620"),
-    FireworksLlamaLlm(llm_id="llama-v3-70b-instruct"),
-    GptLlm(llm_id="gpt-4o-2024-08-06"),
-]
+from stubs.cl.convince.experiments.stub_llms import stub_full_llms
 
 
 def _test_swap_start(text: str):
@@ -42,7 +34,7 @@ def _test_swap_start(text: str):
         )
         run_count = 1
 
-        for llm in llms:
+        for llm in stub_full_llms:
             for _ in range(run_count):
 
                 result = llm.completion(prompt)

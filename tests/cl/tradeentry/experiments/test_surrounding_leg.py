@@ -13,29 +13,20 @@
 # limitations under the License.
 
 import pytest
-import uuid
+
 from typing import List
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
-from cl.runtime.plots.group_bar_plot_style import GroupBarPlotStyle
 from cl.runtime.testing.regression_guard import RegressionGuard
-from cl.convince.llms.claude.claude_llm import ClaudeLlm
-from cl.convince.llms.gpt.gpt_llm import GptLlm
-from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
 from cl.convince.llms.llm import Llm
+from stubs.cl.convince.experiments.stub_llms import stub_full_llms
 from stubs.cl.tradeentry.experiments.stub_string_utils import extract_between_backticks
 from stubs.cl.tradeentry.experiments.stub_string_utils import sanitize_string
-from stubs.cl.tradeentry.experiments.stub_tag_utils import add_line_numbers
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_basis_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_fixed_for_floating_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_floored_swap_entry
 
-llms = [
-    ClaudeLlm(llm_id="claude-3-5-sonnet-20240620"),
-    FireworksLlamaLlm(llm_id="llama-v3-70b-instruct"),
-    GptLlm(llm_id="gpt-4o-2024-08-06"),
-]
 
 PROMPT_TEMPLATE = """In this text, surround information about each leg in curly brackets. Make no other changes
 to the text. Take into account the following:
@@ -117,7 +108,7 @@ def test_surrounding_leg():
     ]
     plot_values = []
     with TestingContext():
-        for llm in llms:
+        for llm in stub_full_llms:
             for trade, correct_answer in zip(trades, correct_answers):
                 results = _test_surrounding_leg(trade, run_count, llm)
 
