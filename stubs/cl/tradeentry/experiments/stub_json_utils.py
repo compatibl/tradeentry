@@ -17,11 +17,11 @@ import re
 from typing import Optional
 
 
-def extract_json(text: str) -> Optional[str]:
+def extract_json(text: str) -> Optional[dict]:
     match = re.search(r"({.*})", text, re.DOTALL)
     if match is None:
         return None
-    json_string = match.groups()[0]
+    json_string = match.group(1)
     try:
         return json.loads(json_string)
     except json.JSONDecodeError:
