@@ -15,8 +15,10 @@
 import csv
 import os
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, ClassVar
 from typing import Dict
+
+from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.settings.settings import Settings
 from cl.runtime.testing.stack_util import StackUtil
 
@@ -34,7 +36,7 @@ def _error_extension_not_supported(ext: str) -> Any:
     )
 
 
-@dataclass(slots=True, init=False)
+@dataclass(slots=True, kw_only=True)
 class CompletionCache:
     """
     Cache LLM completions for reducing AI cost (disable when testing the LLM itself)
@@ -46,47 +48,47 @@ class CompletionCache:
         - To record a new completions file, delete the existing one
     """
 
-    output_path: str
-    """Output file path including directory and channel."""
+    channel: str | None = None
+    """Dot-delimited string or an iterable of dot-delimited tokens to uniquely identify the cache."""
 
-    ext: str
-    """Output file extension (format), defaults to '.csv'"""
+    ext: str | None = None
+    """Output file extension (format) without the dot prefix, defaults to 'csv'."""
 
-    __completion_dict: Dict[str, str]  # TODO: Set using ContextVars
+    output_path: str | None = None
+    """Path for the cache file where completions are stored."""
+
+    __completion_dict: Dict[str, str] = field(default_factory=lambda: {})   # TODO: Set using ContextVars
     """Dictionary of completions indexed by query."""
 
-    def __init__(self, *, channel: str = None, ext: str = None):
+    def __post_init__(self):
         """
-        Initialize the completion cache.
-
-        Args:
-            channel: Dot-delimited string or an iterable of dot-delimited tokens to uniquely identify the cache
-            ext: File extension (format) without the dot prefix, defaults to 'txt'
+        Load the completions file from disk once on construction. New completions added to this instance
+        are written to disk but not reused.
         """
-        if channel is None or channel == "":
-            raise RuntimeError("Completion cache channel is empty or None.")
 
         # Find base_path=dir_path/test_module by examining call stack for test function signature test_*
-        base_path = StackUtil.get_base_dir(allow_missing=True)
+        base_dir = StackUtil.get_base_dir(allow_missing=True)
 
         # If not found, use base path relative to project root
-        if base_path is None:
+        if base_dir is None:
             project_root = Settings.get_project_root()
-            base_path = os.path.join(project_root, "completions")
+            base_dir = os.path.join(project_root, "completions")
 
-        if ext is not None:
+        if self.ext is not None:
             # Remove dot prefix if specified
-            ext = ext.removeprefix(".")
-            if ext not in _supported_extensions:
-                _error_extension_not_supported(ext)
+            self.ext = self.ext.removeprefix(".")
+            if self.ext not in _supported_extensions:
+                _error_extension_not_supported(self.ext)
         else:
-            # Use txt if not specified
-            ext = "csv"
+            # Use csv if not specified
+            self.ext = "csv"
 
-        # Add channel to base path to get output path
-        self.output_path = f"{base_path}.{channel}.completions.{ext}"
-        self.ext = ext
-        self.__completion_dict = {}
+        # Cache file path
+        if self.channel is None or self.channel == "":
+            cache_filename = f"completions.{self.ext}"
+        else:
+            cache_filename = f"{self.channel}.completions.{self.ext}"
+        self.output_path = os.path.join(base_dir, cache_filename)
 
         # Load cache file from disk
         self.load_cache_file()
