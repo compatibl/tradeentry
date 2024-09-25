@@ -1,0 +1,3 @@
+Here is the JSON response:
+
+{ "pay_freq": "6m" },N,N
