@@ -93,8 +93,12 @@ class CompletionCache:
         # Load cache file from disk
         self.load_cache_file()
 
-    def add(self, request_id: str, query: str, completion: str) -> None:
+    def add(self, request_id: str, query: str, completion: str, *, trial_id: str | int | None = None) -> None:
         """Add to file even if already exits, the latest will take precedence during lookup."""
+
+        # Add trial_id to the beginning of cached query key
+        if trial_id is not None:
+            query = f"TrialID: {str(trial_id)} {query}"
 
         # Check if the file already exists
         is_new = not os.path.exists(self.output_path)
@@ -127,8 +131,13 @@ class CompletionCache:
             # Should not be reached here because of a previous check in __init__
             _error_extension_not_supported(self.ext)
 
-    def get(self, query: str) -> str | None:
+    def get(self, query: str, *, trial_id: str | int | None = None) -> str | None:
         """Return completion for the specified query if found and None otherwise."""
+        # Add trial_id to the beginning of cached query key
+        if trial_id is not None:
+            query = f"TrialID: {str(trial_id)} {query}"
+
+        # Look up with trial ID
         result = self.__completion_dict.get(query, None)
         return result
 

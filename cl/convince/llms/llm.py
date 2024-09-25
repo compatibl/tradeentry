@@ -31,7 +31,7 @@ class Llm(LlmKey, RecordMixin[LlmKey], ABC):
     def get_key(self) -> LlmKey:
         return LlmKey(llm_id=self.llm_id)
 
-    def completion(self, query: str) -> str:
+    def completion(self, query: str, *, trial_id: str | int | None = None) -> str:
         """Text-in, text-out single query completion without model-specific tags (uses response caching)."""
 
         # Remove leading and trailing whitespace including EOL from the query
@@ -42,7 +42,7 @@ class Llm(LlmKey, RecordMixin[LlmKey], ABC):
             self._completion_cache = CompletionCache(channel=self.llm_id)
 
         # Try to find in completion cache
-        if (result := self._completion_cache.get(query)) is not None:
+        if (result := self._completion_cache.get(query, trial_id=trial_id)) is not None:
             # Return cached value if found
             return result
         else:
@@ -60,7 +60,7 @@ class Llm(LlmKey, RecordMixin[LlmKey], ABC):
 
             # Save the result in cache before returning, request_id is recorded
             # but not taken into account during lookup
-            self._completion_cache.add(request_id, query, result)
+            self._completion_cache.add(request_id, query, result, trial_id=trial_id)
             return result
 
     @abstractmethod
