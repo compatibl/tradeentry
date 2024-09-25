@@ -1,0 +1,27 @@
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: Frequency of the answer is incorrect
+    freq: multiple
+    answer_type: <class 'dict'>
+  status: BAD
+

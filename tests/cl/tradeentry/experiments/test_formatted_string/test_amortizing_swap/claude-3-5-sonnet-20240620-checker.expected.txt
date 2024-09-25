@@ -1,0 +1,71 @@
+FloatLegCurrency:
+  error_messages:
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: 'Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360'
+  status: BAD
+FloatLegIndex:
+  error_messages:
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: 'Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360'
+  status: BAD
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  error_messages:
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: 'Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360'
+  status: BAD
+FloatLegDaycountBasis:
+  error_messages:
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: 'Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360'
+  status: BAD
+FixedLegCurrency:
+  error_messages:
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: 'Party A receives: USD fixed 3.20%, semi-annual, act/360'
+  status: BAD
+FixedLegFixedRate:
+  error_messages:
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: 'Party A receives: USD fixed 3.20%, semi-annual, act/360'
+  status: BAD
+FixedLegFrequency:
+  error_messages:
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: 'Party A receives: USD fixed 3.20%, semi-annual, act/360'
+  status: BAD
+FixedLegDaycountBasis:
+  error_messages:
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: 'Party A receives: USD fixed 3.20%, semi-annual, act/360'
+  status: BAD
+StartDate:
+  error_messages:
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: 'Start: 10 November 2009'
+  status: BAD
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: 10-Nov-09 100,000,000.00
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: 10-May-10 100,000,000.00
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: 10-Nov-10 100,000,000.00
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: 10-May-11 100,000,000.00
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: 10-Nov-11 90,000,000.00
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: 10-May-12 80,000,000.00
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: 10-Nov-12 70,000,000.00
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: 10-May-13 60,000,000.00
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: 10-Nov-13 50,000,000.00
+  - message: 'ERROR: can''t extract row number'
+    extracted_row: 10-May-14 25,000,000.00
+  status: BAD
+
