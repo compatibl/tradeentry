@@ -1,4 +1,0 @@
-RequestID,Query,Completion
-2024-09-25T01:58:24.360Z-77539d8f06e9b35a2eda,"Trade or leg description contains the following text. What is the payment frequency of this trade or leg? Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: '???', '1m', '3m', '6m', '12m'. No other values are allowed. Use 'ambiguous' when thetext does not allow you to determine the frequency with certainty. Text: Payment dates are January 15 and July 15","Here is the JSON response:
-
-{ ""pay_freq"": ""6m"" }"
