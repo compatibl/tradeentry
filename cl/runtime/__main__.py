@@ -23,6 +23,7 @@ from starlette.responses import Response
 from starlette.staticfiles import StaticFiles
 from cl.runtime import Context
 from cl.runtime.context.process_context import ProcessContext
+from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.log.log_entry import LogEntry
 from cl.runtime.log.log_entry_level_enum import LogEntryLevelEnum
 from cl.runtime.primitive.datetime_util import DatetimeUtil
@@ -81,8 +82,8 @@ async def http_warning_handler(request, exc):
     return await handle_exception(request, exc, log_level=LogEntryLevelEnum.WARNING)
 
 
-# Add Warning exception handler
-@server_app.exception_handler(UserWarning)
+# Add UserError exception handler
+@server_app.exception_handler(UserError)
 async def http_user_error_handler(request, exc):
     return await handle_exception(request, exc, log_level=LogEntryLevelEnum.USER_ERROR)
 

@@ -12,17 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from enum import IntEnum
 
+class UserError(Exception):
+    """Custom exception for user-related errors."""
 
-class LogEntryLevelEnum(IntEnum):
-    """Indicates the type of event."""
+    def __init__(self, message='A user error occurred', username=None):
+        super().__init__(message)
+        self.username = username
 
-    ERROR = 1
-    """An error that prevents an application from functioning as expected."""
-
-    WARNING = 2
-    """An potential issue that could lead to problems."""
-
-    USER_ERROR = 3
-    """An error caused by incorrect user actions (invalid input, unauthorized access attempts, etc.)"""
+    def __str__(self):
+        message = f'UserError: {self.args[0]}'
+        if self.username:
+            message += f' (User: {self.username})'
+        return message
