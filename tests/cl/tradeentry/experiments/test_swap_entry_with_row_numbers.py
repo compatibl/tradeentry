@@ -69,7 +69,7 @@ FIELDS = [
     {"name": "FixedLegFrequency", "type": "string", "freq": "single"},
     {"name": "FixedLegDaycountBasis", "type": "string", "freq": "single"},
     {"name": "StartDate", "type": "date", "freq": "single"},
-    {"name": "NotionalAmount", "type": "float", "freq": "multiple"},
+    {"name": "NotionalAmount", "type": "float", "freq": "multiple or single"},
 ]
 
 
