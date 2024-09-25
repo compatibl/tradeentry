@@ -25,8 +25,12 @@ class GeminiLlm(Llm):
     model_name: str | None = None
     """Model name in Gemini format including version if any, defaults to 'llm_id'."""
 
-    def uncached_completion(self, query: str) -> str:
+    def uncached_completion(self, request_id: str, query: str) -> str:
         """Perform completion without CompletionCache lookup, call completion instead."""
+
+        # Prefix a unique RequestID to the model for audit log purposes and
+        # to stop model provider from caching the results
+        query_with_request_id = f"RequestID: {request_id}\n\n{query}"
 
         model_name = self.model_name if self.model_name is not None else self.llm_id
 

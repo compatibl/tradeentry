@@ -29,11 +29,15 @@ class GptLlm(Llm):
     _client: ClassVar[OpenAI] = None
     """OpenAI client instance."""
 
-    def uncached_completion(self, query: str) -> str:
+    def uncached_completion(self, request_id: str, query: str) -> str:
         """Perform completion without CompletionCache lookup, call completion instead."""
 
+        # Prefix a unique RequestID to the model for audit log purposes and
+        # to stop model provider from caching the results
+        query_with_request_id = f"RequestID: {request_id}\n\n{query}"
+
         model_name = self.model_name if self.model_name is not None else self.llm_id
-        messages = [{"role": "user", "content": query}]
+        messages = [{"role": "user", "content": query_with_request_id}]
 
         client = self._get_client()
         response = client.chat.completions.create(model=model_name, messages=messages)

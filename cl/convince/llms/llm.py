@@ -15,6 +15,8 @@
 from abc import ABC
 from abc import abstractmethod
 from dataclasses import dataclass
+
+from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.convince.llms.completion_cache import CompletionCache
 from cl.convince.llms.llm_key import LlmKey
@@ -43,11 +45,17 @@ class Llm(LlmKey, RecordMixin[LlmKey], ABC):
             return result
         else:
             # Otherwise make cloud provider call
-            result = self.uncached_completion(query)
-            # Save the result in cache before returning
-            self._completion_cache.add(query, result)
+
+            # Generate OrderedUuid and convert to readable ordered string in date-hash format
+            request_uuid = OrderedUuid.create_one()
+            request_id = OrderedUuid.to_readable_str(request_uuid)
+
+            result = self.uncached_completion(request_id, query)
+            # Save the result in cache before returning, request_id is recorded
+            # but not taken into account during lookup
+            self._completion_cache.add(request_id, query, result)
             return result
 
     @abstractmethod
-    def uncached_completion(self, query: str) -> str:
+    def uncached_completion(self, request_id: str, query: str) -> str:
         """Perform completion without CompletionCache lookup, call completion instead."""
