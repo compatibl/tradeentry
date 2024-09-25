@@ -47,7 +47,7 @@ Enclose you output text in triple backticks."""
 def _create_group_bar_plot(results):
 
     group_bar_plot = GroupBarPlot()
-    group_bar_plot.bar_labels = ["Claude 3.5 Sonnet", "Llama3 70b", "GPT4o"]
+    group_bar_plot.bar_labels = [llm.llm_id for llm in stub_full_llms]
     group_bar_plot.group_labels = ["A", "B", "C", "D"]
     group_bar_plot.value_ticks = list(range(0, 101, 10))
     group_bar_plot.values = results
