@@ -12,10 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from random import random, randint, Random
 import pytest
 import datetime as dt
-from dateutil.relativedelta import relativedelta
 from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.testing.regression_guard import RegressionGuard
 from stubs.cl.convince.experiments.stub_llms import stub_mini_llms
 
@@ -32,43 +33,38 @@ def _test_recall(text: str):
         run_count = 1
 
         for llm in stub_mini_llms:
+            guard = RegressionGuard(channel=llm.llm_id)
             for _ in range(run_count):
 
                 result = llm.completion(prompt)
-
-                is_exact_match_yn = "Y" if result == text else "N"
-                is_trimmed_match_yn = "Y" if result.strip() == text.strip() else "N"
-
-                guard = RegressionGuard(channel=llm.llm_id)
-                guard.write(f"{result},{is_exact_match_yn},{is_trimmed_match_yn}")
+                guard.write(result)
 
         guard.verify_all()
 
 
-def test_known_phrase():
-    """Test the specified recall string."""
+def test_well_known_phrase():
+    """Test a well-known recall string."""
     _test_recall("A quick brown fox jumps over the lazy dog")
 
 
-def test_modified_known_phrase():
+def test_modified_well_known_phrase():
     """Test the specified recall string."""
-    _test_recall("A quick brownie dog jumps over the lazy dog")
+    _test_recall("A quick brown fox jumps over a lazy dog")
 
 
-def test_random_chars():
-    """Test the specified recall string."""
-    _test_recall("AasaREl 3022a1 CEoaS aSpWAmaQ &8(1 pSozar")
-
-
-def test_long_table():
-    """Test the specified recall string."""
+def test_date_list():
+    """Test random dates."""
     origin_date = dt.date(2003, 4, 21)
-    row_count = 10
-    row_list = [
-        f"{origin_date + relativedelta(months=3*i)},{1_000_000 * (i if i > 10 else 10)}" for i in range(row_count)
-    ]
-    table = "\n".join(row_list)
-    _test_recall(table)
+    date_count = 10
+    max_offset = 10_000
+
+    # Create a random generator with seed
+    randgen = Random(0)
+
+    offsets = [randgen.randint(0, max_offset) for _ in range(date_count)]
+    date_list = [origin_date + dt.timedelta(days=offset) for offset in offsets]
+    date_list_str = ",".join(DateUtil.to_str(date) for date in date_list)
+    _test_recall(date_list_str)
 
 
 if __name__ == "__main__":
