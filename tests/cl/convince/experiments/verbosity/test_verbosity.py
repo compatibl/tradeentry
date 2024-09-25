@@ -16,11 +16,22 @@ import pytest
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
-from cl.convince.llms.claude.claude_llm import ClaudeLlm
-from cl.convince.llms.gemini.gemini_llm import GeminiLlm
-from cl.convince.llms.gpt.gpt_llm import GptLlm
-from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
+from cl.runtime.testing.regression_guard import RegressionGuard
 from stubs.cl.convince.experiments.stub_llms import stub_mini_llms
+
+
+def _get_question(i: int):
+    return f"{i} times {i}"
+
+
+def _get_simple_prompt(i: int):
+    question = f"{i} times {i}"
+    return f"What is {_get_question(i)}?"
+
+
+def _get_extended_prompt(i: int):
+    return (f"Reply with the answer for ```{_get_question(i)}``. Your reply must include numerical value for the answer "
+            f"(not words) with no other comments or other text.")
 
 
 def test_verbosity(local_dir_fixture):
@@ -28,43 +39,25 @@ def test_verbosity(local_dir_fixture):
 
     with TestingContext():
 
-        rep_count = 10
-        prompt = (
-            "Reply with the answer for 2 times 2. Your reply must include numerical value for the answer "
-            "(not words) with no other comments or other text."
-        )
-
+        reps = 2
         plot = GroupBarPlot()
         plot.values = []
         for llm in stub_mini_llms:
-            completions = [llm.completion(prompt) for _ in range(rep_count)]
-            mult = 100.0 / rep_count
-            results = [
-                ("Success", mult * sum(1 for x in completions if x == "4")),
-                ("Allow EOL", mult * sum(1 for x in completions if x.replace("\n", "") == "4")),
-                ("Allow whitespace", mult * sum(1 for x in completions if x.strip() == "4")),
-                ("Allow comments", mult * sum(1 for x in completions if "4" in x)),
-                ("Allow words", mult * sum(1 for x in completions if ("4" in x or "four" in x.lower()))),
-            ]
 
-            plot.values.extend([result[1] for result in results])
+            # Calculate
+            simple_sum = sum(llm.completion(_get_simple_prompt(i + 1)) == str(pow(i+1, 2)) for i in range(reps))
+            extended_sum = sum(llm.completion(_get_extended_prompt(i + 1)) == str(pow(i+1, 2)) for i in range(reps))
 
-            # Apply group labels once
-            if plot.group_labels is None:
-                plot.group_labels = [result[0] for result in results]
+            # Add to plot
+            plot.values.extend([simple_sum/reps, extended_sum/reps])
 
         # Apply labels
-        plot.bar_labels = [llm.llm_id for llm in llms]
-        plot.group_labels = [result[1] for result in results]
+        plot.bar_labels = [llm.llm_id for llm in stub_mini_llms]
+        plot.group_labels = ["Simple", "Extended"]
 
         # Create and save
         fig = plot.create_figure()
-        fig.savefig("test_verbosity.test_verbosity.png")
-
-        # TODO: Enable
-        # guard = RegressionGuard(channel=llm.llm_id)
-        # guard.write(f"{result},{is_exact_match_yn},{is_trimmed_match_yn}")
-        # guard.verify_all()
+        fig.savefig("test_verbosity.png")
 
 
 if __name__ == "__main__":
