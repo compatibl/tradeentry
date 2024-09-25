@@ -1,0 +1,1134 @@
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+ERROR: No input to check
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  error_messages:
+  - message: 'ERROR: {FloatLegCurrency} not in the formatted_row'
+    formatted_row: '3: We pay: 6M USD Term SOFR (floating), semi-annual, act/360'
+  status: BAD
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  error_messages:
+  - message: 'ERROR: {FixedLegCurrency} not in the formatted_row'
+    formatted_row: '4: We receive: USD fixed 3.45%, semi-annual, act/360'
+  status: BAD
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+

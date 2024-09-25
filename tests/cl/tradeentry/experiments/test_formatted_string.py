@@ -126,7 +126,7 @@ def test_vanilla_swap():
 
 def test_floored_swap():
     numbered_floored_swap = add_line_numbers(stub_floored_swap_entry)
-    fig = _testing_formatted_string(numbered_floored_swap, run_count=1)
+    fig = _testing_formatted_string(numbered_floored_swap, run_count=50)
     fig.savefig("test_formatted_string_floored_swap.png")
     RegressionGuard.verify_all()
 

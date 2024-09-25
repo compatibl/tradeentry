@@ -1,0 +1,1343 @@
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: {NotionalAmount} not in the formatted_row'
+    formatted_row: '1: Floored USD IRS Swap'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: {NotionalAmount} not in the formatted_row'
+    formatted_row: '1: Floored USD IRS Swap'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '4: We receive: USD fixed 3.45%, semi-annual, act/360'
+    extracted_row: '4: We receive: USD fixed 3.45%%, semi-annual, act/360'
+    formatted_row: '4: We receive: USD fixed {FixedLegFixedRate}%, semi-annual, act/360'
+  status: BAD
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '4: We receive: USD fixed 3.45%, semi-annual, act/360'
+    extracted_row: '4: We receive: USD fixed 3.45%%, semi-annual, act/360'
+    formatted_row: '4: We receive: USD fixed {FixedLegFixedRate}%, semi-annual, act/360'
+  status: BAD
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: {NotionalAmount} not in the formatted_row'
+    formatted_row: '1: Floored USD IRS Swap'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: {NotionalAmount} not in the formatted_row'
+    formatted_row: '1: Floored USD IRS Swap'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: {NotionalAmount} not in the formatted_row'
+    formatted_row: '1: Floored USD IRS Swap'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: {NotionalAmount} not in the formatted_row'
+    formatted_row: '1: Floored USD IRS Swap'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '4: We receive: USD fixed 3.45%, semi-annual, act/360'
+    extracted_row: '4: We receive: USD fixed 3.45%%, semi-annual, act/360'
+    formatted_row: '4: We receive: USD fixed {FixedLegFixedRate}%, semi-annual, act/360'
+  status: BAD
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '4: We receive: USD fixed 3.45%, semi-annual, act/360'
+    extracted_row: '4: We receive: USD fixed 3.45%%, semi-annual, act/360'
+    formatted_row: '4: We receive: USD fixed {FixedLegFixedRate}%, semi-annual, act/360'
+  status: BAD
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '4: We receive: USD fixed 3.45%, semi-annual, act/360'
+    extracted_row: '4: We receive: USD fixed 3.45%%, semi-annual, act/360'
+    formatted_row: '4: We receive: USD fixed {FixedLegFixedRate}%, semi-annual, act/360'
+  status: BAD
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '4: We receive: USD fixed 3.45%, semi-annual, act/360'
+    extracted_row: '4: We receive: USD fixed 3.45%%, semi-annual, act/360'
+    formatted_row: '4: We receive: USD fixed {FixedLegFixedRate}%, semi-annual, act/360'
+  status: BAD
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  status: OK
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
+FloatLegCurrency:
+  status: OK
+FloatLegIndex:
+  status: OK
+FloatLegSpread:
+  status: OK
+FloatLegFrequency:
+  status: OK
+FloatLegDaycountBasis:
+  status: OK
+FixedLegCurrency:
+  status: OK
+FixedLegFixedRate:
+  status: OK
+FixedLegFrequency:
+  status: OK
+FixedLegDaycountBasis:
+  status: OK
+StartDate:
+  status: OK
+NotionalAmount:
+  error_messages:
+  - message: 'ERROR: the rows are not the same'
+    input_row: '2: Notional: USD 1bn'
+    extracted_row: '2: Notional: 1bn USD'
+    formatted_row: '2: Notional: {NotionalAmount} USD'
+  status: BAD
+
