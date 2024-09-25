@@ -72,8 +72,8 @@ def _testing_swap_leg_type(trade_description: str, run_count: int, llm: Llm) -> 
 
     results = []
     guard = RegressionGuard(channel=llm.llm_id)
-    for _ in range(run_count):
-        result = llm.completion(prompt)
+    for trial_id in range(run_count):
+        result = llm.completion(prompt, trial_id=trial_id)
         guard.write(result)
         results.append(result)
     return results

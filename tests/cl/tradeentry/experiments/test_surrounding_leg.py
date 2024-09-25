@@ -78,9 +78,9 @@ def _test_surrounding_leg(trade_description: str, run_count: int, llm: Llm) -> L
     prompt = PROMPT_TEMPLATE.format(text=trade_description)
 
     results = []
-    for _ in range(run_count):
+    for trial_id in range(run_count):
 
-        result = llm.completion(prompt)
+        result = llm.completion(prompt, trial_id=trial_id)
 
         guard = RegressionGuard(channel=llm.llm_id)
         guard.write(result)
@@ -91,7 +91,7 @@ def _test_surrounding_leg(trade_description: str, run_count: int, llm: Llm) -> L
 
 
 def test_surrounding_leg():
-    run_count = 1
+    run_count = 2
     correct_answers = [
         [
             "{Bank pays: 6M USD Term SOFR, semi-annual, act/360}",
