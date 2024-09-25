@@ -41,10 +41,14 @@ class Llm(LlmKey, RecordMixin[LlmKey], ABC):
         if self._completion_cache is None:
             self._completion_cache = CompletionCache(channel=self.llm_id)
 
-        # Try to find in completion cache
-        if (result := self._completion_cache.get(query.replace("\n", "\r\n"), trial_id=trial_id)) is not None:
-            # Return cached value if found
-            return result.replace( "\r\n", "\n")
+        # Normalize EOL character in query across operating system types to get cache key
+        cache_key = query.replace("\n", "\r\n")
+
+        # Try to find in completion cache by cache_key
+        if (cached_value := self._completion_cache.get(cache_key, trial_id=trial_id)) is not None:
+            # Normalize EOL character in result across operating system types
+            result = cached_value.replace( "\r\n", "\n")
+            return result
         else:
             # Otherwise make cloud provider call
 
