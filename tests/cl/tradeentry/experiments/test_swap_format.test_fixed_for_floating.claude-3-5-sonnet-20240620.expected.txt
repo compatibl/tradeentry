@@ -1,7 +1,0 @@
-Swap Details:
-Notional: 10,000,000,000
-Bank pays: 6M USD Term SOFR, {floating_leg_payment_frequency}, {floating_leg_daycount_basis}
-Bank receives: USD {fixed_rate}%, {fixed_leg_payment_frequency}, {fixed_leg_daycount_basis}
-Notional exchange: None
-{start_date}: 10 November 2009
-Tenor: 5y

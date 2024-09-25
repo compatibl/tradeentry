@@ -1,8 +1,0 @@
-```
-Notional: 10,000,000,000
-Bank pays: {floating_index}, {floating_leg_payment_frequency}, {floating_leg_daycount_basis}
-Bank receives: {fixed_leg_payment_currency} fixed {swap_lengthfixed_rate}, {fixed_leg_payment_frequency}, {fixed_leg_daycount_basis}
-Notional exchange: None
-Start date: {start_date}
-Tenor: {swap_lengthfixed_rate}
-```
