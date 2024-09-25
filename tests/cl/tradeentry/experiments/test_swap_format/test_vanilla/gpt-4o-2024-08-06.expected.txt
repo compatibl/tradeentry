@@ -1,1 +1,0 @@
-Sell {swap_lengthfixed_rate} SOFR swap at {floating_leg_daycount_basisfixed_leg_payment_frequency}
