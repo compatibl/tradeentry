@@ -35,6 +35,9 @@ class Llm(LlmKey, RecordMixin[LlmKey], ABC):
     def completion(self, query: str) -> str:
         """Text-in, text-out single query completion without model-specific tags (uses response caching)."""
 
+        # Remove leading and trailing whitespace including EOL from the query
+        query = query.strip()
+
         # Create completion cache if does not exist
         if self._completion_cache is None:
             self._completion_cache = CompletionCache(channel=self.llm_id)
@@ -50,7 +53,12 @@ class Llm(LlmKey, RecordMixin[LlmKey], ABC):
             request_uuid = OrderedUuid.create_one()
             request_id = OrderedUuid.to_readable_str(request_uuid)
 
+            # Invoke LLM by calling the cloud provider API
             result = self.uncached_completion(request_id, query)
+
+            # Remove leading and trailing whitespace including EOL from the result
+            result = result.strip()
+
             # Save the result in cache before returning, request_id is recorded
             # but not taken into account during lookup
             self._completion_cache.add(request_id, query, result)
