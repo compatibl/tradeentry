@@ -109,8 +109,11 @@ class CompletionCache:
             if not os.path.exists(output_dir):
                 os.makedirs(output_dir)
 
+        # Set EOL for CSV writer based on the OS
+        eol = "\r\n" if os.name == 'nt' else "\n"  # TODO: Avoid setting EOL explicitly, use param instead
+
         if self.ext == "csv":
-            with open(self.output_path, mode="a", newline="", encoding="utf-8") as file:
+            with open(self.output_path, mode="a", newline=eol, encoding="utf-8") as file:
                 writer = csv.writer(file, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL, escapechar="\\")
 
                 if is_new:
