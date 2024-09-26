@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-
 from cl.runtime import RecordMixin
 from cl.runtime.log.log_entry_key import LogEntryKey
 from cl.runtime.log.log_entry_level_enum import LogEntryLevelEnum

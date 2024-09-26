@@ -14,10 +14,9 @@
 
 from dataclasses import dataclass
 from pathlib import Path
-
 import pandas as pd
-
-from cl.runtime import RecordMixin, viewer
+from cl.runtime import RecordMixin
+from cl.runtime import viewer
 from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.plots.confusion_matrix_plot import ConfusionMatrixPlot
 from cl.runtime.plots.confusion_matrix_plot_style import ConfusionMatrixPlotStyle

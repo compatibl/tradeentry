@@ -58,8 +58,7 @@ class HandlerDeclareBlockDecl:
                     # It does not matter if it is a classmethod or staticmethod from UI perspective
                     # (they are both considered static)
                     isinstance(inspect.getattr_static(record_type, member_name), staticmethod)
-                    or
-                    isinstance(inspect.getattr_static(record_type, member_name), classmethod)
+                    or isinstance(inspect.getattr_static(record_type, member_name), classmethod)
                 )
 
                 # TODO: Add labels support

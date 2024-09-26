@@ -18,7 +18,6 @@ import io
 from typing import Any
 from typing import Dict
 from typing import List
-
 from matplotlib.figure import Figure
 from pydantic import BaseModel
 from cl.runtime.context.context import Context

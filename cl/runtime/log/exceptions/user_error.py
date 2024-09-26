@@ -16,12 +16,12 @@
 class UserError(Exception):
     """Custom exception for user-related errors."""
 
-    def __init__(self, message='A user error occurred', username=None):
+    def __init__(self, message="A user error occurred", username=None):
         super().__init__(message)
         self.username = username
 
     def __str__(self):
-        message = f'UserError: {self.args[0]}'
+        message = f"UserError: {self.args[0]}"
         if self.username:
-            message += f' (User: {self.username})'
+            message += f" (User: {self.username})"
         return message

@@ -11,11 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 import os
 import traceback
 import uuid
-from datetime import datetime, timezone
-
+from datetime import datetime
+from datetime import timezone
 import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
@@ -62,7 +63,7 @@ async def handle_exception(request, exc, log_level):
         id=str(uuid.uuid4()),
         message=str(exc),
         level=log_level,
-        timestamp=DatetimeUtil.to_iso_int(DatetimeUtil.now())
+        timestamp=DatetimeUtil.to_iso_int(DatetimeUtil.now()),
     )
     Context.current().save_one(entry)
 
