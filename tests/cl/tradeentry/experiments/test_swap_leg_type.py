@@ -90,7 +90,7 @@ def test_swap_leg_type():
                 plot_values.append(round(correct_answers_count / run_count * 100, 2))
 
         plot_bar_labels = [llm.llm_id for llm in stub_full_llms]
-        plot_group_labels = ["A", "B", "C", "D"]
+        plot_group_labels = ["C", "B", "D", "E"]
         fig = create_group_bar_plot(plot_values, plot_bar_labels, plot_group_labels)
 
     fig.savefig("test_swap_leg_type.png")
