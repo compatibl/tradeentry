@@ -38,5 +38,5 @@ class StubViewersDataTypes(StubViewersDataTypesKey, RecordMixin[StubViewersDataT
         file_path = os.path.join(os.path.dirname(__file__), "stub_viewers_data_types.pdf")
         with open(file_path, mode="rb") as file:
             content = file.read()
-        pdf_content = BinaryContent(content=content, content_type=BinaryContentTypeEnum.Pdf)
+        pdf_content = BinaryContent(content=content, content_type=BinaryContentTypeEnum.PDF)
         return pdf_content

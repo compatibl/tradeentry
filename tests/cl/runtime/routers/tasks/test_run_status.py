@@ -41,9 +41,9 @@ task_key_str = key_serializer.serialize_key(task.get_key())
 t = DatetimeUtil.now()
 queue_key = handler_queue.get_key()
 task_runs = [
-    TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatusEnum.Pending),
-    TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatusEnum.Failed),
-    TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatusEnum.Completed),
+    TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatusEnum.PENDING),
+    TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatusEnum.FAILED),
+    TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatusEnum.COMPLETED),
 ]
 requests = [
     {

@@ -62,7 +62,7 @@ def test_method(celery_test_queue_fixture):
         task_run.task = task
         task_run.submit_time = submit_time
         task_run.update_time = submit_time
-        task_run.status = TaskStatusEnum.Pending
+        task_run.status = TaskStatusEnum.PENDING
 
         # Save task run record which means task is submitted
         context.save_one(task_run)

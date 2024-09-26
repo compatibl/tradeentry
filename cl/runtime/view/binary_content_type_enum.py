@@ -13,40 +13,43 @@
 # limitations under the License.
 
 from enum import IntEnum
+from types import DynamicClassAttribute
+
+from inflection import camelize
 
 
 class BinaryContentTypeEnum(IntEnum):
     """Binary content type enumeration."""
 
-    Undefined = 0
+    UNDEFINED = 0
     """Undefined content type."""
 
-    Jpg = 1
+    JPG = 1
     """Jpg image type."""
 
-    Jpeg = 2
+    JPEG = 2
     """Jpeg image type."""
 
-    Html = 3
+    HTML = 3
     """Html content type."""
 
-    Plotly = 4
+    PLOTLY = 4
     """The output provided by Plotly Graphing Library."""
 
-    Png = 5
+    PNG = 5
     """PNG image type."""
 
-    Svg = 6
+    SVG = 6
     """SVG image type."""
 
-    Csv = 7
+    CSV = 7
     """Csv type."""
 
-    Zip = 8
+    ZIP = 8
     """Zip type."""
 
-    Pdf = 9
+    PDF = 9
     """PDF type."""
 
-    Xlsx = 10
+    XLSX = 10
     """Excel type."""

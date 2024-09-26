@@ -13,13 +13,16 @@
 # limitations under the License.
 
 from enum import IntEnum
+from types import DynamicClassAttribute
+
+from inflection import camelize
 
 
 class IndexSortOrderEnum(IntEnum):
     """Index sorting order."""
 
-    Ascending = 0
+    ASCENDING = 0
     """Ascending index sorting order."""
 
-    Descending = 1
+    DESCENDING = 1
     """Descending index sorting order."""

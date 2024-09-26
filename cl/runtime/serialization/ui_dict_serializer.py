@@ -15,7 +15,7 @@
 from enum import Enum
 from typing import Any
 from typing import List
-from inflection import underscore
+from inflection import underscore, camelize
 from typing_extensions import Dict
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.records.protocols import RecordProtocol
@@ -43,7 +43,7 @@ class UiDictSerializer(DictSerializer):
         elif isinstance(data, Enum):
             # serialize enum as its name
             serialized_enum = super().serialize_data(data, select_fields)
-            return serialized_enum.get("_name")
+            return camelize(serialized_enum.get("_name").lower(), uppercase_first_letter=True)
         elif is_key(data):
             # serialize key as string
             key_serializer = StringSerializer()
@@ -172,7 +172,7 @@ class UiDictSerializer(DictSerializer):
             if (enum := element_decl.enum) is not None:
                 # Get enum type from element decl and convert value to dict supported by DictSerializer
                 enum_type_name = enum.name
-                return {"_enum": enum_type_name, "_name": data}
+                return {"_enum": enum_type_name, "_name": data.upper()}
 
             elif (key := element_decl.key_) is not None:
                 # Get key type from element decl

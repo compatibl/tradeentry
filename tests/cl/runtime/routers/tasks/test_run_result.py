@@ -45,7 +45,7 @@ task_keys_str = [key_serializer.serialize_key(task.get_key()) for task in tasks]
 t = DatetimeUtil.now()
 queue_key = handler_queue.get_key()
 task_runs = [
-    TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatusEnum.Completed, result=b"result")
+    TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatusEnum.COMPLETED, result=b"result")
     for task in tasks
 ]
 

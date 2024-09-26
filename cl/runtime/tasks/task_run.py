@@ -73,7 +73,7 @@ class TaskRun(TaskRunKey, RecordMixin[TaskRunKey]):
         start_datetime = DatetimeUtil.now()
         while DatetimeUtil.now() < start_datetime + dt.timedelta(seconds=timeout_sec):
             task_run = context.load_one(TaskRun, task_run_key)
-            if task_run is not None and task_run.status == TaskStatusEnum.Completed:
+            if task_run is not None and task_run.status == TaskStatusEnum.COMPLETED:
                 # Test success, task has been completed
                 return
             # TODO: Refactor to use queue-specific push communication rather than heartbeat

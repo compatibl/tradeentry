@@ -15,59 +15,64 @@
 import re
 from enum import Enum
 from enum import IntEnum
+from types import DynamicClassAttribute
 from typing import Any
 from typing import Dict
 from typing import Final
+
+from inflection import camelize
+
 from cl.runtime.records.protocols import is_key
 
 
-class StringValueCustomType(IntEnum):
+class StringValueCustomTypeEnum(IntEnum):
     """Custom types supported for string representation."""
 
-    data = 0
+    DATA = 0
     """Data type."""
 
-    dict = 1
+    DICT = 1
     """Dict type."""
 
-    list = 2
+    LIST = 2
     """Vector type."""
 
-    date = 3
+    DATE = 3
     """Date type."""
 
-    datetime = 4
+    DATETIME = 4
     """Datetime type."""
 
-    time = 5
+    TIME = 5
     """Time type."""
 
-    bool = 6
+    BOOL = 6
     """Bool type."""
 
-    uuid = 7
+    UUID = 7
     """UUID type."""
 
-    enum = 8
+    ENUM = 8
     """Enum type."""
 
-    bytes = 9
+    BYTES = 9
     """Binary type."""
 
-    int = 10
+    INT = 10
     """Integer type."""
 
-    float = 11
+    FLOAT = 11
     """Float type."""
 
-    key = 12
+    KEY = 12
     """Key type."""
 
 
-CUSTOM_TYPE_VALUE_TO_NAME: Final[Dict[StringValueCustomType, str]] = {StringValueCustomType.dict: "json"}
+
+CUSTOM_TYPE_VALUE_TO_NAME: Final[Dict[StringValueCustomTypeEnum, str]] = {StringValueCustomTypeEnum.DICT: "json"}
 """Enum value to name mapping."""
 
-CUSTOM_TYPE_NAME_TO_VALUE: Final[Dict[str, StringValueCustomType]] = {
+CUSTOM_TYPE_NAME_TO_VALUE: Final[Dict[str, StringValueCustomTypeEnum]] = {
     v: k for k, v in CUSTOM_TYPE_VALUE_TO_NAME.items()
 }
 """Name to enum value mapping. Reversed mapping."""
@@ -77,7 +82,7 @@ class StringValueParser:
     """Parser for string value representations of custom types."""
 
     @classmethod
-    def add_type_prefix(cls, value: str, type_: StringValueCustomType | None) -> str:
+    def add_type_prefix(cls, value: str, type_: StringValueCustomTypeEnum | None) -> str:
         """Add type prefix to value that is a string representation of object of type type_."""
 
         if type_ is None:
@@ -92,7 +97,7 @@ class StringValueParser:
         return type_prefix + value
 
     @classmethod
-    def parse(cls, value: str) -> (str, StringValueCustomType | None):
+    def parse(cls, value: str) -> (str, StringValueCustomTypeEnum | None):
         """
         Check if value is a string representation of some custom type and parse it to separated objects:
             value without type and value type.
@@ -118,7 +123,7 @@ class StringValueParser:
             value_custom_type = (
                 custom_type
                 if ((custom_type := CUSTOM_TYPE_NAME_TO_VALUE.get(value_custom_type)) is not None)
-                else StringValueCustomType[value_custom_type]
+                else StringValueCustomTypeEnum[value_custom_type]
             )
 
             return value_without_prefix, value_custom_type
@@ -127,31 +132,31 @@ class StringValueParser:
             return value, None
 
     @classmethod
-    def get_custom_type(cls, value: Any) -> StringValueCustomType | None:
+    def get_custom_type(cls, value: Any) -> StringValueCustomTypeEnum | None:
         """Determine custom_type of value."""
         if value.__class__.__name__ == "date":
-            return StringValueCustomType.date
+            return StringValueCustomTypeEnum.DATE
         elif value.__class__.__name__ == "datetime":
-            return StringValueCustomType.datetime
+            return StringValueCustomTypeEnum.DATETIME
         elif value.__class__.__name__ == "time":
-            return StringValueCustomType.time
+            return StringValueCustomTypeEnum.TIME
         elif value.__class__.__name__ == "bool":
-            return StringValueCustomType.bool
+            return StringValueCustomTypeEnum.BOOL
         elif value.__class__.__name__ == "int":
-            return StringValueCustomType.int
+            return StringValueCustomTypeEnum.INT
         elif value.__class__.__name__ == "float":
-            return StringValueCustomType.float
+            return StringValueCustomTypeEnum.FLOAT
         elif value.__class__.__name__ == "UUID":
-            return StringValueCustomType.uuid
+            return StringValueCustomTypeEnum.UUID
         elif value.__class__.__name__ == "bytes":
-            return StringValueCustomType.bytes
+            return StringValueCustomTypeEnum.BYTES
         elif is_key(value):
-            return StringValueCustomType.key
+            return StringValueCustomTypeEnum.KEY
         elif hasattr(value, "__slots__"):
-            return StringValueCustomType.data
+            return StringValueCustomTypeEnum.DATA
         elif isinstance(value, dict):
-            return StringValueCustomType.dict
+            return StringValueCustomTypeEnum.DICT
         elif isinstance(value, Enum):
-            return StringValueCustomType.enum
+            return StringValueCustomTypeEnum.ENUM
         elif hasattr(value, "__iter__"):
-            return StringValueCustomType.list
+            return StringValueCustomTypeEnum.LIST
