@@ -1,0 +1,2251 @@
+RequestID,Query,Completion
+2024-09-25T23:00:29.307Z-7030856bcce0da7fdbdf,"TrialID: 0 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:29.929Z-7ce3a9c2d7f53ea36bc4,"TrialID: 1 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:30.581Z-7583a2c842148451cb4a,"TrialID: 2 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:31.045Z-7250aba5a3b13fc95cf0,"TrialID: 3 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:31.491Z-75e1a7b6c4acb8abd59e,"TrialID: 4 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:31.957Z-79329accbd09d862261a,"TrialID: 5 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:32.567Z-7ba39597194501768a18,"TrialID: 6 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:33.217Z-7f818362380b76d4a216,"TrialID: 7 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:33.864Z-7122977393859546e2ee,"TrialID: 8 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:34.455Z-73f1a9c60feb6657e0ad,"TrialID: 9 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:35.002Z-7220aecea075640c41ea,"TrialID: 10 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+    ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:35.583Z-7bc2bf0afbd1fe333b6c,"TrialID: 11 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:36.034Z-7a63a476d0287aae9df3,"TrialID: 12 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:36.694Z-7ce1bf70e0eca3363fca,"TrialID: 13 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:37.200Z-7b208fdcc850b86b26f0,"TrialID: 14 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:37.775Z-7331bfdac0b748316042,"TrialID: 15 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:38.308Z-7c8187e5a961d77d94da,"TrialID: 16 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:38.778Z-78b3a9beb86c1a227719,"TrialID: 17 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:39.304Z-7ab0aa4be91135e10c4d,"TrialID: 18 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:40.642Z-7932b48c37725dcaba6b,"TrialID: 19 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:41.328Z-7283a0137a0d96943f74,"TrialID: 20 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:41.951Z-7a13a008ff30c44ef749,"TrialID: 21 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:42.413Z-7a43ac395531538db115,"TrialID: 22 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:44.441Z-70e18eafe2a270db6825,"TrialID: 23 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:45.243Z-7b12b2da9c75d714b086,"TrialID: 24 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:46.092Z-7b109fc66c9223206cfd,"TrialID: 25 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:46.597Z-74719506c2346b47914a,"TrialID: 26 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:47.060Z-7e72856117ebf9ba0fd2,"TrialID: 27 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:47.685Z-73f1985a52b600654fa8,"TrialID: 28 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:48.210Z-7af188a9a48e746b0d1c,"TrialID: 29 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:48.730Z-76e2a43ebd747815ed70,"TrialID: 30 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:49.225Z-71c3b557b7d1144151b1,"TrialID: 31 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+    ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:49.775Z-78a0b33274fa4130910d,"TrialID: 32 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:50.287Z-7ec0ad6dcb3102b0ab20,"TrialID: 33 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:50.710Z-7bc3a457dacdf123ef51,"TrialID: 34 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:51.600Z-79409deef0ec1e5838e6,"TrialID: 35 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:52.042Z-77c2a7b7603d889123ff,"TrialID: 36 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:52.583Z-76c19df5c385d3e272c3,"TrialID: 37 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:53.137Z-7093a4bf82022e79161d,"TrialID: 38 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+    ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:53.606Z-7781b1bb08f58b414980,"TrialID: 39 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:54.412Z-76c18a06dc1dd28d564a,"TrialID: 40 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:54.875Z-7a019085a75f31b8f926,"TrialID: 41 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:55.438Z-7063b5e878be6d53bea2,"TrialID: 42 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:56.280Z-7ab282ea1fccd1c04d51,"TrialID: 43 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:57.105Z-7843a2498c6589579a42,"TrialID: 44 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:57.833Z-78a2b408ee1cbb68e236,"TrialID: 45 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:58.296Z-7333bd9812e3d4e2c441,"TrialID: 46 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:58.847Z-77a2afd4f5915cbbe7a4,"TrialID: 47 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:00:59.661Z-7803bc97474b8e83ee98,"TrialID: 48 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:01:00.102Z-789184d3d896829c30ea,"TrialID: 49 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payment dates are January 15 and July 15
+```","```json
+{
+  ""pay_freq"": ""6m""
+}
+```"
+2024-09-25T23:01:00.956Z-78039949c6a32d19037c,"TrialID: 0 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:01.474Z-7ba0bbca685f61d7c598,"TrialID: 1 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:01.963Z-7f919264db891fb4a652,"TrialID: 2 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","Based on the provided text, the payment frequency can be determined as monthly. Here is the JSON response:
+
+```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:02.857Z-7b819735167f91da48f7,"TrialID: 3 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+    ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:03.285Z-72e3867d9d4cb0d1aef5,"TrialID: 4 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:03.873Z-70e2ac8bbf3825d42af8,"TrialID: 5 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:04.449Z-7bc2be6a1b78326f09d0,"TrialID: 6 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:04.904Z-7481a5d002409fec7287,"TrialID: 7 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:05.574Z-7703b8d889dedeccb780,"TrialID: 8 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:06.015Z-7972a32000e5a5956467,"TrialID: 9 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:06.611Z-721091b3f1932a172f35,"TrialID: 10 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:07.130Z-7801a860298e3fd404a8,"TrialID: 11 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:08.154Z-75429ae4b8e22efee37c,"TrialID: 12 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:09.045Z-7ca08ef31952824001fc,"TrialID: 13 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:09.658Z-74139b9cb50d67f11857,"TrialID: 14 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:10.322Z-79a2b9571080cd97691b,"TrialID: 15 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:10.894Z-72628ae8610828fb8187,"TrialID: 16 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:11.512Z-72a2a30a5a21517a6da4,"TrialID: 17 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:12.066Z-79a1b53da0e72ce7a383,"TrialID: 18 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:12.604Z-7b50a01fe8bd35b2eca2,"TrialID: 19 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:13.077Z-72338e93ba996e037c9e,"TrialID: 20 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:13.571Z-7983a23699170f0165d7,"TrialID: 21 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:14.129Z-7840bdc052209fe21f55,"TrialID: 22 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:14.575Z-7e52b1e052a75e976ff0,"TrialID: 23 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:15.101Z-79a1b6cc27742fcde0b2,"TrialID: 24 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:15.550Z-7671a1c53272268d7a72,"TrialID: 25 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:16.146Z-77739386db53a3f3688b,"TrialID: 26 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:16.803Z-79d185d8cb3a7007b5b0,"TrialID: 27 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:17.314Z-75a28cf0d8a64ea4cbc9,"TrialID: 28 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:17.762Z-7561a9f60df1ab841bc4,"TrialID: 29 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:19.115Z-7942b7d854ae9b98845c,"TrialID: 30 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:19.993Z-7841891834fae70cc68f,"TrialID: 31 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:20.545Z-7f92948fddc49e6c76be,"TrialID: 32 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:21.095Z-737184989e709d52bb98,"TrialID: 33 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:21.555Z-77f2850d9c95713d63f5,"TrialID: 34 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:22.090Z-78a19fd6f5e0f6257a78,"TrialID: 35 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:22.516Z-7030938af1db36b267da,"TrialID: 36 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:23.189Z-71a3829df83d766f9541,"TrialID: 37 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:23.727Z-744092fe14bb877c48d3,"TrialID: 38 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:24.398Z-717395cfb2c3fb396567,"TrialID: 39 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:24.901Z-73f0ba140b9aa7caac87,"TrialID: 40 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:25.466Z-7ce08d9bc84f71b95579,"TrialID: 41 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:26.085Z-72f2991d8fb5cfe2c77d,"TrialID: 42 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:26.615Z-7a71ac869deadd44f511,"TrialID: 43 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:27.172Z-7c62b6024b90cc3da16c,"TrialID: 44 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:27.610Z-7802ae83b15137fb3cc5,"TrialID: 45 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:28.158Z-7fb0be8b0aba0c474d91,"TrialID: 46 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:28.831Z-7a80aeb2188815d274db,"TrialID: 47 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:29.426Z-767189256211895e0996,"TrialID: 48 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:29.975Z-7610b1e077f750c25b21,"TrialID: 49 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments will be made on the 3rd of each month starting from January
+```","```json
+{
+  ""pay_freq"": ""1m""
+}
+```"
+2024-09-25T23:01:30.817Z-7b62be90251a995ffc85,"TrialID: 0 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","{
+  ""pay_freq"": ""12m""
+}"
+2024-09-25T23:01:31.374Z-72819e48b9f64111b080,"TrialID: 1 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:31.852Z-72d3b2c416433494a1cb,"TrialID: 2 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:32.293Z-79f2b4af2dc56454d054,"TrialID: 3 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:32.813Z-717090d38f349db38fa9,"TrialID: 4 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:33.389Z-73b28f2540064e668a3c,"TrialID: 5 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:33.993Z-7ab2bffc73d99b71f982,"TrialID: 6 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:34.799Z-7da18cbde3a31ba455ea,"TrialID: 7 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:35.247Z-7a009aeb10d140a17cb7,"TrialID: 8 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:35.793Z-7311888b43e86ff0ddef,"TrialID: 9 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:36.500Z-7ef394448ff9f74a375c,"TrialID: 10 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:37.278Z-7ae098784a50b0eb7f14,"TrialID: 11 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:37.815Z-76129a07bd127dce9de9,"TrialID: 12 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:38.430Z-70f1bd3755af5cc267f1,"TrialID: 13 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+    ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:38.979Z-73e185f500c252fddd6e,"TrialID: 14 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:39.848Z-7b02a79da71db64b0c58,"TrialID: 15 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:41.252Z-78e3ac5f4aee59554294,"TrialID: 16 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:41.804Z-78f1a6e34b898af999be,"TrialID: 17 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:42.416Z-7640949f319b02090790,"TrialID: 18 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:42.953Z-74c0bb3ff0f0d4d104c5,"TrialID: 19 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:43.679Z-7b51b299ef242f0c900a,"TrialID: 20 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:44.210Z-70b193d7ac8a4abf71bc,"TrialID: 21 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:44.826Z-74a399c9e21a3d5754b8,"TrialID: 22 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:45.311Z-70d1884194bc9c6edb03,"TrialID: 23 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:45.847Z-7842b63f76154c304fcf,"TrialID: 24 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:46.408Z-7761b123bd824aae8628,"TrialID: 25 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:46.863Z-7b93a959eb6c0c1807e8,"TrialID: 26 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:47.547Z-7f22ab040ae1a8759082,"TrialID: 27 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:48.145Z-7d63963291185d29e871,"TrialID: 28 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:48.873Z-75108d59b4cf14cd7075,"TrialID: 29 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:49.414Z-75f2a63620339c0972fd,"TrialID: 30 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:49.909Z-7ad3969cdd35609457bf,"TrialID: 31 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+    ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:50.439Z-72218fe2c0dd18220ab0,"TrialID: 32 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:51.168Z-71138e3098188bae44d8,"TrialID: 33 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:51.861Z-7d1093dd4fd3fcec57c0,"TrialID: 34 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:52.431Z-78a1a54b5e8c74ea0fb7,"TrialID: 35 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:52.972Z-7930a1f07e13c85b2e96,"TrialID: 36 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+    ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:53.574Z-7ad1b65e7ba1535618af,"TrialID: 37 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:54.121Z-73a0982852aae1f7555c,"TrialID: 38 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:54.695Z-7573b3f4e27cee8fcd22,"TrialID: 39 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:55.216Z-7a72bcc4d961147cb283,"TrialID: 40 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:55.768Z-70b0ba768f08497fe1a3,"TrialID: 41 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:56.279Z-7cd39befbf2d219a0c99,"TrialID: 42 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+    ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:56.903Z-741382e6efcae77dd7e1,"TrialID: 43 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:57.387Z-74b2b6b8d3023eab56dd,"TrialID: 44 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:57.861Z-7a039cef619bd54d8b5e,"TrialID: 45 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:58.674Z-7f118ca87c0b33cdb678,"TrialID: 46 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:01:59.325Z-7691b160bfa181d72aea,"TrialID: 47 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:02:00.165Z-707296f3819c7ff73a15,"TrialID: 48 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"
+2024-09-25T23:02:00.777Z-73f1a0c6bc8e4eed4e97,"TrialID: 49 Trade or leg description contains the following text. 
+
+What is the payment frequency of this trade or leg?
+
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. ""
+
+Text: 
+```
+Payments are to be made on an annual basis
+```","```json
+{
+  ""pay_freq"": ""12m""
+}
+```"

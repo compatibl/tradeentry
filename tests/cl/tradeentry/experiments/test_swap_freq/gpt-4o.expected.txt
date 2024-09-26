@@ -1,0 +1,750 @@
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+    "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+    "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+    "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "6m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+Based on the provided text, the payment frequency can be determined as monthly. Here is the JSON response:
+
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+    "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+```json
+{
+  "pay_freq": "1m"
+}
+```
+{
+  "pay_freq": "12m"
+}
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+    "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+    "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+    "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+    "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```
+```json
+{
+  "pay_freq": "12m"
+}
+```

@@ -54,7 +54,7 @@ def _test_swap_freq(text: str, run_count: int, llm: Llm) -> List[str]:
 
 
 def test_swap_freq():
-    run_count = 2
+    run_count = 50
     descriptions = [
         "Payment dates are January 15 and July 15",
         "Payments will be made on the 3rd of each month starting from January",

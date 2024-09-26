@@ -1,0 +1,1194 @@
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is semi-annual, which corresponds to a 6-month frequency.
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, since the payment dates are January 15 and July 15, which are 6 months apart.
+{ "pay_freq": "6m" }
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is semi-annual, which corresponds to a 6-month frequency.
+{
+"pay_freq": "6m"
+}
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are January 15 and July 15, which are 6 months apart.
+{ "pay_freq": "6m" }
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is semi-annual, which corresponds to a 6-month frequency.
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are January 15 and July 15, which are 6 months apart.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are January 15 and July 15, which are 6 months apart.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is semi-annual, which corresponds to a 6-month frequency.
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is semi-annual, which corresponds to a 6-month payment frequency.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are January 15 and July 15, which are 6 months apart.
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+{ "pay_freq": "6m" }
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, since the payment dates are January 15 and July 15, which are 6 months apart.
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the JSON response:
+
+```
+{ "pay_freq": "6m" }
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is semi-annual, which corresponds to a 6-month frequency.
+{ "pay_freq": "6m" }
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are January 15 and July 15, which are 6 months apart.
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+{ "pay_freq": "6m" }
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "6m"
+}
+```
+
+The payment frequency is 6 months, as the payment dates are specified as January 15 and July 15, which are 6 months apart.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{ "pay_freq": "1m" }
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{ "pay_freq": "1m" }
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "1m"
+}
+```
+
+The payment frequency is monthly, as payments are made on the 3rd of each month.
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{ "pay_freq": "12m" }
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the JSON response:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
+Here is the response in JSON format:
+
+```
+{
+  "pay_freq": "12m"
+}
+```
