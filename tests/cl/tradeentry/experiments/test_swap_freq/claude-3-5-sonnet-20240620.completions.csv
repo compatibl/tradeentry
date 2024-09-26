@@ -1,4 +1,4 @@
-RequestID,Query,Completion
+RequestID,Query,Completion
 2024-09-25T22:56:57.612Z-75638f9691591a1eca0d,"TrialID: 0 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -11,7 +11,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:56:58.211Z-7490bdac3f95db41f214,"TrialID: 1 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -24,7 +24,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:56:58.764Z-73b29490c9f907f45e99,"TrialID: 2 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -37,7 +37,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:56:59.302Z-7cd29af5119cfcb6d04a,"TrialID: 3 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -50,7 +50,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:56:59.822Z-7a109e2cb7696a47a448,"TrialID: 4 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -63,7 +63,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:00.321Z-73b29e7cf115392e36ed,"TrialID: 5 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -76,7 +76,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:00.852Z-79d283ab0939dc850a61,"TrialID: 6 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -89,7 +89,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:01.392Z-7ff19ff73ada3dd1db7c,"TrialID: 7 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -102,7 +102,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:01.950Z-7433a181ee0916dffa7b,"TrialID: 8 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -115,7 +115,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:02.504Z-7ee19ce3a15718cdf6e3,"TrialID: 9 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -128,7 +128,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:02.996Z-7d538a0ce2c76f1d8cd2,"TrialID: 10 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -141,7 +141,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:03.654Z-7753ad620862fe36ce2b,"TrialID: 11 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -154,7 +154,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:04.208Z-7fc2bb58829eb25e41ed,"TrialID: 12 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -167,7 +167,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:04.737Z-7b53a041a11afe5d9eca,"TrialID: 13 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -180,7 +180,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:05.207Z-725186a7e9488b6b0e9d,"TrialID: 14 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -193,7 +193,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:05.806Z-7a00b900108a63dc8dff,"TrialID: 15 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -206,7 +206,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:06.457Z-79918ea5c0c43818206c,"TrialID: 16 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -219,7 +219,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:07.026Z-74408b9eec4fc2cbb024,"TrialID: 17 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -232,7 +232,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:07.463Z-7fe19e4c65972af8d199,"TrialID: 18 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -245,7 +245,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:07.939Z-72d2a3341cbf8c3a00dd,"TrialID: 19 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -258,7 +258,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:08.465Z-71538d4690c65a121438,"TrialID: 20 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -271,7 +271,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:09.103Z-70a085083d2b2bff9699,"TrialID: 21 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -284,7 +284,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:09.653Z-74d39db4569649c55f46,"TrialID: 22 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -297,7 +297,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:10.206Z-7192b89acceaff36e029,"TrialID: 23 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -310,7 +310,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:10.728Z-7aa3b5ca8ffecb3f46d7,"TrialID: 24 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -323,7 +323,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:11.253Z-7762bebd7c0da83177c4,"TrialID: 25 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -336,7 +336,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:11.715Z-7c619d4d5109aec4b096,"TrialID: 26 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -349,7 +349,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:12.241Z-70d28e7b1eee49e49295,"TrialID: 27 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -362,7 +362,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:12.829Z-76a3a2618967042e63d9,"TrialID: 28 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -375,7 +375,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:13.402Z-7641b815081ebf5394ff,"TrialID: 29 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -388,7 +388,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:13.904Z-79d1b0b86190c3413450,"TrialID: 30 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -401,7 +401,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:14.433Z-72d1b00abe04ff38f102,"TrialID: 31 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -414,7 +414,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:15.039Z-7be29a5d66377cc20284,"TrialID: 32 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -427,7 +427,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:15.574Z-7310b7fa36eda05f87a0,"TrialID: 33 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -440,7 +440,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:16.064Z-7d838bb984ddfbf35642,"TrialID: 34 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -453,7 +453,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:16.530Z-70c28161904165f0e87c,"TrialID: 35 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -466,7 +466,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:17.008Z-7d31ba2696c05b1ddcfa,"TrialID: 36 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -479,7 +479,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:17.543Z-77829821c095e28bedb0,"TrialID: 37 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -492,7 +492,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:18.053Z-78828baab0cbe352cd10,"TrialID: 38 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -505,7 +505,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:18.621Z-7d21a77bee7a49acac11,"TrialID: 39 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -518,7 +518,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:19.341Z-75038ed7ebace93e4f91,"TrialID: 40 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -531,7 +531,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:19.878Z-76208d2f49f84eaaf794,"TrialID: 41 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -544,7 +544,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:20.450Z-7be38d2c73a65ce26fa4,"TrialID: 42 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -557,7 +557,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:21.016Z-742280b97ff4cf952e82,"TrialID: 43 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -570,7 +570,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:21.610Z-7fd3a41535855be3cdb7,"TrialID: 44 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -583,7 +583,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:22.134Z-7fb0bb4154b580437831,"TrialID: 45 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -596,7 +596,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:22.613Z-72c1abcf29b0cf4c2ed1,"TrialID: 46 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -609,7 +609,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:23.152Z-71139ee18dbfe6a23c3e,"TrialID: 47 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -622,7 +622,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:23.625Z-7ee09ff6efd6ed662818,"TrialID: 48 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -635,7 +635,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:24.158Z-7ef395a476af51da49ae,"TrialID: 49 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -648,7 +648,7 @@ Text:
 Payment dates are January 15 and July 15
 ```","{
   ""pay_freq"": ""6m""
-}"
+}"
 2024-09-25T22:57:24.715Z-7f53912fadf2e5c705ab,"TrialID: 0 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -661,7 +661,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:25.244Z-7ce2beb95b13fb7e7d03,"TrialID: 1 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -674,7 +674,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:25.788Z-7f728863c63cd10ae282,"TrialID: 2 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -687,7 +687,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:26.319Z-7f51b568a355f1a11425,"TrialID: 3 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -700,7 +700,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:26.905Z-73d1b2a6f61ed2bb699e,"TrialID: 4 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -713,7 +713,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:27.451Z-743092e65032dfcf6f64,"TrialID: 5 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -726,7 +726,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:28.000Z-7182b8ff466175d5d36c,"TrialID: 6 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -739,7 +739,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:28.528Z-749390050678ec3b5368,"TrialID: 7 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -752,7 +752,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:29.081Z-7050b4ffa055df8ce11e,"TrialID: 8 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -765,7 +765,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:29.605Z-7562936b1ac7af0bed00,"TrialID: 9 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -778,7 +778,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:30.131Z-76b38cc25d4677bc8773,"TrialID: 10 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -791,7 +791,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:30.741Z-79419b2055ea82739342,"TrialID: 11 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -804,7 +804,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:31.307Z-7ce2a9b9c98d81570456,"TrialID: 12 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -817,7 +817,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:31.802Z-7fe2bd19e809f0ef669d,"TrialID: 13 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -830,7 +830,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:32.324Z-7280b86da249f8904e9e,"TrialID: 14 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -843,7 +843,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:32.886Z-7ce3bcf67cb600071d1c,"TrialID: 15 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -856,7 +856,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:33.449Z-7900baf12bde0f0a5c9f,"TrialID: 16 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -869,7 +869,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:33.936Z-7c529af3687f745fe28f,"TrialID: 17 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -882,7 +882,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:34.375Z-76638d2de84ca568d3dc,"TrialID: 18 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -895,7 +895,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:34.896Z-79609016a093223ebabb,"TrialID: 19 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -908,7 +908,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:35.421Z-7240bbd9dffffdd05e1a,"TrialID: 20 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -921,7 +921,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:35.932Z-7190a4816f868a15d812,"TrialID: 21 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -934,7 +934,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:36.427Z-799192d686951386995d,"TrialID: 22 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -947,7 +947,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:36.933Z-795096d82342bedfb9ea,"TrialID: 23 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -960,7 +960,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:37.541Z-7b42b1af83f39f6110fd,"TrialID: 24 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -973,7 +973,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:38.026Z-7470bc0a3386e76c5aab,"TrialID: 25 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -986,7 +986,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:38.584Z-7ba287cb207d71969738,"TrialID: 26 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -999,7 +999,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:39.137Z-7bf2813c464cdcfacaf1,"TrialID: 27 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1012,7 +1012,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:39.665Z-74f39441c9269f83bdf5,"TrialID: 28 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1025,7 +1025,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:40.133Z-7df38fa42c096774d5a4,"TrialID: 29 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1038,7 +1038,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:40.632Z-7592abe25ce15fb123dc,"TrialID: 30 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1051,7 +1051,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:41.144Z-73a3a1e06fe365833074,"TrialID: 31 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1064,7 +1064,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:41.653Z-7ac381cacc99f38f5e6a,"TrialID: 32 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1077,7 +1077,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:42.172Z-708088e10fc79ff19967,"TrialID: 33 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1090,7 +1090,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:42.749Z-7b918bb382c23c08d1bf,"TrialID: 34 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1103,7 +1103,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:43.247Z-7762887aa27857479dfa,"TrialID: 35 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1116,7 +1116,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:43.834Z-7ab38099d6e58bd98ffd,"TrialID: 36 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1129,7 +1129,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
     ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:44.384Z-7550bc0ae54ade85a587,"TrialID: 37 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1142,7 +1142,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:45.016Z-7e83acb7f29887fd906b,"TrialID: 38 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1155,7 +1155,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:45.575Z-78e39f0035539ac1d590,"TrialID: 39 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1168,7 +1168,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:46.189Z-7cb1b0488a1602769eff,"TrialID: 40 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1181,7 +1181,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:46.693Z-7f438fd505dde8b34b16,"TrialID: 41 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1194,7 +1194,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:47.217Z-7a72a925f81cc46bccfe,"TrialID: 42 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1207,7 +1207,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:47.771Z-70e0a087c814646b0ace,"TrialID: 43 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1220,7 +1220,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:48.300Z-7231bde149911ed113eb,"TrialID: 44 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1233,7 +1233,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:48.846Z-7f708f14855a4c441f28,"TrialID: 45 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1246,7 +1246,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:49.371Z-75b3963997b353a8642f,"TrialID: 46 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1259,7 +1259,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:49.935Z-78a3ab0f9cf45507a20b,"TrialID: 47 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1272,7 +1272,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:50.544Z-75a39914b6486380aca1,"TrialID: 48 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1285,7 +1285,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:51.079Z-7e33bcd0fdf8f9c2a249,"TrialID: 49 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1298,7 +1298,7 @@ Text:
 Payments will be made on the 3rd of each month starting from January
 ```","{
   ""pay_freq"": ""1m""
-}"
+}"
 2024-09-25T22:57:51.648Z-7500a666d4a314dfdf5f,"TrialID: 0 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1311,7 +1311,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
     ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:57:52.225Z-7430844879393869d74d,"TrialID: 1 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1324,7 +1324,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:57:52.795Z-7880aeac42116f185c1e,"TrialID: 2 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1337,7 +1337,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:57:53.355Z-7bc0842830e01f177356,"TrialID: 3 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1350,7 +1350,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:57:53.840Z-7481a227d63990c506e3,"TrialID: 4 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1363,7 +1363,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:57:54.414Z-7591934cea7e584895ba,"TrialID: 5 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1376,7 +1376,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:57:54.904Z-79618a2f5c77be65c7e9,"TrialID: 6 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1389,7 +1389,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:57:55.445Z-7ee3b99275c1a19762a2,"TrialID: 7 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1402,7 +1402,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:57:56.003Z-74019c6eb60e31b0514d,"TrialID: 8 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1415,7 +1415,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:57:56.556Z-7ae1b877176406c644cd,"TrialID: 9 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1428,7 +1428,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:57:57.064Z-72708c49d4d7a03123a4,"TrialID: 10 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1441,7 +1441,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:57:57.567Z-7221879f7008d8ab2551,"TrialID: 11 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1454,7 +1454,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:57:58.073Z-785097b44de7e53a2d77,"TrialID: 12 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1467,7 +1467,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:57:58.629Z-7a9187ffacbfab8a6611,"TrialID: 13 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1480,7 +1480,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:57:59.151Z-7fd38b1225d72c532199,"TrialID: 14 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1493,7 +1493,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:57:59.722Z-7b33a7d496e67595a6c8,"TrialID: 15 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1506,7 +1506,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:00.270Z-771299ceb3ef5d3420d9,"TrialID: 16 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1519,7 +1519,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:00.796Z-788299646ae793e8258f,"TrialID: 17 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1532,7 +1532,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:01.511Z-7052978f895b65f1035a,"TrialID: 18 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1545,7 +1545,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:02.045Z-7ab088939510730ffb47,"TrialID: 19 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1558,7 +1558,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
     ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:02.576Z-7611875e299a7a3cf96f,"TrialID: 20 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1571,7 +1571,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:03.113Z-7863a82844a12cae2b3f,"TrialID: 21 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1584,7 +1584,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:03.659Z-76f1b27a13c00151ef77,"TrialID: 22 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1597,7 +1597,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:04.162Z-7070af98ed3525cbbbfb,"TrialID: 23 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1610,7 +1610,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:04.703Z-7030b241e4c271188363,"TrialID: 24 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1623,7 +1623,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:05.427Z-7a80ab9a2cbdccb37b99,"TrialID: 25 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1636,7 +1636,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:06.036Z-7bd2830b06b6ad4c5ced,"TrialID: 26 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1649,7 +1649,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
     ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:06.746Z-7982acc1183bee8921a0,"TrialID: 27 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1662,7 +1662,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:07.249Z-74d3886ad648e759f215,"TrialID: 28 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1675,7 +1675,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:07.801Z-76f0903001abf9d1c6d1,"TrialID: 29 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1688,7 +1688,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:08.301Z-7821ac7b22e195120082,"TrialID: 30 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1701,7 +1701,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:08.848Z-7692b94f32341eec4b4a,"TrialID: 31 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1714,7 +1714,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:09.377Z-7c5382893e66c598459b,"TrialID: 32 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1727,7 +1727,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:09.993Z-79f2b0e09bc85bc0710b,"TrialID: 33 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1740,7 +1740,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:10.550Z-76e388313a4394d403c5,"TrialID: 34 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1753,7 +1753,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
     ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:11.076Z-7ff3981bcfaaa9c13f47,"TrialID: 35 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1766,7 +1766,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:11.620Z-71c29e03ca77bff0687e,"TrialID: 36 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1779,7 +1779,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:12.165Z-7770bab1dc31cfb55977,"TrialID: 37 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1792,7 +1792,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:12.776Z-7363b6b4aa49a3c844b4,"TrialID: 38 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1805,7 +1805,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:13.275Z-7831b53658ce866d694c,"TrialID: 39 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1818,7 +1818,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:13.775Z-79a18072606555ab124d,"TrialID: 40 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1831,7 +1831,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:14.372Z-7ec093dd3e7d3445c57d,"TrialID: 41 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1844,7 +1844,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:14.875Z-74e2b72095e625cfb4e6,"TrialID: 42 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1857,7 +1857,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:15.448Z-790193a64eb6f34e022a,"TrialID: 43 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1870,7 +1870,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:15.888Z-7dc1b2063bc45d529a42,"TrialID: 44 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1883,7 +1883,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:16.601Z-7fe1a607d7e2ad460d06,"TrialID: 45 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1896,7 +1896,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:17.102Z-7f81a4eea03861e2a66b,"TrialID: 46 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1909,7 +1909,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:17.646Z-70f38ee16102e766f5cb,"TrialID: 47 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1922,7 +1922,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:18.117Z-7e30b473a2414611ff75,"TrialID: 48 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1935,7 +1935,7 @@ Text:
 Payments are to be made on an annual basis
 ```","{
     ""pay_freq"": ""12m""
-}"
+}"
 2024-09-25T22:58:18.636Z-730099fd5859a380c701,"TrialID: 49 Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
@@ -1948,4 +1948,4 @@ Text:
 Payments are to be made on an annual basis
 ```","{
   ""pay_freq"": ""12m""
-}"
+}"
