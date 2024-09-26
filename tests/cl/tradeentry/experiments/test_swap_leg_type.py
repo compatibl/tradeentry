@@ -63,7 +63,7 @@ def _testing_swap_leg_type(trade_description: str, run_count: int, llm: Llm) -> 
 
 
 def test_swap_leg_type():
-    run_count = 2
+    run_count = 50
     correct_answers = [
         "{'Cap': False, 'Floor': False, 'FirstLegType': 'Floating', 'SecondLegType': 'Fixed'}",
         "{'Cap': False, 'Floor': False, 'FirstLegType': 'Floating', 'SecondLegType': 'Floating'}",

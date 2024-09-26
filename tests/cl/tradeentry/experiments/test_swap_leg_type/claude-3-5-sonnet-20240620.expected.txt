@@ -1,0 +1,1200 @@
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Floating"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": true,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
+{
+  "Cap": false,
+  "Floor": false,
+  "FirstLegType": "Floating",
+  "SecondLegType": "Fixed"
+}
