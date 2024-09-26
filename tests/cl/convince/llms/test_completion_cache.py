@@ -34,6 +34,27 @@ def _delete_cache_files(base_dir: str, channels: List[str]):
             os.remove(file_path)
 
 
+def _check_cache_files_eol(base_dir: str, channels: List[str]):
+    """Check if files contain only OS-specific line endings."""
+    for channel in set(channels):
+        if channel is not None and channel != "":
+            filename = f"{channel}.completions.csv"
+        else:
+            filename = f"completions.csv"
+        file_path = os.path.join(base_dir, filename)
+        if os.path.exists(file_path):
+            with open(file_path, "r", newline="") as file:
+                # Get file content
+                file_content = file.read()
+
+                # Remove os-specific line endings
+                file_content_without_os_eol = file_content.replace(os.linesep, "")
+
+                # Check if there are other endings
+                assert "\n" not in file_content_without_os_eol
+                assert "\r" not in file_content_without_os_eol
+
+
 def _get_request_id() -> str:
     """Get random request ID."""
     # Generate OrderedUuid and convert to readable ordered string in date-hash format
@@ -98,6 +119,27 @@ def _perform_testing(base_dir: str):
     assert caches[0].get("a") == "bb"
     assert caches[1].get("a") == "bb"
     assert caches[2].get("a") == "b"
+
+    # Add multiline keys and values
+    caches[0].add(_get_request_id(), "multiline \n key1", "multiline \n value1")
+    caches[0].add(_get_request_id(), "multiline \r\n key2", "multiline \r\n value2")
+
+    # Recreate caches from files
+    caches = [CompletionCache(channel=channel) for channel in channels]
+
+    # Old values should leave unchanged
+    assert caches[0].get("a") == "bb"
+    assert caches[1].get("a") == "bb"
+    assert caches[2].get("a") == "b"
+
+    # Check multiline values
+    assert caches[0].get("multiline \n key1") == "multiline \n value1"
+
+    # Expect received value normalized
+    assert caches[0].get("multiline \r\n key2") == "multiline \n value2"
+
+    # Check cache files eol format
+    _check_cache_files_eol(base_dir, channels)
 
     # Delete the generated test cache files to prevent git diff
     _delete_cache_files(base_dir, channels)
