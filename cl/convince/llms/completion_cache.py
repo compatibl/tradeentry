@@ -113,7 +113,7 @@ class CompletionCache:
 
                 if is_new:
                     # Write the headers if the file is new
-                    writer.writerow(_csv_headers)
+                    writer.writerow(self._normalize_eol_for_file(_csv_headers))
 
                 # NOT ADDING THE VALUE TO COMPLETION DICT HERE IS NOT A BUG
                 # Because we are not adding to the dict here but only writing to a file,
@@ -127,7 +127,7 @@ class CompletionCache:
                 cached_value = self.normalize_eol(completion)
 
                 # Write the new completion without checking if one already exists
-                writer.writerow([request_id, cache_key, cached_value])
+                writer.writerow(self._normalize_eol_for_file([request_id, cache_key, cached_value]))
 
                 # Flush immediately to ensure all of the output is on disk in the event of exception
                 file.flush()
@@ -169,7 +169,9 @@ class CompletionCache:
                     )
 
                 # Read cached completions, ignoring request_id at position 0
-                self.__completion_dict.update({row[1]: row[2] for row in reader})
+                self.__completion_dict.update(
+                    {row[1]: row[2] for row_ in reader if (row := self._normalize_eol_from_file(row_))}
+                )
 
     @classmethod
     def normalize_key(cls, query: str, trial_id: str | int | None = None) -> str:
@@ -199,3 +201,36 @@ class CompletionCache:
             data = data.replace("\r\r\n", "\n")
             data = data.replace("\r\n", "\n")
             return data
+
+    @classmethod
+    def _normalize_eol_for_file(cls, data: Iterable[str] | str | None):
+        """Replace \n in data to os.linesep."""
+        if data is None:
+            return None
+        if not isinstance(data, str) and isinstance(data, collections.abc.Iterable):
+            # If data is iterable return list of adjusted elements
+            return [cls._normalize_eol_for_file(x) for x in data]
+        else:
+            # Raise an exception if data contains os.linesep characters that are not \n, since
+            # they will be lost after normalization.
+            if os.linesep != "\n" and os.linesep in data:
+                raise RuntimeError("Can not normalize data contains os.linesep characters that are not \\n.")
+
+            # Replace \n to os.linesep
+            adjusted_data = data.replace("\n", os.linesep)
+
+            return adjusted_data
+
+    @classmethod
+    def _normalize_eol_from_file(cls, data: Iterable[str] | str | None):
+        """Replace \n in data to os.linesep."""
+        if data is None:
+            return None
+        if not isinstance(data, str) and isinstance(data, collections.abc.Iterable):
+            # If data is iterable return list of adjusted elements
+            return [cls._normalize_eol_from_file(x) for x in data]
+        else:
+            # Replace os.linesep in data to \n
+            adjusted_data = data.replace(os.linesep, "\n")
+
+            return adjusted_data
