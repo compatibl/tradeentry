@@ -1,0 +1,65 @@
+_t: StubDataclassListFields
+Module:
+  ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassListFields
+Name: StubDataclassListFields
+Label: Stub Dataclass List Fields
+Comment: Stub record whose elements are lists.
+DisplayKind: Basic
+Inherit:
+  Module:
+    ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
+  Name: StubDataclassRecord
+Elements:
+- Value:
+    Type: String
+  Name: Id
+- Value:
+    Type: String
+  Name: StrList
+  Comment: Stub field.
+  Vector: true
+- Value:
+    Type: Double
+  Name: FloatList
+  Comment: Stub field.
+  Vector: true
+- Value:
+    Type: Date
+  Name: DateList
+  Comment: Stub field.
+  Vector: true
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData.StubDataclassData
+  Data:
+    Module:
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData
+    Name: StubDataclassData
+  Name: DataList
+  Comment: Stub field.
+  Vector: true
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey.StubDataclassRecordKey
+  Key:
+    Module:
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey
+    Name: StubDataclassRecordKey
+  Name: KeyList
+  Comment: Stub field.
+  Vector: true
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+  Data:
+    Module:
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
+    Name: StubDataclassRecord
+  Name: RecordList
+  Comment: Stub field.
+  Vector: true
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassDerivedRecord.StubDataclassDerivedRecord
+  Data:
+    Module:
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassDerivedRecord
+    Name: StubDataclassDerivedRecord
+  Name: DerivedRecordList
+  Comment: Stub field.
+  Vector: true
+Keys:
+- Id
+
