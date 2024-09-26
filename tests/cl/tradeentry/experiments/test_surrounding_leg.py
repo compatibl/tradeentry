@@ -72,7 +72,7 @@ def _test_surrounding_leg(trade_description: str, run_count: int, llm: Llm) -> L
 
 
 def test_surrounding_leg():
-    run_count = 2
+    run_count = 50
     correct_answers = [
         [
             "{Bank pays: 6M USD Term SOFR, semi-annual, act/360}",
