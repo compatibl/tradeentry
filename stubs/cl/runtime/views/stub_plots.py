@@ -18,7 +18,9 @@ from pathlib import Path
 import pandas as pd
 
 from cl.runtime import RecordMixin, viewer
+from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.plots.confusion_matrix_plot import ConfusionMatrixPlot
+from cl.runtime.plots.confusion_matrix_plot_style import ConfusionMatrixPlotStyle
 from cl.runtime.records.record_mixin import TKey
 from stubs.cl.runtime.views.stub_plots_key import StubPlotsKey
 
@@ -32,10 +34,17 @@ class StubPlots(StubPlotsKey, RecordMixin[StubPlotsKey]):
 
     @viewer
     def confusion_matrix_plot(self):
-        raw_data = pd.read_csv(Path(__file__).resolve().parent / "./test_confusion_matrix_plot.csv")
+        """Matplotlib Figure viewer with theme."""
+
+        raw_data = pd.read_csv(Path(__file__).resolve().parent / "./confusion_matrix_plot.csv")
+
+        matrix_plot_style = ConfusionMatrixPlotStyle()
+        matrix_plot_style.dark_theme = UiAppState.get_current_user_app_theme() == "Dark"
+
         matrix_plot = ConfusionMatrixPlot()
         matrix_plot.title = "Confusion Matrix"
         matrix_plot.expected_categories = raw_data["True Category"].values.tolist()
         matrix_plot.received_categories = raw_data["Predicted"].values.tolist()
+        matrix_plot.style = matrix_plot_style
 
         return matrix_plot.create_figure()
