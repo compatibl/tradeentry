@@ -35,7 +35,7 @@ class Llm(LlmKey, RecordMixin[LlmKey], ABC):
         """Text-in, text-out single query completion without model-specific tags (uses response caching)."""
 
         # Normalize EOL character and remove leading and trailing whitespace in query
-        query = CompletionCache.normalize_value(query)
+        query = CompletionCache.normalize_eol(query)
 
         # Create completion cache if does not exist
         if self._completion_cache is None:
@@ -55,7 +55,7 @@ class Llm(LlmKey, RecordMixin[LlmKey], ABC):
             self._completion_cache.add(request_id, query, result, trial_id=trial_id)
 
         # Normalize EOL character and remove leading and trailing whitespace in result
-        result = CompletionCache.normalize_value(result)
+        result = CompletionCache.normalize_eol(result)
         return result
 
     @abstractmethod

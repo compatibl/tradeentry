@@ -11,11 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+import collections
 import csv
 import os
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Iterable
 from typing import ClassVar
 from typing import Dict
 from cl.runtime.records.dataclasses_extensions import field
@@ -105,12 +105,11 @@ class CompletionCache:
             if not os.path.exists(output_dir):
                 os.makedirs(output_dir)
 
-        # Set EOL for CSV writer based on the OS
-        eol = "\r\n" if os.name == 'nt' else "\n"  # TODO: Avoid setting EOL explicitly, use param instead
-
         if self.ext == "csv":
-            with open(self.output_path, mode="a", newline=eol, encoding="utf-8") as file:
-                writer = csv.writer(file, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL, escapechar="\\")
+            with open(self.output_path, mode="a", newline="", encoding="utf-8") as file:
+                writer = csv.writer(
+                    file, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL, escapechar="\\", lineterminator=os.linesep
+                )
 
                 if is_new:
                     # Write the headers if the file is new
@@ -125,7 +124,7 @@ class CompletionCache:
                 cache_key = self.normalize_key(query, trial_id=trial_id)
 
                 # Normalize EOL character in completion and strip whitespace
-                cached_value = self.normalize_value(completion)
+                cached_value = self.normalize_eol(completion)
 
                 # Write the new completion without checking if one already exists
                 writer.writerow([request_id, cache_key, cached_value])
@@ -147,7 +146,7 @@ class CompletionCache:
 
         if result is not None:
             # Normalize EOL character in result and strip leading and trailing whitespace
-            result = self.normalize_value(result)
+            result = self.normalize_eol(result)
         return result
 
     def load_cache_file(self) -> None:
@@ -155,7 +154,7 @@ class CompletionCache:
         if os.path.exists(self.output_path):
             # Populate the dictionary from file if exists but not yet loaded
             with open(self.output_path, mode="r", newline="", encoding="utf-8") as file:
-                reader = csv.reader(file, delimiter=",", quotechar='"', escapechar="\\")
+                reader = csv.reader(file, delimiter=",", quotechar='"', escapechar="\\", lineterminator=os.linesep)
 
                 # Read and validate the headers
                 headers_in_file = next(reader, None)
@@ -183,15 +182,20 @@ class CompletionCache:
             result = query
 
         # Normalize EOL character and strip leading and trailing whitespace
-        result = cls.normalize_value(result)
+        result = cls.normalize_eol(result)
         return result
 
+
     @classmethod
-    def normalize_value(cls, value: str) -> str:
-        """Normalize EOL character and strip leading and trailing whitespace."""
-        # Set EOL based on the OS
-        if os.name == 'nt':
-            result = value.replace("\n", "\r\n").strip()
+    def normalize_eol(cls, data: Iterable[str] | str | None):
+        """Unify line endings in data to \n."""
+        if data is None:
+            return None
+        if not isinstance(data, str) and isinstance(data, collections.abc.Iterable):
+            # If data is iterable return list of adjusted elements
+            return [cls.normalize_eol(x) for x in data]
         else:
-            result = value.replace("\r\n", "\n").strip()
-        return result
+            # Replace endings format to \n
+            data = data.replace("\r\r\n", "\n")
+            data = data.replace("\r\n", "\n")
+            return data
