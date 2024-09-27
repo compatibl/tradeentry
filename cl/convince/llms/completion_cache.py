@@ -11,13 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 import collections
 import csv
 import os
 from dataclasses import dataclass
-from typing import Any, Iterable
-from typing import ClassVar
+from typing import Any
 from typing import Dict
+from typing import Iterable
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.settings.settings import Settings
 from cl.runtime.testing.stack_util import StackUtil
@@ -108,7 +109,12 @@ class CompletionCache:
         if self.ext == "csv":
             with open(self.output_path, mode="a", newline="", encoding="utf-8") as file:
                 writer = csv.writer(
-                    file, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL, escapechar="\\", lineterminator=os.linesep
+                    file,
+                    delimiter=",",
+                    quotechar='"',
+                    quoting=csv.QUOTE_MINIMAL,
+                    escapechar="\\",
+                    lineterminator=os.linesep,
                 )
 
                 if is_new:
@@ -186,7 +192,6 @@ class CompletionCache:
         # Normalize EOL character and strip leading and trailing whitespace
         result = cls.normalize_eol(result)
         return result
-
 
     @classmethod
     def normalize_eol(cls, data: Iterable[str] | str | None):
