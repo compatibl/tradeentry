@@ -1,10 +1,11 @@
-# CompatibL Trade Entry AI (Community Edition)
+# Trade Entry AI
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/compatibl/tradeentry/python-package.yml)
 ![GitHub](https://img.shields.io/github/license/compatibl/tradeentry)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/tradeentry)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/tradeentry)
 ![PyPI](https://img.shields.io/pypi/v/tradeentry)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/compatibl/tradeentry/pulls)
-## Summary
+## Overview
 
 __Trade entry from natural language for the capital markets using LLMs__
 
