@@ -39,17 +39,12 @@ def test_smoke_dark_theme(local_dir_fixture):
     raw_data = pd.read_csv(Path(__file__).resolve().parent / "./test_confusion_matrix_plot.csv")
 
     with TestingContext() as context:
-        matrix_plot_style = ConfusionMatrixPlotStyle()
-        matrix_plot_style.dark_theme = True
-
-        matrix_plot = ConfusionMatrixPlot()
+        matrix_plot = ConfusionMatrixPlot(plot_id="matrix_plot")
         matrix_plot.title = "Confusion Matrix"
         matrix_plot.expected_categories = raw_data["True Category"].values.tolist()
         matrix_plot.received_categories = raw_data["Predicted"].values.tolist()
-        matrix_plot.style = matrix_plot_style
-
-        fig = matrix_plot.create_figure()
-    fig.savefig("test_confusion_matrix_plot.test_smoke_dark_theme.png")
+        matrix_plot.style = ConfusionMatrixPlotStyle(dark_theme=True)
+        matrix_plot.save()
 
 
 if __name__ == "__main__":
