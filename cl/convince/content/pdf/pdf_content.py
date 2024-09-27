@@ -20,7 +20,7 @@ from cl.convince.content.content import Content
 
 
 @dataclass(slots=True, kw_only=True)
-class TextContent(Content):
+class PdfContent(Content):
     """Single-page content in text format."""
 
     pdf_bytes: bytes = missing()
