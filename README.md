@@ -6,7 +6,15 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/compatibl/tradeentry/pulls)
 ## Summary
 
-Trade entry from natural language for the capital markets using LLMs
+__Trade entry from natural language for the capital markets using LLMs__
+
+Experiment results and completions from the workshop and presentation
+by Alexander Sokol at the WBS Quantitative Finance Conference (2024)
+are located at:
+
+`tests/cl/tradeentry/experiments`
+
+Instructions on running the tests to follow.
 
 ## Copyright
 
