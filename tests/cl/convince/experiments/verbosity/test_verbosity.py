@@ -34,8 +34,6 @@ def _get_extended_prompt(i: int):
         f"(not words) with no other comments or other text."
     )
 
-pytest.skip("Skip to allow GitHub actions to run without LLM keys.", allow_module_level=True)
-
 
 def test_verbosity(local_dir_fixture):
     """Test for verbosity."""
