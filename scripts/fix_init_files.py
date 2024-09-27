@@ -18,4 +18,3 @@ if __name__ == '__main__':
 
     # Create __init__.py files in subdirectories except for tests
     check_init_files(apply_fix=True, verbose=True)
-

@@ -1,0 +1,132 @@
+_t: StubDataclassOptionalFields
+Module:
+  ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassOptionalFields
+Name: StubDataclassOptionalFields
+Label: Stub Dataclass Optional Fields
+Comment: Stub derived class.
+DisplayKind: Basic
+Elements:
+- Value:
+    Type: String
+  Name: Id
+  Comment: Unique identifier.
+- Value:
+    Type: String
+  Name: OptionalStr
+  Comment: Optional string.
+  Optional: true
+- Value:
+    Type: String
+  Name: RequiredListOfOptionalStr
+  Comment: Required list of optional strings.
+  Vector: true
+  OptionalVectorElement: true
+- Value:
+    Type: String
+  Name: OptionalListOfOptionalStr
+  Comment: Optional list of optional strings.
+  Vector: true
+  Optional: true
+  OptionalVectorElement: true
+- Value:
+    Type: Double
+  Name: OptionalFloat
+  Comment: Optional float.
+  Optional: true
+- Value:
+    Type: Double
+  Name: RequiredListOfOptionalFloat
+  Comment: Required list of optional floats.
+  Vector: true
+  OptionalVectorElement: true
+- Value:
+    Type: Double
+  Name: OptionalListOfOptionalFloat
+  Comment: Optional list of optional floats.
+  Vector: true
+  Optional: true
+  OptionalVectorElement: true
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData.StubDataclassData
+  Data:
+    Module:
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData
+    Name: StubDataclassData
+  Name: OptionalData
+  Comment: Optional data.
+  Optional: true
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData.StubDataclassData
+  Data:
+    Module:
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData
+    Name: StubDataclassData
+  Name: RequiredListOfOptionalData
+  Comment: Required list of optional data.
+  Vector: true
+  OptionalVectorElement: true
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData.StubDataclassData
+  Data:
+    Module:
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassData
+    Name: StubDataclassData
+  Name: OptionalListOfOptionalData
+  Comment: Optional list of optional data.
+  Vector: true
+  Optional: true
+  OptionalVectorElement: true
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey.StubDataclassRecordKey
+  Key:
+    Module:
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey
+    Name: StubDataclassRecordKey
+  Name: OptionalKey
+  Comment: Optional key.
+  Optional: true
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey.StubDataclassRecordKey
+  Key:
+    Module:
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey
+    Name: StubDataclassRecordKey
+  Name: RequiredListOfOptionalKey
+  Comment: Required list of optional key.
+  Vector: true
+  OptionalVectorElement: true
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey.StubDataclassRecordKey
+  Key:
+    Module:
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecordKey
+    Name: StubDataclassRecordKey
+  Name: OptionalListOfOptionalKey
+  Comment: Optional list of optional key.
+  Vector: true
+  Optional: true
+  OptionalVectorElement: true
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+  Data:
+    Module:
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
+    Name: StubDataclassRecord
+  Name: OptionalRecord
+  Comment: Optional record.
+  Optional: true
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+  Data:
+    Module:
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
+    Name: StubDataclassRecord
+  Name: RequiredListOfOptionalRecord
+  Comment: Required list of optional record.
+  Vector: true
+  OptionalVectorElement: true
+- _t: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord
+  Data:
+    Module:
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
+    Name: StubDataclassRecord
+  Name: OptionalListOfOptionalRecord
+  Comment: Optional list of optional record.
+  Vector: true
+  Optional: true
+  OptionalVectorElement: true
+Keys:
+- Id
+

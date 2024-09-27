@@ -1,0 +1,159 @@
+{
+    "Cl.Runtime.Backend.Core.UiAppState.UiAppState": {
+        "_t": "UiAppState",
+        "Module": {
+            "ModuleName": "Cl.Runtime.Backend.Core.UiAppState"
+        },
+        "Name": "UiAppState",
+        "Label": "Ui App State",
+        "Comment": "UiAppState.",
+        "DisplayKind": "Basic",
+        "Elements": [
+            {
+                "_t": "Cl.Runtime.Backend.Core.UserKey.UserKey",
+                "Key": {
+                    "Module": {
+                        "ModuleName": "Cl.Runtime.Backend.Core.UserKey"
+                    },
+                    "Name": "UserKey"
+                },
+                "Name": "User",
+                "Comment": "A user the app state is applied for."
+            },
+            {
+                "_t": "Cl.Runtime.Backend.Core.TabInfo.TabInfo",
+                "Data": {
+                    "Module": {
+                        "ModuleName": "Cl.Runtime.Backend.Core.TabInfo"
+                    },
+                    "Name": "TabInfo"
+                },
+                "Name": "OpenedTabs",
+                "Comment": "Information about opened tabs.",
+                "Vector": true,
+                "Optional": true
+            },
+            {
+                "Value": {
+                    "Type": "Int"
+                },
+                "Name": "ActiveTabIndex",
+                "Comment": "Index of active opened tab.",
+                "Optional": true
+            },
+            {
+                "Value": {
+                    "Type": "String"
+                },
+                "Name": "BackendVersion",
+                "Comment": "DEPRECATED. Use versions instead.",
+                "Optional": true
+            },
+            {
+                "Value": {
+                    "Type": "String"
+                },
+                "Name": "ApplicationName",
+                "Comment": "Application name.",
+                "Optional": true
+            },
+            {
+                "Value": {
+                    "Type": "Bool"
+                },
+                "Name": "ReadOnly",
+                "Comment": "Flag indicating that UI is read-only.",
+                "Optional": true
+            },
+            {
+                "Value": {
+                    "Type": "String"
+                },
+                "Name": "ApplicationTheme",
+                "Comment": "Application theme (dark, light, etc.).",
+                "Optional": true
+            }
+        ],
+        "Keys": [
+            "User"
+        ]
+    },
+    "Cl.Runtime.Backend.Core.BaseTypeInfo.BaseTypeInfo": {
+        "_t": "BaseTypeInfo",
+        "Module": {
+            "ModuleName": "Cl.Runtime.Backend.Core.BaseTypeInfo"
+        },
+        "Name": "BaseTypeInfo",
+        "Label": "Base Type Info",
+        "Comment": "Base type info.",
+        "Kind": "Element",
+        "DisplayKind": "Basic",
+        "Elements": [
+            {
+                "Value": {
+                    "Type": "String"
+                },
+                "Name": "Name",
+                "Comment": "Name of type."
+            },
+            {
+                "Value": {
+                    "Type": "String"
+                },
+                "Name": "Module",
+                "Comment": "Module of type."
+            },
+            {
+                "Value": {
+                    "Type": "String"
+                },
+                "Name": "Label",
+                "Comment": "Label of type."
+            }
+        ]
+    },
+    "Cl.Runtime.Backend.Core.TabInfo.TabInfo": {
+        "_t": "TabInfo",
+        "Module": {
+            "ModuleName": "Cl.Runtime.Backend.Core.TabInfo"
+        },
+        "Name": "TabInfo",
+        "Label": "Tab Info",
+        "Comment": "Tab info.",
+        "Kind": "Element",
+        "DisplayKind": "Basic",
+        "Elements": [
+            {
+                "_t": "Cl.Runtime.Backend.Core.BaseTypeInfo.BaseTypeInfo",
+                "Data": {
+                    "Module": {
+                        "ModuleName": "Cl.Runtime.Backend.Core.BaseTypeInfo"
+                    },
+                    "Name": "BaseTypeInfo"
+                },
+                "Name": "Type",
+                "Comment": "Type."
+            }
+        ]
+    },
+    "Cl.Runtime.Backend.Core.UserKey.UserKey": {
+        "_t": "UserKey",
+        "Module": {
+            "ModuleName": "Cl.Runtime.Backend.Core.UserKey"
+        },
+        "Name": "UserKey",
+        "Label": "User Key",
+        "Comment": "User which is allowed to log in.",
+        "Kind": "Element",
+        "DisplayKind": "Basic",
+        "Elements": [
+            {
+                "Value": {
+                    "Type": "String"
+                },
+                "Name": "Username",
+                "Comment": "Unique user identifier."
+            }
+        ]
+    }
+}

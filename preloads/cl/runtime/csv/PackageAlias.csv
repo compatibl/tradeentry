@@ -1,0 +1,3 @@
+package_pattern,package_alias
+cl.runtime.*,rt
+stubs.cl.runtime.*,stubs.rt

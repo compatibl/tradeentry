@@ -1,0 +1,20 @@
+schema:
+  Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord:
+    _t: StubDataclassRecord
+    Module:
+      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
+    Name: StubDataclassRecord
+    Label: Stub Dataclass Record
+    Comment: Stub record base class.
+    DisplayKind: Basic
+    Elements:
+    - Value:
+        Type: String
+      Name: Id
+      Comment: Unique identifier.
+    Keys:
+    - Id
+data:
+  Id: test_get_record
+  _t: StubDataclassRecord
+
