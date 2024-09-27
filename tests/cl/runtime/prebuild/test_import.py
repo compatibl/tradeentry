@@ -19,6 +19,8 @@ import pkgutil
 from typing import List
 import attrs
 
+from cl.runtime.settings.context_settings import ContextSettings
+
 
 def _check_package(package_root: str) -> List[str]:  # TODO: Move this method to cl.runtime.testing module
     """Check package for import errors."""
@@ -43,8 +45,14 @@ def _check_package(package_root: str) -> List[str]:  # TODO: Move this method to
 
 
 def test_import():
-    errors = _check_package("cl.runtime")
-    if errors:
+    # Get the list of packages
+    packages = ContextSettings.instance().packages
+
+    # Find errors in each package
+    errors = [item for sublist in map(_check_package, packages) for item in sublist]
+
+    # Report errors
+    if errors:  # TODO: Improve formatting of the report
         print("\n".join(errors))
     assert 0 == len(errors)
 

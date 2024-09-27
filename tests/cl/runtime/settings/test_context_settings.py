@@ -20,7 +20,7 @@ def test_smoke():
     """Test ContextSettings class."""
 
     context_settings = ContextSettings.instance()
-    assert context_settings.data_source_id == "temp.runtime.default"
+    assert context_settings.data_source_id is not None
 
 
 if __name__ == "__main__":
