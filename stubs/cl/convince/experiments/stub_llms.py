@@ -12,19 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import List
+
 from cl.convince.llms.claude.claude_llm import ClaudeLlm
 from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.llms.llama.fireworks.fireworks_llama_llm import FireworksLlamaLlm
+from cl.convince.llms.llm import Llm
 
-stub_mini_llms = [
-    FireworksLlamaLlm(llm_id="llama-v3-8b-instruct"),
-    GptLlm(llm_id="gpt-4o-mini"),
-]
-"""Mini-LLMs for proof of concept tests."""
 
-stub_full_llms = [
-    ClaudeLlm(llm_id="claude-3-5-sonnet-20240620"),
-    FireworksLlamaLlm(llm_id="llama-v3-70b-instruct"),
-    GptLlm(llm_id="gpt-4o"),
-]
-"""Full (but not extravagant) LLMs for prompt design tests."""
+def get_stub_mini_llms() -> List[Llm]:
+    """Mini-LLMs for proof of concept tests."""
+    return [
+        FireworksLlamaLlm(llm_id="llama-v3-8b-instruct"),
+        GptLlm(llm_id="gpt-4o-mini"),
+    ]
+
+
+def get_stub_full_llms() -> List[Llm]:
+    """Full (but not extravagant) LLMs for prompt design tests."""
+    return [
+        ClaudeLlm(llm_id="claude-3-5-sonnet-20240620"),
+        FireworksLlamaLlm(llm_id="llama-v3-70b-instruct"),
+        GptLlm(llm_id="gpt-4o"),
+    ]

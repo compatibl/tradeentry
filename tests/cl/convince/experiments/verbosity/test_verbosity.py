@@ -16,8 +16,7 @@ import pytest
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
-from cl.runtime.testing.regression_guard import RegressionGuard
-from stubs.cl.convince.experiments.stub_llms import stub_mini_llms
+from stubs.cl.convince.experiments.stub_llms import get_stub_mini_llms
 
 
 def _get_question(i: int):
@@ -46,6 +45,7 @@ def test_verbosity(local_dir_fixture):
         reps = 2
         plot = GroupBarPlot(plot_id="verbosity")
         plot.values = []
+        stub_mini_llms = get_stub_mini_llms()
         for llm in stub_mini_llms:
 
             # Calculate

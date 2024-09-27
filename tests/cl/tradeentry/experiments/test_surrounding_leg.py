@@ -17,7 +17,7 @@ from typing import List
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.llm import Llm
-from stubs.cl.convince.experiments.stub_llms import stub_full_llms
+from stubs.cl.convince.experiments.stub_llms import get_stub_full_llms
 from stubs.cl.tradeentry.experiments.stub_plot_utils import create_group_bar_plot
 from stubs.cl.tradeentry.experiments.stub_string_utils import extract_between_backticks
 from stubs.cl.tradeentry.experiments.stub_string_utils import sanitize_string
@@ -68,9 +68,6 @@ def _test_surrounding_leg(trade_description: str, run_count: int, llm: Llm) -> L
     return results
 
 
-pytest.skip("Skip to allow GitHub actions to run without LLM keys.", allow_module_level=True)
-
-
 def test_surrounding_leg():
     run_count = 50
     correct_answers = [
@@ -99,6 +96,9 @@ def test_surrounding_leg():
     ]
     plot_values = []
     with TestingContext():
+        # Create Llm objects for test
+        stub_full_llms = get_stub_full_llms()
+
         for llm in stub_full_llms:
             for trade, correct_answer in zip(trades, correct_answers):
                 results = _test_surrounding_leg(trade, run_count, llm)

@@ -16,7 +16,7 @@ import pytest
 from typing import Dict
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.testing.regression_guard import RegressionGuard
-from stubs.cl.convince.experiments.stub_llms import stub_full_llms
+from stubs.cl.convince.experiments.stub_llms import get_stub_full_llms
 from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json
 from stubs.cl.tradeentry.experiments.stub_plot_utils import create_group_bar_plot
 from stubs.cl.tradeentry.experiments.stub_tag_utils import add_line_numbers
@@ -79,6 +79,8 @@ def _testing_formatted_string(trade_description: str, run_count: int):
     fields_text = fields_to_text(FIELDS)
 
     with TestingContext():
+        # Create Llm objects for test
+        stub_full_llms = get_stub_full_llms()
 
         prompt = PROMPT_TEMPLATE.format(input_text=trade_description, fields=fields_text)
         field_names = [field["name"] for field in FIELDS]
@@ -114,9 +116,6 @@ def _testing_formatted_string(trade_description: str, run_count: int):
         plot_group_labels = [field["short_name"] for field in FIELDS]
         fig = create_group_bar_plot(normalized_plot_values, plot_bar_labels, plot_group_labels)
     return fig
-
-
-pytest.skip("Skip to allow GitHub actions to run without LLM keys.", allow_module_level=True)
 
 
 def test_vanilla_swap():
