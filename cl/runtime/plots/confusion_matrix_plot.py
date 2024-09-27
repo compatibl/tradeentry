@@ -51,15 +51,6 @@ class ConfusionMatrixPlot(Plot):
     style: ConfusionMatrixPlotStyleKey = field(default_factory=lambda: ConfusionMatrixPlotStyle())
     """Color and layout options."""
 
-    def save(self, *, ext: str = "png") -> None:
-        """Save to 'base_dir/plot_id.ext'."""
-        fig = self.create_figure()
-        base_dir = StackUtil.get_base_dir()
-        if not os.path.exists(base_dir):
-            os.makedirs(base_dir)
-        ext = ext[1:] if ext.startswith(".") else ext
-        fig.savefig(os.path.join(base_dir, f"confusion_matrix.{ext}"))
-
     def create_figure(self) -> plt.Figure:
         # Load style object
         style = Context.current().load_one(ConfusionMatrixPlotStyle, self.style)
