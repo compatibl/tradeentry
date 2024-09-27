@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import pytest
-
 from typing import List
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.testing.regression_guard import RegressionGuard
@@ -26,7 +25,6 @@ from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_s
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_basis_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_fixed_for_floating_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_floored_swap_entry
-
 
 PROMPT_TEMPLATE = """You will be given the input below in the form of description of trade entry.
 
@@ -61,7 +59,9 @@ def _testing_swap_leg_type(trade_description: str, run_count: int, llm: Llm) -> 
         results.append(result)
     return results
 
+
 pytest.skip("Skip to allow GitHub actions to run without LLM keys.", allow_module_level=True)
+
 
 def test_swap_leg_type():
     run_count = 50

@@ -13,9 +13,7 @@
 # limitations under the License.
 
 from typing import List
-
 from matplotlib import pyplot as plt
-
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
 
 

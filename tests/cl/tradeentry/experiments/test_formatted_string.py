@@ -26,7 +26,6 @@ from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_s
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_floored_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_vanilla_swap_entry
 
-
 PROMPT_TEMPLATE = """You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -72,7 +71,7 @@ FIELDS = [
     {"name": "FixedLegFrequency", "type": "string", "freq": "single", "short_name": "FDF"},
     {"name": "FixedLegDaycountBasis", "type": "string", "freq": "single", "short_name": "FDB"},
     {"name": "StartDate", "type": "date", "freq": "single", "short_name": "SDT"},
-    {"name": "NotionalAmount", "type": "float", "freq": "multiple or single", "short_name": "NA"}
+    {"name": "NotionalAmount", "type": "float", "freq": "multiple or single", "short_name": "NA"},
 ]
 
 
@@ -118,6 +117,7 @@ def _testing_formatted_string(trade_description: str, run_count: int):
 
 
 pytest.skip("Skip to allow GitHub actions to run without LLM keys.", allow_module_level=True)
+
 
 def test_vanilla_swap():
     numbered_vanilla_swap = add_line_numbers(stub_vanilla_swap_entry)
