@@ -20,7 +20,7 @@ from cl.convince.content.content import Content
 
 
 @dataclass(slots=True, kw_only=True)
-class TextContent(Content):
+class JsonContent(Content):
     """Single-page content in text format."""
 
     json_bytes: bytes = missing()
