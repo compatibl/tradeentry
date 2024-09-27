@@ -35,6 +35,8 @@ def _get_extended_prompt(i: int):
         f"(not words) with no other comments or other text."
     )
 
+pytest.skip("Skip to allow GitHub actions to run without LLM keys.", allow_module_level=True)
+
 
 def test_verbosity(local_dir_fixture):
     """Test for verbosity."""
@@ -42,7 +44,7 @@ def test_verbosity(local_dir_fixture):
     with TestingContext():
 
         reps = 2
-        plot = GroupBarPlot()
+        plot = GroupBarPlot(plot_id="verbosity")
         plot.values = []
         for llm in stub_mini_llms:
 
@@ -56,10 +58,7 @@ def test_verbosity(local_dir_fixture):
         # Apply labels
         plot.bar_labels = [llm.llm_id for llm in stub_mini_llms]
         plot.group_labels = ["Simple", "Extended"]
-
-        # Create and save
-        fig = plot.create_figure()
-        fig.savefig("test_verbosity.png")
+        plot.save()
 
 
 if __name__ == "__main__":
