@@ -43,9 +43,6 @@ def _test_recall(text: str):
         guard.verify_all()
 
 
-pytest.skip("Skip to allow GitHub actions to run without LLM keys.", allow_module_level=True)
-
-
 def test_well_known_phrase():
     """Test a well-known recall string."""
     _test_recall("A quick brown fox jumps over the lazy dog")
