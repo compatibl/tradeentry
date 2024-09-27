@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os
 
 import pytest
 from pathlib import Path
@@ -19,6 +20,7 @@ from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.plots.confusion_matrix_plot import ConfusionMatrixPlot
 from cl.runtime.plots.confusion_matrix_plot_style import ConfusionMatrixPlotStyle
 from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
+from cl.runtime.testing.stack_util import StackUtil
 
 
 def test_smoke(local_dir_fixture):
@@ -26,12 +28,11 @@ def test_smoke(local_dir_fixture):
 
     with TestingContext() as context:
         matrix_plot = ConfusionMatrixPlot()
+        matrix_plot.plot_id = "confusion_matrix"
         matrix_plot.title = "Confusion Matrix"
         matrix_plot.expected_categories = raw_data["True Category"].values.tolist()
         matrix_plot.received_categories = raw_data["Predicted"].values.tolist()
-
-        fig = matrix_plot.create_figure()
-    fig.savefig("test_confusion_matrix_plot.test_smoke.png")
+        matrix_plot.save()
 
 
 def test_smoke_dark_theme(local_dir_fixture):
