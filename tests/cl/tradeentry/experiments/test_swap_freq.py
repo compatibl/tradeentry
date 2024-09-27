@@ -11,13 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import List
 
 import pytest
-
-from cl.convince.llms.llm import Llm
+from typing import List
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.testing.regression_guard import RegressionGuard
+from cl.convince.llms.llm import Llm
 from stubs.cl.convince.experiments.stub_llms import stub_full_llms
 from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json
 from stubs.cl.tradeentry.experiments.stub_plot_utils import create_group_bar_plot
@@ -36,7 +35,7 @@ Text:
 
 
 def _is_correct_answer(answer: dict, correct_answer: str) -> bool:
-    return answer.get('pay_freq') == correct_answer
+    return answer.get("pay_freq") == correct_answer
 
 
 def _test_swap_freq(text: str, run_count: int, llm: Llm) -> List[str]:
@@ -52,14 +51,16 @@ def _test_swap_freq(text: str, run_count: int, llm: Llm) -> List[str]:
         results.append(result)
     return results
 
+
 pytest.skip("Skip to allow GitHub actions to run without LLM keys.", allow_module_level=True)
+
 
 def test_swap_freq():
     run_count = 50
     descriptions = [
         "Payment dates are January 15 and July 15",
         "Payments will be made on the 3rd of each month starting from January",
-        "Payments are to be made on an annual basis"
+        "Payments are to be made on an annual basis",
     ]
     correct_answers = ["6m", "1m", "12m"]
 

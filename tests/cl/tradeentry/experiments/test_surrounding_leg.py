@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import pytest
-
 from typing import List
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.testing.regression_guard import RegressionGuard
@@ -26,7 +25,6 @@ from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_s
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_basis_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_fixed_for_floating_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_floored_swap_entry
-
 
 PROMPT_TEMPLATE = """In this text, surround information about each leg in curly brackets. Make no other changes
 to the text. Take into account the following:
@@ -48,9 +46,8 @@ def _is_correct_answer(answer: str, trade_description: str, correct_answers: Lis
     sanitized_answer = sanitize_string(answer)
     sanitized_trade_description = sanitize_string(trade_description)
 
-    return (
-        sanitized_answer.replace("{", "").replace("}", "") == sanitized_trade_description
-        and all(correct_answer in answer for correct_answer in correct_answers)
+    return sanitized_answer.replace("{", "").replace("}", "") == sanitized_trade_description and all(
+        correct_answer in answer for correct_answer in correct_answers
     )
 
 
@@ -70,7 +67,9 @@ def _test_surrounding_leg(trade_description: str, run_count: int, llm: Llm) -> L
 
     return results
 
+
 pytest.skip("Skip to allow GitHub actions to run without LLM keys.", allow_module_level=True)
+
 
 def test_surrounding_leg():
     run_count = 50
@@ -81,10 +80,11 @@ def test_surrounding_leg():
         ],
         [
             "{Client pays 3M Term SOFR + 70bps (act/360, quarterly)}",
-            "{Client receives 12M Term SOFR (act/360, annual)}"],
+            "{Client receives 12M Term SOFR (act/360, annual)}",
+        ],
         [
             "{We pay: 6M USD Term SOFR (floating), semi-annual, act/360}",
-            "{We receive: USD fixed 3.45%, semi-annual, act/360}"
+            "{We receive: USD fixed 3.45%, semi-annual, act/360}",
         ],
         [
             "{Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360}",
