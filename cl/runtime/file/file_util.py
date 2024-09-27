@@ -94,7 +94,7 @@ class FileUtil:
         """Remove leading period if specified and convert to lowercase."""
         # Check for None or empty string
         if ext is not None and ext != "":
-            result = ext if not ext.startswith(".") else ext[1:]
+            result = ext[1:] if ext.startswith(".") else ext
             result = result.lower()
             return result
         else:

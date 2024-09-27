@@ -45,7 +45,7 @@ class StackUtil:
     def get_base_dir(
         cls,
         *,
-        allow_missing: bool = False,
+        default_dir: str | None = None,
         test_function_pattern: str | None = None,
     ) -> str:
         """
@@ -56,19 +56,19 @@ class StackUtil:
             Implemented by searching the stack frame for 'test_' or a custom test function name pattern.
 
         Args:
-            allow_missing: If True, return None if path is not found (e.g. when not running inside a test)
+            default_dir: When not running inside a test, return this directory if specified, error if not specified
             test_function_pattern: Glob pattern to identify the test function or method in stack frame,
             defaults to 'test_*'
         """
         return cls._get_base_dir_or_path(
-            dot_delimited=False, allow_missing=allow_missing, test_function_pattern=test_function_pattern
+            dot_delimited=False, default_dir=default_dir, test_function_pattern=test_function_pattern
         )
 
     @classmethod
     def get_base_path(
         cls,
         *,
-        allow_missing: bool = False,
+        default_dir: str | None = None,
         test_function_pattern: str | None = None,
     ) -> str:
         """
@@ -79,20 +79,20 @@ class StackUtil:
             Implemented by searching the stack frame for 'test_' or a custom test function name pattern.
 
         Args:
-            allow_missing: If True, return None if path is not found (e.g. when not running inside a test)
+            default_dir: When not running inside a test, return this directory if specified, error if not specified
             test_function_pattern: Glob pattern to identify the test function or method in stack frame,
             defaults to 'test_*'
         """
         return cls._get_base_dir_or_path(
-            dot_delimited=True, allow_missing=allow_missing, test_function_pattern=test_function_pattern
+            dot_delimited=True, default_dir=default_dir, test_function_pattern=test_function_pattern
         )
 
     @classmethod
-    def _get_base_dir_or_path(  # TODO: Refactor to return tuple of dir and name and rename method after refactoring
+    def _get_base_dir_or_path(
         cls,
         *,
         dot_delimited: bool,
-        allow_missing: bool = False,
+        default_dir: str | None = None,
         test_function_pattern: str | None = None,
     ) -> str:
         """
@@ -101,7 +101,7 @@ class StackUtil:
 
         Args:
             dot_delimited: If True, test module, class and method are dot-delimited rather than directory levels
-            allow_missing: If True, return None if path is not found (e.g. when not running inside a test)
+            default_dir: When not running inside a test, return this directory if specified, error if not specified
             test_function_pattern: Glob pattern to identify the test function or method in stack frame,
             defaults to 'test_*'
         """
@@ -109,6 +109,7 @@ class StackUtil:
         if test_function_pattern is not None:
             # TODO: Support custom patterns
             raise RuntimeError("Custom test function or method name patterns are not yet supported.")
+        test_function_pattern = "test_"
 
         stack = inspect.stack()
         for frame_info in stack:
@@ -153,10 +154,13 @@ class StackUtil:
                 result = os.path.join(module_dir, result)
                 return result
 
-        if allow_missing:
-            # Return None if path is not found (e.g. when not running inside a test)
-            return None
+        # If the end of the frame is reached and no function or method starting from test_ is found,
+        # the function was not called from inside a test and default_dir will be returned if specified
+        if default_dir is not None and default_dir != "":
+            return default_dir
         else:
-            # If the end of the frame is reached and no function or method starting from test_ is found,
-            # the function was not called from inside a test or a custom match pattern is required
-            raise RuntimeError("Not invoked inside a function or method that starts from 'test_'.")
+            RuntimeError(f"Not invoked inside a function or method that starts from '{test_function_pattern}' "
+                         f"and 'default_dir' is None or empty.")
+
+
+
