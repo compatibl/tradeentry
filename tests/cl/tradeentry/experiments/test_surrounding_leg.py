@@ -70,6 +70,7 @@ def _test_surrounding_leg(trade_description: str, run_count: int, llm: Llm) -> L
 
     return results
 
+pytest.skip("Skip to allow GitHub actions to run without LLM keys.", allow_module_level=True)
 
 def test_surrounding_leg():
     run_count = 50

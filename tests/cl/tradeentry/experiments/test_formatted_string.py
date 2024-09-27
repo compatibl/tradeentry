@@ -117,6 +117,8 @@ def _testing_formatted_string(trade_description: str, run_count: int):
     return fig
 
 
+pytest.skip("Skip to allow GitHub actions to run without LLM keys.", allow_module_level=True)
+
 def test_vanilla_swap():
     numbered_vanilla_swap = add_line_numbers(stub_vanilla_swap_entry)
     fig = _testing_formatted_string(numbered_vanilla_swap, run_count=50)

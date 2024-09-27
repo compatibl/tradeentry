@@ -52,6 +52,7 @@ def _test_swap_freq(text: str, run_count: int, llm: Llm) -> List[str]:
         results.append(result)
     return results
 
+pytest.skip("Skip to allow GitHub actions to run without LLM keys.", allow_module_level=True)
 
 def test_swap_freq():
     run_count = 50
