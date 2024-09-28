@@ -126,7 +126,7 @@ if __name__ == "__main__":
         # TODO: Temporary workaround before full configuration workflow is supported
         config = StubRuntimeConfig()
         config.config_id = "Stub Runtime Config"
-        config.configure()
+        config.run_configure()
 
         # Preload data
         PreloadSettings.instance().preload()

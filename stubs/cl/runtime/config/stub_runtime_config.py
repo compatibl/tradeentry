@@ -42,7 +42,7 @@ class StubRuntimeConfig(Config):
     """Save stub records to storage."""
 
     @handler
-    def configure(self) -> None:
+    def run_configure(self) -> None:
         """Populate the current or default data source with stub records."""
 
         # Get data source from the current context
@@ -101,7 +101,7 @@ class StubRuntimeConfig(Config):
         data_source.save_many(all_records)
 
     @handler
-    def configure_plots(self) -> None:
+    def run_configure_plots(self) -> None:
         """Configure plots."""
 
         bar_plot = GroupBarPlot()

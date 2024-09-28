@@ -50,7 +50,7 @@ class Task(TaskKey, RecordMixin[TaskKey], ABC):
         """Invoked by the queue to which the task is submitted."""
 
     @handler
-    def submit(self, queue: TaskQueueKey) -> TaskRunKey:
+    def run_submit(self, queue: TaskQueueKey) -> TaskRunKey:
         """Submit task to the specified queue."""
 
         # Get current context

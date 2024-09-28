@@ -27,5 +27,5 @@ class Config(ConfigKey, RecordMixin[ConfigKey], ABC):
         return ConfigKey(config_id=self.config_id)
 
     @abstractmethod
-    def configure(self) -> None:
+    def run_configure(self) -> None:
         """Perform configuration using parameters specified in this record."""
