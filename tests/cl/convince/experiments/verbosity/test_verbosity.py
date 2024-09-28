@@ -56,7 +56,7 @@ def test_verbosity(local_dir_fixture):
         # Apply labels
         plot.bar_labels = [llm.llm_id for llm in stub_mini_llms]
         plot.group_labels = ["Simple", "Extended"]
-        plot.save()
+        plot.save_png()
 
 
 if __name__ == "__main__":
