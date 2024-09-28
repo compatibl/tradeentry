@@ -22,10 +22,10 @@ from cl.runtime.records.protocols import KeyProtocol
 
 @dataclass(slots=True, kw_only=True)
 class ViewKey(KeyMixin):
-    """Contains data that will be visualized alongside the record specified by the 'view_for' field."""
+    """This type is returned from a viewer method as object or key."""
 
-    view_for: KeyProtocol = missing()
-    """Generic key of the record for which the view is specified."""
+    view_for: str = missing()
+    """Generic key in ClassName;key_field_1;key_field_2 format of the record for which the view is provided."""
 
     view_name: str = missing()
     """Name of the view displayed in the front end."""
