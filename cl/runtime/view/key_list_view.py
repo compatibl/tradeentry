@@ -16,12 +16,11 @@ from dataclasses import dataclass
 from typing import List
 
 from cl.runtime import View
-from cl.runtime.plots.plot_key import PlotKey
 from cl.runtime.records.dataclasses_extensions import missing
 
 
 @dataclass(slots=True, kw_only=True)
-class KeyView(View):
+class KeyListView(View):
     """List of generic keys in ClassName;key_field_1;key_field_2 format, records are loaded and displayed."""
 
     key_list: List[str] = missing()

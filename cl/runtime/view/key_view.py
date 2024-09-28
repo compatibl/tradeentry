@@ -14,7 +14,6 @@
 
 from dataclasses import dataclass
 from cl.runtime import View
-from cl.runtime.plots.plot_key import PlotKey
 from cl.runtime.records.dataclasses_extensions import missing
 
 
