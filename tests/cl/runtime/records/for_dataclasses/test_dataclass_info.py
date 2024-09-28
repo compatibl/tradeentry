@@ -14,8 +14,6 @@
 
 import pytest
 from cl.runtime import ClassInfo
-from stubs.cl.runtime import StubDataclassCyclicA
-from stubs.cl.runtime import StubDataclassCyclicB
 from stubs.cl.runtime import StubDataclassData
 from stubs.cl.runtime import StubDataclassDerivedData
 from stubs.cl.runtime import StubDataclassDerivedFromDerivedData
