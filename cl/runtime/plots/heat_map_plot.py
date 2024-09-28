@@ -51,7 +51,8 @@ class HeatMapPlot(MatplotlibPlot):
     y_label: str = field()
     """y-axis label."""
 
-    style: HeatMapPlotStyleKey = field(default_factory=lambda: HeatMapPlotStyle())
+    # TODO(Roman): support same field name in hierarchy
+    heat_map_style: HeatMapPlotStyleKey = field(default_factory=lambda: HeatMapPlotStyle())
     """Color and layout options."""
 
     def _create_figure(self) -> plt.Figure:
