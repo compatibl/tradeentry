@@ -32,7 +32,7 @@ class StubPlots(StubPlotsKey, RecordMixin[StubPlotsKey]):
         return StubPlotsKey(stub_id=self.stub_id)
 
     @viewer
-    def confusion_matrix_plot(self):
+    def view_confusion_matrix_plot(self):
         """Matplotlib Figure viewer with theme."""
 
         raw_data = pd.read_csv(Path(__file__).resolve().parent / "./confusion_matrix_plot.csv")

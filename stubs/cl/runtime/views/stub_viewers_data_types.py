@@ -32,7 +32,7 @@ class StubViewersDataTypes(StubViewersDataTypesKey, RecordMixin[StubViewersDataT
         return StubViewersDataTypesKey(stub_id=self.stub_id)
 
     @viewer
-    def pdf_viewer(self) -> BinaryContent:
+    def view_pdf(self) -> BinaryContent:
         """Shows a PDF document."""
 
         file_path = os.path.join(os.path.dirname(__file__), "stub_viewers_data_types.pdf")
