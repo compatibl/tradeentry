@@ -33,7 +33,7 @@ context_serializer = DictSerializer()
 def _create_task(task_id: str) -> Task:
     """Create a test task."""
 
-    method_callable = StubHandlers.static_handler_1a
+    method_callable = StubHandlers.run_static_method_1a
     result = StaticMethodTask.create(task_id=task_id, record_type=StubHandlers, method_callable=method_callable)
     return result
 

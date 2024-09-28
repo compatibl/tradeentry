@@ -23,8 +23,8 @@ def test_create():
 
     with TestingContext():
         sample_inputs = [
-            (StubHandlers, StubHandlers.class_handler_1a),
-            (StubHandlers, StubHandlers.static_handler_1a),
+            (StubHandlers, StubHandlers.run_class_method_1a),
+            (StubHandlers, StubHandlers.run_static_method_1a),
         ]
 
         for sample_input in sample_inputs:

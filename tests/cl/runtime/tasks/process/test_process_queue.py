@@ -26,7 +26,7 @@ def test_smoke():
         obj = StubHandlers(stub_id="abc")
         context.save_one(obj)
 
-        method_callable = StubHandlers.static_handler_1a
+        method_callable = StubHandlers.run_static_method_1a
         task = StaticMethodTask.create(task_id="abc", record_type=StubHandlers, method_callable=method_callable)
 
         queue = ProcessQueue()

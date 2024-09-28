@@ -59,109 +59,109 @@ class StubHandlers(StubHandlersKey, RecordMixin[StubHandlersKey]):
         return StubHandlersKey(stub_id=self.stub_id)
 
     @handler
-    def instance_handler_1a(self) -> None:
+    def run_instance_method_1a(self) -> None:
         """Stub handler."""
         log_method_info(__name__)
 
     @handler()
-    def instance_handler_1b(self) -> None:
+    def run_instance_method_1b(self) -> None:
         """Stub handler."""
         log_method_info(__name__)
 
     @handler
-    def instance_handler_2a(self, param1: str, param2: str = None) -> None:
+    def run_instance_method_2a(self, param1: str, param2: str = None) -> None:
         """Stub handler."""
         log_method_info(__name__)
 
     @handler()
-    def instance_handler_2b(self, param1: str, param2: str = None) -> None:
+    def run_instance_method_2b(self, param1: str, param2: str = None) -> None:
         """Stub handler."""
         log_method_info(__name__)
 
     @handler
-    def instance_handler_3a(self, *, param1: str, param2: str = None) -> None:
+    def run_instance_method_3a(self, *, param1: str, param2: str = None) -> None:
         """Stub handler."""
         log_method_info(__name__)
 
     @handler()
-    def instance_handler_3b(self, *, param1: str, param2: str = None) -> None:
+    def run_instance_method_3b(self, *, param1: str, param2: str = None) -> None:
         """Stub handler."""
         log_method_info(__name__)
 
     @classmethod
     @handler
-    def class_handler_1a(cls) -> None:
+    def run_class_method_1a(cls) -> None:
         """Stub handler."""
         log_method_info(__name__)
 
     @classmethod
     @handler()
-    def class_handler_1b(cls) -> None:
+    def run_class_method_1b(cls) -> None:
         """Stub handler."""
         log_method_info(__name__)
 
     @classmethod
     @handler
-    def class_handler_2a(cls, param1: str, param2: str = None) -> None:
+    def run_class_method_2a(cls, param1: str, param2: str = None) -> None:
         """Stub handler."""
         log_method_info(__name__)
 
     @classmethod
     @handler()
-    def class_handler_2b(cls, param1: str, param2: str = None) -> None:
+    def run_class_method_2b(cls, param1: str, param2: str = None) -> None:
         """Stub handler."""
         log_method_info(__name__)
 
     @classmethod
     @handler
-    def class_handler_3a(cls, *, param1: str, param2: str = None) -> None:
+    def run_class_method_3a(cls, *, param1: str, param2: str = None) -> None:
         """Stub handler."""
         log_method_info(__name__)
 
     @classmethod
     @handler()
-    def class_handler_3b(cls, *, param1: str, param2: str = None) -> None:
+    def run_class_method_3b(cls, *, param1: str, param2: str = None) -> None:
         """Stub handler."""
         log_method_info(__name__)
 
     @staticmethod
     @handler
-    def static_handler_1a() -> None:
+    def run_static_method_1a() -> None:
         """Stub handler."""
         log_method_info(__name__)
 
     @staticmethod
     @handler()
-    def static_handler_1b() -> None:
+    def run_static_method_1b() -> None:
         """Stub handler."""
         log_method_info(__name__)
 
     @staticmethod
     @handler
-    def static_handler_2a(param1: str, param2: str = None) -> None:
+    def run_static_method_2a(param1: str, param2: str = None) -> None:
         """Stub handler."""
         log_method_info(__name__)
 
     @staticmethod
     @handler()
-    def static_handler_2b(param1: str, param2: str = None) -> None:
+    def run_static_method_2b(param1: str, param2: str = None) -> None:
         """Stub handler."""
         log_method_info(__name__)
 
     @staticmethod
     @handler
-    def static_handler_3a(*, param1: str, param2: str = None) -> None:
+    def run_static_method_3a(*, param1: str, param2: str = None) -> None:
         """Stub handler."""
         log_method_info(__name__)
 
     @staticmethod
     @handler()
-    def static_handler_3b(*, param1: str, param2: str = None) -> None:
+    def run_static_method_3b(*, param1: str, param2: str = None) -> None:
         """Stub handler."""
         log_method_info(__name__)
 
     @handler
-    def handler_with_args(
+    def run_with_args(
         self,
         int_arg: int,
         datetime_arg: dt.datetime,
@@ -174,27 +174,27 @@ class StubHandlers(StubHandlersKey, RecordMixin[StubHandlersKey]):
         )
 
     @handler
-    def handler_with_two_args(self, arg_1: str, arg_2: str) -> str:
+    def run_with_two_args(self, arg_1: str, arg_2: str) -> str:
         """Stub method."""
         return arg_1 + arg_2
 
     @handler
-    def handler_with_args_and_optional(self, arg_1: str, arg_2: str, arg_3: str = None) -> str:
+    def run_with_args_and_optional(self, arg_1: str, arg_2: str, arg_3: str = None) -> str:
         """Stub method."""
         return arg_1 + arg_2
 
     @handler
-    def handler_with_reserved_param_name(self, from_: dt.date = None) -> dt.date:
+    def run_with_reserved_param_name(self, from_: dt.date = None) -> dt.date:
         """Stub method."""
         return from_
 
     @handler
-    def handler_with_error(self):
+    def run_with_error(self):
         """Stub method."""
         raise RuntimeError("Error in handler.")
 
     @handler
-    def handler_save_to_db(self):
+    def run_save_to_db(self):
         log_method_info(__name__)
         data_source = Context.current().data_source
         stub = StubDataclassRecord(id="saved_from_handler")

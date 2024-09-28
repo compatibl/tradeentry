@@ -23,28 +23,28 @@ def test_smoke():
     with TestingContext():
         # Instance method handlers
         obj = StubHandlers()
-        obj.instance_handler_1a()
-        obj.instance_handler_1b()
-        obj.instance_handler_2a(param1="a")
-        obj.instance_handler_2b(param1="a")
-        obj.instance_handler_3a(param1="a", param2="b")
-        obj.instance_handler_3b(param1="a", param2="b")
+        obj.run_instance_method_1a()
+        obj.run_instance_method_1b()
+        obj.run_instance_method_2a(param1="a")
+        obj.run_instance_method_2b(param1="a")
+        obj.run_instance_method_3a(param1="a", param2="b")
+        obj.run_instance_method_3b(param1="a", param2="b")
 
         # Class method handlers
-        StubHandlers.class_handler_1a()
-        StubHandlers.class_handler_1b()
-        StubHandlers.class_handler_2a(param1="a")
-        StubHandlers.class_handler_2b(param1="a")
-        StubHandlers.class_handler_3a(param1="a", param2="b")
-        StubHandlers.class_handler_3b(param1="a", param2="b")
+        StubHandlers.run_class_method_1a()
+        StubHandlers.run_class_method_1b()
+        StubHandlers.run_class_method_2a(param1="a")
+        StubHandlers.run_class_method_2b(param1="a")
+        StubHandlers.run_class_method_3a(param1="a", param2="b")
+        StubHandlers.run_class_method_3b(param1="a", param2="b")
 
         # Static method handlers
-        StubHandlers.static_handler_1a()
-        StubHandlers.static_handler_1b()
-        StubHandlers.static_handler_2a(param1="a")
-        StubHandlers.static_handler_2b(param1="a")
-        StubHandlers.static_handler_3a(param1="a", param2="b")
-        StubHandlers.static_handler_3b(param1="a", param2="b")
+        StubHandlers.run_static_method_1a()
+        StubHandlers.run_static_method_1b()
+        StubHandlers.run_static_method_2a(param1="a")
+        StubHandlers.run_static_method_2b(param1="a")
+        StubHandlers.run_static_method_3a(param1="a", param2="b")
+        StubHandlers.run_static_method_3b(param1="a", param2="b")
 
 
 if __name__ == "__main__":

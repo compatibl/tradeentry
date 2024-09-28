@@ -32,7 +32,7 @@ from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
 # Create handler tasks
 tasks = [
     InstanceMethodTask.from_key(
-        task_id=f"{i}", key=StubHandlersKey(stub_id=f"{i}"), method=StubHandlers.instance_handler_1a
+        task_id=f"{i}", key=StubHandlersKey(stub_id=f"{i}"), method=StubHandlers.run_instance_method_1a
     )
     for i in range(2)
 ]

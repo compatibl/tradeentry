@@ -27,12 +27,12 @@ def test_smoke():
         ]
         context.save_many(records)
 
-        object_and_instance_handler_on_object = [(x, x.instance_handler_1a) for x in records]
-        key_and_instance_handler_on_object = [(x.get_key(), x.instance_handler_1a) for x in records]
-        object_and_instance_handler_on_class = [(x, StubHandlers.instance_handler_1a) for x in records]
-        key_and_instance_handler_on_class = [(x.get_key(), StubHandlers.instance_handler_1a) for x in records]
-        object_and_class_handler_on_class = [(x, StubHandlers.class_handler_1a) for x in records]
-        key_and_class_handler_on_class = [(x.get_key(), StubHandlers.class_handler_1a) for x in records]
+        object_and_instance_handler_on_object = [(x, x.run_instance_method_1a) for x in records]
+        key_and_instance_handler_on_object = [(x.get_key(), x.run_instance_method_1a) for x in records]
+        object_and_instance_handler_on_class = [(x, StubHandlers.run_instance_method_1a) for x in records]
+        key_and_instance_handler_on_class = [(x.get_key(), StubHandlers.run_instance_method_1a) for x in records]
+        object_and_class_handler_on_class = [(x, StubHandlers.run_class_method_1a) for x in records]
+        key_and_class_handler_on_class = [(x.get_key(), StubHandlers.run_class_method_1a) for x in records]
 
         sample_inputs = (
             object_and_instance_handler_on_object
