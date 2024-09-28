@@ -15,11 +15,11 @@
 import pytest
 from typing import List
 from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.llm import Llm
 from stubs.cl.convince.experiments.stub_llms import get_stub_full_llms
 from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json
-from stubs.cl.tradeentry.experiments.stub_plot_utils import create_group_bar_plot
 
 PROMPT_TEMPLATE = """Trade or leg description contains the following text. 
 
@@ -53,16 +53,16 @@ def _test_swap_freq(text: str, run_count: int, llm: Llm) -> List[str]:
 
 
 def test_swap_freq():
-    run_count = 50
-    descriptions = [
-        "Payment dates are January 15 and July 15",
-        "Payments will be made on the 3rd of each month starting from January",
-        "Payments are to be made on an annual basis",
-    ]
-    correct_answers = ["6m", "1m", "12m"]
-
-    plot_values = []
     with TestingContext():
+        run_count = 50
+        descriptions = [
+            "Payment dates are January 15 and July 15",
+            "Payments will be made on the 3rd of each month starting from January",
+            "Payments are to be made on an annual basis",
+        ]
+        correct_answers = ["6m", "1m", "12m"]
+
+        plot_values = []
         # Create Llm objects for test
         stub_full_llms = get_stub_full_llms()
 
@@ -81,10 +81,15 @@ def test_swap_freq():
 
         plot_bar_labels = [llm.llm_id for llm in stub_full_llms]
         plot_group_labels = ["A", "B", "C"]
-        fig = create_group_bar_plot(plot_values, plot_bar_labels, plot_group_labels)
-
-    fig.savefig("test_swap_freq.png")
-    RegressionGuard.verify_all()
+        plot = GroupBarPlot(
+            plot_id="accuracy",
+            bar_labels=plot_bar_labels,
+            group_labels=plot_group_labels,
+            values=plot_values,
+            value_ticks=list(range(0, 101, 10)),
+        )
+        plot.save_png()
+        RegressionGuard.verify_all()
 
 
 if __name__ == "__main__":
