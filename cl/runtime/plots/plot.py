@@ -26,5 +26,9 @@ class Plot(PlotKey, RecordMixin[PlotKey], ABC):
         return PlotKey(plot_id=self.plot_id)
 
     @abstractmethod
+    def get_view(self) -> None:
+        """Return a view object for the plot."""
+
+    @abstractmethod
     def save_png(self) -> None:
         """Save in png format to 'base_dir/plot_id.png'."""
