@@ -134,7 +134,12 @@ if __name__ == "__main__":
             # Launch UI if ui_path is found
             server_app.mount("/", StaticFiles(directory=wwwroot_dir, html=True))
         else:
-            print(f"UI directory {wwwroot_dir} not found, starting REST API only.")
+            raise RuntimeError(
+                f"Browser client JS directory {wwwroot_dir} is not found.\n"
+                f"  - If installed from GitHub:\n"
+                f"    - Use 'main' branch to run REST API and browser client from __main__ (includes wwwroot)\n"
+                f"    - Use 'main-sdk' branch to make calls from Python code only (excludes wwwroot)\n"
+            )
 
         # Run Uvicorn using hostname and port specified by Dynaconf
         api_settings = ApiSettings.instance()
