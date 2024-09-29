@@ -15,8 +15,6 @@
 import os
 import traceback
 import uuid
-from datetime import datetime
-from datetime import timezone
 import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
@@ -121,7 +119,8 @@ if __name__ == "__main__":
         celery_delete_existing_tasks()
 
         # Start Celery workers (will exit when the current process exits)
-        celery_start_queue()
+        log_dir = os.path.join(Settings.get_project_root(), "logs")  # TODO: Make unique
+        celery_start_queue(log_dir=log_dir)
 
         # TODO: Temporary workaround before full configuration workflow is supported
         config = StubRuntimeConfig()
@@ -137,7 +136,6 @@ if __name__ == "__main__":
         if os.path.exists(wwwroot_dir):
             # Launch UI if ui_path is found
             server_app.mount("/", StaticFiles(directory=wwwroot_dir, html=True))
-            print(f"Starting UI")
         else:
             print(f"UI directory {wwwroot_dir} not found, starting REST API only.")
 

@@ -12,15 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import datetime as dt
 import multiprocessing
 import os
 from dataclasses import dataclass
 from typing import Final
 from uuid import UUID
 from celery import Celery
-from orjson import orjson
-from pymongo import MongoClient
 from cl.runtime import Context
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
@@ -97,7 +94,20 @@ def execute_task(
             context.save_one(task_run)
 
 
-def celery_start_queue_callable() -> None:
+def celery_start_queue_callable(*, log_dir: str) -> None:
+    """
+    Callable for starting the celery queue process.
+
+    Args:
+        log_dir: Directory where Celery console log file will be written
+    """
+
+    # Redirect console output from celery to a log file
+    log_file_path = os.path.join(log_dir, 'celery_queue.log')
+    with open(log_file_path, 'w') as log_file:
+        os.dup2(log_file.fileno(), 1)  # Redirect stdout (file descriptor 1)
+        os.dup2(log_file.fileno(), 2)  # Redirect stderr (file descriptor 2)
+
     celery_app.worker_main(
         argv=[
             "-A",
@@ -119,9 +129,18 @@ def celery_delete_existing_tasks() -> None:
         os.remove(celery_file)
 
 
-def celery_start_queue() -> None:
-    """Start Celery workers (will exit when the current process exits)."""
-    worker_process = multiprocessing.Process(target=celery_start_queue_callable, daemon=True)
+def celery_start_queue(*, log_dir: str) -> None:
+    """
+    Start Celery workers (will exit when the current process exits).
+
+    Args:
+        log_dir: Directory where Celery console log file will be written
+    """
+    worker_process = multiprocessing.Process(
+        target=celery_start_queue_callable,
+        daemon=True,
+        kwargs={"log_dir": log_dir}
+    )
     worker_process.start()
 
 
