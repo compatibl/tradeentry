@@ -62,4 +62,4 @@ async def get_app_index(_):
         if os.path.isfile(index_file):
             with open(index_file, "r") as file:
                 return file.read()
-    raise RuntimeError()
+    return RedirectResponse(url="/docs")
