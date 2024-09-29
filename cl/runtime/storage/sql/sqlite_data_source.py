@@ -396,5 +396,5 @@ class SqliteDataSource(DataSource):
         # Get dir for database
         db_dir = Settings.get_databases_path()
 
-        result = os.path.join(db_dir, f"{filename}.db")
+        result = os.path.join(db_dir, f"{filename}.sqlite")
         return result
