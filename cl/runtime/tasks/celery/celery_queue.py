@@ -44,7 +44,7 @@ databases_path = Settings.get_databases_path()
 data_source_id = ContextSettings.instance().data_source_id
 
 # Get sqlite file name of celery broker based on data source id in settings
-celery_file = os.path.join(databases_path, f"{data_source_id}.celery")
+celery_file = os.path.join(databases_path, f"{data_source_id}.celery.sqlite")
 
 celery_sqlite_uri = f"sqlalchemy+sqlite:///{celery_file}"
 
