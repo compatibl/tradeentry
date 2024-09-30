@@ -96,8 +96,8 @@ def test_api():
 
             assert save_new_record_response.status_code == 200
             # Check that response contains the key of the new record
-            assert save_new_record_json.get("Key") is not None
-            assert save_new_record_json["Key"] == "new_record"
+            assert save_new_record_json.get("key") is not None
+            assert save_new_record_json["key"] == "new_record"
             assert new_record_in_db is not None
             assert new_record_in_db.id == "new_record"
             assert new_record_in_db.derived_field == "test"
@@ -128,8 +128,8 @@ def test_api():
 
             assert update_record_response.status_code == 200
             # Check that response contains the key of the new record
-            assert update_record_json.get("Key") is not None
-            assert update_record_json["Key"] == "existing_record"
+            assert update_record_json.get("key") is not None
+            assert update_record_json["key"] == "existing_record"
             assert updated_record_in_db is not None
             assert updated_record_in_db.id == "existing_record"
             assert updated_record_in_db.derived_field == "new_value"
