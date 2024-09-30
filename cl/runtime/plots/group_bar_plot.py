@@ -18,7 +18,6 @@ import numpy as np
 from matplotlib import pyplot as plt
 from cl.runtime import Context
 from cl.runtime.plots.group_bar_plot_style import GroupBarPlotStyle
-from cl.runtime.plots.group_bar_plot_style_key import GroupBarPlotStyleKey
 from cl.runtime.plots.matplotlib_plot import MatplotlibPlot
 from cl.runtime.records.dataclasses_extensions import field
 
