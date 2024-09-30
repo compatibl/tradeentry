@@ -29,9 +29,9 @@ key_str = key_serializer.serialize_key(stub_viewers.get_key())
 
 
 requests = [
-    {"type": "StubViewers", "panel_id": "Instance Viewer 1A", "key": key_str},
-    {"type": "StubViewers", "panel_id": "Instance Viewer 1B", "key": key_str},
-    {"type": "StubViewers", "panel_id": "Instance Viewer 1C", "key": key_str},
+    {"type": "StubViewers", "panel_id": "View Instance 1A", "key": key_str},
+    {"type": "StubViewers", "panel_id": "View Instance 1B", "key": key_str},
+    {"type": "StubViewers", "panel_id": "View Instance 1C", "key": key_str},
 ]
 
 expected_results = [
