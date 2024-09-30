@@ -16,6 +16,12 @@ import pytest
 from cl.runtime.primitive.string_util import StringUtil
 
 
+def test_is_empty():
+    """Smoke test for functions in StringUtil."""
+    assert StringUtil.is_empty(None)
+    assert StringUtil.is_empty("")
+    assert not StringUtil.is_empty("abc")
+
 def test_to_pascal_case():
     """Smoke test for functions in StringUtil."""
 

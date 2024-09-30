@@ -28,6 +28,11 @@ class StringUtil:
     """Utilities for case conversion and other operations on string."""
 
     @classmethod
+    def is_empty(cls, value: str | None) -> bool:
+        """Returns true if the string is None or an empty string."""
+        return value is None or value == ""
+
+    @classmethod
     def to_pascal_case(cls, value: str) -> str:
         """Converts each dot-delimited token to PascalCase by replacing underscores with capital letters."""
         input_tokens = value.split(".")
