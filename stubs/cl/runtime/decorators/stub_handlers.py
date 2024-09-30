@@ -68,25 +68,29 @@ class StubHandlers(StubHandlersKey, RecordMixin[StubHandlersKey]):
         """Stub handler."""
         log_method_info(__name__)
 
-    @handler
-    def run_instance_method_2a(self, param1: str, param2: str = None) -> None:
-        """Stub handler."""
-        log_method_info(__name__)
+    # TODO (Roman): Restore after supporting handlers with parameters
+    # @handler
+    # def run_instance_method_2a(self, param1: str, param2: str = None) -> None:
+    #     """Stub handler."""
+    #     log_method_info(__name__)
 
-    @handler()
-    def run_instance_method_2b(self, param1: str, param2: str = None) -> None:
-        """Stub handler."""
-        log_method_info(__name__)
+    # TODO (Roman): Restore after supporting handlers with parameters
+    # @handler()
+    # def run_instance_method_2b(self, param1: str, param2: str = None) -> None:
+    #     """Stub handler."""
+    #     log_method_info(__name__)
 
-    @handler
-    def run_instance_method_3a(self, *, param1: str, param2: str = None) -> None:
-        """Stub handler."""
-        log_method_info(__name__)
+    # TODO (Roman): Restore after supporting handlers with parameters
+    # @handler
+    # def run_instance_method_3a(self, *, param1: str, param2: str = None) -> None:
+    #     """Stub handler."""
+    #     log_method_info(__name__)
 
-    @handler()
-    def run_instance_method_3b(self, *, param1: str, param2: str = None) -> None:
-        """Stub handler."""
-        log_method_info(__name__)
+    # TODO (Roman): Restore after supporting handlers with parameters
+    # @handler()
+    # def run_instance_method_3b(self, *, param1: str, param2: str = None) -> None:
+    #     """Stub handler."""
+    #     log_method_info(__name__)
 
     @classmethod
     @handler
@@ -100,29 +104,33 @@ class StubHandlers(StubHandlersKey, RecordMixin[StubHandlersKey]):
         """Stub handler."""
         log_method_info(__name__)
 
-    @classmethod
-    @handler
-    def run_class_method_2a(cls, param1: str, param2: str = None) -> None:
-        """Stub handler."""
-        log_method_info(__name__)
+    # TODO (Roman): Restore after supporting handlers with parameters
+    # @classmethod
+    # @handler
+    # def run_class_method_2a(cls, param1: str, param2: str = None) -> None:
+    #     """Stub handler."""
+    #     log_method_info(__name__)
 
-    @classmethod
-    @handler()
-    def run_class_method_2b(cls, param1: str, param2: str = None) -> None:
-        """Stub handler."""
-        log_method_info(__name__)
+    # TODO (Roman): Restore after supporting handlers with parameters
+    # @classmethod
+    # @handler()
+    # def run_class_method_2b(cls, param1: str, param2: str = None) -> None:
+    #     """Stub handler."""
+    #     log_method_info(__name__)
 
-    @classmethod
-    @handler
-    def run_class_method_3a(cls, *, param1: str, param2: str = None) -> None:
-        """Stub handler."""
-        log_method_info(__name__)
+    # TODO (Roman): Restore after supporting handlers with parameters
+    # @classmethod
+    # @handler
+    # def run_class_method_3a(cls, *, param1: str, param2: str = None) -> None:
+    #     """Stub handler."""
+    #     log_method_info(__name__)
 
-    @classmethod
-    @handler()
-    def run_class_method_3b(cls, *, param1: str, param2: str = None) -> None:
-        """Stub handler."""
-        log_method_info(__name__)
+    # TODO (Roman): Restore after supporting handlers with parameters
+    # @classmethod
+    # @handler()
+    # def run_class_method_3b(cls, *, param1: str, param2: str = None) -> None:
+    #     """Stub handler."""
+    #     log_method_info(__name__)
 
     @staticmethod
     @handler
@@ -136,57 +144,65 @@ class StubHandlers(StubHandlersKey, RecordMixin[StubHandlersKey]):
         """Stub handler."""
         log_method_info(__name__)
 
-    @staticmethod
-    @handler
-    def run_static_method_2a(param1: str, param2: str = None) -> None:
-        """Stub handler."""
-        log_method_info(__name__)
+    # TODO (Roman): Restore after supporting handlers with parameters
+    # @staticmethod
+    # @handler
+    # def run_static_method_2a(param1: str, param2: str = None) -> None:
+    #     """Stub handler."""
+    #     log_method_info(__name__)
 
-    @staticmethod
-    @handler()
-    def run_static_method_2b(param1: str, param2: str = None) -> None:
-        """Stub handler."""
-        log_method_info(__name__)
+    # TODO (Roman): Restore after supporting handlers with parameters
+    # @staticmethod
+    # @handler()
+    # def run_static_method_2b(param1: str, param2: str = None) -> None:
+    #     """Stub handler."""
+    #     log_method_info(__name__)
 
-    @staticmethod
-    @handler
-    def run_static_method_3a(*, param1: str, param2: str = None) -> None:
-        """Stub handler."""
-        log_method_info(__name__)
+    # TODO (Roman): Restore after supporting handlers with parameters
+    # @staticmethod
+    # @handler
+    # def run_static_method_3a(*, param1: str, param2: str = None) -> None:
+    #     """Stub handler."""
+    #     log_method_info(__name__)
 
-    @staticmethod
-    @handler()
-    def run_static_method_3b(*, param1: str, param2: str = None) -> None:
-        """Stub handler."""
-        log_method_info(__name__)
+    # TODO (Roman): Restore after supporting handlers with parameters
+    # @staticmethod
+    # @handler()
+    # def run_static_method_3b(*, param1: str, param2: str = None) -> None:
+    #     """Stub handler."""
+    #     log_method_info(__name__)
 
-    @handler
-    def run_with_args(
-        self,
-        int_arg: int,
-        datetime_arg: dt.datetime,
-        enum_arg: StubIntEnum,
-        data_arg: Any,
-    ) -> None:
-        _logger.info(
-            f"handler_with_arguments(int_arg={int_arg} datetime_arg={datetime_arg}"
-            f"enum_arg={enum_arg} data_arg={data_arg})"
-        )
+    # TODO (Roman): Restore after supporting handlers with parameters
+    # @handler
+    # def run_with_args(
+    #     self,
+    #     int_arg: int,
+    #     datetime_arg: dt.datetime,
+    #     enum_arg: StubIntEnum,
+    #     data_arg: Any,
+    # ) -> None:
+    #     _logger.info(
+    #         f"handler_with_arguments(int_arg={int_arg} datetime_arg={datetime_arg}"
+    #         f"enum_arg={enum_arg} data_arg={data_arg})"
+    #     )
 
-    @handler
-    def run_with_two_args(self, arg_1: str, arg_2: str) -> str:
-        """Stub method."""
-        return arg_1 + arg_2
+    # TODO (Roman): Restore after supporting handlers with parameters
+    # @handler
+    # def run_with_two_args(self, arg_1: str, arg_2: str) -> str:
+    #     """Stub method."""
+    #     return arg_1 + arg_2
 
-    @handler
-    def run_with_args_and_optional(self, arg_1: str, arg_2: str, arg_3: str = None) -> str:
-        """Stub method."""
-        return arg_1 + arg_2
+    # TODO (Roman): Restore after supporting handlers with parameters
+    # @handler
+    # def run_with_args_and_optional(self, arg_1: str, arg_2: str, arg_3: str = None) -> str:
+    #     """Stub method."""
+    #     return arg_1 + arg_2
 
-    @handler
-    def run_with_reserved_param_name(self, from_: dt.date = None) -> dt.date:
-        """Stub method."""
-        return from_
+    # TODO (Roman): Restore after supporting handlers with parameters
+    # @handler
+    # def run_with_reserved_param_name(self, from_: dt.date = None) -> dt.date:
+    #     """Stub method."""
+    #     return from_
 
     @handler
     def run_with_error(self):
