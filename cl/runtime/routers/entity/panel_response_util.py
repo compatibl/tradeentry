@@ -117,7 +117,7 @@ class PanelResponseUtil(BaseModel):
             return {
                 "Content": base64.b64encode(view.png_bytes).decode(),
                 "ContentType": "Png",
-                "_t": "BinaryContent"
+                "_t": "BinaryContent",
             }
         elif isinstance(view, Dict):
             # Return if is already dict

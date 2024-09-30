@@ -14,7 +14,8 @@
 
 from dataclasses import dataclass
 from logging import getLogger
-from typing import List, Dict
+from typing import Dict
+from typing import List
 from typing import Optional
 from typing_extensions import Self
 from cl.runtime.decorators.viewer_decorator import viewer

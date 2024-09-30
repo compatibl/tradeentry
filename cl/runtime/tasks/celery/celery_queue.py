@@ -103,8 +103,8 @@ def celery_start_queue_callable(*, log_dir: str) -> None:
     """
 
     # Redirect console output from celery to a log file
-    log_file_path = os.path.join(log_dir, 'celery_queue.log')
-    with open(log_file_path, 'w') as log_file:
+    log_file_path = os.path.join(log_dir, "celery_queue.log")
+    with open(log_file_path, "w") as log_file:
         os.dup2(log_file.fileno(), 1)  # Redirect stdout (file descriptor 1)
         os.dup2(log_file.fileno(), 2)  # Redirect stderr (file descriptor 2)
 
@@ -137,9 +137,7 @@ def celery_start_queue(*, log_dir: str) -> None:
         log_dir: Directory where Celery console log file will be written
     """
     worker_process = multiprocessing.Process(
-        target=celery_start_queue_callable,
-        daemon=True,
-        kwargs={"log_dir": log_dir}
+        target=celery_start_queue_callable, daemon=True, kwargs={"log_dir": log_dir}
     )
     worker_process.start()
 

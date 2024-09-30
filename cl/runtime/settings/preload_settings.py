@@ -15,7 +15,6 @@
 import os
 from dataclasses import dataclass
 from typing import List
-
 from cl.runtime.config.config import Config
 from cl.runtime.config.config_key import ConfigKey
 from cl.runtime.context.context import Context
@@ -81,10 +80,12 @@ class PreloadSettings(Settings):
                 keys_without_records = [key for key, record in zip(config_keys, config_records) if record is None]
                 keys_without_records_str = "\n".join(f"  - {key.config_id}" for key in keys_without_records)
                 preload_dirs_str = "\n".join(f"  - {x}" for x in self.dirs)
-                raise RuntimeError(f"Preload directories in in 'PreloadSettings.configs' do not have config records "
-                                   f"for the following config_id specified in 'PreloadSettings.configs'.\n"
-                                   f"Missing config records:\n{keys_without_records_str}\n"
-                                   f"Preload directories searched:\n{preload_dirs_str}")
+                raise RuntimeError(
+                    f"Preload directories in in 'PreloadSettings.configs' do not have config records "
+                    f"for the following config_id specified in 'PreloadSettings.configs'.\n"
+                    f"Missing config records:\n{keys_without_records_str}\n"
+                    f"Preload directories searched:\n{preload_dirs_str}"
+                )
 
             # Run configure for the specified records
             tuple(config_record.run_configure() for config_record in config_records)
