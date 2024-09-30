@@ -12,6 +12,7 @@ syntax: glob
 *.idea
 *.py[cod]
 *.so
+*.sqlite
 logs/
 build/
 dist/
