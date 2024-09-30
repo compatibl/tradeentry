@@ -13,6 +13,7 @@ syntax: glob
 *.png
 *.py[cod]
 *.so
+*.sqlite
 logs/
 build/
 dist/
