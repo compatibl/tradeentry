@@ -103,10 +103,11 @@ def celery_start_queue_callable(*, log_dir: str) -> None:
     """
 
     # Redirect console output from celery to a log file
+    # TODO: Use an additional Logger handler instead
     log_file_path = os.path.join(log_dir, "celery_queue.log")
-    with open(log_file_path, "w") as log_file:
-        os.dup2(log_file.fileno(), 1)  # Redirect stdout (file descriptor 1)
-        os.dup2(log_file.fileno(), 2)  # Redirect stderr (file descriptor 2)
+    # with open(log_file_path, "w") as log_file:
+    #    os.dup2(log_file.fileno(), 1)  # Redirect stdout (file descriptor 1)
+    #    os.dup2(log_file.fileno(), 2)  # Redirect stderr (file descriptor 2)
 
     celery_app.worker_main(
         argv=[
