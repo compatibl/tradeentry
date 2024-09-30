@@ -14,12 +14,11 @@
 
 from dataclasses import dataclass
 from cl.runtime.context.context import Context
-from cl.runtime.log.log import Log
+from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.settings.settings import is_inside_test
 from cl.runtime.storage.dataset_util import DatasetUtil
-from cl.runtime.testing.testing_util import TestingUtil
 
 
 @dataclass(slots=True, kw_only=True)
@@ -28,7 +27,7 @@ class TestingContext(Context):
     Utilities for both pytest and unittest.
 
     Notes:
-        - The name TestingUtil was selected to avoid Test prefix and does not indicate it is for unittest package only
+        - The name TestingContext was selected to avoid Test prefix and does not indicate it is for a specific package
         - This module not itself import pytest or unittest package
     """
 
@@ -49,8 +48,8 @@ class TestingContext(Context):
 
             # Use test name in dot-delimited format for context_id unless specified by the caller
             if self.context_id is None:
-                test_name = TestingUtil.get_test_name()
-                self.context_id = test_name
+                env_name = EnvUtil.get_env_name()
+                self.context_id = env_name
 
             # TODO: Set log field here explicitly instead of relying on implicit detection of test environment
             log_type = ClassInfo.get_class_type(context_settings.log_class)
