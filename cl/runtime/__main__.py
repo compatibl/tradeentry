@@ -16,6 +16,7 @@ import os
 import traceback
 import uuid
 import uvicorn
+import webbrowser
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import Response
@@ -133,6 +134,8 @@ if __name__ == "__main__":
         if os.path.exists(wwwroot_dir):
             # Launch UI if ui_path is found
             server_app.mount("/", StaticFiles(directory=wwwroot_dir, html=True))
+            # Open new browser tab in the default browser
+            webbrowser.open_new_tab(f"http://{api_settings.host_name}:{api_settings.port}")
         else:
             raise RuntimeError(
                 f"Browser client JS directory {wwwroot_dir} is not found.\n"
