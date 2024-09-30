@@ -66,7 +66,13 @@ class SqliteSchemaManager:
 
         if primary_keys:
             keys_str = ", ".join([f'"{key}"' for key in primary_keys])
-            create_unique_index_statement = f'CREATE UNIQUE INDEX IF NOT EXISTS idx_key ON "{table_name}" ({keys_str});'
+
+            # Make index name based on table name to be unique within database
+            index_name = f"{table_name}_key_index"
+            
+            create_unique_index_statement = (
+                f'CREATE UNIQUE INDEX IF NOT EXISTS "{index_name}" ON "{table_name}" ({keys_str});'
+            )
             cursor.execute(create_unique_index_statement)
 
         self.sqlite_connection.commit()
