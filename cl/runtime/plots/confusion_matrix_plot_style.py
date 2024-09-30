@@ -12,21 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
 from dataclasses import dataclass
-from cl.runtime.plots.confusion_matrix_plot_style_key import ConfusionMatrixPlotStyleKey
-from cl.runtime.records.record_mixin import RecordMixin
+from cl.runtime.plots.plot_style import PlotStyle
 
 
 @dataclass(slots=True, kw_only=True)
-class ConfusionMatrixPlotStyle(ConfusionMatrixPlotStyleKey, RecordMixin[ConfusionMatrixPlotStyleKey], ABC):
-    """Color and layout options for ConfusionMatrixPlot."""
-
-    dark_theme: bool = False
-    """If true, image is rendered with dark theme."""
+class ConfusionMatrixPlotStyle(PlotStyle):
+    """ConfusionMatrixPlot color and layout options."""
 
     label_font_size: int = 6
     """Font size of cell labels."""
-
-    def get_key(self) -> ConfusionMatrixPlotStyleKey:
-        return ConfusionMatrixPlotStyleKey(style_id=self.style_id)

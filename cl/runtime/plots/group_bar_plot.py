@@ -48,15 +48,11 @@ class GroupBarPlot(MatplotlibPlot):
     value_ticks: List[float] | None = None
     """Custom ticks for the value axis."""
 
-    # TODO(Roman): support same field name in hierarchy
-    group_bar_style: GroupBarPlotStyleKey = field(default_factory=lambda: GroupBarPlotStyle())
-    """Color and layout options."""
-
     def _create_figure(self) -> plt.Figure:
-        # Load style object
+        # Load style object or create with default settings if not specified
         style = Context.current().load_one(GroupBarPlotStyle, self.style)
-
-        theme = "dark_background" if style.dark_theme else "default"
+        style = style if self.style is not None else GroupBarPlotStyle()
+        theme = "dark_background" if self.style is not None and style.dark_theme else "default"
 
         with plt.style.context(theme):
             fig = plt.figure()

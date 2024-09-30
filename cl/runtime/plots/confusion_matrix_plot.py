@@ -21,7 +21,6 @@ from matplotlib import pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 from cl.runtime import Context
 from cl.runtime.plots.confusion_matrix_plot_style import ConfusionMatrixPlotStyle
-from cl.runtime.plots.confusion_matrix_plot_style_key import ConfusionMatrixPlotStyleKey
 from cl.runtime.plots.matplotlib_plot import MatplotlibPlot
 from cl.runtime.plots.matplotlib_util import MatplotlibUtil
 from cl.runtime.plots.matrix_util import MatrixUtil
@@ -47,17 +46,14 @@ class ConfusionMatrixPlot(MatplotlibPlot):
     y_label: str | None = "Correct"
     """y-axis label."""
 
-    style: ConfusionMatrixPlotStyleKey = field(default_factory=lambda: ConfusionMatrixPlotStyle())
-    """Color and layout options."""
-
     def _create_figure(self) -> plt.Figure:
-        # Load style object
+        # Load style object or create with default settings if not specified
         style = Context.current().load_one(ConfusionMatrixPlotStyle, self.style)
+        style = style if self.style is not None else ConfusionMatrixPlotStyle()
+        theme = "dark_background" if self.style is not None and style.dark_theme else "default"
 
         # TODO: consider moving
         data, annotation_text = self._create_confusion_matrix()
-
-        theme = "dark_background" if style.dark_theme else "default"
 
         with plt.style.context(theme):
             fig, axes = plt.subplots()

@@ -12,18 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
 from dataclasses import dataclass
-from cl.runtime.plots.heat_map_plot_style_key import HeatMapPlotStyleKey
-from cl.runtime.records.record_mixin import RecordMixin
+from cl.runtime.plots.plot_style import PlotStyle
 
 
 @dataclass(slots=True, kw_only=True)
-class HeatMapPlotStyle(HeatMapPlotStyleKey, RecordMixin[HeatMapPlotStyleKey], ABC):
-    """Color and layout options for HeatMapPlot."""
-
-    dark_theme: bool = False
-    """If true, image is rendered with dark theme."""
-
-    def get_key(self) -> HeatMapPlotStyleKey:
-        return HeatMapPlotStyleKey(style_id=self.style_id)
+class HeatMapPlotStyle(PlotStyle):
+    """HeatMapPlot color and layout options."""

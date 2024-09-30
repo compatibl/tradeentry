@@ -51,16 +51,11 @@ class HeatMapPlot(MatplotlibPlot):
     y_label: str = field()
     """y-axis label."""
 
-    # TODO(Roman): support same field name in hierarchy
-    heat_map_style: HeatMapPlotStyleKey = field(default_factory=lambda: HeatMapPlotStyle())
-    """Color and layout options."""
-
     def _create_figure(self) -> plt.Figure:
-
-        # Load style object
+        # Load style object or create with default settings if not specified
         style = Context.current().load_one(HeatMapPlotStyle, self.style)
-
-        theme = "dark_background" if style.dark_theme else "default"
+        style = style if self.style is not None else HeatMapPlotStyle()
+        theme = "dark_background" if self.style is not None and style.dark_theme else "default"
 
         with plt.style.context(theme):
             fig, axes = plt.subplots()
