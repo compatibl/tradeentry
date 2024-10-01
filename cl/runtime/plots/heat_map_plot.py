@@ -60,7 +60,7 @@ class HeatMapPlot(MatplotlibPlot):
             pd.DataFrame.from_records(
                 [values, self.col_labels, self.row_labels],
                 index=['Value', 'Col', 'Row']
-            ).T.pivot(index="Row", columns="Col", values="Value").astype(float)
+            ).T.pivot_table(index="Row", columns="Col", values="Value", sort=False).astype(float)
             for values in [self.received_values, self.expected_values]
         )
 

@@ -105,7 +105,7 @@ class StubRuntimeConfig(Config):
         """Configure plots."""
 
         bar_plot = GroupBarPlot()
-        bar_plot.group_labels = ["Single Group"]
+        bar_plot.group_labels = ["Single Group"] * 2
         bar_plot.bar_labels = ["Bar 1", "Bar 2"]
         bar_plot.values = [85.5, 92]
         Context.current().save_one(bar_plot)
