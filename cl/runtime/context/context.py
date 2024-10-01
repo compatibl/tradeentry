@@ -337,7 +337,7 @@ from the current context.
     def error_if_not_temp_db(cls, db_id_or_database_name: str) -> None:
         """Confirm that database id or database name matches temp_db_prefix, error otherwise."""
         context_settings = ContextSettings.instance()
-        temp_db_prefix = context_settings.db_temp_db_prefix
+        temp_db_prefix = context_settings.db_temp_prefix
         if not db_id_or_database_name.startswith(temp_db_prefix):
             raise RuntimeError(
                 f"Destructive action on database not permitted because db_id or database name "

@@ -33,7 +33,7 @@ class ContextSettings(Settings):
     db_id: str
     """Default database identifier, if 'db_class' is a key it will be obtained from preloads."""
 
-    db_temp_db_prefix: str = "temp;"
+    db_temp_prefix: str = "temp;"
     """
     IMPORTANT: DELETING ALL RECORDS AND DROPPING THE DATABASE FROM CODE IS PERMITTED
     when both db_id and database name start with this prefix.
