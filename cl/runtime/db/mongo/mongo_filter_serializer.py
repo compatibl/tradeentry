@@ -19,7 +19,7 @@ from typing import Dict
 from typing import Type
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.serialization.dict_serializer import _get_class_hierarchy_slots  # TODO: Move to ClassInfo
-from cl.runtime.storage.data_source_types import TDataDict
+from cl.runtime.db.data_source_types import TDataDict
 
 
 @dataclass(slots=True, kw_only=True)

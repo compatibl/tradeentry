@@ -27,7 +27,7 @@ from cl.runtime.backend.core.tab_info import TabInfo
 from cl.runtime.records.protocols import is_key
 from cl.runtime.records.protocols import is_record
 from cl.runtime.serialization.sentinel_type import sentinel_value
-from cl.runtime.storage.data_source_types import TDataDict
+from cl.runtime.db.data_source_types import TDataDict
 
 # TODO: Initialize from settings
 alias_dict: Dict[Type, str] = dict()

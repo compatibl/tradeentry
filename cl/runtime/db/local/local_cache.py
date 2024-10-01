@@ -24,10 +24,10 @@ from typing_extensions import Self
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.storage.data_source_types import TQuery
-from cl.runtime.storage.dataset_util import DatasetUtil
-from cl.runtime.storage.protocols import TKey
-from cl.runtime.storage.protocols import TRecord
+from cl.runtime.db.data_source_types import TQuery
+from cl.runtime.db.dataset_util import DatasetUtil
+from cl.runtime.db.protocols import TKey
+from cl.runtime.db.protocols import TRecord
 
 key_serializer = StringSerializer()
 """Serializer for keys used in cache lookup."""

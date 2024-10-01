@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.storage.local.local_cache import LocalCache
+from cl.runtime.db.local.local_cache import LocalCache
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecord
 
 

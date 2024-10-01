@@ -30,10 +30,10 @@ from cl.runtime.records.protocols import is_key
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
 from cl.runtime.settings.settings import Settings
-from cl.runtime.storage.data_source import DataSource
-from cl.runtime.storage.protocols import TKey
-from cl.runtime.storage.protocols import TRecord
-from cl.runtime.storage.sql.sqlite_schema_manager import SqliteSchemaManager
+from cl.runtime.db.data_source import DataSource
+from cl.runtime.db.protocols import TKey
+from cl.runtime.db.protocols import TRecord
+from cl.runtime.db.sql.sqlite_schema_manager import SqliteSchemaManager
 
 _connection_dict: Dict[str, sqlite3.Connection] = {}
 """Dict of Connection instances with data_source_id key stored outside the class to avoid serialization."""

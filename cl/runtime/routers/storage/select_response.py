@@ -29,7 +29,7 @@ from cl.runtime.routers.storage.select_request import SelectRequest
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.serialization.ui_dict_serializer import UiDictSerializer
-from cl.runtime.storage.data_source_types import TPrimitive
+from cl.runtime.db.data_source_types import TPrimitive
 
 SelectResponseSchema = Dict[str, Any]
 SelectResponseData = List[Dict[str, Any]]

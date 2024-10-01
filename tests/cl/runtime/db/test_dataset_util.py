@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.storage.dataset_util import DatasetUtil
+from cl.runtime.db.dataset_util import DatasetUtil
 
 
 def test_to_levels():

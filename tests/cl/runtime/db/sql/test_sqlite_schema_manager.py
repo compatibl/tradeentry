@@ -15,8 +15,8 @@
 import pytest
 import sqlite3
 from cl.runtime.schema.schema import Schema
-from cl.runtime.storage.sql.sqlite_data_source import dict_factory
-from cl.runtime.storage.sql.sqlite_schema_manager import SqliteSchemaManager
+from cl.runtime.db.sql.sqlite_data_source import dict_factory
+from cl.runtime.db.sql.sqlite_schema_manager import SqliteSchemaManager
 from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassDictFields
