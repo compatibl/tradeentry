@@ -30,7 +30,7 @@ from cl.runtime.records.protocols import is_key
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
 from cl.runtime.settings.settings import Settings
-from cl.runtime.db.data_source import DataSource
+from cl.runtime.db.db import DataSource
 from cl.runtime.db.protocols import TKey
 from cl.runtime.db.protocols import TRecord
 from cl.runtime.db.sql.sqlite_schema_manager import SqliteSchemaManager

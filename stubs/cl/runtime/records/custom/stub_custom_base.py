@@ -15,8 +15,8 @@
 from typing import Dict
 from typing import Type
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.runtime.db.data_source_types import TDataDict
-from cl.runtime.db.data_source_types import TDataField
+from cl.runtime.db.db_types import TDataDict
+from cl.runtime.db.db_types import TDataField
 from stubs.cl.runtime.records.custom.stub_custom_base_key import StubCustomBaseKey
 
 

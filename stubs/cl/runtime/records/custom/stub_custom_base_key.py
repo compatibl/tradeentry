@@ -15,7 +15,7 @@
 from typing import Dict
 from typing import Type
 from cl.runtime.records.key_mixin import KeyMixin
-from cl.runtime.db.data_source_types import TDataField
+from cl.runtime.db.db_types import TDataField
 
 
 class StubCustomBaseKey(KeyMixin):

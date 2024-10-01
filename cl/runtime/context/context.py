@@ -26,7 +26,7 @@ from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.settings.context_settings import ContextSettings
-from cl.runtime.db.data_source_key import DataSourceKey
+from cl.runtime.db.db_key import DataSourceKey
 from cl.runtime.db.protocols import TKey
 from cl.runtime.db.protocols import TRecord
 

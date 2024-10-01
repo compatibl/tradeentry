@@ -20,7 +20,7 @@ from uuid import UUID
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_value_parser_enum import StringValueCustomTypeEnum
 from cl.runtime.serialization.string_value_parser_enum import StringValueParser
-from cl.runtime.db.data_source_types import TDataDict
+from cl.runtime.db.db_types import TDataDict
 
 
 class FlatDictSerializer(DictSerializer):
