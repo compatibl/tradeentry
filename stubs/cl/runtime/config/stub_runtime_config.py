@@ -46,13 +46,13 @@ class StubRuntimeConfig(Config):
         """Populate the current or default data source with stub records."""
 
         # Get data source from the current context
-        data_source = Context.current().data_source
+        db = Context.current().db
 
         # Save self
-        data_source.save_one(self)
+        db.save_one(self)
 
         # Save UiAppState instance
-        data_source.save_one(UiAppState(user=UserKey(username="root")))
+        db.save_one(UiAppState(user=UserKey(username="root")))
 
         # Create stub instances
         stub_dataclass_records = [StubDataclassRecord(id=f"A{i}") for i in range(10)]
@@ -98,7 +98,7 @@ class StubRuntimeConfig(Config):
         ]
 
         # save stubs to db
-        data_source.save_many(all_records)
+        db.save_many(all_records)
 
     @handler
     def run_configure_plots(self) -> None:

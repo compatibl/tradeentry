@@ -45,8 +45,8 @@ class Context(ContextKey, RecordMixin[ContextKey]):
     log: LogKey = missing()
     """Log of the context, 'Context.current().log' is used if not specified."""
 
-    data_source: DataSourceKey = missing()
-    """Data source of the context, 'Context.current().data_source' is used if not specified."""
+    db: DataSourceKey = missing()
+    """Data source of the context, 'Context.current().db' is used if not specified."""
 
     dataset: str = missing()
     """Dataset of the context, 'Context.current().dataset' is used if not specified."""
@@ -66,17 +66,17 @@ class Context(ContextKey, RecordMixin[ContextKey]):
             if self.log is None:
                 self._root_context_field_not_set_error("log")
                 self.log = Context.current().log
-            if self.data_source is None:
-                self._root_context_field_not_set_error("data_source")
-                self.data_source = Context.current().data_source
+            if self.db is None:
+                self._root_context_field_not_set_error("db")
+                self.db = Context.current().db
             if self.dataset is None:
                 self._root_context_field_not_set_error("dataset")
                 self.dataset = Context.current().dataset
 
         # Replace fields that are set as keys by records from storage
-        # First, load 'data_source' field of this context using 'Context.current()'
-        if is_key(self.data_source):
-            self.data_source = Context.current().load_one(DataSourceKey, self.data_source)
+        # First, load 'db' field of this context using 'Context.current()'
+        if is_key(self.db):
+            self.db = Context.current().load_one(DataSourceKey, self.db)
 
         # After this all remaining fields can be loaded using data source from this context
         if is_key(self.log):
@@ -116,8 +116,8 @@ class Context(ContextKey, RecordMixin[ContextKey]):
             raise RuntimeError("Current context must only be modified by 'with Context(...)' clause.")
 
         # TODO: Support resource disposal for the data source
-        if self.data_source is not None:
-            # TODO: Finalize approach to disposal self.data_source.disconnect()
+        if self.db is not None:
+            # TODO: Finalize approach to disposal self.db.disconnect()
             pass
 
         # Return False to propagate exception to the caller
@@ -144,7 +144,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
             dataset: If specified, append to the root dataset of the data source
             identity: Identity token for database access and row-level security
         """
-        return self.data_source.load_one(  # noqa
+        return self.db.load_one(  # noqa
             record_type,
             record_or_key,
             dataset=dataset,
@@ -169,7 +169,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
             dataset: If specified, append to the root dataset of the data source
             identity: Identity token for database access and row-level security
         """
-        return self.data_source.load_many(  # noqa
+        return self.db.load_many(  # noqa
             record_type,
             records_or_keys,
             dataset=dataset,
@@ -191,7 +191,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
             dataset: If specified, append to the root dataset of the data source
             identity: Identity token for database access and row-level security
         """
-        return self.data_source.load_all(  # noqa
+        return self.db.load_all(  # noqa
             record_type,
             dataset=dataset,
             identity=identity,
@@ -214,7 +214,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
             dataset: If specified, append to the root dataset of the data source
             identity: Identity token for database access and row-level security
         """
-        return self.data_source.load_filter(  # noqa
+        return self.db.load_filter(  # noqa
             record_type,
             filter_obj,
             dataset=dataset,
@@ -236,7 +236,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
             dataset: Target dataset as a delimited string, list of levels, or None
             identity: Identity token for database access and row-level security
         """
-        self.data_source.save_one(  # noqa
+        self.db.save_one(  # noqa
             record,
             dataset=dataset,
             identity=identity,
@@ -257,7 +257,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
             dataset: Target dataset as a delimited string, list of levels, or None
             identity: Identity token for database access and row-level security
         """
-        self.data_source.save_many(  # noqa
+        self.db.save_many(  # noqa
             records,
             dataset=dataset,
             identity=identity,
@@ -280,7 +280,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
             dataset: If specified, append to the root dataset of the data source
             identity: Identity token for database access and row-level security
         """
-        self.data_source.delete_one(  # noqa
+        self.db.delete_one(  # noqa
             key_type,
             key,
             dataset=dataset,
@@ -302,7 +302,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
             dataset: Target dataset as a delimited string, list of levels, or None
             identity: Identity token for database access and row-level security
         """
-        self.data_source.delete_many(  # noqa
+        self.db.delete_many(  # noqa
             keys,
             dataset=dataset,
             identity=identity,
@@ -313,12 +313,12 @@ class Context(ContextKey, RecordMixin[ContextKey]):
         IMPORTANT: !!! DESTRUCTIVE - THIS WILL PERMANENTLY DELETE ALL RECORDS WITHOUT THE POSSIBILITY OF RECOVERY
 
         Notes:
-            This method will not run unless both data_source_id and database start with 'temp_db_prefix'
+            This method will not run unless both db_id and database start with 'temp_db_prefix'
             specified using Dynaconf and stored in 'DataSourceSettings' class
         """
         # Additional check in context in case a custom data source implementation does not check it
-        self.error_if_not_temp_db(self.data_source.data_source_id)
-        self.data_source.delete_all_and_drop_db()  # noqa
+        self.error_if_not_temp_db(self.db.db_id)
+        self.db.delete_all_and_drop_db()  # noqa
 
     def _root_context_field_not_set_error(self, field_name: str) -> None:
         """Error message about a Context field not set."""
@@ -334,13 +334,13 @@ from the current context.
             )
 
     @classmethod
-    def error_if_not_temp_db(cls, data_source_id_or_database_name: str) -> None:
+    def error_if_not_temp_db(cls, db_id_or_database_name: str) -> None:
         """Confirm that data source id or database name matches temp_db_prefix, error otherwise."""
         context_settings = ContextSettings.instance()
-        temp_db_prefix = context_settings.data_source_temp_db_prefix
-        if not data_source_id_or_database_name.startswith(temp_db_prefix):
+        temp_db_prefix = context_settings.db_temp_db_prefix
+        if not db_id_or_database_name.startswith(temp_db_prefix):
             raise RuntimeError(
-                f"Destructive action on database not permitted because data_source_id or database name "
-                f"'{data_source_id_or_database_name}' does not match temp_db_prefix '{temp_db_prefix}' "
+                f"Destructive action on database not permitted because db_id or database name "
+                f"'{db_id_or_database_name}' does not match temp_db_prefix '{temp_db_prefix}' "
                 f"specified in Dynaconf data source settings ('DataSourceSettings' class)."
             )

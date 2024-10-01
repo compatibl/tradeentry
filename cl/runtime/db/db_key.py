@@ -22,7 +22,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 class DataSourceKey(KeyMixin):
     """Polymorphic data storage with dataset isolation."""
 
-    data_source_id: str = missing()
+    db_id: str = missing()
     """Unique data source identifier."""
 
     @classmethod

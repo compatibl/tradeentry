@@ -212,6 +212,6 @@ class StubHandlers(StubHandlersKey, RecordMixin[StubHandlersKey]):
     @handler
     def run_save_to_db(self):
         log_method_info(__name__)
-        data_source = Context.current().data_source
+        db = Context.current().db
         stub = StubDataclassRecord(id="saved_from_handler")
-        data_source.save_one(stub)
+        db.save_one(stub)

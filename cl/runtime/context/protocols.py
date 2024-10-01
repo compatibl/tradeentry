@@ -32,7 +32,7 @@ class ContextProtocol(Protocol):
     logger: Logger
     """Return the logger provided by the context."""
 
-    data_source: DataSourceProtocol | None
+    db: DataSourceProtocol | None
     """Return the default data source of the context or None if not set."""
 
     dataset: str

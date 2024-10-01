@@ -56,7 +56,7 @@ key_str = key_serializer.serialize_key(stub_handlers.get_key())
 requests = [
     {
         "task_run_ids": [str(task_run.task_run_id) for task_run in task_runs],
-        "data_source": "DEPRECATED",
+        "db": "DEPRECATED",
         "dataset": "",
     }
 ]

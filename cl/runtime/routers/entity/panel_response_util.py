@@ -64,10 +64,10 @@ class PanelResponseUtil(BaseModel):
         key_obj = serializer.deserialize_key(data=request.key, type_=type_)
 
         # Get data source from the current context
-        data_source = Context.current().data_source
+        db = Context.current().db
 
         # Load record from the data source
-        record = data_source.load_one(type_, key_obj, dataset=request.dataset)
+        record = db.load_one(type_, key_obj, dataset=request.dataset)
         if record is None:
             raise RuntimeError(
                 f"Record with type {request.type} and key {request.key} is not found in dataset {request.dataset}."

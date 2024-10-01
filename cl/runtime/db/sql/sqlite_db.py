@@ -36,10 +36,10 @@ from cl.runtime.db.protocols import TRecord
 from cl.runtime.db.sql.sqlite_schema_manager import SqliteSchemaManager
 
 _connection_dict: Dict[str, sqlite3.Connection] = {}
-"""Dict of Connection instances with data_source_id key stored outside the class to avoid serialization."""
+"""Dict of Connection instances with db_id key stored outside the class to avoid serialization."""
 
 _schema_manager_dict: Dict[str, SqliteSchemaManager] = {}
-"""Dict of SqliteSchemaManager instances with data_source_id key key stored outside the class to avoid serialization."""
+"""Dict of SqliteSchemaManager instances with db_id key key stored outside the class to avoid serialization."""
 
 
 def dict_factory(cursor, row):
@@ -341,13 +341,13 @@ class SqliteDataSource(DataSource):
             connection.commit()
 
     def delete_all_and_drop_db(self) -> None:
-        # Check that data_source_id matches temp_db_prefix
-        Context.error_if_not_temp_db(self.data_source_id)
+        # Check that db_id matches temp_db_prefix
+        Context.error_if_not_temp_db(self.db_id)
 
         # Close connection
         self.close_connection()
 
-        # Check that filename also matches temp_db_prefix. It should normally match data_source_id
+        # Check that filename also matches temp_db_prefix. It should normally match db_id
         # we already checked, but given the critical importance of this check will check db_filename
         # as well in case this approach changes later.
         db_file_path = self._get_db_file()
@@ -359,38 +359,38 @@ class SqliteDataSource(DataSource):
             os.remove(db_file_path)
 
     def close_connection(self) -> None:
-        if (connection := _connection_dict.get(self.data_source_id, None)) is not None:
+        if (connection := _connection_dict.get(self.db_id, None)) is not None:
             # Close connection
             connection.close()
             # Remove from dictionary so connection can be reopened on next access
-            del _connection_dict[self.data_source_id]
-            del _schema_manager_dict[self.data_source_id]
+            del _connection_dict[self.db_id]
+            del _schema_manager_dict[self.db_id]
             pass
 
     def _get_connection(self) -> sqlite3.Connection:
         """Get PyMongo database object."""
-        if (connection := _connection_dict.get(self.data_source_id, None)) is None:
+        if (connection := _connection_dict.get(self.db_id, None)) is None:
             # TODO: Implement dispose logic
             db_file = self._get_db_file()
             connection = sqlite3.connect(db_file, check_same_thread=False)
             connection.row_factory = dict_factory
-            _connection_dict[self.data_source_id] = connection
+            _connection_dict[self.db_id] = connection
         return connection
 
     def _get_schema_manager(self) -> SqliteSchemaManager:
         """Get PyMongo database object."""
-        if (result := _schema_manager_dict.get(self.data_source_id, None)) is None:
+        if (result := _schema_manager_dict.get(self.db_id, None)) is None:
             # TODO: Implement dispose logic
             connection = self._get_connection()
             result = SqliteSchemaManager(sqlite_connection=connection)
-            _schema_manager_dict[self.data_source_id] = result
+            _schema_manager_dict[self.db_id] = result
         return result
 
     def _get_db_file(self) -> str:
-        """Get database file path from data_source_id, applying the appropriate formatting conventions."""
+        """Get database file path from db_id, applying the appropriate formatting conventions."""
 
-        # Check that data_source_id is a valid filename
-        filename = self.data_source_id
+        # Check that db_id is a valid filename
+        filename = self.db_id
         FileUtil.check_valid_filename(filename)
 
         # Get dir for database

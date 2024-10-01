@@ -121,7 +121,7 @@ class RecordResponse(BaseModel):
             record_type = ClassInfo.get_class_type(f"{key_module}.{key_class}")
 
         # Get data source from the current context
-        data_source = Context.current().data_source
+        db = Context.current().db
 
         # Load record from storage
         key_serializer = StringSerializer()
@@ -132,7 +132,7 @@ class RecordResponse(BaseModel):
         else:
             deserialized_key = key_serializer.deserialize_key(request.key, record_type.get_key_type())
 
-        record = data_source.load_one(record_type, deserialized_key)
+        record = db.load_one(record_type, deserialized_key)
 
         # Get type declarations based on the actual record type
         type_decl_dict = (

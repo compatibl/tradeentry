@@ -37,7 +37,7 @@ class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
     __default: ClassVar[DataSource | None] = None
 
     def get_key(self) -> DataSourceKey:
-        return DataSourceKey(data_source_id=self.data_source_id)
+        return DataSourceKey(db_id=self.db_id)
 
     @abstractmethod
     def load_one(
@@ -190,7 +190,7 @@ class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
         IMPORTANT: !!! DESTRUCTIVE - THIS WILL PERMANENTLY DELETE ALL RECORDS WITHOUT THE POSSIBILITY OF RECOVERY
 
         Notes:
-            This method will not run unless both data_source_id and database start with 'temp_db_prefix'
+            This method will not run unless both db_id and database start with 'temp_db_prefix'
             specified using Dynaconf and stored in 'DataSourceSettings' class
         """
 
@@ -205,8 +205,8 @@ class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
         if DataSource.__default is None:
             # Load from configuration if not set
             context_settings = ContextSettings.instance()  # TODO: Refactor to place this inside Context
-            data_source_type = ClassInfo.get_class_type(context_settings.data_source_class)
+            db_type = ClassInfo.get_class_type(context_settings.db_class)
             # TODO: Add code to obtain from preloads if only key is specified
-            DataSource.__default = data_source_type(data_source_id=context_settings.data_source_id)
+            DataSource.__default = db_type(db_id=context_settings.db_id)
 
         return DataSource.__default

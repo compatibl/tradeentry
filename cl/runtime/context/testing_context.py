@@ -31,7 +31,7 @@ class TestingContext(Context):
         - This module not itself import pytest or unittest package
     """
 
-    data_source_class: str | None = None
+    db_class: str | None = None
     """Override for the data source class in module.ClassName format."""
 
     def __post_init__(self):
@@ -56,17 +56,17 @@ class TestingContext(Context):
             self.log = log_type(log_id=self.context_id)
 
             # Use data source class from settings unless this class provides an override
-            if self.data_source_class is not None:
-                data_source_class = self.data_source_class
+            if self.db_class is not None:
+                db_class = self.db_class
             else:
-                data_source_class = context_settings.data_source_class
+                db_class = context_settings.db_class
 
-            # Use 'temp' followed by context_id converted to semicolon-delimited format for data_source_id
-            data_source_id = "temp;" + self.context_id.replace(".", ";")
+            # Use 'temp' followed by context_id converted to semicolon-delimited format for db_id
+            db_id = "temp;" + self.context_id.replace(".", ";")
 
             # Instantiate a new data source object for every test
-            data_source_type = ClassInfo.get_class_type(data_source_class)
-            self.data_source = data_source_type(data_source_id=data_source_id)
+            db_type = ClassInfo.get_class_type(db_class)
+            self.db = db_type(db_id=db_id)
 
             # Root dataset
             self.dataset = DatasetUtil.root()
@@ -81,7 +81,7 @@ class TestingContext(Context):
         if not self.is_deserialized:
             # Delete all existing data in temp data source and drop DB in case it was not cleaned up
             # due to abnormal termination of the previous test run
-            self.data_source.delete_all_and_drop_db()  # noqa
+            self.db.delete_all_and_drop_db()  # noqa
 
         return self
 
@@ -91,7 +91,7 @@ class TestingContext(Context):
         # Do not execute this code on deserialized context instances (e.g. when they are passed to a task queue)
         if not self.is_deserialized:
             # Delete all data in temp data source and drop DB to clean up
-            self.data_source.delete_all_and_drop_db()  # noqa
+            self.db.delete_all_and_drop_db()  # noqa
 
         # Call '__exit__' method of base last
         return Context.__exit__(self, exc_type, exc_val, exc_tb)

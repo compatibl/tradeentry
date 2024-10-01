@@ -48,7 +48,7 @@ task_runs = [
 requests = [
     {
         "task_run_ids": [str(task_run.task_run_id) for task_run in task_runs],
-        "data_source": "DEPRECATED",
+        "db": "DEPRECATED",  # TODO: Review and remove
         "dataset": "",
     }
 ]

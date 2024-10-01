@@ -40,20 +40,20 @@ class ProcessContext(Context):
             # Get context settings
             context_settings = ContextSettings.instance()
 
-            # Use data_source_id from settings for context_id unless specified by the caller
+            # Use db_id from settings for context_id unless specified by the caller
             if self.context_id is None:
-                self.context_id = context_settings.data_source_id
+                self.context_id = context_settings.db_id
 
             # Create the log class specified in settings
             log_type = ClassInfo.get_class_type(context_settings.log_class)
             self.log = log_type(log_id=self.context_id)
 
-            # Use context_id converted to semicolon-delimited format for data_source_id
-            data_source_id = self.context_id.replace(".", ";")
+            # Use context_id converted to semicolon-delimited format for db_id
+            db_id = self.context_id.replace(".", ";")
 
             # Create the data source class specified in settings
-            data_source_type = ClassInfo.get_class_type(context_settings.data_source_class)
-            self.data_source = data_source_type(data_source_id=data_source_id)
+            db_type = ClassInfo.get_class_type(context_settings.db_class)
+            self.db = db_type(db_id=db_id)
 
             # Root dataset
             self.dataset = DatasetUtil.root()

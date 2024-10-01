@@ -159,13 +159,13 @@ class DataSourceProtocol(Protocol):
         IMPORTANT: !!! DESTRUCTIVE - THIS WILL PERMANENTLY DELETE ALL RECORDS WITHOUT THE POSSIBILITY OF RECOVERY
 
         Notes:
-            This method will not run unless both data_source_id and database start with 'temp_db_prefix'
+            This method will not run unless both db_id and database start with 'temp_db_prefix'
             specified using Dynaconf and stored in 'DataSourceSettings' class
         """
 
     def delete_all_and_drop_db(self) -> None:
         """
         IMPORTANT: THIS WILL PERMANENTLY DELETE ALL RECORDS WITHOUT THE POSSIBILITY OF RECOVERY,
-        unless stopped due to either data_source_id or database name not matching 'temp_db_prefix'
+        unless stopped due to either db_id or database name not matching 'temp_db_prefix'
         specified in Dynaconf data source settings ('DataSourceSettings' class).
         """

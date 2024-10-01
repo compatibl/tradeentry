@@ -21,7 +21,7 @@ def test_smoke():
 
     with TestingContext() as context:
         assert context.context_id == "test_unit_test_context.test_smoke"
-        assert context.data_source.data_source_id == "temp;" + context.context_id.replace(".", ";")
+        assert context.db.db_id == "temp;" + context.context_id.replace(".", ";")
 
 
 if __name__ == "__main__":

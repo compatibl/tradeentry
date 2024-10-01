@@ -27,16 +27,16 @@ class ContextSettings(Settings):
     log_class: str = "cl.runtime.log.file.file_log.FileLog"  # TODO: Deprecated, switch to class-specific fields
     """Default log class in module.ClassName format."""
 
-    data_source_class: str  # TODO: Deprecated, switch to class-specific fields
+    db_class: str  # TODO: Deprecated, switch to class-specific fields
     """Default data source class in module.ClassName format."""
 
-    data_source_id: str
-    """Default data source identifier, if 'data_source_class' is a key it will be obtained from preloads."""
+    db_id: str
+    """Default data source identifier, if 'db_class' is a key it will be obtained from preloads."""
 
-    data_source_temp_db_prefix: str = "temp;"
+    db_temp_db_prefix: str = "temp;"
     """
     IMPORTANT: DELETING ALL RECORDS AND DROPPING THE DATABASE FROM CODE IS PERMITTED
-    when both data_source_id and database name start with this prefix.
+    when both db_id and database name start with this prefix.
     """
 
     def __post_init__(self):
@@ -58,11 +58,11 @@ class ContextSettings(Settings):
             raise RuntimeError(
                 f"{type(self).__name__} field 'log_class' must be a string " f"in module.ClassName format."
             )
-        if not isinstance(self.data_source_class, str):
+        if not isinstance(self.db_class, str):
             raise RuntimeError(
-                f"{type(self).__name__} field 'data_source_class' must be a string " f"in module.ClassName format."
+                f"{type(self).__name__} field 'db_class' must be a string " f"in module.ClassName format."
             )
-        if not isinstance(self.data_source_id, str):
+        if not isinstance(self.db_id, str):
             raise RuntimeError(f"{type(self).__name__} field 'context_id' must be a string.")
 
     @classmethod

@@ -263,9 +263,9 @@ class BasicMongoDataSource(DataSource):
             self.delete_one(type(key), key, dataset=dataset, identity=identity)
 
     def delete_all_and_drop_db(self) -> None:
-        # Check that data_source_id and db_name both match temp_db_prefix
+        # Check that db_id and db_name both match temp_db_prefix
         db_name = self._get_db_name()
-        Context.error_if_not_temp_db(self.data_source_id)
+        Context.error_if_not_temp_db(self.db_id)
         Context.error_if_not_temp_db(db_name)
 
         # Drop the entire database without possibility of recovery, this
@@ -305,27 +305,27 @@ class BasicMongoDataSource(DataSource):
         return result
 
     def _get_db_name(self) -> str:
-        """Database is from data_source_id, check validity before returning."""
-        result = self.data_source_id
-        self.check_data_source_id(result)
+        """Database is from db_id, check validity before returning."""
+        result = self.db_id
+        self.check_db_id(result)
         return result
 
     @classmethod
-    def check_data_source_id(cls, data_source_id: str) -> None:
-        """Check that data_source_id follows MongoDB database name restrictions, error message otherwise."""
+    def check_db_id(cls, db_id: str) -> None:
+        """Check that db_id follows MongoDB database name restrictions, error message otherwise."""
 
         # Check for invalid characters in MongoDB name
-        if invalid_db_name_regex.search(data_source_id):
+        if invalid_db_name_regex.search(db_id):
             raise RuntimeError(
-                f"MongoDB data_source_id='{data_source_id}' is not valid because it contains "
+                f"MongoDB db_id='{db_id}' is not valid because it contains "
                 f"special characters from this list: {invalid_db_name_symbols}"
             )
 
         # Check for maximum byte length of less than 64 (use Unicode bytes, not string chars to count)
         max_bytes = 63
-        actual_bytes = len(data_source_id.encode("utf-8"))
+        actual_bytes = len(db_id.encode("utf-8"))
         if actual_bytes > max_bytes:
             raise RuntimeError(
-                f"MongoDB does not support data_source_id='{data_source_id}' because "
+                f"MongoDB does not support db_id='{db_id}' because "
                 f"it has {actual_bytes} bytes, exceeding the maximum of {max_bytes}."
             )
