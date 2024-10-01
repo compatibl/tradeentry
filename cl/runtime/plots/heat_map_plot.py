@@ -15,6 +15,7 @@
 from dataclasses import dataclass
 from typing import List
 import numpy as np
+import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 from cl.runtime import Context
@@ -56,19 +57,24 @@ class HeatMapPlot(MatplotlibPlot):
         style = style if self.style is not None else HeatMapPlotStyle()
         theme = "dark_background" if self.style is not None and style.dark_theme else "default"
 
+        received_df, expected_df = (
+            pd.DataFrame.from_records(
+                [values, self.col_labels, self.row_labels],
+                index=['Value', 'Col', 'Row']
+            ).T.pivot(index="Row", columns="Col", values="Value").astype(float)
+            for values in [self.received_values, self.expected_values]
+        )
+
+        data = (received_df - expected_df).abs()
+
         with plt.style.context(theme):
             fig, axes = plt.subplots()
 
-            shape = (len(self.row_labels), len(self.col_labels))
-
-            data = np.abs(
-                np.reshape(np.asarray(self.received_values), shape)
-                - np.reshape(np.asarray(self.expected_values), shape)
-            )
-
             cmap = LinearSegmentedColormap.from_list("rg", ["g", "y", "r"], N=256)
 
-            im = MatplotlibUtil.heatmap(data, self.row_labels, self.col_labels, ax=axes, cmap=cmap)
+            im = MatplotlibUtil.heatmap(
+                data.values, data.index.tolist(), data.columns.tolist(), ax=axes, cmap=cmap
+            )
 
             # Set figure and axes labels
             axes.set_xlabel(self.x_label)

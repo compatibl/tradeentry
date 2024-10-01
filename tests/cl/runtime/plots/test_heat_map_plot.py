@@ -64,13 +64,23 @@ received_values = [
     74,  # "Metric 5"
 ]
 
+num_metrics = 5
+num_models = 4
+
 
 def test_smoke(local_dir_fixture):
     with TestingContext() as context:
+        row_labels = []
+
+        for i in range(num_metrics):
+            row_labels += [f"Metric {i + 1}"] * num_models
+
+        col_labels = [f"Model {i + 1}" for i in range(num_models)] * num_metrics
+
         heat_map_plot = HeatMapPlot(plot_id="heat_map_plot")
         heat_map_plot.title = "Model Comparison"
-        heat_map_plot.row_labels = ["Metric 1", "Metric 2", "Metric 3", "Metric 4", "Metric 5"]
-        heat_map_plot.col_labels = ["Model 1", "Model 2", "Model 3", "Model 4"]
+        heat_map_plot.row_labels = row_labels
+        heat_map_plot.col_labels = col_labels
         heat_map_plot.received_values = received_values
         heat_map_plot.expected_values = expected_values
         heat_map_plot.x_label = "Models"
@@ -83,10 +93,17 @@ def test_smoke_dark_theme(local_dir_fixture):
         heat_map_plot_style = HeatMapPlotStyle()
         heat_map_plot_style.dark_theme = True
 
+        row_labels = []
+
+        for i in range(num_metrics):
+            row_labels += [f"Metric {i + 1}"] * num_models
+
+        col_labels = [f"Model {i + 1}" for i in range(num_models)] * num_metrics
+
         heat_map_plot = HeatMapPlot(plot_id="heat_map_plot")
         heat_map_plot.title = "Model Comparison"
-        heat_map_plot.row_labels = ["Metric 1", "Metric 2", "Metric 3", "Metric 4", "Metric 5"]
-        heat_map_plot.col_labels = ["Model 1", "Model 2", "Model 3", "Model 4"]
+        heat_map_plot.row_labels = row_labels
+        heat_map_plot.col_labels = col_labels
         heat_map_plot.received_values = received_values
         heat_map_plot.expected_values = expected_values
         heat_map_plot.x_label = "Models"
