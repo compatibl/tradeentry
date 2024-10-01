@@ -18,6 +18,13 @@ from logging import getLogger
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.views.binary_content import BinaryContent
 from cl.runtime.views.binary_content_type_enum import BinaryContentTypeEnum
+from cl.runtime.view.dag.dag import DAG
+from cl.runtime.view.dag.dag_edge import DAGEdge
+from cl.runtime.view.dag.dag_layout_enum import DAGLayoutEnum
+from cl.runtime.view.dag.dag_node_data import DAGNodeData
+from cl.runtime.view.dag.nodes.add_text_node import AddTextNode
+from cl.runtime.view.dag.nodes.text_input_node import TextInputNode
+from cl.runtime.view.dag.nodes.text_output_node import TextOutputNode
 from stubs.cl.runtime.views.stub_viewers_data_types_key import StubViewersDataTypesKey
 
 _logger = getLogger(__name__)
@@ -38,3 +45,33 @@ class StubViewersDataTypes(StubViewersDataTypesKey, RecordMixin[StubViewersDataT
             content = file.read()
         pdf_content = BinaryContent(content=content, content_type=BinaryContentTypeEnum.PDF)
         return pdf_content
+
+    def view_graph(self) -> DAG:
+        """Shows a directed acyclic graph."""
+
+        dag = DAG(
+            name="dag_data",
+            nodes=[
+                TextInputNode(id_="root", text="root", data=DAGNodeData(label="Input")),
+                AddTextNode(id_="a", text_to_add="add A", data=DAGNodeData(label="A")),
+                AddTextNode(id_="b", text_to_add="add B", data=DAGNodeData(label="B")),
+                AddTextNode(id_="c", text_to_add="add C", data=DAGNodeData(label="C")),
+                AddTextNode(id_="d", text_to_add="add D", data=DAGNodeData(label="D")),
+                AddTextNode(id_="e", text_to_add="add E", data=DAGNodeData(label="E")),
+                TextOutputNode(id_="output1", data=DAGNodeData(label="Output 1")),
+                TextOutputNode(id_="output2", data=DAGNodeData(label="Output 2")),
+            ],
+            edges=[
+                DAGEdge(source="root", target="a", id_="root;a", label="main stream"),
+                DAGEdge(source="a", target="b", id_="a;b", label="filtered stream"),
+                DAGEdge(source="a", target="e", id_="a;e", label="main stream"),
+                DAGEdge(source="e", target="output1", id_="e;output1", label="to text"),
+                DAGEdge(source="e", target="output2", id_="e;output2", label="to file"),
+                DAGEdge(source="d", target="output2", id_="d;output2", label="to file"),
+                DAGEdge(source="d", target="e", id_="d;e"),
+                DAGEdge(source="c", target="d", id_="c;d"),
+                DAGEdge(source="b", target="c", id_="b;c"),
+            ],
+        )
+
+        return DAG.auto_layout_dag(dag, layout_mode=DAGLayoutEnum.PLANAR, base_scale=180)
