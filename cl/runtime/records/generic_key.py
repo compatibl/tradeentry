@@ -14,7 +14,7 @@
 
 from dataclasses import dataclass
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.db.db_types import TKeyDict
+from cl.runtime.records.protocols import TKeyDict
 
 
 @dataclass(slots=True, kw_only=True)

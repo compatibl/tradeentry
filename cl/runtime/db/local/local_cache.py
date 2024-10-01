@@ -24,7 +24,7 @@ from typing_extensions import Self
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.db.db_types import TQuery
+from cl.runtime.records.protocols import TQuery
 from cl.runtime.db.dataset_util import DatasetUtil
 from cl.runtime.db.protocols import TKey
 from cl.runtime.db.protocols import TRecord

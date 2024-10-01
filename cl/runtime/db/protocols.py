@@ -18,7 +18,7 @@ from typing import Type
 from typing import TypeVar
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
-from cl.runtime.db.db_types import TQuery
+from cl.runtime.records.protocols import TQuery
 
 TRecord = TypeVar("TRecord")
 TKey = TypeVar("TKey")

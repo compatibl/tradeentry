@@ -26,7 +26,7 @@ from cl.runtime.records.protocols import is_record
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.settings.settings import Settings
-from cl.runtime.db.db_types import TDataDict
+from cl.runtime.records.protocols import TDataDict
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue

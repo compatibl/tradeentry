@@ -26,7 +26,7 @@ from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.dict_serializer import _get_class_hierarchy_slots
 from cl.runtime.serialization.dict_serializer import get_type_dict
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.db.db_types import TDataDict
+from cl.runtime.records.protocols import TDataDict
 
 
 class UiDictSerializer(DictSerializer):
