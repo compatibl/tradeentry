@@ -17,9 +17,10 @@ import os
 from abc import abstractmethod
 from dataclasses import dataclass
 from matplotlib import pyplot as plt
-from cl.runtime import View
+from cl.runtime import View, Context
 from cl.runtime.plots.plot import Plot
 from cl.runtime.context.env_util import EnvUtil
+from cl.runtime.plots.plot_style import PlotStyle
 from cl.runtime.view.png_view import PngView
 
 
@@ -31,15 +32,32 @@ class MatplotlibPlot(Plot):
     def _create_figure(self) -> plt.Figure:
         """Return Matplotlib figure object for the plot."""
 
+    def _load_style(self) -> PlotStyle:
+        """Load style object or create with default settings if not specified."""
+        style = Context.current().load_one(PlotStyle, self.style)
+        style = style if self.style is not None else PlotStyle()
+
+        return style
+
+    def _get_pyplot_theme(self, style: PlotStyle) -> str:
+        """Get value to be set as matplotlib.pyplot theme."""
+        theme = "dark_background" if self.style is not None and style.dark_theme else "default"
+
+        return theme
+
     def get_view(self) -> View:
         """Return a view object for the plot, implement using 'create_figure' method."""
 
         # Create figure
         fig = self._create_figure()
 
+        # Check if transparency required
+        style = self._load_style()
+        transparent = self.style is not None and style.dark_theme
+
         # Save to bytes
         png_buffer = io.BytesIO()
-        fig.savefig(png_buffer, format="png")
+        fig.savefig(png_buffer, format="png", transparent=transparent)
 
         # Get the PNG image bytes and wrap in PngView
         png_bytes = png_buffer.getvalue()
@@ -52,6 +70,10 @@ class MatplotlibPlot(Plot):
         # Create figure
         fig = self._create_figure()
 
+        # Check if transparency required
+        style = self._load_style()
+        transparent = self.style is not None and style.dark_theme
+
         # Create directory if does not exist
         base_dir = EnvUtil.get_env_dir()
         if not os.path.exists(base_dir):
@@ -63,4 +85,4 @@ class MatplotlibPlot(Plot):
 
         # Save
         file_path = os.path.join(base_dir, f"{self.plot_id}.png")
-        fig.savefig(file_path)
+        fig.savefig(file_path, transparent=transparent)

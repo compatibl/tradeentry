@@ -50,9 +50,8 @@ class GroupBarPlot(MatplotlibPlot):
 
     def _create_figure(self) -> plt.Figure:
         # Load style object or create with default settings if not specified
-        style = Context.current().load_one(GroupBarPlotStyle, self.style)
-        style = style if self.style is not None else GroupBarPlotStyle()
-        theme = "dark_background" if self.style is not None and style.dark_theme else "default"
+        style = self._load_style()
+        theme = self._get_pyplot_theme(style=style)
 
         data = pd.DataFrame.from_records(
             [self.values, self.bar_labels, self.group_labels],
@@ -99,3 +98,10 @@ class GroupBarPlot(MatplotlibPlot):
             axes.legend()
 
         return fig
+
+    def _load_style(self) -> GroupBarPlotStyle:
+        """Load style object or create with default settings if not specified."""
+        style = Context.current().load_one(GroupBarPlotStyle, self.style)
+        style = style if self.style is not None else GroupBarPlotStyle()
+
+        return style

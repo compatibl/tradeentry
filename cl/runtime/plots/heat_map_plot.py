@@ -53,9 +53,8 @@ class HeatMapPlot(MatplotlibPlot):
 
     def _create_figure(self) -> plt.Figure:
         # Load style object or create with default settings if not specified
-        style = Context.current().load_one(HeatMapPlotStyle, self.style)
-        style = style if self.style is not None else HeatMapPlotStyle()
-        theme = "dark_background" if self.style is not None and style.dark_theme else "default"
+        style = self._load_style()
+        theme = self._get_pyplot_theme(style=style)
 
         received_df, expected_df = (
             pd.DataFrame.from_records(
@@ -84,3 +83,10 @@ class HeatMapPlot(MatplotlibPlot):
             fig.tight_layout()
 
         return fig
+
+    def _load_style(self) -> HeatMapPlotStyle:
+        """Load style object or create with default settings if not specified."""
+        style = Context.current().load_one(HeatMapPlotStyle, self.style)
+        style = style if self.style is not None else HeatMapPlotStyle()
+
+        return style

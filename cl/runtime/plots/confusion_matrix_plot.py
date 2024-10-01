@@ -48,9 +48,8 @@ class ConfusionMatrixPlot(MatplotlibPlot):
 
     def _create_figure(self) -> plt.Figure:
         # Load style object or create with default settings if not specified
-        style = Context.current().load_one(ConfusionMatrixPlotStyle, self.style)
-        style = style if self.style is not None else ConfusionMatrixPlotStyle()
-        theme = "dark_background" if self.style is not None and style.dark_theme else "default"
+        style = self._load_style()
+        theme = self._get_pyplot_theme(style=style)
 
         # TODO: consider moving
         data, annotation_text = self._create_confusion_matrix()
@@ -71,6 +70,13 @@ class ConfusionMatrixPlot(MatplotlibPlot):
             fig.tight_layout()
 
         return fig
+
+    def _load_style(self) -> ConfusionMatrixPlotStyle:
+        """Load style object or create with default settings if not specified."""
+        style = Context.current().load_one(ConfusionMatrixPlotStyle, self.style)
+        style = style if self.style is not None else ConfusionMatrixPlotStyle()
+
+        return style
 
     def _create_confusion_matrix(self) -> Tuple[pd.DataFrame, List[List[str]]]:
         raw_data = pd.DataFrame({"Actual": self.expected_categories, "Predicted": self.received_categories})
