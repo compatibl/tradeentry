@@ -77,7 +77,6 @@ FIELDS = [
 
 
 def _testing_formatted_string(trade_description: str, run_count: int) -> plt.Figure:
-
     # Text for the fields
     fields_text = fields_to_text(FIELDS)
 
@@ -86,6 +85,8 @@ def _testing_formatted_string(trade_description: str, run_count: int) -> plt.Fig
 
     prompt = PROMPT_TEMPLATE.format(input_text=trade_description, fields=fields_text)
     field_names = [field["name"] for field in FIELDS]
+    plot_bar_labels = []
+    plot_group_labels = []
     plot_values = []
     for llm in stub_full_llms:
         results = {field: 0 for field in field_names}
@@ -109,11 +110,11 @@ def _testing_formatted_string(trade_description: str, run_count: int) -> plt.Fig
             else:
                 guard_checker.write("ERROR: No input to check")
 
+        plot_bar_labels.extend([llm.llm_id] * len(results))
+        plot_group_labels.extend([field["short_name"] for field in FIELDS])
         plot_values.extend(list(results.values()))
 
     normalized_plot_values = [round(val / run_count * 100, 2) for val in plot_values]
-    plot_bar_labels = [llm.llm_id for llm in stub_full_llms]
-    plot_group_labels = [field["short_name"] for field in FIELDS]
 
     plot = GroupBarPlot(
         plot_id="accuracy",

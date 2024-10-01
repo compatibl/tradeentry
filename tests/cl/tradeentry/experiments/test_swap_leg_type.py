@@ -48,7 +48,6 @@ def _is_correct_answer(answer: str, correct_answer: str) -> bool:
 
 
 def _testing_swap_leg_type(trade_description: str, run_count: int, llm: Llm) -> List[str]:
-
     prompt = PROMPT_TEMPLATE.format(input_text=trade_description)
 
     results = []
@@ -76,23 +75,26 @@ def test_swap_leg_type():
             stub_floored_swap_entry,
             stub_amortizing_swap_entry,
         ]
+        trade_labels = ["C", "B", "D", "E"]
+        plot_bar_labels = []
+        plot_group_labels = []
         plot_values = []
 
         # Create Llm objects for test
         stub_full_llms = get_stub_full_llms()
 
         for llm in stub_full_llms:
-            for trade, correct_answer in zip(trades, correct_answers):
+            for trade, correct_answer, trade_label in zip(trades, correct_answers, trade_labels):
                 results = _testing_swap_leg_type(trade, run_count, llm)
 
                 correct_answers_count = 0
                 for result in results:
                     extracted_output = extract_json(result)
                     correct_answers_count += int(_is_correct_answer(str(extracted_output), correct_answer))
+                plot_bar_labels.append(llm.llm_id)
+                plot_group_labels.append(trade_label)
                 plot_values.append(round(correct_answers_count / run_count * 100, 2))
 
-        plot_bar_labels = [llm.llm_id for llm in stub_full_llms]
-        plot_group_labels = ["C", "B", "D", "E"]
         plot = GroupBarPlot(
             plot_id="accuracy",
             bar_labels=plot_bar_labels,

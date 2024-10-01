@@ -62,12 +62,15 @@ def test_swap_freq():
         ]
         correct_answers = ["6m", "1m", "12m"]
 
+        trade_labels = ["A", "B", "C"]
+        plot_bar_labels = []
+        plot_group_labels = []
         plot_values = []
         # Create Llm objects for test
         stub_full_llms = get_stub_full_llms()
 
         for llm in stub_full_llms:
-            for trade, correct_answer in zip(descriptions, correct_answers):
+            for trade, correct_answer, trade_label in zip(descriptions, correct_answers, trade_labels):
                 results = _test_swap_freq(trade, run_count, llm)
 
                 correct_answers_count = 0
@@ -77,10 +80,10 @@ def test_swap_freq():
                         extracted_output = {}
 
                     correct_answers_count += int(_is_correct_answer(extracted_output, correct_answer))
+                plot_bar_labels.append(llm.llm_id)
+                plot_group_labels.append(trade_label)
                 plot_values.append(round(correct_answers_count / run_count * 100, 2))
 
-        plot_bar_labels = [llm.llm_id for llm in stub_full_llms]
-        plot_group_labels = ["A", "B", "C"]
         plot = GroupBarPlot(
             plot_id="accuracy",
             bar_labels=plot_bar_labels,

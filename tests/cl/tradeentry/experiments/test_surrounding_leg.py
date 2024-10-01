@@ -95,13 +95,16 @@ def test_surrounding_leg():
             stub_floored_swap_entry,
             stub_amortizing_swap_entry,
         ]
+        trade_labels = ["C", "B", "D", "E"]
+        plot_bar_labels = []
+        plot_group_labels = []
         plot_values = []
 
         # Create Llm objects for test
         stub_full_llms = get_stub_full_llms()
 
         for llm in stub_full_llms:
-            for trade, correct_answer in zip(trades, correct_answers):
+            for trade, correct_answer, trade_label in zip(trades, correct_answers, trade_labels):
                 results = _test_surrounding_leg(trade, run_count, llm)
 
                 correct_answers_count = 0
@@ -109,12 +112,14 @@ def test_surrounding_leg():
                     extracted_output = extract_between_backticks(result)
                     correct_answers_count += int(_is_correct_answer(extracted_output, trade, correct_answer))
 
+                plot_bar_labels.append(llm.llm_id)
+                plot_group_labels.append(trade_label)
                 plot_values.append(round(correct_answers_count / run_count * 100, 2))
 
         plot = GroupBarPlot(
             plot_id="accuracy",
-            bar_labels=[llm.llm_id for llm in stub_full_llms],
-            group_labels=["C", "B", "D", "E"],
+            bar_labels=plot_bar_labels,
+            group_labels=plot_group_labels,
             values=plot_values,
             value_ticks=list(range(0, 101, 10)),
         )
