@@ -22,7 +22,7 @@ from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.plots.confusion_matrix_plot import ConfusionMatrixPlot
 from cl.runtime.plots.confusion_matrix_plot_style import ConfusionMatrixPlotStyle
 from cl.runtime.records.record_mixin import TKey
-from cl.runtime.view.plot_view import PlotView
+from cl.runtime.views.plot_view import PlotView
 from stubs.cl.runtime.views.stub_plots_key import StubPlotsKey
 
 

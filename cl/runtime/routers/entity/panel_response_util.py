@@ -28,9 +28,9 @@ from cl.runtime.routers.response_util import to_record_dict
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.view.key_view import KeyView
-from cl.runtime.view.plot_view import PlotView
-from cl.runtime.view.png_view import PngView
+from cl.runtime.views.key_view import KeyView
+from cl.runtime.views.plot_view import PlotView
+from cl.runtime.views.png_view import PngView
 
 PanelResponseData = Dict[str, Any] | List[Dict[str, Any]] | None
 

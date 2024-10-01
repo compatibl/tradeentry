@@ -17,7 +17,7 @@ from typing import List
 from typing import final
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.view.view import View
+from cl.runtime.views.view import View
 
 
 @final

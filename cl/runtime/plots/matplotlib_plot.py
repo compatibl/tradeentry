@@ -21,7 +21,7 @@ from cl.runtime import View, Context
 from cl.runtime.plots.plot import Plot
 from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.plots.plot_style import PlotStyle
-from cl.runtime.view.png_view import PngView
+from cl.runtime.views.png_view import PngView
 
 
 @dataclass(slots=True, kw_only=True)

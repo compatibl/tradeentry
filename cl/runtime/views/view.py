@@ -15,7 +15,7 @@
 from abc import ABC
 from dataclasses import dataclass
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.runtime.view.view_key import ViewKey
+from cl.runtime.views.view_key import ViewKey
 
 
 @dataclass(slots=True, kw_only=True)

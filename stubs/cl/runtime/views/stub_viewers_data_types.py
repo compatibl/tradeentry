@@ -17,8 +17,8 @@ from dataclasses import dataclass
 from logging import getLogger
 from cl.runtime.decorators.viewer_decorator import viewer
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.runtime.view.binary_content import BinaryContent
-from cl.runtime.view.binary_content_type_enum import BinaryContentTypeEnum
+from cl.runtime.views.binary_content import BinaryContent
+from cl.runtime.views.binary_content_type_enum import BinaryContentTypeEnum
 from stubs.cl.runtime.views.stub_viewers_data_types_key import StubViewersDataTypesKey
 
 _logger = getLogger(__name__)

@@ -7,7 +7,7 @@ from cl.runtime.storage.data_source import DataSource
 from cl.runtime.context.protocols import ContextProtocol
 from cl.runtime.context.context import Context
 from cl.runtime.storage.local.local_cache import LocalCache
-from cl.runtime.view.view import View
-from cl.runtime.view.record_view import RecordView
-from cl.runtime.view.record_list_view import RecordListView
+from cl.runtime.views.view import View
+from cl.runtime.views.record_view import RecordView
+from cl.runtime.views.record_list_view import RecordListView
 from cl.runtime.storage.sql.sqlite_data_source import SqliteDataSource
