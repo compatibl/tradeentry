@@ -19,7 +19,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class DataSourceKey(KeyMixin):
+class DbKey(KeyMixin):
     """Polymorphic data storage with dataset isolation."""
 
     db_id: str = missing()
@@ -27,4 +27,4 @@ class DataSourceKey(KeyMixin):
 
     @classmethod
     def get_key_type(cls) -> Type:
-        return DataSourceKey
+        return DbKey

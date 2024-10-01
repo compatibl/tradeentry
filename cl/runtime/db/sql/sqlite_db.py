@@ -30,7 +30,7 @@ from cl.runtime.records.protocols import is_key
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
 from cl.runtime.settings.settings import Settings
-from cl.runtime.db.db import DataSource
+from cl.runtime.db.db import Db
 from cl.runtime.db.protocols import TKey
 from cl.runtime.db.protocols import TRecord
 from cl.runtime.db.sql.sqlite_schema_manager import SqliteSchemaManager
@@ -49,7 +49,7 @@ def dict_factory(cursor, row):
 
 
 @dataclass(slots=True, kw_only=True)
-class SqliteDataSource(DataSource):
+class SqliteDb(Db):
     """Sqlite database without dataset and mile wide table for inheritance."""
 
     def batch_size(self) -> int:

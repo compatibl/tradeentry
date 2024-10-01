@@ -15,7 +15,7 @@
 import pytest
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.records.class_info import ClassInfo
-from cl.runtime.db.mongo.basic_mongo_db import BasicMongoDataSource
+from cl.runtime.db.mongo.basic_mongo_db import BasicMongoDb
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecord
 
@@ -26,50 +26,50 @@ def test_check_db_id():
 
     with TestingContext() as context:
         # Check for length
-        BasicMongoDataSource.check_db_id("a" * 63)
+        BasicMongoDb.check_db_id("a" * 63)
         with pytest.raises(RuntimeError):
-            BasicMongoDataSource.check_db_id("a" * 64)
+            BasicMongoDb.check_db_id("a" * 64)
 
         # Letters, numbers and underscore are allowed
-        BasicMongoDataSource.check_db_id("abc")
-        BasicMongoDataSource.check_db_id("123")
-        BasicMongoDataSource.check_db_id("abc_xyz")
+        BasicMongoDb.check_db_id("abc")
+        BasicMongoDb.check_db_id("123")
+        BasicMongoDb.check_db_id("abc_xyz")
 
         # Semicolon is allowed even though it is not in the suggested list
-        BasicMongoDataSource.check_db_id("abc;xyz")
+        BasicMongoDb.check_db_id("abc;xyz")
 
         # Check for space
         with pytest.raises(RuntimeError):
-            BasicMongoDataSource.check_db_id("abc xyz")
+            BasicMongoDb.check_db_id("abc xyz")
         with pytest.raises(RuntimeError):
-            BasicMongoDataSource.check_db_id("abc ")
+            BasicMongoDb.check_db_id("abc ")
         with pytest.raises(RuntimeError):
-            BasicMongoDataSource.check_db_id(" xyz")
+            BasicMongoDb.check_db_id(" xyz")
 
         # Check for period
         with pytest.raises(RuntimeError):
-            BasicMongoDataSource.check_db_id("abc.xyz")
+            BasicMongoDb.check_db_id("abc.xyz")
         with pytest.raises(RuntimeError):
-            BasicMongoDataSource.check_db_id("abc.")
+            BasicMongoDb.check_db_id("abc.")
         with pytest.raises(RuntimeError):
-            BasicMongoDataSource.check_db_id(".xyz")
+            BasicMongoDb.check_db_id(".xyz")
 
         # Check for other symbols
         with pytest.raises(RuntimeError):
-            BasicMongoDataSource.check_db_id("abc:xyz")
+            BasicMongoDb.check_db_id("abc:xyz")
         with pytest.raises(RuntimeError):
-            BasicMongoDataSource.check_db_id("abc|xyz")
+            BasicMongoDb.check_db_id("abc|xyz")
         with pytest.raises(RuntimeError):
-            BasicMongoDataSource.check_db_id("abc\\xyz")
+            BasicMongoDb.check_db_id("abc\\xyz")
         with pytest.raises(RuntimeError):
-            BasicMongoDataSource.check_db_id("abc/xyz")
+            BasicMongoDb.check_db_id("abc/xyz")
 
 
 @pytest.mark.skip("Requires MongoDB server.")  # TODO: Switch test to MongoMock
 def test_load_filter():
     """Test 'load_filter' method."""
 
-    db_class = ClassInfo.get_class_path(BasicMongoDataSource)
+    db_class = ClassInfo.get_class_path(BasicMongoDb)
     with TestingContext(db_class=db_class) as context:
         # Create test record and populate with sample data
         offset = 0
@@ -89,7 +89,7 @@ def test_smoke():
     """Smoke test."""
 
     # TODO: Do not hardcode DB name
-    db_class = ClassInfo.get_class_path(BasicMongoDataSource)
+    db_class = ClassInfo.get_class_path(BasicMongoDb)
     with TestingContext(db_class=db_class) as context:
         # Create test record and populate with sample data
         record = StubDataclassRecord()

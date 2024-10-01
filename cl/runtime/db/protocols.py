@@ -24,7 +24,7 @@ TRecord = TypeVar("TRecord")
 TKey = TypeVar("TKey")
 
 
-class DataSourceProtocol(Protocol):
+class DbProtocol(Protocol):
     """Protocol for a database providing polymorphic data storage with dataset isolation."""
 
     def load_one(
@@ -160,12 +160,12 @@ class DataSourceProtocol(Protocol):
 
         Notes:
             This method will not run unless both db_id and database start with 'temp_db_prefix'
-            specified using Dynaconf and stored in 'DataSourceSettings' class
+            specified using Dynaconf and stored in 'DbSettings' class
         """
 
     def delete_all_and_drop_db(self) -> None:
         """
         IMPORTANT: THIS WILL PERMANENTLY DELETE ALL RECORDS WITHOUT THE POSSIBILITY OF RECOVERY,
         unless stopped due to either db_id or database name not matching 'temp_db_prefix'
-        specified in Dynaconf database settings ('DataSourceSettings' class).
+        specified in Dynaconf database settings ('DbSettings' class).
         """

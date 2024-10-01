@@ -36,7 +36,7 @@ def test_smoke():
         file_reader.read()
 
         # Verify
-        # TODO: Check count using load_all or count method of DataSource when created
+        # TODO: Check count using load_all or count method of Db when created
         for i in range(1, 2):
             key = StubDataclassRecordKey(id=f"derived_id_{i}")
             record = context.load_one(StubDataclassRecord, key)

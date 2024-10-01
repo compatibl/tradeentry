@@ -26,7 +26,7 @@ from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.settings.context_settings import ContextSettings
-from cl.runtime.db.db_key import DataSourceKey
+from cl.runtime.db.db_key import DbKey
 from cl.runtime.db.protocols import TKey
 from cl.runtime.db.protocols import TRecord
 
@@ -45,7 +45,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
     log: LogKey = missing()
     """Log of the context, 'Context.current().log' is used if not specified."""
 
-    db: DataSourceKey = missing()
+    db: DbKey = missing()
     """Database of the context, 'Context.current().db' is used if not specified."""
 
     dataset: str = missing()
@@ -76,7 +76,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
         # Replace fields that are set as keys by records from storage
         # First, load 'db' field of this context using 'Context.current()'
         if is_key(self.db):
-            self.db = Context.current().load_one(DataSourceKey, self.db)
+            self.db = Context.current().load_one(DbKey, self.db)
 
         # After this all remaining fields can be loaded using database from this context
         if is_key(self.log):
@@ -314,7 +314,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
 
         Notes:
             This method will not run unless both db_id and database start with 'temp_db_prefix'
-            specified using Dynaconf and stored in 'DataSourceSettings' class
+            specified using Dynaconf and stored in 'DbSettings' class
         """
         # Additional check in context in case a custom database implementation does not check it
         self.error_if_not_temp_db(self.db.db_id)
@@ -342,5 +342,5 @@ from the current context.
             raise RuntimeError(
                 f"Destructive action on database not permitted because db_id or database name "
                 f"'{db_id_or_database_name}' does not match temp_db_prefix '{temp_db_prefix}' "
-                f"specified in Dynaconf database settings ('DataSourceSettings' class)."
+                f"specified in Dynaconf database settings ('DbSettings' class)."
             )

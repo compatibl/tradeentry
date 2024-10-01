@@ -16,7 +16,7 @@ from __future__ import annotations
 from logging import Logger
 from typing import ClassVar
 from typing import Protocol
-from cl.runtime.db.protocols import DataSourceProtocol
+from cl.runtime.db.protocols import DbProtocol
 
 
 class ProgressProtocol(Protocol):
@@ -32,7 +32,7 @@ class ContextProtocol(Protocol):
     logger: Logger
     """Return the logger provided by the context."""
 
-    db: DataSourceProtocol | None
+    db: DbProtocol | None
     """Return the default database of the context or None if not set."""
 
     dataset: str

@@ -27,7 +27,7 @@ from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.db.db import DataSource
+from cl.runtime.db.db import Db
 from cl.runtime.db.mongo.mongo_filter_serializer import MongoFilterSerializer
 from cl.runtime.db.protocols import TKey
 from cl.runtime.db.protocols import TRecord
@@ -52,7 +52,7 @@ _db_dict: Dict[str, Database] = {}
 
 
 @dataclass(slots=True, kw_only=True)
-class BasicMongoDataSource(DataSource):
+class BasicMongoDb(Db):
     """MongoDB database without datasets."""
 
     client_uri: str = "mongodb://localhost:27017/"

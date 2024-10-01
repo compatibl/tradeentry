@@ -24,20 +24,20 @@ from cl.runtime.records.protocols import KeyProtocol, TQuery
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.settings.context_settings import ContextSettings
-from cl.runtime.db.db_key import DataSourceKey
+from cl.runtime.db.db_key import DbKey
 from cl.runtime.records.protocols import TKey
 from cl.runtime.records.protocols import TRecord
 
 
 @dataclass(slots=True, kw_only=True)
-class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
+class Db(DbKey, RecordMixin[DbKey], ABC):
     """Polymorphic data storage with dataset isolation."""
 
     # TODO: Do not store here, instead get from settings once during the initial Context construction
-    __default: ClassVar[DataSource | None] = None
+    __default: ClassVar[Db | None] = None
 
-    def get_key(self) -> DataSourceKey:
-        return DataSourceKey(db_id=self.db_id)
+    def get_key(self) -> DbKey:
+        return DbKey(db_id=self.db_id)
 
     @abstractmethod
     def load_one(
@@ -191,7 +191,7 @@ class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
 
         Notes:
             This method will not run unless both db_id and database start with 'temp_db_prefix'
-            specified using Dynaconf and stored in 'DataSourceSettings' class
+            specified using Dynaconf and stored in 'DbSettings' class
         """
 
     @abstractmethod
@@ -199,14 +199,14 @@ class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
         """Close database connection to releasing resource locks."""
 
     @classmethod
-    def default(cls) -> DataSource:
+    def default(cls) -> Db:
         """Default database is initialized from settings and cannot be modified in code."""
 
-        if DataSource.__default is None:
+        if Db.__default is None:
             # Load from configuration if not set
             context_settings = ContextSettings.instance()  # TODO: Refactor to place this inside Context
             db_type = ClassInfo.get_class_type(context_settings.db_class)
             # TODO: Add code to obtain from preloads if only key is specified
-            DataSource.__default = db_type(db_id=context_settings.db_id)
+            Db.__default = db_type(db_id=context_settings.db_id)
 
-        return DataSource.__default
+        return Db.__default
