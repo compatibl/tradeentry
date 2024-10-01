@@ -26,7 +26,7 @@ class RunRequest(BaseModel):
     """Headers from the request."""
 
     db: str | None = Field(None)
-    """Data source to be used."""
+    """Database to be used."""
 
     dataset: str | None = Field(None)
     """Dataset to be used."""

@@ -22,7 +22,7 @@ from cl.runtime.db.protocols import DataSourceProtocol
 
 @dataclass(slots=True, kw_only=True)
 class CsvDirReader(Reader):
-    """Load records a CSV directory into the context data source."""
+    """Load records a CSV directory into the context database."""
 
     dir_path: str
     """Absolute path to the CSV directory where file naming convention is 'ClassName.csv'."""

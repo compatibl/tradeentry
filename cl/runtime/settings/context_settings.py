@@ -28,10 +28,10 @@ class ContextSettings(Settings):
     """Default log class in module.ClassName format."""
 
     db_class: str  # TODO: Deprecated, switch to class-specific fields
-    """Default data source class in module.ClassName format."""
+    """Default database class in module.ClassName format."""
 
     db_id: str
-    """Default data source identifier, if 'db_class' is a key it will be obtained from preloads."""
+    """Default database identifier, if 'db_class' is a key it will be obtained from preloads."""
 
     db_temp_db_prefix: str = "temp;"
     """

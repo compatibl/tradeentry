@@ -23,7 +23,7 @@ class DataSourceKey(KeyMixin):
     """Polymorphic data storage with dataset isolation."""
 
     db_id: str = missing()
-    """Unique data source identifier."""
+    """Unique database identifier."""
 
     @classmethod
     def get_key_type(cls) -> Type:

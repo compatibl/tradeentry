@@ -75,7 +75,7 @@ class PreloadSettings(Settings):
             config_keys = [ConfigKey(config_id=config_id) for config_id in self.configs]
             config_records = list(Context.current().load_many(Config, config_keys))
 
-            # Error message if a config is not found # TODO: Move to data source allow_missing_record is implemented
+            # Error message if a config is not found # TODO: Move to database allow_missing_record is implemented
             if any(config_record is None for config_record in config_records):
                 keys_without_records = [key for key, record in zip(config_keys, config_records) if record is None]
                 keys_without_records_str = "\n".join(f"  - {key.config_id}" for key in keys_without_records)

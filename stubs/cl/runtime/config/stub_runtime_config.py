@@ -43,9 +43,9 @@ class StubRuntimeConfig(Config):
 
     @handler
     def run_configure(self) -> None:
-        """Populate the current or default data source with stub records."""
+        """Populate the current or default database with stub records."""
 
-        # Get data source from the current context
+        # Get database from the current context
         db = Context.current().db
 
         # Save self

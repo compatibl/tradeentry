@@ -54,7 +54,7 @@ class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
         Args:
             record_type: Record type to load, error if the result is not this type or its subclass
             record_or_key: Record (returned without lookup) or key in object, tuple or string format
-            dataset: If specified, append to the root dataset of the data source
+            dataset: If specified, append to the root dataset of the database
             identity: Identity token for database access and row-level security
         """
 
@@ -74,7 +74,7 @@ class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
         Args:
             record_type: Record type to load, error if the result is not this type or its subclass
             records_or_keys: Records (returned without lookup) or keys in object, tuple or string format
-            dataset: If specified, append to the root dataset of the data source
+            dataset: If specified, append to the root dataset of the database
             identity: Identity token for database access and row-level security
         """
 
@@ -91,7 +91,7 @@ class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
 
         Args:
             record_type: Record type to load, error if the result is not this type or its subclass
-            dataset: If specified, append to the root dataset of the data source
+            dataset: If specified, append to the root dataset of the database
             identity: Identity token for database access and row-level security
         """
 
@@ -110,7 +110,7 @@ class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
         Args:
             record_type: Record type to load, error if the result is not this type or its subclass
             filter_obj: Instance of 'record_type' whose fields are used for the query
-            dataset: If specified, append to the root dataset of the data source
+            dataset: If specified, append to the root dataset of the database
             identity: Identity token for database access and row-level security
         """
 
@@ -163,7 +163,7 @@ class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
         Args:
             key_type: Key type to delete, used to determine the database table
             key: Key in object, tuple or string format
-            dataset: If specified, append to the root dataset of the data source
+            dataset: If specified, append to the root dataset of the database
             identity: Identity token for database access and row-level security
         """
 
@@ -200,7 +200,7 @@ class DataSource(DataSourceKey, RecordMixin[DataSourceKey], ABC):
 
     @classmethod
     def default(cls) -> DataSource:
-        """Default data source is initialized from settings and cannot be modified in code."""
+        """Default database is initialized from settings and cannot be modified in code."""
 
         if DataSource.__default is None:
             # Load from configuration if not set

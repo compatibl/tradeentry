@@ -50,7 +50,7 @@ def dict_factory(cursor, row):
 
 @dataclass(slots=True, kw_only=True)
 class SqliteDataSource(DataSource):
-    """Sqlite data source without dataset and mile wide table for inheritance."""
+    """Sqlite database without dataset and mile wide table for inheritance."""
 
     def batch_size(self) -> int:
         pass

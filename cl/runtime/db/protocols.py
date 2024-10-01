@@ -25,7 +25,7 @@ TKey = TypeVar("TKey")
 
 
 class DataSourceProtocol(Protocol):
-    """Protocol for a data source providing polymorphic data storage with dataset isolation."""
+    """Protocol for a database providing polymorphic data storage with dataset isolation."""
 
     def load_one(
         self,
@@ -41,7 +41,7 @@ class DataSourceProtocol(Protocol):
         Args:
             record_type: Record type to load, error if the result is not this type or its subclass
             record_or_key: Record (returned without lookup) or key in object, tuple or string format
-            dataset: If specified, append to the root dataset of the data source
+            dataset: If specified, append to the root dataset of the database
             identity: Identity token for database access and row-level security
         """
 
@@ -60,7 +60,7 @@ class DataSourceProtocol(Protocol):
         Args:
             record_type: Record type to load, error if the result is not this type or its subclass
             records_or_keys: Records (returned without lookup) or keys in object, tuple or string format
-            dataset: If specified, append to the root dataset of the data source
+            dataset: If specified, append to the root dataset of the database
             identity: Identity token for database access and row-level security
         """
 
@@ -76,7 +76,7 @@ class DataSourceProtocol(Protocol):
 
         Args:
             record_type: Type of the records to load
-            dataset: If specified, append to the root dataset of the data source
+            dataset: If specified, append to the root dataset of the database
             identity: Identity token for database access and row-level security
         """
 
@@ -94,7 +94,7 @@ class DataSourceProtocol(Protocol):
         Args:
             record_type: Record type to load, error if the result is not this type or its subclass
             filter_obj: Instance of 'record_type' whose fields are used for the query
-            dataset: If specified, append to the root dataset of the data source
+            dataset: If specified, append to the root dataset of the database
             identity: Identity token for database access and row-level security
         """
 
@@ -144,7 +144,7 @@ class DataSourceProtocol(Protocol):
         Args:
             key_type: Key type to delete, used to determine the database table
             key: Key in object, tuple or string format
-            dataset: If specified, append to the root dataset of the data source
+            dataset: If specified, append to the root dataset of the database
             identity: Identity token for database access and row-level security
         """
 
@@ -167,5 +167,5 @@ class DataSourceProtocol(Protocol):
         """
         IMPORTANT: THIS WILL PERMANENTLY DELETE ALL RECORDS WITHOUT THE POSSIBILITY OF RECOVERY,
         unless stopped due to either db_id or database name not matching 'temp_db_prefix'
-        specified in Dynaconf data source settings ('DataSourceSettings' class).
+        specified in Dynaconf database settings ('DataSourceSettings' class).
         """

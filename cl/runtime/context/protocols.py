@@ -24,7 +24,7 @@ class ProgressProtocol(Protocol):
 
 
 class ContextProtocol(Protocol):
-    """Protocol implemented by context objects providing logging, data source, dataset, and progress reporting."""
+    """Protocol implemented by context objects providing logging, database, dataset, and progress reporting."""
 
     current: ClassVar[ContextProtocol]
     """Return current context, error message if not set."""
@@ -33,7 +33,7 @@ class ContextProtocol(Protocol):
     """Return the logger provided by the context."""
 
     db: DataSourceProtocol | None
-    """Return the default data source of the context or None if not set."""
+    """Return the default database of the context or None if not set."""
 
     dataset: str
     """Return the default dataset of the context or None if not set."""

@@ -63,10 +63,10 @@ class PanelResponseUtil(BaseModel):
         serializer = StringSerializer()
         key_obj = serializer.deserialize_key(data=request.key, type_=type_)
 
-        # Get data source from the current context
+        # Get database from the current context
         db = Context.current().db
 
-        # Load record from the data source
+        # Load record from the database
         record = db.load_one(type_, key_obj, dataset=request.dataset)
         if record is None:
             raise RuntimeError(

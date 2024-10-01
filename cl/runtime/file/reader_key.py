@@ -20,7 +20,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 @dataclass(slots=True, kw_only=True)
 class ReaderKey(KeyMixin):
-    """Load records into the specified data source."""
+    """Load records into the specified database."""
 
     loader_id: str = missing()
     """Unique loader identifier."""

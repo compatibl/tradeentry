@@ -40,13 +40,13 @@ The following root context types can be used in the outermost 'with' clause:
 
 @dataclass(slots=True, kw_only=True)
 class Context(ContextKey, RecordMixin[ContextKey]):
-    """Protocol implemented by context objects providing logging, data source, dataset, and progress reporting."""
+    """Protocol implemented by context objects providing logging, database, dataset, and progress reporting."""
 
     log: LogKey = missing()
     """Log of the context, 'Context.current().log' is used if not specified."""
 
     db: DataSourceKey = missing()
-    """Data source of the context, 'Context.current().db' is used if not specified."""
+    """Database of the context, 'Context.current().db' is used if not specified."""
 
     dataset: str = missing()
     """Dataset of the context, 'Context.current().dataset' is used if not specified."""
@@ -78,7 +78,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
         if is_key(self.db):
             self.db = Context.current().load_one(DataSourceKey, self.db)
 
-        # After this all remaining fields can be loaded using data source from this context
+        # After this all remaining fields can be loaded using database from this context
         if is_key(self.log):
             self.log = self.load_one(LogKey, self.log)
 
@@ -115,7 +115,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
         if current_context is not self:
             raise RuntimeError("Current context must only be modified by 'with Context(...)' clause.")
 
-        # TODO: Support resource disposal for the data source
+        # TODO: Support resource disposal for the database
         if self.db is not None:
             # TODO: Finalize approach to disposal self.db.disconnect()
             pass
@@ -141,7 +141,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
         Args:
             record_type: Record type to load, error if the result is not this type or its subclass
             record_or_key: Record (returned without lookup) or key in object, tuple or string format
-            dataset: If specified, append to the root dataset of the data source
+            dataset: If specified, append to the root dataset of the database
             identity: Identity token for database access and row-level security
         """
         return self.db.load_one(  # noqa
@@ -166,7 +166,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
         Args:
             record_type: Record type to load, error if the result is not this type or its subclass
             records_or_keys: Records (returned without lookup) or keys in object, tuple or string format
-            dataset: If specified, append to the root dataset of the data source
+            dataset: If specified, append to the root dataset of the database
             identity: Identity token for database access and row-level security
         """
         return self.db.load_many(  # noqa
@@ -188,7 +188,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
 
         Args:
             record_type: Type of the records to load
-            dataset: If specified, append to the root dataset of the data source
+            dataset: If specified, append to the root dataset of the database
             identity: Identity token for database access and row-level security
         """
         return self.db.load_all(  # noqa
@@ -211,7 +211,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
         Args:
             record_type: Record type to load, error if the result is not this type or its subclass
             filter_obj: Instance of 'record_type' whose fields are used for the query
-            dataset: If specified, append to the root dataset of the data source
+            dataset: If specified, append to the root dataset of the database
             identity: Identity token for database access and row-level security
         """
         return self.db.load_filter(  # noqa
@@ -277,7 +277,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
         Args:
             key_type: Key type to delete, used to determine the database table
             key: Key in object, tuple or string format
-            dataset: If specified, append to the root dataset of the data source
+            dataset: If specified, append to the root dataset of the database
             identity: Identity token for database access and row-level security
         """
         self.db.delete_one(  # noqa
@@ -316,7 +316,7 @@ class Context(ContextKey, RecordMixin[ContextKey]):
             This method will not run unless both db_id and database start with 'temp_db_prefix'
             specified using Dynaconf and stored in 'DataSourceSettings' class
         """
-        # Additional check in context in case a custom data source implementation does not check it
+        # Additional check in context in case a custom database implementation does not check it
         self.error_if_not_temp_db(self.db.db_id)
         self.db.delete_all_and_drop_db()  # noqa
 
@@ -335,12 +335,12 @@ from the current context.
 
     @classmethod
     def error_if_not_temp_db(cls, db_id_or_database_name: str) -> None:
-        """Confirm that data source id or database name matches temp_db_prefix, error otherwise."""
+        """Confirm that database id or database name matches temp_db_prefix, error otherwise."""
         context_settings = ContextSettings.instance()
         temp_db_prefix = context_settings.db_temp_db_prefix
         if not db_id_or_database_name.startswith(temp_db_prefix):
             raise RuntimeError(
                 f"Destructive action on database not permitted because db_id or database name "
                 f"'{db_id_or_database_name}' does not match temp_db_prefix '{temp_db_prefix}' "
-                f"specified in Dynaconf data source settings ('DataSourceSettings' class)."
+                f"specified in Dynaconf database settings ('DataSourceSettings' class)."
             )

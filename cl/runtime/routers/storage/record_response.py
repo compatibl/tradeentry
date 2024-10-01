@@ -120,7 +120,7 @@ class RecordResponse(BaseModel):
             # TODO: Use after module is specified
             record_type = ClassInfo.get_class_type(f"{key_module}.{key_class}")
 
-        # Get data source from the current context
+        # Get database from the current context
         db = Context.current().db
 
         # Load record from storage

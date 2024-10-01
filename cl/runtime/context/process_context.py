@@ -51,7 +51,7 @@ class ProcessContext(Context):
             # Use context_id converted to semicolon-delimited format for db_id
             db_id = self.context_id.replace(".", ";")
 
-            # Create the data source class specified in settings
+            # Create the database class specified in settings
             db_type = ClassInfo.get_class_type(context_settings.db_class)
             self.db = db_type(db_id=db_id)
 

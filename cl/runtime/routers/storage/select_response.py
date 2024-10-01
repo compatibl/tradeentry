@@ -55,14 +55,14 @@ class SelectResponse(BaseModel):
         record_class = request.type_
         record_type = ClassInfo.get_class_type(f"{record_module}.{record_class}")
 
-        # Get data source from the current context
+        # Get database from the current context
         db = Context.current().db
 
         # TODO (Roman): replace temporary load_all to load_filter
         if not hasattr(db, "load_all"):
             raise RuntimeError(
-                f"Currently data source need to implement load_all() method for select records by type. "
-                f"Data source {db.__class__.__name__} doesn't have load_all()."
+                f"Currently database need to implement load_all() method for select records by type. "
+                f"Database {db.__class__.__name__} doesn't have load_all()."
             )
 
         # load records by type

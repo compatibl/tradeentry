@@ -32,7 +32,7 @@ class TestingContext(Context):
     """
 
     db_class: str | None = None
-    """Override for the data source class in module.ClassName format."""
+    """Override for the database class in module.ClassName format."""
 
     def __post_init__(self):
         """Configure fields that were not specified in constructor."""
@@ -55,7 +55,7 @@ class TestingContext(Context):
             log_type = ClassInfo.get_class_type(context_settings.log_class)
             self.log = log_type(log_id=self.context_id)
 
-            # Use data source class from settings unless this class provides an override
+            # Use database class from settings unless this class provides an override
             if self.db_class is not None:
                 db_class = self.db_class
             else:
@@ -64,7 +64,7 @@ class TestingContext(Context):
             # Use 'temp' followed by context_id converted to semicolon-delimited format for db_id
             db_id = "temp;" + self.context_id.replace(".", ";")
 
-            # Instantiate a new data source object for every test
+            # Instantiate a new database object for every test
             db_type = ClassInfo.get_class_type(db_class)
             self.db = db_type(db_id=db_id)
 
@@ -79,7 +79,7 @@ class TestingContext(Context):
 
         # Do not execute this code on deserialized context instances (e.g. when they are passed to a task queue)
         if not self.is_deserialized:
-            # Delete all existing data in temp data source and drop DB in case it was not cleaned up
+            # Delete all existing data in temp database and drop DB in case it was not cleaned up
             # due to abnormal termination of the previous test run
             self.db.delete_all_and_drop_db()  # noqa
 
@@ -90,7 +90,7 @@ class TestingContext(Context):
 
         # Do not execute this code on deserialized context instances (e.g. when they are passed to a task queue)
         if not self.is_deserialized:
-            # Delete all data in temp data source and drop DB to clean up
+            # Delete all data in temp database and drop DB to clean up
             self.db.delete_all_and_drop_db()  # noqa
 
         # Call '__exit__' method of base last

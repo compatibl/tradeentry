@@ -38,7 +38,7 @@ invalid_db_name_symbols = r'/\\. "$*<>:|?'
 invalid_db_name_regex = re.compile(f"[{invalid_db_name_symbols}]")
 """Precompiled regex to check for invalid MongoDB database name symbols."""
 
-# TODO: Revise and consider making fields of the data source
+# TODO: Revise and consider making fields of the database
 # TODO: Review and consider alternative names, e.g. DataSerializer or RecordSerializer
 data_serializer = DictSerializer()
 key_serializer = StringSerializer()
@@ -48,12 +48,12 @@ _client_dict: Dict[str, MongoClient] = {}
 """Dict of MongoClient instances with client_uri key stored outside the class to avoid serializing them."""
 
 _db_dict: Dict[str, Database] = {}
-"""Dict of Database instances with client_uri.database_name key stored outside the class to avoid serializing them."""
+"""Dict of database instances with client_uri.database_name key stored outside the class to avoid serializing them."""
 
 
 @dataclass(slots=True, kw_only=True)
 class BasicMongoDataSource(DataSource):
-    """MongoDB data source without datasets."""
+    """MongoDB database without datasets."""
 
     client_uri: str = "mongodb://localhost:27017/"
     """MongoDB client URI, defaults to mongodb://localhost:27017/"""
@@ -73,9 +73,9 @@ class BasicMongoDataSource(DataSource):
         elif getattr(record_or_key, "get_key_type"):
             # Confirm dataset and identity are both None
             if dataset is not None:
-                raise RuntimeError("BasicMongo data source type does not support datasets.")
+                raise RuntimeError("BasicMongo database type does not support datasets.")
             if identity is not None:
-                raise RuntimeError("BasicMongo data source type does not support row-level security.")
+                raise RuntimeError("BasicMongo database type does not support row-level security.")
 
             # Key, get collection name from key type by removing Key suffix if present
             key_type = record_or_key.get_key_type()
@@ -117,9 +117,9 @@ class BasicMongoDataSource(DataSource):
     ) -> Iterable[TRecord | None] | None:
         # Confirm dataset and identity are both None
         if dataset is not None:
-            raise RuntimeError("BasicMongo data source type does not support datasets.")
+            raise RuntimeError("BasicMongo database type does not support datasets.")
         if identity is not None:
-            raise RuntimeError("BasicMongo data source type does not support row-level security.")
+            raise RuntimeError("BasicMongo database type does not support row-level security.")
 
         # Key, get collection name from key type by removing Key suffix if present
         key_type = record_type.get_key_type()
@@ -149,9 +149,9 @@ class BasicMongoDataSource(DataSource):
     ) -> Iterable[TRecord]:
         # Confirm dataset and identity are both None
         if dataset is not None:
-            raise RuntimeError("BasicMongo data source type does not support datasets.")
+            raise RuntimeError("BasicMongo database type does not support datasets.")
         if identity is not None:
-            raise RuntimeError("BasicMongo data source type does not support row-level security.")
+            raise RuntimeError("BasicMongo database type does not support row-level security.")
 
         # Key, get collection name from key type by removing Key suffix if present
         key_type = record_type.get_key_type()
@@ -186,9 +186,9 @@ class BasicMongoDataSource(DataSource):
 
         # Confirm dataset and identity are both None
         if dataset is not None:
-            raise RuntimeError("BasicMongo data source type does not support datasets.")
+            raise RuntimeError("BasicMongo database type does not support datasets.")
         if identity is not None:
-            raise RuntimeError("BasicMongo data source type does not support row-level security.")
+            raise RuntimeError("BasicMongo database type does not support row-level security.")
 
         # Get collection name from key type by removing Key suffix if present
         key_type = record.get_key_type()
@@ -238,9 +238,9 @@ class BasicMongoDataSource(DataSource):
     ) -> None:
         # Confirm dataset and identity are both None
         if dataset is not None:
-            raise RuntimeError("BasicMongo data source type does not support datasets.")
+            raise RuntimeError("BasicMongo database type does not support datasets.")
         if identity is not None:
-            raise RuntimeError("BasicMongo data source type does not support row-level security.")
+            raise RuntimeError("BasicMongo database type does not support row-level security.")
 
         # Get collection name from key type by removing Key suffix if present
         collection_name = key_type.__name__  # TODO: Decision on short alias
