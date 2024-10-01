@@ -88,7 +88,7 @@ def test_smoke(local_dir_fixture):
         heat_map_plot.save_png()
 
 
-def test_smoke_dark_theme(local_dir_fixture):
+def test_dark_theme(local_dir_fixture):
     with TestingContext() as context:
         heat_map_plot_style = HeatMapPlotStyle()
         heat_map_plot_style.dark_theme = True

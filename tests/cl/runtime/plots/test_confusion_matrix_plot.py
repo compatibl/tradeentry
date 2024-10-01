@@ -34,7 +34,7 @@ def test_smoke(local_dir_fixture):
         plot.save_png()
 
 
-def test_smoke_dark_theme(local_dir_fixture):
+def test_dark_theme(local_dir_fixture):
     raw_data = pd.read_csv(Path(__file__).resolve().parent / "./test_confusion_matrix_plot.csv")
 
     with TestingContext() as context:

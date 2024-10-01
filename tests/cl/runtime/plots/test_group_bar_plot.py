@@ -28,6 +28,16 @@ def test_single_group(local_dir_fixture):
         group_bar_plot.save_png()
 
 
+def test_dark_theme(local_dir_fixture):
+    with TestingContext() as context:
+        group_bar_plot = GroupBarPlot(plot_id="group_bar_plot")
+        group_bar_plot.group_labels = ["Single Group"] * 2
+        group_bar_plot.bar_labels = ["Bar 1", "Bar 2"]
+        group_bar_plot.values = [85.5, 92]
+        group_bar_plot.style = GroupBarPlotStyle(dark_theme=True)
+        group_bar_plot.save_png()
+
+
 def test_4_groups_2_bars(local_dir_fixture):
     with TestingContext() as context:
         num_groups = 4
