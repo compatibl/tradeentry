@@ -60,7 +60,7 @@ class StubDataclassPrimitiveFieldsKey(KeyMixin):
     key_bytes_field: bytes = bytes([100, 110, 120])
     """Stub field."""
 
-    key_enum_field: StubIntEnum = StubIntEnum.ENUM_VALUE_2
+    key_enum_field: StubIntEnum = StubIntEnum.ENUM_VALUE2
     """Stub field."""
 
     @classmethod

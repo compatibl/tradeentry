@@ -24,6 +24,7 @@ from typing import cast
 from inflection import camelize
 from cl.runtime.backend.core.base_type_info import BaseTypeInfo
 from cl.runtime.backend.core.tab_info import TabInfo
+from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.records.protocols import is_key
 from cl.runtime.records.protocols import is_record
 from cl.runtime.serialization.sentinel_type import sentinel_value
@@ -167,7 +168,8 @@ class DictSerializer:
             # Cache type for subsequent reverse lookup
             type_dict = get_type_dict()
             type_dict[short_name] = type_
-            return {"_enum": short_name, "_name": data.name}
+            pascal_case_value = StringUtil.upper_to_pascal_case(data.name)
+            return {"_enum": short_name, "_name": pascal_case_value}
         else:
             raise RuntimeError(f"Cannot serialize data of type '{type(data)}'.")
 
@@ -204,7 +206,9 @@ class DictSerializer:
                         f"Enum not found for name or alias '{short_name}' during deserialization. "
                         f"Ensure all serialized enums are included in package import settings."
                     )
-                result = deserialized_type[data["_name"]]  # noqa
+                pascal_case_value = data["_name"]
+                upper_case_value = StringUtil.pascal_to_upper_case(pascal_case_value)
+                result = deserialized_type[upper_case_value]  # noqa
                 return result
             else:
                 # Otherwise return a dictionary with recursively deserialized values
