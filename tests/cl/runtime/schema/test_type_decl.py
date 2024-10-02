@@ -32,7 +32,7 @@ type_decl_dict = {
 def to_snake_case(data):
     if isinstance(data, dict):
         return {
-            StringUtil.to_snake_case(key) if isinstance(key, str) else key: to_snake_case(value)
+            StringUtil.pascal_to_snake_case(key) if isinstance(key, str) else key: to_snake_case(value)
             for key, value in data.items()
         }
     elif isinstance(data, list):

@@ -32,7 +32,7 @@ class TypeHierarchyResponseItem(BaseModel):
     """Type label displayed in the UI is humanized class name (may be customized in settings)."""
 
     class Config:
-        alias_generator = StringUtil.to_pascal_case
+        alias_generator = StringUtil.snake_to_pascal_case
         populate_by_name = True
 
     @classmethod

@@ -29,7 +29,7 @@ class StringUtil:
         return value is None or value == ""
 
     @classmethod
-    def to_snake_case(cls, value: str) -> str:
+    def pascal_to_snake_case(cls, value: str) -> str:
         """Convert PascalCase to snake_case using custom rule for separators in front of digits."""
         # TODO: Implement custom rule for separators in front of digits
         input_tokens = value.split(".")
@@ -42,10 +42,10 @@ class StringUtil:
         """Convert UPPER_CASE to snake_case using custom rule for separators in front of digits."""
         # TODO: Implement custom rule for separators in front of digits
         cls.check_upper_case(value)
-        return cls.to_snake_case(value.lower())
+        return cls.pascal_to_snake_case(value.lower())
 
     @classmethod
-    def to_pascal_case(cls, value: str) -> str:
+    def snake_to_pascal_case(cls, value: str) -> str:
         """Convert snake_case to PascalCase using custom rule for separators in front of digits."""
         # TODO: Implement custom rule for separators in front of digits
         input_tokens = value.split(".")
@@ -58,14 +58,14 @@ class StringUtil:
         """Convert UPPER_CASE to PascalCase using custom rule for separators in front of digits."""
         # TODO: Implement custom rule for separators in front of digits
         cls.check_upper_case(value)
-        return cls.to_pascal_case(value.lower())
+        return cls.snake_to_pascal_case(value.lower())
 
     @classmethod
     def pascal_to_upper_case(cls, value: str) -> str:
         """Convert PascalCase to UPPER_CASE using custom rule for separators in front of digits."""
         # TODO: Implement custom rule for separators in front of digits
         cls.check_pascal_case(value)
-        snake_case_value = cls.to_snake_case(value)
+        snake_case_value = cls.pascal_to_snake_case(value)
         return snake_case_value.upper()
 
     @classmethod

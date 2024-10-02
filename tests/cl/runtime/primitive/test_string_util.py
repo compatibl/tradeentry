@@ -27,14 +27,14 @@ def test_pascal_to_snake_case():
     """Test for case conversion from PascalCase to snake_case."""
 
     # From snake_case without dot delimiter
-    assert StringUtil.to_snake_case("AbcDef") == "abc_def"
-    assert StringUtil.to_snake_case("Some2dPoint") == "some2d_point"  # TODO: Should be an input format error
-    assert StringUtil.to_snake_case("Great2DPicture") == "great2d_picture"
+    assert StringUtil.pascal_to_snake_case("AbcDef") == "abc_def"
+    assert StringUtil.pascal_to_snake_case("Some2dPoint") == "some2d_point"  # TODO: Should be an input format error
+    assert StringUtil.pascal_to_snake_case("Great2DPicture") == "great2d_picture"
 
     # From snake_case with dot delimiter
-    assert StringUtil.to_snake_case("Abc.Def") == "abc.def"
-    assert StringUtil.to_snake_case("AbcDef.Xyz") == "abc_def.xyz"
-    assert StringUtil.to_snake_case("AbcDef.UvwXyz") == "abc_def.uvw_xyz"
+    assert StringUtil.pascal_to_snake_case("Abc.Def") == "abc.def"
+    assert StringUtil.pascal_to_snake_case("AbcDef.Xyz") == "abc_def.xyz"
+    assert StringUtil.pascal_to_snake_case("AbcDef.UvwXyz") == "abc_def.uvw_xyz"
 
 
 def test_upper_to_snake_case():
@@ -51,14 +51,14 @@ def test_snake_to_pascal_case():
     """Test for case conversion from snake_case to PascalCase."""
 
     # From snake_case without dot delimiter
-    assert StringUtil.to_pascal_case("abc_def") == "AbcDef"
-    assert StringUtil.to_pascal_case("some2d_point") == "Some2dPoint"
-    assert StringUtil.to_pascal_case("great2_d_picture") == "Great2DPicture"
+    assert StringUtil.snake_to_pascal_case("abc_def") == "AbcDef"
+    assert StringUtil.snake_to_pascal_case("some2d_point") == "Some2dPoint"
+    assert StringUtil.snake_to_pascal_case("great2_d_picture") == "Great2DPicture"
 
     # From snake_case with dot delimiter
-    assert StringUtil.to_pascal_case("abc.def") == "Abc.Def"
-    assert StringUtil.to_pascal_case("abc_def.xyz") == "AbcDef.Xyz"
-    assert StringUtil.to_pascal_case("abc_def.uvw_xyz") == "AbcDef.UvwXyz"
+    assert StringUtil.snake_to_pascal_case("abc.def") == "Abc.Def"
+    assert StringUtil.snake_to_pascal_case("abc_def.xyz") == "AbcDef.Xyz"
+    assert StringUtil.snake_to_pascal_case("abc_def.uvw_xyz") == "AbcDef.UvwXyz"
 
 
 def test_upper_to_pascal_case():
