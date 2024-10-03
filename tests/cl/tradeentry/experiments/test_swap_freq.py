@@ -17,7 +17,7 @@ from typing import List
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.llm import Llm
-from stubs.cl.convince.experiments.stub_llms import stub_full_llms
+from stubs.cl.convince.experiments.stub_llms import get_stub_full_llms
 from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json
 from stubs.cl.tradeentry.experiments.stub_plot_utils import create_group_bar_plot
 
@@ -52,9 +52,6 @@ def _test_swap_freq(text: str, run_count: int, llm: Llm) -> List[str]:
     return results
 
 
-pytest.skip("Skip to allow GitHub actions to run without LLM keys.", allow_module_level=True)
-
-
 def test_swap_freq():
     run_count = 50
     descriptions = [
@@ -66,6 +63,9 @@ def test_swap_freq():
 
     plot_values = []
     with TestingContext():
+        # Create Llm objects for test
+        stub_full_llms = get_stub_full_llms()
+
         for llm in stub_full_llms:
             for trade, correct_answer in zip(descriptions, correct_answers):
                 results = _test_swap_freq(trade, run_count, llm)
