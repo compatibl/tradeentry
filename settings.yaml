@@ -11,8 +11,8 @@ default:
     - cl.convince
     - stubs.cl.runtime
     - stubs.cl.convince
-  runtime_context_data_source_class: cl.runtime.storage.sql.sqlite_data_source.SqliteDataSource
-  runtime_context_data_source_id: temp.convince.default
+  runtime_context_db_class: cl.runtime.db.sql.sqlite_db.SqliteDb
+  runtime_context_db_id: temp.convince.default
 
   # Documented in ApiSettings class
   runtime_api_host_name: localhost
