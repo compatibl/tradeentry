@@ -46,4 +46,5 @@ class StubPlots(StubPlotsKey, RecordMixin[StubPlotsKey]):
         matrix_plot.received_categories = raw_data["Predicted"].values.tolist()
         matrix_plot.style = matrix_plot_style
 
-        return matrix_plot.create_figure()
+        return matrix_plot._create_figure()  # TODO: Return PNG instead?
+

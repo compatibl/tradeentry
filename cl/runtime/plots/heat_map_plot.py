@@ -20,13 +20,14 @@ from matplotlib.colors import LinearSegmentedColormap
 from cl.runtime import Context
 from cl.runtime.plots.heat_map_plot_style import HeatMapPlotStyle
 from cl.runtime.plots.heat_map_plot_style_key import HeatMapPlotStyleKey
+from cl.runtime.plots.matplotlib_plot import MatplotlibPlot
 from cl.runtime.plots.matplotlib_util import MatplotlibUtil
 from cl.runtime.plots.plot import Plot
 from cl.runtime.records.dataclasses_extensions import field
 
 
 @dataclass(slots=True, kw_only=True)
-class HeatMapPlot(Plot):
+class HeatMapPlot(MatplotlibPlot):
     """Heat map visualization."""
 
     title: str = field()
@@ -53,7 +54,7 @@ class HeatMapPlot(Plot):
     style: HeatMapPlotStyleKey = field(default_factory=lambda: HeatMapPlotStyle())
     """Color and layout options."""
 
-    def create_figure(self) -> plt.Figure:
+    def _create_figure(self) -> plt.Figure:
 
         # Load style object
         style = Context.current().load_one(HeatMapPlotStyle, self.style)

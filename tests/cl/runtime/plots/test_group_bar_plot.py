@@ -25,7 +25,7 @@ def test_single_group(local_dir_fixture):
         group_bar_plot.group_labels = ["Single Group"]
         group_bar_plot.bar_labels = ["Bar 1", "Bar 2"]
         group_bar_plot.values = [85.5, 92]
-        group_bar_plot.save()
+        group_bar_plot.save_png()
 
 
 def test_4_groups_2_bars(local_dir_fixture):
@@ -44,7 +44,7 @@ def test_4_groups_2_bars(local_dir_fixture):
             25,
             30,  # "Metric 2"
         ]
-        group_bar_plot.save()
+        group_bar_plot.save_png()
 
 def test_4_groups_5_bars(local_dir_fixture):
     with TestingContext() as context:
@@ -78,7 +78,7 @@ def test_4_groups_5_bars(local_dir_fixture):
         ]
         group_bar_plot.value_ticks = list(range(0, 101, 10))
         group_bar_plot.style = GroupBarPlotStyle(dark_theme=True)
-        group_bar_plot.save()
+        group_bar_plot.save_png()
 
 
 if __name__ == "__main__":

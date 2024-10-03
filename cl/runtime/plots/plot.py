@@ -12,12 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-from abc import ABC
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from cl.runtime.plots.plot_key import PlotKey
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.runtime.testing.stack_util import StackUtil
 
 
 @dataclass(slots=True, kw_only=True)
@@ -27,11 +25,6 @@ class Plot(PlotKey, RecordMixin[PlotKey], ABC):
     def get_key(self) -> PlotKey:
         return PlotKey(plot_id=self.plot_id)
 
-    def save(self, *, ext: str = "png") -> None:
-        """Save to 'base_dir/plot_id.ext'."""
-        fig = self.create_figure()  # TODO: Must implement abstract method, works because all plots are Matplotlib
-        base_dir = StackUtil.get_base_dir()
-        if not os.path.exists(base_dir):
-            os.makedirs(base_dir)
-        ext = ext[1:] if ext.startswith(".") else ext
-        fig.savefig(os.path.join(base_dir, f"{self.plot_id}.{ext}"))
+    @abstractmethod
+    def save_png(self) -> None:
+        """Save in png format to 'base_dir/plot_id.png'."""

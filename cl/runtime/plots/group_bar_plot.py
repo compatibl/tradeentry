@@ -19,12 +19,12 @@ from matplotlib import pyplot as plt
 from cl.runtime import Context
 from cl.runtime.plots.group_bar_plot_style import GroupBarPlotStyle
 from cl.runtime.plots.group_bar_plot_style_key import GroupBarPlotStyleKey
-from cl.runtime.plots.plot import Plot
+from cl.runtime.plots.matplotlib_plot import MatplotlibPlot
 from cl.runtime.records.dataclasses_extensions import field
 
 
 @dataclass(slots=True, kw_only=True)
-class GroupBarPlot(Plot):
+class GroupBarPlot(MatplotlibPlot):
     """Base class for the 2D bar plot."""
 
     title: str = field()
@@ -51,7 +51,7 @@ class GroupBarPlot(Plot):
     style: GroupBarPlotStyleKey = field(default_factory=lambda: GroupBarPlotStyle())
     """Color and layout options."""
 
-    def create_figure(self) -> plt.Figure:
+    def _create_figure(self) -> plt.Figure:
         # Load style object
         style = Context.current().load_one(GroupBarPlotStyle, self.style)
 

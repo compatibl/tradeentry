@@ -75,7 +75,7 @@ def test_smoke(local_dir_fixture):
         heat_map_plot.expected_values = expected_values
         heat_map_plot.x_label = "Models"
         heat_map_plot.y_label = "Metrics"
-        heat_map_plot.save()
+        heat_map_plot.save_png()
 
 
 def test_smoke_dark_theme(local_dir_fixture):
@@ -92,7 +92,7 @@ def test_smoke_dark_theme(local_dir_fixture):
         heat_map_plot.x_label = "Models"
         heat_map_plot.y_label = "Metrics"
         heat_map_plot.style = heat_map_plot_style
-        heat_map_plot.save()
+        heat_map_plot.save_png()
 
 
 if __name__ == "__main__":

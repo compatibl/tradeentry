@@ -33,7 +33,7 @@ def test_smoke(local_dir_fixture):
         matrix_plot.title = "Confusion Matrix"
         matrix_plot.expected_categories = raw_data["True Category"].values.tolist()
         matrix_plot.received_categories = raw_data["Predicted"].values.tolist()
-        matrix_plot.save()
+        matrix_plot.save_png()
 
 
 def test_smoke_dark_theme(local_dir_fixture):
@@ -45,7 +45,7 @@ def test_smoke_dark_theme(local_dir_fixture):
         matrix_plot.expected_categories = raw_data["True Category"].values.tolist()
         matrix_plot.received_categories = raw_data["Predicted"].values.tolist()
         matrix_plot.style = ConfusionMatrixPlotStyle(dark_theme=True)
-        matrix_plot.save()
+        matrix_plot.save_png()
 
 
 if __name__ == "__main__":

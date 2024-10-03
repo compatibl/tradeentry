@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 from dataclasses import dataclass
 from typing import List
 from typing import Tuple
@@ -23,15 +22,14 @@ from matplotlib.colors import LinearSegmentedColormap
 from cl.runtime import Context
 from cl.runtime.plots.confusion_matrix_plot_style import ConfusionMatrixPlotStyle
 from cl.runtime.plots.confusion_matrix_plot_style_key import ConfusionMatrixPlotStyleKey
+from cl.runtime.plots.matplotlib_plot import MatplotlibPlot
 from cl.runtime.plots.matplotlib_util import MatplotlibUtil
 from cl.runtime.plots.matrix_util import MatrixUtil
-from cl.runtime.plots.plot import Plot
 from cl.runtime.records.dataclasses_extensions import field
-from cl.runtime.testing.stack_util import StackUtil
 
 
 @dataclass(slots=True, kw_only=True)
-class ConfusionMatrixPlot(Plot):
+class ConfusionMatrixPlot(MatplotlibPlot):
     """Confusion matrix visualization for a categorical experiment."""
 
     title: str = field()
@@ -52,7 +50,7 @@ class ConfusionMatrixPlot(Plot):
     style: ConfusionMatrixPlotStyleKey = field(default_factory=lambda: ConfusionMatrixPlotStyle())
     """Color and layout options."""
 
-    def create_figure(self) -> plt.Figure:
+    def _create_figure(self) -> plt.Figure:
         # Load style object
         style = Context.current().load_one(ConfusionMatrixPlotStyle, self.style)
 
