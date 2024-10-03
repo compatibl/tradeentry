@@ -19,9 +19,6 @@ from types import DynamicClassAttribute
 from typing import Any
 from typing import Dict
 from typing import Final
-
-from inflection import camelize
-
 from cl.runtime.records.protocols import is_key
 
 

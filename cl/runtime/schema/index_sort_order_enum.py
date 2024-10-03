@@ -13,9 +13,6 @@
 # limitations under the License.
 
 from enum import IntEnum
-from types import DynamicClassAttribute
-
-from inflection import camelize
 
 
 class IndexSortOrderEnum(IntEnum):

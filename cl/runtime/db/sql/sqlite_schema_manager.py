@@ -17,12 +17,10 @@ from dataclasses import dataclass
 from typing import Dict
 from typing import Iterable
 from typing import List
-from typing import Set
 from typing import Tuple
 from typing import Type
 from typing import cast
 from inflection import camelize
-from cl.runtime.records.key_mixin import KeyMixin
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.schema.schema import Schema
 
