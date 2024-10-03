@@ -15,6 +15,9 @@
 import os
 from dataclasses import dataclass
 from typing import List
+
+from cl.runtime.config.config import Config
+from cl.runtime.config.config_key import ConfigKey
 from cl.runtime.context.context import Context
 from cl.runtime.file.csv_dir_reader import CsvDirReader
 from cl.runtime.records.dataclasses_extensions import field
@@ -25,7 +28,7 @@ from cl.runtime.settings.settings import Settings
 class PreloadSettings(Settings):
     """Runtime settings for preloading records from files."""
 
-    dirs: List[str] = field(default_factory=lambda: [])
+    dirs: List[str] | None = None
     """
     Absolute or relative (to Dynaconf project root) directory paths under which preloaded data is located.
     
@@ -35,6 +38,9 @@ class PreloadSettings(Settings):
         - For YAML, the data is in yaml/ClassName/.../KeyToken1;KeyToken2.yaml where ... is optional dataset
         - For JSON, the data is in json/ClassName/.../KeyToken1;KeyToken2.json where ... is optional dataset
     """
+
+    configs: List[str] | None = None
+    """Method Config.run_configure will run for each specified config_id (the record must exist in preloads)."""
 
     def __post_init__(self):
         """Perform validation and type conversions."""
@@ -62,13 +68,37 @@ class PreloadSettings(Settings):
         yaml_dirs = self._find_type_root_dirs("yaml")
         json_dirs = self._find_type_root_dirs("json")
 
+    def configure(self) -> None:
+        """Execute configure for each config_id specified in PreloadSettings.configs."""
+        if self.configs is not None and len(self.configs) > 0:
+
+            # Load configs
+            config_keys = [ConfigKey(config_id=config_id) for config_id in self.configs]
+            config_records = list(Context.current().load_many(Config, config_keys))
+
+            # Error message if a config is not found # TODO: Move to data source allow_missing_record is implemented
+            if any(config_record is None for config_record in config_records):
+                keys_without_records = [key for key, record in zip(config_keys, config_records) if record is None]
+                keys_without_records_str = "\n".join(f"  - {key.config_id}" for key in keys_without_records)
+                preload_dirs_str = "\n".join(f"  - {x}" for x in self.dirs)
+                raise RuntimeError(f"Preload directories in in 'PreloadSettings.configs' do not have config records "
+                                   f"for the following config_id specified in 'PreloadSettings.configs'.\n"
+                                   f"Missing config records:\n{keys_without_records_str}\n"
+                                   f"Preload directories searched:\n{preload_dirs_str}")
+
+            # Run configure for the specified records
+            tuple(config_record.run_configure() for config_record in config_records)
+
     def _find_type_root_dirs(self, root_name: str) -> List[str]:
-        result = []
+        # Return empty list if no dirs are specified in settings
+        if self.dirs is None or len(self.dirs) == 0:
+            return []
 
         # Set of directories to skip
         exclude_dirs = {"csv", "yaml", "json"}
 
         # Walk through the directory tree for each specified preload dir
+        result = []
         for preload_dir in self.dirs:
             for dir_path, dir_names, filenames in os.walk(preload_dir):
                 if root_name in dir_names:

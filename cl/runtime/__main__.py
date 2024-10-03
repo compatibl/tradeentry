@@ -38,7 +38,6 @@ from cl.runtime.settings.preload_settings import PreloadSettings
 from cl.runtime.settings.settings import Settings
 from cl.runtime.tasks.celery.celery_queue import celery_delete_existing_tasks
 from cl.runtime.tasks.celery.celery_queue import celery_start_queue
-from stubs.cl.runtime.config.stub_runtime_config import StubRuntimeConfig  # TODO: Remove after refactoring
 
 # Server
 server_app = FastAPI()
@@ -122,13 +121,11 @@ if __name__ == "__main__":
         log_dir = os.path.join(Settings.get_project_root(), "logs")  # TODO: Make unique
         celery_start_queue(log_dir=log_dir)
 
-        # TODO: Temporary workaround before full configuration workflow is supported
-        config = StubRuntimeConfig()
-        config.config_id = "Stub Runtime Config"
-        config.run_configure()
-
         # Preload data
         PreloadSettings.instance().preload()
+
+        # Execute configure for each config_id specified in PreloadSettings.configs
+        PreloadSettings.instance().configure()
 
         # Find wwwroot directory relative to the location of __main__ rather than project root
         wwwroot_dir = Settings.get_static_files_path()
