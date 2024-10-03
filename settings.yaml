@@ -8,8 +8,8 @@ default:
     runtime_context_packages:
         - cl.runtime
         - stubs.cl.runtime
-    runtime_context_data_source_class: cl.runtime.storage.sql.sqlite_data_source.SqliteDataSource
-    runtime_context_data_source_id: temp.runtime.default
+    runtime_context_db_class: cl.runtime.db.sql.sqlite_db.SqliteDb
+    runtime_context_db_id: temp.runtime.default
 
     # Documented in ApiSettings class
     runtime_api_host_name: localhost
