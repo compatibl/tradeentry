@@ -20,12 +20,12 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class DAGKey(KeyMixin):
-    """DAG Key."""
+class DagKey(KeyMixin):
+    """Structure and visual representation of a directed acyclic graph (DAG)."""
 
     name: str = missing()
-    """DAG unique name."""
+    """Unique DAG identifier."""
 
     @classmethod
     def get_key_type(cls) -> Type:
-        return DAGKey
+        return DagKey

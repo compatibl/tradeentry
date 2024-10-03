@@ -21,54 +21,54 @@ import networkx as nx
 
 from cl.runtime import RecordMixin
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.view.dag.dag_edge import DAGEdge
-from cl.runtime.view.dag.dag_key import DAGKey
-from cl.runtime.view.dag.dag_layout_enum import DAGLayoutEnum
-from cl.runtime.view.dag.dag_node_position import DAGNodePosition
-from cl.runtime.view.dag.nodes.dag_node import DAGNode
+from cl.runtime.view.dag.dag_edge import DagEdge
+from cl.runtime.view.dag.dag_key import DagKey
+from cl.runtime.view.dag.dag_layout_enum import DagLayoutEnum
+from cl.runtime.view.dag.dag_node_position import DagNodePosition
+from cl.runtime.view.dag.nodes.dag_node import DagNode
 
 
 @dataclass(slots=True, kw_only=True)
-class DAG(DAGKey, RecordMixin[DAGKey]):
-    """Representation of directed acyclic graph (DAG)."""
+class Dag(DagKey, RecordMixin[DagKey]):
+    """Structure and visual representation of a directed acyclic graph (DAG)."""
 
-    nodes: List[DAGNode] = missing()
+    nodes: List[DagNode] = missing()
     """List of DAG nodes."""
 
-    edges: List[DAGEdge] = missing()
+    edges: List[DagEdge] = missing()
     """List of DAG edges."""
 
-    def get_key(self) -> DAGKey:
+    def get_key(self) -> DagKey:
         """Return primary key of this instance in semicolon-delimited string format."""
-        return DAGKey(name=self.name)
+        return DagKey(name=self.name)
 
     @staticmethod
     def auto_layout_dag(
-        dag: DAG,
-        layout_mode: DAGLayoutEnum = DAGLayoutEnum.SPRING,
+        dag: Dag,
+        layout_mode: DagLayoutEnum = DagLayoutEnum.SPRING,
         offset_x: int = 600,
         base_scale: int = 100,
-    ) -> DAG:
+    ) -> Dag:
         """
         Set positions automatically for the passed DAG.
 
         Parameters
         ----------
-            dag : DAG
-                DAG to create layout for.
-            layout_mode : DAGLayoutEnum
+            dag : Dag
+                Dag to create layout for.
+            layout_mode : DagLayoutEnum
                 Graph layout to use.
             offset_x : int
-                Offset on x-axis to use between multiple DAGs. Won't affect the resulting autolayout of a single DAG.
+                Offset on x-axis to use between multiple Dags. Won't affect the resulting autolayout of a single Dag.
             base_scale : int
-                Base scale to use while calculating the final DAG scale.
+                Base scale to use while calculating the final Dag scale.
                 The final scale is calculated for each subgraph separately based on the number of nodes in
                 it using the following formula: base_scale * number_of_nodes^0.5.
 
         Returns
         -------
-            DAG
-                A modified DAG object with adjusted positions of nodes.
+            Dag
+                A modified Dag object with adjusted positions of nodes.
         """
 
         subgraphs = dag._build_disconnected_graphs()
@@ -78,11 +78,11 @@ class DAG(DAGKey, RecordMixin[DAGKey]):
         for subgraph in subgraphs:
             subgraph_scale = base_scale * len(subgraph.nodes) ** 0.5
 
-            if layout_mode == DAGLayoutEnum.CIRCULAR:
+            if layout_mode == DagLayoutEnum.CIRCULAR:
                 layout = nx.circular_layout(subgraph, scale=subgraph_scale)
-            elif layout_mode == DAGLayoutEnum.PLANAR:
+            elif layout_mode == DagLayoutEnum.PLANAR:
                 layout = nx.planar_layout(subgraph, scale=subgraph_scale)
-            elif layout_mode == DAGLayoutEnum.SPRING:
+            elif layout_mode == DagLayoutEnum.SPRING:
                 layout = nx.spring_layout(
                     subgraph,
                     scale=subgraph_scale,
@@ -100,7 +100,7 @@ class DAG(DAGKey, RecordMixin[DAGKey]):
 
         for node in dag.nodes:
             x, y = positions[node.id_]
-            node.position = DAGNodePosition(x=float(x), y=float(y))
+            node.position = DagNodePosition(x=float(x), y=float(y))
 
         return dag
 

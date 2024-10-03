@@ -15,13 +15,13 @@
 from dataclasses import dataclass
 
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.view.dag.nodes.dag_node import DAGNode
+from cl.runtime.view.dag.nodes.dag_node import DagNode
 
 
 @dataclass(slots=True, kw_only=True)
-class AddTextNode(DAGNode):
+class AddTextNode(DagNode):
     """
-    Represent a DAG node that adds a specified text to the input data.
+    Represent a Dag node that adds a specified text to the input data.
     """
 
     text_to_add: str = missing()

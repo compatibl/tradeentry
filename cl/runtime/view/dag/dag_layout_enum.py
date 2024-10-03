@@ -15,7 +15,7 @@
 from enum import Enum
 
 
-class DAGLayoutEnum(Enum):
+class DagLayoutEnum(Enum):
     """Enumeration of supported DAG layouts used for auto-layout."""
 
     SPRING = "spring"

@@ -20,8 +20,8 @@ from cl.runtime.records.protocols import KeyProtocol, TPrimitive
 
 
 @dataclass(slots=True, kw_only=True)
-class DAGNodeData:
-    """DAG Node Data."""
+class DagNodeData:
+    """Directed acyclic graph (DAG) node data."""
 
     label: str = missing()
     """Node label."""

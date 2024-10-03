@@ -19,8 +19,8 @@ from cl.runtime.records.dataclasses_extensions import missing
 
 
 @dataclass(slots=True, kw_only=True)
-class DAGEdge:
-    """DAG link representation."""
+class DagEdge:
+    """Directed acyclic graph (DAG) node edge."""
 
     id_: str = missing()
     """Unique edge identifier."""

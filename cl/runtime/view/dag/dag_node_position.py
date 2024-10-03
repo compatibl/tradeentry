@@ -18,8 +18,8 @@ from cl.runtime.records.dataclasses_extensions import missing
 
 
 @dataclass(slots=True, kw_only=True)
-class DAGNodePosition:
-    """DAG Node Position."""
+class DagNodePosition:
+    """Directed acyclic graph (DAG) node position."""
 
     x: float = missing()
     """X coordinate."""

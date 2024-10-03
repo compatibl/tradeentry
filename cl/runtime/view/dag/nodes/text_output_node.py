@@ -14,11 +14,11 @@
 
 from dataclasses import dataclass
 
-from cl.runtime.view.dag.nodes.dag_node import DAGNode
+from cl.runtime.view.dag.nodes.dag_node import DagNode
 
 
 @dataclass(slots=True, kw_only=True)
-class TextOutputNode(DAGNode):
+class TextOutputNode(DagNode):
     """
     Represent a DAG node that returns the input data as is.
     """
