@@ -35,4 +35,4 @@ class AssetClassEntry(Entry):
             self.asset_class = AssetClassKeys.rates
         else:
             raise RuntimeError(f"Cannot extract asset class from {self.entry_text}")
-        self.entry_status = EntryStatusEnum.Completed
+        self.entry_status = EntryStatusEnum.COMPLETED

@@ -35,4 +35,4 @@ class RatesTradeTypeEntry(Entry):
             self.rates_trade_type = RatesTradeTypeKeys.vanilla_swap
         else:
             raise RuntimeError(f"Cannot extract rates trade type from {self.entry_text}")
-        self.entry_status = EntryStatusEnum.Completed
+        self.entry_status = EntryStatusEnum.COMPLETED
