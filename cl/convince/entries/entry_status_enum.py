@@ -18,14 +18,14 @@ from enum import IntEnum
 class EntryStatusEnum(IntEnum):
     """Entry processing status."""
 
-    Created = 1
+    CREATED = 1
     """The entry has been created."""
 
-    Completed = 4
+    COMPLETED = 4
     """Entry processing has been completed."""
 
-    Approved = 4
+    APPROVED = 4
     """Entry processing result has been approved."""
 
-    Escalation = 4
+    ESCALATION = 4
     """Entry processing result requires escalation."""
