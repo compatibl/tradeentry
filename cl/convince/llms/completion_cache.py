@@ -71,7 +71,7 @@ class CompletionCache:
         # Find base_path=dir_path/test_module by examining call stack for test function signature test_*
         # Directory 'project_root/completions' is used when not running under a test
         default_dir = os.path.join(ContextSettings.instance().get_project_root(), "completions")
-        base_dir = EnvUtil.get_base_dir(default_dir=default_dir)
+        base_dir = EnvUtil.get_env_dir(default_dir=default_dir)
 
         # If not found, use base path relative to project root
         if base_dir is None:
