@@ -15,12 +15,10 @@
 import pytest
 import datetime as dt
 from random import Random
-from random import randint
-from random import random
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.primitive.date_util import DateUtil
 from cl.runtime.testing.regression_guard import RegressionGuard
-from stubs.cl.convince.experiments.stub_llms import stub_mini_llms
+from stubs.cl.convince.experiments.stub_llms import get_stub_mini_llms
 
 
 def _test_recall(text: str):
@@ -34,6 +32,7 @@ def _test_recall(text: str):
         )
         run_count = 1
 
+        stub_mini_llms = get_stub_mini_llms()
         for llm in stub_mini_llms:
             guard = RegressionGuard(channel=llm.llm_id)
             for _ in range(run_count):
