@@ -13,22 +13,24 @@
 # limitations under the License.
 
 import ast
+import base64
 import dataclasses
 import io
 from typing import Any
 from typing import Dict
 from typing import List
-from matplotlib.figure import Figure
 from pydantic import BaseModel
 from cl.runtime.context.context import Context
+from cl.runtime.plots.plot_key import PlotKey
 from cl.runtime.routers.entity.panel_request import PanelRequest
 from cl.runtime.routers.response_util import to_legacy_dict
 from cl.runtime.routers.response_util import to_record_dict
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.view.binary_content import BinaryContent
-from cl.runtime.view.binary_content_type_enum import BinaryContentTypeEnum
+from cl.runtime.view.key_view import KeyView
+from cl.runtime.view.plot_view import PlotView
+from cl.runtime.view.png_view import PngView
 
 PanelResponseData = Dict[str, Any] | List[Dict[str, Any]] | None
 
@@ -85,31 +87,47 @@ class PanelResponseUtil(BaseModel):
         return {"ViewOf": view_dict}
 
     @classmethod
-    def _get_view_dict(cls, view: Any) -> Dict[str, Any]:
+    def _get_view_dict(cls, view: Any) -> Dict[str, Any] | None:
         """Convert value to dict format."""
 
-        # Convert matplotlib Figure to ui format
-        if isinstance(view, Figure):
-            # Save Figure content to buffer
-            buf = io.BytesIO()
-            view.savefig(buf)
-            buf.seek(0)
+        # Return None if view is None
+        if view is None:
+            return None
 
-            # Create BinaryContent with png content type
-            view = BinaryContent()
-            view.content = buf.read()
-            view.content_type = BinaryContentTypeEnum.Png
+        if isinstance(view, PlotView):
+            # Load plot for view if it is key
+            plot = Context.current().load_one(PlotKey, view.plot)
+            if plot is None:
+                raise RuntimeError(f"Not found plot for key {view.plot}.")
 
-        if isinstance(view, str):
-            view_dict = ast.literal_eval(view)
-        elif view is not None:
+            # Get view for plot and transform to ui format dict
+            return cls._get_view_dict(plot.get_view())
+
+        elif isinstance(view, KeyView):
+            # Load record for view
+            record = Context.current().load_one(type(view.key), view.key)
+            if record is None:
+                raise RuntimeError(f"Not found record for key {view.key}.")
+
+            # Return ui format dict dict of record
+            return cls._get_view_dict(record)
+
+        elif isinstance(view, PngView):
+            # Return ui format dict of binary data
+            return {
+                "Content": base64.b64encode(view.png_bytes).decode(),
+                "ContentType": "Png",
+                "_t": "BinaryContent"
+            }
+        elif isinstance(view, Dict):
+            # Return if is already dict
+            return view
+        else:
             # TODO (Ina): Do not use a method from dataclasses
             result_type = type(view)
             if result_type.__name__.endswith("Key"):
                 view_dict = to_legacy_dict(dataclasses.asdict(view))
                 view_dict["_t"] = result_type.__name__
+                return view_dict
             else:
-                view_dict = to_legacy_dict(to_record_dict(view))
-        else:
-            view_dict = None
-        return view_dict
+                return to_legacy_dict(to_record_dict(view))

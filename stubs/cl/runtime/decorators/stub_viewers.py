@@ -14,7 +14,7 @@
 
 from dataclasses import dataclass
 from logging import getLogger
-from typing import List
+from typing import List, Dict
 from typing import Optional
 from typing_extensions import Self
 from cl.runtime.decorators.viewer_decorator import viewer
@@ -34,17 +34,15 @@ class StubViewers(StubViewersKey, RecordMixin[StubViewersKey]):
         return StubViewersKey(stub_id=self.stub_id)
 
     @viewer
-    def view_instance_1a(self) -> str:
+    def view_instance_1a(self):
         """Stub viewer with UI element."""
-        return str(
-            {
-                "_t": "Script",
-                "Name": None,
-                "Language": "Markdown",
-                "Body": ["# Viewer with UI element", "### _Script_"],
-                "WordWrap": None,
-            }
-        )
+        return {
+            "_t": "Script",
+            "Name": None,
+            "Language": "Markdown",
+            "Body": ["# Viewer with UI element", "### _Script_"],
+            "WordWrap": None,
+        }
 
     @viewer()
     def view_instance_1b(self) -> Optional[str]:
@@ -85,17 +83,15 @@ class StubViewers(StubViewersKey, RecordMixin[StubViewersKey]):
         return [StubViewers(stub_id="Record 1"), StubViewers(stub_id="Record 2"), StubViewers(stub_id="Record 3")]
 
     @viewer
-    def view_instance_3a(self, param1: str = "Test", param2: str = None) -> str:
+    def view_instance_3a(self, param1: str = "Test", param2: str = None):
         """Stub viewer with optional parameters."""
 
-        return str(
-            {
-                "_t": "Script",
-                "Name": None,
-                "Language": "Markdown",
-                "Body": [f"# Viewer with optional parameters", f"### Param1: {param1}", f"### Param2: {param2}"],
-                "WordWrap": None,
-            }
-        )
+        return {
+            "_t": "Script",
+            "Name": None,
+            "Language": "Markdown",
+            "Body": [f"# Viewer with optional parameters", f"### Param1: {param1}", f"### Param2: {param2}"],
+            "WordWrap": None,
+        }
 
     # TODO (Ina): introduce more viewer cases

@@ -33,7 +33,7 @@ class StubPlots(StubPlotsKey, RecordMixin[StubPlotsKey]):
 
     @viewer
     def view_confusion_matrix_plot(self):
-        """Matplotlib Figure viewer with theme."""
+        """Png viewer for MatplotlibPlot with theme."""
 
         raw_data = pd.read_csv(Path(__file__).resolve().parent / "./confusion_matrix_plot.csv")
 
@@ -46,4 +46,5 @@ class StubPlots(StubPlotsKey, RecordMixin[StubPlotsKey]):
         matrix_plot.received_categories = raw_data["Predicted"].values.tolist()
         matrix_plot.style = matrix_plot_style
 
-        return matrix_plot._create_figure()  # TODO: Return PNG instead?
+        # Return PngView
+        return matrix_plot.get_view()
