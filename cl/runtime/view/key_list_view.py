@@ -14,7 +14,6 @@
 
 from dataclasses import dataclass
 from typing import List
-
 from cl.runtime import View
 from cl.runtime.records.dataclasses_extensions import missing
 

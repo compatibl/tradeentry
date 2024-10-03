@@ -159,8 +159,7 @@ class StackUtil:
         if default_dir is not None and default_dir != "":
             return default_dir
         else:
-            RuntimeError(f"Not invoked inside a function or method that starts from '{test_function_pattern}' "
-                         f"and 'default_dir' is None or empty.")
-
-
-
+            RuntimeError(
+                f"Not invoked inside a function or method that starts from '{test_function_pattern}' "
+                f"and 'default_dir' is None or empty."
+            )

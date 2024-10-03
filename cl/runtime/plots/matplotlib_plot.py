@@ -11,14 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 import io
 import os
 from abc import abstractmethod
 from dataclasses import dataclass
-
+from matplotlib import pyplot as plt
 from cl.runtime import View
 from cl.runtime.plots.plot import Plot
-from matplotlib import pyplot as plt
 from cl.runtime.testing.stack_util import StackUtil
 from cl.runtime.view.png_view import PngView
 
@@ -39,7 +39,7 @@ class MatplotlibPlot(Plot):
 
         # Save to bytes
         png_buffer = io.BytesIO()
-        fig.savefig(png_buffer, format='png')
+        fig.savefig(png_buffer, format="png")
 
         # Get the PNG image bytes and wrap in PngView
         png_bytes = png_buffer.getvalue()

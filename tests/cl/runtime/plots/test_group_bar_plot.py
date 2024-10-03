@@ -46,6 +46,7 @@ def test_4_groups_2_bars(local_dir_fixture):
         ]
         group_bar_plot.save_png()
 
+
 def test_4_groups_5_bars(local_dir_fixture):
     with TestingContext() as context:
         group_bar_plot = GroupBarPlot(plot_id="group_bar_plot")

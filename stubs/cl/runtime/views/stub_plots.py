@@ -47,4 +47,3 @@ class StubPlots(StubPlotsKey, RecordMixin[StubPlotsKey]):
         matrix_plot.style = matrix_plot_style
 
         return matrix_plot._create_figure()  # TODO: Return PNG instead?
-

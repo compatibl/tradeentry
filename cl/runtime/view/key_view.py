@@ -23,4 +23,3 @@ class KeyView(View):
 
     key: str = missing()
     """Generic key in ClassName;key_field_1;key_field_2 format, record is loaded and displayed."""
-
