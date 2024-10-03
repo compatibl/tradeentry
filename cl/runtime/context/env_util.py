@@ -18,8 +18,8 @@ from typing import cast
 import inflection
 
 
-class StackUtil:
-    """Utilities for stack introspection."""
+class EnvUtil:
+    """Helper methods for environment selection."""
 
     @classmethod
     def is_inside_test(cls, *, test_module_pattern: str | None = None) -> bool:

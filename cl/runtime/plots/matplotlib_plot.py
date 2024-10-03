@@ -19,7 +19,7 @@ from dataclasses import dataclass
 from matplotlib import pyplot as plt
 from cl.runtime import View
 from cl.runtime.plots.plot import Plot
-from cl.runtime.testing.stack_util import StackUtil
+from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.view.png_view import PngView
 
 
@@ -53,7 +53,7 @@ class MatplotlibPlot(Plot):
         fig = self._create_figure()
 
         # Create directory if does not exist
-        base_dir = StackUtil.get_base_dir()
+        base_dir = EnvUtil.get_base_dir()
         if not os.path.exists(base_dir):
             os.makedirs(base_dir)
 

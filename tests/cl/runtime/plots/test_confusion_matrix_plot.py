@@ -20,7 +20,7 @@ from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.plots.confusion_matrix_plot import ConfusionMatrixPlot
 from cl.runtime.plots.confusion_matrix_plot_style import ConfusionMatrixPlotStyle
 from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
-from cl.runtime.testing.stack_util import StackUtil
+from cl.runtime.context.env_util import EnvUtil
 
 
 def test_smoke(local_dir_fixture):

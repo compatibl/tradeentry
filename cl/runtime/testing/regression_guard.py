@@ -31,7 +31,7 @@ from cl.runtime.records.protocols import is_record
 from cl.runtime.schema.field_decl import primitive_types
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.testing.stack_util import StackUtil
+from cl.runtime.context.env_util import EnvUtil
 
 _supported_extensions = ["txt"]
 """The list of supported output file extensions (formats)."""
@@ -100,7 +100,7 @@ class RegressionGuard:
         """
 
         # Find base path by examining call stack
-        base_path = StackUtil.get_base_dir(test_function_pattern=test_function_pattern)
+        base_path = EnvUtil.get_base_dir(test_function_pattern=test_function_pattern)
 
         # Make channel the filename prefix with dot delimiter if specified
         if channel is not None and channel != "":

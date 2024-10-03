@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import os
-from cl.runtime.testing.stack_util import StackUtil
+from cl.runtime.context.env_util import EnvUtil
 
 
 class TestingUtil:
@@ -41,7 +41,7 @@ class TestingUtil:
         """
 
         # Perform stack introspection
-        base_path = StackUtil.get_base_path(test_function_pattern=test_function_pattern)
+        base_path = EnvUtil.get_base_path(test_function_pattern=test_function_pattern)
 
         # Result is the last token in path
         result = os.path.basename(base_path)

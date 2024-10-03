@@ -14,7 +14,7 @@
 
 import pytest
 import os
-from cl.runtime.testing.stack_util import StackUtil
+from cl.runtime.context.env_util import EnvUtil
 
 # TODO: Add tests for get_base_path
 
@@ -23,7 +23,7 @@ def test_stack_util():
     """Method name matches module name, shortened path"""
     dir_name = os.path.dirname(__file__)
     expected_result = os.path.join(dir_name, "test_stack_util")
-    result = StackUtil.get_base_dir()
+    result = EnvUtil.get_base_dir()
     assert result == expected_result
 
 
@@ -31,7 +31,7 @@ def test_get_base_path_in_function():
     """Function name does not match module name, two-token path."""
     dir_name = os.path.dirname(__file__)
     expected_result = os.path.join(dir_name, "test_stack_util", "test_get_base_path_in_function")
-    result = StackUtil.get_base_dir()
+    result = EnvUtil.get_base_dir()
     assert result == expected_result
 
 
@@ -43,32 +43,32 @@ class TestClass:
         """Function name does not match module name, two-token path."""
         dir_name = os.path.dirname(__file__)
         expected_result = os.path.join(dir_name, "test_stack_util", "test_class", "test_stack_util")
-        result = StackUtil.get_base_dir()
+        result = EnvUtil.get_base_dir()
         assert result == expected_result
 
     def test_get_base_path_in_method(self):
         """Method name does not match class name or module name, three-token path"""
         dir_name = os.path.dirname(__file__)
         expected_result = os.path.join(dir_name, "test_stack_util", "test_class", "test_get_base_path_in_method")
-        result = StackUtil.get_base_dir()
+        result = EnvUtil.get_base_dir()
         assert result == expected_result
 
 
-class TestStackUtil:
+class TestEnvUtil:
     """Stub pytest class with name matching the module."""
 
     def test_stack_util(self):
         """All three match, one-token path."""
         dir_name = os.path.dirname(__file__)
         expected_result = os.path.join(dir_name, "test_stack_util")
-        result = StackUtil.get_base_dir()
+        result = EnvUtil.get_base_dir()
         assert result == expected_result
 
     def test_get_base_path_in_method(self):
         """Method name does not match class name or module name which match, two-token path"""
         dir_name = os.path.dirname(__file__)
         expected_result = os.path.join(dir_name, "test_stack_util", "test_get_base_path_in_method")
-        result = StackUtil.get_base_dir()
+        result = EnvUtil.get_base_dir()
         assert result == expected_result
 
 
