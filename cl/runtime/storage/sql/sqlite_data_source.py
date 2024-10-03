@@ -113,10 +113,8 @@ class SqliteDataSource(DataSource):
         serializer = FlatDictSerializer()
         schema_manager = self._get_schema_manager()
 
-        # it is important to preserve the original order of records_or_keys.
-        # itertools.groupby works just like that and does not violate the order.
-
-        # group by key type and then by it is key or record. if not keys - return themselves.
+        # Use itertools.groupby to preserve the original order of records_or_keys
+        # Group by key type and then by it is key or record, if records rather than keys return without lookup
         for key_type, records_or_keys_group in groupby(records_or_keys, lambda x: x.get_key_type() if x else None):
             # handle None records_or_keys
             if key_type is None:
