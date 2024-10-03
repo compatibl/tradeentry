@@ -178,9 +178,7 @@ class CompletionCache:
                     )
 
                 # Read cached completions, ignoring request_id at position 0
-                self.__completion_dict.update(
-                    {row[1]: row[2] for row_ in reader if (row := self.to_python_eol(row_))}
-                )
+                self.__completion_dict.update({row[1]: row[2] for row_ in reader if (row := self.to_python_eol(row_))})
 
     @classmethod
     def normalize_key(cls, query: str, trial_id: str | int | None = None) -> str:
@@ -196,7 +194,7 @@ class CompletionCache:
         # Normalize EOL
         result = cls.to_python_eol(result)
         return result
-    
+
     @classmethod
     def normalize_value(cls, value: str) -> str:
         """Strip leading and trailing whitespace, and normalize EOL."""
