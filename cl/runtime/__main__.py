@@ -66,7 +66,7 @@ async def handle_exception(request, exc, log_level):
     Context.current().save_one(entry)
 
     # Return 500 response to avoid exception handler multiple calls
-    return Response("Internal Server Error", status_code=500)
+    return Response("Status code 500 in handle_exception", status_code=500)
 
 
 # Add RuntimeError exception handler
