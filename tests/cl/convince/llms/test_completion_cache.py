@@ -16,7 +16,7 @@ import pytest
 import os
 from typing import List
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
-from cl.runtime.testing.stack_util import StackUtil
+from cl.runtime.context.env_util import EnvUtil
 from cl.convince.llms.completion_cache import CompletionCache
 
 module_path = __file__.removesuffix(".py")
@@ -149,7 +149,7 @@ def test_function():
     """Stub test function without a class."""
 
     # Test calling from a function
-    base_dir = StackUtil.get_base_dir()
+    base_dir = EnvUtil.get_base_dir()
     _perform_testing(base_dir)
 
 
@@ -160,7 +160,7 @@ class TestClass:
         """Stub test method inside pytest class."""
 
         # Test calling from a method
-        base_dir = StackUtil.get_base_dir()
+        base_dir = EnvUtil.get_base_dir()
         _perform_testing(base_dir)
 
 
