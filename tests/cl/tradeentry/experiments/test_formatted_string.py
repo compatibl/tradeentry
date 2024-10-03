@@ -14,9 +14,7 @@
 
 import pytest
 from typing import Dict
-
 from matplotlib import pyplot as plt
-
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.regression_guard import RegressionGuard
@@ -103,9 +101,7 @@ def _testing_formatted_string(trade_description: str, run_count: int) -> plt.Fig
 
             guard_checker = RegressionGuard(channel=f"{llm.llm_id}-checker")
             if isinstance(json_result, Dict):
-                json_checker_output = StubFormattedStringChecker(trade_description, FIELDS).check_answer(
-                    json_result
-                )
+                json_checker_output = StubFormattedStringChecker(trade_description, FIELDS).check_answer(json_result)
                 for field in field_names:
                     if json_checker_output[field]["status"] == "OK":
                         results[field] += 1
@@ -124,7 +120,7 @@ def _testing_formatted_string(trade_description: str, run_count: int) -> plt.Fig
         bar_labels=plot_bar_labels,
         group_labels=plot_group_labels,
         values=normalized_plot_values,
-        value_ticks = list(range(0, 101, 10)),
+        value_ticks=list(range(0, 101, 10)),
     )
     plot.save_png()
 
