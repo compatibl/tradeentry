@@ -18,7 +18,6 @@ import inspect
 import pkgutil
 from typing import List
 import attrs
-
 from cl.runtime.settings.context_settings import ContextSettings
 
 
