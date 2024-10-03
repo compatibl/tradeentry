@@ -33,16 +33,17 @@ class EnvUtil:
         if test_module_pattern is not None:
             # TODO: test_module_pattern custom patterns
             raise RuntimeError("Custom test module patterns are not yet supported.")
+        test_module_pattern = "test_"
 
         stack = inspect.stack()
         for frame_info in stack:
             filename = os.path.basename(frame_info.filename)
-            if filename.startswith("test_") and filename.endswith(".py"):
+            if filename.startswith(test_module_pattern) and filename.endswith(".py"):
                 return True
         return False
 
     @classmethod
-    def get_base_dir(
+    def get_env_dir(
         cls,
         *,
         default_dir: str | None = None,
@@ -57,18 +58,29 @@ class EnvUtil:
 
         Args:
             default_dir: When not running inside a test, return this directory if specified, error if not specified
-            test_function_pattern: Glob pattern to identify the test function or method in stack frame,
-            defaults to 'test_*'
+            test_function_pattern: Glob pattern for function or method in stack frame, defaults to 'test_*'
         """
-        return cls._get_base_dir_or_path(
-            dot_delimited=False, default_dir=default_dir, test_function_pattern=test_function_pattern
+        result = cls._get_test_env_dir_or_name(
+            is_name=False,
+            test_function_pattern=test_function_pattern,
         )
 
+        # If the end of the frame is reached and no function or method starting from test_ is found,
+        # the function was not called from inside a test and default_dir will be returned if specified
+        if result is None:
+            if default_dir is not None and default_dir != "":
+                result = default_dir
+            else:
+                RuntimeError(
+                    f"Not invoked inside a function or method that starts from '{test_function_pattern}' "
+                    f"and 'default_dir' is None or empty."
+                )
+        return result
+
     @classmethod
-    def get_base_path(
+    def get_env_name(
         cls,
         *,
-        default_dir: str | None = None,
         test_function_pattern: str | None = None,
     ) -> str:
         """
@@ -79,31 +91,34 @@ class EnvUtil:
             Implemented by searching the stack frame for 'test_' or a custom test function name pattern.
 
         Args:
-            default_dir: When not running inside a test, return this directory if specified, error if not specified
-            test_function_pattern: Glob pattern to identify the test function or method in stack frame,
-            defaults to 'test_*'
+            test_function_pattern: Glob pattern for function or method in stack frame, defaults to 'test_*'
         """
-        return cls._get_base_dir_or_path(
-            dot_delimited=True, default_dir=default_dir, test_function_pattern=test_function_pattern
+
+        # Get test environment if inside test
+        result = cls._get_test_env_dir_or_name(
+            is_name=True,
+            test_function_pattern=test_function_pattern,
         )
 
+        # Otherwise assign default name
+        if result is None:
+            result = "main"
+        return result
+
     @classmethod
-    def _get_base_dir_or_path(
+    def _get_test_env_dir_or_name(
         cls,
         *,
-        dot_delimited: bool,
-        default_dir: str | None = None,
+        is_name: bool,
         test_function_pattern: str | None = None,
-    ) -> str:
+    ) -> str | None:
         """
         Return test_module.test_function or test_module.test_class.test_function by searching the stack frame
         for 'test_' or a custom test function name pattern.
 
         Args:
-            dot_delimited: If True, test module, class and method are dot-delimited rather than directory levels
-            default_dir: When not running inside a test, return this directory if specified, error if not specified
-            test_function_pattern: Glob pattern to identify the test function or method in stack frame,
-            defaults to 'test_*'
+            is_name: If True, return dot delimited name, otherwise return directory path
+            test_function_pattern: Glob pattern for function or method in stack frame, defaults to 'test_*'
         """
 
         if test_function_pattern is not None:
@@ -113,7 +128,7 @@ class EnvUtil:
 
         stack = inspect.stack()
         for frame_info in stack:
-            if frame_info.function.startswith("test_"):
+            if frame_info.function.startswith(test_function_pattern):
                 frame_globals = frame_info.frame.f_globals
                 module_file = frame_globals["__file__"]
                 test_name = frame_info.function
@@ -125,8 +140,8 @@ class EnvUtil:
                 else:
                     raise RuntimeError(f"Test module file {module_file} does not end with '.py'.")
 
-                # Determine delimiter based on dot_delimited flag
-                delim = "." if dot_delimited else os.sep
+                # Determine delimiter based on is_name flag
+                delim = "." if is_name else os.sep
 
                 module_dir = os.path.dirname(module_file_without_ext)
                 module_name = os.path.basename(module_file_without_ext)
@@ -151,15 +166,9 @@ class EnvUtil:
                             result = delim.join((module_name, test_name))
                         else:
                             result = module_name
-                result = os.path.join(module_dir, result)
+                if not is_name:
+                    result = os.path.join(module_dir, result)
                 return result
 
-        # If the end of the frame is reached and no function or method starting from test_ is found,
-        # the function was not called from inside a test and default_dir will be returned if specified
-        if default_dir is not None and default_dir != "":
-            return default_dir
-        else:
-            RuntimeError(
-                f"Not invoked inside a function or method that starts from '{test_function_pattern}' "
-                f"and 'default_dir' is None or empty."
-            )
+        # Not inside test, return None
+        return None

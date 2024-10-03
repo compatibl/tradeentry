@@ -16,60 +16,48 @@ import pytest
 import os
 from cl.runtime.context.env_util import EnvUtil
 
-# TODO: Add tests for get_base_path
+
+def _test_env_dir_and_name(*, expected_name: str):
+    """Test for EnvUtil.env_dir and EnvUtil.env_name."""
+    dir_name = os.path.dirname(__file__)
+    expected_dir = os.path.join(dir_name, expected_name.replace(".", os.sep))
+    assert EnvUtil.get_env_name() == expected_name
+    assert os.path.normpath(EnvUtil.get_env_dir()) == os.path.normpath(expected_dir)
 
 
-def test_stack_util():
+def test_env_util():
     """Method name matches module name, shortened path"""
-    dir_name = os.path.dirname(__file__)
-    expected_result = os.path.join(dir_name, "test_stack_util")
-    result = EnvUtil.get_base_dir()
-    assert result == expected_result
+    _test_env_dir_and_name(expected_name="test_env_util")
 
 
-def test_get_base_path_in_function():
+def test_in_function():
     """Function name does not match module name, two-token path."""
-    dir_name = os.path.dirname(__file__)
-    expected_result = os.path.join(dir_name, "test_stack_util", "test_get_base_path_in_function")
-    result = EnvUtil.get_base_dir()
-    assert result == expected_result
+    _test_env_dir_and_name(expected_name="test_env_util.test_in_function")
 
 
 class TestClass:
     """Stub pytest class."""
 
-    def test_stack_util(self):
+    def test_env_util(self):
         """Method name matches module name, still three-token path as they are not next to each other."""
-        """Function name does not match module name, two-token path."""
-        dir_name = os.path.dirname(__file__)
-        expected_result = os.path.join(dir_name, "test_stack_util", "test_class", "test_stack_util")
-        result = EnvUtil.get_base_dir()
-        assert result == expected_result
+        _test_env_dir_and_name(expected_name="test_env_util.test_class.test_env_util")
 
-    def test_get_base_path_in_method(self):
+    def test_in_method(self):
         """Method name does not match class name or module name, three-token path"""
-        dir_name = os.path.dirname(__file__)
-        expected_result = os.path.join(dir_name, "test_stack_util", "test_class", "test_get_base_path_in_method")
-        result = EnvUtil.get_base_dir()
-        assert result == expected_result
+        _test_env_dir_and_name(expected_name="test_env_util.test_class.test_in_method")
 
 
 class TestEnvUtil:
     """Stub pytest class with name matching the module."""
 
-    def test_stack_util(self):
+    def test_env_util(self):
         """All three match, one-token path."""
-        dir_name = os.path.dirname(__file__)
-        expected_result = os.path.join(dir_name, "test_stack_util")
-        result = EnvUtil.get_base_dir()
-        assert result == expected_result
+        """Method name matches module name, still three-token path as they are not next to each other."""
+        _test_env_dir_and_name(expected_name="test_env_util")
 
-    def test_get_base_path_in_method(self):
+    def test_in_method(self):
         """Method name does not match class name or module name which match, two-token path"""
-        dir_name = os.path.dirname(__file__)
-        expected_result = os.path.join(dir_name, "test_stack_util", "test_get_base_path_in_method")
-        result = EnvUtil.get_base_dir()
-        assert result == expected_result
+        _test_env_dir_and_name(expected_name="test_env_util.test_in_method")
 
 
 if __name__ == "__main__":

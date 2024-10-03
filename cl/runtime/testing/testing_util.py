@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 from cl.runtime.context.env_util import EnvUtil
 
 
@@ -32,17 +31,13 @@ class TestingUtil:
         test_function_pattern: str | None = None,
     ) -> str | None:
         """
-        Return dot-delimited test name in 'module.test_function' or 'module.TestClass.test_method' format
-        by searching the stack frame for 'test_' or a custom test function name pattern.
+        Return dot-delimited test name in 'module.test_function' or 'module.test_class.test_method' format,
+        collapsing levels with identical name into one.
 
         Args:
-            test_function_pattern: Glob pattern to identify the test function or method in stack frame,
-            defaults to 'test_*'
+            test_function_pattern: Glob pattern for function or method in stack frame, defaults to 'test_*'
         """
 
-        # Perform stack introspection
-        base_path = EnvUtil.get_base_path(test_function_pattern=test_function_pattern)
-
-        # Result is the last token in path
-        result = os.path.basename(base_path)
+        # Performs stack introspection
+        result = EnvUtil.get_env_name(test_function_pattern=test_function_pattern)
         return result

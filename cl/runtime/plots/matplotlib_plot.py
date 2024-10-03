@@ -53,7 +53,7 @@ class MatplotlibPlot(Plot):
         fig = self._create_figure()
 
         # Create directory if does not exist
-        base_dir = EnvUtil.get_base_dir()
+        base_dir = EnvUtil.get_env_dir()
         if not os.path.exists(base_dir):
             os.makedirs(base_dir)
 
