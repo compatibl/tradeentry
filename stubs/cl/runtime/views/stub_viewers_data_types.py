@@ -15,7 +15,6 @@
 import os.path
 from dataclasses import dataclass
 from logging import getLogger
-from cl.runtime.decorators.viewer_decorator import viewer
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.views.binary_content import BinaryContent
 from cl.runtime.views.binary_content_type_enum import BinaryContentTypeEnum
@@ -31,7 +30,6 @@ class StubViewersDataTypes(StubViewersDataTypesKey, RecordMixin[StubViewersDataT
     def get_key(self) -> StubViewersDataTypesKey:
         return StubViewersDataTypesKey(stub_id=self.stub_id)
 
-    @viewer
     def view_pdf(self) -> BinaryContent:
         """Shows a PDF document."""
 

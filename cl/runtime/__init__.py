@@ -1,5 +1,3 @@
-from cl.runtime.decorators.handler_decorator import handler
-from cl.runtime.decorators.viewer_decorator import viewer
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.records.key_util import KeyUtil
 from cl.runtime.records.record_mixin import RecordMixin

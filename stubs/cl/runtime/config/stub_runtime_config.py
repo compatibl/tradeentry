@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime import handler
 from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.backend.core.user_key import UserKey
 from cl.runtime.config.config import Config
@@ -41,7 +40,6 @@ from stubs.cl.runtime.views.stub_viewers_data_types import StubViewersDataTypes
 class StubRuntimeConfig(Config):
     """Save stub records to storage."""
 
-    @handler
     def run_configure(self) -> None:
         """Populate the current or default database with stub records."""
 
@@ -100,7 +98,6 @@ class StubRuntimeConfig(Config):
         # save stubs to db
         db.save_many(all_records)
 
-    @handler
     def run_configure_plots(self) -> None:
         """Configure plots."""
 

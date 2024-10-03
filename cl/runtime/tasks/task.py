@@ -16,7 +16,6 @@ from abc import ABC
 from abc import abstractmethod
 from dataclasses import dataclass
 from cl.runtime.context.context import Context
-from cl.runtime.decorators.handler_decorator import handler
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
@@ -44,12 +43,10 @@ class Task(TaskKey, RecordMixin[TaskKey], ABC):
     def get_key(self) -> TaskKey:
         return TaskKey(task_id=self.task_id)
 
-    @handler
     @abstractmethod
     def execute(self) -> None:
         """Invoked by the queue to which the task is submitted."""
 
-    @handler
     def run_submit(self, queue: TaskQueueKey) -> TaskRunKey:
         """Submit task to the specified queue."""
 

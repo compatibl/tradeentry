@@ -12,19 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import datetime as dt
 import inspect
 from dataclasses import dataclass
 from logging import getLogger
-from typing import Any
 from cl.runtime.context.context import Context
-from cl.runtime.decorators.handler_decorator import handler
-from cl.runtime.records.dataclasses_extensions import field
-from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
-from stubs.cl.runtime.records.enum.stub_int_enum import StubIntEnum
 
 _logger = getLogger(__name__)
 
@@ -58,12 +52,10 @@ class StubHandlers(StubHandlersKey, RecordMixin[StubHandlersKey]):
     def get_key(self) -> StubHandlersKey:
         return StubHandlersKey(stub_id=self.stub_id)
 
-    @handler
     def run_instance_method_1a(self) -> None:
         """Stub handler."""
         log_method_info(__name__)
 
-    @handler()
     def run_instance_method_1b(self) -> None:
         """Stub handler."""
         log_method_info(__name__)
@@ -93,13 +85,11 @@ class StubHandlers(StubHandlersKey, RecordMixin[StubHandlersKey]):
     #     log_method_info(__name__)
 
     @classmethod
-    @handler
     def run_class_method_1a(cls) -> None:
         """Stub handler."""
         log_method_info(__name__)
 
     @classmethod
-    @handler()
     def run_class_method_1b(cls) -> None:
         """Stub handler."""
         log_method_info(__name__)
@@ -133,13 +123,11 @@ class StubHandlers(StubHandlersKey, RecordMixin[StubHandlersKey]):
     #     log_method_info(__name__)
 
     @staticmethod
-    @handler
     def run_static_method_1a() -> None:
         """Stub handler."""
         log_method_info(__name__)
 
     @staticmethod
-    @handler()
     def run_static_method_1b() -> None:
         """Stub handler."""
         log_method_info(__name__)
@@ -204,12 +192,10 @@ class StubHandlers(StubHandlersKey, RecordMixin[StubHandlersKey]):
     #     """Stub method."""
     #     return from_
 
-    @handler
     def run_with_error(self):
         """Stub method."""
         raise RuntimeError("Error in handler.")
 
-    @handler
     def run_save_to_db(self):
         log_method_info(__name__)
         db = Context.current().db

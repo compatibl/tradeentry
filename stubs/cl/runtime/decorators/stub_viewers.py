@@ -14,11 +14,9 @@
 
 from dataclasses import dataclass
 from logging import getLogger
-from typing import Dict
 from typing import List
 from typing import Optional
 from typing_extensions import Self
-from cl.runtime.decorators.viewer_decorator import viewer
 from cl.runtime.records.record_mixin import RecordMixin
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassRecordKey
@@ -34,7 +32,6 @@ class StubViewers(StubViewersKey, RecordMixin[StubViewersKey]):
     def get_key(self) -> StubViewersKey:
         return StubViewersKey(stub_id=self.stub_id)
 
-    @viewer
     def view_instance_1a(self):
         """Stub viewer with UI element."""
         return {
@@ -45,22 +42,18 @@ class StubViewers(StubViewersKey, RecordMixin[StubViewersKey]):
             "WordWrap": None,
         }
 
-    @viewer()
     def view_instance_1b(self) -> Optional[str]:
         """Stub viewer with an empty data."""
         return None
 
-    @viewer
     def view_instance_1c(self) -> StubViewersKey:
         """Stub viewer with key data."""
         return self.get_key()
 
-    @viewer
     def view_instance_1d(self) -> Self:
         """Stub viewer with record data."""
         return self
 
-    @viewer
     def view_instance_2a(self) -> List[StubDataclassRecordKey]:
         """Stub viewer with list of keys."""
         return [
@@ -69,7 +62,6 @@ class StubViewers(StubViewersKey, RecordMixin[StubViewersKey]):
             StubDataclassRecordKey(id="Key 3"),
         ]
 
-    @viewer
     def view_instance_2b(self) -> List[StubDataclassDerivedRecord]:
         """Stub viewer with list of records."""
         return [
@@ -78,12 +70,10 @@ class StubViewers(StubViewersKey, RecordMixin[StubViewersKey]):
             StubDataclassDerivedRecord(id="Record 3"),
         ]
 
-    @viewer
     def view_instance_2c(self) -> List[Self]:
         """Stub viewer with list of current type's records."""
         return [StubViewers(stub_id="Record 1"), StubViewers(stub_id="Record 2"), StubViewers(stub_id="Record 3")]
 
-    @viewer
     def view_instance_3a(self, param1: str = "Test", param2: str = None):
         """Stub viewer with optional parameters."""
 

@@ -17,7 +17,6 @@ from pathlib import Path
 import pandas as pd
 from cl.runtime import Context
 from cl.runtime import RecordMixin
-from cl.runtime import viewer
 from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.plots.confusion_matrix_plot import ConfusionMatrixPlot
 from cl.runtime.plots.confusion_matrix_plot_style import ConfusionMatrixPlotStyle
@@ -49,8 +48,7 @@ class StubPlots(StubPlotsKey, RecordMixin[StubPlotsKey]):
 
         return matrix_plot
 
-    @viewer
-    def confusion_matrix_plot_png_view(self):
+    def view_confusion_matrix_plot_png(self):
         """Png viewer for MatplotlibPlot with theme."""
 
         # Create ConfusionMatrixPlot instance
@@ -59,8 +57,7 @@ class StubPlots(StubPlotsKey, RecordMixin[StubPlotsKey]):
         # Return PngView
         return matrix_plot.get_view()
 
-    @viewer
-    def confusion_matrix_plot_view_with_record(self):
+    def view_confusion_matrix_plot_with_record(self):
         """Plot viewer for MatplotlibPlot as record with theme."""
 
         # Create ConfusionMatrixPlot instance
@@ -69,8 +66,7 @@ class StubPlots(StubPlotsKey, RecordMixin[StubPlotsKey]):
         # Return PlotView
         return PlotView(plot=matrix_plot)
 
-    @viewer
-    def confusion_matrix_plot_view_with_key(self):
+    def view_confusion_matrix_plot_with_key(self):
         """Plot viewer for MatplotlibPlot as key with theme."""
 
         # Create ConfusionMatrixPlot instance
