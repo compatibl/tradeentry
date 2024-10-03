@@ -20,7 +20,7 @@ from typing_extensions import Self
 from cl.runtime.records.record_mixin import RecordMixin
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassRecordKey
-from stubs.cl.runtime.decorators.stub_viewers_key import StubViewersKey
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_viewers_key import StubViewersKey
 
 _logger = getLogger(__name__)
 

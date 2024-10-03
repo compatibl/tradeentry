@@ -24,7 +24,7 @@ from cl.runtime.tasks.task_queue_key import TaskQueueKey
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_status_enum import TaskStatusEnum
 from cl.runtime.testing.pytest.pytest_fixtures import celery_test_queue_fixture
-from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
+from stubs.cl.runtime import StubHandlers
 
 context_serializer = DictSerializer()
 """Serializer for the context parameter of 'execute_task' method."""

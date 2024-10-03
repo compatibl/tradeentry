@@ -18,7 +18,7 @@ from logging import getLogger
 from cl.runtime.context.context import Context
 from cl.runtime.records.record_mixin import RecordMixin
 from stubs.cl.runtime import StubDataclassRecord
-from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_handlers_key import StubHandlersKey
 
 _logger = getLogger(__name__)
 

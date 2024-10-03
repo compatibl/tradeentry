@@ -20,7 +20,7 @@ from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.entity.panel_request import PanelRequest
 from cl.runtime.routers.entity.panel_response_util import PanelResponseUtil
 from cl.runtime.serialization.string_serializer import StringSerializer
-from stubs.cl.runtime.decorators.stub_viewers import StubViewers
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_viewers import StubViewers
 
 # create stub with viewers
 stub_viewers = StubViewers()

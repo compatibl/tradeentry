@@ -26,8 +26,8 @@ from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.tasks.instance_method_task import InstanceMethodTask
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_status_enum import TaskStatusEnum
-from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
-from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
+from stubs.cl.runtime import StubHandlers
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_handlers_key import StubHandlersKey
 
 # Create handler tasks
 tasks = [

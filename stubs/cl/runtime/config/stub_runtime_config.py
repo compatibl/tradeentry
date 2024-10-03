@@ -30,10 +30,10 @@ from stubs.cl.runtime import StubDataclassOtherDerivedRecord
 from stubs.cl.runtime import StubDataclassPrimitiveFields
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassSingleton
-from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
-from stubs.cl.runtime.decorators.stub_viewers import StubViewers
-from stubs.cl.runtime.views.stub_plots import StubPlots
-from stubs.cl.runtime.views.stub_viewers_data_types import StubViewersDataTypes
+from stubs.cl.runtime import StubHandlers
+from stubs.cl.runtime import StubViewers
+from stubs.cl.runtime import StubPlots
+from stubs.cl.runtime import StubViewersDataTypes
 
 
 @dataclass(slots=True, kw_only=True)
