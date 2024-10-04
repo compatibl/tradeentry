@@ -213,8 +213,8 @@ class Settings(ABC):
             return _dynaconf_dir_path
         else:
             raise RuntimeError(
-                f"Cannot resolve relative preload path value {path} for {field_name} when "
-                "neither .env nor dynaconf settings file is present to use as project root."
+                "Cannot get project root because neither .env file nor dynaconf settings file are found. "
+                "Project root is defined based on the location of these two files (with .env having a priority)."
             )
 
     @classmethod
