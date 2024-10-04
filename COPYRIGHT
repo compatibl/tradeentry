@@ -1,15 +1,21 @@
-CompatibL Runtime Community Edition Copyright
+Copyright (C) 2023-present The Project Contributors
 
-Each individual contributor holds copyright over their contributions to the
-project. The project versioning is the sole means of recording all such
-contributions and copyright details. Specifying corporate affiliation or
-work email along with the commit shall have no bearing on copyright ownership
-and does not constitute copyright assignment to the employer. Submitting a
-contribution to this project constitutes your acceptance of these terms.
+1. Each contributor retains the copyright to their individual contributions
+to the project.
 
-Because individual contributions are often changes to the existing code,
-copyright notices in project files must specify The Project Contributors and
-never an individual copyright holder.
+2. The project's versioning system is the sole method for recording all
+individual contributions and the associated copyright details.
+
+3. Specifying corporate affiliation or a work email with a commit shall
+have no bearing on copyright ownership and does not constitute copyright
+assignment to the employer.
+
+4. Since individual contributions are often changes to the existing code,
+copyright notices in project files must specify The Project Contributors
+and never an individual copyright holder.
+
+5. Submitting a contribution to this project constitutes your acceptance
+of these terms.
 
 Sample copyright notice:
 
