@@ -255,14 +255,17 @@ class Settings(ABC):
             )
 
     @classmethod
-    def normalize_paths(cls, field_name: str, field_value: Iterable[str] | str) -> List[str]:
+    def normalize_paths(cls, field_name: str, field_value: Iterable[str] | str | None) -> List[str]:
         """
         Convert to absolute path if path relative to the location of .env or Dynaconf file is specified
         and convert to list if single value is specified.
         """
 
-        # Check that the argument is either a string or an iterable
-        if isinstance(field_value, str):
+        # Check that the argument is either None, a string or, an iterable
+        if field_value is None:
+            # Accept None and treat it as an empty list
+            return []
+        elif isinstance(field_value, str):
             paths = [field_value]
         elif hasattr(field_value, "__iter__"):
             paths = list(field_value)
@@ -276,14 +279,14 @@ class Settings(ABC):
         return result
 
     @classmethod
-    def normalize_path(cls, field_name: str, field_value: str) -> str:
+    def normalize_path(cls, field_name: str, field_value: str | None) -> str:
         """Convert to absolute path if path relative to the location of .env or Dynaconf file is specified."""
 
-        # Check that 'field_value' is a string
-        if isinstance(field_value, str):
-            path = field_value
-        elif field_value is None or field_value == "":
+        if field_value is None or field_value == "":
             raise RuntimeError(f"Field '{field_name}' in class '{cls.__name__}' has an empty element.")
+        elif isinstance(field_value, str):
+            # Check that 'field_value' is a string
+            path = field_value
         else:
             raise RuntimeError(
                 f"Field '{field_name}' in class '{cls.__name__}' has an element "
