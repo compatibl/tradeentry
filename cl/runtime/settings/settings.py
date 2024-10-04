@@ -42,18 +42,22 @@ is_inside_test = EnvUtil.is_inside_test()
 if is_inside_test:
     os.environ["CL_SETTINGS_ENV"] = "test"
 
+# Get submodules and repo root relative to this source file
+_submodules_root_dir = Path(__file__).parents[4]
+_repo_root_dir = Path(__file__).parents[3]
+
 _all_settings = Dynaconf(
     environments=True,
     envvar_prefix="CL",
     env_switcher="CL_SETTINGS_ENV",
     envvar="CL_SETTINGS_FILE",
     settings_files=[
-        # Look in the repo root first (for monorepo configuration)
-        "../../../settings.yaml",
-        "../../../.secrets.yaml",
-        # Submodules root takes priority over the repo root if found (for submodules configuration)
-        "../../../../settings.yaml",
-        "../../../../.secrets.yaml"
+        # Repo root (location for monorepo configuration) is second priority, submodules root will override if found
+        os.path.normpath(os.path.join(_repo_root_dir, "settings.yaml")),
+        os.path.normpath(os.path.join(_repo_root_dir, ".secrets.yaml")),
+        # Submodules root (location for submodules configuration) is first priority, listed last and will override
+        os.path.normpath(os.path.join(_submodules_root_dir, "settings.yaml")),
+        os.path.normpath(os.path.join(_submodules_root_dir, ".secrets.yaml")),
     ],
     dotenv_override=True,
 )
@@ -88,11 +92,6 @@ _dotenv_file_path = find_dotenv_output if (find_dotenv_output := find_dotenv()) 
 
 _dotenv_dir_path = os.path.dirname(_dotenv_file_path) if _dotenv_file_path is not None else None
 """Absolute path to .env directory if found, None otherwise."""
-
-# TODO (Roman): make _main_path unrelated to __file__
-_main_path = Path(__file__).parents[1].joinpath("__main__.py")
-"""Path to __main__.py file as entrypoint of program."""
-
 
 @dataclass(slots=True, kw_only=True)
 class Settings(ABC):
@@ -228,17 +227,12 @@ class Settings(ABC):
         return db_dir
 
     @classmethod
-    def get_main_path(cls) -> Path:
-        """Returns path to __main__.py file."""
-        return _main_path
-
-    @classmethod
     def get_wwwroot_dir(cls) -> str:
         """Returns path to wwwroot directory containing ui static files."""
 
         # Look at submodules root first and then at repo root, do not search other directories
-        at_submodules_root = os.path.normpath(cls.get_main_path().parents[3] / "wwwroot")
-        at_repo_root = os.path.normpath(cls.get_main_path().parents[2] / "wwwroot")
+        at_submodules_root = os.path.normpath(_submodules_root_dir / "wwwroot")
+        at_repo_root = os.path.normpath(_repo_root_dir / "wwwroot")
 
         if os.path.exists(at_submodules_root):
             # The directory at submodules root takes priority if both exist
