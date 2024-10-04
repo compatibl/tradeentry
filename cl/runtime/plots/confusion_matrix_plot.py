@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 from dataclasses import dataclass
 from typing import List
 from typing import Tuple
@@ -26,7 +25,6 @@ from cl.runtime.plots.matplotlib_plot import MatplotlibPlot
 from cl.runtime.plots.matplotlib_util import MatplotlibUtil
 from cl.runtime.plots.matrix_util import MatrixUtil
 from cl.runtime.records.dataclasses_extensions import field
-from cl.runtime.testing.stack_util import StackUtil
 
 
 @dataclass(slots=True, kw_only=True)
