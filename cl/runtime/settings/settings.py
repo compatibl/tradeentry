@@ -237,8 +237,8 @@ class Settings(ABC):
         """Returns path to wwwroot directory containing ui static files."""
 
         # Look at submodules root first and then at repo root, do not search other directories
-        at_submodules_root = cls.get_main_path().parents[3] / "wwwroot"
-        at_repo_root = cls.get_main_path().parents[2] / "wwwroot"
+        at_submodules_root = os.path.normpath(cls.get_main_path().parents[3] / "wwwroot")
+        at_repo_root = os.path.normpath(cls.get_main_path().parents[2] / "wwwroot")
 
         if os.path.exists(at_submodules_root):
             # The directory at submodules root takes priority if both exist
@@ -249,7 +249,7 @@ class Settings(ABC):
         else:
             raise RuntimeError(
                 f"Browser client not found. If installed from GitHub, use 'main' branch to run.\n"
-                f"Directories searched (in priority order):\n"
+                f"Directories searched for static JS files (in priority order):\n"
                 f"  - {at_submodules_root}\n"
                 f"  - {at_repo_root}\n"
             )
