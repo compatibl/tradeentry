@@ -128,21 +128,14 @@ if __name__ == "__main__":
         # Execute configure for each config_id specified in PreloadSettings.configs
         PreloadSettings.instance().configure()
 
-        # Find wwwroot directory relative to the location of __main__ rather than project root
-        wwwroot_dir = Settings.get_static_files_path()
+        # Find wwwroot directory, error if not found
+        wwwroot_dir = Settings.get_wwwroot_dir()
 
-        if os.path.exists(wwwroot_dir):
-            # Launch UI if ui_path is found
-            server_app.mount("/", StaticFiles(directory=wwwroot_dir, html=True))
-            # Open new browser tab in the default browser
-            webbrowser.open_new_tab(f"http://{api_settings.host_name}:{api_settings.port}")
-        else:
-            raise RuntimeError(
-                f"Browser client JS directory {wwwroot_dir} is not found.\n"
-                f"  - If installed from GitHub:\n"
-                f"    - Use 'main' branch to run REST API and browser client from __main__ (includes wwwroot)\n"
-                f"    - Use 'main-sdk' branch to make calls from Python code only (excludes wwwroot)\n"
-            )
+        # Mount static client files
+        server_app.mount("/", StaticFiles(directory=wwwroot_dir, html=True))
+
+        # Open new browser tab in the default browser
+        webbrowser.open_new_tab(f"http://{api_settings.host_name}:{api_settings.port}")
 
         # Run Uvicorn using hostname and port specified by Dynaconf
         api_settings = ApiSettings.instance()

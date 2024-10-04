@@ -226,9 +226,24 @@ class Settings(ABC):
         return _main_path
 
     @classmethod
-    def get_static_files_path(cls) -> Path:
+    def get_wwwroot_dir(cls) -> str:
         """Returns path to wwwroot directory containing ui static files."""
-        return cls.get_main_path().parents[2] / "wwwroot"
+
+        # Look at either runtime root or submodules root, do not search any further up
+        at_runtime_root = cls.get_main_path().parents[2] / "wwwroot"
+        at_submodules_root = cls.get_main_path().parents[3] / "wwwroot"
+
+        if os.path.exists(at_runtime_root):
+            return str(at_runtime_root)
+        elif os.path.exists(at_submodules_root):
+            return str(at_submodules_root)
+        else:
+            raise RuntimeError(
+                f"Browser client not found. If installed from GitHub, use 'main' branch to run.\n"
+                f"Directories searched:\n"
+                f"  - {at_runtime_root}\n"
+                f"  - {at_submodules_root}\n"
+            )
 
     @classmethod
     def normalize_paths(cls, field_name: str, field_value: Iterable[str] | str) -> List[str]:
