@@ -47,7 +47,14 @@ _all_settings = Dynaconf(
     envvar_prefix="CL",
     env_switcher="CL_SETTINGS_ENV",
     envvar="CL_SETTINGS_FILE",
-    settings_files=["settings.yaml", ".secrets.yaml"],
+    settings_files=[
+        # Look in the repo root first (for monorepo configuration)
+        "../../../settings.yaml",
+        "../../../.secrets.yaml",
+        # Submodules root takes priority over the repo root if found (for submodules configuration)
+        "../../../../settings.yaml",
+        "../../../../.secrets.yaml"
+    ],
     dotenv_override=True,
 )
 """
@@ -229,20 +236,22 @@ class Settings(ABC):
     def get_wwwroot_dir(cls) -> str:
         """Returns path to wwwroot directory containing ui static files."""
 
-        # Look at either runtime root or submodules root, do not search any further up
-        at_runtime_root = cls.get_main_path().parents[2] / "wwwroot"
+        # Look at submodules root first and then at repo root, do not search other directories
         at_submodules_root = cls.get_main_path().parents[3] / "wwwroot"
+        at_repo_root = cls.get_main_path().parents[2] / "wwwroot"
 
-        if os.path.exists(at_runtime_root):
-            return str(at_runtime_root)
-        elif os.path.exists(at_submodules_root):
+        if os.path.exists(at_submodules_root):
+            # The directory at submodules root takes priority if both exist
             return str(at_submodules_root)
+        elif os.path.exists(at_repo_root):
+            # Repo root if not found at submodules root
+            return str(at_repo_root)
         else:
             raise RuntimeError(
                 f"Browser client not found. If installed from GitHub, use 'main' branch to run.\n"
-                f"Directories searched:\n"
-                f"  - {at_runtime_root}\n"
+                f"Directories searched (in priority order):\n"
                 f"  - {at_submodules_root}\n"
+                f"  - {at_repo_root}\n"
             )
 
     @classmethod
