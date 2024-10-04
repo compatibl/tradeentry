@@ -13,6 +13,9 @@
 # limitations under the License.
 
 from enum import IntEnum
+from types import DynamicClassAttribute
+
+from inflection import camelize
 
 
 class TaskStatusEnum(IntEnum):
@@ -21,20 +24,20 @@ class TaskStatusEnum(IntEnum):
     optionally Paused state and ending in one of Completed, Failed, or Cancelled states.
     """
 
-    Pending = 1
+    PENDING = 1
     """The task has been submitted to the queue but is not yet running."""
 
-    Running = 2
+    RUNNING = 2
     """The task is running."""
 
-    Paused = 3
+    PAUSED = 3
     """The task is paused."""
 
-    Completed = 4
+    COMPLETED = 4
     """The task has been completed (successful completion)."""
 
-    Failed = 5
+    FAILED = 5
     """The task has failed (this status is distinct from 'Cancelled')."""
 
-    Cancelled = 6
+    CANCELLED = 6
     """The task has been cancelled (this status is distinct from 'Failed')."""

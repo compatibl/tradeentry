@@ -40,7 +40,7 @@ class TaskResultResponseItem(BaseModel):
     """Key of the record."""
 
     class Config:
-        alias_generator = StringUtil.to_pascal_case
+        alias_generator = StringUtil.snake_to_pascal_case
         populate_by_name = True
 
     @classmethod

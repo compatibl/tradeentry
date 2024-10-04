@@ -45,8 +45,6 @@ def test_data_serialization():
         StubDataclassPrimitiveFields,
         StubDataclassSingleton,
         # TODO: Support serialization of classes with cyclic references
-        # StubDataclassCyclicA,
-        # StubDataclassCyclicB,
     ]
 
     serializer = DictSerializer()

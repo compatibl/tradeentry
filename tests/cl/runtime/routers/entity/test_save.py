@@ -33,6 +33,7 @@ def test_method():
 
         save_new_record_result = SaveResponse.save_entity(save_new_record_request_obj)
         new_record_in_db = context.load_one(StubDataclassDerivedRecord, StubDataclassRecordKey(id="new_record"))
+        records_count = len(list(context.load_all(StubDataclassDerivedRecord)))
 
         # Check if the result is a SaveResponse instance
         assert isinstance(save_new_record_result, SaveResponse)
@@ -40,6 +41,8 @@ def test_method():
         assert new_record_in_db is not None
         assert new_record_in_db.id == "new_record"
         assert new_record_in_db.derived_field == "test"
+        # DB should only contain the created record
+        assert records_count == 1
 
         # Test updating existing record
         update_record_payload = {
@@ -55,6 +58,7 @@ def test_method():
         updated_record_in_db = context.load_one(
             StubDataclassDerivedRecord, StubDataclassRecordKey(id="existing_record")
         )
+        records_count = len(list(context.load_all(StubDataclassDerivedRecord)))
 
         # Check if the result is a SaveResponse instance
         assert isinstance(update_record_result, SaveResponse)
@@ -63,6 +67,8 @@ def test_method():
         assert updated_record_in_db is not None
         assert updated_record_in_db.id == "existing_record"
         assert updated_record_in_db.derived_field == "new_value"
+        # DB should only contain the created record + the updated record
+        assert records_count == 2
 
 
 def test_api():
@@ -86,14 +92,17 @@ def test_api():
             )
             save_new_record_json = save_new_record_response.json()
             new_record_in_db = context.load_one(StubDataclassDerivedRecord, StubDataclassRecordKey(id="new_record"))
+            records_count = len(list(context.load_all(StubDataclassDerivedRecord)))
 
             assert save_new_record_response.status_code == 200
             # Check that response contains the key of the new record
-            assert save_new_record_json.get("Key") is not None
-            assert save_new_record_json["Key"] == "new_record"
+            assert save_new_record_json.get("key") is not None
+            assert save_new_record_json["key"] == "new_record"
             assert new_record_in_db is not None
             assert new_record_in_db.id == "new_record"
             assert new_record_in_db.derived_field == "test"
+            # DB should only contain the created record
+            assert records_count == 1
 
             # Test updating existing record
             update_record_payload = {
@@ -115,14 +124,17 @@ def test_api():
             )
             update_record_json = update_record_response.json()
             updated_record_in_db = context.load_one(StubDataclassDerivedRecord, existing_record.get_key())
+            records_count = len(list(context.load_all(StubDataclassDerivedRecord)))
 
             assert update_record_response.status_code == 200
             # Check that response contains the key of the new record
-            assert update_record_json.get("Key") is not None
-            assert update_record_json["Key"] == "existing_record"
+            assert update_record_json.get("key") is not None
+            assert update_record_json["key"] == "existing_record"
             assert updated_record_in_db is not None
             assert updated_record_in_db.id == "existing_record"
             assert updated_record_in_db.derived_field == "new_value"
+            # DB should only contain the created record + the updated record
+            assert records_count == 2
 
 
 if __name__ == "__main__":

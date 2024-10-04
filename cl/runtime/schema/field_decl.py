@@ -215,6 +215,6 @@ class FieldDecl:
                 # Add to Schema
 
         else:
-            raise RuntimeError(f"Complex type {field_type} is not recognized when building data source schema.")
+            raise RuntimeError(f"Complex type {field_type} is not recognized when building database schema.")
 
         return result

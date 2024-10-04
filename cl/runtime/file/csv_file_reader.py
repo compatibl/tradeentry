@@ -27,7 +27,7 @@ serializer = FlatDictSerializer()
 
 @dataclass(slots=True, kw_only=True)
 class CsvFileReader(Reader):
-    """Load records from a single CSV file into the context data source."""
+    """Load records from a single CSV file into the context database."""
 
     record_type: Type
     """Absolute path to the CSV file including extension."""
@@ -46,7 +46,7 @@ class CsvFileReader(Reader):
             # Deserialize rows into records
             records = [self._deserialize_row(row_dict) for row_dict in csv_reader]
 
-            # Save records to the specified data source
+            # Save records to the specified database
             if records:
                 context.save_many(records)
 

@@ -24,7 +24,7 @@ from cl.runtime.tasks.task_queue_key import TaskQueueKey
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_status_enum import TaskStatusEnum
 from cl.runtime.testing.pytest.pytest_fixtures import celery_test_queue_fixture
-from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
+from stubs.cl.runtime import StubHandlers
 
 context_serializer = DictSerializer()
 """Serializer for the context parameter of 'execute_task' method."""
@@ -33,7 +33,7 @@ context_serializer = DictSerializer()
 def _create_task(task_id: str) -> Task:
     """Create a test task."""
 
-    method_callable = StubHandlers.static_handler_1a
+    method_callable = StubHandlers.run_static_method_1a
     result = StaticMethodTask.create(task_id=task_id, record_type=StubHandlers, method_callable=method_callable)
     return result
 
@@ -62,7 +62,7 @@ def test_method(celery_test_queue_fixture):
         task_run.task = task
         task_run.submit_time = submit_time
         task_run.update_time = submit_time
-        task_run.status = TaskStatusEnum.Pending
+        task_run.status = TaskStatusEnum.PENDING
 
         # Save task run record which means task is submitted
         context.save_one(task_run)

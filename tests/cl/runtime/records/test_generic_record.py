@@ -16,7 +16,7 @@ import pytest
 from typing import cast
 from cl.runtime.records.generic_key import GenericKey
 from cl.runtime.records.generic_record import GenericRecord
-from cl.runtime.view.view_key import ViewKey
+from cl.runtime.views.view_key import ViewKey
 
 
 @pytest.mark.skip("Generic keys and records are not yet supported.")

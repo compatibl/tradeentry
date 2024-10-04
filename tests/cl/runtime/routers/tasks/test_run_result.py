@@ -26,13 +26,13 @@ from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.tasks.instance_method_task import InstanceMethodTask
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_status_enum import TaskStatusEnum
-from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
-from stubs.cl.runtime.decorators.stub_handlers_key import StubHandlersKey
+from stubs.cl.runtime import StubHandlers
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_handlers_key import StubHandlersKey
 
 # Create handler tasks
 tasks = [
     InstanceMethodTask.from_key(
-        task_id=f"{i}", key=StubHandlersKey(stub_id=f"{i}"), method=StubHandlers.instance_handler_1a
+        task_id=f"{i}", key=StubHandlersKey(stub_id=f"{i}"), method=StubHandlers.run_instance_method_1a
     )
     for i in range(2)
 ]
@@ -45,7 +45,7 @@ task_keys_str = [key_serializer.serialize_key(task.get_key()) for task in tasks]
 t = DatetimeUtil.now()
 queue_key = handler_queue.get_key()
 task_runs = [
-    TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatusEnum.Completed, result=b"result")
+    TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatusEnum.COMPLETED, result=b"result")
     for task in tasks
 ]
 
@@ -56,7 +56,7 @@ key_str = key_serializer.serialize_key(stub_handlers.get_key())
 requests = [
     {
         "task_run_ids": [str(task_run.task_run_id) for task_run in task_runs],
-        "data_source": "DEPRECATED",
+        "db": "DEPRECATED",
         "dataset": "",
     }
 ]

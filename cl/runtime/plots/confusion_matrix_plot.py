@@ -22,16 +22,15 @@ from matplotlib import pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 from cl.runtime import Context
 from cl.runtime.plots.confusion_matrix_plot_style import ConfusionMatrixPlotStyle
-from cl.runtime.plots.confusion_matrix_plot_style_key import ConfusionMatrixPlotStyleKey
+from cl.runtime.plots.matplotlib_plot import MatplotlibPlot
 from cl.runtime.plots.matplotlib_util import MatplotlibUtil
 from cl.runtime.plots.matrix_util import MatrixUtil
-from cl.runtime.plots.plot import Plot
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.testing.stack_util import StackUtil
 
 
 @dataclass(slots=True, kw_only=True)
-class ConfusionMatrixPlot(Plot):
+class ConfusionMatrixPlot(MatplotlibPlot):
     """Confusion matrix visualization for a categorical experiment."""
 
     title: str = field()
@@ -49,17 +48,13 @@ class ConfusionMatrixPlot(Plot):
     y_label: str | None = "Correct"
     """y-axis label."""
 
-    style: ConfusionMatrixPlotStyleKey = field(default_factory=lambda: ConfusionMatrixPlotStyle())
-    """Color and layout options."""
-
-    def create_figure(self) -> plt.Figure:
-        # Load style object
-        style = Context.current().load_one(ConfusionMatrixPlotStyle, self.style)
+    def _create_figure(self) -> plt.Figure:
+        # Load style object or create with default settings if not specified
+        style = self._load_style()
+        theme = self._get_pyplot_theme(style=style)
 
         # TODO: consider moving
         data, annotation_text = self._create_confusion_matrix()
-
-        theme = "dark_background" if style.dark_theme else "default"
 
         with plt.style.context(theme):
             fig, axes = plt.subplots()
@@ -77,6 +72,13 @@ class ConfusionMatrixPlot(Plot):
             fig.tight_layout()
 
         return fig
+
+    def _load_style(self) -> ConfusionMatrixPlotStyle:
+        """Load style object or create with default settings if not specified."""
+        style = Context.current().load_one(ConfusionMatrixPlotStyle, self.style)
+        style = style if self.style is not None else ConfusionMatrixPlotStyle()
+
+        return style
 
     def _create_confusion_matrix(self) -> Tuple[pd.DataFrame, List[List[str]]]:
         raw_data = pd.DataFrame({"Actual": self.expected_categories, "Predicted": self.received_categories})

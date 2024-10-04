@@ -26,12 +26,12 @@ from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
 
 LEGACY_TASK_STATUS_NAMES_MAP: Dict[str, str] = {
-    "Pending": "Submitted",
-    "Running": "Running",
-    "Paused": "Paused",
-    "Completed": "Completed",
-    "Failed": "Failed",
-    "Cancelled": "Cancelled",
+    "PENDING": "Submitted",
+    "RUNNING": "Running",
+    "PAUSED": "Paused",
+    "COMPLETED": "Completed",
+    "FAILED": "Failed",
+    "CANCELLED": "Cancelled",
 }
 """Status name to legacy status name map according to ui convention."""
 
@@ -49,7 +49,7 @@ class TaskStatusResponseItem(BaseModel):
     """Task key."""
 
     class Config:
-        alias_generator = StringUtil.to_pascal_case
+        alias_generator = StringUtil.snake_to_pascal_case
         populate_by_name = True
 
     @classmethod

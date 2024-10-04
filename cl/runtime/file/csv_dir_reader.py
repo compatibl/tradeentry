@@ -17,12 +17,12 @@ from dataclasses import dataclass
 from cl.runtime.file.csv_file_reader import CsvFileReader
 from cl.runtime.file.reader import Reader
 from cl.runtime.schema.schema import Schema
-from cl.runtime.storage.protocols import DataSourceProtocol
+from cl.runtime.db.protocols import DbProtocol
 
 
 @dataclass(slots=True, kw_only=True)
 class CsvDirReader(Reader):
-    """Load records a CSV directory into the context data source."""
+    """Load records a CSV directory into the context database."""
 
     dir_path: str
     """Absolute path to the CSV directory where file naming convention is 'ClassName.csv'."""

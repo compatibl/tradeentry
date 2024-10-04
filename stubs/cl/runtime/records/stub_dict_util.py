@@ -14,7 +14,7 @@
 
 import datetime as dt
 from uuid import UUID
-from cl.runtime.storage.data_source_types import TDataDict
+from cl.runtime.records.protocols import TDataDict
 
 
 class StubDictUtil:

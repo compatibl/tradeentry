@@ -25,7 +25,7 @@ from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
 from cl.runtime.testing.pytest.pytest_fixtures import celery_test_queue_fixture
 from stubs.cl.runtime import StubDataclassRecord
-from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
+from stubs.cl.runtime import StubHandlers
 
 stub_handlers = StubHandlers()
 key_serializer = StringSerializer()
@@ -33,7 +33,7 @@ key_str = key_serializer.serialize_key(stub_handlers.get_key())
 
 simple_requests = [
     {
-        "data_source": "DEPRECATED",  # TODO: Review and remove
+        "db": "DEPRECATED",  # TODO: Review and remove
         "dataset": "",
         "table": "StubHandlers",
         "keys": [key_str],
@@ -48,7 +48,7 @@ simple_requests = [
 
 save_to_db_requests = [
     {
-        "data_source": "DEPRECATED",  # TODO: Review and remove
+        "db": "DEPRECATED",  # TODO: Review and remove
         "dataset": "",
         "table": "StubHandlers",
         "keys": [key_str],

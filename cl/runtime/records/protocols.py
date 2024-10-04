@@ -12,10 +12,49 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import datetime as dt
 from typing import Any
 from typing import Protocol
 from typing import Type
 from typing import TypeGuard
+from enum import Enum
+from typing import Dict
+from typing import List
+from typing import Literal
+from typing import Tuple
+from uuid import UUID
+from typing import TypeVar
+
+TPrimitive = str | float | bool | int | dt.date | dt.time | dt.datetime | UUID | bytes
+"""Supported primitive value types for serialized data in dictionary format."""
+
+TDataField = Dict[str, "TDataField"] | List["TDataField"] | TPrimitive | Enum | None
+"""Supported field types for serialized data in dictionary format."""
+
+TDataDict = Dict[str, TDataField]
+"""Serialized data in dictionary format."""
+
+TKeyField = Dict[str, "TKeyField"] | TPrimitive | Enum
+"""Supported field types for serialized key in dictionary format."""
+
+TKeyDict = Dict[str, TKeyField]
+"""Serialized key in dictionary format."""
+
+TStamp = dt.datetime | UUID | None
+"""Timestamp or time-ordered globally unique identifier in UUID7 format."""  # TODO: Confirm UUID format to use
+
+TQuery = Tuple[
+    Type,  # Query type and its descendents will be returned by the query. It must include all query and order fields.
+    Dict[str, Any],  # NoSQL query conditions in MongoDB format.
+    Dict[str, Literal[1, -1]],  # NoSQL query order in MongoDB format.
+]
+"""NoSQL query data in MongoDB format."""
+
+TRecord = TypeVar("TRecord")
+"""Generic type parameter for the record."""
+
+TKey = TypeVar("TKey")
+"""Generic type parameter for the key."""
 
 
 class KeyProtocol(Protocol):

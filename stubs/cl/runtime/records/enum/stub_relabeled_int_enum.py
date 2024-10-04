@@ -20,8 +20,8 @@ from cl.runtime.records.enum_util import enum_class
 class StubRelabeledIntEnum(IntEnum):
     """Stub enum with custom label that does not match the name."""
 
-    ENUM_VALUE_1 = 1
+    ENUM_VALUE1 = 1
     """Enum value 1."""
 
-    ENUM_VALUE_2 = 2
+    ENUM_VALUE2 = 2
     """Enum value 2."""

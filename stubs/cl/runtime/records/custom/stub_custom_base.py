@@ -13,10 +13,8 @@
 # limitations under the License.
 
 from typing import Dict
-from typing import Type
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.runtime.storage.data_source_types import TDataDict
-from cl.runtime.storage.data_source_types import TDataField
+from cl.runtime.records.protocols import TDataField
 from stubs.cl.runtime.records.custom.stub_custom_base_key import StubCustomBaseKey
 
 

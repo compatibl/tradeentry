@@ -19,8 +19,8 @@ from cl.runtime.settings.context_settings import ContextSettings
 context_settings = ContextSettings.instance()
 
 
-def test_smoke():
-    """Test get_base_path in a test function."""
+def test_process_context():
+    """Smoke test."""
 
     # Check that ProcessContext cannot be invoked inside a test
     with pytest.raises(RuntimeError):

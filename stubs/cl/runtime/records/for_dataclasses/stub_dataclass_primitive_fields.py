@@ -59,7 +59,7 @@ class StubDataclassPrimitiveFields(StubDataclassPrimitiveFieldsKey, RecordMixin[
     obj_bytes_field: bytes = bytes([100, 110, 120])
     """Stub field."""
 
-    obj_enum_field: StubIntEnum = StubIntEnum.ENUM_VALUE_1
+    obj_enum_field: StubIntEnum = StubIntEnum.ENUM_VALUE1
     """Stub field."""
 
     def get_key(self) -> StubDataclassPrimitiveFieldsKey:

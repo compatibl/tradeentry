@@ -65,12 +65,16 @@ class HandlerDeclareBlockDecl:
                 handler.label = titleize(humanize(member_name))
 
                 # TODO: Implement for handlers and contents
-                if getattr(member, "_is_viewer", None) is not None:
-                    handler.type_ = "viewer"
-                elif getattr(member, "_is_handler", None) is not None:
+
+                if member_name.startswith("run_"):
+                    # If method name starts with "run_" consider it a handler
                     handler.type_ = "job"
+                elif member_name.startswith("view_"):
+                    # If method name starts with "view_" consider it a viewer
+                    handler.type_ = "viewer"
                 else:
                     continue
+
                 handlers.append(handler)
 
                 # Process method's return type

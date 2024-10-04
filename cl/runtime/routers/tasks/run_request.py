@@ -25,8 +25,8 @@ class RunRequest(BaseModel):
     headers: dict[str, str] | None = Field(None)
     """Headers from the request."""
 
-    data_source: str | None = Field(None)
-    """Data source to be used."""
+    db: str | None = Field(None)
+    """Database to be used."""
 
     dataset: str | None = Field(None)
     """Dataset to be used."""

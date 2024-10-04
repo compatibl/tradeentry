@@ -15,18 +15,19 @@
 from dataclasses import dataclass
 from typing import List
 import numpy as np
+import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 from cl.runtime import Context
 from cl.runtime.plots.heat_map_plot_style import HeatMapPlotStyle
-from cl.runtime.plots.heat_map_plot_style_key import HeatMapPlotStyleKey
+from cl.runtime.plots.matplotlib_plot import MatplotlibPlot
 from cl.runtime.plots.matplotlib_util import MatplotlibUtil
 from cl.runtime.plots.plot import Plot
 from cl.runtime.records.dataclasses_extensions import field
 
 
 @dataclass(slots=True, kw_only=True)
-class HeatMapPlot(Plot):
+class HeatMapPlot(MatplotlibPlot):
     """Heat map visualization."""
 
     title: str = field()
@@ -50,29 +51,29 @@ class HeatMapPlot(Plot):
     y_label: str = field()
     """y-axis label."""
 
-    style: HeatMapPlotStyleKey = field(default_factory=lambda: HeatMapPlotStyle())
-    """Color and layout options."""
+    def _create_figure(self) -> plt.Figure:
+        # Load style object or create with default settings if not specified
+        style = self._load_style()
+        theme = self._get_pyplot_theme(style=style)
 
-    def create_figure(self) -> plt.Figure:
+        received_df, expected_df = (
+            pd.DataFrame.from_records(
+                [values, self.col_labels, self.row_labels],
+                index=['Value', 'Col', 'Row']
+            ).T.pivot_table(index="Row", columns="Col", values="Value", sort=False).astype(float)
+            for values in [self.received_values, self.expected_values]
+        )
 
-        # Load style object
-        style = Context.current().load_one(HeatMapPlotStyle, self.style)
-
-        theme = "dark_background" if style.dark_theme else "default"
+        data = (received_df - expected_df).abs()
 
         with plt.style.context(theme):
             fig, axes = plt.subplots()
 
-            shape = (len(self.row_labels), len(self.col_labels))
-
-            data = np.abs(
-                np.reshape(np.asarray(self.received_values), shape)
-                - np.reshape(np.asarray(self.expected_values), shape)
-            )
-
             cmap = LinearSegmentedColormap.from_list("rg", ["g", "y", "r"], N=256)
 
-            im = MatplotlibUtil.heatmap(data, self.row_labels, self.col_labels, ax=axes, cmap=cmap)
+            im = MatplotlibUtil.heatmap(
+                data.values, data.index.tolist(), data.columns.tolist(), ax=axes, cmap=cmap
+            )
 
             # Set figure and axes labels
             axes.set_xlabel(self.x_label)
@@ -82,3 +83,10 @@ class HeatMapPlot(Plot):
             fig.tight_layout()
 
         return fig
+
+    def _load_style(self) -> HeatMapPlotStyle:
+        """Load style object or create with default settings if not specified."""
+        style = Context.current().load_one(HeatMapPlotStyle, self.style)
+        style = style if self.style is not None else HeatMapPlotStyle()
+
+        return style

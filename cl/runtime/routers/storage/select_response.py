@@ -29,7 +29,7 @@ from cl.runtime.routers.storage.select_request import SelectRequest
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.serialization.ui_dict_serializer import UiDictSerializer
-from cl.runtime.storage.data_source_types import TPrimitive
+from cl.runtime.records.protocols import TPrimitive
 
 SelectResponseSchema = Dict[str, Any]
 SelectResponseData = List[Dict[str, Any]]
@@ -55,18 +55,18 @@ class SelectResponse(BaseModel):
         record_class = request.type_
         record_type = ClassInfo.get_class_type(f"{record_module}.{record_class}")
 
-        # Get data source from the current context
-        data_source = Context.current().data_source
+        # Get database from the current context
+        db = Context.current().db
 
         # TODO (Roman): replace temporary load_all to load_filter
-        if not hasattr(data_source, "load_all"):
+        if not hasattr(db, "load_all"):
             raise RuntimeError(
-                f"Currently data source need to implement load_all() method for select records by type. "
-                f"Data source {data_source.__class__.__name__} doesn't have load_all()."
+                f"Currently database need to implement load_all() method for select records by type. "
+                f"Database {db.__class__.__name__} doesn't have load_all()."
             )
 
         # load records by type
-        records = data_source.load_all(record_type)
+        records = db.load_all(record_type)
 
         # TODO: Refactor the code below
 

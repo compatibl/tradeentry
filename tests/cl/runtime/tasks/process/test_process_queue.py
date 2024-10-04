@@ -16,7 +16,7 @@ import pytest
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.tasks.process.process_queue import ProcessQueue
 from cl.runtime.tasks.static_method_task import StaticMethodTask
-from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
+from stubs.cl.runtime import StubHandlers
 
 
 def test_smoke():
@@ -26,7 +26,7 @@ def test_smoke():
         obj = StubHandlers(stub_id="abc")
         context.save_one(obj)
 
-        method_callable = StubHandlers.static_handler_1a
+        method_callable = StubHandlers.run_static_method_1a
         task = StaticMethodTask.create(task_id="abc", record_type=StubHandlers, method_callable=method_callable)
 
         queue = ProcessQueue()

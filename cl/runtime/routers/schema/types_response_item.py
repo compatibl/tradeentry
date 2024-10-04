@@ -34,7 +34,7 @@ class TypesResponseItem(BaseModel):
     """Type label displayed in the UI is humanized class name (may be customized in settings)."""
 
     class Config:
-        alias_generator = StringUtil.to_pascal_case
+        alias_generator = StringUtil.snake_to_pascal_case
         populate_by_name = True
 
     @classmethod
@@ -49,7 +49,7 @@ class TypesResponseItem(BaseModel):
         result = [
             TypesResponseItem(
                 name=record_type.__name__,
-                module=StringUtil.to_pascal_case(record_type.__module__),
+                module=StringUtil.snake_to_pascal_case(record_type.__module__),
                 label=titleize(record_type.__name__),
             )
             for record_type in type_dict.values()

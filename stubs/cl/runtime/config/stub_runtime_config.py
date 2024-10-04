@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime import handler
 from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.backend.core.user_key import UserKey
 from cl.runtime.config.config import Config
@@ -31,28 +30,27 @@ from stubs.cl.runtime import StubDataclassOtherDerivedRecord
 from stubs.cl.runtime import StubDataclassPrimitiveFields
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassSingleton
-from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
-from stubs.cl.runtime.decorators.stub_viewers import StubViewers
-from stubs.cl.runtime.views.stub_plots import StubPlots
-from stubs.cl.runtime.views.stub_viewers_data_types import StubViewersDataTypes
+from stubs.cl.runtime import StubHandlers
+from stubs.cl.runtime import StubViewers
+from stubs.cl.runtime import StubPlots
+from stubs.cl.runtime import StubViewersDataTypes
 
 
 @dataclass(slots=True, kw_only=True)
 class StubRuntimeConfig(Config):
     """Save stub records to storage."""
 
-    @handler
-    def configure(self) -> None:
-        """Populate the current or default data source with stub records."""
+    def run_configure(self) -> None:
+        """Populate the current or default database with stub records."""
 
-        # Get data source from the current context
-        data_source = Context.current().data_source
+        # Get database from the current context
+        db = Context.current().db
 
         # Save self
-        data_source.save_one(self)
+        db.save_one(self)
 
         # Save UiAppState instance
-        data_source.save_one(UiAppState(user=UserKey(username="root")))
+        db.save_one(UiAppState(user=UserKey(username="root")))
 
         # Create stub instances
         stub_dataclass_records = [StubDataclassRecord(id=f"A{i}") for i in range(10)]
@@ -98,14 +96,13 @@ class StubRuntimeConfig(Config):
         ]
 
         # save stubs to db
-        data_source.save_many(all_records)
+        db.save_many(all_records)
 
-    @handler
-    def configure_plots(self) -> None:
+    def run_configure_plots(self) -> None:
         """Configure plots."""
 
         bar_plot = GroupBarPlot()
-        bar_plot.group_labels = ["Single Group"]
+        bar_plot.group_labels = ["Single Group"] * 2
         bar_plot.bar_labels = ["Bar 1", "Bar 2"]
         bar_plot.values = [85.5, 92]
         Context.current().save_one(bar_plot)

@@ -15,7 +15,7 @@
 import pytest
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.tasks.static_method_task import StaticMethodTask
-from stubs.cl.runtime.decorators.stub_handlers import StubHandlers
+from stubs.cl.runtime import StubHandlers
 
 
 def test_create():
@@ -23,8 +23,8 @@ def test_create():
 
     with TestingContext():
         sample_inputs = [
-            (StubHandlers, StubHandlers.class_handler_1a),
-            (StubHandlers, StubHandlers.static_handler_1a),
+            (StubHandlers, StubHandlers.run_class_method_1a),
+            (StubHandlers, StubHandlers.run_static_method_1a),
         ]
 
         for sample_input in sample_inputs:

@@ -17,7 +17,7 @@ import os
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.file.csv_dir_reader import CsvDirReader
 from cl.runtime.settings.settings import Settings
-from cl.runtime.storage.local.local_cache import LocalCache
+from cl.runtime.db.local.local_cache import LocalCache
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassRecordKey
@@ -35,7 +35,7 @@ def test_smoke():
         dir_reader.read()
 
         # Verify
-        # TODO: Check count using load_all or count method of DataSource when created
+        # TODO: Check count using load_all or count method of Db when created
         for i in range(1, 2):
             key = StubDataclassRecordKey(id=f"base_id_{i}")
             record = context.load_one(StubDataclassRecord, key)

@@ -15,12 +15,11 @@
 from typing import List
 import numpy as np
 from cl.runtime.primitive.float_util import FloatUtil
+from cl.runtime.primitive.list_util import ListUtil
 
 
-class FloatListUtil:
-    """
-    This class provides helper methods for float lists.
-    """
+class FloatListUtil(ListUtil):
+    """Extends ListUtil to provide helper methods for float lists."""
 
     @classmethod
     def is_strictly_ascending(cls, values: List[float]) -> bool:

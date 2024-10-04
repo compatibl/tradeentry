@@ -13,13 +13,8 @@
 # limitations under the License.
 
 from pydantic import BaseModel
-from pydantic import ValidationError
 from cl.runtime import Context
-from cl.runtime.backend.core.base_type_info import BaseTypeInfo
-from cl.runtime.backend.core.tab_info import TabInfo
-from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.routers.entity.save_request import SaveRequest
-from cl.runtime.serialization.dict_serializer import get_type_dict
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.serialization.ui_dict_serializer import UiDictSerializer
 
@@ -34,7 +29,6 @@ class SaveResponse(BaseModel):
     """String representation of the key for the saved record."""
 
     class Config:
-        alias_generator = StringUtil.to_pascal_case
         populate_by_name = True
 
     @staticmethod

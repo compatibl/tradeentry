@@ -15,9 +15,8 @@
 import os
 import traceback
 import uuid
-from datetime import datetime
-from datetime import timezone
 import uvicorn
+import webbrowser
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import Response
@@ -40,7 +39,6 @@ from cl.runtime.settings.preload_settings import PreloadSettings
 from cl.runtime.settings.settings import Settings
 from cl.runtime.tasks.celery.celery_queue import celery_delete_existing_tasks
 from cl.runtime.tasks.celery.celery_queue import celery_start_queue
-from stubs.cl.runtime.config.stub_runtime_config import StubRuntimeConfig  # TODO: Remove after refactoring
 
 # Server
 server_app = FastAPI()
@@ -68,7 +66,7 @@ async def handle_exception(request, exc, log_level):
     Context.current().save_one(entry)
 
     # Return 500 response to avoid exception handler multiple calls
-    return Response("Internal Server Error", status_code=500)
+    return Response("Status code 500 in handle_exception", status_code=500)
 
 
 # Add RuntimeError exception handler
@@ -121,15 +119,14 @@ if __name__ == "__main__":
         celery_delete_existing_tasks()
 
         # Start Celery workers (will exit when the current process exits)
-        celery_start_queue()
-
-        # TODO: Temporary workaround before full configuration workflow is supported
-        config = StubRuntimeConfig()
-        config.config_id = "Stub Runtime Config"
-        config.configure()
+        log_dir = os.path.join(Settings.get_project_root(), "logs")  # TODO: Make unique
+        celery_start_queue(log_dir=log_dir)
 
         # Preload data
         PreloadSettings.instance().preload()
+
+        # Execute configure for each config_id specified in PreloadSettings.configs
+        PreloadSettings.instance().configure()
 
         # Find wwwroot directory relative to the location of __main__ rather than project root
         wwwroot_dir = Settings.get_static_files_path()
@@ -137,9 +134,15 @@ if __name__ == "__main__":
         if os.path.exists(wwwroot_dir):
             # Launch UI if ui_path is found
             server_app.mount("/", StaticFiles(directory=wwwroot_dir, html=True))
-            print(f"Starting UI")
+            # Open new browser tab in the default browser
+            webbrowser.open_new_tab(f"http://{api_settings.host_name}:{api_settings.port}")
         else:
-            print(f"UI directory {wwwroot_dir} not found, starting REST API only.")
+            raise RuntimeError(
+                f"Browser client JS directory {wwwroot_dir} is not found.\n"
+                f"  - If installed from GitHub:\n"
+                f"    - Use 'main' branch to run REST API and browser client from __main__ (includes wwwroot)\n"
+                f"    - Use 'main-sdk' branch to make calls from Python code only (excludes wwwroot)\n"
+            )
 
         # Run Uvicorn using hostname and port specified by Dynaconf
         api_settings = ApiSettings.instance()

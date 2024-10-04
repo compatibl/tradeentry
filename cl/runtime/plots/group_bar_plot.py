@@ -15,16 +15,16 @@
 from dataclasses import dataclass
 from typing import List
 import numpy as np
+import pandas as pd
 from matplotlib import pyplot as plt
 from cl.runtime import Context
 from cl.runtime.plots.group_bar_plot_style import GroupBarPlotStyle
-from cl.runtime.plots.group_bar_plot_style_key import GroupBarPlotStyleKey
-from cl.runtime.plots.plot import Plot
+from cl.runtime.plots.matplotlib_plot import MatplotlibPlot
 from cl.runtime.records.dataclasses_extensions import field
 
 
 @dataclass(slots=True, kw_only=True)
-class GroupBarPlot(Plot):
+class GroupBarPlot(MatplotlibPlot):
     """Base class for the 2D bar plot."""
 
     title: str = field()
@@ -48,40 +48,43 @@ class GroupBarPlot(Plot):
     value_ticks: List[float] | None = None
     """Custom ticks for the value axis."""
 
-    style: GroupBarPlotStyleKey = field(default_factory=lambda: GroupBarPlotStyle())
-    """Color and layout options."""
+    def _create_figure(self) -> plt.Figure:
+        # Load style object or create with default settings if not specified
+        style = self._load_style()
+        theme = self._get_pyplot_theme(style=style)
 
-    def create_figure(self) -> plt.Figure:
-        # Load style object
-        style = Context.current().load_one(GroupBarPlotStyle, self.style)
-
-        theme = "dark_background" if style.dark_theme else "default"
+        data = pd.DataFrame.from_records(
+            [self.values, self.bar_labels, self.group_labels],
+            index=['Value', 'Col', 'Row']
+        ).T.pivot_table(index="Row", columns="Col", values="Value", sort=False).astype(float)
 
         with plt.style.context(theme):
             fig = plt.figure()
             axes = fig.add_subplot()
 
-            x_ticks = np.arange(len(self.group_labels))
+            num_groups = data.shape[0]
+            num_bars = data.shape[1]
 
-            if len(self.bar_labels) % 2 != 0:
-                bar_shifts_positive = list(range(1, len(self.bar_labels) // 2 + 1))
+            x_ticks = np.arange(num_groups)
+
+            if num_bars % 2 != 0:
+                bar_shifts_positive = list(range(1, num_bars // 2 + 1))
             else:
-                bar_shifts_positive = [x + 1 / 2 for x in range(len(self.bar_labels) // 2)]
+                bar_shifts_positive = [x + 1 / 2 for x in range(num_bars // 2)]
 
             bar_shifts = [-x for x in reversed(bar_shifts_positive)]
 
-            if len(self.bar_labels) % 2 != 0:
+            if num_bars % 2 != 0:
                 bar_shifts += [0]
 
             bar_shifts += bar_shifts_positive
 
-            space = 1 / (len(self.bar_labels) + 1)
+            space = 1 / (num_bars + 1)
 
-            for i, (bar_label, bar_shift) in enumerate(zip(self.bar_labels, bar_shifts)):
-                data = self.values[i * len(self.group_labels) : (i + 1) * len(self.group_labels)]
-                axes.bar(x_ticks + space * bar_shift, data, space, label=bar_label)
+            for i, (bar_label, bar_shift) in enumerate(zip(data.columns, bar_shifts)):
+                axes.bar(x_ticks + space * bar_shift, data[bar_label].values, space, label=bar_label)
 
-            axes.set_xticks(x_ticks, self.group_labels)
+            axes.set_xticks(x_ticks, data.index.tolist())
 
             if self.value_ticks is not None:
                 axes.set_yticks(self.value_ticks)
@@ -95,3 +98,10 @@ class GroupBarPlot(Plot):
             axes.legend()
 
         return fig
+
+    def _load_style(self) -> GroupBarPlotStyle:
+        """Load style object or create with default settings if not specified."""
+        style = Context.current().load_one(GroupBarPlotStyle, self.style)
+        style = style if self.style is not None else GroupBarPlotStyle()
+
+        return style
