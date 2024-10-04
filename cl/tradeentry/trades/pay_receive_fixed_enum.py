@@ -18,8 +18,8 @@ from enum import IntEnum
 class PayReceiveFixedEnum(IntEnum):
     """Determines if we pay or receive fixed leg coupons in a fixed-for-floating swap."""
 
-    PayFixed = 1
+    PAY_FIXED = 1
     """We pay fixed leg coupons."""
 
-    ReceiveFixed = 2
+    RECEIVE_FIXED = 2
     """We receive fixed leg coupons."""

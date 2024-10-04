@@ -18,8 +18,8 @@ from enum import IntEnum
 class PayReceiveEnum(IntEnum):
     """Determines if we pay or receive payments or periodic coupons for a trade or leg."""
 
-    Pay = 1
+    PAY = 1
     """We pay payments or periodic coupons."""
 
-    Receive = 2
+    RECEIVE = 2
     """We receive payments or periodic coupons."""

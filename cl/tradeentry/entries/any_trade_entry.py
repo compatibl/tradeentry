@@ -31,7 +31,7 @@ class AnyTradeEntry(TradeEntry):
         # TODO: Update to use AI
         asset_class_entry = AssetClassEntry(entry_text=self.entry_text, parent_entry=self)
         asset_class_entry.process()
-        if asset_class_entry.entry_status == EntryStatusEnum.Completed:
+        if asset_class_entry.entry_status == EntryStatusEnum.COMPLETED:
             # Create and process trade entry record for the specific trade type
             # TODO: Use switch
             if asset_class_entry.asset_class == AssetClassKeys.rates:

@@ -33,7 +33,7 @@ class RatesTradeEntry(TradeEntry):
         # TODO: Update to use AI
         rates_trade_type_entry = RatesTradeTypeEntry(entry_text=self.entry_text, parent_entry=self)
         rates_trade_type_entry.process()
-        if rates_trade_type_entry.entry_status == EntryStatusEnum.Completed:
+        if rates_trade_type_entry.entry_status == EntryStatusEnum.COMPLETED:
             # Create and process trade entry record for the specific rates trade type
             # TODO: Use switch
             if rates_trade_type_entry.rates_trade_type == RatesTradeTypeKeys.vanilla_swap:

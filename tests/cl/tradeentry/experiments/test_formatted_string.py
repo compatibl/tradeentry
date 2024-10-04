@@ -14,11 +14,12 @@
 
 import pytest
 from typing import Dict
+from matplotlib import pyplot as plt
 from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.regression_guard import RegressionGuard
 from stubs.cl.convince.experiments.stub_llms import get_stub_full_llms
 from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json
-from stubs.cl.tradeentry.experiments.stub_plot_utils import create_group_bar_plot
 from stubs.cl.tradeentry.experiments.stub_tag_utils import add_line_numbers
 from stubs.cl.tradeentry.experiments.stub_tag_utils import fields_to_text
 from stubs.cl.tradeentry.experiments.stub_trade_checker import StubFormattedStringChecker
@@ -75,68 +76,75 @@ FIELDS = [
 ]
 
 
-def _testing_formatted_string(trade_description: str, run_count: int):
+def _testing_formatted_string(trade_description: str, run_count: int) -> plt.Figure:
+    # Text for the fields
     fields_text = fields_to_text(FIELDS)
 
-    with TestingContext():
-        # Create Llm objects for test
-        stub_full_llms = get_stub_full_llms()
+    # Create Llm objects for test
+    stub_full_llms = get_stub_full_llms()
 
-        prompt = PROMPT_TEMPLATE.format(input_text=trade_description, fields=fields_text)
-        field_names = [field["name"] for field in FIELDS]
-        plot_values = []
-        for llm in stub_full_llms:
-            results = {field: 0 for field in field_names}
-            for trial_id in range(run_count):
-                result = llm.completion(prompt, trial_id=trial_id)
+    prompt = PROMPT_TEMPLATE.format(input_text=trade_description, fields=fields_text)
+    field_names = [field["name"] for field in FIELDS]
+    plot_bar_labels = []
+    plot_group_labels = []
+    plot_values = []
+    for llm in stub_full_llms:
+        results = {field: 0 for field in field_names}
+        for trial_id in range(run_count):
+            result = llm.completion(prompt, trial_id=trial_id)
 
-                json_result = extract_json(result)
-                guard = RegressionGuard(channel=llm.llm_id)
-                if json_result is not None:
-                    guard.write(str(json_result))
-                else:
-                    guard.write("ERROR: can not extract json")
+            json_result = extract_json(result)
+            guard = RegressionGuard(channel=llm.llm_id)
+            if json_result is not None:
+                guard.write(str(json_result))
+            else:
+                guard.write("ERROR: can not extract json")
 
-                guard_checker = RegressionGuard(channel=f"{llm.llm_id}-checker")
-                if isinstance(json_result, Dict):
-                    json_checker_output = StubFormattedStringChecker(trade_description, FIELDS).check_answer(
-                        json_result
-                    )
-                    for field in field_names:
-                        if json_checker_output[field]["status"] == "OK":
-                            results[field] += 1
-                    guard_checker.write(json_checker_output)
-                else:
-                    guard_checker.write("ERROR: No input to check")
+            guard_checker = RegressionGuard(channel=f"{llm.llm_id}-checker")
+            if isinstance(json_result, Dict):
+                json_checker_output = StubFormattedStringChecker(trade_description, FIELDS).check_answer(json_result)
+                for field in field_names:
+                    if json_checker_output[field]["status"] == "OK":
+                        results[field] += 1
+                guard_checker.write(json_checker_output)
+            else:
+                guard_checker.write("ERROR: No input to check")
 
-            plot_values.extend(list(results.values()))
+        plot_bar_labels.extend([llm.llm_id] * len(results))
+        plot_group_labels.extend([field["short_name"] for field in FIELDS])
+        plot_values.extend(list(results.values()))
 
-        normalized_plot_values = [round(val / run_count * 100, 2) for val in plot_values]
-        plot_bar_labels = [llm.llm_id for llm in stub_full_llms]
-        plot_group_labels = [field["short_name"] for field in FIELDS]
-        fig = create_group_bar_plot(normalized_plot_values, plot_bar_labels, plot_group_labels)
-    return fig
+    normalized_plot_values = [round(val / run_count * 100, 2) for val in plot_values]
+
+    plot = GroupBarPlot(
+        plot_id="accuracy",
+        bar_labels=plot_bar_labels,
+        group_labels=plot_group_labels,
+        values=normalized_plot_values,
+        value_ticks=list(range(0, 101, 10)),
+    )
+    plot.save_png()
 
 
 def test_vanilla_swap():
-    numbered_vanilla_swap = add_line_numbers(stub_vanilla_swap_entry)
-    fig = _testing_formatted_string(numbered_vanilla_swap, run_count=50)
-    fig.savefig("test_formatted_string_vanilla_swap.png")
-    RegressionGuard.verify_all()
+    with TestingContext():
+        numbered_vanilla_swap = add_line_numbers(stub_vanilla_swap_entry)
+        _testing_formatted_string(numbered_vanilla_swap, run_count=50)
+        RegressionGuard.verify_all()
 
 
 def test_floored_swap():
-    numbered_floored_swap = add_line_numbers(stub_floored_swap_entry)
-    fig = _testing_formatted_string(numbered_floored_swap, run_count=50)
-    fig.savefig("test_formatted_string_floored_swap.png")
-    RegressionGuard.verify_all()
+    with TestingContext():
+        numbered_floored_swap = add_line_numbers(stub_floored_swap_entry)
+        _testing_formatted_string(numbered_floored_swap, run_count=50)
+        RegressionGuard.verify_all()
 
 
 def test_amortizing_swap():
-    numbered_amortizing_swap = add_line_numbers(stub_amortizing_swap_entry)
-    fig = _testing_formatted_string(numbered_amortizing_swap, run_count=50)
-    fig.savefig("test_formatted_string_amortizing_swap.png")
-    RegressionGuard.verify_all()
+    with TestingContext():
+        numbered_amortizing_swap = add_line_numbers(stub_amortizing_swap_entry)
+        _testing_formatted_string(numbered_amortizing_swap, run_count=50)
+        RegressionGuard.verify_all()
 
 
 if __name__ == "__main__":

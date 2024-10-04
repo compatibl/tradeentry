@@ -46,4 +46,4 @@ class VanillaSwapEntry(TradeEntry):
         # Recognize trade
         # TODO: This is a stub, implement
         self.trade = VanillaSwap()
-        self.trade.pay_receive_fixed = PayReceiveFixedEnum.PayFixed
+        self.trade.pay_receive_fixed = PayReceiveFixedEnum.PAY_FIXED
