@@ -29,6 +29,7 @@ from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.views.key_view import KeyView
+from cl.runtime.views.pdf_view import PdfView
 from cl.runtime.views.plot_view import PlotView
 from cl.runtime.views.png_view import PngView
 
@@ -117,6 +118,13 @@ class PanelResponseUtil(BaseModel):
             return {
                 "Content": base64.b64encode(view.png_bytes).decode(),
                 "ContentType": "Png",
+                "_t": "BinaryContent",
+            }
+        elif isinstance(view, PdfView):
+            # Return ui format dict of binary data
+            return {
+                "Content": base64.b64encode(view.pdf_bytes).decode(),
+                "ContentType": "Pdf",
                 "_t": "BinaryContent",
             }
         elif isinstance(view, Dict):
