@@ -37,8 +37,12 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
 
     def __post_init__(self):
         """Populate status if not specified."""
+
+        # Call __post_init__ from the base class
+        super(Entry, self).__post_init__()
+
         if self.entry_status is None:
-            self.entry_status = EntryStatusEnum.Created
+            self.entry_status = EntryStatusEnum.CREATED
 
     def get_key(self) -> EntryKey:
         return EntryKey(entry_type=self.entry_type, entry_text=self.entry_text)

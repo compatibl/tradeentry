@@ -31,8 +31,9 @@ class EntryKey(KeyMixin):
 
     def __post_init__(self):
         """Populate entry type if not set when called inside a record derived from key, leave blank if this is a key."""
+
         if self.entry_type is None and is_record(self):
-            self.entry_type = type(self).__class__.__name__
+            self.entry_type = type(self).__name__
 
     @classmethod
     def get_key_type(cls) -> Type:

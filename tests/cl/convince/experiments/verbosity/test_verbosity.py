@@ -43,6 +43,8 @@ def test_verbosity(local_dir_fixture):
         reps = 2
         plot = GroupBarPlot(plot_id="verbosity")
         plot.values = []
+        plot.bar_labels = []
+        plot.group_labels = []
         stub_mini_llms = get_stub_mini_llms()
         for llm in stub_mini_llms:
 
@@ -51,12 +53,12 @@ def test_verbosity(local_dir_fixture):
             extended_sum = sum(llm.completion(_get_extended_prompt(i + 1)) == str(pow(i + 1, 2)) for i in range(reps))
 
             # Add to plot
+            plot.bar_labels.extend([llm.llm_id] * 2)
+            plot.group_labels.extend(["Simple", "Extended"])
             plot.values.extend([simple_sum / reps, extended_sum / reps])
 
-        # Apply labels
-        plot.bar_labels = [llm.llm_id for llm in stub_mini_llms]
-        plot.group_labels = ["Simple", "Extended"]
-        plot.save()
+        # Save
+        plot.save_png()
 
 
 if __name__ == "__main__":

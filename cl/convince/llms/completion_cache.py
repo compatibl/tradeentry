@@ -22,7 +22,7 @@ from typing import Iterable
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.settings.settings import Settings
-from cl.runtime.testing.stack_util import StackUtil
+from cl.runtime.context.env_util import EnvUtil
 
 _supported_extensions = ["csv"]
 """The list of supported output file extensions (formats)."""
@@ -71,7 +71,7 @@ class CompletionCache:
         # Find base_path=dir_path/test_module by examining call stack for test function signature test_*
         # Directory 'project_root/completions' is used when not running under a test
         default_dir = os.path.join(ContextSettings.instance().get_project_root(), "completions")
-        base_dir = StackUtil.get_base_dir(default_dir=default_dir)
+        base_dir = EnvUtil.get_env_dir(default_dir=default_dir)
 
         # If not found, use base path relative to project root
         if base_dir is None:
@@ -178,9 +178,7 @@ class CompletionCache:
                     )
 
                 # Read cached completions, ignoring request_id at position 0
-                self.__completion_dict.update(
-                    {row[1]: row[2] for row_ in reader if (row := self.to_python_eol(row_))}
-                )
+                self.__completion_dict.update({row[1]: row[2] for row_ in reader if (row := self.to_python_eol(row_))})
 
     @classmethod
     def normalize_key(cls, query: str, trial_id: str | int | None = None) -> str:
@@ -196,7 +194,7 @@ class CompletionCache:
         # Normalize EOL
         result = cls.to_python_eol(result)
         return result
-    
+
     @classmethod
     def normalize_value(cls, value: str) -> str:
         """Strip leading and trailing whitespace, and normalize EOL."""
