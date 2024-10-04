@@ -1,0 +1,4 @@
+-r tools/convince_install_requirements.txt
+-r tools/runtime_install_requirements.txt
+-r tools/runtime_build_requirements.txt
+-r tools/runtime_test_requirements.txt
