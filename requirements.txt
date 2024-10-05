@@ -1,4 +1,9 @@
--r tools/convince_install_requirements.txt
--r tools/runtime_install_requirements.txt
--r tools/runtime_build_requirements.txt
--r tools/runtime_test_requirements.txt
+# Submodules
+runtime>=2.0.5
+
+# Install requirements not included in submodules
+-r tools/cl/convince/install_requirements.txt
+
+# Build and test requirements
+-r tools/cl/convince/build_requirements.txt
+-r tools/cl/convince/test_requirements.txt
