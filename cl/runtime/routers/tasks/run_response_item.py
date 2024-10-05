@@ -16,7 +16,7 @@ from __future__ import annotations
 import traceback
 from typing import List
 from pydantic import BaseModel
-from cl.runtime.primitive.string_util import StringUtil
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseItem
 from cl.runtime.routers.tasks.run_request import RunRequest
@@ -39,7 +39,7 @@ class RunResponseItem(BaseModel):
     """Key of the record."""
 
     class Config:
-        alias_generator = StringUtil.snake_to_pascal_case
+        alias_generator = CaseUtil.snake_to_pascal_case
         populate_by_name = True
 
     @classmethod

@@ -12,16 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import pytest
-from cl.runtime.primitive.list_util import ListUtil
 
+class StringUtil:
+    """Utilities for string, other than case conversion which is in CaseUtil."""
 
-def test_is_empty():
-    """Smoke test for functions in CaseUtil."""
-    assert ListUtil.is_empty(None)
-    assert ListUtil.is_empty([])
-    assert not ListUtil.is_empty([1])
-
-
-if __name__ == "__main__":
-    pytest.main([__file__])
+    @classmethod
+    def is_empty(cls, value: str | None) -> bool:
+        """Returns true if the string is None or ''."""
+        return value is None or value == ""

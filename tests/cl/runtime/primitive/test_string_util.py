@@ -13,14 +13,14 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.primitive.list_util import ListUtil
+from cl.runtime.primitive.string_util import StringUtil
 
 
 def test_is_empty():
-    """Smoke test for functions in CaseUtil."""
-    assert ListUtil.is_empty(None)
-    assert ListUtil.is_empty([])
-    assert not ListUtil.is_empty([1])
+    """Test for StringUtil.is_empty."""
+    assert StringUtil.is_empty(None)
+    assert StringUtil.is_empty("")
+    assert not StringUtil.is_empty("abc")
 
 
 if __name__ == "__main__":

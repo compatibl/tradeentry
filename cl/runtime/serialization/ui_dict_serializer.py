@@ -17,7 +17,7 @@ from typing import Any
 from typing import List
 from inflection import underscore, camelize
 from typing_extensions import Dict
-from cl.runtime.primitive.string_util import StringUtil
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key
 from cl.runtime.schema.element_decl import ElementDecl
@@ -173,7 +173,7 @@ class UiDictSerializer(DictSerializer):
             if (enum := element_decl.enum) is not None:
                 # Get enum type from element decl and convert value to dict supported by DictSerializer
                 enum_type_name = enum.name
-                return {"_enum": enum_type_name, "_name": StringUtil.upper_to_pascal_case(data)}
+                return {"_enum": enum_type_name, "_name": CaseUtil.upper_to_pascal_case(data)}
 
             elif (key := element_decl.key_) is not None:
                 # Get key type from element decl

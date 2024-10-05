@@ -17,7 +17,7 @@ import inspect
 from typing import List
 from inflection import titleize
 from pydantic import BaseModel
-from cl.runtime.primitive.string_util import StringUtil
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.routers.schema.type_hierarchy_request import TypeHierarchyRequest
 from cl.runtime.schema.schema import Schema
 
@@ -32,7 +32,7 @@ class TypeHierarchyResponseItem(BaseModel):
     """Type label displayed in the UI is humanized class name (may be customized in settings)."""
 
     class Config:
-        alias_generator = StringUtil.snake_to_pascal_case
+        alias_generator = CaseUtil.snake_to_pascal_case
         populate_by_name = True
 
     @classmethod

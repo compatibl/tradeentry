@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from pydantic import BaseModel
-from cl.runtime.primitive.string_util import StringUtil
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.dataclasses_extensions import missing
 
 
@@ -39,5 +39,5 @@ class RunErrorResponseItem(BaseModel):
     """Stack trace of the exception."""
 
     class Config:
-        alias_generator = StringUtil.snake_to_pascal_case
+        alias_generator = CaseUtil.snake_to_pascal_case
         populate_by_name = True

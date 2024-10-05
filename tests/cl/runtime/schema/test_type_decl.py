@@ -14,7 +14,7 @@
 
 import pytest
 from cl.runtime.backend.core.ui_app_state import UiAppState
-from cl.runtime.primitive.string_util import StringUtil
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.schema.type_decl import TypeDecl
 from stubs.cl.runtime import StubDataclassRecord
 
@@ -32,7 +32,7 @@ type_decl_dict = {
 def to_snake_case(data):
     if isinstance(data, dict):
         return {
-            StringUtil.pascal_to_snake_case(key) if isinstance(key, str) else key: to_snake_case(value)
+            CaseUtil.pascal_to_snake_case(key) if isinstance(key, str) else key: to_snake_case(value)
             for key, value in data.items()
         }
     elif isinstance(data, list):

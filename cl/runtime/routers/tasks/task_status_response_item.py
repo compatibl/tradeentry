@@ -19,7 +19,7 @@ from typing import List
 from typing import cast
 from pydantic import BaseModel
 from cl.runtime import Context
-from cl.runtime.primitive.string_util import StringUtil
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.routers.tasks.task_status_request import TaskStatusRequest
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_run import TaskRun
@@ -49,7 +49,7 @@ class TaskStatusResponseItem(BaseModel):
     """Task key."""
 
     class Config:
-        alias_generator = StringUtil.snake_to_pascal_case
+        alias_generator = CaseUtil.snake_to_pascal_case
         populate_by_name = True
 
     @classmethod

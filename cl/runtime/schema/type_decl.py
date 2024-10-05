@@ -47,7 +47,7 @@ DisplayKindLiteral = Literal["Basic", "Singleton", "Dashboard"]
 # TODO: Move functions to helper class
 
 
-def pascalize(s: str) -> str:  # TODO: Use StringUtil function
+def pascalize(s: str) -> str:  # TODO: Use CaseUtil function
     """Split into dot-delimited tokens, pascalize each token, then concatenate."""
     tokens = s.split(".")
     tokens = [camelize(token, uppercase_first_letter=True) for token in tokens]

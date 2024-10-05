@@ -15,7 +15,7 @@
 from __future__ import annotations
 from typing import List
 from pydantic import BaseModel
-from cl.runtime.primitive.string_util import StringUtil
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.schema import Schema
@@ -28,7 +28,7 @@ class ListPanelsResponseItem(BaseModel):
     """Name of the panel."""
 
     class Config:
-        alias_generator = StringUtil.snake_to_pascal_case
+        alias_generator = CaseUtil.snake_to_pascal_case
         populate_by_name = True
 
     @classmethod

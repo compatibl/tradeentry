@@ -20,13 +20,8 @@ _all_cap_re: Pattern = re.compile("([a-z0-9])([A-Z])")
 _to_pascal_re: Pattern = re.compile("(?:^|_+)(.)")
 
 
-class StringUtil:
+class CaseUtil:
     """Utilities for case conversion and other operations on string."""
-
-    @classmethod
-    def is_empty(cls, value: str | None) -> bool:
-        """Returns true if the string is None or an empty string."""
-        return value is None or value == ""
 
     @classmethod
     def pascal_to_snake_case(cls, value: str) -> str:
