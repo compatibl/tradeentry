@@ -14,24 +14,23 @@
 
 import pytest
 import os
+
+from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.file.csv_dir_reader import CsvDirReader
 from cl.runtime.settings.settings import Settings
-from cl.runtime.db.local.local_cache import LocalCache
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassRecordKey
 
 
-def test_smoke():
+def test_csv_dir_reader():
     """Test CsvDirReader class."""
-
-    project_root = Settings.get_project_root()
-    dir_path = os.path.join(project_root, "preloads/stubs/cl/runtime/csv")
 
     # Create a new instance of local cache for the test
     with TestingContext() as context:
-        dir_reader = CsvDirReader(dir_path=dir_path)
+        env_dir = EnvUtil.get_env_dir()
+        dir_reader = CsvDirReader(dir_path=env_dir)
         dir_reader.read()
 
         # Verify
