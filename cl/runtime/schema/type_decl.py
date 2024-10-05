@@ -28,10 +28,11 @@ from typing import Optional
 from typing import Set
 from typing import Type
 from typing import get_type_hints
-from inflection import camelize
 from inflection import titleize
 from memoization import cached
 from typing_extensions import Self
+
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.key_util import KeyUtil
 from cl.runtime.records.record_mixin import RecordMixin
@@ -42,33 +43,24 @@ from cl.runtime.schema.module_decl_key import ModuleDeclKey
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from cl.runtime.schema.type_kind import TypeKind
 
-DisplayKindLiteral = Literal["Basic", "Singleton", "Dashboard"]
-
-# TODO: Move functions to helper class
+DisplayKindLiteral = Literal["Basic", "Singleton", "Dashboard"]  # TODO: Review
 
 
-def pascalize(s: str) -> str:  # TODO: Use CaseUtil function
-    """Split into dot-delimited tokens, pascalize each token, then concatenate."""
-    tokens = s.split(".")
-    tokens = [camelize(token, uppercase_first_letter=True) for token in tokens]
-    result = ".".join(tokens)
-    return result
-
-
+# TODO: Move this and other functions to helper class
 def to_type_decl_dict(node: Dict[str, Any] | List[Dict[str, Any]] | str) -> Dict[str, Any] | List[Dict[str, Any]] | str:
     """Recursively apply type declaration dictionary conventions to the argument dictionary."""
 
     if isinstance(node, dict):
         # For type declarations only, skip nodes that have the value of None or False
         # Remove suffix _ from field names if present
-        # pascalized_values = {k: (pascalize(v) if k in ['module_name', 'name'] else v) for k, v in node.items()}
+        # pascalized_values = {k: (CaseUtil.snake_to_pascal_case(v) if k in ['module_name', 'name'] else v) for k, v in node.items()}
         # Searching for the name of given type declaration
         result: Dict[str, Any] = {}
         if (_t := get_name_of_type_decl_dict(node)) is not None:
-            result["_t"] = pascalize(_t)
+            result["_t"] = _t
         result.update(
             {
-                (pascalize(k.removesuffix("_")) if k != "_t" else k): to_type_decl_dict(v)
+                (CaseUtil.snake_to_pascal_case(k.removesuffix("_")) if k != "_t" else k): to_type_decl_dict(v)
                 for k, v in node.items()
                 if v not in [None, False]
             }
@@ -82,9 +74,9 @@ def to_type_decl_dict(node: Dict[str, Any] | List[Dict[str, Any]] | str) -> Dict
         # Remove suffix _ from field names if present
         key_field_names = node[0].get_key_fields()
         key_field_values = [to_type_decl_dict(v) for v in node[1:]]
-        return {pascalize(k.removesuffix("_")): v for k, v in zip(key_field_names, key_field_values)}
+        return {CaseUtil.snake_to_pascal_case(k.removesuffix("_")): v for k, v in zip(key_field_names, key_field_values)}
     elif isinstance(node, str):
-        return pascalize(node)
+        return node
     else:
         return node
 

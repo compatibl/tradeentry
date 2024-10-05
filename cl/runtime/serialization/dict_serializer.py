@@ -21,7 +21,9 @@ from typing import List
 from typing import Tuple
 from typing import Type
 from typing import cast
-from inflection import camelize
+
+import inflection
+
 from cl.runtime.backend.core.base_type_info import BaseTypeInfo
 from cl.runtime.backend.core.tab_info import TabInfo
 from cl.runtime.primitive.case_util import CaseUtil
@@ -125,7 +127,7 @@ class DictSerializer:
             all_slots = _get_class_hierarchy_slots(data.__class__)
             # Serialize slot values in the order of declaration except those that are None
             result = {
-                k if not self.pascalize_keys else camelize(k, uppercase_first_letter=True): (
+                k if not self.pascalize_keys else CaseUtil.snake_to_pascal_case(k): (
                     v if v.__class__.__name__ in self.primitive_type_names else self.serialize_data(v)
                 )
                 for k in all_slots
@@ -190,6 +192,10 @@ class DictSerializer:
                         f"Class not found for name or alias '{short_name}' during deserialization. "
                         f"Ensure all serialized classes are included in package import settings."
                     )
+
+                # TODO(CaseUtil): Case varies from call to call, e.g. ApplicationTheme has different case than others
+                data = {inflection.underscore(k): v for k, v in data.items()}
+
                 deserialized_fields = {
                     k: v if v.__class__.__name__ in self.primitive_type_names else self.deserialize_data(v)
                     for k, v in data.items()

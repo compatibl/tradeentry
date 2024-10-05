@@ -12,12 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import re
-from typing import Pattern
-
-_first_cap_re: Pattern = re.compile("(.)([A-Z][a-z]+)")
-_all_cap_re: Pattern = re.compile("([a-z0-9])([A-Z])")
-_to_pascal_re: Pattern = re.compile("(?:^|_+)(.)")
+import inflection
 
 
 class CaseUtil:
@@ -27,9 +22,8 @@ class CaseUtil:
     def pascal_to_snake_case(cls, value: str) -> str:
         """Convert PascalCase to snake_case using custom rule for separators in front of digits."""
         # TODO: Implement custom rule for separators in front of digits
-        input_tokens = value.split(".")
-        result_tokens = [_first_cap_re.sub(r"\1_\2", x).lower() for x in input_tokens]
-        result = ".".join(result_tokens)
+        cls.check_pascal_case(value)
+        result = inflection.underscore(value)  # TODO: Replace by custom method
         return result
 
     @classmethod
@@ -37,15 +31,15 @@ class CaseUtil:
         """Convert UPPER_CASE to snake_case using custom rule for separators in front of digits."""
         # TODO: Implement custom rule for separators in front of digits
         cls.check_upper_case(value)
-        return cls.pascal_to_snake_case(value.lower())
+        return value.lower()  # TODO: Replace by custom method
 
     @classmethod
     def snake_to_pascal_case(cls, value: str) -> str:
         """Convert snake_case to PascalCase using custom rule for separators in front of digits."""
         # TODO: Implement custom rule for separators in front of digits
-        input_tokens = value.split(".")
-        result_tokens = [_to_pascal_re.sub(lambda match: f"{match.group(1).upper()}", x) for x in input_tokens]
-        result = ".".join(result_tokens)
+        cls.check_snake_case(value)
+        # TODO: Replace by custom method
+        result = ".".join(inflection.camelize(token, uppercase_first_letter=True) for token in value.split("."))
         return result
 
     @classmethod
@@ -53,15 +47,15 @@ class CaseUtil:
         """Convert UPPER_CASE to PascalCase using custom rule for separators in front of digits."""
         # TODO: Implement custom rule for separators in front of digits
         cls.check_upper_case(value)
-        return cls.snake_to_pascal_case(value.lower())
+        return cls.snake_to_pascal_case(value.lower())  # TODO: Replace by custom method
 
     @classmethod
     def pascal_to_upper_case(cls, value: str) -> str:
         """Convert PascalCase to UPPER_CASE using custom rule for separators in front of digits."""
         # TODO: Implement custom rule for separators in front of digits
         cls.check_pascal_case(value)
-        snake_case_value = cls.pascal_to_snake_case(value)
-        return snake_case_value.upper()
+        snake_case_value = cls.pascal_to_snake_case(value)  # TODO: Replace by custom method
+        return snake_case_value.upper()  # TODO: Replace by custom method
 
     @classmethod
     def check_snake_case(cls, value: str) -> None:

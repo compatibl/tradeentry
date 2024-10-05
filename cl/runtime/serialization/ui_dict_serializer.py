@@ -151,17 +151,16 @@ class UiDictSerializer(DictSerializer):
                     if field == "_t":
                         continue
 
-                    # TODO (Roman): check self.pascalize_keys
-                    # Apply force snake case conversion for field names
-                    field_in_snake_case = underscore(field)
+                    # TODO(CaseUtil): Review the expected case of field
+                    field = camelize(field, uppercase_first_letter=True)
 
-                    if (field_decl := type_decl_elements.get(field_in_snake_case)) is not None:
+                    if (field_decl := type_decl_elements.get(field)) is not None:
                         # Apply ui conversion for values recursively
-                        result[field_in_snake_case] = self.apply_ui_conversion(value, field_decl)
+                        result[field] = self.apply_ui_conversion(value, field_decl)
                     else:
                         # If element decl is not found for field in data raise RuntimeError
                         raise RuntimeError(
-                            f'Data conflicts with type declaration. Field "{field_in_snake_case}" not found '
+                            f'Data conflicts with type declaration. Field "{field}" not found '
                             f'in "{short_name}" type elements.'
                         )
 

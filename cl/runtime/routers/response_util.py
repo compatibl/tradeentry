@@ -21,8 +21,9 @@ from enum import Enum
 from typing import Any
 from typing import Dict
 from typing import List
+
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.schema.field_decl import primitive_types  # TODO: Move definition to a separate module
-from cl.runtime.schema.type_decl import pascalize
 
 
 def to_record_dict(node):  # TODO: Apply type hints
@@ -74,7 +75,7 @@ def to_legacy_dict(node: Dict[str, Any] | List[Dict[str, Any]] | str) -> Dict[st
     if isinstance(node, dict):
         # Skip nodes that have the value of None
         # Remove suffix _ from field names if present
-        result = {pascalize(k.removesuffix("_")): to_legacy_dict(v) for k, v in node.items() if v is not None}
+        result = {CaseUtil.snake_to_pascal_case(k.removesuffix("_")): to_legacy_dict(v) for k, v in node.items() if v is not None}
         return result
     elif isinstance(node, list):
         # Skip nodes that have the value of None

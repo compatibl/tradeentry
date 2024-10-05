@@ -28,10 +28,11 @@ from typing import Type
 from typing import cast
 from memoization import cached
 from typing_extensions import Self
+
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.schema.type_decl import TypeDecl
-from cl.runtime.schema.type_decl import pascalize
 from cl.runtime.schema.type_decl_key import TypeDeclKey
 from cl.runtime.settings.context_settings import ContextSettings
 
@@ -180,7 +181,7 @@ class Schema:
 
         # TODO: Move pascalize to a helper class
         result = {
-            pascalize(f"{type_decl.module.module_name}.{type_decl.name}"): type_decl.to_type_decl_dict()
+            f"{type_decl.module.module_name}.{type_decl.name}": type_decl.to_type_decl_dict()
             for type_decl in type_decl_list
         }
         return result

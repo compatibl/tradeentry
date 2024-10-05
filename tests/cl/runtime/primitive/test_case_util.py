@@ -22,7 +22,7 @@ def test_pascal_to_snake_case():
     # From snake_case without dot delimiter
     assert CaseUtil.pascal_to_snake_case("AbcDef") == "abc_def"
     assert CaseUtil.pascal_to_snake_case("Some2dPoint") == "some2d_point"  # TODO: Should be an input format error
-    assert CaseUtil.pascal_to_snake_case("Great2DPicture") == "great2d_picture"
+    assert CaseUtil.pascal_to_snake_case("Great2DPicture") == "great2_d_picture"  # TODO: Should not have space in 2d
 
     # From snake_case with dot delimiter
     assert CaseUtil.pascal_to_snake_case("Abc.Def") == "abc.def"

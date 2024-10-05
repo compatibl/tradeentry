@@ -20,7 +20,8 @@ from typing import List
 from typing import Tuple
 from typing import Type
 from typing import cast
-from inflection import camelize
+
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.schema.schema import Schema
 
@@ -139,7 +140,7 @@ class SqliteSchemaManager:
 
         for field_name, (class_name, _) in all_fields.items():
             field_name = (
-                field_name if not self.pascalize_column_names else camelize(field_name, uppercase_first_letter=True)
+                field_name if not self.pascalize_column_names else CaseUtil.snake_to_pascal_case(field_name)
             )
 
             column_name = (
