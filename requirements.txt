@@ -1,5 +1,10 @@
--r tools/tradeentry_install_requirements.txt
--r tools/convince_install_requirements.txt
--r tools/runtime_install_requirements.txt
--r tools/runtime_build_requirements.txt
--r tools/runtime_test_requirements.txt
+# Submodules
+runtime>=2.0.5
+convince>=0.0.3
+
+# Install requirements not included in submodules
+-r tools/cl/tradeentry/install_requirements.txt
+
+# Build and test requirements
+-r tools/cl/tradeentry/build_requirements.txt
+-r tools/cl/tradeentry/test_requirements.txt

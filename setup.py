@@ -3,7 +3,7 @@ import setuptools
 with open('./README.md', 'r') as readme_file:
     readme = readme_file.read()
 
-with open('./install_requirements.txt') as install_requirements:
+with open('./tools/cl/tradeentry/install_requirements.txt') as install_requirements:
     install_requires = [line.strip() for line in install_requirements.readlines()]
 
 setuptools.setup(
