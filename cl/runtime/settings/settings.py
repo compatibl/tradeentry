@@ -93,6 +93,7 @@ _dotenv_file_path = find_dotenv_output if (find_dotenv_output := find_dotenv()) 
 _dotenv_dir_path = os.path.dirname(_dotenv_file_path) if _dotenv_file_path is not None else None
 """Absolute path to .env directory if found, None otherwise."""
 
+
 @dataclass(slots=True, kw_only=True)
 class Settings(ABC):
     """Base class for a singleton settings object."""
