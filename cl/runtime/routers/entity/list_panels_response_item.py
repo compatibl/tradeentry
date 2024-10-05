@@ -41,6 +41,6 @@ class ListPanelsResponseItem(BaseModel):
 
         if handlers_block is not None and handlers_block:
             return [
-                ListPanelsResponseItem(name=handler.label) for handler in handlers_block if handler.type_ == "viewer"
+                ListPanelsResponseItem(name=handler.label) for handler in handlers_block if handler.type_ == "Viewer"
             ]
         return []

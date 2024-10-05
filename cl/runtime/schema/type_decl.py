@@ -223,7 +223,7 @@ class TypeDecl(TypeDeclKey, RecordMixin[TypeDeclKey]):
         if is_record:
             result.kind = "abstract" if is_abstract else None
         else:
-            result.kind = "abstract_element" if is_abstract else "element"
+            result.kind = "abstract_element" if is_abstract else "Element"
 
         # Set display kind
         result.display_kind = "Basic"  # TODO: Remove Basic after display_kind is made optional
@@ -250,8 +250,11 @@ class TypeDecl(TypeDeclKey, RecordMixin[TypeDeclKey]):
             if handlers_block.handlers:
                 result.declare = handlers_block
 
-        # Get key fields by parsing the source of 'get_key' method
-        result.keys = KeyUtil.get_key_fields(record_type)  # TODO: Use slots of key type when present?
+        # Get key fields by parsing the source of 'get_key' method and convert to PascalCase
+        snake_case_key_fields = KeyUtil.get_key_fields(record_type)
+        if snake_case_key_fields is not None:
+            pascal_case_key_fields = [CaseUtil.snake_to_pascal_case(x) for x in snake_case_key_fields]
+            result.keys = pascal_case_key_fields  # TODO: Use slots of key type when present?
 
         # Use this flag to skip fields generation when the method is invoked from a derived class
         if not skip_fields:

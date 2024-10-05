@@ -53,7 +53,7 @@ class PanelResponseUtil(BaseModel):
         if (
             handlers is not None
             and handlers
-            and (found_viewers := [h.name for h in handlers if h.label == request.panel_id and h.type_ == "viewer"])
+            and (found_viewers := [h.name for h in handlers if h.label == request.panel_id and h.type_ == "Viewer"])
         ):
             viewer_name: str = found_viewers[0]
         else:
