@@ -18,7 +18,6 @@ from abc import ABC
 from abc import abstractmethod
 from dataclasses import MISSING
 from dataclasses import dataclass
-from pathlib import Path
 from typing import ClassVar
 from typing import Dict
 from typing import Iterable
@@ -29,6 +28,7 @@ from dotenv import load_dotenv
 from dynaconf import Dynaconf
 from typing_extensions import Self
 from cl.runtime.context.env_util import EnvUtil
+from cl.runtime.settings.project_settings import ProjectSettings, SETTINGS_FILES_ENVVAR
 
 # Load dotenv first (the priority order is envvars first, then dotenv, then settings.yaml and .secrets.yaml)
 load_dotenv()
@@ -42,22 +42,15 @@ is_inside_test = EnvUtil.is_inside_test()
 if is_inside_test:
     os.environ["CL_SETTINGS_ENV"] = "test"
 
-# Get submodules and repo root relative to this source file
-_submodules_root_dir = Path(__file__).parents[4]
-_repo_root_dir = Path(__file__).parents[3]
-
 _all_settings = Dynaconf(
     environments=True,
     envvar_prefix="CL",
     env_switcher="CL_SETTINGS_ENV",
-    envvar="CL_SETTINGS_FILE",
+    envvar=SETTINGS_FILES_ENVVAR,
     settings_files=[
-        # Repo root (location for monorepo configuration) is second priority, submodules root will override if found
-        os.path.normpath(os.path.join(_repo_root_dir, "settings.yaml")),
-        os.path.normpath(os.path.join(_repo_root_dir, ".secrets.yaml")),
-        # Submodules root (location for submodules configuration) is first priority, listed last and will override
-        os.path.normpath(os.path.join(_submodules_root_dir, "settings.yaml")),
-        os.path.normpath(os.path.join(_submodules_root_dir, ".secrets.yaml")),
+        # Specify the exact path to prevent uncertainty associated with searching in multiple directories
+        os.path.normpath(os.path.join(ProjectSettings.get_project_root(), "settings.yaml")),
+        os.path.normpath(os.path.join(ProjectSettings.get_project_root(), ".secrets.yaml")),
     ],
     dotenv_override=True,
 )
@@ -215,38 +208,6 @@ class Settings(ABC):
             raise RuntimeError(
                 "Cannot get project root because neither .env file nor dynaconf settings file are found. "
                 "Project root is defined based on the location of these two files (with .env having a priority)."
-            )
-
-    @classmethod
-    def get_databases_path(cls) -> str:
-        """Returns absolute path to dir for databases."""
-        project_root = Settings.get_project_root()
-        db_dir = os.path.join(project_root, "databases")
-        if not os.path.exists(db_dir):
-            # Create the directory if does not exist
-            os.makedirs(db_dir)
-        return db_dir
-
-    @classmethod
-    def get_wwwroot_dir(cls) -> str:
-        """Returns path to wwwroot directory containing ui static files."""
-
-        # Look at submodules root first and then at repo root, do not search other directories
-        at_submodules_root = os.path.normpath(_submodules_root_dir / "wwwroot")
-        at_repo_root = os.path.normpath(_repo_root_dir / "wwwroot")
-
-        if os.path.exists(at_submodules_root):
-            # The directory at submodules root takes priority if both exist
-            return str(at_submodules_root)
-        elif os.path.exists(at_repo_root):
-            # Repo root if not found at submodules root
-            return str(at_repo_root)
-        else:
-            raise RuntimeError(
-                f"Browser client not found. If installed from GitHub, use 'main' branch to run.\n"
-                f"Directories searched for static JS files (in priority order):\n"
-                f"  - {at_submodules_root}\n"
-                f"  - {at_repo_root}\n"
             )
 
     @classmethod

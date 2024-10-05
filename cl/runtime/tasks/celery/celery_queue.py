@@ -25,7 +25,7 @@ from cl.runtime.records.protocols import is_key
 from cl.runtime.records.protocols import is_record
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.settings.context_settings import ContextSettings
-from cl.runtime.settings.settings import Settings
+from cl.runtime.settings.project_settings import ProjectSettings
 from cl.runtime.records.protocols import TDataDict
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
@@ -40,11 +40,11 @@ CELERY_RUN_COMMAND_QUEUE: Final[str] = "run_command"
 CELERY_MAX_RETRIES: Final[int] = 3
 CELERY_TIME_LIMIT: Final[int] = 3600 * 2  # TODO: 2 hours (configure)
 
-databases_path = Settings.get_databases_path()
+databases_dir = ProjectSettings.get_databases_dir()
 db_id = ContextSettings.instance().db_id
 
 # Get sqlite file name of celery broker based on database id in settings
-celery_file = os.path.join(databases_path, f"{db_id}.celery.sqlite")
+celery_file = os.path.join(databases_dir, f"{db_id}.celery.sqlite")
 
 celery_sqlite_uri = f"sqlalchemy+sqlite:///{celery_file}"
 

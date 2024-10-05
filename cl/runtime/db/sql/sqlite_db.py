@@ -29,7 +29,7 @@ from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
-from cl.runtime.settings.settings import Settings
+from cl.runtime.settings.project_settings import ProjectSettings
 from cl.runtime.db.db import Db
 from cl.runtime.db.protocols import TKey
 from cl.runtime.db.protocols import TRecord
@@ -394,7 +394,7 @@ class SqliteDb(Db):
         FileUtil.check_valid_filename(filename)
 
         # Get dir for database
-        db_dir = Settings.get_databases_path()
+        db_dir = ProjectSettings.get_databases_dir()
 
         result = os.path.join(db_dir, f"{filename}.sqlite")
         return result

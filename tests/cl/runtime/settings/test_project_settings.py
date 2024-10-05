@@ -29,12 +29,12 @@ def test_project_settings():
     project_settings = ProjectSettings.instance()
 
     # Check root_dir and offset
-    if project_settings.root_offset == 0:
-        assert project_settings.root_dir == superproject_root_dir
-    elif project_settings.root_offset == 1:
-        assert project_settings.root_dir == monorepo_root_dir
+    if ProjectSettings.component_offset == 0:
+        assert project_settings.project_root == superproject_root_dir
+    elif project_settings.component_offset == 1:
+        assert project_settings.project_root == monorepo_root_dir
     else:
-        raise RuntimeError(f"ProjectSettings.root_offset={project_settings.root_offset} is not 0 or 1.")
+        raise RuntimeError(f"ProjectSettings.root_offset={project_settings.component_offset} is not 0 or 1.")
 
 
 if __name__ == "__main__":

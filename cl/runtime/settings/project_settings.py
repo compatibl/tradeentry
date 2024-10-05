@@ -21,6 +21,9 @@ from typing import ClassVar
 from typing_extensions import Self
 from cl.runtime.records.dataclasses_extensions import missing
 
+SETTINGS_FILES_ENVVAR = "CL_SETTINGS_FILES"
+"""The name of environment variable used to override the settings file(s) names or locations."""
+
 
 @dataclass(slots=True, kw_only=True)
 class ProjectSettings:
@@ -32,7 +35,7 @@ class ProjectSettings:
         - It does not read data .env or settings.yaml because its initialization happens before
     """
 
-    root_dir: str = missing()
+    project_root: str = missing()
     """
     Superproject root if contains .env or settings.yaml, otherwise monorepo root if contains one of these files.
     + Superproject root
@@ -46,17 +49,48 @@ class ProjectSettings:
         ++ (files for component_2)
     """
 
-    root_offset: int = missing()
-    """One for superproject or zero for monorepo layout."""
+    component_offset: int = missing()
+    """Directory levels between project root and component root (superproject=1, monorepo=0)."""
     
     __instance: ClassVar[ProjectSettings] = None
     """Singleton instance."""
+
+    @classmethod
+    def get_project_root(cls) -> str:
+        """Class method returning project root directory."""
+        return cls.instance().project_root
+
+    @classmethod
+    def get_component_offset(cls) -> int:
+        """Directory levels between project root and component root (superproject=1, monorepo=0)."""
+        return cls.instance().component_offset
+
+    @classmethod
+    def get_wwwroot_dir(cls) -> str:
+        """Class method returning path to wwwroot directory under project root directory."""
+        return os.path.normpath(os.path.join(cls.instance().project_root, "wwwroot"))
+
+    @classmethod
+    def get_databases_dir(cls) -> str:
+        """Class method returning path to databases directory under project root directory."""
+        project_root = cls.get_project_root()
+        db_dir = os.path.join(project_root, "databases")
+        if not os.path.exists(db_dir):
+            # Create the directory if does not exist
+            os.makedirs(db_dir)
+        return db_dir
 
     @classmethod
     def instance(cls) -> Self:
         """Return singleton instance."""
         # Check if cached value exists, load if not found
         if cls.__instance is None:
+            env_settings_files = os.getenv(SETTINGS_FILES_ENVVAR)
+            if env_settings_files:
+                # TODO: Handle by replacing settings.yaml in search by the specified list
+                raise RuntimeError(f"Override of the Dynaconf settings file(s) names or locations using envvar "
+                                   f"'{SETTINGS_FILES_ENVVAR}' is not supported in this version.")
+
             # Possible project root locations for each layout relative to this module
             superproject_root_dir = os.path.normpath(Path(__file__).parents[4])
             monorepo_root_dir = os.path.normpath(Path(__file__).parents[3])
@@ -114,8 +148,8 @@ Directories searched in the order of priority:
 - Monorepo root: {monorepo_root_dir}
 """)
             obj = ProjectSettings(
-                root_dir=root_dir,
-                root_offset=root_offset
+                project_root=root_dir,
+                component_offset=root_offset
             )
             cls.__instance = obj
         return cls.__instance

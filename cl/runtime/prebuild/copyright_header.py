@@ -14,10 +14,8 @@
 
 import os
 from fnmatch import fnmatch
-from typing import Iterable
 from typing import List
-from typing import Tuple
-from cl.runtime.settings.settings import Settings
+from cl.runtime.settings.project_settings import ProjectSettings
 
 
 def check_copyright_headers(
@@ -47,7 +45,7 @@ def check_copyright_headers(
         source_dirs = ["cl/", "stubs/cl/", "tests/cl"]
 
     # Project root assuming the script is located in project_root/scripts
-    project_root = Settings.get_project_root()
+    project_root = ProjectSettings.get_project_root()
 
     # Absolute paths to source directories
     root_paths = [os.path.normpath(os.path.join(project_root, source_dir)) for source_dir in source_dirs]

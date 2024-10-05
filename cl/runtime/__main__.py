@@ -36,7 +36,7 @@ from cl.runtime.routers.storage import storage_router
 from cl.runtime.routers.tasks import tasks_router
 from cl.runtime.settings.api_settings import ApiSettings
 from cl.runtime.settings.preload_settings import PreloadSettings
-from cl.runtime.settings.settings import Settings
+from cl.runtime.settings.project_settings import ProjectSettings
 from cl.runtime.tasks.celery.celery_queue import celery_delete_existing_tasks
 from cl.runtime.tasks.celery.celery_queue import celery_start_queue
 
@@ -119,7 +119,7 @@ if __name__ == "__main__":
         celery_delete_existing_tasks()
 
         # Start Celery workers (will exit when the current process exits)
-        log_dir = os.path.join(Settings.get_project_root(), "logs")  # TODO: Make unique
+        log_dir = os.path.join(ProjectSettings.get_project_root(), "logs")  # TODO: Make unique
         celery_start_queue(log_dir=log_dir)
 
         # Preload data
@@ -129,7 +129,7 @@ if __name__ == "__main__":
         PreloadSettings.instance().configure()
 
         # Find wwwroot directory, error if not found
-        wwwroot_dir = Settings.get_wwwroot_dir()
+        wwwroot_dir = ProjectSettings.get_wwwroot_dir()
 
         # Mount static client files
         server_app.mount("/", StaticFiles(directory=wwwroot_dir, html=True))
