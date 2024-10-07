@@ -1,7 +1,8 @@
-# Install requirements not included in submodules
--r tools/cl/runtime/install_requirements.txt
+# Package requirements
+-r ./tools/cl/runtime/package_requirements.txt
 
-# Build and test requirements
--r tools/cl/runtime/build_requirements.txt
--r tools/cl/runtime/test_requirements.txt
+# Build requirements
+-r ./tools/cl/runtime/build_requirements.txt
 
+# Test requirements
+-r ./tools/cl/runtime/test_requirements.txt
