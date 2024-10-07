@@ -1,2 +1,2 @@
--r tools/runtime_install_requirements.txt
-
+# This submodule
+-r package_requirements.txt
