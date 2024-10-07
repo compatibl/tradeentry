@@ -1,9 +1,11 @@
-# Submodules
-runtime>=2.0.5
+# Submodule package requirements
+-r ./tools/cl/runtime/package_requirements.txt
+-r ./tools/cl/convince/package_requirements.txt
 
-# Install requirements not included in submodules
--r tools/cl/convince/install_requirements.txt
+# Submodule build requirements
+-r ./tools/cl/runtime/build_requirements.txt
+-r ./tools/cl/convince/build_requirements.txt
 
-# Build and test requirements
--r tools/cl/convince/build_requirements.txt
--r tools/cl/convince/test_requirements.txt
+# Submodule test requirements
+-r ./tools/cl/runtime/test_requirements.txt
+-r ./tools/cl/convince/test_requirements.txt
