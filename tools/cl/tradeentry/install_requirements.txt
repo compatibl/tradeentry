@@ -1,6 +1,6 @@
 # This submodule
 -r package_requirements.txt
 
-# Other submodules from PyPI
+# Other submodules from PyPI or an internal package repository
 convince>=0.0.3
 runtime>=2.0.5
