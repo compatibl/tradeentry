@@ -28,10 +28,12 @@ from cl.runtime.routers.response_util import to_record_dict
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.string_serializer import StringSerializer
+from cl.runtime.view.dag.dag import Dag
 from cl.runtime.views.key_view import KeyView
 from cl.runtime.views.pdf_view import PdfView
 from cl.runtime.views.plot_view import PlotView
 from cl.runtime.views.png_view import PngView
+
 
 PanelResponseData = Dict[str, Any] | List[Dict[str, Any]] | None
 
@@ -127,6 +129,11 @@ class PanelResponseUtil(BaseModel):
                 "ContentType": "Pdf",
                 "_t": "BinaryContent",
             }
+        elif isinstance(view, Dag):
+            # Return DAG
+            view_dict: dict = to_legacy_dict(to_record_dict(view))
+            view_dict['_t'] = 'DAG'
+            return view_dict
         elif isinstance(view, Dict):
             # Return if is already dict
             return view
