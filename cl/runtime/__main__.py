@@ -15,8 +15,8 @@
 import os
 import traceback
 import uuid
-import uvicorn
 import webbrowser
+import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import Response

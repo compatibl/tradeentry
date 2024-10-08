@@ -120,12 +120,12 @@ def test_check_snake_case():
     check_raises_error(
         CaseUtil.check_snake_case,
         "invalid snake case",
-        "String invalid snake case is not snake_case because it contains a space."
+        "String invalid snake case is not snake_case because it contains a space.",
     )
     check_raises_error(
         CaseUtil.check_snake_case,
         "InvalidSnakeCase",
-        "String InvalidSnakeCase is not snake_case because it contains an uppercase character."
+        "String InvalidSnakeCase is not snake_case because it contains an uppercase character.",
     )
     check_raises_error(
         CaseUtil.check_snake_case,
@@ -136,7 +136,7 @@ def test_check_snake_case():
         CaseUtil.check_snake_case,
         "invalid_snake_case2",
         "String invalid_snake_case2 is not snake_case because it does not follow custom rule "
-        "for separators in front of digits."
+        "for separators in front of digits.",
     )
 
 
@@ -150,17 +150,17 @@ def test_check_pascal_case():
     check_raises_error(
         CaseUtil.check_pascal_case,
         "Invalid Pascal Case",
-        "String Invalid Pascal Case is not PascalCase because it contains a space."
+        "String Invalid Pascal Case is not PascalCase because it contains a space.",
     )
     check_raises_error(
         CaseUtil.check_pascal_case,
         "invalid_pascal_case",
-        "String invalid_pascal_case is not PascalCase because it contains an underscore."
+        "String invalid_pascal_case is not PascalCase because it contains an underscore.",
     )
     check_raises_error(
         CaseUtil.check_pascal_case,
         "invalidPascalcase",
-        "String invalidPascalcase is not PascalCase because the first letter is lowercase."
+        "String invalidPascalcase is not PascalCase because the first letter is lowercase.",
     )
 
 
@@ -173,18 +173,18 @@ def test_check_title_case():
     check_raises_error(
         CaseUtil.check_title_case,
         "invalid_title_case",
-        "String invalid_title_case is not Title Case because it contains an underscore."
+        "String invalid_title_case is not Title Case because it contains an underscore.",
     )
     check_raises_error(
         CaseUtil.check_title_case,
         "invalid Title Case",
-        "String invalid Title Case is not Title Case because the first letter is lowercase."
+        "String invalid Title Case is not Title Case because the first letter is lowercase.",
     )
     check_raises_error(
         CaseUtil.check_title_case,
         "Invalid Title Case2",
         "String Invalid Title Case2 is not Title Case because it does not follow custom rule "
-        "for separators in front of digits."
+        "for separators in front of digits.",
     )
 
 
@@ -197,17 +197,17 @@ def test_check_upper_case():
     check_raises_error(
         CaseUtil.check_upper_case,
         "Invalid_UPPER_CASE",
-        "String Invalid_UPPER_CASE is not UPPER_CASE because it contains a lowercase character."
+        "String Invalid_UPPER_CASE is not UPPER_CASE because it contains a lowercase character.",
     )
     check_raises_error(
         CaseUtil.check_upper_case,
         "UPPER_CASE example",
-        "String UPPER_CASE example is not UPPER_CASE because it contains a space."
+        "String UPPER_CASE example is not UPPER_CASE because it contains a space.",
     )
     check_raises_error(
         CaseUtil.check_upper_case,
         "UPPER_CASE2",
-        "String UPPER_CASE2 is not UPPER_CASE because it does not follow custom rule for separators in front of digits."
+        "String UPPER_CASE2 is not UPPER_CASE because it does not follow custom rule for separators in front of digits.",
     )
 
 
@@ -260,7 +260,6 @@ def test_round_trip_conversions():
         ("AbcDef.Xyz", "ABC_DEF.XYZ"),
         ("AbcDef.UvwXyz", "ABC_DEF.UVW_XYZ"),
     )
-
 
     for pascal_case_value, snake_case_value in pascal_to_snake_case_test_cases:
         assert CaseUtil.pascal_to_snake_case(pascal_case_value) == snake_case_value

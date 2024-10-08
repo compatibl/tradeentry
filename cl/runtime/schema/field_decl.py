@@ -21,7 +21,6 @@ from typing import Literal
 from typing import Type
 from uuid import UUID
 from typing_extensions import Self
-
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.records.dataclasses_extensions import missing

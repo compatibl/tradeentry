@@ -21,14 +21,13 @@ from typing import List
 from typing import Tuple
 from typing import Type
 from typing import cast
-
 from cl.runtime.backend.core.base_type_info import BaseTypeInfo
 from cl.runtime.backend.core.tab_info import TabInfo
 from cl.runtime.primitive.case_util import CaseUtil
+from cl.runtime.records.protocols import TDataDict
 from cl.runtime.records.protocols import is_key
 from cl.runtime.records.protocols import is_record
 from cl.runtime.serialization.sentinel_type import sentinel_value
-from cl.runtime.records.protocols import TDataDict
 
 # TODO: Initialize from settings
 alias_dict: Dict[Type, str] = dict()
@@ -191,8 +190,9 @@ class DictSerializer:
                     )
 
                 deserialized_fields = {
-                    CaseUtil.pascal_to_snake_case(k) if self.pascalize_keys else k: v
-                    if v.__class__.__name__ in self.primitive_type_names else self.deserialize_data(v)
+                    CaseUtil.pascal_to_snake_case(k) if self.pascalize_keys else k: (
+                        v if v.__class__.__name__ in self.primitive_type_names else self.deserialize_data(v)
+                    )
                     for k, v in data.items()
                     if k != "_type"
                 }

@@ -31,8 +31,8 @@ from stubs.cl.runtime import StubDataclassPrimitiveFields
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassSingleton
 from stubs.cl.runtime import StubHandlers
-from stubs.cl.runtime import StubViewers
 from stubs.cl.runtime import StubPlots
+from stubs.cl.runtime import StubViewers
 from stubs.cl.runtime import StubViewersDataTypes
 
 

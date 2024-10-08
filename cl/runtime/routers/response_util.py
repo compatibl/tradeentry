@@ -16,13 +16,13 @@
 
 from __future__ import annotations
 import base64
-from dataclasses import asdict, is_dataclass, fields
-
+from dataclasses import asdict
+from dataclasses import fields
+from dataclasses import is_dataclass
 from enum import Enum
 from typing import Any
 from typing import Dict
 from typing import List
-
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.schema.field_decl import primitive_types  # TODO: Move definition to a separate module
 
@@ -52,7 +52,7 @@ def to_record_dict(node):  # TODO: Apply type hints
     elif node_type is dict:
         # TODO: Decision on short name alias
         # Tuple key, table name is class name
-        result = {k: to_record_dict(v) for k,v in node.items()}
+        result = {k: to_record_dict(v) for k, v in node.items()}
         return result
     elif node_type.__name__.endswith("Key"):
         # Key type, use semicolon-delimited serialization
@@ -63,7 +63,7 @@ def to_record_dict(node):  # TODO: Apply type hints
     elif hasattr(node, "get_key") or is_dataclass(node):
         # Record or data
         # Creating the result dictionary starting with the "_t" field
-        result = {'_t': node.__class__.__name__}
+        result = {"_t": node.__class__.__name__}
         for field in fields(node):
             if (value := getattr(node, field.name)) is not None:
                 result[field.name] = to_record_dict(value)
@@ -78,7 +78,11 @@ def to_legacy_dict(node: Dict[str, Any] | List[Dict[str, Any]] | str) -> Dict[st
     if isinstance(node, dict):
         # Skip nodes that have the value of None
         # Remove suffix _ from field names if present
-        result = {CaseUtil.snake_to_pascal_case(k.removesuffix("_")) if not k == "id_" else "Id_": to_legacy_dict(v) for k, v in node.items() if v is not None}
+        result = {
+            CaseUtil.snake_to_pascal_case(k.removesuffix("_")) if not k == "id_" else "Id_": to_legacy_dict(v)
+            for k, v in node.items()
+            if v is not None
+        }
         return result
     elif isinstance(node, list):
         # Skip nodes that have the value of None

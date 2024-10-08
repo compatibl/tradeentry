@@ -57,10 +57,9 @@ class HeatMapPlot(MatplotlibPlot):
         theme = self._get_pyplot_theme(style=style)
 
         received_df, expected_df = (
-            pd.DataFrame.from_records(
-                [values, self.col_labels, self.row_labels],
-                index=['Value', 'Col', 'Row']
-            ).T.pivot_table(index="Row", columns="Col", values="Value", sort=False).astype(float)
+            pd.DataFrame.from_records([values, self.col_labels, self.row_labels], index=["Value", "Col", "Row"])
+            .T.pivot_table(index="Row", columns="Col", values="Value", sort=False)
+            .astype(float)
             for values in [self.received_values, self.expected_values]
         )
 
@@ -71,9 +70,7 @@ class HeatMapPlot(MatplotlibPlot):
 
             cmap = LinearSegmentedColormap.from_list("rg", ["g", "y", "r"], N=256)
 
-            im = MatplotlibUtil.heatmap(
-                data.values, data.index.tolist(), data.columns.tolist(), ax=axes, cmap=cmap
-            )
+            im = MatplotlibUtil.heatmap(data.values, data.index.tolist(), data.columns.tolist(), ax=axes, cmap=cmap)
 
             # Set figure and axes labels
             axes.set_xlabel(self.x_label)

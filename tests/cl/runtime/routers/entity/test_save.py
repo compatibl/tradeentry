@@ -22,7 +22,6 @@ from cl.runtime.routers.entity.save_response import SaveResponse
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassRecordKey
 
-
 # Test save record payloads
 create_record_payload = {"Id": "new_record", "DerivedField": "test", "_t": "StubDataclassDerivedRecord"}
 
@@ -31,6 +30,7 @@ update_record_payload = {
     "DerivedField": "new_value",
     "_t": "StubDataclassDerivedRecord",
 }
+
 
 def test_method():
     """Test coroutine for /entity/save route."""

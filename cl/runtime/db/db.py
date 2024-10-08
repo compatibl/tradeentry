@@ -19,14 +19,15 @@ from dataclasses import dataclass
 from typing import ClassVar
 from typing import Iterable
 from typing import Type
+from cl.runtime.db.db_key import DbKey
 from cl.runtime.records.class_info import ClassInfo
-from cl.runtime.records.protocols import KeyProtocol, TQuery
+from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.records.protocols import TKey
+from cl.runtime.records.protocols import TQuery
+from cl.runtime.records.protocols import TRecord
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.settings.context_settings import ContextSettings
-from cl.runtime.db.db_key import DbKey
-from cl.runtime.records.protocols import TKey
-from cl.runtime.records.protocols import TRecord
 
 
 @dataclass(slots=True, kw_only=True)

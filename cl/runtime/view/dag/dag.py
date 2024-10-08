@@ -13,12 +13,9 @@
 # limitations under the License.
 
 from __future__ import annotations
-
 from dataclasses import dataclass
 from typing import List
-
 import networkx as nx
-
 from cl.runtime import RecordMixin
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.view.dag.dag_edge import DagEdge
@@ -94,7 +91,7 @@ class Dag(DagKey, RecordMixin[DagKey]):
                     k=1 / (len(subgraph.nodes) ** 0.2),
                 )
             else:
-                raise Exception('Unsupported layout mode. Accepted layout modes: circular, planar, spring')
+                raise Exception("Unsupported layout mode. Accepted layout modes: circular, planar, spring")
             positions.update({node: (x + base_offset_x, y) for node, (x, y) in layout.items()})
             base_offset_x += offset_x
 

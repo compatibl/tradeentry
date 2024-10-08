@@ -15,11 +15,11 @@
 from dataclasses import dataclass
 from cl.runtime.context.context import Context
 from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.db.dataset_util import DatasetUtil
 from cl.runtime.log.log import Log
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.settings.settings import is_inside_test
-from cl.runtime.db.dataset_util import DatasetUtil
 
 
 @dataclass(slots=True, kw_only=True)

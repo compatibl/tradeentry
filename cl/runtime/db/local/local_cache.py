@@ -21,13 +21,13 @@ from typing import Iterable
 from typing import Type
 from typing import cast
 from typing_extensions import Self
-from cl.runtime.records.protocols import KeyProtocol
-from cl.runtime.records.protocols import RecordProtocol
-from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.records.protocols import TQuery
 from cl.runtime.db.dataset_util import DatasetUtil
 from cl.runtime.db.protocols import TKey
 from cl.runtime.db.protocols import TRecord
+from cl.runtime.records.protocols import KeyProtocol
+from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.records.protocols import TQuery
+from cl.runtime.serialization.string_serializer import StringSerializer
 
 key_serializer = StringSerializer()
 """Serializer for keys used in cache lookup."""

@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from __future__ import annotations
-
 import os
 from dataclasses import dataclass
 from pathlib import Path
@@ -51,7 +50,7 @@ class ProjectSettings:
 
     component_offset: int = missing()
     """Directory levels between project root and component root (superproject=1, monorepo=0)."""
-    
+
     __instance: ClassVar[ProjectSettings] = None
     """Singleton instance."""
 
@@ -88,13 +87,15 @@ class ProjectSettings:
             env_settings_files = os.getenv(SETTINGS_FILES_ENVVAR)
             if env_settings_files:
                 # TODO: Handle by replacing settings.yaml in search by the specified list
-                raise RuntimeError(f"Override of the Dynaconf settings file(s) names or locations using envvar "
-                                   f"'{SETTINGS_FILES_ENVVAR}' is not supported in this version.")
+                raise RuntimeError(
+                    f"Override of the Dynaconf settings file(s) names or locations using envvar "
+                    f"'{SETTINGS_FILES_ENVVAR}' is not supported in this version."
+                )
 
             # Possible project root locations for each layout relative to this module
             superproject_root_dir = os.path.normpath(Path(__file__).parents[4])
             monorepo_root_dir = os.path.normpath(Path(__file__).parents[3])
-            
+
             # Settings filenames to search
             settings_filenames = [".env", "settings.yaml"]
 
@@ -127,9 +128,10 @@ class ProjectSettings:
 
             # Error if still not found
             if root_dir is None:
-                raise RuntimeError(f"Settings files .env, settings.yaml, or both must be present "
-                                   f"in either superproject or monorepo root."
-                                   f"""Expected layout:
+                raise RuntimeError(
+                    f"Settings files .env, settings.yaml, or both must be present "
+                    f"in either superproject or monorepo root."
+                    f"""Expected layout:
 + Superproject root
     ++ (settings files)
     ++ component_1
@@ -146,10 +148,8 @@ OR
 Directories searched in the order of priority:
 - Superproject root: {superproject_root_dir}
 - Monorepo root: {monorepo_root_dir}
-""")
-            obj = ProjectSettings(
-                project_root=root_dir,
-                component_offset=root_offset
-            )
+"""
+                )
+            obj = ProjectSettings(project_root=root_dir, component_offset=root_offset)
             cls.__instance = obj
         return cls.__instance

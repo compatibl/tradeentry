@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-
 from cl.runtime.view.dag.nodes.dag_node import DagNode
 
 

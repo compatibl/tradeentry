@@ -51,7 +51,11 @@ class StringSerializer:
 
         value_custom_type = StringValueParser.get_custom_type(data)
 
-        if value_custom_type in [StringValueCustomTypeEnum.DATA, StringValueCustomTypeEnum.DICT, StringValueCustomTypeEnum.LIST]:
+        if value_custom_type in [
+            StringValueCustomTypeEnum.DATA,
+            StringValueCustomTypeEnum.DICT,
+            StringValueCustomTypeEnum.LIST,
+        ]:
             raise ValueError(f"Value {str(data)} of type {type(data)} is not supported in key.")
 
         if value_custom_type in [

@@ -28,7 +28,6 @@ from typing import Type
 from typing import cast
 from memoization import cached
 from typing_extensions import Self
-
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.records.protocols import KeyProtocol

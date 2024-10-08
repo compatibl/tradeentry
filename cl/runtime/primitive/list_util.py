@@ -22,4 +22,3 @@ class ListUtil:
     def is_empty(cls, values: List | None) -> bool:
         """Returns true if the list is None or has zero length."""
         return values is None or len(values) == 0
-

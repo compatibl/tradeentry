@@ -14,9 +14,9 @@
 
 from dataclasses import dataclass
 from typing import Dict
-
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.protocols import KeyProtocol, TPrimitive
+from cl.runtime.records.protocols import KeyProtocol
+from cl.runtime.records.protocols import TPrimitive
 
 
 @dataclass(slots=True, kw_only=True)

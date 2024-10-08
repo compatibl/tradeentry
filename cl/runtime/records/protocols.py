@@ -13,17 +13,17 @@
 # limitations under the License.
 
 import datetime as dt
-from typing import Any
-from typing import Protocol
-from typing import Type
-from typing import TypeGuard
 from enum import Enum
+from typing import Any
 from typing import Dict
 from typing import List
 from typing import Literal
+from typing import Protocol
 from typing import Tuple
-from uuid import UUID
+from typing import Type
+from typing import TypeGuard
 from typing import TypeVar
+from uuid import UUID
 
 TPrimitive = str | float | bool | int | dt.date | dt.time | dt.datetime | UUID | bytes
 """Supported primitive value types for serialized data in dictionary format."""

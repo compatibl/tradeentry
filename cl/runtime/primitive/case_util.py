@@ -15,15 +15,15 @@
 import re
 from typing import Pattern
 
-_all_cap_re: Pattern = re.compile(r'([a-z])([A-Z])')
+_all_cap_re: Pattern = re.compile(r"([a-z])([A-Z])")
 # Pattern to add underscores before digits (e.g., "Abc2" -> "abc_2")
-_digit_separator_re: Pattern = re.compile(r'([a-zA-Z])(\d)')
+_digit_separator_re: Pattern = re.compile(r"([a-zA-Z])(\d)")
 # This pattern looks for uppercase sequences and adds an underscore between them if needed
-_consecutive_cap_re: Pattern = re.compile(r'([A-Z])([A-Z])')
+_consecutive_cap_re: Pattern = re.compile(r"([A-Z])([A-Z])")
 # Digit without underscore pattern
-_digit_without_underscore_re: Pattern = re.compile(r'(?<!_)\d')
+_digit_without_underscore_re: Pattern = re.compile(r"(?<!_)\d")
 # Digit without space pattern
-_digit_without_space_re: Pattern = re.compile(r'(?<! )\d')
+_digit_without_space_re: Pattern = re.compile(r"(?<! )\d")
 
 
 class CaseUtil:
@@ -34,11 +34,11 @@ class CaseUtil:
         """Convert PascalCase to snake_case using custom rule for separators in front of digits."""
         cls.check_pascal_case(value)
         # Add underscores between consecutive uppercase letters
-        result = _consecutive_cap_re.sub(r'\1_\2', value)
+        result = _consecutive_cap_re.sub(r"\1_\2", value)
         # Handle lowercase to uppercase transitions
-        result = _all_cap_re.sub(r'\1_\2', result)
+        result = _all_cap_re.sub(r"\1_\2", result)
         # Insert underscore before digits
-        result = _digit_separator_re.sub(r'\1_\2', result)
+        result = _digit_separator_re.sub(r"\1_\2", result)
 
         # Convert the final result to lowercase
         return result.lower()
@@ -65,10 +65,7 @@ class CaseUtil:
         # them into PascalCase.
         # Finally, join the tokens with dots and return the result
         return ".".join(
-            [
-                "".join(cls.__pascalize_segment(segment) for segment in token.split("_"))
-                for token in input_tokens
-            ]
+            ["".join(cls.__pascalize_segment(segment) for segment in token.split("_")) for token in input_tokens]
         )
 
     @classmethod

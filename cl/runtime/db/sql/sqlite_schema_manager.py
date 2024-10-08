@@ -20,7 +20,6 @@ from typing import List
 from typing import Tuple
 from typing import Type
 from typing import cast
-
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.schema.schema import Schema
@@ -68,7 +67,7 @@ class SqliteSchemaManager:
 
             # Make index name based on table name to be unique within database
             index_name = f"{table_name}_key_index"
-            
+
             create_unique_index_statement = (
                 f'CREATE UNIQUE INDEX IF NOT EXISTS "{index_name}" ON "{table_name}" ({keys_str});'
             )
@@ -139,9 +138,7 @@ class SqliteSchemaManager:
         columns_mapping = {"_type": "_type"}
 
         for field_name, (class_name, _) in all_fields.items():
-            field_name = (
-                field_name if not self.pascalize_column_names else CaseUtil.snake_to_pascal_case(field_name)
-            )
+            field_name = field_name if not self.pascalize_column_names else CaseUtil.snake_to_pascal_case(field_name)
 
             column_name = (
                 f"{class_name}." if self.add_class_to_column_names and class_name is not None else ""

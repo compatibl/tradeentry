@@ -34,7 +34,6 @@ from cl.runtime.views.pdf_view import PdfView
 from cl.runtime.views.plot_view import PlotView
 from cl.runtime.views.png_view import PngView
 
-
 PanelResponseData = Dict[str, Any] | List[Dict[str, Any]] | None
 
 
@@ -132,7 +131,7 @@ class PanelResponseUtil(BaseModel):
         elif isinstance(view, Dag):
             # Return DAG
             view_dict: dict = to_legacy_dict(to_record_dict(view))
-            view_dict['_t'] = 'DAG'
+            view_dict["_t"] = "DAG"
             return view_dict
         elif isinstance(view, Dict):
             # Return if is already dict

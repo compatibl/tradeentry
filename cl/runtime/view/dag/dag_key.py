@@ -14,7 +14,6 @@
 
 from dataclasses import dataclass
 from typing import Type
-
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.key_mixin import KeyMixin
 

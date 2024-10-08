@@ -17,8 +17,8 @@ import time
 from typing import Any
 from typing import Iterable
 from cl.runtime.context.testing_context import TestingContext
-from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.db.sql.sqlite_db import SqliteDb
+from cl.runtime.records.class_info import ClassInfo
 from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassDictFields

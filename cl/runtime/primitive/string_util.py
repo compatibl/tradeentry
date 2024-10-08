@@ -36,5 +36,5 @@ class StringUtil:
         value = value.replace(" ", "").replace("\n", "").replace("\r", "")
 
         # Encode to bytes using UTF-8 and get the MD5 hash in hexadecimal format
-        result = hashlib.md5(value.encode('utf-8'))
+        result = hashlib.md5(value.encode("utf-8"))
         return result

@@ -16,8 +16,6 @@ import os.path
 from dataclasses import dataclass
 from logging import getLogger
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.runtime.views.binary_content import BinaryContent
-from cl.runtime.views.binary_content_type_enum import BinaryContentTypeEnum
 from cl.runtime.view.dag.dag import Dag
 from cl.runtime.view.dag.dag_edge import DagEdge
 from cl.runtime.view.dag.dag_layout_enum import DagLayoutEnum
@@ -25,6 +23,8 @@ from cl.runtime.view.dag.dag_node_data import DagNodeData
 from cl.runtime.view.dag.nodes.add_text_node import AddTextNode
 from cl.runtime.view.dag.nodes.text_input_node import TextInputNode
 from cl.runtime.view.dag.nodes.text_output_node import TextOutputNode
+from cl.runtime.views.binary_content import BinaryContent
+from cl.runtime.views.binary_content_type_enum import BinaryContentTypeEnum
 from cl.runtime.views.pdf_view import PdfView
 from stubs.cl.runtime.views.stub_viewers_data_types_key import StubViewersDataTypesKey
 

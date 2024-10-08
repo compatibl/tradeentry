@@ -53,10 +53,11 @@ class GroupBarPlot(MatplotlibPlot):
         style = self._load_style()
         theme = self._get_pyplot_theme(style=style)
 
-        data = pd.DataFrame.from_records(
-            [self.values, self.bar_labels, self.group_labels],
-            index=['Value', 'Col', 'Row']
-        ).T.pivot_table(index="Row", columns="Col", values="Value", sort=False).astype(float)
+        data = (
+            pd.DataFrame.from_records([self.values, self.bar_labels, self.group_labels], index=["Value", "Col", "Row"])
+            .T.pivot_table(index="Row", columns="Col", values="Value", sort=False)
+            .astype(float)
+        )
 
         with plt.style.context(theme):
             fig = plt.figure()

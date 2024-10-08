@@ -28,7 +28,8 @@ from dotenv import load_dotenv
 from dynaconf import Dynaconf
 from typing_extensions import Self
 from cl.runtime.context.env_util import EnvUtil
-from cl.runtime.settings.project_settings import ProjectSettings, SETTINGS_FILES_ENVVAR
+from cl.runtime.settings.project_settings import SETTINGS_FILES_ENVVAR
+from cl.runtime.settings.project_settings import ProjectSettings
 
 # Load dotenv first (the priority order is envvars first, then dotenv, then settings.yaml and .secrets.yaml)
 load_dotenv()

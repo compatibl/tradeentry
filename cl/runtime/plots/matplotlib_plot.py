@@ -17,9 +17,10 @@ import os
 from abc import abstractmethod
 from dataclasses import dataclass
 from matplotlib import pyplot as plt
-from cl.runtime import View, Context
-from cl.runtime.plots.plot import Plot
+from cl.runtime import Context
+from cl.runtime import View
 from cl.runtime.context.env_util import EnvUtil
+from cl.runtime.plots.plot import Plot
 from cl.runtime.plots.plot_style import PlotStyle
 from cl.runtime.views.png_view import PngView
 

@@ -31,7 +31,6 @@ from typing import get_type_hints
 from inflection import titleize
 from memoization import cached
 from typing_extensions import Self
-
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.key_util import KeyUtil
@@ -74,7 +73,9 @@ def to_type_decl_dict(node: Dict[str, Any] | List[Dict[str, Any]] | str) -> Dict
         # Remove suffix _ from field names if present
         key_field_names = node[0].get_key_fields()
         key_field_values = [to_type_decl_dict(v) for v in node[1:]]
-        return {CaseUtil.snake_to_pascal_case(k.removesuffix("_")): v for k, v in zip(key_field_names, key_field_values)}
+        return {
+            CaseUtil.snake_to_pascal_case(k.removesuffix("_")): v for k, v in zip(key_field_names, key_field_values)
+        }
     elif isinstance(node, str):
         return node
     else:

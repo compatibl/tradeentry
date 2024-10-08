@@ -23,6 +23,10 @@ from typing import Iterable
 from typing import Tuple
 from typing import Type
 from cl.runtime.context.context import Context
+from cl.runtime.db.db import Db
+from cl.runtime.db.protocols import TKey
+from cl.runtime.db.protocols import TRecord
+from cl.runtime.db.sql.sqlite_schema_manager import SqliteSchemaManager
 from cl.runtime.file.file_util import FileUtil
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
@@ -30,10 +34,6 @@ from cl.runtime.records.protocols import is_key
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
 from cl.runtime.settings.project_settings import ProjectSettings
-from cl.runtime.db.db import Db
-from cl.runtime.db.protocols import TKey
-from cl.runtime.db.protocols import TRecord
-from cl.runtime.db.sql.sqlite_schema_manager import SqliteSchemaManager
 
 _connection_dict: Dict[str, sqlite3.Connection] = {}
 """Dict of Connection instances with db_id key stored outside the class to avoid serialization."""

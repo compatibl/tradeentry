@@ -65,7 +65,6 @@ class StringValueCustomTypeEnum(IntEnum):
     """Key type."""
 
 
-
 CUSTOM_TYPE_VALUE_TO_NAME: Final[Dict[StringValueCustomTypeEnum, str]] = {StringValueCustomTypeEnum.DICT: "json"}
 """Enum value to name mapping."""
 

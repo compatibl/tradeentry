@@ -13,8 +13,8 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from typing import Any, Dict
-
+from typing import Any
+from typing import Dict
 from cl.runtime.records.dataclasses_extensions import missing
 
 

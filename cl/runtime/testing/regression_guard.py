@@ -26,12 +26,12 @@ from typing import cast
 import inflection
 import yaml
 from typing_extensions import Self
+from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.records.protocols import is_key
 from cl.runtime.records.protocols import is_record
 from cl.runtime.schema.field_decl import primitive_types
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.context.env_util import EnvUtil
 
 _supported_extensions = ["txt"]
 """The list of supported output file extensions (formats)."""
