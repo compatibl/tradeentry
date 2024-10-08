@@ -20,7 +20,6 @@ from cl.convince.entries.entry_type_key import EntryTypeKey
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.key_mixin import KeyMixin
-from cl.runtime.records.protocols import is_record
 
 
 @dataclass(slots=True, kw_only=True)
@@ -41,7 +40,7 @@ class EntryKey(KeyMixin):
             title: str,
             *,
             body: str | None = None,
-            data: str | None = None
+            data: str | None = None,
     ) -> EntryKey:
         """Uses 'type: title' format followed by an MD5 hash of body and data if present."""
 

@@ -17,6 +17,8 @@ from abc import abstractmethod
 from dataclasses import dataclass
 from typing import List
 
+from typing_extensions import Self
+
 from cl.convince.entries.entry_type_key import EntryTypeKey
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
@@ -54,6 +56,26 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
             title: str,
             *,
             body: str | None = None,
-            data: str | None = None
+            data: str | None = None,
     ) -> None:
         """Create from type and title with optional body and data parameters."""
+
+    @classmethod
+    @abstractmethod
+    def create_self(
+            cls,
+            entry_type: EntryTypeKey,
+            title: str,
+            *,
+            body: str | None = None,
+            data: str | None = None,
+            status: EntryStatusEnum = EntryStatusEnum.PROCESSED,
+    ) -> Self:
+        """Create self from type and title with optional body, data and status parameters."""
+        return cls(
+            entry_type=entry_type,
+            title=title,
+            body=body,
+            data=data,
+            status=status,
+        )
