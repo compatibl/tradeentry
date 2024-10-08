@@ -15,38 +15,45 @@
 from abc import ABC
 from abc import abstractmethod
 from dataclasses import dataclass
+from typing import List
+
+from cl.convince.entries.entry_type_key import EntryTypeKey
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.convince.entries.entry_key import EntryKey
 from cl.convince.entries.entry_status_enum import EntryStatusEnum
-from cl.convince.llms.llm_key import LlmKey
 
 
 @dataclass(slots=True, kw_only=True)
 class Entry(EntryKey, RecordMixin[EntryKey], ABC):
-    """Performs comprehension of the specified type on entry text."""
+    """Contains text and supporting data along with the results of their processing."""
 
-    parent_entry: EntryKey | None = None
-    """Parent entry (optional)."""
+    entry_type: EntryTypeKey = missing()
+    """Used to distinguish different entry types that share the same title and text (included in MD5 hash)."""
 
-    entry_status: EntryStatusEnum = missing()
-    """Entry type."""
+    title: str = missing()
+    """Title of a long entry or complete description of a short one (included in MD5 hash)."""
 
-    llm: LlmKey = missing()
-    """LLM used to process the entry."""
+    body: str | None = None
+    """Optional body of the entry if not completely described by the title (included in MD5 hash)."""
 
-    def __post_init__(self):
-        """Populate status if not specified."""
+    data: str | None = None
+    """Optional supporting data in YAML format (included in MD5 hash)."""
 
-        # Call __post_init__ from the base class
-        super(Entry, self).__post_init__()
-
-        if self.entry_status is None:
-            self.entry_status = EntryStatusEnum.CREATED
+    status: EntryStatusEnum = missing()
+    """Processing status and if the entry was created by AI or code or by a human."""
 
     def get_key(self) -> EntryKey:
-        return EntryKey(entry_type=self.entry_type, entry_text=self.entry_text)
+        return EntryKey(entry_id=self.entry_id)
 
+    @classmethod
     @abstractmethod
-    def process(self) -> None:
-        """Process using the LLM specified in the entry record."""
+    def create(
+            cls,
+            entry_type: EntryTypeKey,
+            title: str,
+            *,
+            body: str | None = None,
+            data: str | None = None
+    ) -> None:
+        """Create from type and title with optional body and data parameters."""

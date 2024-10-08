@@ -12,20 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from enum import IntEnum
+from abc import ABC
+from dataclasses import dataclass
+from cl.convince.entries.entry_type_key import EntryTypeKey
+from cl.runtime.records.record_mixin import RecordMixin
 
 
-class EntryStatusEnum(IntEnum):
-    """Entry processing status."""
+@dataclass(slots=True, kw_only=True)
+class EntryType(EntryTypeKey, RecordMixin[EntryTypeKey], ABC):
+    """Used to distinguish different entry types that share the same title and text (included in MD5 hash)."""
 
-    PROCESSED = 1
-    """Processed by AI or conventional code (excludes overrides and manual entries)."""
+    def get_key(self) -> EntryTypeKey:
+        return EntryTypeKey(entry_type_id=self.entry_type_id)
 
-    ESCALATION = 2
-    """Escalated by AI or conventional code for human review, contains pertinent details to create an override."""
-
-    OVERRIDE = 3
-    """Human override of a previously processed or escalated entry."""
-
-    MANUAL = 4
-    """New manual entry by a human in the normal course of processing (not an override)."""

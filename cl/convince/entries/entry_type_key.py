@@ -12,20 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from enum import IntEnum
+from dataclasses import dataclass
+from typing import Type
+from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.records.key_mixin import KeyMixin
 
 
-class EntryStatusEnum(IntEnum):
-    """Entry processing status."""
+@dataclass(slots=True, kw_only=True)
+class EntryTypeKey(KeyMixin):
+    """Used to distinguish different entry types that share the same title and text (included in MD5 hash)."""
 
-    PROCESSED = 1
-    """Processed by AI or conventional code (excludes overrides and manual entries)."""
+    entry_type_id: str = missing()
+    """Unique entry type identifier."""
 
-    ESCALATION = 2
-    """Escalated by AI or conventional code for human review, contains pertinent details to create an override."""
-
-    OVERRIDE = 3
-    """Human override of a previously processed or escalated entry."""
-
-    MANUAL = 4
-    """New manual entry by a human in the normal course of processing (not an override)."""
+    @classmethod
+    def get_key_type(cls) -> Type:
+        return EntryTypeKey
