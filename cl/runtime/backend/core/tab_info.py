@@ -21,8 +21,7 @@ from cl.runtime.records.dataclasses_extensions import missing
 class TabInfo:
     """Tab info."""
 
-    # TODO (Roman): support aliases
-    type_: BaseTypeInfo = missing()
+    type: BaseTypeInfo = missing()
     """Type."""
 
     # key: Tuple | None = missing()  # TODO: Add generic key support

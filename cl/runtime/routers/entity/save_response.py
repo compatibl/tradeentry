@@ -46,7 +46,7 @@ class SaveResponse(BaseModel):
             ui_record["OpenedTabs"] = [
                 {
                     **{k: v for k, v in item.items() if k != "Type"},
-                    "Type_": {**item["Type"], "_t": "BaseTypeInfo"},
+                    "Type": {**item["Type"], "_t": "BaseTypeInfo"},
                     "_t": "TabInfo",
                 }
                 for item in opened_tabs
