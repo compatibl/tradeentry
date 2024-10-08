@@ -151,8 +151,7 @@ class UiDictSerializer(DictSerializer):
                     if field == "_t":
                         continue
 
-                    # TODO(CaseUtil): Review the expected case of field
-                    field = camelize(field, uppercase_first_letter=True)
+                    field = CaseUtil.snake_to_pascal_case(field)
 
                     if (field_decl := type_decl_elements.get(field)) is not None:
                         # Apply ui conversion for values recursively

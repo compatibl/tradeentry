@@ -27,12 +27,10 @@ class StubDataclassNestedFieldsKey(KeyMixin):
     primitive: str = "abc"
     """String key element."""
 
-    # TODO(CaseUtil): Convert to embedded1 when roundtrip serialization with digits is supported
-    embedded1: StubDataclassRecordKey = field(default_factory=lambda: StubDataclassRecordKey(id="def"))
+    embedded_1: StubDataclassRecordKey = field(default_factory=lambda: StubDataclassRecordKey(id="def"))
     """Embedded key 1."""
 
-    # TODO(CaseUtil): Convert to embedded1 when roundtrip serialization with digits is supported
-    embedded2: StubDataclassRecordKey = field(default_factory=lambda: StubDataclassRecordKey(id="xyz"))
+    embedded_2: StubDataclassRecordKey = field(default_factory=lambda: StubDataclassRecordKey(id="xyz"))
     """Embedded key 2."""
 
     @classmethod

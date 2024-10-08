@@ -18,8 +18,8 @@ from enum import IntEnum
 class StubIntEnum(IntEnum):  # Enum is derived from IntEnum
     """Sample enum."""
 
-    ENUM_VALUE1 = 1
+    ENUM_VALUE_1 = 1
     """Enum value 1."""
 
-    ENUM_VALUE2 = 2
+    ENUM_VALUE_2 = 2
     """Enum value 2."""

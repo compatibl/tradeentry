@@ -193,8 +193,10 @@ class DictSerializer:
                         f"Ensure all serialized classes are included in package import settings."
                     )
 
-                # TODO(CaseUtil): Case varies from call to call, e.g. ApplicationTheme has different case than others
-                data = {inflection.underscore(k): v for k, v in data.items()}
+                data = {
+                    CaseUtil.pascal_to_snake_case(k) if CaseUtil.is_pascal_case(k) else k: v
+                    for k, v in data.items()
+                }
 
                 deserialized_fields = {
                     k: v if v.__class__.__name__ in self.primitive_type_names else self.deserialize_data(v)

@@ -55,5 +55,5 @@ class StubDataclassNestedFields(StubDataclassNestedFieldsKey, RecordMixin[StubDa
 
     def get_key(self) -> StubDataclassNestedFieldsKey:
         return StubDataclassNestedFieldsKey(
-            primitive=self.primitive, embedded1=self.embedded1, embedded2=self.embedded2
+            primitive=self.primitive, embedded_1=self.embedded_1, embedded_2=self.embedded_2
         )

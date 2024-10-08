@@ -19,7 +19,7 @@ from stubs.cl.runtime import StubIntEnum
 def test_smoke():
     """Smoke test."""
 
-    assert StubIntEnum.ENUM_VALUE1 == 1
+    assert StubIntEnum.ENUM_VALUE_1 == 1
 
 
 def test_class_label():
