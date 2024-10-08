@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import hashlib
 
 
 class StringUtil:
@@ -20,3 +21,20 @@ class StringUtil:
     def is_empty(cls, value: str | None) -> bool:
         """Returns true if the string is None or ''."""
         return value is None or value == ""
+
+    @classmethod
+    def md5_hex(cls, value: str | None) -> str:
+        """Return MD5 hash in hexadecimal format after converting to lowercase and removing all whitespace."""
+        return cls._md5(value).hexdigest()
+
+    @classmethod
+    def _md5(cls, value: str | None):
+        """Return MD5 hash object after converting to lowercase and removing all whitespace."""
+
+        # Convert to lowercase and remove all whitespace including EOL for any OS
+        value = value.lower()
+        value = value.replace(" ", "").replace("\n", "").replace("\r", "")
+
+        # Encode to bytes using UTF-8 and get the MD5 hash in hexadecimal format
+        result = hashlib.md5(value.encode('utf-8'))
+        return result
