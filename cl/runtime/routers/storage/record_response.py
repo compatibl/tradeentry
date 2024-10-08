@@ -147,7 +147,7 @@ class RecordResponse(BaseModel):
 
         # TODO: Optimize speed using dacite or similar library
 
-        ui_serializer = UiDictSerializer(pascalize_keys=True)
+        ui_serializer = UiDictSerializer()
         # serialize record to ui format
         record_dict_in_legacy_format = ui_serializer.serialize_data(record)
 

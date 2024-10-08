@@ -176,10 +176,9 @@ class DictSerializer:
             raise RuntimeError(f"Cannot serialize data of type '{type(data)}'.")
 
     def deserialize_data(self, data: TDataDict):  # TODO: Check if None should be supported
-        """Deserialize from dictionary containing primitive types, dictionaries, or iterables."""
-
-        if self.pascalize_keys:
-            raise RuntimeError("Cannot deserialize if pascalize_keys=True.")
+        """
+        Deserialize from dictionary containing primitive types, dictionaries, or iterables.
+        """
 
         if isinstance(data, dict):
             # Determine if the dictionary is a serialized dataclass or a dictionary
@@ -193,13 +192,9 @@ class DictSerializer:
                         f"Ensure all serialized classes are included in package import settings."
                     )
 
-                data = {
-                    CaseUtil.pascal_to_snake_case(k) if CaseUtil.is_pascal_case(k) else k: v
-                    for k, v in data.items()
-                }
-
                 deserialized_fields = {
-                    k: v if v.__class__.__name__ in self.primitive_type_names else self.deserialize_data(v)
+                    CaseUtil.pascal_to_snake_case(k) if self.pascalize_keys else k: v
+                    if v.__class__.__name__ in self.primitive_type_names else self.deserialize_data(v)
                     for k, v in data.items()
                     if k != "_type"
                 }

@@ -12,11 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 from enum import Enum
 from typing import Any
 from typing import List
-from inflection import underscore, camelize
 from typing_extensions import Dict
+
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key
@@ -29,11 +30,17 @@ from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.records.protocols import TDataDict
 
 
+@dataclass(slots=True, kw_only=True)
 class UiDictSerializer(DictSerializer):
     """Serialization for slot-based classes to ui format dict (legacy format)."""
 
+    pascalize_keys: bool = True
+    """pascalize_keys is True by default."""
+
     def serialize_data(self, data, select_fields: List[str] | None = None):
-        # TODO (Roman): make serialization format deserializable
+
+        if not self.pascalize_keys:
+            raise RuntimeError("Expect ui serialization always with pascalized keys.")
 
         if data is None:
             return None
@@ -42,7 +49,7 @@ class UiDictSerializer(DictSerializer):
             return data
         elif isinstance(data, Enum):
             # serialize enum as its name
-            serialized_enum = super().serialize_data(data, select_fields)
+            serialized_enum = super(UiDictSerializer, self).serialize_data(data, select_fields)
             pascal_case_value = serialized_enum.get("_name")
             return pascal_case_value
         elif is_key(data):
@@ -52,7 +59,7 @@ class UiDictSerializer(DictSerializer):
         elif isinstance(data, dict):
             # serialize dict as list of dicts in format [{"key": [key], "value": [value_as_legacy_variant]}]
             serialized_dict_items = []
-            for k, v in super().serialize_data(data).items():
+            for k, v in super(UiDictSerializer, self).serialize_data(data).items():
                 # TODO (Roman): support more value types in dict
                 if isinstance(v, str):
                     value_type = "String"
@@ -67,7 +74,7 @@ class UiDictSerializer(DictSerializer):
 
             return serialized_dict_items
         elif getattr(data, "__slots__", None) is not None:
-            serialized_data = super().serialize_data(data, select_fields)
+            serialized_data = super(UiDictSerializer, self).serialize_data(data, select_fields)
 
             # replace "_type" with "_t"
             if "_type" in serialized_data:
@@ -78,7 +85,7 @@ class UiDictSerializer(DictSerializer):
 
             return serialized_data
         else:
-            return super().serialize_data(data, select_fields)
+            return super(UiDictSerializer, self).serialize_data(data, select_fields)
 
     def serialize_record_for_table(self, record: RecordProtocol) -> Dict[str, Any]:
         """
@@ -124,6 +131,9 @@ class UiDictSerializer(DictSerializer):
         specific TypeDecl object.
         """
 
+        if not self.pascalize_keys:
+            raise RuntimeError("Expect ui serialization always with pascalized keys.")
+
         if isinstance(data, dict):
             if (short_name := data.get("_t")) is not None:
 
@@ -151,7 +161,8 @@ class UiDictSerializer(DictSerializer):
                     if field == "_t":
                         continue
 
-                    field = CaseUtil.snake_to_pascal_case(field)
+                    # Expect pascal case fields
+                    CaseUtil.check_pascal_case(field)
 
                     if (field_decl := type_decl_elements.get(field)) is not None:
                         # Apply ui conversion for values recursively

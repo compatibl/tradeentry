@@ -66,7 +66,7 @@ class SelectResponse(BaseModel):
 
         # TODO: Refactor the code below
 
-        ui_serializer = UiDictSerializer(pascalize_keys=True)
+        ui_serializer = UiDictSerializer()
 
         # TODO (Roman): check if we are calling /select somewhere other than the main grid.
         serialized_records = tuple(ui_serializer.serialize_record_for_table(record) for record in records)
