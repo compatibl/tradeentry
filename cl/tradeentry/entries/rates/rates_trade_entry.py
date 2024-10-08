@@ -13,9 +13,16 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+
+from typing_extensions import Self
+
 from cl.convince.entries.entry import Entry
+from cl.convince.entries.entry_key import EntryKey
 from cl.convince.entries.entry_status_enum import EntryStatusEnum
+from cl.runtime import Context
+from cl.runtime.records.dataclasses_extensions import missing
 from cl.tradeentry.entries.rates.rates_trade_type_entry import RatesTradeTypeEntry
+from cl.tradeentry.entries.rates.swaps.rates_swap_entry import RatesSwapEntry
 from cl.tradeentry.entries.rates.swaps.vanilla.vanilla_swap_entry import VanillaSwapEntry
 from cl.tradeentry.entries.trade_entry import TradeEntry
 from cl.tradeentry.trades.rates.rates_trade_type_key import RatesTradeTypeKey
@@ -28,19 +35,25 @@ from cl.tradeentry.trades.trade_key import TradeKey
 class RatesTradeEntry(TradeEntry):
     """Capture an interest rate trade from user input, trade type is determined from the input."""
 
-    def process(self) -> None:
-        # Recognize trade
-        # TODO: Update to use AI
-        rates_trade_type_entry = RatesTradeTypeEntry(entry_text=self.entry_text, parent_entry=self)
-        rates_trade_type_entry.process()
-        if rates_trade_type_entry.entry_status == EntryStatusEnum.COMPLETED:
-            # Create and process trade entry record for the specific rates trade type
-            # TODO: Use switch
-            if rates_trade_type_entry.rates_trade_type == RatesTradeTypeKeys.vanilla_swap:
-                vanilla_swap_entry = VanillaSwapEntry(entry_text=self.entry_text, parent_entry=self)
-                vanilla_swap_entry.process()
-            else:
-                raise RuntimeError(f"Unknown asset class {rates_trade_type_entry.rates_trade_type.rates_trade_type_id}")
+    rates_trade: EntryKey = missing()
+    """Entry for a rates trade."""
 
-            # Copy the trade to this record
-            self.trade = vanilla_swap_entry.trade
+    @classmethod
+    def create(
+            cls,
+            title: str,
+            *,
+            body: str | None = None,
+            data: str | None = None,
+    ) -> Self:
+        # TODO: This is a stub, requires implementation
+
+        # Create an instance of self and populate fields of the base class
+        result = cls.create_self(title, body=body, data=data)
+
+        # Create a type-specific entry record for further processing
+        result.rates_trade = RatesSwapEntry.create(title, body=body, data=data)
+
+        # Save to storage and return
+        Context.current().save_one(result)
+        return result

@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import datetime as dt
+from abc import ABC
 from dataclasses import dataclass
 from cl.tradeentry.entries.pay_freq_entry_key import PayFreqEntryKey
 from cl.tradeentry.entries.pay_receive_entry_key import PayReceiveEntryKey
@@ -22,7 +23,7 @@ from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import RatesMatur
 
 
 @dataclass(slots=True, kw_only=True)
-class RatesSwapLegEntry(RatesLegEntry):
+class RatesSwapLegEntry(RatesLegEntry, ABC):
     """Swap leg."""
 
     pay_receive: PayReceiveEntryKey | None = None

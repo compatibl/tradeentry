@@ -13,6 +13,9 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from typing_extensions import Self
+
+from cl.runtime import Context
 from cl.tradeentry.entries.fixed_rate_entry_key import FixedRateEntryKey
 from cl.tradeentry.entries.pay_receive_fixed_entry_key import PayReceiveFixedEntryKey
 from cl.tradeentry.entries.rates.rates_effective_date_entry_key import RatesEffectiveDateEntryKey
@@ -42,8 +45,22 @@ class VanillaSwapEntry(TradeEntry):
     fixed_rate: FixedRateEntryKey | None = None
     """Fixed rate (breakeven rate is assumed if not specified)."""
 
-    def process(self) -> None:
-        # Recognize trade
-        # TODO: This is a stub, implement
-        self.trade = VanillaSwap()
-        self.trade.pay_receive_fixed = PayReceiveFixedEnum.PAY_FIXED
+    @classmethod
+    def create(
+            cls,
+            title: str,
+            *,
+            body: str | None = None,
+            data: str | None = None,
+    ) -> Self:
+        # TODO: This is a stub, requires implementation
+
+        # Create an instance of self and populate fields of the base class
+        result = cls.create_self(title, body=body, data=data)
+
+        # TODO: Populate fields
+
+        # Save to storage and return
+        Context.current().save_one(result)
+        return result
+

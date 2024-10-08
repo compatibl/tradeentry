@@ -13,6 +13,10 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+
+from typing_extensions import Self
+
+from cl.runtime import Context
 from cl.tradeentry.entries.rates.rates_index_entry_key import RatesIndexEntryKey
 from cl.tradeentry.entries.rates.rates_spread_entry_key import RatesSpreadEntryKey
 from cl.tradeentry.entries.rates.swaps.rates_swap_leg_entry import RatesSwapLegEntry
@@ -30,3 +34,20 @@ class FloatSwapLegEntry(RatesSwapLegEntry):
 
     float_spread: RatesSpreadEntryKey | None = None
     """Spread over the interest rate index."""
+
+    @classmethod
+    def create(
+            cls,
+            title: str,
+            *,
+            body: str | None = None,
+            data: str | None = None,
+    ) -> Self:
+        # TODO: This is a stub, requires implementation
+
+        # Create an instance of self and populate fields of the base class
+        result = cls.create_self(title, body=body, data=data)
+
+        # Save to storage and return
+        Context.current().save_one(result)
+        return result

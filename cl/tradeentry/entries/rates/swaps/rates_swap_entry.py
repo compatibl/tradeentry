@@ -14,8 +14,15 @@
 
 from dataclasses import dataclass
 from typing import List
+
+from typing_extensions import Self
+
+from cl.convince.entries.entry_key import EntryKey
+from cl.runtime import Context
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.tradeentry.entries.rates.rates_leg_entry_key import RatesLegEntryKey
+
+from cl.tradeentry.entries.rates.swaps.fixed_swap_leg_entry import FixedSwapLegEntry
+from cl.tradeentry.entries.rates.swaps.float_swap_leg_entry import FloatSwapLegEntry
 from cl.tradeentry.entries.trade_entry import TradeEntry
 
 
@@ -23,5 +30,29 @@ from cl.tradeentry.entries.trade_entry import TradeEntry
 class RatesSwapEntry(TradeEntry):
     """Swap consists of two or more legs."""
 
-    legs: List[RatesLegEntryKey] = missing()
+    legs: List[EntryKey] = missing()
     """List of swap legs."""
+
+    @classmethod
+    def create(
+            cls,
+            title: str,
+            *,
+            body: str | None = None,
+            data: str | None = None,
+    ) -> Self:
+
+        # TODO: This is a stub, requires implementation
+        
+        # Create an instance of self and populate fields of the base class
+        result = cls.create_self(title, body=body, data=data)
+        
+        # Process legs
+        result.legs = []
+        result.legs.append(FixedSwapLegEntry.create("FixedLeg"))
+        result.legs.append(FloatSwapLegEntry.create("FloatLeg"))
+        
+        # Save to storage and return
+        Context.current().save_one(result)
+        return result
+
