@@ -16,7 +16,8 @@
 
 from __future__ import annotations
 import base64
-import dataclasses
+from dataclasses import asdict, is_dataclass, fields
+
 from enum import Enum
 from typing import Any
 from typing import Dict
@@ -35,7 +36,7 @@ def to_record_dict(node):  # TODO: Apply type hints
     elif node_type in primitive_types:
         # Primitive type, serialize as string
         # TODO: Apply custom formatting
-        result = str(node)
+        result = node
         return result
     elif issubclass(node_type, Enum):
         return node.name
@@ -48,25 +49,27 @@ def to_record_dict(node):  # TODO: Apply type hints
         table = node[0].__name__
         result = ";".join([table] + node[1:])
         return result
+    elif node_type is dict:
+        # TODO: Decision on short name alias
+        # Tuple key, table name is class name
+        result = {k: to_record_dict(v) for k,v in node.items()}
+        return result
     elif node_type.__name__.endswith("Key"):
         # Key type, use semicolon-delimited serialization
         # TODO: Do not use a method from dataclasses
-        node_dict = dataclasses.asdict(node)
+        node_dict = asdict(node)
         result = ";".join(node_dict.keys())
         return result
-    elif hasattr(node, "get_key"):
-        # Data or record
-        # TODO: Do not use a method from dataclasses
-        node_dict = dataclasses.asdict(node)
-        node_dict = {k: getattr(node, k) for k in node_dict.keys()}
-        result = {k: to_record_dict(v) for k, v in node_dict.items() if v is not None}
-        result["_t"] = type(node).__name__
+    elif hasattr(node, "get_key") or is_dataclass(node):
+        # Record or data
+        # Creating the result dictionary starting with the "_t" field
+        result = {'_t': node.__class__.__name__}
+        for field in fields(node):
+            if (value := getattr(node, field.name)) is not None:
+                result[field.name] = to_record_dict(value)
         return result
     else:
-        node_dict = dataclasses.asdict(node)
-        result = {k: to_record_dict(v) for k, v in node_dict.items() if v is not None}
-        result["_t"] = type(node).__name__
-        return result
+        return node
 
 
 def to_legacy_dict(node: Dict[str, Any] | List[Dict[str, Any]] | str) -> Dict[str, Any] | List[Dict[str, Any]] | str:
@@ -75,7 +78,7 @@ def to_legacy_dict(node: Dict[str, Any] | List[Dict[str, Any]] | str) -> Dict[st
     if isinstance(node, dict):
         # Skip nodes that have the value of None
         # Remove suffix _ from field names if present
-        result = {CaseUtil.snake_to_pascal_case(k.removesuffix("_")): to_legacy_dict(v) for k, v in node.items() if v is not None}
+        result = {CaseUtil.snake_to_pascal_case(k.removesuffix("_")) if not k == "id_" else "Id_": to_legacy_dict(v) for k, v in node.items() if v is not None}
         return result
     elif isinstance(node, list):
         # Skip nodes that have the value of None
