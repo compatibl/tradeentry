@@ -16,10 +16,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Type
 
-from cl.convince.entries.entry_type_key import EntryTypeKey
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.key_mixin import KeyMixin
+from cl.runtime.records.protocols import is_record
 
 
 @dataclass(slots=True, kw_only=True)
@@ -36,22 +36,22 @@ class EntryKey(KeyMixin):
     @classmethod
     def create_key(
             cls,
-            entry_type: EntryTypeKey,
             title: str,
             *,
             body: str | None = None,
             data: str | None = None,
     ) -> EntryKey:
-        """Uses 'type: title' format followed by an MD5 hash of body and data if present."""
+        """Uses 'ClassName: Title' format followed by an MD5 hash of body and data if present."""
 
         # Initial checks
-        if entry_type is None:
-            raise RuntimeError("Empty 'entry_type' is passed to 'EntryKey.create_key' method.")
+        if not is_record(cls):
+            raise RuntimeError("The method 'create_key' should be called from a record, not from a key.")
         if StringUtil.is_empty(title):
-            raise RuntimeError("Empty 'title' is passed to 'EntryKey.create_key' method.")
+            raise RuntimeError("Empty 'title' parameter is passed to 'create_key' method.")
 
-        # Type and title
-        entry_id = f"{entry_type.entry_type_id}: {title}"
+        # Type is ClassName without module
+        type_ = cls.__name__
+        entry_id = f"{type_}: {title}"
 
         # Append MD5 hash in hexadecimal format of the body and data if present
         if not StringUtil.is_empty(body) or not StringUtil.is_empty(data):

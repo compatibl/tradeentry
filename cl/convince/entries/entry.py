@@ -15,11 +15,9 @@
 from abc import ABC
 from abc import abstractmethod
 from dataclasses import dataclass
-from typing import List
 
 from typing_extensions import Self
 
-from cl.convince.entries.entry_type_key import EntryTypeKey
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.convince.entries.entry_key import EntryKey
@@ -30,8 +28,8 @@ from cl.convince.entries.entry_status_enum import EntryStatusEnum
 class Entry(EntryKey, RecordMixin[EntryKey], ABC):
     """Contains text and supporting data along with the results of their processing."""
 
-    entry_type: EntryTypeKey = missing()
-    """Used to distinguish different entry types that share the same title and text (included in MD5 hash)."""
+    type_: str = missing()
+    """Type in ClassName format without module (included in MD5 hash)."""
 
     title: str = missing()
     """Title of a long entry or complete description of a short one (included in MD5 hash)."""
@@ -52,30 +50,42 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
     @abstractmethod
     def create(
             cls,
-            entry_type: EntryTypeKey,
             title: str,
             *,
             body: str | None = None,
             data: str | None = None,
-    ) -> None:
-        """Create from type and title with optional body and data parameters."""
+    ) -> Self:
+        """Create and save to storage using type and title with optional body and data parameters."""
 
     @classmethod
-    @abstractmethod
     def create_self(
             cls,
-            entry_type: EntryTypeKey,
             title: str,
             *,
             body: str | None = None,
             data: str | None = None,
-            status: EntryStatusEnum = EntryStatusEnum.PROCESSED,
+            status: EntryStatusEnum = EntryStatusEnum.COMPLETED,
     ) -> Self:
         """Create self from type and title with optional body, data and status parameters."""
-        return cls(
-            entry_type=entry_type,
+
+        # Create key (includes generation of MD5 hash when body or data are empty)
+        entry_key = cls.create_key(
+            title=title,
+            body=body,
+            data=data,
+        )
+
+        # Type is ClassName without module
+        type_ = cls.__name__
+
+        # Create self and populate fields of the base class
+        result = cls(
+            entry_id=entry_key.entry_id,
+            type_=type_,
             title=title,
             body=body,
             data=data,
             status=status,
         )
+
+        return result

@@ -14,40 +14,35 @@
 
 import pytest
 
+from cl.convince.entries.entry import Entry
 from cl.convince.entries.entry_key import EntryKey
-from cl.convince.entries.entry_type_key import EntryTypeKey
 from cl.runtime.testing.regression_guard import RegressionGuard
 
 
 def test_entry_key():
     """Test EntryKey.create_key method."""
 
-    entry_type_key = EntryTypeKey(entry_type_id="SampleEntryType")
     guard = RegressionGuard()
 
     # Check with type and title only
-    guard.write(EntryKey.create_key(
-        entry_type_key,
+    guard.write(Entry.create_key(
         "Sample Title",
     ).entry_id)
 
     # Check with body
-    guard.write(EntryKey.create_key(
-        entry_type_key,
+    guard.write(Entry.create_key(
         "Sample Title",
         body="Sample Body",
     ).entry_id)
 
     # Check with data
-    guard.write(EntryKey.create_key(
-        entry_type_key,
+    guard.write(Entry.create_key(
         "Sample Title",
         data="Sample Data",
     ).entry_id)
 
     # Check with both
-    guard.write(EntryKey.create_key(
-        entry_type_key,
+    guard.write(Entry.create_key(
         "Sample Title",
         body="Sample Body",
         data="Sample Data",

@@ -18,8 +18,8 @@ from enum import IntEnum
 class EntryStatusEnum(IntEnum):
     """Entry processing status."""
 
-    PROCESSED = 1
-    """Processed by AI or conventional code (excludes overrides and manual entries)."""
+    COMPLETED = 1
+    """Processing completed by AI or conventional code (excludes overrides and manual entries)."""
 
     ESCALATION = 2
     """Escalated by AI or conventional code for human review, contains pertinent details to create an override."""
