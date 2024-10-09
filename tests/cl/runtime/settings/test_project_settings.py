@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 import pytest
 import os
 from pathlib import Path
@@ -28,12 +29,12 @@ def test_project_settings():
     project_settings = ProjectSettings.instance()
 
     # Check root_dir and offset
-    if ProjectSettings.component_offset == 0:
+    if ProjectSettings.project_levels == 1:
         assert project_settings.project_root == superproject_root_dir
-    elif project_settings.component_offset == 1:
+    elif project_settings.project_levels == 2:
         assert project_settings.project_root == monorepo_root_dir
     else:
-        raise RuntimeError(f"ProjectSettings.root_offset={project_settings.component_offset} is not 0 or 1.")
+        raise RuntimeError(f"ProjectSettings.project_levels={project_settings.project_levels} is not 1 or 2.")
 
 
 if __name__ == "__main__":

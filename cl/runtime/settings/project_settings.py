@@ -16,7 +16,7 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass
 from pathlib import Path
-from typing import ClassVar
+from typing import ClassVar, Literal, cast
 from typing_extensions import Self
 from cl.runtime.records.dataclasses_extensions import missing
 
@@ -27,47 +27,51 @@ SETTINGS_FILES_ENVVAR = "CL_SETTINGS_FILES"
 @dataclass(slots=True, kw_only=True)
 class ProjectSettings:
     """
-    Information about the project location and layout (used to search for settings and submodules).
+    Information about the project location and layout used to search for settings and packages.
+    This class finds the location of .env or settings.yaml and detects one of two supported layouts:
 
-    Notes:
-        - This class is used to search for .env or settings.yaml
-        - It does not read data .env or settings.yaml because its initialization happens before
+    One-level (suitable only for monorepo git layout):
+        - project and packages root (one level layout)
+            -- project files
+            -- package files (files from all packages are interleaved under a common root)
+
+    Two-level (suitable for monorepo, submodules or subtree git layout):
+        - project root (first level of two-level layout)
+            -- project files
+            -- package root (second level of two-level layout)
+                --- package files (files from each package are under a separate package root)
     """
 
     project_root: str = missing()
-    """
-    Superproject root if contains .env or settings.yaml, otherwise monorepo root if contains one of these files.
-    + Superproject root
-        ++ component_1
-            +++ (files for component_1)
-        ++ component_2
-            +++ (files for component_2)     
-    OR
-    + Monorepo root
-        ++ (files for component_1)
-        ++ (files for component_2)
-    """
+    """Project root directory is the location of .env or settings.yaml file."""
 
-    component_offset: int = missing()
-    """Directory levels between project root and component root (superproject=1, monorepo=0)."""
+    project_levels: int = missing()
+    """Number of levels in project layout (one or two)."""
 
     __instance: ClassVar[ProjectSettings] = None
     """Singleton instance."""
 
+    def __post_init__(self):
+        """Perform validation and type conversions."""
+        if self.project_levels != 1 and self.project_levels != 2:
+            raise RuntimeError(f"Field 'ProjectSettings.project_levels' must be 1 or 2.")
+
     @classmethod
     def get_project_root(cls) -> str:
-        """Class method returning project root directory."""
+        """Project root directory is the location of .env or settings.yaml file."""
         return cls.instance().project_root
 
     @classmethod
-    def get_component_offset(cls) -> int:
-        """Directory levels between project root and component root (superproject=1, monorepo=0)."""
-        return cls.instance().component_offset
+    def get_project_levels(cls) -> Literal[1, 2]:
+        """Project root directory is the location of .env or settings.yaml file."""
+        project_levels = cls.instance().project_levels
+        return cast(Literal[1, 2], project_levels)
 
     @classmethod
     def get_wwwroot_dir(cls) -> str:
         """Class method returning path to wwwroot directory under project root directory."""
-        return os.path.normpath(os.path.join(cls.instance().project_root, "wwwroot"))
+        project_root = cls.get_project_root()
+        return os.path.normpath(os.path.join(project_root, "wwwroot"))
 
     @classmethod
     def get_databases_dir(cls) -> str:
@@ -99,27 +103,27 @@ class ProjectSettings:
             # Settings filenames to search
             settings_filenames = [".env", "settings.yaml"]
 
-            root_dir = None
-            root_offset = None
+            project_root = None
+            project_levels = None
             try:
                 if os.path.exists(superproject_root_dir):
                     # Supermodule directory takes priority but only if it contains one of the settings files
                     if any(os.path.exists(os.path.join(superproject_root_dir, x)) for x in settings_filenames):
-                        root_dir = superproject_root_dir
-                        root_offset = 1
+                        project_root = superproject_root_dir
+                        project_levels = 2
             # Handle the possibility that directory access is prohibited
             except FileNotFoundError:
                 pass
             except PermissionError:
                 pass
 
-            if root_dir is None:
+            if project_root is None:
                 try:
                     if os.path.exists(monorepo_root_dir):
                         # Monorepo directory is searched next
                         if any(os.path.exists(os.path.join(monorepo_root_dir, x)) for x in settings_filenames):
-                            root_dir = monorepo_root_dir
-                            root_offset = 0
+                            project_root = monorepo_root_dir
+                            project_levels = 1
                 # Handle the possibility that directory access is prohibited
                 except FileNotFoundError:
                     pass
@@ -127,29 +131,13 @@ class ProjectSettings:
                     pass
 
             # Error if still not found
-            if root_dir is None:
+            if project_root is None:
                 raise RuntimeError(
-                    f"Settings files .env, settings.yaml, or both must be present "
-                    f"in either superproject or monorepo root."
-                    f"""Expected layout:
-+ Superproject root
-    ++ (settings files)
-    ++ component_1
-        --- (settings files here will be ignored for superproject layout)
-        +++ (files for component_1)
-    ++ component_2
-        --- (settings files here will be ignored for superproject layout)
-        +++ (files for component_2)     
-OR
-+ Monorepo root
-    ++ (settings files)
-    ++ (files for component_1)
-    ++ (files for component_2)
-Directories searched in the order of priority:
-- Superproject root: {superproject_root_dir}
-- Monorepo root: {monorepo_root_dir}
+                    f"""Project settings ('.env' or 'settings.yaml' files) could not be found. Locations searched:
+1. {superproject_root_dir}
+2. {monorepo_root_dir}
 """
                 )
-            obj = ProjectSettings(project_root=root_dir, component_offset=root_offset)
+            obj = ProjectSettings(project_root=project_root, project_levels=project_levels)
             cls.__instance = obj
         return cls.__instance
