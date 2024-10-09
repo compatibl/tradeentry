@@ -92,6 +92,9 @@ class ElementDecl(MemberDecl):  # TODO: Consider renaming to TypeFieldDecl or Fi
             result.vector = False
         elif field_decl.container_type == "list":
             result.vector = True
+        elif field_decl.container_type == "dict":
+            # TODO (Roman): Use another way to define the dict field. This is currently legacy format.
+            result.value = ValueDecl(type_="Dict")
         else:
             raise RuntimeError(f"Unsupported container type {field_decl.container_type} for field {field_decl.name}.")
 
