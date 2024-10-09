@@ -22,17 +22,23 @@ def test_project_settings():
     """Test ProjectSettings class."""
 
     # Relative to the location of this test module
-    superproject_root_dir = os.path.normpath(Path(__file__).parents[6])
-    monorepo_root_dir = os.path.normpath(Path(__file__).parents[5])
+    two_level_root_dir = os.path.normpath(Path(__file__).parents[6])
+    one_level_root_dir = os.path.normpath(Path(__file__).parents[5])
 
     # Create settings
     project_settings = ProjectSettings.instance()
 
-    # Check root_dir and offset
+    # Check project root
     if ProjectSettings.project_levels == 1:
-        assert project_settings.project_root == superproject_root_dir
+        assert project_settings.project_root == two_level_root_dir
+        assert project_settings.get_source_root("cl.runtime") == os.path.normpath(
+            os.path.join(project_settings.project_root, "cl", "runtime")
+        )
     elif project_settings.project_levels == 2:
-        assert project_settings.project_root == monorepo_root_dir
+        assert project_settings.project_root == one_level_root_dir
+        assert project_settings.get_source_root("cl.runtime") == os.path.normpath(
+            os.path.join(project_settings.project_root, "runtime", "cl", "runtime")
+        )
     else:
         raise RuntimeError(f"ProjectSettings.project_levels={project_settings.project_levels} is not 1 or 2.")
 

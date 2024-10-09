@@ -62,10 +62,34 @@ class ProjectSettings:
         return cls.instance().project_root
 
     @classmethod
-    def get_project_levels(cls) -> Literal[1, 2]:
-        """Project root directory is the location of .env or settings.yaml file."""
+    def get_source_root(cls, package: str) -> str:
+        """Source code root (the entry in PYTHONPATH) for dot-delimited package, e.g. 'stubs.cl.runtime'."""
+        project_root = cls.instance().project_root
         project_levels = cls.instance().project_levels
-        return cast(Literal[1, 2], project_levels)
+        relative_path = package.replace(".", os.sep)
+        if project_levels == 1:
+            # One-level project, search directly under project root
+            search_paths = [os.path.normpath(os.path.join(project_root, relative_path, "__init__.py"))]
+        elif project_levels == 2:
+            # Two-level project, check each dot-delimited package token in reverse order as potential package root
+            package_tokens = package.split(".")
+            package_tokens.reverse()
+            search_paths = [
+                os.path.normpath(os.path.join(project_root, x, relative_path, "__init__.py"))
+                for x in package_tokens
+            ]
+        else:
+            raise RuntimeError(f"Field 'ProjectSettings.project_levels' must be 1 or 2.")
+
+        # Find the first directory with __init__.py
+        init_path = next((x for x in search_paths if os.path.exists(x)), None)
+        if init_path is not None:
+            result = os.path.normpath(os.path.dirname(init_path))
+            return result
+        else:
+            search_paths_str = "\n".join(search_paths)
+            raise RuntimeError(f"Did not find  __init__.py for package '{package}'. Location searched:\n"
+                               f"{search_paths_str}\n")
 
     @classmethod
     def get_wwwroot_dir(cls) -> str:
