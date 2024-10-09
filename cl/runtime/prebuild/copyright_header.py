@@ -68,6 +68,9 @@ def check_copyright_headers(
     # The list of packages from context settings
     packages = ContextSettings.instance().packages
 
+    files_with_copyright_header_error = []
+    files_with_trailing_line_error = []
+    all_paths = []
     for package in packages:
 
         # Check if the LICENSE file at package root is Apache 2.0
@@ -85,6 +88,7 @@ def check_copyright_headers(
 
         # Absolute paths to source, stubs, and test directories
         root_paths = ProjectSettings.get_source_stubs_tests_roots(package)
+        all_paths.extend(root_paths)
 
         if copyright_header is None:
             # If not specified by the user, default to APACHE_HEADER or COMPATIBL_HEADER
@@ -97,9 +101,6 @@ def check_copyright_headers(
         # Use default exclude patterns if not specified by the caller
         if exclude_patterns is None:
             exclude_patterns = ["__init__.py"]
-
-        files_with_copyright_header_error = []
-        files_with_trailing_line_error = []
 
         # Apply to each element of root_paths
         for root_path in root_paths:
@@ -139,21 +140,21 @@ def check_copyright_headers(
                         with open(file_path, "w") as file:
                             file.write(updated_text)
 
-        if files_with_copyright_header_error:
-            raise RuntimeError(
-                "Invalid copyright header in file(s):\n"
-                + "".join([f"    {file}\n" for file in files_with_copyright_header_error])
-            )
-        elif files_with_trailing_line_error:
-            files_with_trailing_line_msg = "missing blank line(s) after copyright header in file(s):\n" + "".join(
-                [f"    {file}\n" for file in files_with_trailing_line_error]
-            )
-            if not fix_trailing_blank_line:
-                raise RuntimeError(f"Found {files_with_trailing_line_msg}")
-            elif verbose:
-                print(f"Fixed {files_with_trailing_line_msg}")
+    if files_with_copyright_header_error:
+        raise RuntimeError(
+            "Invalid copyright header in file(s):\n"
+            + "".join([f"    {file}\n" for file in files_with_copyright_header_error])
+        )
+    elif files_with_trailing_line_error:
+        files_with_trailing_line_msg = "missing blank line(s) after copyright header in file(s):\n" + "".join(
+            [f"    {file}\n" for file in files_with_trailing_line_error]
+        )
+        if not fix_trailing_blank_line:
+            raise RuntimeError(f"Found {files_with_trailing_line_msg}")
         elif verbose:
-            print(
-                "Verified copyright header and trailing blank line under directory root(s):\n"
-                + "".join([f"    {root_path}\n" for root_path in root_paths])
-            )
+            print(f"Fixed {files_with_trailing_line_msg}")
+    elif verbose:
+        print(
+            "Verified copyright header and trailing blank line under directory root(s):\n"
+            + "".join([f"    {x}\n" for x in all_paths])
+        )
