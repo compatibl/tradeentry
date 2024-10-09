@@ -76,7 +76,7 @@ class InitProtocol:
     """Protocol implemented by objects that require initialization."""
 
     def init(self) -> None:
-        """Similar to __init__ but uses previously set fields instead of parameters."""
+        """Perform type conversion and validation of fields and initialize instance variables that are not fields."""
 
 
 class ValidateProtocol:
