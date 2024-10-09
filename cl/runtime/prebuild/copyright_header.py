@@ -15,7 +15,6 @@
 import os
 from fnmatch import fnmatch
 from typing import List
-
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.settings.project_settings import ProjectSettings
@@ -81,7 +80,7 @@ def check_copyright_headers(
                 # LICENSE file found, check it is Apache 2.0 license
                 license_str = license_file.read()
                 license_md5 = StringUtil.md5_hex(license_str)
-                is_apache = (license_md5 == APACHE_LICENSE_MD5)
+                is_apache = license_md5 == APACHE_LICENSE_MD5
         else:
             # LICENSE file not found, assume commercial license
             is_apache = False

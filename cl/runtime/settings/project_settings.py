@@ -16,7 +16,10 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass
 from pathlib import Path
-from typing import ClassVar, Literal, cast, List
+from typing import ClassVar
+from typing import List
+from typing import Literal
+from typing import cast
 from typing_extensions import Self
 from cl.runtime.records.dataclasses_extensions import missing
 
@@ -73,7 +76,7 @@ class ProjectSettings:
         package_tokens = package.split(".")
         package_tokens_len = len(package_tokens)
         source_root = cls.get_source_root(package)
-        result = os.path.normpath(str(Path(source_root).parents[package_tokens_len-1]))
+        result = os.path.normpath(str(Path(source_root).parents[package_tokens_len - 1]))
         return result
 
     @classmethod
@@ -98,8 +101,7 @@ class ProjectSettings:
             package_tokens = package.split(".")
             package_tokens.reverse()
             search_paths = [
-                os.path.normpath(os.path.join(project_root, x, relative_path, "__init__.py"))
-                for x in package_tokens
+                os.path.normpath(os.path.join(project_root, x, relative_path, "__init__.py")) for x in package_tokens
             ]
         else:
             raise RuntimeError(f"Field 'ProjectSettings.project_levels' must be 1 or 2.")
@@ -111,14 +113,15 @@ class ProjectSettings:
             return result
         else:
             search_paths_str = "\n".join(search_paths)
-            raise RuntimeError(f"Did not find  __init__.py for package '{package}'. Location searched:\n"
-                               f"{search_paths_str}\n")
+            raise RuntimeError(
+                f"Did not find  __init__.py for package '{package}'. Location searched:\n" f"{search_paths_str}\n"
+            )
 
     @classmethod
     def get_source_stubs_tests_roots(cls, package: str) -> List[str]:
         """
         Source, stubs, and tests root directories for the specified package.
-        
+
         Notes:
             - The presence of __init__.py is only required for source root
             - Stubs and tests directories are only added if they exist,
@@ -130,7 +133,7 @@ class ProjectSettings:
         package_tokens = package.split(".")
         package_tokens_len = len(package_tokens)
         source_root = cls.get_source_root(package)
-        common_root = str(Path(source_root).parents[package_tokens_len-1])
+        common_root = str(Path(source_root).parents[package_tokens_len - 1])
         result = [source_root]
         if package_tokens[0] != "stubs" and package_tokens[0] != "tests":
             stubs_root = os.path.normpath(os.path.join(common_root, "stubs", *package_tokens))
