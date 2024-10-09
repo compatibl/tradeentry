@@ -129,7 +129,7 @@ if __name__ == "__main__":
         PreloadSettings.instance().configure()
 
         # Find wwwroot directory, error if not found
-        wwwroot_dir = ProjectSettings.get_wwwroot_dir()
+        wwwroot_dir = ProjectSettings.get_wwwroot()
 
         # Mount static client files
         server_app.mount("/", StaticFiles(directory=wwwroot_dir, html=True))

@@ -16,7 +16,7 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass
 from pathlib import Path
-from typing import ClassVar, Literal, cast
+from typing import ClassVar, Literal, cast, List
 from typing_extensions import Self
 from cl.runtime.records.dataclasses_extensions import missing
 
@@ -63,7 +63,15 @@ class ProjectSettings:
 
     @classmethod
     def get_source_root(cls, package: str) -> str:
-        """Source code root (the entry in PYTHONPATH) for dot-delimited package, e.g. 'stubs.cl.runtime'."""
+        """
+        Source code root directory (the entry in PYTHONPATH) for the specified package.
+
+        Notes:
+            Error if the directory does not contains __init__.py
+
+        Args:
+            package: Dot-delimited package root, e.g. 'cl.runtime'
+        """
         project_root = cls.instance().project_root
         project_levels = cls.instance().project_levels
         relative_path = package.replace(".", os.sep)
@@ -92,7 +100,34 @@ class ProjectSettings:
                                f"{search_paths_str}\n")
 
     @classmethod
-    def get_wwwroot_dir(cls) -> str:
+    def get_source_stubs_tests_roots(cls, package: str) -> List[str]:
+        """
+        Source, stubs, and tests root directories for the specified package.
+        
+        Notes:
+            - The presence of __init__.py is only required for source root
+            - Stubs and tests directories are only added if they exist,
+              path is calculated assuming standard package conventions
+
+        Args:
+            package: Dot-delimited package root, e.g. 'cl.runtime'
+        """
+        package_tokens = package.split(".")
+        package_tokens_len = len(package_tokens)
+        source_root = cls.get_source_root(package)
+        common_root = str(Path(source_root).parents[package_tokens_len-1])
+        result = [source_root]
+        if package_tokens[0] != "stubs" and package_tokens[0] != "tests":
+            stubs_root = os.path.normpath(os.path.join(common_root, "stubs", *package_tokens))
+            tests_root = os.path.normpath(os.path.join(common_root, "tests", *package_tokens))
+            if os.path.exists(stubs_root):
+                result.append(stubs_root)
+            if os.path.exists(tests_root):
+                result.append(tests_root)
+        return result
+
+    @classmethod
+    def get_wwwroot(cls) -> str:
         """Class method returning path to wwwroot directory under project root directory."""
         project_root = cls.get_project_root()
         return os.path.normpath(os.path.join(project_root, "wwwroot"))

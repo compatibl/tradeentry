@@ -22,7 +22,7 @@ class ContextSettings(Settings):
     """Default context parameters."""
 
     packages: List[str]
-    """List of packages to load in dot-delimited module prefix format, for example 'cl.runtime'."""
+    """List of packages to load in dot-delimited format, for example 'cl.runtime' or 'stubs.cl.runtime'."""
 
     log_class: str = "cl.runtime.log.file.file_log.FileLog"  # TODO: Deprecated, switch to class-specific fields
     """Default log class in module.ClassName format."""
