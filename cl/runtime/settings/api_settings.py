@@ -18,7 +18,7 @@ from cl.runtime.settings.settings import Settings
 
 @dataclass(slots=True, kw_only=True)
 class ApiSettings(Settings):
-    """Runtime REST API settings."""
+    """REST API settings."""
 
     host_name: str = "localhost"
     """REST API host name (either host name or IP can be used to access the API)."""

@@ -193,7 +193,7 @@ class Settings(ABC):
         return result
 
     @classmethod
-    def get_project_root(cls) -> str:
+    def get_project_root(cls) -> str:  # TODO: Merge with the version from ProjectSettings
         """
         Returns absolute path of the directory containing .env file, and if not present the directory
         containing the first Dynaconf settings file found. Error message if neither is found.

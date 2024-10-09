@@ -19,7 +19,7 @@ from cl.runtime.settings.settings import Settings
 
 @dataclass(slots=True, kw_only=True)
 class ContextSettings(Settings):
-    """Runtime context settings specifies default context parameters."""
+    """Default context parameters."""
 
     packages: List[str]
     """List of packages to load in dot-delimited module prefix format, for example 'cl.runtime'."""

@@ -25,7 +25,7 @@ from cl.runtime.settings.settings import Settings
 
 @dataclass(slots=True, kw_only=True)
 class PreloadSettings(Settings):
-    """Runtime settings for preloading records from files."""
+    """Settings for preloading records from files."""
 
     dirs: List[str] | None = None
     """

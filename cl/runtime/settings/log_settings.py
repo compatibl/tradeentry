@@ -20,7 +20,7 @@ from cl.runtime.settings.settings import Settings
 
 @dataclass(slots=True, kw_only=True)
 class LogSettings(Settings):
-    """Runtime REST API settings."""
+    """REST API settings."""
 
     filename_format: str = "prefix-timestamp"
     """
