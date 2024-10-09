@@ -31,11 +31,15 @@ def test_project_settings():
     # Check project root
     if ProjectSettings.project_levels == 1:
         assert project_settings.project_root == two_level_root_dir
+        assert project_settings.get_package_root("cl.runtime") == project_settings.project_root
         assert project_settings.get_source_root("cl.runtime") == os.path.normpath(
             os.path.join(project_settings.project_root, "cl", "runtime")
         )
     elif project_settings.project_levels == 2:
         assert project_settings.project_root == one_level_root_dir
+        assert project_settings.get_package_root("cl.runtime") == os.path.normpath(
+            os.path.join(project_settings.project_root, "runtime")
+        )
         assert project_settings.get_source_root("cl.runtime") == os.path.normpath(
             os.path.join(project_settings.project_root, "runtime", "cl", "runtime")
         )

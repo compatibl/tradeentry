@@ -62,6 +62,21 @@ class ProjectSettings:
         return cls.instance().project_root
 
     @classmethod
+    def get_package_root(cls, package: str) -> str:
+        """
+        Package root directory for the specified package, same as project root in one-level layout
+        and project_root/package_name for two-level layout. Not the same as get_source_root.
+
+        Args:
+            package: Dot-delimited package root, e.g. 'cl.runtime'
+        """
+        package_tokens = package.split(".")
+        package_tokens_len = len(package_tokens)
+        source_root = cls.get_source_root(package)
+        result = os.path.normpath(str(Path(source_root).parents[package_tokens_len-1]))
+        return result
+
+    @classmethod
     def get_source_root(cls, package: str) -> str:
         """
         Source code root directory (the entry in PYTHONPATH) for the specified package.
