@@ -45,10 +45,17 @@ def _check_package(package_root: str) -> List[str]:  # TODO: Move this method to
 
 def test_import():
     # Get the list of packages
-    packages = ContextSettings.instance().packages
+    context_packages = ContextSettings.instance().packages
+    all_packages = []
+    for package in context_packages:
+        if package.startswith("stubs.") or package.startswith("tests."):
+            all_packages.append(package)
+        else:
+            # TODO: Also support tests
+            all_packages.extend([package, f"stubs.{package}"])
 
-    # Find errors in each package
-    errors = [item for sublist in map(_check_package, packages) for item in sublist]
+    # Find import errors in each package
+    errors = [item for sublist in map(_check_package, all_packages) for item in sublist]
 
     # Report errors
     if errors:  # TODO: Improve formatting of the report

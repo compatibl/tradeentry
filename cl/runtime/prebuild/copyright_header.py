@@ -15,6 +15,8 @@
 import os
 from fnmatch import fnmatch
 from typing import List
+
+from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.settings.project_settings import ProjectSettings
 
 
@@ -40,15 +42,11 @@ def check_copyright_headers(
         verbose: Print messages about fixes to stdout if specified
     """
 
-    if source_dirs is None:
-        # Default to checking namespace 'cl'
-        source_dirs = ["cl/", "stubs/cl/", "tests/cl"]
+    # The list of packages from context settings
+    packages = ContextSettings.instance().packages
 
-    # Project root assuming the script is located in project_root/scripts
-    project_root = ProjectSettings.get_project_root()
-
-    # Absolute paths to source directories
-    root_paths = [os.path.normpath(os.path.join(project_root, source_dir)) for source_dir in source_dirs]
+    # Absolute paths to source, stubs, and test directories
+    root_paths = [y for x in packages for y in ProjectSettings.get_source_stubs_tests_roots(x)]
 
     # Use the project contributors Apache header if not specified by the caller
     if copyright_header is None:
