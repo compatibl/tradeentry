@@ -36,7 +36,7 @@ APACHE_HEADER = """# Copyright (C) 2023-present The Project Contributors
 # limitations under the License.
 """
 
-COMPATIBL_HEADER = """# Copyright (C) 2003-present CompatibL. All rights reserved.
+DEFAULT_HEADER = """# Copyright (C) 2003-present CompatibL. All rights reserved.
 #
 # This file contains valuable trade secrets and may be copied, stored, used,
 # or distributed only in compliance with the terms of a written commercial
@@ -46,18 +46,16 @@ COMPATIBL_HEADER = """# Copyright (C) 2003-present CompatibL. All rights reserve
 
 def check_copyright_headers(
     *,
-    copyright_header: str | None = None,
     include_patterns: List[str] | None = None,
     exclude_patterns: List[str] | None = None,
     fix_trailing_blank_line: bool = False,
     verbose: bool = False,
 ) -> None:
     """
-    Check that the specified copyright header is present and followed by a blank line in all files with
-    the specified glob filename pattern.
+    Check that the correct copyright header (Apache or default, based on the presence of Apache LICENSE file at
+    package root) is present and followed by a blank line in all files with the specified glob filename pattern.
 
     Args:
-        copyright_header: Optional copyright header, defaults to project contributors Apache header
         include_patterns: Optional list of filename glob patterns to include, use the defaults in code if not specified
         exclude_patterns: Optional list of filename glob patterns to exclude, use the defaults in code if not specified
         fix_trailing_blank_line: If specified, add a trailing blank line after the copyright header if missing
@@ -89,9 +87,9 @@ def check_copyright_headers(
         root_paths = ProjectSettings.get_source_stubs_tests_roots(package)
         all_paths.extend(root_paths)
 
-        if copyright_header is None:
-            # If not specified by the user, default to APACHE_HEADER or COMPATIBL_HEADER
-            copyright_header = APACHE_HEADER if is_apache else COMPATIBL_HEADER
+        # If not specified by the user, select APACHE_HEADER or DEFAULT_HEADER
+        copyright_header = APACHE_HEADER if is_apache else DEFAULT_HEADER
+        copyright_header_md5 = StringUtil.md5_hex(copyright_header)
 
         # Use default include patterns if not specified by the caller
         if include_patterns is None:
@@ -118,7 +116,9 @@ def check_copyright_headers(
                     with open(file_path, "r") as file:
                         # Check for the correct copyright header (disregard the trailing blank line)
                         file_header = file.read(len(copyright_header))
-                        if file_header != copyright_header:
+                        file_header_md5 = StringUtil.md5_hex(file_header)
+
+                        if file_header_md5 != copyright_header_md5:
                             # Add to the list of results if it does not start from the copyright header
                             files_with_copyright_header_error.append(str(file_path))
                         else:
