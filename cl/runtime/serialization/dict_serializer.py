@@ -205,7 +205,7 @@ class DictSerializer:
                 result = deserialized_type(**deserialized_fields)  # noqa
 
                 # Invoke 'init' for each class in class hierarchy that implements it, in the order from base to derived
-                RecordUtil.init_all(deserialized_type)
+                RecordUtil.init_all(result)
                 return result
             elif (short_name := data.get("_enum", None)) is not None:
                 # If _enum is specified, create an instance of _enum using _name
