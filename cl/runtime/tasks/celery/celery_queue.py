@@ -30,6 +30,7 @@ from cl.runtime.settings.project_settings import ProjectSettings
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
+from cl.runtime.tasks.task_queue_key import TaskQueueKey
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
 from cl.runtime.tasks.task_status_enum import TaskStatusEnum
@@ -189,7 +190,7 @@ class CeleryQueue(TaskQueue):
         # Create a task run record in Pending state
         task_run = TaskRun()
         task_run.task_run_id = task_run_id
-        task_run.queue = self.queue_id
+        task_run.queue = TaskQueueKey(queue_id=self.queue_id)
         task_run.task = task if is_key(task) else task.get_key()
         task_run.submit_time = submit_time
         task_run.update_time = submit_time
