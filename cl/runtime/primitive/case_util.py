@@ -15,6 +15,8 @@
 import re
 from typing import Pattern
 
+from cl.runtime.primitive.string_util import StringUtil
+
 _all_cap_re: Pattern = re.compile(r"([a-z])([A-Z])")
 # Pattern to add underscores before digits (e.g., "Abc2" -> "abc_2")
 _digit_separator_re: Pattern = re.compile(r"([a-zA-Z])(\d)")
@@ -30,8 +32,10 @@ class CaseUtil:
     """Utilities for case conversion and other operations on string."""
 
     @classmethod
-    def pascal_to_snake_case(cls, value: str) -> str:
+    def pascal_to_snake_case(cls, value: str | None) -> str | None:
         """Convert PascalCase to snake_case using custom rule for separators in front of digits."""
+        if StringUtil.is_empty(value):
+            return value
         cls.check_pascal_case(value)
         # Add underscores between consecutive uppercase letters
         result = _consecutive_cap_re.sub(r"\1_\2", value)
@@ -44,20 +48,26 @@ class CaseUtil:
         return result.lower()
 
     @classmethod
-    def upper_to_snake_case(cls, value: str) -> str:
+    def upper_to_snake_case(cls, value: str | None) -> str | None:
         """Convert UPPER_CASE to snake_case using custom rule for separators in front of digits."""
+        if StringUtil.is_empty(value):
+            return value
         cls.check_upper_case(value)
         return value.lower()
 
     @classmethod
-    def snake_to_upper_case(cls, value: str) -> str:
+    def snake_to_upper_case(cls, value: str | None) -> str | None:
         """Convert snake_case to UPPER_CASE using custom rule for separators in front of digits."""
+        if StringUtil.is_empty(value):
+            return value
         cls.check_snake_case(value)
         return value.upper()
 
     @classmethod
-    def snake_to_pascal_case(cls, value: str) -> str:
+    def snake_to_pascal_case(cls, value: str | None) -> str | None:
         """Convert snake_case to PascalCase using custom rule for separators in front of digits."""
+        if StringUtil.is_empty(value):
+            return value
         cls.check_snake_case(value)
         input_tokens = value.split(".")
 
@@ -69,21 +79,27 @@ class CaseUtil:
         )
 
     @classmethod
-    def upper_to_pascal_case(cls, value: str) -> str:
+    def upper_to_pascal_case(cls, value: str | None) -> str | None:
         """Convert UPPER_CASE to PascalCase using custom rule for separators in front of digits."""
+        if StringUtil.is_empty(value):
+            return value
         cls.check_upper_case(value)
         return cls.snake_to_pascal_case(value.lower())
 
     @classmethod
-    def pascal_to_upper_case(cls, value: str) -> str:
+    def pascal_to_upper_case(cls, value: str | None) -> str | None:
         """Convert PascalCase to UPPER_CASE using custom rule for separators in front of digits."""
+        if StringUtil.is_empty(value):
+            return value
         cls.check_pascal_case(value)
         snake_case_value = cls.pascal_to_snake_case(value)
         return snake_case_value.upper()
 
     @classmethod
-    def pascal_to_title_case(cls, value: str) -> str:
+    def pascal_to_title_case(cls, value: str | None) -> str | None:
         """Convert PascalCase to Title Case using custom rule for separators in front of digits."""
+        if StringUtil.is_empty(value):
+            return value
         cls.check_pascal_case(value)
         snake_case_value = cls.pascal_to_snake_case(value)
 
@@ -92,23 +108,31 @@ class CaseUtil:
         return " ".join(cls.__pascalize_segment(segment) for segment in snake_case_value.split("_"))
 
     @classmethod
-    def snake_to_title_case(cls, value: str) -> str:
+    def snake_to_title_case(cls, value: str | None) -> str | None:
         """Convert snake_case to Title Case using custom rule for separators in front of digits."""
+        if StringUtil.is_empty(value):
+            return value
         cls.check_snake_case(value)
         pascal_case_value = cls.snake_to_pascal_case(value)
         return cls.pascal_to_title_case(pascal_case_value)
 
     @classmethod
-    def check_snake_case(cls, value: str) -> None:
+    def check_snake_case(cls, value: str | None) -> None:
         """Error message if arg is not snake_case or does not follow custom rule for separators in front of digits."""
+        if StringUtil.is_empty(value):
+            # Consider None or empty string compliant with the format
+            return
         cls._check_no_space(value, "snake_case")
         cls._check_no_upper(value, "snake_case")
         cls._check_double_underscore(value, "snake_case")
         cls._check_snake_case_digit_separator(value)
 
     @classmethod
-    def check_pascal_case(cls, value: str) -> None:
+    def check_pascal_case(cls, value: str | None) -> None:
         """Error message if arg is not PascalCase or does not follow custom rule for separators in front of digits."""
+        if StringUtil.is_empty(value):
+            # Consider None or empty string compliant with the format
+            return
         cls._check_no_space(value, "PascalCase")
         cls._check_no_underscore(value, "PascalCase")
         cls._check_first_letter_capitalized(value, "PascalCase")
@@ -116,15 +140,21 @@ class CaseUtil:
         # front of digits, because there's no separators
 
     @classmethod
-    def check_title_case(cls, value: str) -> None:
+    def check_title_case(cls, value: str | None) -> None:
         """Error message if arg is not Title Case or does not follow custom rule for separators in front of digits."""
+        if StringUtil.is_empty(value):
+            # Consider None or empty string compliant with the format
+            return
         cls._check_no_underscore(value, "Title Case")
         cls._check_first_letter_capitalized(value, "Title Case")
         cls._check_title_case_digit_separator(value)
 
     @classmethod
-    def check_upper_case(cls, value: str) -> None:
+    def check_upper_case(cls, value: str | None) -> None:
         """Error message if arg is not UPPER_CASE or does not follow custom rule for separators in front of digits."""
+        if StringUtil.is_empty(value):
+            # Consider None or empty string compliant with the format
+            return
         cls._check_no_space(value, "UPPER_CASE")
         cls._check_no_lower(value, "UPPER_CASE")
         cls._check_upper_case_digit_separator(value)
