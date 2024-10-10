@@ -109,7 +109,7 @@ class StringSerializer:
                     f"Ensure all serialized enums are included in package import settings."
                 )
 
-            # get enum value
+            # Get enum value
             return deserialized_type[enum_value]  # noqa
         elif custom_type == StringValueCustomTypeEnum.UUID:
             return UUID(data)
@@ -169,21 +169,21 @@ class StringSerializer:
                 )
         """
 
-        # contains slot values
+        # Contains slot values
         slot_values: Dict[str, Any] = {}
 
-        # init slots iterator if type_ is specified
+        # Init slots iterator if type_ is specified
         slots_iterator = iter(type_.__slots__) if type_ else None
 
-        # reserve first slot from slots iterator
+        # Reserve first slot from slots iterator
         slot = next(slots_iterator) if slots_iterator else None
 
-        # iterate over tokens using tokens iterator
+        # Iterate over tokens using tokens iterator
         while token := next(tokens_iterator, None):
-            # parse token to value and custom type
+            # Parse token to value and custom type
             token, token_type = StringValueParser.parse(token)
 
-            # if token is key get type and fill embedded key slots recursively using the same iterator instance
+            # If token is key get type and fill embedded key slots recursively using the same iterator instance
             if token_type == StringValueCustomTypeEnum.KEY:
                 # TODO (Roman): verify proper way to get type in serialization.
                 current_type = Schema.get_type_by_short_name(token)
@@ -196,23 +196,23 @@ class StringSerializer:
 
                 key = self._fill_key_slots(tokens_iterator, current_type)
 
-                # slots_iterator - None, means the root key object, so return it, otherwise assign the associated slot
+                # slots_iterator == None means the root key object, so return it, otherwise assign the associated slot
                 if slots_iterator is None:
                     return key
                 else:
                     slot_values[slot] = key
             else:
-                # deserialize token and assign the associated slot
+                # Deserialize token and assign the associated slot
                 slot_values[slot] = self._deserialize_key_token(token, token_type)
 
-            # reserve next slot for next token
+            # Reserve next slot for next token
             slot = next(slots_iterator, None)
 
-            # if the slots are over - break.
+            # If the slots are over - break.
             if slot is None:
                 break
 
-        # construct final key object
+        # Construct final key object
         return type_(**slot_values)
 
     def deserialize_key(self, data: str, type_: Type | None = None) -> KeyProtocol:

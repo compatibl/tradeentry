@@ -47,16 +47,16 @@ class UiDictSerializer(DictSerializer):
         if data.__class__.__name__ in self.primitive_type_names:
             return data
         elif isinstance(data, Enum):
-            # serialize enum as its name
+            # Serialize enum as its name
             serialized_enum = super(UiDictSerializer, self).serialize_data(data, select_fields)
             pascal_case_value = serialized_enum.get("_name")
             return pascal_case_value
         elif is_key(data):
-            # serialize key as string
+            # Serialize key as string
             key_serializer = StringSerializer()
             return key_serializer.serialize_key(data)
         elif isinstance(data, dict):
-            # serialize dict as list of dicts in format [{"key": [key], "value": [value_as_legacy_variant]}]
+            # Serialize dict as list of dicts in format [{"key": [key], "value": [value_as_legacy_variant]}]
             serialized_dict_items = []
             for k, v in super(UiDictSerializer, self).serialize_data(data).items():
                 # TODO (Roman): support more value types in dict
@@ -75,7 +75,7 @@ class UiDictSerializer(DictSerializer):
         elif getattr(data, "__slots__", None) is not None:
             serialized_data = super(UiDictSerializer, self).serialize_data(data, select_fields)
 
-            # replace "_type" with "_t"
+            # Replace "_type" with "_t"
             if "_type" in serialized_data:
                 serialized_data["_t"] = data.__class__.__name__
                 del serialized_data["_type"]
@@ -95,7 +95,7 @@ class UiDictSerializer(DictSerializer):
         key_serializer = StringSerializer()
         all_slots = _get_class_hierarchy_slots(record.__class__)
 
-        # get subset of slots which supported in table format
+        # Get subset of slots which supported in table format
         table_slots = [
             slot
             for slot in all_slots
@@ -109,15 +109,15 @@ class UiDictSerializer(DictSerializer):
             )
         ]
 
-        # serialize record to ui format using table_slots
+        # Serialize record to ui format using table_slots
         table_record: Dict[str, Any] = self.serialize_data(record, select_fields=table_slots)
 
-        # replace "_type" with "_t"
+        # Replace "_type" with "_t"
         if "_type" in table_record:
             table_record["_t"] = record.__class__.__name__
             del table_record["_type"]
 
-        # add "_key"
+        # Add "_key"
         table_record["_key"] = key_serializer.serialize_key(record.get_key())
 
         return table_record
