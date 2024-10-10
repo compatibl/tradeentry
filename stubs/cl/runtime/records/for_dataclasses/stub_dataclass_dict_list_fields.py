@@ -36,19 +36,11 @@ def stub_dataclass_str_dict_list_factory() -> List[str]:
     return ["abc", "def"]
 
 
-def stub_dataclass_float_dict_list_factory() -> List[float]:
+def stub_dataclass_float_dict_list_factory() -> List[Dict[str, float]]:
     """Create stub values."""
     return [
-        0.0000123456789,
-        0.000123456789,
-        0.00123456789,
-        0.0123456789,
-        0.123456789,
-        1.23456789,
-        12.3456789,
-        123.456789,
-        1234.56789,
-        12345.6789,
+        {"a": 1.0},
+        {"b": 2.0},
     ]
 
 
@@ -108,6 +100,6 @@ class StubDataclassDictListFields(StubDataclassRecord):
     """Stub field."""
 
     derived_record_dict_list: List[Dict[str, StubDataclassDerivedRecord]] = field(
-        default_factory=stub_dataclass_derived_record_dict_factory
+        default_factory=stub_dataclass_derived_record_dict_list_factory
     )
     """Stub field."""
