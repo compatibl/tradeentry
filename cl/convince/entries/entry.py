@@ -63,7 +63,7 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
             # Assign if not specified
             self.type_ = class_name
         elif self.type_ != class_name:
-            # Otherwise it matches the rest of the data
+            # Otherwise check that it matches the rest of the data
             raise RuntimeError(f"Record's type {self.type_} does not match the implementing class {class_name}.")
 
         # Set entry_id or ensure that it matches the type, title, body and data of the record
@@ -72,14 +72,13 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
             # Assign if not specified
             self.entry_id = entry_id
         elif self.entry_id != entry_id:
-            # Otherwise it matches the rest of the data
+            # Otherwise check that it matches the rest of the data
             raise RuntimeError(f"""Record's entry_id if out of sync with the record's type, title, body and data.
 Record's entry_id: {self.entry_id}
 Expected from type, title, body and data: {entry_id} 
 """)
 
     @classmethod
-    @abstractmethod
     def create(
             cls,
             title: str,
@@ -88,13 +87,7 @@ Expected from type, title, body and data: {entry_id}
             data: str | None = None,
     ) -> Self:
         """Create and save to storage using type and title with optional body and data parameters."""
-
-        # Create key (includes generation of MD5 hash when body or data are empty)
-        entry_key = cls.create_key(
-            title=title,
-            body=body,
-            data=data,
-        )
+        raise NotImplementedError()
 
     @classmethod
     def create_self(
