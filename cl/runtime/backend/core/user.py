@@ -34,3 +34,14 @@ class User(UserKey, RecordMixin[UserKey]):
 
     def get_key(self) -> UserKey:
         return UserKey(username=self.username)
+
+    def init(self) -> None:
+        """Generate username in 'LastName, FirstName' format if not specified and check if specified."""
+        username = f"{self.last_name}, {self.first_name}"
+        if self.username is None:
+            # Assign if not specified
+            self.username = username
+        elif self.username != username:
+            # Otherwise check that it matches the rest of the data
+            raise RuntimeError(f"Username {self.username} is not in 'LastName, FirstName' format for last name "
+                               f"'{self.last_name}' and first name '{self.last_name}'.")
