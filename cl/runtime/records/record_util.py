@@ -23,8 +23,8 @@ class RecordUtil:
     """Utilities for working with records."""
 
     @classmethod
-    def init_base_to_derived(cls, obj) -> None:
-        """Invoke 'init' method for each class in MRO that implements it in the order from base to derived."""
+    def init_all(cls, obj) -> None:
+        """Invoke 'init' for each class in class hierarchy that implements it, in the order from base to derived."""
 
         # Keep track of which init methods in class hierarchy were already called
         invoked = set()

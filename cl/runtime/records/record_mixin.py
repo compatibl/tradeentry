@@ -18,6 +18,7 @@ from typing import Generic
 from typing import Type
 from typing import TypeVar
 from cl.runtime.records.protocols import KeyProtocol
+from cl.runtime.records.record_util import RecordUtil
 
 TKey = TypeVar("TKey", bound=KeyProtocol)  # TODO: Remove duplicate TKey definition
 
@@ -34,3 +35,8 @@ class RecordMixin(Generic[TKey]):
     @abstractmethod
     def get_key(self) -> TKey:
         """Return a new key object whose fields populated from self, do not return self."""
+
+    def init_all(self) -> None:
+        """Invoke 'init' for each class in class hierarchy that implements it, in the order from base to derived."""
+        RecordUtil.init_all(self)
+

@@ -49,18 +49,18 @@ class _DerivedFromDerivedWithoutInit(_Derived):
     """Test class."""
 
 
-def test_init_base_to_derived():
-    """Test RecordUtil.init_base_to_derived method."""
+def test_init_all():
+    """Test RecordUtil.init_all method."""
 
     guard = RegressionGuard()
     guard.write("Testing _Base:")
-    RecordUtil.init_base_to_derived(_Base())
+    RecordUtil.init_all(_Base())
     guard.write("Testing _Derived:")
-    RecordUtil.init_base_to_derived(_Derived())
+    RecordUtil.init_all(_Derived())
     guard.write("Testing _DerivedFromDerivedWithInit:")
-    RecordUtil.init_base_to_derived(_DerivedFromDerivedWithInit())
+    RecordUtil.init_all(_DerivedFromDerivedWithInit())
     guard.write("Testing _DerivedFromDerivedWithoutInit:")
-    RecordUtil.init_base_to_derived(_DerivedFromDerivedWithoutInit())
+    RecordUtil.init_all(_DerivedFromDerivedWithoutInit())
     RegressionGuard.verify_all()
 
 

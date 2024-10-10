@@ -189,7 +189,7 @@ class Settings(ABC):
             result = cls(**settings_dict)
 
             # Invoke init method for each class hierarchy member from base to derived
-            RecordUtil.init_base_to_derived(result)
+            RecordUtil.init_all(result)
 
             # Cache the result
             cls.__settings_dict[cls] = result
