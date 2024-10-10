@@ -67,7 +67,7 @@ def check_copyright_headers(
 
     files_with_copyright_header_error = []
     files_with_trailing_line_error = []
-    all_paths = []
+    all_root_paths = set()
     for package in packages:
 
         # Check if the LICENSE file at package root is Apache 2.0
@@ -83,9 +83,21 @@ def check_copyright_headers(
             # LICENSE file not found, assume commercial license
             is_apache = False
 
-        # Absolute paths to source, stubs, and test directories
-        root_paths = ProjectSettings.get_source_stubs_tests_roots(package)
-        all_paths.extend(root_paths)
+        # Add paths to source, stubs, and test directories
+        package_root_paths = []
+        if (x := ProjectSettings.get_source_root(package)) is not None and x not in all_root_paths:
+            package_root_paths.append(x)
+            all_root_paths.add(x)
+        if (x := ProjectSettings.get_stubs_root(package)) is not None and x not in all_root_paths:
+            package_root_paths.append(x)
+            all_root_paths.add(x)
+        if (x := ProjectSettings.get_tests_root(package)) is not None and x not in all_root_paths:
+            package_root_paths.append(x)
+            all_root_paths.add(x)
+
+        # Go to the next package if no paths are added
+        if len(package_root_paths) == 0:
+            continue
 
         # If not specified by the user, select APACHE_HEADER or DEFAULT_HEADER
         copyright_header = APACHE_HEADER if is_apache else DEFAULT_HEADER
@@ -100,7 +112,7 @@ def check_copyright_headers(
             exclude_patterns = ["__init__.py"]
 
         # Apply to each element of root_paths
-        for root_path in root_paths:
+        for root_path in package_root_paths:
             # Walk the directory tree
             for dir_path, dir_names, filenames in os.walk(root_path):
                 # Apply exclude patterns
@@ -155,5 +167,5 @@ def check_copyright_headers(
     elif verbose:
         print(
             "Verified copyright header and trailing blank line under directory root(s):\n"
-            + "".join([f"    {x}\n" for x in all_paths])
+            + "".join([f"    {x}\n" for x in sorted(all_root_paths)])
         )

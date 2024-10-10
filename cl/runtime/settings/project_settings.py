@@ -118,14 +118,12 @@ class ProjectSettings:
             )
 
     @classmethod
-    def get_source_stubs_tests_roots(cls, package: str) -> List[str]:
+    def get_stubs_root(cls, package: str) -> str | None:
         """
-        Source, stubs, and tests root directories for the specified package.
+        Stubs root directory for the specified package.
 
         Notes:
-            - The presence of __init__.py is only required for source root
-            - Stubs and tests directories are only added if they exist,
-              path is calculated assuming standard package conventions
+            Error if the directory does not contains __init__.py
 
         Args:
             package: Dot-delimited package root, e.g. 'cl.runtime'
@@ -134,15 +132,48 @@ class ProjectSettings:
         package_tokens_len = len(package_tokens)
         source_root = cls.get_source_root(package)
         common_root = str(Path(source_root).parents[package_tokens_len - 1])
-        result = [source_root]
-        if package_tokens[0] != "stubs" and package_tokens[0] != "tests":
+        if package_tokens[0] == "tests":
+            # Do not look for stubs relative to tests
+            return None
+        elif package_tokens[0] == "stubs":
+            # Stubs package is specified directly
+            return source_root
+        else:
+            # Look for stubs package relative to source, return if exists
             stubs_root = os.path.normpath(os.path.join(common_root, "stubs", *package_tokens))
-            tests_root = os.path.normpath(os.path.join(common_root, "tests", *package_tokens))
             if os.path.exists(stubs_root):
-                result.append(stubs_root)
+                return stubs_root
+            else:
+                return None
+
+    @classmethod
+    def get_tests_root(cls, package: str) -> str | None:
+        """
+        Tests root directory for the specified package.
+
+        Notes:
+            The presence of __init__.py is not required for tests
+
+        Args:
+            package: Dot-delimited package root, e.g. 'cl.runtime'
+        """
+        package_tokens = package.split(".")
+        package_tokens_len = len(package_tokens)
+        source_root = cls.get_source_root(package)
+        common_root = str(Path(source_root).parents[package_tokens_len - 1])
+        if package_tokens[0] == "tests":
+            # Tests package is specified directly
+            return source_root
+        elif package_tokens[0] == "stubs":
+            # Do not look for tests package relative to stubs
+            return None
+        else:
+            # Look for tests package relative to source, return if exists
+            tests_root = os.path.normpath(os.path.join(common_root, "tests", *package_tokens))
             if os.path.exists(tests_root):
-                result.append(tests_root)
-        return result
+                return tests_root
+            else:
+                return None
 
     @classmethod
     def get_wwwroot(cls) -> str:

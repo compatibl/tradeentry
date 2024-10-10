@@ -14,6 +14,8 @@
 
 import os
 from typing import List
+
+from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.settings.project_settings import ProjectSettings
 
 
@@ -33,20 +35,20 @@ def check_init_files(
         verbose: Print messages about fixes to stdout if specified
     """
 
-    if source_dirs is None:
-        # Default to checking namespace 'cl'
-        source_dirs = ["cl/", "stubs/cl/"]
-
-    # Project root assuming the script is located in project_root/scripts
-    project_root = ProjectSettings.get_project_root()
-
-    # Absolute paths to source directories
-    root_paths = [os.path.normpath(os.path.join(project_root, source_dir)) for source_dir in source_dirs]
+    # The list of packages from context settings
+    packages = ContextSettings.instance().packages
 
     missing_files = []
+    all_root_paths = set()
+    for package in packages:
+        # Add paths to source and stubs directories
+        if (x := ProjectSettings.get_source_root(package)) is not None and x not in all_root_paths:
+            all_root_paths.add(x)
+        if (x := ProjectSettings.get_stubs_root(package)) is not None and x not in all_root_paths:
+            all_root_paths.add(x)
 
     # Apply to each element of root_paths
-    for root_path in root_paths:
+    for root_path in all_root_paths:
         # Walk the directory tree
         for dir_path, dir_names, filenames in os.walk(root_path):
             # Check for .py files in the directory
@@ -73,5 +75,5 @@ def check_init_files(
     elif verbose:
         print(
             "Verified that all __init__.py files are present under directory root(s):\n"
-            + "".join([f"    {root_path}\n" for root_path in root_paths])
+            + "".join([f"    {root_path}\n" for root_path in sorted(all_root_paths)])
         )
