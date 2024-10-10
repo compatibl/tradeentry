@@ -25,6 +25,7 @@ class _Base:
         raise NotImplementedError()
 
     def init(self) -> None:
+        """Same as __init__ but can be used when field values are set both during and after construction."""
         RegressionGuard().write("> _Base.init")
 
 
@@ -32,6 +33,7 @@ class _Derived(_Base):
     """Test class."""
 
     def init(self) -> None:
+        """Same as __init__ but can be used when field values are set both during and after construction."""
         RegressionGuard().write(">> _Derived.init")
 
 
@@ -39,6 +41,7 @@ class _DerivedFromDerivedWithInit(_Derived):
     """Test class."""
 
     def init(self) -> None:
+        """Same as __init__ but can be used when field values are set both during and after construction."""
         RegressionGuard().write(">>> _DerivedFromDerivedWithInit.init")
 
 
@@ -47,7 +50,7 @@ class _DerivedFromDerivedWithoutInit(_Derived):
 
 
 def test_init_base_to_derived():
-    """Test RecordUtil.super_invoke method."""
+    """Test RecordUtil.init_base_to_derived method."""
 
     guard = RegressionGuard()
     guard.write("Testing _Base:")
