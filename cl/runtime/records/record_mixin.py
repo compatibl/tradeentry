@@ -37,6 +37,7 @@ class RecordMixin(Generic[TKey]):
         """Return a new key object whose fields populated from self, do not return self."""
 
     def init_all(self) -> None:
-        """Invoke 'init' for each class in class hierarchy that implements it, in the order from base to derived."""
+        """Invoke 'init' for each class in the order from base to derived, then validate against schema."""
         RecordUtil.init_all(self)
+
 

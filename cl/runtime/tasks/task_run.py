@@ -57,7 +57,7 @@ class TaskRun(TaskRunKey, RecordMixin[TaskRunKey]):
     result: str | None = None  # TODO: Review the need for the result field in this record
     """Result converted to string."""
 
-    def __post_init__(self):
+    def init(self):
         # Automatically generate time-ordered unique task run identifier in UUIDv7 format if not yet specified
         if self.task_run_id is None:
             self.task_run_id = str(OrderedUuid.create_one())
