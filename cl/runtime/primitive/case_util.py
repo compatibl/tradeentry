@@ -92,6 +92,13 @@ class CaseUtil:
         return " ".join(cls.__pascalize_segment(segment) for segment in snake_case_value.split("_"))
 
     @classmethod
+    def snake_to_title_case(cls, value: str) -> str:
+        """Convert snake_case to Title Case using custom rule for separators in front of digits."""
+        cls.check_snake_case(value)
+        pascal_case_value = cls.snake_to_pascal_case(value)
+        return cls.pascal_to_title_case(pascal_case_value)
+
+    @classmethod
     def check_snake_case(cls, value: str) -> None:
         """Error message if arg is not snake_case or does not follow custom rule for separators in front of digits."""
         cls._check_no_space(value, "snake_case")
