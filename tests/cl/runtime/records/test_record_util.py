@@ -16,6 +16,7 @@ import pytest
 from cl.runtime.db.protocols import TKey
 from cl.runtime.records.record_util import RecordUtil
 from cl.runtime.testing.regression_guard import RegressionGuard
+from stubs.cl.runtime import StubDataclassOptionalFields, StubDataclassRecord
 
 
 class _Base:
@@ -53,6 +54,7 @@ def test_init_all():
     """Test RecordUtil.init_all method."""
 
     guard = RegressionGuard()
+
     guard.write("Testing _Base:")
     RecordUtil.init_all(_Base())
     guard.write("Testing _Derived:")
@@ -61,7 +63,15 @@ def test_init_all():
     RecordUtil.init_all(_DerivedFromDerivedWithInit())
     guard.write("Testing _DerivedFromDerivedWithoutInit:")
     RecordUtil.init_all(_DerivedFromDerivedWithoutInit())
+
     RegressionGuard.verify_all()
+
+
+def test_validate():
+    """Test RecordUtil.validate method."""
+
+    RecordUtil.validate(StubDataclassRecord())
+    RecordUtil.validate(StubDataclassOptionalFields())
 
 
 if __name__ == "__main__":
