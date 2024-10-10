@@ -17,10 +17,17 @@ from dataclasses import dataclass
 from typing import Any
 from typing import Dict
 from typing import Type
+
 from cl.runtime import Context
 from cl.runtime.file.reader import Reader
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.schema.element_decl import ElementDecl
+from cl.runtime.schema.type_decl import TypeDecl
+from cl.runtime.serialization.dict_serializer import get_type_dict
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
+from cl.runtime.serialization.string_serializer import StringSerializer
+from cl.runtime.serialization.string_value_parser_enum import StringValueParser
 
 serializer = FlatDictSerializer()
 
@@ -50,26 +57,53 @@ class CsvFileReader(Reader):
             if records:
                 context.save_many(records)
 
+    @classmethod
+    def _prepare_csv_value(cls, csv_value: str, element_decl: ElementDecl):
+        """Prepare csv value before deserialization."""
+
+        # TODO (Roman): add ability to see difference between an empty string and None.
+        # Replace empty string to None
+        if csv_value is None or csv_value == "":
+            return None
+
+        if not element_decl.vector and (value_decl := element_decl.value) is not None:
+            # Convert primitive types
+            if value_decl.type_ == "Int":
+                return int(csv_value)
+            elif value_decl.type_ == "Double":
+                return float(csv_value)
+        elif (key := element_decl.key_) is not None and StringValueParser.parse(csv_value)[1] is None:
+            # Get key type from element decl
+            key_type_name = key.name
+            type_dict = get_type_dict()
+            key_type = type_dict.get(key_type_name)  # noqa
+
+            # Deserialize key from string
+            key_serializer = StringSerializer()
+            return key_serializer.deserialize_key(csv_value, key_type)
+
+        return csv_value
+
+
     def _deserialize_row(self, row_dict: Dict[str, Any]) -> RecordProtocol:
         """Deserialize row into a record."""
+
+        # Get TypeDecl object for record type
+        type_decl = TypeDecl.for_type(self.record_type)
+
+        # Construct name to element decl map
+        type_decl_elements = (
+            {element.name: element for element in type_decl.elements} if type_decl.elements is not None else {}
+        )
 
         prepared_row = {}
         for k, v in row_dict.items():
 
-            # TODO (Roman): add ability to see difference between an empty string and None.
-            # Replace empty string to None
-            if v is None or v == "":
-                prepared_row[k] = None
-                continue
+            # Get element_decl for field
+            element_decl = type_decl_elements.get(CaseUtil.snake_to_pascal_case(k))
 
-            # Try to convert value from csv to int or float
-            try:
-                prepared_row[k] = int(v)
-            except ValueError:
-                try:
-                    prepared_row[k] = float(v)
-                except ValueError:
-                    prepared_row[k] = v
+            # Prepare csv value using element decl
+            prepared_row[k] = self._prepare_csv_value(v, element_decl)
 
         prepared_row["_type"] = self.record_type.__name__
         return serializer.deserialize_data(prepared_row)
