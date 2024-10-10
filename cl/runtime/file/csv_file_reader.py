@@ -49,9 +49,23 @@ class CsvFileReader(Reader):
         with open(self.file_path, mode="r", encoding="utf-8") as file:
             # The reader is an iterable of row dicts
             csv_reader = csv.DictReader(file)
+            row_dicts = [row_dict for row_dict in csv_reader]
+
+            invalid_rows = set(
+                index
+                for index, row_dict in enumerate(row_dicts)
+                for key in row_dict.keys()
+                if key is None or key == ""  # TODO: Add other checks for invalid keys
+            )
+
+            if invalid_rows:
+                rows_str = "".join([f'Row: {invalid_row}\n' for invalid_row in invalid_rows])
+                raise RuntimeError(
+                    f"Misaligned values found in the following rows of CSV file: {self.file_path}\n"
+                    f"Check the placement of commas and double quotes.\n" + rows_str)
 
             # Deserialize rows into records
-            records = [self._deserialize_row(row_dict) for row_dict in csv_reader]
+            records = [self._deserialize_row(row_dict) for row_dict in row_dicts]
 
             # Save records to the specified database
             if records:
@@ -65,6 +79,9 @@ class CsvFileReader(Reader):
         # Replace empty string to None
         if csv_value is None or csv_value == "":
             return None
+
+        if element_decl is None:
+            raise NotImplementedError()
 
         if not element_decl.vector and (value_decl := element_decl.value) is not None:
             # Convert primitive types
@@ -83,7 +100,6 @@ class CsvFileReader(Reader):
             return key_serializer.deserialize_key(csv_value, key_type)
 
         return csv_value
-
 
     def _deserialize_row(self, row_dict: Dict[str, Any]) -> RecordProtocol:
         """Deserialize row into a record."""
