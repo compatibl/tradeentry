@@ -18,11 +18,18 @@ from dataclasses import dataclass
 
 from typing_extensions import Self
 
+from cl.runtime import Context
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.convince.entries.entry_util import EntryUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.convince.entries.entry_key import EntryKey
 from cl.convince.entries.entry_status_enum import EntryStatusEnum
+from cl.runtime.view.dag.dag import Dag
+from cl.runtime.view.dag.dag_edge import DagEdge
+from cl.runtime.view.dag.dag_layout_enum import DagLayoutEnum
+from cl.runtime.view.dag.dag_node_data import DagNodeData
+from cl.runtime.view.dag.nodes.dag_node import DagNode
 
 
 @dataclass(slots=True, kw_only=True)
@@ -100,3 +107,100 @@ Expected from type, title, body and data: {entry_id}
         )
 
         return result
+
+    @staticmethod
+    def build_dag(entry: "Entry", layout_mode: DagLayoutEnum = DagLayoutEnum.TREE) -> Dag:
+        """Build the DAG for the entry."""
+        nodes, edges = [entry.to_dag_node()], []
+
+        def traverse_graph_from_node(entry_record: Entry, source_node: DagNode):
+            """Traverse the graph from the specified node."""
+            if not (slots := getattr(entry_record, "__slots__", None)):
+                return
+
+            entry_fields = {
+                field_name: field_value
+                for field_name in slots
+                if (
+                    isinstance((field_value := getattr(entry_record, field_name)), EntryKey)
+                    # TODO (Yauheni): Use declarations instead of isinstance
+                    # TODO: (Yauheni): Current filtration filters out the empty lists, which should be processed
+                    or (field_value and hasattr(field_value, "__iter__") and isinstance(field_value[0], EntryKey))
+                )
+            }
+            for field_name, field_value in entry_fields.items():
+                if isinstance(field_value, EntryKey):
+                    if not (entry := Context.current().load_one(EntryKey, field_value)):
+                        Entry.__append_empty_node(
+                            source_node=source_node,
+                            entry_id=field_value.entry_id,
+                            edge_label=CaseUtil.snake_to_title_case(field_name),
+                            nodes=nodes,
+                            edges=edges,
+                        )
+                        continue
+
+                    entry_node = entry.to_dag_node()
+                    edges.append(
+                        Dag.build_edge_between_nodes(
+                            source=source_node,
+                            target=entry_node,
+                            label=CaseUtil.snake_to_title_case(field_name),
+                        ),
+                    )
+                    if entry_node not in nodes:
+                        nodes.append(entry_node)
+                        traverse_graph_from_node(entry_record=field_value, source_node=entry_node)
+                else:
+                    if not field_value:
+                        # TODO (Yauheni): Handle the case, when the list is empty
+                        continue
+
+                    for index, entry_key in enumerate(field_value, start=1):
+                        if not (entry := Context.current().load_one(EntryKey, entry_key)):
+                            Entry.__append_empty_node(
+                                source_node=source_node,
+                                entry_id=field_value.entry_id,
+                                edge_label=f"{CaseUtil.snake_to_title_case(field_name)}[{index}]",
+                                nodes=nodes,
+                                edges=edges,
+                            )
+                            continue
+
+                        entry_node = entry.to_dag_node()
+                        edges.append(
+                            Dag.build_edge_between_nodes(
+                                source=source_node,
+                                target=entry_node,
+                                label=f"{CaseUtil.snake_to_title_case(field_name)}[{index}]",
+                            ),
+                        )
+                        if entry_node not in nodes:
+                            nodes.append(entry_node)
+                            traverse_graph_from_node(entry_record=entry, source_node=entry_node)
+
+        traverse_graph_from_node(entry, nodes[0])
+        dag = Dag(name=f"DAG from `{entry.entry_id}` node", nodes=nodes, edges=edges)
+
+        return Dag.auto_layout_dag(dag, layout_mode)
+
+    def to_dag_node(self) -> DagNode:
+        """Transform entry to DAG node."""
+        return DagNode(id_=self.entry_id, data=DagNodeData(label=self.entry_id))
+
+    @staticmethod
+    def __append_empty_node(
+            source_node: DagNode,
+            entry_id: str,
+            edge_label: str,
+            nodes: list[DagNode],
+            edges: list[DagEdge],
+    ) -> None:
+        """Append empty node to the list of nodes and edge to the list of edges."""
+        # TODO (Yauheni): Add color information to the node with entry, which doesn't exist
+        empty_node = DagNode(id_=entry_id, data=DagNodeData(label=entry_id))
+        if empty_node not in nodes:
+            nodes.append(empty_node)
+        edges.append(
+            Dag.build_edge_between_nodes(source=source_node, target=empty_node, label=edge_label),
+        )
