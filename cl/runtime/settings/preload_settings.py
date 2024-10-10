@@ -41,8 +41,8 @@ class PreloadSettings(Settings):
     configs: List[str] | None = None
     """Method Config.run_configure will run for each specified config_id (the record must exist in preloads)."""
 
-    def __post_init__(self):
-        """Perform validation and type conversions."""
+    def init(self) -> None:
+        """Same as __init__ but can be used when field values are set both during and after construction."""
 
         # Convert to absolute paths if specified as relative paths and convert to list if single value is specified
         self.dirs = self.normalize_paths("dirs", self.dirs)
