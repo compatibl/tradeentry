@@ -69,14 +69,20 @@ Note: In case of containers, type mismatch may be in one of the items.
         args = get_args(field_type)
 
         if origin is None:
-            # Not a generic type
-            return isinstance(field_value, field_type)
+            # Not a generic type, consider the possible use of annotation
+            if isinstance(field_type, type):
+                return isinstance(field_value, field_type)
+            elif isinstance(field_type, str):
+                field_value_type_name = type(field_value).__name__
+                return field_value_type_name == field_type
+            else:
+                raise RuntimeError(f"Field type {field_type} is neither a type nor a string.")
         elif origin in [UnionType, Union]:
             if field_value is None:
                 return NoneType in args
             else:
                 return any(cls._is_instance(field_value, arg) for arg in args)
-        elif isinstance(field_value, origin):
+        elif cls._is_instance(field_value, origin):
             # If the generic has type parameters, check them
             if args:
                 if isinstance(field_value, list) and origin is list:
