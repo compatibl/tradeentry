@@ -32,10 +32,3 @@ class RecordMixin(Generic[TKey]):
     @abstractmethod
     def get_key(self) -> TKey:
         """Return a new key object whose fields populated from self, do not return self."""
-
-    def super_init(self, caller_class) -> None:
-        """Invoke 'self.super_init(__class__)' to call the definition of 'init' method in superclass if present."""
-        superclass_init = getattr(super(caller_class, self), "init", None)
-        if superclass_init is not None:
-            # Invoke 'init' method of superclass if it exists, otherwise do nothing
-            superclass_init()

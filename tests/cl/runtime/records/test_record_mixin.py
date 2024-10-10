@@ -13,21 +13,18 @@
 # limitations under the License.
 
 import pytest
-
-from cl.runtime import RecordMixin
 from cl.runtime.db.protocols import TKey
+from cl.runtime.records.record_util import RecordUtil
 from cl.runtime.testing.regression_guard import RegressionGuard
-from stubs.cl.runtime import StubDataclassRecordKey
 
 
-class _Base(RecordMixin[StubDataclassRecordKey]):
+class _Base:
     """Test class."""
 
     def get_key(self) -> TKey:
         raise NotImplementedError()
 
     def init(self) -> None:
-        self.super_init(__class__)
         RegressionGuard().write("> _Base.init")
 
 
@@ -35,7 +32,6 @@ class _Derived(_Base):
     """Test class."""
 
     def init(self) -> None:
-        self.super_init(__class__)
         RegressionGuard().write(">> _Derived.init")
 
 
@@ -43,7 +39,6 @@ class _DerivedFromDerivedWithInit(_Derived):
     """Test class."""
 
     def init(self) -> None:
-        self.super_init(__class__)
         RegressionGuard().write(">>> _DerivedFromDerivedWithInit.init")
 
 
@@ -51,18 +46,18 @@ class _DerivedFromDerivedWithoutInit(_Derived):
     """Test class."""
 
 
-def test_super_init():
-    """Test RecordMixin.super_invoke method."""
+def test_init_base_to_derived():
+    """Test RecordUtil.super_invoke method."""
 
     guard = RegressionGuard()
     guard.write("Testing _Base:")
-    _Base().init()
+    RecordUtil.init_base_to_derived(_Base())
     guard.write("Testing _Derived:")
-    _Derived().init()
+    RecordUtil.init_base_to_derived(_Derived())
     guard.write("Testing _DerivedFromDerivedWithInit:")
-    _DerivedFromDerivedWithInit().init()
+    RecordUtil.init_base_to_derived(_DerivedFromDerivedWithInit())
     guard.write("Testing _DerivedFromDerivedWithoutInit:")
-    _DerivedFromDerivedWithoutInit().init()
+    RecordUtil.init_base_to_derived(_DerivedFromDerivedWithoutInit())
     RegressionGuard.verify_all()
 
 
