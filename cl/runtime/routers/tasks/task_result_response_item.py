@@ -59,7 +59,7 @@ class TaskResultResponseItem(BaseModel):
 
             response_items.append(
                 TaskResultResponseItem(
-                    result=task_run.result,  # TODO: Use bytes for the response?
+                    result=task_run.result,
                     task_run_id=str(task_run.task_run_id),
                     key=task_obj.key_str if hasattr(task_obj, "key_str") else None,
                 ),

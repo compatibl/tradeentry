@@ -85,7 +85,7 @@ def execute_task(
             # Update task run record to report task failure
             task_run.update_time = DatetimeUtil.now()
             task_run.status = TaskStatusEnum.FAILED
-            task_run.result = str(e)
+            task_run.message = str(e)
             context.save_one(task_run)
         else:
             # Update task run record to report task completion

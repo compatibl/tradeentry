@@ -54,8 +54,11 @@ class TaskRun(TaskRunKey, RecordMixin[TaskRunKey]):
     progress: int | None = None
     """Task progress as percent integer from 0 to 100 when available."""
 
-    result: str | None = None  # TODO: Review the need for the result field in this record
-    """Result converted to string."""
+    message: str | None = None
+    """Optional exception message in string format."""
+
+    result: str | None = None
+    """Optional result in string format."""
 
     def init(self):
         # Automatically generate time-ordered unique task run identifier in UUIDv7 format if not yet specified
