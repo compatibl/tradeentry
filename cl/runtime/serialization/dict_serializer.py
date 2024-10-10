@@ -27,6 +27,7 @@ from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.protocols import TDataDict
 from cl.runtime.records.protocols import is_key
 from cl.runtime.records.protocols import is_record
+from cl.runtime.records.record_util import RecordUtil
 from cl.runtime.serialization.sentinel_type import sentinel_value
 
 # TODO: Initialize from settings
@@ -112,6 +113,10 @@ class DictSerializer:
         """
         Serialize to dictionary containing primitive types, dictionaries, or iterables.
 
+        Notes:
+            Before serialization, invoke 'init' for each class in class hierarchy that implements it,
+            in the order from base to derived.
+
         Args:
             data: Object to serialize
             select_fields: Fields of data object which will be used for serialization. If None - use all fields.
@@ -119,6 +124,9 @@ class DictSerializer:
 
         if getattr(data, "__slots__", None) is not None:
             # Slots class, serialize as dictionary
+
+            # Invoke 'init' for each class in class hierarchy that implements it, in the order from base to derived
+            RecordUtil.init_all(data)
 
             # Get slots from this class and its bases in the order of declaration from base to derived
             all_slots = _get_class_hierarchy_slots(data.__class__)
@@ -173,9 +181,7 @@ class DictSerializer:
             raise RuntimeError(f"Cannot serialize data of type '{type(data)}'.")
 
     def deserialize_data(self, data: TDataDict):  # TODO: Check if None should be supported
-        """
-        Deserialize from dictionary containing primitive types, dictionaries, or iterables.
-        """
+        """Deserialize object from data, invoke init_all after deserialization."""
 
         if isinstance(data, dict):
             # Determine if the dictionary is a serialized dataclass or a dictionary
@@ -197,6 +203,9 @@ class DictSerializer:
                     if k != "_type"
                 }
                 result = deserialized_type(**deserialized_fields)  # noqa
+
+                # Invoke 'init' for each class in class hierarchy that implements it, in the order from base to derived
+                RecordUtil.init_all(deserialized_type)
                 return result
             elif (short_name := data.get("_enum", None)) is not None:
                 # If _enum is specified, create an instance of _enum using _name
