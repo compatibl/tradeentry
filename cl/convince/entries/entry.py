@@ -18,6 +18,7 @@ from dataclasses import dataclass
 
 from typing_extensions import Self
 
+from cl.convince.entries.entry_util import EntryUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.convince.entries.entry_key import EntryKey
@@ -26,7 +27,7 @@ from cl.convince.entries.entry_status_enum import EntryStatusEnum
 
 @dataclass(slots=True, kw_only=True)
 class Entry(EntryKey, RecordMixin[EntryKey], ABC):
-    """Contains text and supporting data along with the results of their processing."""
+    """Contains title, body and supporting data of user entry along with the entry processing result."""
 
     type_: str = missing()
     """Type in ClassName format without module (included in MD5 hash)."""
@@ -46,6 +47,16 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
     def get_key(self) -> EntryKey:
         return EntryKey(entry_id=self.entry_id)
 
+    def init(self) -> None:
+        """Generate entry_id in 'type: title' format followed by an MD5 hash of body and data if present."""
+        # Ensure that entry_id matches the type, title, body and data of the record
+        entry_id = EntryUtil.create_id(self.type_, self.title, body=self.body, data=self.data)
+        if self.entry_id != entry_id:
+            raise RuntimeError(f"""Record's entry_id if out of sync with the record's type, title, body and data.
+Record's entry_id: {self.entry_id}
+Expected from type, title, body and data: {entry_id} 
+""")
+
     @classmethod
     @abstractmethod
     def create(
@@ -56,6 +67,13 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
             data: str | None = None,
     ) -> Self:
         """Create and save to storage using type and title with optional body and data parameters."""
+
+        # Create key (includes generation of MD5 hash when body or data are empty)
+        entry_key = cls.create_key(
+            title=title,
+            body=body,
+            data=data,
+        )
 
     @classmethod
     def create_self(
@@ -68,20 +86,13 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
     ) -> Self:
         """Create self from type and title with optional body, data and status parameters."""
 
-        # Create key (includes generation of MD5 hash when body or data are empty)
-        entry_key = cls.create_key(
-            title=title,
-            body=body,
-            data=data,
-        )
-
-        # Type is ClassName without module
-        type_ = cls.__name__
+        # Generate entry_id using cls as one of the parameters
+        entry_id = EntryUtil.create_id(cls, title, body=body, data=data)
 
         # Create self and populate fields of the base class
         result = cls(
-            entry_id=entry_key.entry_id,
-            type_=type_,
+            entry_id=entry_id,
+            type_=cls.__name__,
             title=title,
             body=body,
             data=data,
