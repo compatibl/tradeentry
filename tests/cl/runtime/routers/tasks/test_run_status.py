@@ -45,6 +45,11 @@ task_runs = [
     TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatusEnum.FAILED),
     TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatusEnum.COMPLETED),
 ]
+
+# Init task runs
+for task_run in task_runs:
+    task_run.init()
+
 requests = [
     {
         "task_run_ids": [str(task_run.task_run_id) for task_run in task_runs],
@@ -57,7 +62,6 @@ requests = [
 def test_method():
     """Test coroutine for /tasks/run/status route."""
 
-    # TODO: Use TestingContext instead
     with TestingContext() as context:
         context.save_one(task)
         context.save_many(task_runs)

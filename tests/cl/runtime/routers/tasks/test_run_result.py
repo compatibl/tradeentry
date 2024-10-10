@@ -49,6 +49,10 @@ task_runs = [
     for task in tasks
 ]
 
+# Init task runs
+for task_run in task_runs:
+    task_run.init()
+
 stub_handlers = StubHandlers()
 key_serializer = StringSerializer()
 key_str = key_serializer.serialize_key(stub_handlers.get_key())
