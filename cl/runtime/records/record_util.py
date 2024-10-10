@@ -51,8 +51,13 @@ class RecordUtil:
                     # Check that for the fields that have values, the values are of the right type
                     if not cls._is_instance(field_value, field.type):
                         field_type_name = cls._get_field_type_name(field.type)
-                        # TODO: raise RuntimeError(f"Field '{field.name}' is declared with type '{field_type_name}' "
-                        #                   f"while its value has type '{type(field_value).__name__}'")
+                        value_type_name = type(field_value).__name__
+                        if "member_descriptor" not in value_type_name:  # TODO(Roman): Remove when fixed
+                            raise RuntimeError(f"""Type mismatch for field '{field.name}' of class {class_name}.
+Type in dataclass declaration: {field_type_name}
+Type of the value: {type(field_value).__name__}
+Note: In case of containers, type mismatch may be in one of the items.
+""")
                 elif field.default is not None:
                     # Error if a field is None but declared as required
                     raise RuntimeError(f"Field '{field.name}' in class '{class_name}' is required but not set.")
