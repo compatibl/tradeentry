@@ -29,8 +29,8 @@ class ApiSettings(Settings):
     port: int = 7008
     """REST API port."""
 
-    def __post_init__(self):
-        """Perform validation and type conversions."""
+    def init(self) -> None:
+        """Same as __init__ but can be used when field values are set both during and after construction."""
 
         if not isinstance(self.host_name, str):
             raise RuntimeError(f"{type(self).__name__} field 'host_name' must be a string.")

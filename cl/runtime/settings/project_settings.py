@@ -54,8 +54,8 @@ class ProjectSettings:
     __instance: ClassVar[ProjectSettings] = None
     """Singleton instance."""
 
-    def __post_init__(self):
-        """Perform validation and type conversions."""
+    def init(self) -> None:
+        """Same as __init__ but can be used when field values are set both during and after construction."""
         if self.project_levels != 1 and self.project_levels != 2:
             raise RuntimeError(f"Field 'ProjectSettings.project_levels' must be 1 or 2.")
 

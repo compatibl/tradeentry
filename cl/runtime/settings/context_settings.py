@@ -39,8 +39,8 @@ class ContextSettings(Settings):
     when both db_id and database name start with this prefix.
     """
 
-    def __post_init__(self):
-        """Perform validation and type conversions."""
+    def init(self) -> None:
+        """Same as __init__ but can be used when field values are set both during and after construction."""
 
         # TODO: Move to ValidationUtil or PrimitiveUtil class
         if isinstance(self.packages, list):

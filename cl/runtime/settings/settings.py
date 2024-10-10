@@ -28,6 +28,7 @@ from dotenv import load_dotenv
 from dynaconf import Dynaconf
 from typing_extensions import Self
 from cl.runtime.context.env_util import EnvUtil
+from cl.runtime.records.record_util import RecordUtil
 from cl.runtime.settings.project_settings import SETTINGS_FILES_ENVVAR
 from cl.runtime.settings.project_settings import ProjectSettings
 
@@ -186,6 +187,9 @@ class Settings(ABC):
             # TODO: Add a check for nested complex types in settings, if these are present deserialization will fail
             # TODO: Can custom deserializer that removes trailing and leading _ can be used without cyclic reference?
             result = cls(**settings_dict)
+
+            # Invoke init method for each class hierarchy member from base to derived
+            RecordUtil.init_base_to_derived(result)
 
             # Cache the result
             cls.__settings_dict[cls] = result
