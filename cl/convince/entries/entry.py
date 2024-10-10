@@ -56,9 +56,23 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
 
     def init(self) -> None:
         """Generate entry_id in 'type: title' format followed by an MD5 hash of body and data if present."""
-        # Ensure that entry_id matches the type, title, body and data of the record
+
+        # Set type to ClassName of this class or check it matches
+        class_name = type(self).__name__
+        if self.type_ is None:
+            # Assign if not specified
+            self.type_ = class_name
+        elif self.type_ != class_name:
+            # Otherwise it matches the rest of the data
+            raise RuntimeError(f"Record's type {self.type_} does not match the implementing class {class_name}.")
+
+        # Set entry_id or ensure that it matches the type, title, body and data of the record
         entry_id = EntryUtil.create_id(self.type_, self.title, body=self.body, data=self.data)
-        if self.entry_id != entry_id:
+        if self.entry_id is None:
+            # Assign if not specified
+            self.entry_id = entry_id
+        elif self.entry_id != entry_id:
+            # Otherwise it matches the rest of the data
             raise RuntimeError(f"""Record's entry_id if out of sync with the record's type, title, body and data.
 Record's entry_id: {self.entry_id}
 Expected from type, title, body and data: {entry_id} 
