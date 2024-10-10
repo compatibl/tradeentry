@@ -17,6 +17,7 @@ import filecmp
 import inspect
 import os
 from dataclasses import dataclass
+from enum import Enum
 from typing import Any
 from typing import ClassVar
 from typing import Dict
@@ -325,6 +326,8 @@ class RegressionGuard:
             return data_serializer.serialize_data(value)
         elif is_key(value_type):
             return key_serializer.serialize_data(value)
+        elif issubclass(value_type, Enum):
+            return str(value)
         elif hasattr(value_type, "__iter__"):
             return "\n".join(map(self._format_txt, value)) + "\n"
         else:
