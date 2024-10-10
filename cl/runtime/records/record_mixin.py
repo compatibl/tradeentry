@@ -13,7 +13,9 @@
 # limitations under the License.
 
 from abc import abstractmethod
-from typing import Generic, Callable, Type
+from typing import Callable
+from typing import Generic
+from typing import Type
 from typing import TypeVar
 from cl.runtime.records.protocols import KeyProtocol
 

@@ -36,4 +36,3 @@ def test_preload_settings():
 
 if __name__ == "__main__":
     pytest.main([__file__])
-

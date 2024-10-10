@@ -20,8 +20,8 @@ from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import TQuery
 
-TRecord = TypeVar("TRecord")   # TODO: Remove duplicate TKey definition
-TKey = TypeVar("TKey")   # TODO: Remove duplicate TKey definition
+TRecord = TypeVar("TRecord")  # TODO: Remove duplicate TKey definition
+TKey = TypeVar("TKey")  # TODO: Remove duplicate TKey definition
 
 
 class DbProtocol(Protocol):
