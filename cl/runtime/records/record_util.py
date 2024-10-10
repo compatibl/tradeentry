@@ -74,7 +74,7 @@ class RecordUtil:
                     return all(
                         isinstance(key, args[0]) and isinstance(value, args[1]) for key, value in field_value.items()
                     )
-        elif origin is UnionType and type(None) in args:
+        elif origin is UnionType and any(isinstance(field_value, args) for args in args):
             return True
         else:
             # Not an instance of the specified origin
