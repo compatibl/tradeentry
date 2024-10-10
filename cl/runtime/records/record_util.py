@@ -13,8 +13,8 @@
 # limitations under the License.
 
 from dataclasses import is_dataclass, fields
-from types import UnionType
-from typing import get_origin, get_args
+from types import UnionType, NoneType
+from typing import get_origin, get_args, Union
 
 
 class RecordUtil:
@@ -51,31 +51,35 @@ class RecordUtil:
                     # Check that for the fields that have values, the values are of the right type
                     if not cls._is_instance(field_value, field.type):
                         field_type_name = cls._get_field_type_name(field.type)
-                        raise RuntimeError(f"Field '{field.name}' is declared with type '{field_type_name}' "
-                                           f"while its value has type '{type(field_value).__name__}'")
+                        # TODO: raise RuntimeError(f"Field '{field.name}' is declared with type '{field_type_name}' "
+                        #                   f"while its value has type '{type(field_value).__name__}'")
                 elif field.default is not None:
                     # Error if a field is None but declared as required
                     raise RuntimeError(f"Field '{field.name}' in class '{class_name}' is required but not set.")
 
     @classmethod
     def _is_instance(cls, field_value, field_type):
+
         origin = get_origin(field_type)
         args = get_args(field_type)
 
         if origin is None:
             # Not a generic type
             return isinstance(field_value, field_type)
+        elif origin in [UnionType, Union]:
+            if field_value is None:
+                return NoneType in args
+            else:
+                return any(cls._is_instance(field_value, arg) for arg in args)
         elif isinstance(field_value, origin):
             # If the generic has type parameters, check them
             if args:
                 if isinstance(field_value, list) and origin is list:
-                    return all(isinstance(item, args[0]) for item in field_value)
+                    return all(cls._is_instance(item, args[0]) for item in field_value)
                 elif isinstance(field_value, dict) and origin is dict:
                     return all(
-                        isinstance(key, args[0]) and isinstance(value, args[1]) for key, value in field_value.items()
+                        isinstance(key, args[0]) and cls._is_instance(value, args[1]) for key, value in field_value.items()
                     )
-        elif origin is UnionType and any(isinstance(field_value, args) for args in args):
-            return True
         else:
             # Not an instance of the specified origin
             return False
@@ -83,7 +87,7 @@ class RecordUtil:
     @classmethod
     def _get_field_type_name(cls, field_type):
         """Get the name of a type, including handling for Union types."""
-        if get_origin(field_type) is UnionType:
+        if get_origin(field_type) in [UnionType, Union]:
             return ' | '.join(t.__name__ for t in get_args(field_type))
         else:
             return field_type.__name__

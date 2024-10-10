@@ -16,7 +16,18 @@ import pytest
 from cl.runtime.db.protocols import TKey
 from cl.runtime.records.record_util import RecordUtil
 from cl.runtime.testing.regression_guard import RegressionGuard
-from stubs.cl.runtime import StubDataclassOptionalFields, StubDataclassRecord
+from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
+from stubs.cl.runtime import StubDataclassDerivedRecord
+from stubs.cl.runtime import StubDataclassDictFields
+from stubs.cl.runtime import StubDataclassDictListFields
+from stubs.cl.runtime import StubDataclassListDictFields
+from stubs.cl.runtime import StubDataclassListFields
+from stubs.cl.runtime import StubDataclassNestedFields
+from stubs.cl.runtime import StubDataclassOptionalFields
+from stubs.cl.runtime import StubDataclassOtherDerivedRecord
+from stubs.cl.runtime import StubDataclassPrimitiveFields
+from stubs.cl.runtime import StubDataclassRecord
+from stubs.cl.runtime import StubDataclassSingleton
 
 
 class _Base:
@@ -70,8 +81,24 @@ def test_init_all():
 def test_validate():
     """Test RecordUtil.validate method."""
 
-    RecordUtil.validate(StubDataclassRecord())
-    RecordUtil.validate(StubDataclassOptionalFields())
+    samples = [
+        StubDataclassOptionalFields(id="abc7"),
+        StubDataclassRecord(id="abc1"),
+        StubDataclassNestedFields(primitive="abc2"),
+        StubDataclassDerivedRecord(id="abc3"),
+        StubDataclassDerivedFromDerivedRecord(id="abc4"),
+        StubDataclassOtherDerivedRecord(id="abc5"),
+        StubDataclassListFields(id="abc6"),
+        StubDataclassOptionalFields(id="abc7"),
+        StubDataclassDictFields(id="abc8"),
+        StubDataclassDictListFields(id="abc9"),
+        StubDataclassListDictFields(id="abc10"),
+        StubDataclassPrimitiveFields(key_str_field="abc11"),
+        StubDataclassSingleton(),
+    ]
+
+    for sample in samples:
+        RecordUtil.validate(sample)
 
 
 if __name__ == "__main__":
