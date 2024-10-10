@@ -109,8 +109,13 @@ Expected from type, title, body and data: {entry_id}
         return result
 
     @staticmethod
-    def build_dag(entry: "Entry", layout_mode: DagLayoutEnum = DagLayoutEnum.TREE) -> Dag:
+    def build_dag(
+            entry: "Entry",
+            layout_mode: DagLayoutEnum = DagLayoutEnum.PLANAR,
+            ignore_fields: list[str] = None,
+    ) -> Dag:
         """Build the DAG for the entry."""
+        ignore_fields = ignore_fields or []
         nodes, edges = [entry.to_dag_node()], []
 
         def traverse_graph_from_node(entry_record: Entry, source_node: DagNode):
@@ -126,6 +131,7 @@ Expected from type, title, body and data: {entry_id}
                     # TODO (Yauheni): Use declarations instead of isinstance
                     # TODO: (Yauheni): Current filtration filters out the empty lists, which should be processed
                     or (field_value and hasattr(field_value, "__iter__") and isinstance(field_value[0], EntryKey))
+                    and field_name not in ignore_fields
                 )
             }
             for field_name, field_value in entry_fields.items():
