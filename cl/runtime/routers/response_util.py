@@ -78,8 +78,11 @@ def to_legacy_dict(node: Dict[str, Any] | List[Dict[str, Any]] | str) -> Dict[st
     if isinstance(node, dict):
         # Skip nodes that have the value of None
         # Remove suffix _ from field names if present
+        # Fields that cannot be serialized in common way
+        special_fields = {'id_': 'Id_', '_t': '_t'}
         result = {
-            CaseUtil.snake_to_pascal_case(k.removesuffix("_")) if not k == "id_" else "Id_": to_legacy_dict(v)
+            CaseUtil.snake_to_pascal_case(k.removesuffix("_")) if not k in special_fields else special_fields[k]:
+            to_legacy_dict(v)
             for k, v in node.items()
             if v is not None
         }

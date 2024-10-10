@@ -29,10 +29,12 @@ from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.view.dag.dag import Dag
+from cl.runtime.views.html_view import HtmlView
 from cl.runtime.views.key_view import KeyView
 from cl.runtime.views.pdf_view import PdfView
 from cl.runtime.views.plot_view import PlotView
 from cl.runtime.views.png_view import PngView
+from cl.runtime.views.script import Script
 
 PanelResponseData = Dict[str, Any] | List[Dict[str, Any]] | None
 
@@ -121,17 +123,22 @@ class PanelResponseUtil(BaseModel):
                 "ContentType": "Png",
                 "_t": "BinaryContent",
             }
-        elif isinstance(view, PdfView):
+        elif isinstance(view, HtmlView):
             # Return ui format dict of binary data
             return {
-                "Content": base64.b64encode(view.pdf_bytes).decode(),
-                "ContentType": "Pdf",
+                "Content": base64.b64encode(view.html_bytes).decode(),
+                "ContentType": "Html",
                 "_t": "BinaryContent",
             }
         elif isinstance(view, Dag):
             # Return DAG
             view_dict: dict = to_legacy_dict(to_record_dict(view))
             view_dict["_t"] = "DAG"
+            return view_dict
+        elif isinstance(view, Script):
+            # Return script
+            view_dict: dict = to_legacy_dict(to_record_dict(view))
+            view_dict['Language'] = view_dict.pop('Language').capitalize()
             return view_dict
         elif isinstance(view, Dict):
             # Return if is already dict
