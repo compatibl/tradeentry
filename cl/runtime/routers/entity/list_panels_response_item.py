@@ -37,7 +37,7 @@ class ListPanelsResponseItem(BaseModel):
 
         # TODO: Return saved view names
         type_ = Schema.get_type_by_short_name(request.type)
-        handlers_block = HandlerDeclareBlockDecl.get_type_methods(type_).handlers
+        handlers_block = HandlerDeclareBlockDecl.get_type_methods(type_, inherit=True).handlers
 
         if handlers_block is not None and handlers_block:
             return [

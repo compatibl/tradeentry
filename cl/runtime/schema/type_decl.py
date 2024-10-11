@@ -247,7 +247,7 @@ class TypeDecl(TypeDeclKey, RecordMixin[TypeDeclKey]):
 
         # Get type public methods
         if not skip_handlers:
-            handlers_block = HandlerDeclareBlockDecl.get_type_methods(record_type)
+            handlers_block = HandlerDeclareBlockDecl.get_type_methods(record_type, inherit=True)
             if handlers_block.handlers:
                 result.declare = handlers_block
 

@@ -53,7 +53,7 @@ class PanelResponseUtil(BaseModel):
         type_ = Schema.get_type_by_short_name(request.type)
 
         # Check if the selected type has the needed viewer and get its name (only viewer's label is provided)
-        handlers = HandlerDeclareBlockDecl.get_type_methods(type_).handlers
+        handlers = HandlerDeclareBlockDecl.get_type_methods(type_, inherit=True).handlers
         if (
             handlers is not None
             and handlers

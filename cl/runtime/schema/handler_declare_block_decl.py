@@ -69,9 +69,13 @@ class HandlerDeclareBlockDecl:
                 if member_name.startswith("run_"):
                     # If method name starts with "run_" consider it a handler
                     handler.type_ = "Job"
+                    # Strip the `run_` prefix
+                    handler.label = handler.label[4:]
                 elif member_name.startswith("view_"):
                     # If method name starts with "view_" consider it a viewer
                     handler.type_ = "Viewer"
+                    # Strip the `view_` prefix
+                    handler.label = handler.label[5:]
                 else:
                     continue
 
