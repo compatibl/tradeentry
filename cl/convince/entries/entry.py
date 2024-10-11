@@ -34,7 +34,7 @@ from cl.convince.entries.entry_util import EntryUtil
 class Entry(EntryKey, RecordMixin[EntryKey], ABC):
     """Contains title, body and supporting data of user entry along with the entry processing result."""
 
-    type_: str = missing()
+    record_type: str = missing()
     """Type in ClassName format without module (included in MD5 hash)."""
 
     title: str = missing()
@@ -57,22 +57,22 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
 
         # Set type to ClassName of this class or check it matches
         class_name = type(self).__name__
-        if self.type_ is None:
+        if self.record_type is None:
             # Assign if not specified
-            self.type_ = class_name
-        elif self.type_ != class_name:
+            self.record_type = class_name
+        elif self.record_type != class_name:
             # Otherwise check that it matches the rest of the data
-            raise RuntimeError(f"Record's type {self.type_} does not match the implementing class {class_name}.")
+            raise RuntimeError(f"Record's type {self.record_type} does not match the implementing class {class_name}.")
 
         # Set entry_id or ensure that it matches the type, title, body and data of the record
-        entry_id = EntryUtil.create_id(self.type_, self.title, body=self.body, data=self.data)
+        entry_id = EntryUtil.create_id(self.record_type, self.title, body=self.body, data=self.data)
         if self.entry_id is None:
             # Assign if not specified
             self.entry_id = entry_id
         elif self.entry_id != entry_id:
             # Otherwise check that it matches the rest of the data
             raise RuntimeError(
-                f"""Record's entry_id if out of sync with the record's type, title, body and data.
+                f"""Record's entry_id is out of sync with the record's type, title, body and data.
 Record's entry_id: {self.entry_id}
 Expected from type, title, body and data: {entry_id} 
 """
@@ -106,7 +106,7 @@ Expected from type, title, body and data: {entry_id}
         # Create self and populate fields of the base class
         result = cls(
             entry_id=entry_id,
-            type_=cls.__name__,
+            record_type=cls.__name__,
             title=title,
             body=body,
             data=data,
