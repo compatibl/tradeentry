@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from abc import ABC, abstractmethod
+from abc import ABC
 from dataclasses import dataclass
 from typing_extensions import Self
 
@@ -101,7 +102,7 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
             }
             for field_name, field_value in entry_fields.items():
                 if isinstance(field_value, EntryKey):
-                    if not (entry := Context.current().load_one(EntryKey, field_value)):
+                    if not (loaded_entry := Context.current().load_one(EntryKey, field_value)):
                         Entry.__append_empty_node(
                             source_node=source_node,
                             entry_id=field_value.entry_id,
@@ -111,7 +112,7 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
                         )
                         continue
 
-                    entry_node = entry.to_dag_node()
+                    entry_node = loaded_entry.to_dag_node()
                     edges.append(
                         Dag.build_edge_between_nodes(
                             source=source_node,
@@ -121,14 +122,14 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
                     )
                     if entry_node not in nodes:
                         nodes.append(entry_node)
-                        traverse_graph_from_node(entry_record=field_value, source_node=entry_node)
+                        traverse_graph_from_node(entry_record=loaded_entry, source_node=entry_node)
                 else:
                     if not field_value:
                         # TODO (Yauheni): Handle the case, when the list is empty
                         continue
 
                     for index, entry_key in enumerate(field_value, start=1):
-                        if not (entry := Context.current().load_one(EntryKey, entry_key)):
+                        if not (loaded_entry := Context.current().load_one(EntryKey, entry_key)):
                             Entry.__append_empty_node(
                                 source_node=source_node,
                                 entry_id=field_value.entry_id,
@@ -138,7 +139,7 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
                             )
                             continue
 
-                        entry_node = entry.to_dag_node()
+                        entry_node = loaded_entry.to_dag_node()
                         edges.append(
                             Dag.build_edge_between_nodes(
                                 source=source_node,
@@ -148,7 +149,7 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
                         )
                         if entry_node not in nodes:
                             nodes.append(entry_node)
-                            traverse_graph_from_node(entry_record=entry, source_node=entry_node)
+                            traverse_graph_from_node(entry_record=loaded_entry, source_node=entry_node)
 
         traverse_graph_from_node(entry, nodes[0])
         dag = Dag(name=f"DAG from `{entry.entry_id}` node", nodes=nodes, edges=edges)
