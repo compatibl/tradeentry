@@ -14,7 +14,7 @@
 
 from dataclasses import dataclass
 from typing import List
-from cl.runtime.settings.settings import Settings
+from cl.runtime.settings.settings import Settings, process_id
 
 
 @dataclass(slots=True, kw_only=True)
@@ -30,8 +30,8 @@ class ContextSettings(Settings):
     db_class: str  # TODO: Deprecated, switch to class-specific fields
     """Default database class in module.ClassName format."""
 
-    db_id: str
-    """Default database identifier, if 'db_class' is a key it will be obtained from preloads."""
+    db_id: str | None = None
+    """Default database identifier, if not specified a time-ordered UUID will be used."""
 
     db_temp_prefix: str = "temp;"
     """
@@ -62,8 +62,13 @@ class ContextSettings(Settings):
             raise RuntimeError(
                 f"{type(self).__name__} field 'db_class' must be a string " f"in module.ClassName format."
             )
-        if not isinstance(self.db_id, str):
-            raise RuntimeError(f"{type(self).__name__} field 'context_id' must be a string.")
+        if self.db_id is None:
+            # Make DB name unique if not specified
+            # TODO: Consider using unique directory instead
+            self.db_id = process_id
+            pass
+        elif not isinstance(self.db_id, str):
+            raise RuntimeError(f"{type(self).__name__} field 'db_id' must be a string.")
 
     @classmethod
     def get_prefix(cls) -> str:

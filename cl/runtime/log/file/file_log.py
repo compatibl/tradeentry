@@ -26,6 +26,7 @@ from cl.runtime.settings.project_settings import ProjectSettings
 def _get_log_filename() -> str:
     """Generate log filename during import and use it throughout the session."""
 
+    # TODO: Refactor to use a unique directory name instead
     # Generate log file name
     log_settings = LogSettings.instance()
     log_filename_format = log_settings.filename_format
