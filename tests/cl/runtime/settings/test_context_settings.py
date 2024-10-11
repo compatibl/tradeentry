@@ -20,7 +20,7 @@ def test_smoke():
     """Test ContextSettings class."""
 
     context_settings = ContextSettings.instance()
-    assert context_settings.db_id is not None
+    assert context_settings.db_class is not None
 
 
 if __name__ == "__main__":
