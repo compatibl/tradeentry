@@ -14,7 +14,6 @@
 
 import re
 from typing import Pattern
-
 from cl.runtime.primitive.string_util import StringUtil
 
 _all_cap_re: Pattern = re.compile(r"([a-z])([A-Z])")

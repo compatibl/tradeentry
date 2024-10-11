@@ -17,7 +17,8 @@ import os
 from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.file.csv_file_reader import CsvFileReader
-from stubs.cl.runtime import StubDataclassDerivedRecord, StubDataclassNestedFields
+from stubs.cl.runtime import StubDataclassDerivedRecord
+from stubs.cl.runtime import StubDataclassNestedFields
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassRecordKey
 

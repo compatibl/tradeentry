@@ -17,7 +17,6 @@ from dataclasses import dataclass
 from typing import Any
 from typing import Dict
 from typing import Type
-
 from cl.runtime import Context
 from cl.runtime.file.reader import Reader
 from cl.runtime.primitive.case_util import CaseUtil
@@ -59,10 +58,11 @@ class CsvFileReader(Reader):
             )
 
             if invalid_rows:
-                rows_str = "".join([f'Row: {invalid_row}\n' for invalid_row in invalid_rows])
+                rows_str = "".join([f"Row: {invalid_row}\n" for invalid_row in invalid_rows])
                 raise RuntimeError(
                     f"Misaligned values found in the following rows of CSV file: {self.file_path}\n"
-                    f"Check the placement of commas and double quotes.\n" + rows_str)
+                    f"Check the placement of commas and double quotes.\n" + rows_str
+                )
 
             # Deserialize rows into records
             records = [self._deserialize_row(row_dict) for row_dict in row_dicts]

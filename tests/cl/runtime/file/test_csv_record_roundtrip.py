@@ -21,7 +21,8 @@ from typing import Type
 import pandas as pd
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.file.csv_file_reader import CsvFileReader
-from cl.runtime.records.protocols import RecordProtocol, is_key
+from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.records.protocols import is_key
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
 from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
@@ -35,7 +36,6 @@ from stubs.cl.runtime import StubDataclassOptionalFields
 from stubs.cl.runtime import StubDataclassOtherDerivedRecord
 from stubs.cl.runtime import StubDataclassPrimitiveFields
 from stubs.cl.runtime import StubDataclassRecord
-
 
 flat_serializer = FlatDictSerializer()
 """Serializer for file serialization."""

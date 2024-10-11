@@ -36,7 +36,13 @@ from cl.runtime.settings.project_settings import ProjectSettings
 # Load dotenv first (the priority order is envvars first, then dotenv, then settings.yaml and .secrets.yaml)
 load_dotenv()
 
-process_id = OrderedUuid.to_readable_str(OrderedUuid.create_one()).replace(":", "-").replace(".", "-").replace("T", "-").replace("Z", "")
+process_id = (
+    OrderedUuid.to_readable_str(OrderedUuid.create_one())
+    .replace(":", "-")
+    .replace(".", "-")
+    .replace("T", "-")
+    .replace("Z", "")
+)
 """Process timestamp is OrderedUuid in readable string format created during the Python process launch."""
 
 # Determine if we are inside a test and store the result in a global variable for performance

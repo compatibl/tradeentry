@@ -39,5 +39,3 @@ class RecordMixin(Generic[TKey]):
     def init_all(self) -> None:
         """Invoke 'init' for each class in the order from base to derived, then validate against schema."""
         RecordUtil.init_all(self)
-
-

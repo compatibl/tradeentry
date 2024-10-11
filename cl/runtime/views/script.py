@@ -14,8 +14,8 @@
 
 from dataclasses import dataclass
 from typing import List
-
-from cl.runtime.records.dataclasses_extensions import missing, field
+from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.views.script_language_enum import ScriptLanguageEnum
 
 

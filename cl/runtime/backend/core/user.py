@@ -43,5 +43,7 @@ class User(UserKey, RecordMixin[UserKey]):
             self.username = username
         elif self.username != username:
             # Otherwise check that it matches the rest of the data
-            raise RuntimeError(f"Username {self.username} is not in 'LastName, FirstName' format for last name "
-                               f"'{self.last_name}' and first name '{self.last_name}'.")
+            raise RuntimeError(
+                f"Username {self.username} is not in 'LastName, FirstName' format for last name "
+                f"'{self.last_name}' and first name '{self.last_name}'."
+            )

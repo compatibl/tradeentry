@@ -12,9 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import is_dataclass, fields
-from types import UnionType, NoneType
-from typing import get_origin, get_args, Union
+from dataclasses import fields
+from dataclasses import is_dataclass
+from types import NoneType
+from types import UnionType
+from typing import Union
+from typing import get_args
+from typing import get_origin
 
 
 class RecordUtil:
@@ -53,11 +57,13 @@ class RecordUtil:
                         field_type_name = cls._get_field_type_name(field.type)
                         value_type_name = type(field_value).__name__
                         if "member_descriptor" not in value_type_name:  # TODO(Roman): Remove when fixed
-                            raise RuntimeError(f"""Type mismatch for field '{field.name}' of class {class_name}.
+                            raise RuntimeError(
+                                f"""Type mismatch for field '{field.name}' of class {class_name}.
 Type in dataclass declaration: {field_type_name}
 Type of the value: {type(field_value).__name__}
 Note: In case of containers, type mismatch may be in one of the items.
-""")
+"""
+                            )
                 elif field.default is not None:
                     # Error if a field is None but declared as required
                     raise RuntimeError(f"Field '{field.name}' in class '{class_name}' is required but not set.")
@@ -89,7 +95,8 @@ Note: In case of containers, type mismatch may be in one of the items.
                     return all(cls._is_instance(item, args[0]) for item in field_value)
                 elif isinstance(field_value, dict) and origin is dict:
                     return all(
-                        isinstance(key, args[0]) and cls._is_instance(value, args[1]) for key, value in field_value.items()
+                        isinstance(key, args[0]) and cls._is_instance(value, args[1])
+                        for key, value in field_value.items()
                     )
         else:
             # Not an instance of the specified origin
@@ -99,6 +106,6 @@ Note: In case of containers, type mismatch may be in one of the items.
     def _get_field_type_name(cls, field_type):
         """Get the name of a type, including handling for Union types."""
         if get_origin(field_type) in [UnionType, Union]:
-            return ' | '.join(t.__name__ for t in get_args(field_type))
+            return " | ".join(t.__name__ for t in get_args(field_type))
         else:
             return field_type.__name__

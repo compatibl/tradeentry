@@ -138,7 +138,7 @@ class PanelResponseUtil(BaseModel):
         elif isinstance(view, Script):
             # Return script
             view_dict: dict = to_legacy_dict(to_record_dict(view))
-            view_dict['Language'] = view_dict.pop('Language').capitalize()
+            view_dict["Language"] = view_dict.pop("Language").capitalize()
             return view_dict
         elif isinstance(view, Dict):
             # Return if is already dict
