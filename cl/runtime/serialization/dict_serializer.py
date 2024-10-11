@@ -24,7 +24,7 @@ from typing import cast
 from cl.runtime.backend.core.base_type_info import BaseTypeInfo
 from cl.runtime.backend.core.tab_info import TabInfo
 from cl.runtime.primitive.case_util import CaseUtil
-from cl.runtime.records.protocols import TDataDict
+from cl.runtime.records.protocols import TDataDict, TPrimitive
 from cl.runtime.records.protocols import is_key
 from cl.runtime.records.protocols import is_record
 from cl.runtime.records.record_util import RecordUtil
@@ -247,3 +247,29 @@ class DictSerializer:
             return data
         else:
             raise RuntimeError(f"Cannot deserialize data of type '{type(data)}'.")
+
+    @classmethod
+    def _serialize_primitive(cls, value: TPrimitive, class_name: str) -> TPrimitive:
+        """Serialize primitive value applying the applicable conversion rules."""
+        # TODO: Use switch statement
+        if class_name == "bool":
+            return "Y" if value else "N"
+        else:
+            return value
+
+    @classmethod
+    def _deserialize_primitive(cls, value: TPrimitive, class_name: str) -> TPrimitive:
+        """Deserialize primitive value applying the applicable conversion rules."""
+        # TODO: Use switch statement
+        if class_name == "bool":
+            # TODO: Use switch statement
+            if isinstance(value, bool):
+                return value
+            elif value == "Y":
+                return True
+            elif value == "N":
+                return False
+            else:
+                raise RuntimeError(f"Serialized boolean field has value {value} but only Y or N are allowed.")
+        else:
+            return value

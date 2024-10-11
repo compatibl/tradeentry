@@ -47,8 +47,7 @@ class FlatDictSerializer(DictSerializer):
             if serialized_data.__class__.__name__ in ("date", "datetime", "time"):
                 handled_serialized_value = serialized_data.isoformat()
             elif serialized_data.__class__.__name__ == "bool":
-                # TODO (Roman): think about a more efficient way to store bool
-                handled_serialized_value = "1" if data else "0"
+                handled_serialized_value = self._deserialize_primitive(data, "bool")
             elif serialized_data.__class__.__name__ == "UUID":
                 handled_serialized_value = str(data)
             elif serialized_data.__class__.__name__ == "bytes":
@@ -57,7 +56,6 @@ class FlatDictSerializer(DictSerializer):
                 # TODO (Roman): refactor to avoid nested data json dumps.
                 #  It is enough to do single json dump for the entire object.
                 handled_serialized_value = json.dumps(serialized_data)
-
             return (
                 StringValueParser.add_type_prefix(handled_serialized_value, value_custom_type)
                 if handled_serialized_value is not None
@@ -79,7 +77,7 @@ class FlatDictSerializer(DictSerializer):
                 elif custom_type == StringValueCustomTypeEnum.TIME:
                     converted_data = dt.time.fromisoformat(converted_data)
                 elif custom_type == StringValueCustomTypeEnum.BOOL:
-                    converted_data = True if converted_data == "1" else False
+                    converted_data = self._deserialize_primitive(converted_data, "bool")
                 elif custom_type == StringValueCustomTypeEnum.UUID:
                     converted_data = UUID(converted_data)
                 elif custom_type == StringValueCustomTypeEnum.BYTES:
