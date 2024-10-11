@@ -19,6 +19,8 @@ from typing import List
 from typing import cast
 from pydantic import BaseModel
 from cl.runtime import Context
+from cl.runtime.log.log_entry import LogEntry
+from cl.runtime.log.log_entry_level_enum import LogEntryLevelEnum
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.routers.tasks.task_status_request import TaskStatusRequest
 from cl.runtime.tasks.task import Task
@@ -48,6 +50,9 @@ class TaskStatusResponseItem(BaseModel):
     key: str | None  # TODO: Rename to task_id in REST API for clarity
     """Task key."""
 
+    user_message: str | None
+    """Optional user message."""
+
     class Config:
         alias_generator = CaseUtil.snake_to_pascal_case
         populate_by_name = True
@@ -66,11 +71,17 @@ class TaskStatusResponseItem(BaseModel):
         for task_run in task_runs:
             task_obj = context.load_one(Task, task_run.task)
 
+            user_message = log_entry.message if (
+                    (log_entry := context.load_one(LogEntry, task_run.log_entry)) is not None
+                    and log_entry.level == LogEntryLevelEnum.USER_ERROR
+            ) else None
+
             response_items.append(
                 TaskStatusResponseItem(
                     status_code=LEGACY_TASK_STATUS_NAMES_MAP.get(task_run.status.name),
                     task_run_id=str(task_run.task_run_id),
                     key=task_obj.key_str if hasattr(task_obj, "key_str") else None,
+                    user_message=user_message,
                 ),
             )
 

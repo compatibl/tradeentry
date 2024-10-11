@@ -14,11 +14,15 @@
 
 import multiprocessing
 import os
+import uuid
 from dataclasses import dataclass
 from typing import Final
 from uuid import UUID
 from celery import Celery
 from cl.runtime import Context
+from cl.runtime.log.exceptions.user_error import UserError
+from cl.runtime.log.log_entry import LogEntry
+from cl.runtime.log.log_entry_level_enum import LogEntryLevelEnum
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.records.protocols import TDataDict
@@ -83,10 +87,23 @@ def execute_task(
             task = context.load_one(Task, task_key)
             task.execute()
         except Exception as e:  # noqa
+            # Save log entry to the database
+            log_entry = LogEntry(
+                id=str(uuid.uuid4()),
+                message=str(e),
+                level=LogEntryLevelEnum.USER_ERROR if isinstance(e, UserError) else LogEntryLevelEnum.ERROR,
+                timestamp=DatetimeUtil.to_iso_int(DatetimeUtil.now()),
+            )
+            Context.current().save_one(log_entry)
+
             # Update task run record to report task failure
             task_run.update_time = DatetimeUtil.now()
             task_run.status = TaskStatusEnum.FAILED
             task_run.message = str(e)
+
+            # Add log entry key
+            task_run.log_entry = log_entry.get_key()
+
             context.save_one(task_run)
         else:
             # Update task run record to report task completion

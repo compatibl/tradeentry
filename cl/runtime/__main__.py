@@ -19,7 +19,7 @@ import webbrowser
 import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-from starlette.responses import Response
+from starlette.responses import JSONResponse
 from starlette.staticfiles import StaticFiles
 from cl.runtime import Context
 from cl.runtime.context.process_context import ProcessContext
@@ -56,6 +56,7 @@ async def handle_exception(request, exc, log_level):
     # Output traceback
     traceback.print_exception(exc)
 
+    # TODO (Roman): save all logs to db
     # Save log entry to the database
     entry = LogEntry(
         id=str(uuid.uuid4()),
@@ -65,8 +66,11 @@ async def handle_exception(request, exc, log_level):
     )
     Context.current().save_one(entry)
 
+    # Message to display for user
+    user_message = str(exc) if log_level == LogEntryLevelEnum.USER_ERROR else None
+
     # Return 500 response to avoid exception handler multiple calls
-    return Response("Status code 500 in handle_exception", status_code=500)
+    return JSONResponse({"UserMessage": user_message}, status_code=500)
 
 
 # Add RuntimeError exception handler

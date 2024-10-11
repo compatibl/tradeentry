@@ -16,6 +16,7 @@ import inspect
 from dataclasses import dataclass
 from logging import getLogger
 from cl.runtime.context.context import Context
+from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.records.record_mixin import RecordMixin
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_handlers_key import StubHandlersKey
@@ -180,7 +181,12 @@ class StubHandlers(StubHandlersKey, RecordMixin[StubHandlersKey]):
         """Stub method."""
         raise RuntimeError("Error in handler.")
 
+    def run_with_user_error(self):
+        """Stub method."""
+        raise UserError("User error in handler.")
+
     def run_save_to_db(self):
+        """Stub method."""
         log_method_info(__name__)
         db = Context.current().db
         stub = StubDataclassRecord(id="saved_from_handler")

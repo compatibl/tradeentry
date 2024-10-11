@@ -14,6 +14,7 @@
 
 from pydantic import BaseModel
 from cl.runtime import Context
+from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.routers.entity.save_request import SaveRequest
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.serialization.ui_dict_serializer import UiDictSerializer
@@ -69,7 +70,7 @@ class SaveResponse(BaseModel):
                 dataset=request.dataset,
             )
             if existing_record is not None:
-                raise RuntimeError(f"Record with key {str(record)} already exists.")
+                raise UserError(f"Record with key {str(record)} already exists.")
 
         if request.old_record_key is not None and request.old_record_key != key_serializer.serialize_key(record):
             old_record_key_obj = key_serializer.deserialize_key(request.old_record_key, type(record.get_key()))

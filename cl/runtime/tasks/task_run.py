@@ -16,6 +16,7 @@ import datetime as dt
 import time
 from dataclasses import dataclass
 from cl.runtime import Context
+from cl.runtime.log.log_entry_key import LogEntryKey
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.records.dataclasses_extensions import missing
@@ -59,6 +60,9 @@ class TaskRun(TaskRunKey, RecordMixin[TaskRunKey]):
 
     result: str | None = None
     """Optional result in string format."""
+
+    log_entry: LogEntryKey | None = None
+    """Optional key of the associated log entry."""
 
     def init(self):
         # Automatically generate time-ordered unique task run identifier in UUIDv7 format if not yet specified
