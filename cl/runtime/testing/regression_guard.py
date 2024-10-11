@@ -325,7 +325,7 @@ class RegressionGuard:
         elif is_record(value_type):
             return data_serializer.serialize_data(value)
         elif is_key(value_type):
-            return key_serializer.serialize_data(value)
+            return key_serializer.serialize_key(value)
         elif issubclass(value_type, Enum):
             return str(value)
         elif hasattr(value_type, "__iter__"):
