@@ -21,6 +21,7 @@ from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import TDataDict
 from cl.runtime.records.protocols import is_key
+from cl.runtime.records.record_util import RecordUtil
 from cl.runtime.schema.element_decl import ElementDecl
 from cl.runtime.schema.type_decl import TypeDecl
 from cl.runtime.serialization.dict_serializer import DictSerializer
@@ -73,6 +74,10 @@ class UiDictSerializer(DictSerializer):
 
             return serialized_dict_items
         elif getattr(data, "__slots__", None) is not None:
+
+            # Invoke 'init' for each class in class hierarchy that implements it, in the order from base to derived
+            RecordUtil.init_all(data)
+
             serialized_data = super(UiDictSerializer, self).serialize_data(data, select_fields)
 
             # Replace "_type" with "_t"
