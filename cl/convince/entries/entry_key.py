@@ -24,7 +24,7 @@ class EntryKey(KeyMixin):
     """Contains title, body and supporting data of user entry along with the entry processing result."""
 
     entry_id: str = missing()
-    """Based on record type, title and MD5 hash of body and data if present, use EntryUtil.create_id to generate."""
+    """Based on record type, title and MD5 hash of body and data if present, EntryUtil.create_id is used to generate."""
 
     @classmethod
     def get_key_type(cls) -> Type:
