@@ -24,7 +24,7 @@ class UserKey(KeyMixin):
     """User which is allowed to log in."""
 
     username: str = missing()  # TODO: Consider renaming to user_id, requires matching UI and auth changes
-    """Unique user identifier (auto-generated in 'LastName, FirstName' format if not specified)."""
+    """Unique user identifier."""
 
     @classmethod
     def get_key_type(cls) -> Type:
