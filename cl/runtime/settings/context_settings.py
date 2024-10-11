@@ -22,6 +22,9 @@ from cl.runtime.settings.settings import process_id
 class ContextSettings(Settings):
     """Default context parameters."""
 
+    context_id: str | None = None
+    """Context identifier, if not specified a time-ordered UUID will be used."""
+
     packages: List[str]
     """List of packages to load in dot-delimited format, for example 'cl.runtime' or 'stubs.cl.runtime'."""
 
@@ -31,9 +34,6 @@ class ContextSettings(Settings):
     db_class: str  # TODO: Deprecated, switch to class-specific fields
     """Default database class in module.ClassName format."""
 
-    db_id: str | None = None
-    """Default database identifier, if not specified a time-ordered UUID will be used."""
-
     db_temp_prefix: str = "temp;"
     """
     IMPORTANT: DELETING ALL RECORDS AND DROPPING THE DATABASE FROM CODE IS PERMITTED
@@ -42,6 +42,9 @@ class ContextSettings(Settings):
 
     def init(self) -> None:
         """Same as __init__ but can be used when field values are set both during and after construction."""
+
+        if self.context_id is not None and not isinstance(self.context_id, str):
+            raise RuntimeError(f"{type(self).__name__} field 'context_id' must be None or a string.")
 
         # TODO: Move to ValidationUtil or PrimitiveUtil class
         if isinstance(self.packages, list):
@@ -63,13 +66,6 @@ class ContextSettings(Settings):
             raise RuntimeError(
                 f"{type(self).__name__} field 'db_class' must be a string " f"in module.ClassName format."
             )
-        if self.db_id is None:
-            # Make DB name unique if not specified
-            # TODO: Consider using unique directory instead
-            self.db_id = process_id
-            pass
-        elif not isinstance(self.db_id, str):
-            raise RuntimeError(f"{type(self).__name__} field 'db_id' must be a string.")
 
     @classmethod
     def get_prefix(cls) -> str:
