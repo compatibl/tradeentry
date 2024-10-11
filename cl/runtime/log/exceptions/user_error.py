@@ -12,16 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from cl.runtime import Context
+from cl.runtime.backend.core.user_key import UserKey
 
-class UserError(Exception):
-    """Custom exception for user-related errors."""
 
-    def __init__(self, message="A user error occurred", username=None):
+class UserError(RuntimeError):
+    """Custom exception type for an error message displayed to the front end user."""
+
+    user: UserKey
+    """User to whom the message was displayed, taken from current context."""
+
+    def __init__(self, message: str):
         super().__init__(message)
-        self.username = username
+        self.user = Context.current().user
 
-    def __str__(self):
-        message = f"UserError: {self.args[0]}"
-        if self.username:
-            message += f" (User: {self.username})"
-        return message
