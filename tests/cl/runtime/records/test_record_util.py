@@ -78,6 +78,18 @@ def test_init_all():
     RegressionGuard.verify_all()
 
 
+def test_is_instance():
+    """Test RecordUtil.validate method."""
+
+    # Primitive types
+    assert RecordUtil._is_instance(True, bool)
+    assert not RecordUtil._is_instance(None, bool)
+
+    # Primitive types | None
+    assert RecordUtil._is_instance(True, bool | None)
+    assert RecordUtil._is_instance(None, bool | None)
+
+
 def test_validate():
     """Test RecordUtil.validate method."""
 
