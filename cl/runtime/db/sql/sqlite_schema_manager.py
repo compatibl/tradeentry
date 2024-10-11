@@ -14,6 +14,7 @@
 
 import sqlite3
 from dataclasses import dataclass
+from inspect import isclass
 from typing import Dict
 from typing import Iterable
 from typing import List
@@ -94,7 +95,6 @@ class SqliteSchemaManager:
         cursor = self.sqlite_connection.cursor()
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
 
-        # cursor.fetchall() returns [{'name': name},]
         return [select_res["name"] for select_res in cursor.fetchall()]
 
     def _get_type_fields(self, type_: Type) -> Dict[str, Type]:  # TODO: Consolidate this and similar code in Schema
@@ -126,7 +126,12 @@ class SqliteSchemaManager:
                 existing_field = all_fields.get(field_name)
 
                 if existing_field is not None:
-                    # check if fields with the same name have compatible type
+                    if not isclass(field_type):
+                        # TODO (Roman): support union validation in schema
+                        # Skip type checking for fields with non-class annotation (e.g. Union)
+                        continue
+
+                    # Check if fields with the same name have compatible type
                     if not issubclass(field_type, existing_field[1]):
                         raise TypeError(
                             f"Field {field_name}: {field_type} of class {type_.__name__} conflicts with the same field "
