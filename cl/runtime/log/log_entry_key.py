@@ -22,8 +22,8 @@ from cl.runtime.records.key_mixin import KeyMixin
 class LogEntryKey(KeyMixin):
     """A target for log messages."""
 
-    id: str = missing()
-    """Unique log identifier."""
+    timestamp: str = missing()
+    """Time-ordered UUID."""
 
     @classmethod
     def get_key_type(cls) -> Type:

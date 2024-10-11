@@ -89,10 +89,8 @@ def execute_task(
         except Exception as e:  # noqa
             # Save log entry to the database
             log_entry = LogEntry(
-                id=str(uuid.uuid4()),
                 message=str(e),
                 level=LogEntryLevelEnum.USER_ERROR if isinstance(e, UserError) else LogEntryLevelEnum.ERROR,
-                timestamp=DatetimeUtil.to_iso_int(DatetimeUtil.now()),
             )
             Context.current().save_one(log_entry)
 

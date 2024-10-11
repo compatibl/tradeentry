@@ -59,10 +59,8 @@ async def handle_exception(request, exc, log_level):
     # TODO (Roman): save all logs to db
     # Save log entry to the database
     entry = LogEntry(
-        id=str(uuid.uuid4()),
         message=str(exc),
         level=log_level,
-        timestamp=DatetimeUtil.to_iso_int(DatetimeUtil.now()),
     )
     Context.current().save_one(entry)
 
