@@ -68,6 +68,10 @@ async def handle_exception(request, exc, log_level):
     user_message = str(exc) if log_level == LogEntryLevelEnum.USER_ERROR else None
 
     # Return 500 response to avoid exception handler multiple calls
+    # IMPORTANT:
+    # - If UserMessage is set it will be shown to the user on toast badge and bell becomes red,
+    # - Otherwise default message will be shown
+    # TODO: Make it possible to customize default message in client code or pass from settings via runtime
     return JSONResponse({"UserMessage": user_message}, status_code=500)
 
 

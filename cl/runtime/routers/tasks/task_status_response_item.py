@@ -71,6 +71,7 @@ class TaskStatusResponseItem(BaseModel):
         for task_run in task_runs:
             task_obj = context.load_one(Task, task_run.task)
 
+            # Displayed to the user in case of UserError
             user_message = log_entry.message if (
                     (log_entry := context.load_one(LogEntry, task_run.log_entry)) is not None
                     and log_entry.level == LogEntryLevelEnum.USER_ERROR
