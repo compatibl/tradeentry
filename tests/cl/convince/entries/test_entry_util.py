@@ -13,11 +13,10 @@
 # limitations under the License.
 
 import pytest
-
+from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.entries.entry import Entry
 from cl.convince.entries.entry_key import EntryKey
 from cl.convince.entries.entry_util import EntryUtil
-from cl.runtime.testing.regression_guard import RegressionGuard
 
 
 def test_create_id():

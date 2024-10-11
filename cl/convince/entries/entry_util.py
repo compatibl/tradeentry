@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from typing import Type
-
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.records.protocols import is_record
@@ -24,12 +23,12 @@ class EntryUtil:
 
     @classmethod
     def create_id(
-            cls,
-            type_: Type | str,
-            title: str,
-            *,
-            body: str | None = None,
-            data: str | None = None,
+        cls,
+        type_: Type | str,
+        title: str,
+        *,
+        body: str | None = None,
+        data: str | None = None,
     ) -> str:
         """Create entry_id in 'Type: Title' format followed by an MD5 hash of body and data if present."""
 
@@ -56,8 +55,10 @@ class EntryUtil:
             raise RuntimeError("Empty 'title' parameter is passed to 'create_id' method.")
         max_title_len = 1000
         if len(title) > max_title_len:
-            raise RuntimeError(f"The length {len(title)} of the 'title' parameter passed to 'create_id' method "
-                               f"exceeds the {max_title_len} limit, use body parameter for the excess text.")
+            raise RuntimeError(
+                f"The length {len(title)} of the 'title' parameter passed to 'create_id' method "
+                f"exceeds the {max_title_len} limit, use body parameter for the excess text."
+            )
         if "\n" in type_:
             raise RuntimeError(f"Parameter title={title} of 'create_id' method must not contain EOL.")
 

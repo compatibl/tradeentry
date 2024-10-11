@@ -15,21 +15,19 @@
 from abc import ABC
 from abc import abstractmethod
 from dataclasses import dataclass
-
 from typing_extensions import Self
-
 from cl.runtime import Context
 from cl.runtime.primitive.case_util import CaseUtil
-from cl.convince.entries.entry_util import EntryUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.convince.entries.entry_key import EntryKey
-from cl.convince.entries.entry_status_enum import EntryStatusEnum
 from cl.runtime.view.dag.dag import Dag
 from cl.runtime.view.dag.dag_edge import DagEdge
 from cl.runtime.view.dag.dag_layout_enum import DagLayoutEnum
 from cl.runtime.view.dag.dag_node_data import DagNodeData
 from cl.runtime.view.dag.nodes.dag_node import DagNode
+from cl.convince.entries.entry_key import EntryKey
+from cl.convince.entries.entry_status_enum import EntryStatusEnum
+from cl.convince.entries.entry_util import EntryUtil
 
 
 @dataclass(slots=True, kw_only=True)
@@ -73,30 +71,32 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
             self.entry_id = entry_id
         elif self.entry_id != entry_id:
             # Otherwise check that it matches the rest of the data
-            raise RuntimeError(f"""Record's entry_id if out of sync with the record's type, title, body and data.
+            raise RuntimeError(
+                f"""Record's entry_id if out of sync with the record's type, title, body and data.
 Record's entry_id: {self.entry_id}
 Expected from type, title, body and data: {entry_id} 
-""")
+"""
+            )
 
     @classmethod
     def create(
-            cls,
-            title: str,
-            *,
-            body: str | None = None,
-            data: str | None = None,
+        cls,
+        title: str,
+        *,
+        body: str | None = None,
+        data: str | None = None,
     ) -> Self:
         """Create and save to storage using type and title with optional body and data parameters."""
         raise NotImplementedError()
 
     @classmethod
     def create_self(
-            cls,
-            title: str,
-            *,
-            body: str | None = None,
-            data: str | None = None,
-            status: EntryStatusEnum = EntryStatusEnum.COMPLETED,
+        cls,
+        title: str,
+        *,
+        body: str | None = None,
+        data: str | None = None,
+        status: EntryStatusEnum = EntryStatusEnum.COMPLETED,
     ) -> Self:
         """Create self from type and title with optional body, data and status parameters."""
 
@@ -117,9 +117,9 @@ Expected from type, title, body and data: {entry_id}
 
     @staticmethod
     def build_dag(
-            entry: "Entry",
-            layout_mode: DagLayoutEnum = DagLayoutEnum.PLANAR,
-            ignore_fields: list[str] = None,
+        entry: "Entry",
+        layout_mode: DagLayoutEnum = DagLayoutEnum.PLANAR,
+        ignore_fields: list[str] = None,
     ) -> Dag:
         """Build the DAG for the entry."""
         ignore_fields = ignore_fields or []
@@ -203,11 +203,11 @@ Expected from type, title, body and data: {entry_id}
 
     @staticmethod
     def __append_empty_node(
-            source_node: DagNode,
-            entry_id: str,
-            edge_label: str,
-            nodes: list[DagNode],
-            edges: list[DagEdge],
+        source_node: DagNode,
+        entry_id: str,
+        edge_label: str,
+        nodes: list[DagNode],
+        edges: list[DagEdge],
     ) -> None:
         """Append empty node to the list of nodes and edge to the list of edges."""
         # TODO (Yauheni): Add color information to the node with entry, which doesn't exist

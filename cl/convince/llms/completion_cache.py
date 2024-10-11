@@ -19,10 +19,10 @@ from dataclasses import dataclass
 from typing import Any
 from typing import Dict
 from typing import Iterable
+from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.settings.project_settings import ProjectSettings
-from cl.runtime.context.env_util import EnvUtil
 
 _supported_extensions = ["csv"]
 """The list of supported output file extensions (formats)."""
