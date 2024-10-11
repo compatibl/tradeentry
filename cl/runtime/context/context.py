@@ -18,6 +18,8 @@ from typing import ClassVar
 from typing import Iterable
 from typing import List
 from typing import Type
+
+from cl.runtime.backend.core.user_key import UserKey
 from cl.runtime.context.context_key import ContextKey
 from cl.runtime.db.db_key import DbKey
 from cl.runtime.db.protocols import TKey
@@ -42,6 +44,9 @@ The following root context types can be used in the outermost 'with' clause:
 class Context(ContextKey, RecordMixin[ContextKey]):
     """Protocol implemented by context objects providing logging, database, dataset, and progress reporting."""
 
+    user: UserKey = missing()
+    """Current user, 'Context.current().user' is used if not specified."""
+
     log: LogKey = missing()
     """Log of the context, 'Context.current().log' is used if not specified."""
 
@@ -63,6 +68,9 @@ class Context(ContextKey, RecordMixin[ContextKey]):
         # Do not execute this code on deserialized context instances (e.g. when they are passed to a task queue)
         if not self.is_deserialized:
             # Set fields that are not specified to their values from 'Context.current()'
+            if self.user is None:
+                self._root_context_field_not_set_error("user")
+                self.user = Context.current().user
             if self.log is None:
                 self._root_context_field_not_set_error("log")
                 self.log = Context.current().log
