@@ -14,7 +14,7 @@
 
 
 import json
-from cl.convince.llms.json_response_parser import JsonResponseUtil
+from cl.convince.llms.json_response_util import JsonResponseUtil
 
 
 def test_fix_json_format():
