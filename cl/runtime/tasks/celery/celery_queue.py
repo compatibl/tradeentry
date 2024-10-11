@@ -42,10 +42,10 @@ CELERY_MAX_RETRIES: Final[int] = 3
 CELERY_TIME_LIMIT: Final[int] = 3600 * 2  # TODO: 2 hours (configure)
 
 databases_dir = ProjectSettings.get_databases_dir()
-db_id = ContextSettings.instance().db_id
+context_id = ContextSettings.instance().context_id
 
 # Get sqlite file name of celery broker based on database id in settings
-celery_file = os.path.join(databases_dir, f"{db_id}.celery.sqlite")
+celery_file = os.path.join(databases_dir, f"{context_id}.celery.sqlite")
 
 celery_sqlite_uri = f"sqlalchemy+sqlite:///{celery_file}"
 
