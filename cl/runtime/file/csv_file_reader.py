@@ -19,6 +19,7 @@ from typing import Dict
 from typing import Type
 from cl.runtime import Context
 from cl.runtime.file.reader import Reader
+from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.primitive.char_util import CharUtil
 from cl.runtime.records.protocols import RecordProtocol
@@ -123,6 +124,10 @@ class CsvFileReader(Reader):
             # Get element_decl for field
             pascal_case_field_name = CaseUtil.snake_to_pascal_case(k)
             element_decl = type_decl_elements.get(pascal_case_field_name)
+
+            if element_decl is None:
+                raise UserError(f"Field '{k}' is not defined in record '{self.record_type.__name__}' "
+                                f"while its value '{v}' is present in CSV input.")
 
             # Prepare csv value using element decl
             prepared_row[k] = self._prepare_csv_value(v, element_decl)
