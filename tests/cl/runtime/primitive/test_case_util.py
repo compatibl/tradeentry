@@ -60,6 +60,7 @@ def test_snake_to_pascal_case():
         ("abc.def", "Abc.Def"),
         ("abc_def.xyz", "AbcDef.Xyz"),
         ("abc_def.uvw_xyz", "AbcDef.UvwXyz"),
+        ("node_id", "NodeId"),
     )
 
     for input_value, expected in test_cases:
@@ -155,7 +156,7 @@ def test_check_pascal_case():
     check_raises_error(
         CaseUtil.check_pascal_case,
         "invalid_pascal_case",
-        "String invalid_pascal_case is not PascalCase because it contains an underscore.",
+        "String 'invalid_pascal_case' is not 'PascalCase' because it contains non-alphanumeric characters: '_'",
     )
     check_raises_error(
         CaseUtil.check_pascal_case,
@@ -173,7 +174,7 @@ def test_check_title_case():
     check_raises_error(
         CaseUtil.check_title_case,
         "invalid_title_case",
-        "String invalid_title_case is not Title Case because it contains an underscore.",
+        "String 'invalid_title_case' is not 'Title Case' because it contains non-alphanumeric characters: '_'",
     )
     check_raises_error(
         CaseUtil.check_title_case,
@@ -272,6 +273,30 @@ def test_round_trip_conversions():
     for pascal_case_value, upper_case_value in pascal_to_upper_case_test_cases:
         assert CaseUtil.pascal_to_upper_case(pascal_case_value) == upper_case_value
         assert CaseUtil.upper_to_pascal_case(upper_case_value) == pascal_case_value
+
+
+def test_non_alphanumeric():
+    """Test CaseUtil._check_non_alphanumeric."""
+
+    # Underscore
+    CaseUtil._check_non_alphanumeric("a_b", "sample_format", allow_underscore=True)  # Do not throw
+    with pytest.raises(Exception):
+        CaseUtil._check_non_alphanumeric("a_b", "sample_format")
+
+    # Other characters
+    with pytest.raises(Exception):
+        CaseUtil._check_non_alphanumeric("abc\n", "sample_format")
+    with pytest.raises(Exception):
+        CaseUtil._check_non_alphanumeric("abc\rdef", "sample_format")
+    with pytest.raises(Exception):
+        CaseUtil._check_non_alphanumeric("\ufeffabc_def", "sample_format")
+
+
+def test_describe_char():
+    """Test CaseUtil._check_non_alphanumeric."""
+    assert CaseUtil._describe_char("\n") == 'Newline'
+    assert CaseUtil._describe_char("\r") == 'Carriage Return'
+    assert CaseUtil._describe_char("\ufeff") == 'UTF-8 BOM'
 
 
 if __name__ == "__main__":

@@ -16,15 +16,38 @@ import re
 from typing import Pattern
 from cl.runtime.primitive.string_util import StringUtil
 
+_alphanumeric_re: Pattern = re.compile(r"[^a-zA-Z0-9 .]")
+"""Match sequences where all characters are either letters or digits, also allowing dot and space."""
+
+_alphanumeric_or_underscore_re: Pattern = re.compile(r"[^a-zA-Z0-9 ._]")
+"""Match sequences where all characters are either letters or digits or an underscore, also allowing dot and space."""
+
 _all_cap_re: Pattern = re.compile(r"([a-z])([A-Z])")
-# Pattern to add underscores before digits (e.g., "Abc2" -> "abc_2")
+"""Match sequences where a lowercase letter ([a-z]) is immediately followed by an uppercase letter ([A-Z])"""
+
 _digit_separator_re: Pattern = re.compile(r"([a-zA-Z])(\d)")
-# This pattern looks for uppercase sequences and adds an underscore between them if needed
+"""Pattern to add underscores before digits (e.g., "Abc2" -> "abc_2")"""
+
 _consecutive_cap_re: Pattern = re.compile(r"([A-Z])([A-Z])")
-# Digit without underscore pattern
+"""This pattern looks for uppercase sequences and adds an underscore between them if needed"""
+
 _digit_without_underscore_re: Pattern = re.compile(r"(?<!_)\d")
-# Digit without space pattern
+"""Digit without underscore pattern"""
+
 _digit_without_space_re: Pattern = re.compile(r"(?<! )\d")
+"""Digit without space pattern"""
+
+_special_char_names = {
+    '\x00': 'Null Byte',
+    '\n': 'Newline',
+    '\t': 'Tab',
+    '\r': 'Carriage Return',
+    '\ufeff': 'UTF-8 BOM',
+    '\uFFFD': 'Unicode replacement character',
+    '\u201C': 'Left Double Quotation Mark',
+    '\u201D': 'Right Double Quotation Mark',
+}
+"""Map of special unprintable characters and their names"""
 
 
 class CaseUtil:
@@ -121,6 +144,7 @@ class CaseUtil:
         if StringUtil.is_empty(value):
             # Consider None or empty string compliant with the format
             return
+        cls._check_non_alphanumeric(value, "snake_case", allow_underscore=True)
         cls._check_no_space(value, "snake_case")
         cls._check_no_upper(value, "snake_case")
         cls._check_double_underscore(value, "snake_case")
@@ -132,6 +156,7 @@ class CaseUtil:
         if StringUtil.is_empty(value):
             # Consider None or empty string compliant with the format
             return
+        cls._check_non_alphanumeric(value, "PascalCase", allow_underscore=False)
         cls._check_no_space(value, "PascalCase")
         cls._check_no_underscore(value, "PascalCase")
         cls._check_first_letter_capitalized(value, "PascalCase")
@@ -144,6 +169,7 @@ class CaseUtil:
         if StringUtil.is_empty(value):
             # Consider None or empty string compliant with the format
             return
+        cls._check_non_alphanumeric(value, "Title Case", allow_underscore=False)
         cls._check_no_underscore(value, "Title Case")
         cls._check_first_letter_capitalized(value, "Title Case")
         cls._check_title_case_digit_separator(value)
@@ -154,6 +180,7 @@ class CaseUtil:
         if StringUtil.is_empty(value):
             # Consider None or empty string compliant with the format
             return
+        cls._check_non_alphanumeric(value, "UPPER_CASE", allow_underscore=True)
         cls._check_no_space(value, "UPPER_CASE")
         cls._check_no_lower(value, "UPPER_CASE")
         cls._check_upper_case_digit_separator(value)
@@ -193,6 +220,20 @@ class CaseUtil:
             return True
         except RuntimeError:
             return False
+
+    @classmethod
+    def _check_non_alphanumeric(cls, value: str, format_: str, allow_underscore: bool) -> None:
+        """Error message stating the string does not follow format because it contains non-alphanumeric characters."""
+        if allow_underscore:
+            non_alphanumeric = re.findall(_alphanumeric_or_underscore_re, value)
+        else:
+            non_alphanumeric = list(set(re.findall(_alphanumeric_re, value)))
+        if non_alphanumeric:
+            offending_chars = ', '.join(cls._describe_char(char) for char in non_alphanumeric)
+            other_than_underscore_msg = " other than underscore" if allow_underscore else ""
+            raise RuntimeError(f"String '{value}' is not '{format_}' because it contains "
+                               f"non-alphanumeric characters{other_than_underscore_msg}: "
+                               f"{offending_chars}")
 
     @classmethod
     def _check_no_space(cls, value: str, format_: str) -> None:
@@ -261,8 +302,8 @@ class CaseUtil:
                 f"for separators in front of digits.",
             )
 
-    @staticmethod
-    def __pascalize_segment(segment: str) -> str:
+    @classmethod
+    def __pascalize_segment(cls, segment: str) -> str:
         """
         Pascalize a segment (substring between 2 underscores) from snake_case
         using custom rule for separators in front of digits.
@@ -272,3 +313,8 @@ class CaseUtil:
             return segment[0] + segment[1:].capitalize()
         # Otherwise, capitalize the first letter of the segment
         return segment.capitalize()
+
+    @classmethod
+    def _describe_char(cls, char: str) -> str:
+        # If the character is in the special map, use its name, otherwise use repr()
+        return _special_char_names.get(char, repr(char))
