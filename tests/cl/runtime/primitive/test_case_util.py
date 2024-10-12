@@ -292,12 +292,5 @@ def test_non_alphanumeric():
         CaseUtil._check_non_alphanumeric("\ufeffabc_def", "sample_format")
 
 
-def test_describe_char():
-    """Test CaseUtil._check_non_alphanumeric."""
-    assert CaseUtil._describe_char("\n") == 'Newline'
-    assert CaseUtil._describe_char("\r") == 'Carriage Return'
-    assert CaseUtil._describe_char("\ufeff") == 'UTF-8 BOM'
-
-
 if __name__ == "__main__":
     pytest.main([__file__])

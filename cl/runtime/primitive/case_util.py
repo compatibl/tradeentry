@@ -14,6 +14,8 @@
 
 import re
 from typing import Pattern
+
+from cl.runtime.primitive.char_util import CharUtil
 from cl.runtime.primitive.string_util import StringUtil
 
 _alphanumeric_re: Pattern = re.compile(r"[^a-zA-Z0-9 .]")
@@ -36,18 +38,6 @@ _digit_without_underscore_re: Pattern = re.compile(r"(?<!_)\d")
 
 _digit_without_space_re: Pattern = re.compile(r"(?<! )\d")
 """Digit without space pattern"""
-
-_special_char_names = {
-    '\x00': 'Null Byte',
-    '\n': 'Newline',
-    '\t': 'Tab',
-    '\r': 'Carriage Return',
-    '\ufeff': 'UTF-8 BOM',
-    '\uFFFD': 'Unicode replacement character',
-    '\u201C': 'Left Double Quotation Mark',
-    '\u201D': 'Right Double Quotation Mark',
-}
-"""Map of special unprintable characters and their names"""
 
 
 class CaseUtil:
@@ -229,11 +219,11 @@ class CaseUtil:
         else:
             non_alphanumeric = list(set(re.findall(_alphanumeric_re, value)))
         if non_alphanumeric:
-            offending_chars = ', '.join(cls._describe_char(char) for char in non_alphanumeric)
+            non_alphanumeric_names = ', '.join(CharUtil.describe_char(char) for char in non_alphanumeric)
             other_than_underscore_msg = " other than underscore" if allow_underscore else ""
             raise RuntimeError(f"String '{value}' is not '{format_}' because it contains "
                                f"non-alphanumeric characters{other_than_underscore_msg}: "
-                               f"{offending_chars}")
+                               f"{non_alphanumeric_names}")
 
     @classmethod
     def _check_no_space(cls, value: str, format_: str) -> None:
@@ -314,7 +304,4 @@ class CaseUtil:
         # Otherwise, capitalize the first letter of the segment
         return segment.capitalize()
 
-    @classmethod
-    def _describe_char(cls, char: str) -> str:
-        # If the character is in the special map, use its name, otherwise use repr()
-        return _special_char_names.get(char, repr(char))
+
