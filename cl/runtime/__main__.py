@@ -26,6 +26,7 @@ from cl.runtime.context.process_context import ProcessContext
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.log.log_entry import LogEntry
 from cl.runtime.log.log_entry_level_enum import LogEntryLevelEnum
+from cl.runtime.log.user_log_entry import UserLogEntry
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.routers.app import app_router
 from cl.runtime.routers.auth import auth_router
@@ -58,10 +59,12 @@ async def handle_exception(request, exc, log_level):
 
     # TODO (Roman): save all logs to db
     # Save log entry to the database
-    entry = LogEntry(
+    log_type = UserLogEntry if isinstance(exc, UserError) else LogEntry
+    entry = log_type( # noqa
         message=str(exc),
         level=log_level,
     )
+    entry.init()
     Context.current().save_one(entry)
 
     # Message to display for user
