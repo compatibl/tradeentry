@@ -80,7 +80,8 @@ class Schema:
         if record_type is None:
             raise RuntimeError(
                 f"Record class with short name {short_name} is not found "
-                f"in the list of packages specified in settings."
+                f"in the list of packages specified in settings. Check for "
+                f"the presence of __init__.py in each source directory."
             )
         return record_type
 
