@@ -11,14 +11,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 import inspect
-from dataclasses import fields
+from dataclasses import fields, MISSING
 from dataclasses import is_dataclass
 from types import NoneType
 from types import UnionType
 from typing import Union, List, Type, Set
 from typing import get_args
 from typing import get_origin
+
+from cl.runtime.log.exceptions.user_error import UserError
 
 
 class RecordUtil:
@@ -64,9 +67,13 @@ Type of the value: {type(field_value).__name__}
 Note: In case of containers, type mismatch may be in one of the items.
 """
                             )
-                elif field.default is not None:
-                    # Error if a field is None but declared as required
-                    raise RuntimeError(f"Field '{field.name}' in class '{class_name}' is required but not set.")
+                else:
+                    default_is_none = field.default is None
+                    default_factory_is_missing = field.default_factory is MISSING
+                    default_value_not_set = default_is_none and default_factory_is_missing
+                    if default_value_not_set and not cls._is_optional(field.type):
+                        # Error if a field is None but declared as required
+                        raise UserError(f"Field '{field.name}' in class '{class_name}' is required but not set.")
 
     @classmethod
     def is_abstract(cls, record_type: Type) -> bool:
@@ -118,6 +125,17 @@ Note: In case of containers, type mismatch may be in one of the items.
                     )
         else:
             # Not an instance of the specified origin
+            return False
+
+    @classmethod
+    def _is_optional(cls, field_type) -> bool:
+        """Return true if None is an valid value for field_type."""
+        # Check if the type is a union
+        if get_origin(field_type) in [UnionType, Union]:
+            # Check if NoneType is one of the arguments in the union
+            return NoneType in get_args(field_type)
+        else:
+            # Type hint is not a union, the value cannot be None
             return False
 
     @classmethod
