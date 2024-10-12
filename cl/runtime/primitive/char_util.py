@@ -13,6 +13,8 @@
 # limitations under the License.
 import re
 
+from cl.runtime.primitive.string_util import StringUtil
+
 _DESCRIPTION_MAP = {
     '\x00': 'Null Byte',
     '\n': 'Newline',
@@ -53,6 +55,10 @@ class CharUtil:
     @classmethod
     def normalize_chars(cls, value: str) -> str:
         """Flag _FLAGGED_CHARS, remove _REMOVED_CHARS and _REPLACED_CHARS. """
+
+        # Do not normalize chars in None or an empty string
+        if StringUtil.is_empty(value):
+            return value
 
         # Search for flagged characters
         flagged_chars = list(set(re.findall(_FLAGGED_CHARS_REGEX, value)))
