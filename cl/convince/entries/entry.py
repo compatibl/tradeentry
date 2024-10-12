@@ -12,17 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC, abstractmethod
-from abc import ABC
+from abc import abstractmethod, ABC
 from dataclasses import dataclass
-from typing_extensions import Self
 
 from cl.convince.entries.entry_type_key import EntryTypeKey
 from cl.runtime import Context
 from cl.runtime.backend.core.user_key import UserKey
-from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.primitive.case_util import CaseUtil
-from cl.runtime.primitive.char_util import CharUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.view.dag.dag import Dag
@@ -31,7 +27,6 @@ from cl.runtime.view.dag.dag_layout_enum import DagLayoutEnum
 from cl.runtime.view.dag.dag_node_data import DagNodeData
 from cl.runtime.view.dag.nodes.dag_node import DagNode
 from cl.convince.entries.entry_key import EntryKey
-from cl.convince.entries.entry_status_enum import EntryStatusEnum
 from cl.convince.entries.entry_util import EntryUtil
 
 
