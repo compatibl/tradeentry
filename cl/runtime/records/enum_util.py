@@ -12,28 +12,3 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from enum import IntEnum
-
-
-def enum_class_impl(cls, *, label=None):
-    """Performs the actual wrapping irrespective of call syntax with or without parentheses."""
-
-    if not issubclass(cls, IntEnum):
-        raise TypeError("Expected StrEnum or IntEnum derived type.")  # TODO: Review if StrEnum should be used
-
-    # Add label if specified
-    if label is not None:
-        cls._label = label
-
-    return cls
-
-
-def enum_class(cls=None, *, label=None):
-    """Runtime decorator for key, record, and data classes."""
-
-    # The value of cls type depends on whether parentheses follow the decorator.
-    # It is the class when used as @enum_class but None for @enum_class().
-    if cls is None:
-        return enum_class_impl
-    else:
-        return enum_class_impl(cls, label=label)
