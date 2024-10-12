@@ -57,7 +57,10 @@ class RunResponseItem(BaseModel):
             # TODO: Add request.arguments_ and type_
             if serialized_key is not None:
                 # Key is not None, this is an instance method
-                key_type = Schema.get_type_by_short_name(request.table)
+
+                # Get key type based on table in request
+                key_type = Schema.get_type_by_short_name(request.table).get_key_type() # noqa
+
                 key_type_str = f"{key_type.__module__}.{key_type.__name__}"
                 handler_task = InstanceMethodTask(
                     task_id=f"{key_type_str}:{serialized_key}:{request.method}",  # TODO Include parameters or use GUID
