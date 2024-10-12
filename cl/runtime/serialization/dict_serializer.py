@@ -23,6 +23,7 @@ from typing import Type
 from typing import cast
 from cl.runtime.backend.core.base_type_info import BaseTypeInfo
 from cl.runtime.backend.core.tab_info import TabInfo
+from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.protocols import TDataDict, TPrimitive
 from cl.runtime.records.protocols import is_key
@@ -194,6 +195,14 @@ class DictSerializer:
                         f"Class not found for name or alias '{short_name}' during deserialization. "
                         f"Ensure all serialized classes are included in package import settings."
                     )
+
+                # Check if the class is abstract
+                if RecordUtil.is_abstract(deserialized_type):
+                    descendants = RecordUtil.get_non_abstract_descendants(deserialized_type)
+                    descendant_names = sorted(set([x.__name__ for x in descendants]))
+                    descendant_names_str = ", ".join(descendant_names)
+                    raise UserError(f"Record {deserialized_type.__name__} cannot be created directly, "
+                                    f"but the following descendant records can: {descendant_names_str}")
 
                 deserialized_fields = {
                     CaseUtil.pascal_to_snake_case(k) if self.pascalize_keys else k: (

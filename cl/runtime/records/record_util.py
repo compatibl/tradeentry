@@ -11,12 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+import inspect
 from dataclasses import fields
 from dataclasses import is_dataclass
 from types import NoneType
 from types import UnionType
-from typing import Union
+from typing import Union, List, Type, Set
 from typing import get_args
 from typing import get_origin
 
@@ -69,7 +69,25 @@ Note: In case of containers, type mismatch may be in one of the items.
                     raise RuntimeError(f"Field '{field.name}' in class '{class_name}' is required but not set.")
 
     @classmethod
-    def _is_instance(cls, field_value, field_type):
+    def is_abstract(cls, record_type: Type) -> bool:
+        """Return True if 'record_type' is abstract."""
+        return bool(inspect.isabstract(record_type))
+
+    @classmethod
+    def get_non_abstract_descendants(cls, record_type: Type) -> List[Type]:
+        """Find non-abstract descendants of 'record_type' to all levels and return the list of ClassName."""
+        subclasses = record_type.__subclasses__()
+        result = []
+        for subclass in subclasses:
+            # Recursively check subclasses
+            result.extend(cls.get_non_abstract_descendants(subclass))
+            # If the subclass is not abstract, add it to the list
+            if not inspect.isabstract(subclass):
+                result.append(subclass)
+        return result
+
+    @classmethod
+    def _is_instance(cls, field_value, field_type) -> bool:
 
         origin = get_origin(field_type)
         args = get_args(field_type)
