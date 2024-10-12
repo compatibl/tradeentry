@@ -56,6 +56,9 @@ TRecord = TypeVar("TRecord")
 TKey = TypeVar("TKey")
 """Generic type parameter for the key."""
 
+TEnum = TypeVar("TEnum", bound=Enum)
+"""Generic type parameter for an enum."""
+
 
 class KeyProtocol(Protocol):
     """Protocol implemented by keys and also required for records which are derived from keys."""
