@@ -135,14 +135,16 @@ class SuccessorDagNode(SuccessorDagNodeKey, RecordMixin[SuccessorDagNodeKey]):
                         continue
 
                     for index, node_key in enumerate(field_value, start=1):
-                        if not (loaded_node := Context.current().load_one(SuccessorDagNodeKey, node_key)):
-                            edge_label = f"{CaseUtil.snake_to_title_case(field_name)}[{index}]",
-                            if str.endswith(field_name, 'Nodes'):
-                                edges_field_name = str.rstrip('Nodes') + 'Edges'
-                                edges_names_values = getattr(node_record, edges_field_name)
-                                if edges_names_values is not None and len(edges_names_values) == len(field_value):
-                                    edge_label = str(edges_names_values[index])
+                        edge_label = f"{CaseUtil.snake_to_title_case(field_name)}[{index}]"
+                        if str.endswith(field_name, 'nodes'):
+                            edges_names_field_name = str.rstrip(field_name, 'nodes') + 'edges'
+                            edges_names = getattr(node_record, edges_names_field_name)
+                            if edges_names is not None and len(edges_names) == len(field_value):
+                                edge_label_candidate = str(edges_names[index - 1])
+                                if edge_label_candidate is not None:
+                                    edge_label = edge_label_candidate
 
+                        if not (loaded_node := Context.current().load_one(SuccessorDagNodeKey, node_key)):
                             SuccessorDagNode.__append_empty_node(
                                 source_node=source_node,
                                 node_id=field_value.node_id,
@@ -157,7 +159,7 @@ class SuccessorDagNode(SuccessorDagNodeKey, RecordMixin[SuccessorDagNodeKey]):
                             Dag.build_edge_between_nodes(
                                 source=source_node,
                                 target=tree_node,
-                                label=f"{CaseUtil.snake_to_title_case(field_name)}[{index}]",
+                                label=edge_label,
                             ),
                         )
                         if tree_node not in nodes:
