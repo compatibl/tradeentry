@@ -1,5 +1,5 @@
 dag,node_name,node_yaml,successors,edges
-Dag1,Root,Root node yaml,Dag1: Node 1A;Dag1: Node 1B,Edge to 1A;Edge to 1B
-Dag1,Node 1A,Node 1A yaml,Dag1: Final,Final Edge Name From 1A
-Dag1,Node 1B,Node 1B yaml,Dag1: Final,Final Edge Name From 1B
+Dag1,Root,Root node yaml,"```LIST [""```json {\""node_id\"": \""Dag1: Node 1A\""}"",""```json {\""node_id\"": \""Dag1: Node 1B\""}""]","```LIST [""Edge to 1A"", ""Edge to 1B""]"
+Dag1,Node 1A,Node 1A yaml,"```LIST [""```json {\""node_id\"": \""Dag1: Final\""}""]","```LIST [""Final Edge Name From 1A""]"
+Dag1,Node 1B,Node 1B yaml,"```LIST [""```json {\""node_id\"": \""Dag1: Final\""}""]","```LIST [""Final Edge Name From 1B""]"
 Dag1,Final,Final node yaml,,

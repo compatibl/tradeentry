@@ -45,14 +45,8 @@ class SuccessorDagNode(SuccessorDagNodeKey, RecordMixin[SuccessorDagNodeKey]):
         self.node_id = f"{self.dag.dag_id}: {self.node_name}"
 
         # TODO: Make this a standard feature of CSV reader, then remove this code
-        if self.successors is not None and not hasattr(self.successors, "__iter__"):
-            # Should actually be a list
-            self.successors = [SuccessorDagNodeKey(node_id=x) for x in self.successors.node_id.split(";")]
-
-        # TODO: Make this a standard feature of CSV reader, then remove this code
-        if self.edges is not None and isinstance(self.edges, str):
-            # Should actually be a list
-            self.edges = self.edges.split(";")
+        if self.successors is not None:
+            self.successors = [SuccessorDagNodeKey(**x) if isinstance(x, dict) else x for x in self.successors]
 
         # Verify that each successor belongs to the same DAG
         if self.successors:
