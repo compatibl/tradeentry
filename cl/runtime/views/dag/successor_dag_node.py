@@ -14,9 +14,15 @@
 
 from dataclasses import dataclass
 from typing import List
-from cl.runtime import RecordMixin
+from cl.runtime import RecordMixin, Context
 from cl.runtime.log.exceptions.user_error import UserError
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.view.dag.dag import Dag
+from cl.runtime.view.dag.dag_edge import DagEdge
+from cl.runtime.view.dag.dag_layout_enum import DagLayoutEnum
+from cl.runtime.view.dag.dag_node_data import DagNodeData
+from cl.runtime.view.dag.nodes.dag_node import DagNode
 from cl.runtime.views.dag.successor_dag_key import SuccessorDagKey
 from cl.runtime.views.dag.successor_dag_node_key import SuccessorDagNodeKey
 
@@ -69,3 +75,123 @@ class SuccessorDagNode(SuccessorDagNodeKey, RecordMixin[SuccessorDagNodeKey]):
 
     def get_key(self) -> SuccessorDagNodeKey:
         return SuccessorDagNodeKey(node_id=self.node_id)
+
+    def view_dag(self) -> Dag:
+        """DAG view for the decision tree node."""
+        return self.build_dag(node=self)
+
+    @staticmethod
+    def build_dag(
+            node: "SuccessorDagNode",
+            layout_mode: DagLayoutEnum = DagLayoutEnum.PLANAR,
+            ignore_fields: list[str] = None,
+    ) -> Dag:
+        """Build the DAG for the node."""
+        ignore_fields = ignore_fields or []
+        nodes, edges = [node.to_dag_node()], []
+
+        def traverse_graph_from_node(node_record: SuccessorDagNode, source_node: DagNode):
+            """Traverse the graph from the specified node."""
+            if not (slots := getattr(node_record, "__slots__", None)):
+                return
+
+            node_fields = {
+                field_name: field_value
+                for field_name in slots
+                if (
+                        isinstance((field_value := getattr(node_record, field_name)), SuccessorDagNodeKey)
+                        # TODO (Yauheni): Use declarations instead of isinstance
+                        # TODO: (Yauheni): Current filtration filters out the empty lists, which should be processed
+                        or (field_value and hasattr(field_value, "__iter__") and isinstance(field_value[0], SuccessorDagNodeKey))
+                        and field_name not in ignore_fields
+                )
+            }
+            for field_name, field_value in node_fields.items():
+                if isinstance(field_value, SuccessorDagNodeKey):
+                    if not (loaded_node := Context.current().load_one(SuccessorDagNodeKey, field_value)):
+                        SuccessorDagNode.__append_empty_node(
+                            source_node=source_node,
+                            node_id=field_value.node_id,
+                            edge_label=CaseUtil.snake_to_title_case(field_name),
+                            nodes=nodes,
+                            edges=edges,
+                        )
+                        continue
+
+                    tree_node = loaded_node.to_dag_node()
+                    edges.append(
+                        Dag.build_edge_between_nodes(
+                            source=source_node,
+                            target=tree_node,
+                            label=CaseUtil.snake_to_title_case(field_name),
+                        ),
+                    )
+                    if tree_node not in nodes:
+                        nodes.append(tree_node)
+                        traverse_graph_from_node(node_record=loaded_node, source_node=tree_node)
+                else:
+                    if not field_value:
+                        # TODO (Yauheni): Handle the case, when the list is empty
+                        continue
+
+                    for index, node_key in enumerate(field_value, start=1):
+                        if not (loaded_node := Context.current().load_one(SuccessorDagNodeKey, node_key)):
+                            edge_label = f"{CaseUtil.snake_to_title_case(field_name)}[{index}]",
+                            if str.endswith(field_name, 'Nodes'):
+                                edges_field_name = str.rstrip('Nodes') + 'Edges'
+                                edges_names_values = getattr(node_record, edges_field_name)
+                                if edges_names_values is not None and len(edges_names_values) == len(field_value):
+                                    edge_label = str(edges_names_values[index])
+
+                            SuccessorDagNode.__append_empty_node(
+                                source_node=source_node,
+                                node_id=field_value.node_id,
+                                edge_label=edge_label,
+                                nodes=nodes,
+                                edges=edges,
+                            )
+                            continue
+
+                        tree_node = loaded_node.to_dag_node()
+                        edges.append(
+                            Dag.build_edge_between_nodes(
+                                source=source_node,
+                                target=tree_node,
+                                label=f"{CaseUtil.snake_to_title_case(field_name)}[{index}]",
+                            ),
+                        )
+                        if tree_node not in nodes:
+                            nodes.append(tree_node)
+                            traverse_graph_from_node(node_record=loaded_node, source_node=tree_node)
+
+        traverse_graph_from_node(node, nodes[0])
+        dag = Dag(name=f"DAG from `{node.node_id}` node", nodes=nodes, edges=edges)
+
+        return Dag.auto_layout_dag(dag, layout_mode)
+
+    def to_dag_node(self) -> DagNode:
+        """Transform tree node to the DAG node."""
+        node_data = DagNodeData(label=self.node_id)
+        node_data.node_data = \
+            {
+                "title": self.node_id,
+                "data": self.node_yaml
+             }
+        return DagNode(id_=self.node_id, data=node_data)
+
+    @staticmethod
+    def __append_empty_node(
+            source_node: DagNode,
+            node_id: str,
+            edge_label: str,
+            nodes: list[DagNode],
+            edges: list[DagEdge],
+    ) -> None:
+        """Append empty node to the list of nodes and edge to the list of edges."""
+        # TODO (Yauheni): Add color information to the node with entry, which doesn't exist
+        empty_node = DagNode(id_=node_id, data=DagNodeData(label=node_id))
+        if empty_node not in nodes:
+            nodes.append(empty_node)
+        edges.append(
+            Dag.build_edge_between_nodes(source=source_node, target=empty_node, label=edge_label),
+        )
