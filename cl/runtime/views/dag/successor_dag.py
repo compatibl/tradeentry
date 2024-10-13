@@ -13,9 +13,12 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from cl.runtime import Context
 from cl.runtime import RecordMixin
 from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.view.dag.dag import Dag
 from cl.runtime.views.dag.successor_dag_key import SuccessorDagKey
+from cl.runtime.views.dag.successor_dag_node import SuccessorDagNode
 from cl.runtime.views.dag.successor_dag_node_key import SuccessorDagNodeKey
 
 
@@ -31,3 +34,15 @@ class SuccessorDag(SuccessorDagKey, RecordMixin[SuccessorDagKey]):
 
     def get_key(self) -> SuccessorDagKey:
         return SuccessorDagKey(dag_id=self.dag_id)
+
+    def view_dag(self) -> Dag | None:
+        """DAG view for the decision tree node."""
+        if self.root_node is None:
+            return None
+
+        root_node = Context.current().load_one(SuccessorDagNodeKey, self.root_node)
+
+        if root_node is None:
+            return None
+
+        return SuccessorDagNode.build_dag(node=root_node)
