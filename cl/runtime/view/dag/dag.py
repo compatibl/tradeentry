@@ -101,6 +101,16 @@ class Dag(DagKey, RecordMixin[DagKey]):
 
         return dag
 
+    @staticmethod
+    def build_edge_between_nodes(source: DagNode, target: DagNode, label: str | None = None) -> DagEdge:
+        """Create a connection between two DagNode instances."""
+        return DagEdge(
+            id_=f"e-{source.id_}-{target.id_}",
+            label=label,
+            source=source.id_,
+            target=target.id_,
+        )
+
     def _build_graph(self) -> nx.DiGraph:
         """Build networkx graph representation."""
 
