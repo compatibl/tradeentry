@@ -200,9 +200,13 @@ class DictSerializer:
                 if RecordUtil.is_abstract(deserialized_type):
                     descendants = RecordUtil.get_non_abstract_descendants(deserialized_type)
                     descendant_names = sorted(set([x.__name__ for x in descendants]))
-                    descendant_names_str = ", ".join(descendant_names)
-                    raise UserError(f"Record {deserialized_type.__name__} cannot be created directly, "
-                                    f"but the following descendant records can: {descendant_names_str}")
+                    if len(descendant_names) > 0:
+                        descendant_names_str = ", ".join(descendant_names)
+                        raise UserError(f"Record {deserialized_type.__name__} cannot be created directly, "
+                                        f"but the following descendant records can: {descendant_names_str}")
+                    else:
+                        raise UserError(f"Record {deserialized_type.__name__} cannot be created directly "
+                                        f"and there are no descendant records that can.")
 
                 deserialized_fields = {
                     CaseUtil.pascal_to_snake_case(k) if self.pascalize_keys else k: (
