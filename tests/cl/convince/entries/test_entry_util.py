@@ -13,6 +13,8 @@
 # limitations under the License.
 
 import pytest
+
+from cl.convince.entries.entry_type_key import EntryTypeKey
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.entries.entry import Entry
 from cl.convince.entries.entry_key import EntryKey
@@ -24,17 +26,20 @@ def test_create_id():
 
     guard = RegressionGuard()
 
+    # Create entry type key
+    entry_type_key = EntryTypeKey(entry_type_id="SampleEntryType")
+
     # Check with type and title only
-    guard.write(EntryUtil.create_id(Entry, "Sample Title"))
+    guard.write(EntryUtil.create_id(entry_type_key, "Sample Title"))
 
     # Check with body
-    guard.write(EntryUtil.create_id(Entry, "Sample Title", body="Sample Body"))
+    guard.write(EntryUtil.create_id(entry_type_key, "Sample Title", body="Sample Body"))
 
     # Check with data
-    guard.write(EntryUtil.create_id(Entry, "Sample Title", data="Sample Data"))
+    guard.write(EntryUtil.create_id(entry_type_key, "Sample Title", data="Sample Data"))
 
     # Check with both
-    guard.write(EntryUtil.create_id(Entry, "Sample Title", body="Sample Body", data="Sample Data"))
+    guard.write(EntryUtil.create_id(entry_type_key, "Sample Title", body="Sample Body", data="Sample Data"))
 
     # Verify
     guard.verify_all()
