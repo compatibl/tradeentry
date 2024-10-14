@@ -18,7 +18,6 @@ from dataclasses import dataclass
 from typing import Final
 from uuid import UUID
 from celery import Celery
-
 from cl.runtime import Context
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.log.log_entry import LogEntry
@@ -98,7 +97,7 @@ def execute_task(
                 level = LogEntryLevelEnum.ERROR
 
             # Create log entry
-            log_entry = log_type( # noqa
+            log_entry = log_type(  # noqa
                 message=str(e),
                 level=level,
             )

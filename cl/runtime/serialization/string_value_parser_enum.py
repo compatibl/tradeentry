@@ -19,7 +19,6 @@ from types import DynamicClassAttribute
 from typing import Any
 from typing import Dict
 from typing import Final
-
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.protocols import is_key
 from cl.runtime.serialization.dict_serializer import DictSerializer

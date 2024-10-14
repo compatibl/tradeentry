@@ -126,8 +126,10 @@ class CsvFileReader(Reader):
             element_decl = type_decl_elements.get(pascal_case_field_name)
 
             if element_decl is None:
-                raise UserError(f"Field '{k}' is not defined in record '{self.record_type.__name__}' "
-                                f"while its value '{v}' is present in CSV input.")
+                raise UserError(
+                    f"Field '{k}' is not defined in record '{self.record_type.__name__}' "
+                    f"while its value '{v}' is present in CSV input."
+                )
 
             # Prepare csv value using element decl
             prepared_row[k] = self._prepare_csv_value(v, element_decl)

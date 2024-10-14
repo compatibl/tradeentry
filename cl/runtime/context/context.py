@@ -18,7 +18,6 @@ from typing import ClassVar
 from typing import Iterable
 from typing import List
 from typing import Type
-
 from cl.runtime.backend.core.user_key import UserKey
 from cl.runtime.context.context_key import ContextKey
 from cl.runtime.db.db_key import DbKey

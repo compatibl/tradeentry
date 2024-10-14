@@ -13,7 +13,10 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.primitive.char_util import CharUtil, _FLAGGED_CHARS, _REMOVED_CHARS, _REPLACED_CHARS
+from cl.runtime.primitive.char_util import _FLAGGED_CHARS
+from cl.runtime.primitive.char_util import _REMOVED_CHARS
+from cl.runtime.primitive.char_util import _REPLACED_CHARS
+from cl.runtime.primitive.char_util import CharUtil
 from cl.runtime.testing.regression_guard import RegressionGuard
 
 
@@ -32,9 +35,9 @@ def test_normalize_text():
 
 def test_describe_char():
     """Test CharUtil.describe_char."""
-    assert CharUtil.describe_char("\n") == 'Newline'
-    assert CharUtil.describe_char("\r") == 'Carriage Return'
-    assert CharUtil.describe_char("\ufeff") == 'UTF-8 BOM'
+    assert CharUtil.describe_char("\n") == "Newline"
+    assert CharUtil.describe_char("\r") == "Carriage Return"
+    assert CharUtil.describe_char("\ufeff") == "UTF-8 BOM"
 
 
 if __name__ == "__main__":

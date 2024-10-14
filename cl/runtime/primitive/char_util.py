@@ -11,38 +11,38 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import re
 
+import re
 from cl.runtime.primitive.string_util import StringUtil
 
 _DESCRIPTION_MAP = {
-    '\x00': 'Null Byte',
-    '\n': 'Newline',
-    '\t': 'Tab',
-    '\r': 'Carriage Return',
-    '\ufeff': 'UTF-8 BOM',
-    '\uFFFD': 'Unicode replacement character',
-    '\u201C': 'Left Double Quotation Mark',
-    '\u201D': 'Right Double Quotation Mark',
+    "\x00": "Null Byte",
+    "\n": "Newline",
+    "\t": "Tab",
+    "\r": "Carriage Return",
+    "\ufeff": "UTF-8 BOM",
+    "\uFFFD": "Unicode replacement character",
+    "\u201C": "Left Double Quotation Mark",
+    "\u201D": "Right Double Quotation Mark",
 }
 """Map of special unprintable characters to their descriptions."""
 
 _FLAGGED_CHARS = [
-    '\x00',  # Null Byte
-    '\uFFFD',  # Unicode replacement character
+    "\x00",  # Null Byte
+    "\uFFFD",  # Unicode replacement character
 ]
 """List of characters that will trigger an error during normalization."""
 
 _REMOVED_CHARS = [
-    '\r',  # Carriage Return
-    '\ufeff',  # UTF-8 BOM
-    '\u201C',  # Left Double Quotation Mark
-    '\u201D',  # Right Double Quotation Mark
+    "\r",  # Carriage Return
+    "\ufeff",  # UTF-8 BOM
+    "\u201C",  # Left Double Quotation Mark
+    "\u201D",  # Right Double Quotation Mark
 ]
 """List of characters that will be removed during normalization."""
 
 _REPLACED_CHARS = {
-    '\t': "    ",  # Tab
+    "\t": "    ",  # Tab
 }
 """List of characters that will be replaced during normalization and their replacements."""
 
@@ -54,7 +54,7 @@ class CharUtil:
 
     @classmethod
     def normalize_chars(cls, value: str) -> str:
-        """Flag _FLAGGED_CHARS, remove _REMOVED_CHARS and _REPLACED_CHARS. """
+        """Flag _FLAGGED_CHARS, remove _REMOVED_CHARS and _REPLACED_CHARS."""
 
         # Do not normalize chars in None or an empty string
         if StringUtil.is_empty(value):
@@ -63,9 +63,8 @@ class CharUtil:
         # Search for flagged characters
         flagged_chars = list(set(re.findall(_FLAGGED_CHARS_REGEX, value)))
         if flagged_chars:
-            flagged_char_names = ', '.join(CharUtil.describe_char(char) for char in flagged_chars)
-            raise RuntimeError(f"The following characters are not allowed in input text: "
-                               f"{flagged_char_names}")
+            flagged_char_names = ", ".join(CharUtil.describe_char(char) for char in flagged_chars)
+            raise RuntimeError(f"The following characters are not allowed in input text: " f"{flagged_char_names}")
 
         # Create a translation table for replacement
         translation_table = str.maketrans(_REPLACED_CHARS)
@@ -74,7 +73,7 @@ class CharUtil:
         value = value.translate(translation_table)
 
         # Remove characters from _REMOVED_CHARS by translating them to None
-        removal_table = str.maketrans('', '', ''.join(_REMOVED_CHARS))
+        removal_table = str.maketrans("", "", "".join(_REMOVED_CHARS))
 
         # Apply the removal translation
         return value.translate(removal_table)

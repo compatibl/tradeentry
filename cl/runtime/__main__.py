@@ -60,7 +60,7 @@ async def handle_exception(request, exc, log_level):
     # TODO (Roman): save all logs to db
     # Save log entry to the database
     log_type = UserLogEntry if isinstance(exc, UserError) else LogEntry
-    entry = log_type( # noqa
+    entry = log_type(  # noqa
         message=str(exc),
         level=log_level,
     )

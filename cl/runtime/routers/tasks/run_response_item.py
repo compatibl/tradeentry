@@ -59,7 +59,7 @@ class RunResponseItem(BaseModel):
                 # Key is not None, this is an instance method
 
                 # Get key type based on table in request
-                key_type = Schema.get_type_by_short_name(request.table).get_key_type() # noqa
+                key_type = Schema.get_type_by_short_name(request.table).get_key_type()  # noqa
 
                 key_type_str = f"{key_type.__module__}.{key_type.__name__}"
                 handler_task = InstanceMethodTask(

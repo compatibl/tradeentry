@@ -14,7 +14,6 @@
 
 import re
 from typing import Pattern
-
 from cl.runtime.primitive.char_util import CharUtil
 from cl.runtime.primitive.string_util import StringUtil
 
@@ -219,11 +218,13 @@ class CaseUtil:
         else:
             non_alphanumeric = list(set(re.findall(_alphanumeric_re, value)))
         if non_alphanumeric:
-            non_alphanumeric_names = ', '.join(CharUtil.describe_char(char) for char in non_alphanumeric)
+            non_alphanumeric_names = ", ".join(CharUtil.describe_char(char) for char in non_alphanumeric)
             other_than_underscore_msg = " other than underscore" if allow_underscore else ""
-            raise RuntimeError(f"String '{value}' is not '{format_}' because it contains "
-                               f"non-alphanumeric characters{other_than_underscore_msg}: "
-                               f"{non_alphanumeric_names}")
+            raise RuntimeError(
+                f"String '{value}' is not '{format_}' because it contains "
+                f"non-alphanumeric characters{other_than_underscore_msg}: "
+                f"{non_alphanumeric_names}"
+            )
 
     @classmethod
     def _check_no_space(cls, value: str, format_: str) -> None:
@@ -303,5 +304,3 @@ class CaseUtil:
             return segment[0] + segment[1:].capitalize()
         # Otherwise, capitalize the first letter of the segment
         return segment.capitalize()
-
-

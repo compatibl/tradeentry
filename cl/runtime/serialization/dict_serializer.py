@@ -25,7 +25,8 @@ from cl.runtime.backend.core.base_type_info import BaseTypeInfo
 from cl.runtime.backend.core.tab_info import TabInfo
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.primitive.case_util import CaseUtil
-from cl.runtime.records.protocols import TDataDict, TPrimitive
+from cl.runtime.records.protocols import TDataDict
+from cl.runtime.records.protocols import TPrimitive
 from cl.runtime.records.protocols import is_key
 from cl.runtime.records.protocols import is_record
 from cl.runtime.records.record_util import RecordUtil
@@ -202,11 +203,15 @@ class DictSerializer:
                     descendant_names = sorted(set([x.__name__ for x in descendants]))
                     if len(descendant_names) > 0:
                         descendant_names_str = ", ".join(descendant_names)
-                        raise UserError(f"Record {deserialized_type.__name__} cannot be created directly, "
-                                        f"but the following descendant records can: {descendant_names_str}")
+                        raise UserError(
+                            f"Record {deserialized_type.__name__} cannot be created directly, "
+                            f"but the following descendant records can: {descendant_names_str}"
+                        )
                     else:
-                        raise UserError(f"Record {deserialized_type.__name__} cannot be created directly "
-                                        f"and there are no descendant records that can.")
+                        raise UserError(
+                            f"Record {deserialized_type.__name__} cannot be created directly "
+                            f"and there are no descendant records that can."
+                        )
 
                 deserialized_fields = {
                     CaseUtil.pascal_to_snake_case(k) if self.pascalize_keys else k: (

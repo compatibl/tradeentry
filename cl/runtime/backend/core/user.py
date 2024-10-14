@@ -34,4 +34,3 @@ class User(UserKey, RecordMixin[UserKey]):
 
     def get_key(self) -> UserKey:
         return UserKey(username=self.username)
-

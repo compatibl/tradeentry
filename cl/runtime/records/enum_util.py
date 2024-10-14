@@ -13,8 +13,8 @@
 # limitations under the License.
 
 from enum import Enum
-from typing import Type, TypeVar
-
+from typing import Type
+from typing import TypeVar
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.primitive.string_util import StringUtil
@@ -31,12 +31,12 @@ class EnumUtil:
 
     @classmethod
     def from_str(
-            cls,
-            enum_type: Type[TEnum],
-            value: str | None,
-            *,
-            field_name: str | None = None,
-            class_name: str | None = None,
+        cls,
+        enum_type: Type[TEnum],
+        value: str | None,
+        *,
+        field_name: str | None = None,
+        class_name: str | None = None,
     ) -> TEnum:
         """Convert PascalCase string to Enum instance."""
         # Convert from PascalCase to UPPER_CASE for matching but not error reporting
@@ -56,12 +56,12 @@ class EnumUtil:
 
     @classmethod
     def get_description(
-            cls,
-            enum_type: Type[TEnum],
-            value: str | None,
-            *,
-            field_name: str | None = None,
-            class_name: str | None = None,
+        cls,
+        enum_type: Type[TEnum],
+        value: str | None,
+        *,
+        field_name: str | None = None,
+        class_name: str | None = None,
     ) -> str:
         description = f"value '{value}' for "
         if not StringUtil.is_empty(field_name):

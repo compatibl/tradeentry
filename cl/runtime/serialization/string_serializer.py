@@ -25,7 +25,8 @@ from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.schema.schema import Schema
 
 # TODO (Roman): remove dependency from dict_serializer
-from cl.runtime.serialization.dict_serializer import alias_dict, DictSerializer
+from cl.runtime.serialization.dict_serializer import DictSerializer
+from cl.runtime.serialization.dict_serializer import alias_dict
 from cl.runtime.serialization.dict_serializer import get_type_dict
 from cl.runtime.serialization.string_value_parser_enum import StringValueCustomTypeEnum
 from cl.runtime.serialization.string_value_parser_enum import StringValueParser
