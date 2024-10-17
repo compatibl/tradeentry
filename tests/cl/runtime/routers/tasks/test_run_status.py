@@ -29,8 +29,10 @@ from stubs.cl.runtime import StubHandlers
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_handlers_key import StubHandlersKey
 
 # Create handler task
-task = InstanceMethodTask.from_key(
-    task_id="abc", key=StubHandlersKey(stub_id="abc"), method=StubHandlers.run_instance_method_1a
+task = InstanceMethodTask.create(
+    task_id="abc",
+    record_or_key=StubHandlersKey(stub_id="abc"),
+    method_callable=StubHandlers.run_instance_method_1a,
 )
 
 # Get handler task key

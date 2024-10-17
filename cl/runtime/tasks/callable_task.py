@@ -40,29 +40,6 @@ class CallableTask(Task, ABC):
     """Base class for tasks that invoke callables (class methods, functions, etc.)."""
 
     @classmethod
-    def from_key(cls, *, task_id: str, key: KeyProtocol, method: Callable, parent: TaskKey | None = None) -> Self:
-        """Create from key and method callable."""
-
-        # Populate known fields
-        key_type_str = type(key).__name__
-        key_str = key_serializer.serialize_key(key)
-        result = cls(task_id=task_id, key_type_str=key_type_str, key_str=key_str, parent=parent)
-
-        # Get method name from callable
-        method_tokens = method.__qualname__.split(".")
-        if len(method_tokens) == 2:
-            # Two tokens means the callable is bound to a class
-            result.method_name = method_tokens[1]
-
-            if hasattr(method, "__self__"):
-                raise RuntimeError(
-                    f"When key is provided separately, method {method.__qualname__} "
-                    f"must be specified as 'ClassName.method' rather than 'obj.method'."
-                )
-
-        return result
-
-    @classmethod
     def normalize_method_name(cls, method_name: str) -> str:
         """If method name has uppercase letters, assume it is PascalCase and convert to snake_case."""
 
