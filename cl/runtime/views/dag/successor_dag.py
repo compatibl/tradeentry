@@ -36,7 +36,7 @@ class SuccessorDag(SuccessorDagKey, RecordMixin[SuccessorDagKey]):
         return SuccessorDagKey(dag_id=self.dag_id)
 
     def view_dag(self) -> Dag | None:
-        """DAG view for the decision tree node."""
+        """DAG view."""
         if self.root_node is None:
             return None
 
