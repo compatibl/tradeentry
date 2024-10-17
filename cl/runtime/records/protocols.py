@@ -19,13 +19,14 @@ from typing import Dict
 from typing import List
 from typing import Literal
 from typing import Protocol
+from typing import runtime_checkable
 from typing import Tuple
 from typing import Type
 from typing import TypeGuard
 from typing import TypeVar
 from uuid import UUID
 
-TPrimitive = str | float | bool | int | dt.date | dt.time | dt.datetime | UUID | bytes
+TPrimitive = str | float | bool | int | dt.date | dt.time | dt.datetime | UUID | bytes | None
 """Supported primitive value types for serialized data in dictionary format."""
 
 TDataField = Dict[str, "TDataField"] | List["TDataField"] | TPrimitive | Enum | None
@@ -60,6 +61,7 @@ TEnum = TypeVar("TEnum", bound=Enum)
 """Generic type parameter for an enum."""
 
 
+@runtime_checkable
 class KeyProtocol(Protocol):
     """Protocol implemented by keys and also required for records which are derived from keys."""
 
