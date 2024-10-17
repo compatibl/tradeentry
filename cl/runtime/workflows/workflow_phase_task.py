@@ -15,7 +15,7 @@
 from dataclasses import dataclass
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.tasks.task import Task
-from cl.runtime.tasks.workflow_phase_key import WorkflowPhaseKey
+from cl.runtime.workflows.workflow_phase_key import WorkflowPhaseKey
 
 
 @dataclass(slots=True, kw_only=True)

@@ -17,8 +17,8 @@ from typing import List
 from cl.runtime.context.context import Context
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.tasks.task import Task
-from cl.runtime.tasks.workflow_phase import WorkflowPhase
-from cl.runtime.tasks.workflow_phase_key import WorkflowPhaseKey
+from cl.runtime.workflows.workflow_phase import WorkflowPhase
+from cl.runtime.workflows.workflow_phase_key import WorkflowPhaseKey
 
 
 @dataclass(slots=True, kw_only=True)

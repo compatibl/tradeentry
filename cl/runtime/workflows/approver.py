@@ -19,7 +19,7 @@ from getpass import getuser
 from typing_extensions import Self
 
 from cl.runtime import Context
-from cl.runtime.backend.core.approver_key import ApproverKey
+from cl.runtime.workflows.approver_key import ApproverKey
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
