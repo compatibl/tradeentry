@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
 from dataclasses import dataclass
 from typing import List
 import networkx as nx
@@ -41,11 +40,11 @@ class Dag(DagKey, RecordMixin[DagKey]):
 
     @staticmethod
     def auto_layout_dag(
-        dag: Dag,
+        dag: "Dag",
         layout_mode: DagLayoutEnum = DagLayoutEnum.SPRING,
         offset_x: int = 600,
         base_scale: int = 100,
-    ) -> Dag:
+    ) -> "Dag":
         """
         Set positions automatically for the passed DAG.
 

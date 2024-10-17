@@ -28,6 +28,7 @@ from cl.runtime.routers.response_util import to_record_dict
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.string_serializer import StringSerializer
+from cl.runtime.serialization.ui_dict_serializer import UiDictSerializer
 from cl.runtime.view.dag.dag import Dag
 from cl.runtime.views.html_view import HtmlView
 from cl.runtime.views.key_view import KeyView
@@ -37,6 +38,10 @@ from cl.runtime.views.png_view import PngView
 from cl.runtime.views.script import Script
 
 PanelResponseData = Dict[str, Any] | List[Dict[str, Any]] | None
+
+
+ui_serializer = UiDictSerializer()
+"""Ui serializer."""
 
 
 class PanelResponseUtil(BaseModel):
@@ -131,9 +136,13 @@ class PanelResponseUtil(BaseModel):
                 "_t": "BinaryContent",
             }
         elif isinstance(view, Dag):
-            # Return DAG
-            view_dict: dict = to_legacy_dict(to_record_dict(view))
+            # Serialize Dag using ui serialization
+            view_dict = ui_serializer.serialize_data(view)
+
+            # Set _t with legacy Dag type name
             view_dict["_t"] = "DAG"
+
+            # Return Dag view
             return view_dict
         elif isinstance(view, Script):
             # Return script
