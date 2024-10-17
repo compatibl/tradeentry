@@ -61,6 +61,12 @@ class UiDictSerializer(DictSerializer):
             serialized_dict_items = []
             for k, v in super(UiDictSerializer, self).serialize_data(data).items():
                 # TODO (Roman): support more value types in dict
+
+                # Apply custom format for None in dict
+                if v is None:
+                    serialized_dict_items.append({"key": k, "value": {"Empty": None}})
+                    continue
+
                 if isinstance(v, str):
                     value_type = "String"
                 elif isinstance(v, int):
