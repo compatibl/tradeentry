@@ -44,8 +44,9 @@ class CallableTask(Task, ABC):
         """Create from key and method callable."""
 
         # Populate known fields
+        key_type_str = type(key).__name__
         key_str = key_serializer.serialize_key(key)
-        result = cls(task_id=task_id, key_str=key_str, parent=parent)
+        result = cls(task_id=task_id, key_type_str=key_type_str, key_str=key_str, parent=parent)
 
         # Get method name from callable
         method_tokens = method.__qualname__.split(".")
