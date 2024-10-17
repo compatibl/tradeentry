@@ -128,6 +128,28 @@ class CaseUtil:
         return cls.pascal_to_title_case(pascal_case_value)
 
     @classmethod
+    def snake_to_pascal_case_keep_trailing_underscore(cls, value: str | None):
+        """
+        Convert snake_case_ to PascalCase_ using custom rule for separators in front of digits
+        and keep ending underscore.
+        """
+        if StringUtil.is_empty(value):
+            return value
+
+        return cls.snake_to_pascal_case(value.removesuffix("_")) + ("_" if value.endswith("_") else "")
+
+    @classmethod
+    def pascale_to_snake_case_keep_trailing_underscore(cls, value: str | None):
+        """
+        Convert PascalCase_ to snake_case_ using custom rule for separators in front of digits
+        and keep ending underscore.
+        """
+        if StringUtil.is_empty(value):
+            return value
+
+        return cls.pascal_to_snake_case(value.removesuffix("_")) + ("_" if value.endswith("_") else "")
+
+    @classmethod
     def check_snake_case(cls, value: str | None) -> None:
         """Error message if arg is not snake_case or does not follow custom rule for separators in front of digits."""
         if StringUtil.is_empty(value):

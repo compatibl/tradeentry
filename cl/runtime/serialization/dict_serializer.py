@@ -134,7 +134,7 @@ class DictSerializer:
             all_slots = _get_class_hierarchy_slots(data.__class__)
             # Serialize slot values in the order of declaration except those that are None
             result = {
-                k if not self.pascalize_keys else CaseUtil.snake_to_pascal_case(k): (
+                k if not self.pascalize_keys else CaseUtil.snake_to_pascal_case_keep_trailing_underscore(k): (
                     v if v.__class__.__name__ in self.primitive_type_names else self.serialize_data(v)
                 )
                 for k in all_slots
@@ -214,7 +214,7 @@ class DictSerializer:
                         )
 
                 deserialized_fields = {
-                    CaseUtil.pascal_to_snake_case(k) if self.pascalize_keys else k: (
+                    CaseUtil.pascale_to_snake_case_keep_trailing_underscore(k) if self.pascalize_keys else k: (
                         v if v.__class__.__name__ in self.primitive_type_names else self.deserialize_data(v)
                     )
                     for k, v in data.items()

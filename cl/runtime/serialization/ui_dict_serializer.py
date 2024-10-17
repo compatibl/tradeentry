@@ -91,7 +91,7 @@ class UiDictSerializer(DictSerializer):
                 serialized_data["_t"] = data.__class__.__name__
                 del serialized_data["_type"]
 
-            serialized_data = {k.removesuffix("_"): v for k, v in serialized_data.items()}
+            serialized_data = {k: v for k, v in serialized_data.items()}
 
             return serialized_data
         else:
@@ -172,7 +172,7 @@ class UiDictSerializer(DictSerializer):
                         continue
 
                     # Expect pascal case fields
-                    CaseUtil.check_pascal_case(field)
+                    CaseUtil.check_pascal_case(field.removesuffix("_"))
 
                     if (field_decl := type_decl_elements.get(field)) is not None:
                         # Apply ui conversion for values recursively
