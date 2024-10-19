@@ -13,8 +13,10 @@
 # limitations under the License.
 
 import logging
+from contextlib import contextmanager
+from contextvars import ContextVar
 from dataclasses import dataclass
-from typing import ClassVar
+from typing import Iterator, Optional
 from typing import Iterable
 from typing import List
 from typing import Type
@@ -23,7 +25,11 @@ from cl.runtime.context.context_key import ContextKey
 from cl.runtime.db.db_key import DbKey
 from cl.runtime.db.protocols import TKey
 from cl.runtime.db.protocols import TRecord
+from cl.runtime.log.exceptions.user_error import UserError
+from cl.runtime.log.log_entry import LogEntry
+from cl.runtime.log.log_entry_level_enum import LogEntryLevelEnum
 from cl.runtime.log.log_key import LogKey
+from cl.runtime.log.user_log_entry import UserLogEntry
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
@@ -34,9 +40,22 @@ from cl.runtime.settings.context_settings import ContextSettings
 root_context_types_str = """
 The following root context types can be used in the outermost 'with' clause:
     - ProcessContext: Context for launching a process, use in __main__
-    - HandlerContext: Context for invoking a handler
     - TestingContext: Context for running unit tests
 """
+
+_context_stack: ContextVar[Optional[List["Context"]]] = ContextVar('context_stack', default=None)
+"""
+Context adds self to the stack on __enter__ and removes self on __exit__.
+Each asynchronous context has its own stack.
+"""
+
+
+@contextmanager
+def request_cycle_context() -> Iterator[None]:
+    """Context manager to create isolated queue of contexts"""
+    token = _context_stack.set([])
+    yield
+    _context_stack.reset(token)
 
 
 @dataclass(slots=True, kw_only=True)
@@ -58,8 +77,6 @@ class Context(ContextKey, RecordMixin[ContextKey]):
     is_deserialized: bool = False
     """Use this flag to determine if this context instance has been deserialized from data."""
 
-    __context_stack: ClassVar[List["Context"]] = []  # TODO: Set using ContextVars
-    """New current context is pushed to the context stack using 'with Context(...)' clause."""
 
     def __post_init__(self):
         """Set fields to their values in 'Context.current()' if not specified."""
@@ -95,8 +112,9 @@ class Context(ContextKey, RecordMixin[ContextKey]):
     @classmethod
     def current(cls):
         """Return the current context or None if not set."""
-        if len(cls.__context_stack) > 0:
-            return cls.__context_stack[-1]
+        context_stack = _context_stack.get()
+        if context_stack and len(context_stack) > 0:
+            return context_stack[-1]
         else:
             raise RuntimeError(
                 "Current context is not set, use 'with' clause with a root context type to set."
@@ -106,19 +124,50 @@ class Context(ContextKey, RecordMixin[ContextKey]):
     def __enter__(self):
         """Supports 'with' operator for resource disposal."""
 
+        context_stack = _context_stack.get()
+        if context_stack is None:
+            # Context activated without middleware, create a new context stack
+            context_stack = []
+            _context_stack.set(context_stack)
+
+        # Check if self is already the current context
+        if context_stack and context_stack[-1] is self:
+            raise RuntimeError("The context activated using 'with' operator is already current.")
+
         # Set current context on entering 'with Context(...)' clause
-        self.__context_stack.append(self)
+        context_stack.append(self)
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Supports 'with' operator for resource disposal."""
 
-        # Restore the previous current context on exiting from 'with Context(...)' clause
-        if len(self.__context_stack) > 0:
-            current_context = self.__context_stack.pop()
-        else:
+        if exc_val is not None:
+            # Save log entry to the database
+            # Get log entry type and level
+            if isinstance(exc_val, UserError):
+                log_type = UserLogEntry
+                level = LogEntryLevelEnum.USER_ERROR
+            else:
+                log_type = LogEntry
+                level = LogEntryLevelEnum.ERROR
+
+            # Create log entry
+            log_entry = log_type(  # noqa
+                message=str(exc_val),
+                level=level,
+            )
+            log_entry.init()
+
+            # Save occurred error to self db
+            self.save_one(log_entry)
+
+        context_stack = _context_stack.get()
+
+        if context_stack is None or not bool(context_stack):
             raise RuntimeError("Current context must not be cleared inside 'with Context(...)' clause.")
 
+        # Restore the previous current context on exiting from 'with Context(...)' clause
+        current_context = context_stack.pop()
         if current_context is not self:
             raise RuntimeError("Current context must only be modified by 'with Context(...)' clause.")
 
