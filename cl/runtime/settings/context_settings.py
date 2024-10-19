@@ -40,6 +40,9 @@ class ContextSettings(Settings):
     when both db_id and database name start with this prefix.
     """
 
+    db_uri: str | None = None
+    """Optional database URI to connect to the database. Required for basic mongo db data source."""
+
     def init(self) -> None:
         """Same as __init__ but can be used when field values are set both during and after construction."""
 
