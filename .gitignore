@@ -10,11 +10,9 @@ syntax: glob
 *.egg
 *.egg-info/
 *.idea
-*.png
 *.py[cod]
 *.so
 *.sqlite
-*.xlsx
 logs/
 build/
 dist/
