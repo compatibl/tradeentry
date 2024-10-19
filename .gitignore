@@ -16,7 +16,6 @@ syntax: glob
 logs/
 build/
 dist/
-wwwroot/
 
 # Using regexp syntax
 syntax: regexp
