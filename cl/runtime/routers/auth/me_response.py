@@ -22,22 +22,22 @@ class MeResponse(BaseModel):
     """Response data type for the /auth/me route."""
 
     id: str
-    """Class name (may be customized in settings)."""
+    """Id of the user."""
 
     username: str
-    """Module path in dot-delimited format (may be customized in settings)."""
+    """Username of the user."""
 
     first_name: str
-    """Type label displayed in the UI is humanized class name (may be customized in settings)."""
+    """First name of the user."""
 
     last_name: str | None
-    """Class name (may be customized in settings)."""
+    """Last name of the user."""
 
     email: str | None
-    """Module path in dot-delimited format (may be customized in settings)."""
+    """Email of the user."""
 
     scopes: List[str] | None
-    """Type label displayed in the UI is humanized class name (may be customized in settings)."""
+    """List of scopes for the user."""
 
     @classmethod
     def get_me(cls, request: UserRequest) -> MeResponse:
