@@ -27,11 +27,11 @@ class VanillaSwap(Trade):
     pay_receive_fixed: PayReceiveFixedKey = missing()
     """Flag indicating if we pay or receive fixed leg coupons in a fixed-for-floating swap."""
 
-    effective_date: dt.date = missing()
-    """Effective date."""
+    effective_date: str = missing()
+    """Effective date in ISO-8601 yyyy-mm-dd string format."""
 
-    maturity_date: dt.date = missing()
-    """Maturity date."""
+    maturity_date: str = missing()
+    """Maturity date in ISO-8601 yyyy-mm-dd string format."""
 
     float_index: RatesIndexKey = missing()
     """Floating interest rate index."""

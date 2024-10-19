@@ -27,11 +27,11 @@ class RatesSwapLeg(RatesLeg):
     pay_receive: PayReceiveKey = missing()
     """Flag indicating if we pay or receive payments or periodic coupons for a trade or leg."""
 
-    effective_date: dt.date = missing()
-    """Effective date."""
+    effective_date: str = missing()
+    """Effective date in ISO-8601 yyyy-mm-dd string format."""
 
-    maturity_date: dt.date = missing()
-    """Maturity date."""
+    maturity_date: str = missing()
+    """Maturity date in ISO-8601 yyyy-mm-dd string format."""
 
     pay_freq: FreqKey = missing()
     """Payment frequency."""

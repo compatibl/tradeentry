@@ -24,8 +24,8 @@ from cl.tradeentry.entries.date_entry_key import DateEntryKey
 class DateEntry(DateEntryKey, RecordMixin[DateEntryKey], ABC):
     """Maps a date string specified by the user to a calendar date."""
 
-    value: dt.date = missing()
-    """Date specified by the entry."""
+    value: str = missing()
+    """Date specified by the entry in ISO-8601 yyyy-mm-dd string format."""
 
     def get_key(self) -> DateEntryKey:
         return DateEntryKey(entry_id=self.entry_id)
