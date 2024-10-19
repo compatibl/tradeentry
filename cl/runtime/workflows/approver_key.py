@@ -14,7 +14,6 @@
 
 from dataclasses import dataclass
 from typing import Type
-
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.key_mixin import KeyMixin
@@ -27,7 +26,7 @@ class ApproverKey(KeyMixin):
 
     approver_id: str = missing()
     """Unique approver identifier in 'LastName, FirstName' format."""
-    
+
     def init(self) -> None:
         # Check only if inside a key, will be set automatically if inside a record
         if is_key(self):
@@ -47,6 +46,5 @@ class ApproverKey(KeyMixin):
         """Check that the unique identifier is compliant with the expected format."""
         if len(approver_id.split(", ")) != 2:
             raise UserError(
-                f"Invalid ApproverId format: '{approver_id}', expected format is "
-                f"'{{LastName}}, {{FirstName}}'"
+                f"Invalid ApproverId format: '{approver_id}', expected format is " f"'{{LastName}}, {{FirstName}}'"
             )

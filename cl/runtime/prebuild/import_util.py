@@ -59,7 +59,8 @@ class ImportUtil:
                 package_import = importlib.import_module(m.name)
             except SyntaxError as error:
                 errors.append(
-                    f"Cannot import module: {m.name}. Error: {error.msg}. Line: {error.lineno}, {error.offset}")
+                    f"Cannot import module: {m.name}. Error: {error.msg}. Line: {error.lineno}, {error.offset}"
+                )
                 continue
             except Exception as error:
                 errors.append(f"Cannot import module: {m.name}. Error: {error.args}")
