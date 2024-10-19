@@ -184,6 +184,10 @@ class BasicMongoDb(Db):
         if record is None:
             return
 
+        # Call on_save if defined
+        if hasattr(record, "on_save"):
+            record.on_save()  # TODO: Refactor on_save
+
         # Confirm dataset and identity are both None
         if dataset is not None:
             raise RuntimeError("BasicMongo database type does not support datasets.")
@@ -215,18 +219,6 @@ class BasicMongoDb(Db):
         # TODO: Temporary, replace by independent implementation
         [self.save_one(x, dataset=dataset, identity=identity) for x in records]
         return
-
-        # Convert to (key_type, serialized_key, serialized_record) triples
-        serialized_data = [
-            (x.get_key_type(), key_serializer.serialize_key(x), data_serializer.serialize_data(x)) for x in records
-        ]
-
-        # Group by key_type
-        grouped_data = groupby(serialized_data, key=lambda x: x[0])
-
-        # Process separately for each base type
-        for key_type, data_for_key_type in grouped_data:
-            pass
 
     def delete_one(
         self,
@@ -329,3 +321,8 @@ class BasicMongoDb(Db):
                 f"MongoDB does not support db_id='{db_id}' because "
                 f"it has {actual_bytes} bytes, exceeding the maximum of {max_bytes}."
             )
+
+    # TODO (Roman): move to base Db class?
+    def is_empty(self) -> bool:
+        """Return True if db has no collections."""
+        return len(self._get_db().list_collection_names()) == 0

@@ -232,6 +232,13 @@ class SqliteDb(Db):
         dataset: str | None = None,
         identity: str | None = None,
     ) -> None:
+
+        # Call on_save if defined
+        [
+            record.on_save() for record in records  # TODO: Refactor on_save
+            if record is not None and hasattr(record, "on_save")
+        ]
+
         serializer = FlatDictSerializer()
         schema_manager = self._get_schema_manager()
 
