@@ -13,18 +13,13 @@
 # limitations under the License.
 
 import difflib
-import filecmp
-import inspect
 import os
 from dataclasses import dataclass
 from enum import Enum
 from typing import Any
 from typing import ClassVar
 from typing import Dict
-from typing import Iterable
 from typing import Literal
-from typing import cast
-import inflection
 import yaml
 from typing_extensions import Self
 from cl.runtime.context.env_util import EnvUtil
@@ -246,7 +241,7 @@ class RegressionGuard:
 
         if os.path.exists(expected_path):
             # Expected file exists, compare
-            if filecmp.cmp(received_path, expected_path, shallow=False):
+            if self.__cmp_files(received_path, expected_path):
                 # Received and expected match, delete the received file and diff file
                 os.remove(received_path)
                 if os.path.exists(diff_path):
@@ -349,3 +344,15 @@ class RegressionGuard:
         """The diff between received and expected is written to 'channel.diff.ext' located next to the unit test."""
         result = f"{self.output_path}{file_type}.{self.ext}"
         return result
+
+    def __cmp_files(self, file_path_a: str, file_path_b: str) -> bool:
+        """Compare two files ignoring line endings."""
+        with open(file_path_a, 'r') as file_a, open(file_path_b, 'r') as file_b:
+            for line_a, line_b in zip(file_a, file_b):
+                # Strip line endings before comparing
+                if line_a.rstrip('\r\n') != line_b.rstrip('\r\n'):
+                    return False
+            # Check if there are any remaining lines in either file
+            if file_a.readline() or file_b.readline():
+                return False
+        return True
