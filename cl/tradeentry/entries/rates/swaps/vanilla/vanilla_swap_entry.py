@@ -22,8 +22,6 @@ from cl.tradeentry.entries.rates.rates_effective_date_entry_key import RatesEffe
 from cl.tradeentry.entries.rates.rates_index_entry_key import RatesIndexEntryKey
 from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import RatesMaturityDateEntryKey
 from cl.tradeentry.entries.trade_entry import TradeEntry
-from cl.tradeentry.trades.pay_receive_fixed_enum import PayReceiveFixedEnum
-from cl.tradeentry.trades.rates.swaps.vanilla.vanilla_swap import VanillaSwap
 
 
 @dataclass(slots=True, kw_only=True)

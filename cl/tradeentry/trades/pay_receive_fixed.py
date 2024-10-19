@@ -12,26 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import datetime as dt
+from abc import ABC
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses_extensions import missing
-from cl.tradeentry.trades.freq_key import FreqKey
-from cl.tradeentry.trades.pay_receive_key import PayReceiveKey
-from cl.tradeentry.trades.rates.rates_leg import RatesLeg
+from cl.runtime.records.record_mixin import RecordMixin
+from cl.tradeentry.trades.pay_receive_fixed_key import PayReceiveFixedKey
 
 
 @dataclass(slots=True, kw_only=True)
-class RatesSwapLeg(RatesLeg):
-    """Swap leg."""
+class PayReceiveFixed(PayReceiveFixedKey, RecordMixin[PayReceiveFixedKey], ABC):
+    """Determines if we pay or receive payments or periodic coupons for a trade or leg."""
 
-    pay_receive: PayReceiveKey = missing()
-    """Flag indicating if we pay or receive payments or periodic coupons for a trade or leg."""
+    comment: str | None = None
+    """Optional comment."""
 
-    effective_date: dt.date = missing()
-    """Effective date."""
-
-    maturity_date: dt.date = missing()
-    """Maturity date."""
-
-    pay_freq: FreqKey = missing()
-    """Payment frequency."""
+    def get_key(self) -> PayReceiveFixedKey:
+        return PayReceiveFixedKey(pay_receive_fixed_id=self.pay_receive_fixed_id)

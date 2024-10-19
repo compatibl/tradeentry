@@ -16,15 +16,15 @@ from dataclasses import dataclass
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.tradeentry.entries.pay_receive_entry_key import PayReceiveEntryKey
-from cl.tradeentry.trades.pay_receive_enum import PayReceiveEnum
+from cl.tradeentry.trades.pay_receive_key import PayReceiveKey
 
 
 @dataclass(slots=True, kw_only=True)
 class PayReceiveEntry(PayReceiveEntryKey, RecordMixin[PayReceiveEntryKey]):
     """User input to determine if we pay or receive payments or periodic coupons for a trade or leg."""
 
-    value: PayReceiveEnum = missing()
-    """Enum to determine if we pay or receive payments or periodic coupons for a trade or leg."""
+    value: PayReceiveKey = missing()
+    """Flag indicating if we pay or receive payments or periodic coupons for a trade or leg."""
 
     def get_key(self) -> PayReceiveEntryKey:
         return PayReceiveEntryKey(entry_id=self.entry_id)

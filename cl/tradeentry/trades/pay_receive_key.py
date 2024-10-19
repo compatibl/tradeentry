@@ -12,26 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import datetime as dt
 from dataclasses import dataclass
+from typing import Type
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.tradeentry.trades.freq_key import FreqKey
-from cl.tradeentry.trades.pay_receive_key import PayReceiveKey
-from cl.tradeentry.trades.rates.rates_leg import RatesLeg
+from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class RatesSwapLeg(RatesLeg):
-    """Swap leg."""
+class PayReceiveKey(KeyMixin):
+    """Determines if we pay or receive payments or periodic coupons for a trade or leg."""
 
-    pay_receive: PayReceiveKey = missing()
-    """Flag indicating if we pay or receive payments or periodic coupons for a trade or leg."""
+    pay_receive_id: str = missing()
+    """Unique PayReceive identifier."""
 
-    effective_date: dt.date = missing()
-    """Effective date."""
-
-    maturity_date: dt.date = missing()
-    """Maturity date."""
-
-    pay_freq: FreqKey = missing()
-    """Payment frequency."""
+    @classmethod
+    def get_key_type(cls) -> Type:
+        return PayReceiveKey

@@ -12,26 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import datetime as dt
-from dataclasses import dataclass
-from cl.runtime.records.dataclasses_extensions import missing
-from cl.tradeentry.trades.freq_key import FreqKey
 from cl.tradeentry.trades.pay_receive_key import PayReceiveKey
-from cl.tradeentry.trades.rates.rates_leg import RatesLeg
+
+cls = PayReceiveKey
 
 
-@dataclass(slots=True, kw_only=True)
-class RatesSwapLeg(RatesLeg):
-    """Swap leg."""
+class PayReceiveKeys:
+    """PayReceiveKey constants."""
 
-    pay_receive: PayReceiveKey = missing()
-    """Flag indicating if we pay or receive payments or periodic coupons for a trade or leg."""
+    PAY: cls = cls(pay_receive_id="Pay")
+    """We pay payments or periodic coupons."""
 
-    effective_date: dt.date = missing()
-    """Effective date."""
-
-    maturity_date: dt.date = missing()
-    """Maturity date."""
-
-    pay_freq: FreqKey = missing()
-    """Payment frequency."""
+    RECEIVE: cls = cls(pay_receive_id="Receive")
+    """We receive payments or periodic coupons."""
