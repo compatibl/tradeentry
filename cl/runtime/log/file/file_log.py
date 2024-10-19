@@ -90,5 +90,8 @@ class FileLog(Log):
         )
         file_log_handler.setFormatter(file_log_formatter)
 
+        console_handler = logging.StreamHandler()
+        console_handler.setFormatter(file_log_formatter)
+
         # TODO: Add another handler that saves records
-        return [file_log_handler]
+        return [file_log_handler, console_handler]
