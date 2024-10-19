@@ -30,6 +30,7 @@ from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.serialization.ui_dict_serializer import UiDictSerializer
 from cl.runtime.view.dag.dag import Dag
+from cl.runtime.views.binary_content import BinaryContent
 from cl.runtime.views.html_view import HtmlView
 from cl.runtime.views.key_view import KeyView
 from cl.runtime.views.pdf_view import PdfView
@@ -133,6 +134,13 @@ class PanelResponseUtil(BaseModel):
             return {
                 "Content": base64.b64encode(view.html_bytes).decode(),
                 "ContentType": "Html",
+                "_t": "BinaryContent",
+            }
+        elif isinstance(view, PdfView):
+            # Return ui format dict of binary PDF view data
+            return {
+                "Content": base64.b64encode(view.pdf_bytes).decode(),
+                "ContentType": "Pdf",
                 "_t": "BinaryContent",
             }
         elif isinstance(view, Dag):
