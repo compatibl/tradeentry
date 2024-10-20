@@ -53,41 +53,54 @@ class BracesExtractPrompt(ExtractPrompt):
         formatted_request = self.request.format(text=text, param=param)
         formatted_prompt = f"""{self.preamble}{formatted_request}"""
 
-        # Get text annotated with braces and check that the only difference is braces and whitespace
-        annotated_text = llm.completion(formatted_prompt)
-        between_backticks = self._extract_between_backticks(annotated_text)
-        deannotated = between_backticks.replace("`", "").replace("{", "").replace("}", "").strip()
-        if between_backticks != "NotFound" and deannotated != text:
-            # Try one more time
-            formatted_prompt = (f"{formatted_prompt}\n\nYou previously returned this text inside triple backticks: "
-                                f"{between_backticks}\n"
-                                f"However it does not meet the requirement that the only difference between "
-                                f"the input and the output is curly braces. Please try again.")
-            annotated_text = llm.completion(formatted_prompt).strip()
-            between_backticks = self._extract_between_backticks(annotated_text)
-            pass
+        trial_count = 10
+        for trial_index in range(trial_count):
+            # Error messages only during the last trial
+            is_last_trial = (trial_index == trial_count-1)
 
-        deannotated = between_backticks.replace("`", "").replace("{", "").replace("}", "").strip()
-        if between_backticks != "NotFound" and deannotated != text:
-            # TODO: Use unified diff
-            raise UserError(f"Annotated text has changes other than curly braces.\n"
-                            f"Original text: ```{text}```\n"
-                            f"Annotated text: ```{between_backticks}```\n")
+            # Get text annotated with braces and check that the only difference is braces and whitespace
+            completion = llm.completion(formatted_prompt, trial_id=trial_index)
+            extracted = self._extract_annotated(completion)
+            to_compare = self._deannotate(extracted)
+            if to_compare != text:
+                # Call again with feedback
+                formatted_prompt = (f"{formatted_prompt}\n\nYou previously returned this text inside triple backticks: "
+                                    f"{extracted}\n"
+                                    f"However it does not meet the requirement that the only difference between "
+                                    f"the input and the output is curly braces. Please try again.")
+                completion = llm.completion(formatted_prompt, trial_id=trial_index)
+                extracted = self._extract_annotated(completion)
+                to_compare = self._deannotate(extracted)
 
-        # Extract data inside braces
-        matches = re.findall(_BRACES_RE, between_backticks)
-        for match in matches:
-            if "{" in match or "}" in match:
-                raise UserError(f"Nested curly braces are present in annotated text.\n"
-                                f"Annotated text: ```{between_backticks}```\n")
+            if to_compare != text:
+                if not is_last_trial:
+                    continue
+                else:
+                    # TODO: Use unified diff
+                    raise UserError(f"Annotated text has changes other than curly braces.\n"
+                                    f"Original text: ```{text}```\n"
+                                    f"Annotated text: ```{extracted}```\n")
 
-        # Combine
-        # TODO: Determine if numbered combination works better
-        result = " ".join(matches)
-        return result
+            # Extract data inside braces
+            matches = re.findall(_BRACES_RE, extracted)
+            for match in matches:
+                if "{" in match or "}" in match:
+                    if not is_last_trial:
+                        continue
+                    else:
+                        raise UserError(f"Nested curly braces are present in annotated text.\n"
+                                        f"Annotated text: ```{extracted}```\n")
+
+            # Combine and return from inside the loop
+            # TODO: Determine if numbered combination works better
+            result = " ".join(matches)
+            return result
+
+        # The method should always return from the loop, adding as a backup in case this changes in the future
+        return ""
 
     @classmethod
-    def _extract_between_backticks(cls, text: str) -> str:
+    def _extract_annotated(cls, text: str) -> str:
         # Find all occurrences of triple backticks and the text inside them
         matches = re.findall(_TRIPLE_BACKTICKS_RE, text)
         if len(matches) == 0:
@@ -96,3 +109,10 @@ class BracesExtractPrompt(ExtractPrompt):
             raise RuntimeError("More than one string found between triple backticks in: ", text)
         result = matches[0].strip()
         return result
+
+    @classmethod
+    def _deannotate(cls, text: str) -> str:
+        # Remove triple backticks and curly brackets
+        result = text.replace("`", "").strip().replace("{", "").replace("}", "").strip()
+        return result
+
