@@ -17,13 +17,10 @@ from dataclasses import dataclass
 from typing_extensions import Self
 
 from cl.convince.entries.entry_key import EntryKey
-from cl.convince.entries.entry_status_enum import EntryStatusEnum
 from cl.runtime import Context
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.tradeentry.entries.asset_class_entry import AssetClassEntry
 from cl.tradeentry.entries.rates.rates_trade_entry import RatesTradeEntry
 from cl.tradeentry.entries.trade_entry import TradeEntry
-from cl.tradeentry.trades.asset_class_keys import AssetClassKeys
 
 
 @dataclass(slots=True, kw_only=True)

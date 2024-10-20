@@ -14,12 +14,13 @@
 
 import datetime as dt
 from dataclasses import dataclass
+
+from cl.convince.entries.entry import Entry
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.tradeentry.entries.tenor_entry import TenorEntry
 
 
 @dataclass(slots=True, kw_only=True)
-class YearsMonthsEntry(TenorEntry):
+class YearsMonthsEntry(Entry):
     """Maps tenor entry in years and months to its precise specification."""
 
     months: int = missing()

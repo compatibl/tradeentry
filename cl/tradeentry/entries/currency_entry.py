@@ -12,20 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
 from dataclasses import dataclass
+from cl.convince.entries.entry import Entry
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.currency_entry_key import CurrencyEntryKey
 from cl.tradeentry.trades.currency_key import CurrencyKey
 
 
 @dataclass(slots=True, kw_only=True)
-class CurrencyEntry(CurrencyEntryKey, RecordMixin[CurrencyEntryKey], ABC):
+class CurrencyEntry(Entry):
     """Maps currency string specified by the user to the ISO-4217 three-letter currency code."""
 
     currency: CurrencyKey = missing()
-    """Currency specified by the entry."""
-
-    def get_key(self) -> CurrencyEntryKey:
-        return CurrencyEntryKey(entry_id=self.entry_id)
+    """Currency."""

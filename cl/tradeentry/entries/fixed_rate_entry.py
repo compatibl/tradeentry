@@ -13,17 +13,15 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+
+from cl.convince.entries.entry import Entry
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.fixed_rate_entry_key import FixedRateEntryKey
 
 
 @dataclass(slots=True, kw_only=True)
-class FixedRateEntry(FixedRateEntryKey, RecordMixin[FixedRateEntryKey]):
+class FixedRateEntry(Entry):
     """Maps fixed interest rate entry to its numerical value."""
 
-    value: float = missing()
-    """Numerical value specified by the entry."""
+    fixed_rate_pct: float = missing()
+    """Numerical value for the fixed rate in percent."""
 
-    def get_key(self) -> FixedRateEntryKey:
-        return FixedRateEntryKey(entry_id=self.entry_id)

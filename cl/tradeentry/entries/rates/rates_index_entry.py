@@ -13,18 +13,15 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+
+from cl.convince.entries.entry import Entry
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.rates.rates_index_entry_key import RatesIndexEntryKey
 from cl.tradeentry.trades.rates.rates_index_key import RatesIndexKey
 
 
 @dataclass(slots=True, kw_only=True)
-class RatesIndexEntry(RatesIndexEntryKey, RecordMixin[RatesIndexEntryKey]):
+class RatesIndexEntry(Entry):
     """Floating interest rate index or currency (in case of currency, default index for the currency is used)."""
 
     rates_index: RatesIndexKey = missing()
-    """Floating rate index specified by the entry."""
-
-    def get_key(self) -> RatesIndexEntryKey:
-        return RatesIndexEntryKey(entry_id=self.entry_id)
+    """Floating rate index."""

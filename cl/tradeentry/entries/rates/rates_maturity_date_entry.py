@@ -13,13 +13,9 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import RatesMaturityDateEntryKey
+from cl.convince.entries.entry import Entry
 
 
 @dataclass(slots=True, kw_only=True)
-class RatesMaturityDateEntry(RatesMaturityDateEntryKey, RecordMixin[RatesMaturityDateEntryKey]):
+class RatesMaturityDateEntry(Entry):
     """Trade or leg maturity date defined as unadjusted date or time interval relative to another date."""
-
-    def get_key(self) -> RatesMaturityDateEntryKey:
-        return RatesMaturityDateEntryKey(entry_id=self.entry_id)

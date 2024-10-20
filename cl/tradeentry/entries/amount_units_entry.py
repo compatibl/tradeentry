@@ -12,19 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
 from dataclasses import dataclass
+
+from cl.convince.entries.entry import Entry
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.amount_units_entry_key import AmountUnitsEntryKey
 
 
 @dataclass(slots=True, kw_only=True)
-class AmountUnitsEntry(AmountUnitsEntryKey, RecordMixin[AmountUnitsEntryKey], ABC):
-    """Maps amount units string specified by the user to the numerical multiplier."""
+class AmountUnitsEntry(Entry):
+    """Maps amount units string specified by the user to the numerical multiplier for the amount."""
 
-    multiplier: float = missing()
-    """Numerical multiplier specified by the entry."""
-
-    def get_key(self) -> AmountUnitsEntryKey:
-        return AmountUnitsEntryKey(entry_id=self.entry_id)
+    amount_multiplier: float = missing()
+    """Numerical multiplier for the amount."""

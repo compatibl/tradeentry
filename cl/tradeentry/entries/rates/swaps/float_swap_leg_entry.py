@@ -16,9 +16,8 @@ from dataclasses import dataclass
 
 from typing_extensions import Self
 
+from cl.convince.entries.entry_key import EntryKey
 from cl.runtime import Context
-from cl.tradeentry.entries.rates.rates_index_entry_key import RatesIndexEntryKey
-from cl.tradeentry.entries.rates.rates_spread_entry_key import RatesSpreadEntryKey
 from cl.tradeentry.entries.rates.swaps.rates_swap_leg_entry import RatesSwapLegEntry
 
 
@@ -29,11 +28,11 @@ class FloatSwapLegEntry(RatesSwapLegEntry):
     float_freq: str | None = None
     """Frequency at which floating interest accrues."""
 
-    float_index: RatesIndexEntryKey | None = None
+    float_index: EntryKey | None = None
     """Floating interest rate index ('float_spread' is added to the index fixing)."""
 
-    float_spread: RatesSpreadEntryKey | None = None
-    """Spread over the interest rate index."""
+    float_spread: EntryKey | None = None
+    """Spread over the interest rate index (zero if not specified)."""
 
     @classmethod
     def create(

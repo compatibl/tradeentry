@@ -12,20 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
 from dataclasses import dataclass
+from cl.convince.entries.entry import Entry
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.pay_freq_entry_key import PayFreqEntryKey
 from cl.tradeentry.trades.freq_key import FreqKey
 
 
 @dataclass(slots=True, kw_only=True)
-class PayFreqEntry(PayFreqEntryKey, RecordMixin[PayFreqEntryKey], ABC):
+class PayFreqEntry(Entry):
     """Maps payment frequency string specified by the user to frequency specification."""
 
-    freq: FreqKey = missing()
-    """Frequency specified by the entry."""
-
-    def get_key(self) -> PayFreqEntryKey:
-        return PayFreqEntryKey(entry_id=self.entry_id)
+    pay_freq: FreqKey = missing()
+    """Payment frequency."""

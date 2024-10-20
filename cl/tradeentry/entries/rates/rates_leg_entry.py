@@ -25,5 +25,5 @@ class RatesLegEntry(Entry, ABC):
     """Interest rate leg entry."""
 
     leg: RatesLegKey = missing()
-    """Interest rate leg specified by the entry."""
+    """Interest rate leg."""
 

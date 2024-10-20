@@ -36,5 +36,5 @@ class VanillaSwap(Trade):
     float_index: RatesIndexKey = missing()
     """Floating interest rate index."""
 
-    fixed_rate_pct: float = missing()
-    """Fixed rate in percent."""
+    fixed_rate_pct: float | None = None
+    """Fixed rate in percent or breakeven rate if not specified."""

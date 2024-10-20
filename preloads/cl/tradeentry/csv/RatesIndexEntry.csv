@@ -1,4 +1,4 @@
-entry_id,rates_index
+title,rates_index
 usd-sofr,"```json {""rates_index_id"": ""USD-SOFR"", ""_type"": ""RatesIndexKey""}"
 usd sofr,"```json {""rates_index_id"": ""USD-SOFR"", ""_type"": ""RatesIndexKey""}"
 sofr,"```json {""rates_index_id"": ""USD-SOFR"", ""_type"": ""RatesIndexKey""}"

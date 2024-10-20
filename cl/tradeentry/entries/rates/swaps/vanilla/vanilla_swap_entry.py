@@ -16,11 +16,7 @@ from dataclasses import dataclass
 from typing_extensions import Self
 
 from cl.runtime import Context
-from cl.tradeentry.entries.fixed_rate_entry_key import FixedRateEntryKey
-from cl.tradeentry.entries.pay_receive_fixed_entry_key import PayReceiveFixedEntryKey
-from cl.tradeentry.entries.rates.rates_effective_date_entry_key import RatesEffectiveDateEntryKey
-from cl.tradeentry.entries.rates.rates_index_entry_key import RatesIndexEntryKey
-from cl.tradeentry.entries.rates.rates_maturity_date_entry_key import RatesMaturityDateEntryKey
+from cl.convince.entries.entry_key import EntryKey
 from cl.tradeentry.entries.trade_entry import TradeEntry
 
 
@@ -28,20 +24,20 @@ from cl.tradeentry.entries.trade_entry import TradeEntry
 class VanillaSwapEntry(TradeEntry):
     """Vanilla fixed-for-floating swap."""
 
-    pay_receive_fixed: PayReceiveFixedEntryKey | None = None
+    pay_receive_fixed: EntryKey | None = None
     """String representation of the PayFixed or ReceiveFixed flag in the format specified by the user."""
 
-    effective_date: RatesEffectiveDateEntryKey | None = None
+    effective_date: EntryKey | None = None
     """Trade or leg effective date defined as unadjusted date or time interval relative to another date."""
 
-    maturity_date: RatesMaturityDateEntryKey | None = None
+    maturity_date: EntryKey | None = None
     """Trade or leg maturity date defined as unadjusted date or time interval relative to another date."""
 
-    float_index: RatesIndexEntryKey | None = None
+    float_index: EntryKey | None = None
     """Floating interest rate index or currency (in case of currency, default index for the currency is used)."""
 
-    fixed_rate: FixedRateEntryKey | None = None
-    """Fixed rate (breakeven rate is assumed if not specified)."""
+    fixed_rate: EntryKey | None = None
+    """Fixed rate entry or breakeven rate if not specified."""
 
     @classmethod
     def create(

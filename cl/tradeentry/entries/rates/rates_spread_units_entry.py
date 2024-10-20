@@ -12,19 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
 from dataclasses import dataclass
+from cl.convince.entries.entry import Entry
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.rates.rates_spread_units_entry_key import RatesSpreadUnitsEntryKey
 
 
 @dataclass(slots=True, kw_only=True)
-class RatesSpreadUnitsEntry(RatesSpreadUnitsEntryKey, RecordMixin[RatesSpreadUnitsEntryKey], ABC):
+class RatesSpreadUnitsEntry(Entry):
     """Maps interest rate spread units string specified by the user to the numerical multiplier."""
 
-    multiplier: float = missing()
-    """Numerical multiplier specified by the entry."""
-
-    def get_key(self) -> RatesSpreadUnitsEntryKey:
-        return RatesSpreadUnitsEntryKey(entry_id=self.entry_id)
+    rates_spread_multiplier: float = missing()
+    """Numerical multiplier."""
