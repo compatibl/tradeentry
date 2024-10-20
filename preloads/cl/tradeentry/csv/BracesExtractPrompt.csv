@@ -1,6 +1,6 @@
 prompt_id,preamble,request
-Braces,"Follow these instructions precisely and adhere to the requested format exactly.
+BracesExtract,"Follow these instructions precisely and adhere to the requested format exactly.
 - You will be provided with a data entry text and a description of a data parameter.
-- If the text contains one or more pieces of information about the parameter, return the input text where each piece of such information is surrounded by curly braces. No changes to the text other than inserting curly braces should be made.
-- If the text does not contain any information about the parameter, return a single word 'NotFound' and nothing else.","Text: ```{title}``` 
-Parameter: ```{parameter}```"
+- If the text contains one or more pieces of information about the parameter, return the input text where each piece of such information is surrounded by curly braces. Surround the entire annotated text by triple backticks. No changes to the text other than adding curly braces and triple backticks should be made, not even whitespace should change. Also do not change the order of words in what you return even if it does not affect meaning.
+- If the text does not contain any information about the parameter, return a single word NotFound surrounded by triple backticks and nothing else.","Parameter: ```{param}```
+Text: ```{text}```"
