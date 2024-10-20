@@ -1,10 +1,10 @@
 title,rates_index
-usd-sofr,"```json {""rates_index_id"": ""USD-SOFR"", ""_type"": ""RatesIndexKey""}"
-usd sofr,"```json {""rates_index_id"": ""USD-SOFR"", ""_type"": ""RatesIndexKey""}"
-sofr,"```json {""rates_index_id"": ""USD-SOFR"", ""_type"": ""RatesIndexKey""}"
-usd,"```json {""rates_index_id"": ""USD-SOFR"", ""_type"": ""RatesIndexKey""}"
-eur-eurostr,"```json {""rates_index_id"": ""EUR-EuroSTR"", ""_type"": ""RatesIndexKey""}"
-eur eurostr,"```json {""rates_index_id"": ""EUR-EuroSTR"", ""_type"": ""RatesIndexKey""}"
-eurostr,"```json {""rates_index_id"": ""EUR-EuroSTR"", ""_type"": ""RatesIndexKey""}"
-€str,"```json {""rates_index_id"": ""EUR-EuroSTR"", ""_type"": ""RatesIndexKey""}"
-eur,"```json {""rates_index_id"": ""EUR-EuroSTR"", ""_type"": ""RatesIndexKey""}"
+usd-sofr,USD-SOFR
+usd sofr,USD-SOFR
+sofr,USD-SOFR
+usd,USD-SOFR
+eur-eurostr,EUR-EuroSTR
+eur eurostr,EUR-EuroSTR
+eurostr,EUR-EuroSTR
+€str,EUR-EuroSTR
+eur,EUR-EuroSTR

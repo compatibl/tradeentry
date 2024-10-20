@@ -1,11 +1,11 @@
 title,currency
-EUR,"```json {""iso_code"": ""EUR"", ""_type"": ""CurrencyKey""}"
-euro,"```json {""iso_code"": ""EUR"", ""_type"": ""CurrencyKey""}"
-€,"```json {""iso_code"": ""EUR"", ""_type"": ""CurrencyKey""}"
-USD,"```json {""iso_code"": ""USD"", ""_type"": ""CurrencyKey""}"
-dollar,"```json {""iso_code"": ""USD"", ""_type"": ""CurrencyKey""}"
-US dollar,"```json {""iso_code"": ""USD"", ""_type"": ""CurrencyKey""}"
-$,"```json {""iso_code"": ""USD"", ""_type"": ""CurrencyKey""}"
-US$,"```json {""iso_code"": ""USD"", ""_type"": ""CurrencyKey""}"
-CAD,"```json {""iso_code"": ""CAD"", ""_type"": ""CurrencyKey""}"
-CA$,"```json {""iso_code"": ""CAD"", ""_type"": ""CurrencyKey""}"
+EUR,EUR
+euro,EUR
+€,EUR
+USD,USD
+dollar,USD
+US dollar,USD
+$,USD
+US$,USD
+CAD,CAD
+CA$,CAD
