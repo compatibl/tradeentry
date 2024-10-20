@@ -43,15 +43,6 @@ class StubRuntimeConfig(Config):
     def run_configure(self) -> None:
         """Populate the current or default database with stub records."""
 
-        # Get database from the current context
-        db = Context.current().db
-
-        # Save self
-        db.save_one(self)
-
-        # Save UiAppState instance
-        db.save_one(UiAppState(user=UserKey(username="root")))
-
         # Create stub instances
         stub_dataclass_records = [StubDataclassRecord(id=f"A{i}") for i in range(10)]
         stub_dataclass_nested_fields = [StubDataclassNestedFields(primitive=f"B{i}") for i in range(10)]
@@ -96,7 +87,7 @@ class StubRuntimeConfig(Config):
         ]
 
         # save stubs to db
-        db.save_many(all_records)
+        Context.current().save_many(all_records)
 
     def run_configure_plots(self) -> None:
         """Configure plots."""
