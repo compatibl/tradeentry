@@ -189,7 +189,7 @@ class CompletionCache:
 
         # Add trial_id to the beginning of cached query key
         if trial_id is not None:
-            result = f"TrialID: {str(trial_id)} {result}"
+            result = f"TrialID: {str(trial_id)}\n{result}"
 
         # Normalize EOL
         result = cls.to_python_eol(result)
