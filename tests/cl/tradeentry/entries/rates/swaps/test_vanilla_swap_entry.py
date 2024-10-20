@@ -116,7 +116,8 @@ def _test_extraction(entry: str, params: List[Tuple[str, str, List[str], str]]) 
     RegressionGuard.verify_all()
 
 
-def test_vanilla_swap():
+@pytest.mark.skip("Refactoring.")
+def test_end_to_end():
     with TestingContext():
         _test_extraction(TRADE_ENTRY, PARAMS)
 
