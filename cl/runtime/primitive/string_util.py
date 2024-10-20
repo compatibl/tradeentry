@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import hashlib
+from typing import TypeGuard
 
 
 class StringUtil:
@@ -22,6 +23,11 @@ class StringUtil:
     def is_empty(cls, value: str | None) -> bool:
         """Returns true if the string is None or ''."""
         return value is None or value == ""
+
+    @classmethod
+    def is_not_empty(cls, value: str | None) -> TypeGuard[str]:
+        """Returns true if the string is not None or ''."""
+        return value is not None and value != ""
 
     @classmethod
     def md5_hex(cls, value: str | None) -> str:
