@@ -15,6 +15,7 @@
 import pytest
 
 from cl.convince.entries.entry_type_key import EntryTypeKey
+from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.entries.entry import Entry
 from cl.convince.entries.entry_key import EntryKey
@@ -42,6 +43,21 @@ def test_get_entry_id():
 
     # Verify
     guard.verify_all()
+
+
+def test_check_entry_id():
+    """Test EntryKey.create_key method."""
+
+    EntryKey.check_entry_id("SampleEntryType: Sample Title")
+    EntryKey.check_entry_id("SampleEntryType: Sample Title (MD5: 00000000000000000000000000000000)")
+    with pytest.raises(UserError):
+        EntryKey.check_entry_id("Sample Title")
+    with pytest.raises(UserError):
+        EntryKey.check_entry_id("SampleEntryType: Sample Title (MD5: 00000000000000000000000000000000")
+    with pytest.raises(UserError):
+        EntryKey.check_entry_id("SampleEntryType: Sample Title (MD5: 000000000000000000000000000000000")
+    with pytest.raises(UserError):
+        EntryKey.check_entry_id("SampleEntryType: Sample Title (md5: 0000000000000000000000000000000")
 
 
 if __name__ == "__main__":

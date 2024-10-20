@@ -17,6 +17,7 @@ from dataclasses import dataclass
 from typing import Type
 
 from cl.runtime.log.exceptions.user_error import UserError
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.key_mixin import KeyMixin
@@ -34,8 +35,8 @@ _DISALLOWED_TITLE_SUBSTRINGS = {
 }
 """These substrings are not allowed in title."""
 
-_ENTRY_ID_RE = re.compile(r"^([A-Za-z0-9_]+):\s([A-Za-z0-9\s]+)(?:\s\(MD5:\s([a-f0-9]{32})\))?$")
-"""Regex for entry_id."""
+_MD5_HEX_RE = re.compile(r'^[0-9a-f]+$')
+"""Regext for MD5 hex."""
 
 
 @dataclass(slots=True, kw_only=True)
@@ -93,7 +94,34 @@ class EntryKey(KeyMixin):
     @classmethod
     def check_entry_id(cls, entry_id: str) -> None:
         """Check that the unique identifier is compliant with the expected format."""
-        if not re.match(_ENTRY_ID_RE, entry_id):
+        is_valid = True
+        type_and_title = None
+        # Validate MD5 suffix if present
+        left_parenthesis_tokens = entry_id.split("(")
+        if len(left_parenthesis_tokens) == 2:
+            # Includes type, title and MD5 cache
+            type_and_title = left_parenthesis_tokens[0]
+            md5_suffix = left_parenthesis_tokens[1]
+            is_valid = md5_suffix.startswith("MD5: ") and md5_suffix.endswith(")")
+            md5_hex = md5_suffix[5:-1]
+            is_valid = is_valid and len(md5_hex) == 32 and bool(_MD5_HEX_RE.match(md5_hex))
+        elif len(left_parenthesis_tokens) == 1:
+            # Includes only type and title
+            type_and_title = entry_id
+        else:
+            is_valid = False
+
+        # Validate type and title
+        if is_valid:
+            colon_tokens = type_and_title.split(": ")
+            if len(colon_tokens) == 2:
+                is_valid = CaseUtil.is_pascal_case(colon_tokens[0])
+            else:
+                is_valid = False
+
+        # Error message if does not match format
+        if not is_valid:
             raise UserError(
-                f"EntryId format must be either 'RecordType: Title' or 'RecordType: Title (MD5: ...)'.\n"
-                f"EntryId value: '{entry_id}'")
+                f"EntryId format must be either '{{RecordType}}: {{Title}}' "
+                f"or '{{RecordType}}: {{Title}} (MD5: {{lowercase hexadecimal}})'.\n"
+                f"EntryId: '{entry_id}'")
