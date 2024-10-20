@@ -1,5 +1,6 @@
 RequestID,Query,Completion
-2024-09-25T22:12:38.623Z-76b3ba42fde895b1a065,"TrialID: 0 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:12:38.623Z-76b3ba42fde895b1a065,"TrialID: 0
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -100,7 +101,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:12:44.428Z-79508bf84e181fdf300d,"TrialID: 1 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:12:44.428Z-79508bf84e181fdf300d,"TrialID: 1
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -201,7 +203,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:12:50.145Z-7380b7c5fdb2e9f16874,"TrialID: 2 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:12:50.145Z-7380b7c5fdb2e9f16874,"TrialID: 2
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -302,7 +305,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:12:55.934Z-77128d6886fe0ce37e95,"TrialID: 3 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:12:55.934Z-77128d6886fe0ce37e95,"TrialID: 3
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -403,7 +407,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:13:01.704Z-79a2b2f117dede65bb54,"TrialID: 4 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:13:01.704Z-79a2b2f117dede65bb54,"TrialID: 4
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -504,7 +509,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:13:07.381Z-7551be22fd643c5f10f5,"TrialID: 5 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:13:07.381Z-7551be22fd643c5f10f5,"TrialID: 5
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -605,7 +611,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:13:13.207Z-7f139fa352f5f254d60c,"TrialID: 6 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:13:13.207Z-7f139fa352f5f254d60c,"TrialID: 6
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -706,7 +713,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:13:19.029Z-7f418361636a49609840,"TrialID: 7 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:13:19.029Z-7f418361636a49609840,"TrialID: 7
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -807,7 +815,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:13:24.707Z-7423ba03a3d46c5a7b35,"TrialID: 8 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:13:24.707Z-7423ba03a3d46c5a7b35,"TrialID: 8
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -908,7 +917,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:13:30.427Z-7bd3a7cab957e1dd2c20,"TrialID: 9 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:13:30.427Z-7bd3a7cab957e1dd2c20,"TrialID: 9
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -1009,7 +1019,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:13:36.119Z-74c09e2ac81a646ce294,"TrialID: 10 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:13:36.119Z-74c09e2ac81a646ce294,"TrialID: 10
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -1110,7 +1121,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:13:42.088Z-7c62b5603e2f0d41448a,"TrialID: 11 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:13:42.088Z-7c62b5603e2f0d41448a,"TrialID: 11
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -1211,7 +1223,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:13:47.781Z-7cb0853306bad68aa3c5,"TrialID: 12 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:13:47.781Z-7cb0853306bad68aa3c5,"TrialID: 12
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -1312,7 +1325,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:13:53.765Z-75b197ac6b93b5739847,"TrialID: 13 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:13:53.765Z-75b197ac6b93b5739847,"TrialID: 13
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -1413,7 +1427,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:13:59.456Z-7b208d23f69e96fb1e74,"TrialID: 14 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:13:59.456Z-7b208d23f69e96fb1e74,"TrialID: 14
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -1514,7 +1529,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:14:05.116Z-79d19d8af4a6c07ad63b,"TrialID: 15 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:14:05.116Z-79d19d8af4a6c07ad63b,"TrialID: 15
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -1615,7 +1631,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:14:10.935Z-74e18cd8d74ecca7bc45,"TrialID: 16 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:14:10.935Z-74e18cd8d74ecca7bc45,"TrialID: 16
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -1716,7 +1733,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:14:16.647Z-7e83883ddafe744e9944,"TrialID: 17 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:14:16.647Z-7e83883ddafe744e9944,"TrialID: 17
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -1817,7 +1835,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:14:22.419Z-7e21a8bac9986dbb254f,"TrialID: 18 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:14:22.419Z-7e21a8bac9986dbb254f,"TrialID: 18
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -1918,7 +1937,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:14:28.267Z-7c93ac9db8a9b0afef09,"TrialID: 19 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:14:28.267Z-7c93ac9db8a9b0afef09,"TrialID: 19
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -2019,7 +2039,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:14:34.021Z-787295b4c7a75fc6f9ea,"TrialID: 20 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:14:34.021Z-787295b4c7a75fc6f9ea,"TrialID: 20
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -2120,7 +2141,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:14:39.711Z-7170a4da0c844c8acdad,"TrialID: 21 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:14:39.711Z-7170a4da0c844c8acdad,"TrialID: 21
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -2221,7 +2243,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:14:45.413Z-76a3bafbf7181e77dd61,"TrialID: 22 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:14:45.413Z-76a3bafbf7181e77dd61,"TrialID: 22
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -2322,7 +2345,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:14:51.379Z-707194a00b9296b226ed,"TrialID: 23 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:14:51.379Z-707194a00b9296b226ed,"TrialID: 23
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -2423,7 +2447,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:14:57.180Z-7453816ff2272f989f80,"TrialID: 24 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:14:57.180Z-7453816ff2272f989f80,"TrialID: 24
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -2524,7 +2549,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:15:02.855Z-753384ed5ac4bd2c5830,"TrialID: 25 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:15:02.855Z-753384ed5ac4bd2c5830,"TrialID: 25
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -2625,7 +2651,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:15:08.822Z-7822afd284bd0a8e9c8b,"TrialID: 26 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:15:08.822Z-7822afd284bd0a8e9c8b,"TrialID: 26
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -2726,7 +2753,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:15:14.573Z-753281f6f8e000c73ad5,"TrialID: 27 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:15:14.573Z-753281f6f8e000c73ad5,"TrialID: 27
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -2827,7 +2855,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:15:21.048Z-7c51b4b1bd5e649dab0e,"TrialID: 28 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:15:21.048Z-7c51b4b1bd5e649dab0e,"TrialID: 28
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -2928,7 +2957,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:15:26.790Z-76f08b7c91c300c714e1,"TrialID: 29 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:15:26.790Z-76f08b7c91c300c714e1,"TrialID: 29
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -3029,7 +3059,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:15:32.573Z-7b5298e1620b178908ee,"TrialID: 30 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:15:32.573Z-7b5298e1620b178908ee,"TrialID: 30
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -3130,7 +3161,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:15:38.376Z-7030a10c77e628d69e75,"TrialID: 31 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:15:38.376Z-7030a10c77e628d69e75,"TrialID: 31
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -3231,7 +3263,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:15:44.528Z-7c318d7f96f480daa948,"TrialID: 32 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:15:44.528Z-7c318d7f96f480daa948,"TrialID: 32
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -3332,7 +3365,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:15:50.449Z-7ab0ae4bf5c436539d1a,"TrialID: 33 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:15:50.449Z-7ab0ae4bf5c436539d1a,"TrialID: 33
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -3433,7 +3467,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:15:56.267Z-7ee0a508a5ec3297a25d,"TrialID: 34 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:15:56.267Z-7ee0a508a5ec3297a25d,"TrialID: 34
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -3534,7 +3569,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:16:02.261Z-77a089b76431e30d6b49,"TrialID: 35 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:16:02.261Z-77a089b76431e30d6b49,"TrialID: 35
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -3635,7 +3671,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:16:07.853Z-7ee2848964cf63b2e976,"TrialID: 36 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:16:07.853Z-7ee2848964cf63b2e976,"TrialID: 36
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -3736,7 +3773,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:16:13.602Z-7a11baae247a92bd3d8a,"TrialID: 37 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:16:13.602Z-7a11baae247a92bd3d8a,"TrialID: 37
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -3837,7 +3875,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:16:19.494Z-7a108b060bd646af2a07,"TrialID: 38 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:16:19.494Z-7a108b060bd646af2a07,"TrialID: 38
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -3938,7 +3977,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:16:25.273Z-76f083ec0b67e52c5acd,"TrialID: 39 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:16:25.273Z-76f083ec0b67e52c5acd,"TrialID: 39
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -4039,7 +4079,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:16:31.395Z-7da384852d997cd0d042,"TrialID: 40 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:16:31.395Z-7da384852d997cd0d042,"TrialID: 40
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -4140,7 +4181,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:16:37.132Z-7f239666b55dac49b81d,"TrialID: 41 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:16:37.132Z-7f239666b55dac49b81d,"TrialID: 41
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -4241,7 +4283,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:16:43.179Z-7b83b7feee8c4dfdc20e,"TrialID: 42 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:16:43.179Z-7b83b7feee8c4dfdc20e,"TrialID: 42
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -4342,7 +4385,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:16:48.823Z-76b192ade212bbb97ce1,"TrialID: 43 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:16:48.823Z-76b192ade212bbb97ce1,"TrialID: 43
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -4443,7 +4487,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:16:54.846Z-76638f4c6dc7e9370107,"TrialID: 44 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:16:54.846Z-76638f4c6dc7e9370107,"TrialID: 44
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -4544,7 +4589,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:17:00.560Z-7bc39bbaeeb58bba5c39,"TrialID: 45 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:17:00.560Z-7bc39bbaeeb58bba5c39,"TrialID: 45
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -4645,7 +4691,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:17:06.275Z-7431a483915c43a72145,"TrialID: 46 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:17:06.275Z-7431a483915c43a72145,"TrialID: 46
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -4746,7 +4793,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:17:12.077Z-7762b4705d8c80a520e0,"TrialID: 47 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:17:12.077Z-7762b4705d8c80a520e0,"TrialID: 47
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -4847,7 +4895,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:17:17.819Z-71d3b6ff1b07f9465436,"TrialID: 48 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:17:17.819Z-71d3b6ff1b07f9465436,"TrialID: 48
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
@@ -4948,7 +4997,8 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here's th
   ]
 }
 '''"
-2024-09-25T22:17:23.729Z-79919b271e59d8e1484c,"TrialID: 49 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
+2024-09-25T22:17:23.729Z-79919b271e59d8e1484c,"TrialID: 49
+You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
 Here is the input trade entry:
