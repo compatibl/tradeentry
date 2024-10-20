@@ -19,6 +19,7 @@ from cl.convince.entries.entry_type_key import EntryTypeKey
 from cl.runtime import Context
 from cl.runtime.backend.core.user_key import UserKey
 from cl.runtime.log.exceptions.user_error import UserError
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
@@ -49,6 +50,9 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
 
     def init(self) -> None:
         """Generate entry_id in 'type: title' format followed by an MD5 hash of body and data if present."""
+        # Convert field types if necessary
+        if self.few_shot is not None and isinstance(self.few_shot, str):
+            self.few_shot = self._parse_optional_bool(self.few_shot, field_name="few_shot")
         # Record type is part of the key
         record_type = type(self).__name__
         self.entry_id = self.get_entry_id(record_type, self.title, self.body, self.data)
@@ -63,3 +67,35 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
         context = Context.current()
         self.approved_by = context.user
         context.save_one(self)
+
+    @classmethod
+    def _parse_required_bool(cls, field_value: str, *, field_name: str | None = None) -> bool:  # TODO: Move to Util class
+        """Parse an optional boolean value."""
+        match field_value:
+            case None | "":
+                field_name = CaseUtil.snake_to_pascal_case(field_name)
+                for_field = f"for field {field_name}" if field_name is not None else " for a Y/N field"
+                raise UserError(f"The value {for_field} is empty. Valid values are Y or N.")
+            case "Y":
+                return True
+            case "N":
+                return False
+            case _:
+                field_name = CaseUtil.snake_to_pascal_case(field_name)
+                for_field = f" for field {field_name}" if field_name is not None else  " for a Y/N field"
+                raise UserError(f"The value {for_field} must be Y, N or an empty string.\nField value: {field_value}")
+
+    @classmethod
+    def _parse_optional_bool(cls, field_value: str | None, *, field_name: str | None = None) -> bool | None:  # TODO: Move to Util class
+        """Parse an optional boolean value."""
+        match field_value:
+            case None | "":
+                return None
+            case "Y":
+                return True
+            case "N":
+                return False
+            case _:
+                field_name = CaseUtil.snake_to_pascal_case(field_name)
+                for_field = f" for field {field_name}" if field_name is not None else ""
+                raise UserError(f"The value{for_field} must be Y, N or an empty string.\nField value: {field_value}")
