@@ -24,15 +24,10 @@ from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.convince.entries.entry_key import EntryKey
 
-_MAX_TITLE_LEN = 1000
-"""Maximum length of the title."""
 
 @dataclass(slots=True, kw_only=True)
 class Entry(EntryKey, RecordMixin[EntryKey], ABC):
     """Contains title, body and supporting data of user entry along with the entry processing result."""
-
-    entry_type: EntryTypeKey = missing()
-    """Type of the entry (included in MD5 hash)."""
 
     title: str = missing()
     """Title of a long entry or complete description of a short one (included in MD5 hash)."""
@@ -51,30 +46,15 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
 
     def init(self) -> None:
         """Generate entry_id in 'type: title' format followed by an MD5 hash of body and data if present."""
-        # Initial checks for the title
-        if StringUtil.is_empty(self.title):
-            raise UserError("Empty 'Entry.title' field.")
-        if len(self.title) > _MAX_TITLE_LEN:
-            raise UserError(
-                f"The length {len(self.title)} of the 'Entry.title' field exceeds {_MAX_TITLE_LEN}, "
-                f"use 'Entry.body' field for the excess text."
-            )
-        if "\n" in self.title:
-            raise UserError(f"Parameter title={self.title} of 'EntryUtil.create_id' method is not a single line.")
+        # Record type is part of the key
+        record_type = type(self).__name__
+        self.entry_id = self.get_entry_id(record_type, self.title, self.body, self.data)
 
-        if not StringUtil.is_empty(self.body) or not StringUtil.is_empty(self.data):
-            # Append MD5 hash in hexadecimal format of the body and data if at least one is present
-            md5_hash = StringUtil.md5_hex(f"{self.body}.{self.data}")
-            self.entry_id = f"{self.title} (MD5: {md5_hash})"
-        else:
-            # Otherwise entry_id is the title
-            self.entry_id = self.title
-
-    @abstractmethod
+    # TODO: Restore abstract when implemented @abstractmethod
     def run_propose(self) -> None:
         """Generate or regenerate the proposed value."""
 
-    def run_approve(self) -> None:
+    def run_approve(self) -> None:  # TODO: Review
         """Approve the manually set approved value, or proposed value if the approved value is not set."""
         # Set approved_py to the user obtained from the current context and save
         context = Context.current()
