@@ -1,0 +1,22 @@
+RequestID,Query,Completion
+2024-10-20T21:51:06.257Z-7da0b235e07fd886c502,"TrialID: 0 You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```Fixed rate.``","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""Sell 10y SOFR swap at {3.45%}"",
+    ""justification"": ""The fixed rate in the input text is represented by '3.45%', which is the rate at which the swap is being sold.""
+}
+```"
