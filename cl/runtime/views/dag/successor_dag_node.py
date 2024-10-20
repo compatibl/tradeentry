@@ -60,11 +60,11 @@ class SuccessorDagNode(SuccessorDagNodeKey, RecordMixin[SuccessorDagNodeKey]):
 
         # Verify that each successor belongs to the same DAG
         if self.successor_nodes:
-            offending_list = [s for s in self.successor_nodes if s.node_id.split(":")[0] != self.dag.dag_id]
-            if offending_list and any(offending_list):
-                offending_list_str = "  - ".join(f"  - Node: {x.node_id}\n" for x in offending_list)
+            disallowed_list = [s for s in self.successor_nodes if s.node_id.split(":")[0] != self.dag.dag_id]
+            if disallowed_list and any(disallowed_list):
+                disallowed_list_str = "  - ".join(f"  - Node: {x.node_id}\n" for x in disallowed_list)
                 raise UserError(
-                    f"One or more successors do not belong to DAG {self.dag.dag_id}:\n" f"{offending_list_str}"
+                    f"One or more successors do not belong to DAG {self.dag.dag_id}:\n" f"{disallowed_list_str}"
                 )
         # Verify that edges is None or has the same size
         edge_count = len(self.successor_edges) if self.successor_edges is not None else 0
