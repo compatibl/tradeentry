@@ -18,28 +18,27 @@ from cl.convince.entries.entry_type_key import EntryTypeKey
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.entries.entry import Entry
 from cl.convince.entries.entry_key import EntryKey
-from cl.convince.entries.entry_util import EntryUtil
 
 
-def test_create_id():
+def test_get_entry_id():
     """Test EntryKey.create_key method."""
 
     guard = RegressionGuard()
 
-    # Create entry type key
-    entry_type_key = EntryTypeKey(entry_type_id="SampleEntryType")
+    # Record type
+    record_type = "SampleEntryType"
 
     # Check with type and title only
-    guard.write(EntryUtil.create_id(entry_type_key, "Sample Title"))
+    guard.write(EntryKey.get_entry_id(record_type, "Sample Title"))
 
     # Check with body
-    guard.write(EntryUtil.create_id(entry_type_key, "Sample Title", body="Sample Body"))
+    guard.write(EntryKey.get_entry_id(record_type, "Sample Title", body="Sample Body"))
 
     # Check with data
-    guard.write(EntryUtil.create_id(entry_type_key, "Sample Title", data="Sample Data"))
+    guard.write(EntryKey.get_entry_id(record_type, "Sample Title", data="Sample Data"))
 
     # Check with both
-    guard.write(EntryUtil.create_id(entry_type_key, "Sample Title", body="Sample Body", data="Sample Data"))
+    guard.write(EntryKey.get_entry_id(record_type, "Sample Title", body="Sample Body", data="Sample Data"))
 
     # Verify
     guard.verify_all()
