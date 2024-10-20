@@ -26,6 +26,7 @@ from cl.runtime.db.db import Db
 from cl.runtime.db.mongo.mongo_filter_serializer import MongoFilterSerializer
 from cl.runtime.db.protocols import TKey
 from cl.runtime.db.protocols import TRecord
+from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.schema.schema import Schema
@@ -65,11 +66,16 @@ class BasicMongoDb(Db):
         *,
         dataset: str | None = None,
         identity: str | None = None,
+        is_key_optional: bool = False,
+        is_record_optional: bool = False,
     ) -> TRecord | None:
+        # Check for an empty key
+        if not is_key_optional and record_or_key is None:
+            raise UserError(f"Key is None when trying to load record type {record_type.__name__} from DB.")
+
         if record_or_key is None or getattr(record_or_key, "get_key", None) is not None:
             # Record or None, return without lookup
             return cast(RecordProtocol, record_or_key)
-
         elif getattr(record_or_key, "get_key_type"):
             # Confirm dataset and identity are both None
             if dataset is not None:
@@ -91,8 +97,10 @@ class BasicMongoDb(Db):
                 result = data_serializer.deserialize_data(serialized_record)
                 return result
             else:
+                # Check if returning None is allowed
+                if not is_record_optional:
+                    raise UserError(f"{record_type.__name__} record is not found for key {record_or_key}")
                 return None
-
         else:
             raise RuntimeError(f"Type {record_or_key.__class__.__name__} is not a record or key.")
 
@@ -105,7 +113,17 @@ class BasicMongoDb(Db):
         identity: str | None = None,
     ) -> Iterable[TRecord | None] | None:
         # TODO: Implement directly for better performance
-        result = [self.load_one(record_type, x, dataset=dataset, identity=identity) for x in records_or_keys]
+        result = [
+            self.load_one(
+                record_type,
+                x,
+                dataset=dataset,
+                identity=identity,
+                is_key_optional=True,  # TODO: Keep the existing defaults for load_many
+                is_record_optional=True,  # TODO: Keep the existing defaults for load_many
+            )
+            for x in records_or_keys
+        ]
         return result
 
     def load_all(
@@ -287,7 +305,7 @@ class BasicMongoDb(Db):
     def _get_db(self) -> Database:
         """Get PyMongo database object."""
         db_name = self._get_db_name()
-        db_key = f"{self.client_uri}.{db_name}"
+        db_key = f"{self.client_uri}{db_name}"
         if (result := _db_dict.get(db_key, None)) is None:
             # Create if it does not exist
             client = self._get_client()

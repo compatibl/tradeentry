@@ -190,6 +190,8 @@ class Context(ContextKey, RecordMixin[ContextKey]):
         *,
         dataset: str | None = None,
         identity: str | None = None,
+        is_key_optional: bool = False,
+        is_record_optional: bool = False,
     ) -> TRecord | None:
         """
         Load a single record using a key (if a record is passed instead of a key, it is returned without DB lookup)
@@ -199,12 +201,16 @@ class Context(ContextKey, RecordMixin[ContextKey]):
             record_or_key: Record (returned without lookup) or key in object, tuple or string format
             dataset: If specified, append to the root dataset of the database
             identity: Identity token for database access and row-level security
+            is_key_optional: If True, return None when key is none found instead of an error
+            is_record_optional: If True, return None when record is not found instead of an error
         """
         return self.db.load_one(  # noqa
             record_type,
             record_or_key,
             dataset=dataset,
             identity=identity,
+            is_key_optional=is_key_optional,
+            is_record_optional=is_record_optional,
         )
 
     def load_many(

@@ -28,6 +28,7 @@ from cl.runtime.db.protocols import TKey
 from cl.runtime.db.protocols import TRecord
 from cl.runtime.db.sql.sqlite_schema_manager import SqliteSchemaManager
 from cl.runtime.file.file_util import FileUtil
+from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key
@@ -99,8 +100,21 @@ class SqliteDb(Db):
         *,
         dataset: str | None = None,
         identity: str | None = None,
+        is_key_optional: bool = False,
+        is_record_optional: bool = False,
     ) -> TRecord | None:
-        return next(iter(self.load_many(record_type, [record_or_key], dataset=dataset, identity=identity)))
+        # Check for an empty key
+        if not is_key_optional and record_or_key is None:
+            raise UserError(f"Key is None when trying to load record type {record_type.__name__} from DB.")
+
+        # Delegate to load_many
+        result = next(iter(self.load_many(record_type, [record_or_key], dataset=dataset, identity=identity)))
+
+        # Check if the record was not found
+        if not is_record_optional and result is None:
+            raise UserError(f"{record_type.__name__} record is not found for key {record_or_key}")
+        return result
+
 
     def load_many(
         self,
