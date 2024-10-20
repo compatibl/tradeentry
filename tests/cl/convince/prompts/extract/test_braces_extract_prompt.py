@@ -12,12 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Iterable
 import pytest
+from typing import Iterable
 from cl.convince.prompts.extract.extract_prompt import ExtractPrompt
 from cl.convince.prompts.prompt_keys import PromptKeys
 from cl.runtime import Context
 from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.settings.preload_settings import PreloadSettings
 from cl.runtime.testing.regression_guard import RegressionGuard
 from stubs.cl.convince.experiments.stub_llms import get_stub_full_llms
@@ -26,6 +27,8 @@ from stubs.cl.convince.experiments.stub_llms import get_stub_full_llms
 def _test_extract(entries: Iterable[str], params: Iterable[str]):
     """Test extraction of the specified parameters from the entries."""
     prompt = Context.current().load_one(ExtractPrompt, PromptKeys.BRACES_EXTRACT)
+    if prompt is None:
+        raise UserError(f"LLM record {prompt.prompt_id} is not found.")
     stub_full_llms = get_stub_full_llms()
     for llm in stub_full_llms:
         guard = RegressionGuard(channel=llm.llm_id)
