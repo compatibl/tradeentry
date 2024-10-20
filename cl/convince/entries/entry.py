@@ -52,7 +52,7 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
         """Generate entry_id in 'type: title' format followed by an MD5 hash of body and data if present."""
         # Convert field types if necessary
         if self.few_shot is not None and isinstance(self.few_shot, str):
-            self.few_shot = self._parse_optional_bool(self.few_shot, field_name="few_shot")
+            self.few_shot = self.parse_optional_bool(self.few_shot, field_name="few_shot")
         # Record type is part of the key
         record_type = type(self).__name__
         self.entry_id = self.get_entry_id(record_type, self.title, self.body, self.data)
@@ -69,7 +69,7 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
         context.save_one(self)
 
     @classmethod
-    def _parse_required_bool(cls, field_value: str, *, field_name: str | None = None) -> bool:  # TODO: Move to Util class
+    def parse_required_bool(cls, field_value: str | None, *, field_name: str | None = None) -> bool:  # TODO: Move to Util class
         """Parse an optional boolean value."""
         match field_value:
             case None | "":
@@ -86,7 +86,7 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
                 raise UserError(f"The value {for_field} must be Y, N or an empty string.\nField value: {field_value}")
 
     @classmethod
-    def _parse_optional_bool(cls, field_value: str | None, *, field_name: str | None = None) -> bool | None:  # TODO: Move to Util class
+    def parse_optional_bool(cls, field_value: str | None, *, field_name: str | None = None) -> bool | None:  # TODO: Move to Util class
         """Parse an optional boolean value."""
         match field_value:
             case None | "":
