@@ -1,10 +1,10 @@
-title,pay_receive_fixed
-pay fixed,PayFixed
-we pay fixed,PayFixed
-long,PayFixed
-buy,PayFixed
-receive fixed,ReceiveFixed
-rec fixed,ReceiveFixed
-we receive fixed,ReceiveFixed
-short,ReceiveFixed
-sell,ReceiveFixed
+title,few_shot,pay_receive_fixed
+Pay fixed,Y,PayFixed
+We pay fixed,Y,PayFixed
+Long,Y,PayFixed
+Buy,Y,PayFixed
+Receive fixed,Y,ReceiveFixed
+Rec fixed,Y,ReceiveFixed
+We receive fixed,Y,ReceiveFixed
+Short,Y,ReceiveFixed
+Sell,Y,ReceiveFixed

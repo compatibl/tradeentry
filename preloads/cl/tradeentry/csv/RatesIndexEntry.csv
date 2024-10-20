@@ -1,10 +1,10 @@
-title,rates_index
-usd-sofr,USD-SOFR
-usd sofr,USD-SOFR
-sofr,USD-SOFR
-usd,USD-SOFR
-eur-eurostr,EUR-EuroSTR
-eur eurostr,EUR-EuroSTR
-eurostr,EUR-EuroSTR
-€str,EUR-EuroSTR
-eur,EUR-EuroSTR
+title,few_shot,rates_index
+usd-sofr,Y,USD-SOFR
+usd sofr,Y,USD-SOFR
+sofr,Y,USD-SOFR
+usd,Y,USD-SOFR
+eur-eurostr,Y,EUR-EuroSTR
+eur eurostr,Y,EUR-EuroSTR
+eurostr,Y,EUR-EuroSTR
+€str,Y,EUR-EuroSTR
+eur,Y,EUR-EuroSTR

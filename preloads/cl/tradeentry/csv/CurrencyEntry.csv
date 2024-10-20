@@ -1,11 +1,11 @@
-title,currency
-EUR,EUR
-euro,EUR
-€,EUR
-USD,USD
-dollar,USD
-US dollar,USD
-$,USD
-US$,USD
-CAD,CAD
-CA$,CAD
+title,few_shot,currency
+EUR,Y,EUR
+euro,Y,EUR
+€,Y,EUR
+USD,Y,USD
+dollar,Y,USD
+US dollar,Y,USD
+$,Y,USD
+US$,Y,USD
+CAD,Y,CAD
+CA$,Y,CAD
