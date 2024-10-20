@@ -39,7 +39,10 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
     """Optional supporting data in YAML format (included in MD5 hash)."""
 
     approved_by: UserKey | None = None
-    """Use who recorded the approval."""
+    """User who recorded the approval."""
+
+    few_shot: bool | None = None
+    """If True, use this entry as a few-shot example."""
 
     def get_key(self) -> EntryKey:
         return EntryKey(entry_id=self.entry_id)
