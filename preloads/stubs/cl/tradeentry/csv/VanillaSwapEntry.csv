@@ -1,2 +1,2 @@
-﻿title,pay_receive_fixed,effective_date,maturity_date,float_index,fixed_rate
-Sell 10y SOFR swap at 3.45%,PayReceiveFixedEntry: sell,,YearsMonthsEntry: 10y,RatesIndexEntry: sofr,FixedRateEntry: 3.45%
+﻿title
+Sell 10y SOFR swap at 3.45%
