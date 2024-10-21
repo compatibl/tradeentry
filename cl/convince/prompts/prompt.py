@@ -12,16 +12,36 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from typing import Any
+
 from cl.runtime import RecordMixin
+from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.convince.prompts.prompt_key import PromptKey
+from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.schema.schema import Schema
 
 
 @dataclass(slots=True, kw_only=True)
 class Prompt(PromptKey, RecordMixin[PromptKey], ABC):
-    """The prompt begins from the preamble and ends with the request, with supporting information in the middle."""
+    """Parameterized LLM prompt template rendered using a parameters object."""
+
+    params_type: str = missing()
+    """Record whose pascalized fields are used as template parameters in ClassName format."""
 
     def get_key(self) -> PromptKey:
         return PromptKey(prompt_id=self.prompt_id)
+
+    @abstractmethod
+    def render(self, params: RecordMixin) -> str:
+        """Use data from the parameters object of 'params_type' to render the template."""
+
+    def _check_params_type(self, params: Any) -> None:
+        """Check that params object is an instance of the right type."""
+        params_type = Schema.get_type_by_short_name(self.params_type)
+        if not isinstance(params, params_type):
+            actual_type_str = type(params).__name__
+            raise UserError(f"Parameters object for prompt {self.prompt_id} has type {actual_type_str} which "
+                            f"is not a subclass of the expected type {self.params_type}.")

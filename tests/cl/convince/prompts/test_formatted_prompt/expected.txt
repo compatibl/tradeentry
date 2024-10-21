@@ -1,0 +1,13 @@
+StrReq='abc' StrOpt='def' IntReq='123' IntOpt='456'
+Expected UserError: Parameter required by prompt is either None or not a field of the parameters object.
+Prompt key='Default'
+Parameter name: 'StrOpt'
+Parameters object type=StubPromptParams and key='Default'
+Non-empty fields of the parameters object:
+  - PromptParamsId
+  - StrReq
+  - IntReq
+  - FloatReq
+  - Type
+
+

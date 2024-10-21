@@ -14,17 +14,16 @@
 
 from dataclasses import dataclass
 from typing import Type
-from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class PromptKey(KeyMixin):
-    """Parameterized LLM prompt template rendered using a parameters object."""
+class StubPromptParamsKey(KeyMixin):
+    """Stub prompt parameters of various primitive types."""
 
-    prompt_id: str = missing()
-    """Unique prompt identifier."""
+    prompt_params_id: str = "Default"
+    """Unique prompt params identifier."""
 
     @classmethod
     def get_key_type(cls) -> Type:
-        return PromptKey
+        return StubPromptParamsKey
