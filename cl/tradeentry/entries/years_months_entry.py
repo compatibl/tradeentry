@@ -23,7 +23,7 @@ from cl.runtime.records.dataclasses_extensions import missing
 class YearsMonthsEntry(Entry):
     """Maps tenor entry in years and months to its precise specification."""
 
-    months: int = missing()
+    months: int | None = None
     """Total number of months (years are converted to months)."""
 
     def get_time_delta(self, query: str) -> dt.timedelta:

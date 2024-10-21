@@ -22,6 +22,5 @@ from cl.runtime.records.dataclasses_extensions import missing
 class DateEntry(Entry):
     """Maps a date string specified by the user to a calendar date."""
 
-    date: str = missing()
+    date: str | None = None
     """Date specified by the entry in ISO-8601 yyyy-mm-dd string format."""
-

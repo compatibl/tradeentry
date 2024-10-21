@@ -23,5 +23,5 @@ from cl.tradeentry.trades.rates.rates_index_key import RatesIndexKey
 class RatesIndexEntry(Entry):
     """Floating interest rate index or currency (in case of currency, default index for the currency is used)."""
 
-    rates_index: RatesIndexKey = missing()
+    rates_index: RatesIndexKey | None = None
     """Floating rate index."""

@@ -23,5 +23,5 @@ from cl.tradeentry.trades.pay_receive_fixed_key import PayReceiveFixedKey
 class PayReceiveFixedEntry(Entry):
     """User input to determine if we pay or receive fixed leg coupons in a fixed-for-floating swap."""
 
-    pay_receive_fixed: PayReceiveFixedKey = missing()
+    pay_receive_fixed: PayReceiveFixedKey | None = None
     """Determines if we pay or receive fixed leg coupons in a fixed-for-floating swap."""
