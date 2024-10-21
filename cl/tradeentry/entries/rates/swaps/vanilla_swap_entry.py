@@ -17,14 +17,14 @@ from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.retrievers.annotating_retriever import AnnotatingRetriever
 from cl.convince.entries.entry_key import EntryKey
 from cl.runtime import Context
+from cl.tradeentry.entries.date_or_tenor_entry import DateOrTenorEntry
 from cl.tradeentry.entries.fixed_rate_entry import FixedRateEntry
 from cl.tradeentry.entries.pay_receive_fixed_entry import PayReceiveFixedEntry
 from cl.tradeentry.entries.rates.rates_index_entry import RatesIndexEntry
 from cl.tradeentry.entries.trade_entry import TradeEntry
-from cl.tradeentry.entries.years_months_entry import YearsMonthsEntry
 
-_SIDE = "Floating rate index"
-_TENOR = "Tenor (length)"
+_SIDE = "The words Buy or Sell, or the words Pay Fixed or Receive Fixed"
+_MATURITY = "Either maturity date as a date, or tenor (length) as the number of years and/or months"
 _FLOAT_INDEX = "Floating rate index"
 _FIXED_RATE = "Fixed rate"
 
@@ -36,10 +36,10 @@ class VanillaSwapEntry(TradeEntry):
     pay_receive_fixed: EntryKey | None = None
     """String representation of the PayFixed or ReceiveFixed flag in the format specified by the user."""
 
-    effective_date: EntryKey | None = None
+    effective: EntryKey | None = None
     """Trade or leg effective date defined as unadjusted date or time interval relative to another date."""
 
-    maturity_date: EntryKey | None = None
+    maturity: EntryKey | None = None
     """Trade or leg maturity date defined as unadjusted date or time interval relative to another date."""
 
     tenor: EntryKey | None = None
@@ -71,9 +71,9 @@ class VanillaSwapEntry(TradeEntry):
         self.pay_receive_fixed = pay_receive_fixed.get_key()
 
         # Tenor
-        tenor = YearsMonthsEntry(title=retriever.retrieve(self.entry_id, input_text, _TENOR))
-        context.save_one(tenor)
-        self.tenor = tenor.get_key()
+        maturity = DateOrTenorEntry(title=retriever.retrieve(self.entry_id, input_text, _MATURITY))
+        context.save_one(maturity)
+        self.maturity = maturity.get_key()
 
         # Floating rate index
         float_index = RatesIndexEntry(title=retriever.retrieve(self.entry_id, input_text, _FLOAT_INDEX))
