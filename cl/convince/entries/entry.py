@@ -57,6 +57,16 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
         record_type = type(self).__name__
         self.entry_id = self.get_entry_id(record_type, self.title, self.body, self.data)
 
+    def get_text(self) -> str:
+        """Get the complete text of the entry."""
+        # TODO: Support body and data
+        if self.body is not None:
+            raise RuntimeError("Entry 'body' field is not yet supported.")
+        if self.data is not None:
+            raise RuntimeError("Entry 'data' field is not yet supported.")
+        result = self.title
+        return result
+
     # TODO: Restore abstract when implemented @abstractmethod
     def run_propose(self) -> None:
         """Generate or regenerate the proposed value."""
