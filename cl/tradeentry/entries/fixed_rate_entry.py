@@ -22,6 +22,5 @@ from cl.runtime.records.dataclasses_extensions import missing
 class FixedRateEntry(Entry):
     """Maps fixed interest rate entry to its numerical value."""
 
-    fixed_rate_pct: float = missing()
+    fixed_rate_pct: float | None = None
     """Numerical value for the fixed rate in percent."""
-

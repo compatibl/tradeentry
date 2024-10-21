@@ -13,11 +13,14 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from typing_extensions import Self
-
-from cl.runtime import Context
+from cl.convince.llms.gpt.gpt_llm import GptLlm
+from cl.convince.retrievers.annotating_retriever import AnnotatingRetriever
 from cl.convince.entries.entry_key import EntryKey
+from cl.runtime import Context
+from cl.tradeentry.entries.fixed_rate_entry import FixedRateEntry
 from cl.tradeentry.entries.trade_entry import TradeEntry
+
+_FIXED_RATE = "Fixed rate"
 
 
 @dataclass(slots=True, kw_only=True)
@@ -38,3 +41,25 @@ class VanillaSwapEntry(TradeEntry):
 
     fixed_rate: EntryKey | None = None
     """Fixed rate entry or breakeven rate if not specified."""
+
+    def run_propose(self) -> None:
+        """Retrieve parameters from this entry and save the resulting entries."""
+        # Get retriever
+        # TODO: Make configurable
+        retriever = AnnotatingRetriever(
+            retriever_id="test_annotating_retriever",
+            llm=GptLlm(llm_id="gpt-4o"),
+        )
+        retriever.init_all()
+
+        # Process fields
+        context = Context.current()
+        input_text = self.get_text()
+
+        # Fixed Rate
+        fixed_rate = FixedRateEntry(title=retriever.retrieve(self.entry_id, input_text, _FIXED_RATE))
+        context.save_one(fixed_rate)
+        self.fixed_rate = fixed_rate.get_key()
+
+        # Save self to DB
+        Context.current().save_one(self)
