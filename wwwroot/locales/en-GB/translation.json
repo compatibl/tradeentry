@@ -1,0 +1,377 @@
+{
+  "header": {
+    "input": {
+      "placeholder": "Press Ctrl+F or start typing to search"
+    },
+    "tabgroups": {
+      "opened": "Opened",
+      "tables": "Tables",
+      "types": "Types"
+    },
+    "userInfo": {
+      "theme": {
+        "label": "Theme:"
+      },
+      "language": {
+        "label": "Language:"
+      },
+      "role": "Role",
+      "accessLevel": "Access level",
+      "build": "Build",
+      "versions": "Versions",
+      "userMode": "User mode"
+    },
+    "theme": {
+      "dark": "Dark",
+      "light": "Light",
+      "demo": "Demo",
+      "blue": "Blue",
+      "time": "Time"
+    },
+    "environmentModal": {
+      "environment": "Environment"
+    },
+    "addEnvironmentModal": {
+      "addTitle": "Add"
+    },
+    "cancelButton": {
+      "tooltip": "Cancel running jobs",
+      "loading": "Loading",
+      "button": "Cancel Running Jobs"
+    },
+    "downloadLogs": "Download Logs",
+    "sendFeedback": "Send Feedback",
+    "logsFileName": "Logs"
+  },
+  "shared": {
+    "copy": "Copy",
+    "copied": "Copied",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No",
+    "open": "Open",
+    "somethingWentWrong": "Please Reload the Page",
+    "notSupported": "Not supported",
+    "success": "Success",
+    "reloadPage": "Reload page",
+    "noRecordsAreSelected": "No records are selected",
+    "refresh": "Refresh"
+  },
+  "grid": {
+    "sorting": {
+      "asc": "Sort Asc",
+      "desc": "Sort Desc",
+      "none": "No Sort"
+    },
+    "filterInputPlaceholder": "Filter here",
+    "noTypesSelected": "No Types Selected",
+    "pleaseContantTheAdministrator": "No data found. Please contact the administrator.",
+    "overview": "Overview",
+    "complianceRunDetails": "Compliance Run Details",
+    "columnFilter": {
+      "filterPlaceholder": "Start typing to search"
+    },
+    "tabs": {
+      "main": "Main"
+    }
+  },
+  "editor": {
+    "modalHeader": "Select the key",
+    "entityModalHeader": "Create Entity",
+    "entityExists": "Entity exists",
+    "duplicateEntity": "Record with key undefined already exists. Do you want to replace it?",
+    "createEntity": "Create new empty record",
+    "copyEntity": "Create copy from existing record",
+    "openJSONEditor": "JSON Editor",
+    "entitySavedSuccessfully": "Entity saved successfully",
+    "tabs": {
+      "editor": "Editor",
+      "newEntity": "New entity",
+      "copyEntity": "Copy entity",
+      "history": "History",
+      "selectType": "Select Type",
+      "dag": "Directed Acyclic Graph",
+      "prevRecord": "Prev record",
+      "nextRecord": "Next record"
+    },
+    "listToolbar": {
+      "add": "Add array element",
+      "remove": "Remove array element",
+      "insertRow": "Insert row",
+      "deleteAllExceptSelected": "Delete all rows except selected",
+      "moveRowDown": "Move Row Down",
+      "moveRowUp": "Move Row Up",
+      "addValue": "Add value",
+      "addVector": "Add vector",
+      "insertValue": "Insert value",
+      "insertVector": "Insert vector"
+    },
+    "modals": {
+      "genericTypeEmpty": "Type doesn't have any information"
+    },
+    "validation": {
+      "containErrors": "Some fields contain errors"
+    }
+  },
+  "gridToolbar": {
+    "layout": "Layout",
+    "content": "Content",
+    "query": "Query",
+    "data": "Data",
+    "entity": "Entity",
+    "excel": "Excel",
+    "history": "Show history",
+    "refresh": "Refresh",
+    "addNewEntity": "Add New Entity",
+    "copyEntity": "Copy Entity",
+    "duplicateFocucedEntity": "Duplicate Focused Entity",
+    "deleteSelectedEntity": "Delete Selected Entity",
+    "deleteSelectedEntities": "Delete {{numberOfItems}}Selected Entities",
+    "selectAllRecords": "Select All Records",
+    "bulkExportEntities": "Bulk Export {{numberOfItems}}Selected Entities",
+    "savePermanentlyEntity": "Save Permanently Entity",
+    "savePermanentlyEntities": "Save Permanently {{numberOfItems}}Selected Entities",
+    "chatAbout": "Chat About",
+    "export": "Export",
+    "json": "JSON",
+    "openExcelAddIn": "Export to Excel",
+    "openCSV": "Open CSV",
+    "entityDeletedSuccessfuly": "Entity deleted successfully",
+    "entitiesDeletedSuccessfuly": "Entities deleted successfully",
+    "restoreDefaultLayout": "Restore Default Layout",
+    "pagination": {
+      "firstPage": "First page",
+      "nextPage": "Next page",
+      "previousPage": "Previous page"
+    },
+    "editorToolbar": {
+      "json": "Open JSON editor",
+      "refresh": "Refresh"
+    },
+    "typeToolbar": {
+      "run": "Run",
+      "openLogs": "Open Logs",
+      "emptyRunHanlers": "No items available",
+      "handlerExecutedSuccessfuly": "Completed"
+    },
+    "datasetModal": {
+      "datasets": "Datasets",
+      "showAll": "Show All",
+      "includeParents": "Include Parents"
+    },
+    "buttons": {
+      "cancel": "CANCEL",
+      "apply": "APPLY",
+      "save": "SAVE",
+      "connect": "CONNECT",
+      "add": "ADD",
+      "delete": "DELETE",
+      "execute": "EXECUTE",
+      "ok": "OK",
+      "run": "RUN",
+      "yes": "YES",
+      "no": "NO",
+      "send": "SEND"
+    },
+    "logs": {
+      "filterByStatus": "Filter by status",
+      "search": "Search",
+      "flatView": "Flat view",
+      "handlers": "Handlers",
+      "notifications": "Notifications",
+      "elapsedTime": "Elapsed Time",
+      "startTime": "Start Time",
+      "finishTime": "Finish Time",
+      "sec": "sec",
+      "eraseLogs": "Erase Logs",
+      "sendLogs": "Send Logs",
+      "sendLogsWarningMessage": "Your message will be sent anonymously. If you'd like us to reply you, please indicate your email address in the mail body."
+    },
+    "unsavedChangeModal": {
+      "title": "Unsaved Changes",
+      "content": "Unsaved data will be lost. Continue?"
+    },
+    "unsavedChangeInfoModal": {
+      "title": "Unsaved Changes Detected",
+      "content": "Please save your changes before running the handler."
+    },
+    "sendLogsModal": {
+      "title": "Send Logs",
+      "feedback": "Send feedback",
+      "warningMessage": "Your message will be sent anonymously. If you'd like us to reply you, please indicate your email address in the mail body.",
+      "to": "To",
+      "purpose": "Purpose",
+      "textareaPlaceholder": "Please describe what you were doing when the error occurred.",
+      "subject": "Subject",
+      "initialSubjectValue": "{{applicationName}} Application Feedback (Build = {{frontendVersion}})"
+    },
+    "scroll": {
+      "scrollDownAutomatically": "Scroll down automatically"
+    },
+    "logsFilter": {
+      "all": "All",
+      "notSet": "Not Set",
+      "debug": "Debug",
+      "info": "Info",
+      "warning": "Warning",
+      "warn": "Warn",
+      "error": "Error",
+      "fatal": "Fatal",
+      "critical": "Critical"
+    },
+    "validationMessage": {
+      "invalidEmail": "Please enter a valid email address",
+      "noDescription": "Please enter a description",
+      "fieldRequired": "Field is required",
+      "intValue": "Value should be integer",
+      "boolValue": "Value should be boolean",
+      "dateValue": "Value should be YYYY-MM-DD format",
+      "timeValue": "Value should be HH:mm:ss format",
+      "dateTimeValue": "Value should be YYYY-MM-DD HH:mm:ss format",
+      "emptyTagsArray": "Please specify at least one recipient"
+    },
+    "noData": {
+      "inTheReport": "No Data in the Report",
+      "refresh": "Refresh",
+      "contactAdministrator": "Something went wrong, please reload the page and contact administrator",
+      "loading": "Loading"
+    },
+    "auth": {
+      "login": {
+        "title": "Log In",
+        "actions": {
+          "login": "Log In",
+          "backToTypes": "Back to Types"
+        },
+        "username": {
+          "placeholder": "Username",
+          "required": "Username is required"
+        },
+        "password": {
+          "placeholder": "Password",
+          "required": "Password is required"
+        },
+        "error": "The username or password is incorrect"
+      },
+      "multiLogin": {
+        "title": "Please Select an Authentication Type"
+      },
+      "signOut": "Sign Out",
+      "error": "Something went wrong, please contact the administrator",
+      "backToLogin": "Back to login"
+    },
+    "chat": {
+      "pleaseStartNewChat": "Please start new chat to continue ...",
+      "sendMessage": "Send a message ...",
+      "cancelRequest": "Processing ... Press Cancel to stop.",
+      "loading": "Processing ...",
+      "startNewChat": "start new chat",
+      "emptyHistoryTooltip": "No available chats for this topic",
+      "historyTooltip": "Chat history",
+      "deleteSelectedChats": "delete selected chats",
+      "allChats": "all chats",
+      "types": {
+        "private": "private chat",
+        "internal": "internal chat",
+        "encrypted": "encrypted chat"
+      },
+      "prompt": "Current Profile",
+      "newTypes": {
+        "internalAndProfile": "new chat & Profile",
+        "private": "new private chat",
+        "internal": "new chat",
+        "encrypted": "new encrypted chat"
+      },
+      "newTooltipTypes": {
+        "internalAndProfile": "Start a new chat session & Profile",
+        "private": "Start a new private encrypted chat session",
+        "internal": "Start a new chat session"
+      },
+      "disclaimer": {
+        "paragraph": "By using this software, you consent to the following:",
+        "list": [
+          "This demo may have trained AI against datasets that may not be complete",
+          "Any results obtained from this demonstration need to be carefully considered as feedback from the AI model",
+          "Any results may not be used as source data for any other purpose, without independent verification",
+          "The results obtained should not be used to automate any business process without a review by the subject matter expert",
+          "The results herein shall be deemed confidential and proprietary."
+        ]
+      },
+      "contentHandlersModal": {
+        "title": "Please select the content"
+      }
+    },
+    "maximizeButton": {
+      "fullScreen": "Full screen mode",
+      "exitFullScreen": "Exit full screen mode"
+    },
+    "confirmationModal": {
+      "deleteRecords": {
+        "addCurrentRecord": "Do you want to add current record to the selection and delete {{numberOfItems}} records?",
+        "addTitle": "Do you want to delete current record",
+        "head": "Deleting Entities",
+        "title": "Deleting Entities",
+        "confirmationTextOneEntity": "This action cannot be undone.\n Are you sure you want to delete selected entity?",
+        "confirmationTexts": "This action cannot be undone.\n Are you sure you want to delete {{numberOfItems}} selected entities?"
+      },
+      "executingHandlers": {
+        "addCurrentRecord": "Do you want to add current record to the selection and execute {{numberOfItems}} records?",
+        "addTitle": "Do you want to execute current record",
+        "title": "Confirmation",
+        "confirmationTexts": "Are you sure you want to execute {{numberOfItems}} selected records?"
+      },
+      "restoreLayout": {
+        "title": "Restore Default Layout",
+        "confirmationText": "All settings that were not saved manually will be discarded. Continue?"
+      },
+      "variantSelect": {
+        "title": "Variant"
+      },
+      "withDependencies": "Save With Dependencies",
+      "export": {
+        "title": "Confirm",
+        "exportEntity_zero": "You are about to export all entities. Continue?",
+        "exportEntity_one": "You are about to export {{count}} selected entity. Continue?",
+        "exportEntity_other": "You are about to export {{count}} selected entities. Continue?"
+      },
+      "savePermanently": {
+        "title": "Confirm",
+        "exportEntity_zero": "You are about to save all entities. Continue?",
+        "exportEntity_one": "You are about to save {{count}} selected entity. Continue?",
+        "exportEntity_other": "You are about to save {{count}} selected entities. Continue?"
+      }
+    },
+    "viewers": {
+      "pdf": {
+        "placeholder": "Enter to search",
+        "search": "Search",
+        "previousPage": "Previous page",
+        "nextPage": "Next page",
+        "previousMatch": "Previous match",
+        "nextMatch": "Next match"
+      }
+    },
+    "queryBuilder": {
+      "customIndex": "Custom",
+      "title": "Query",
+      "introduction": "Please Select an Index to Display Data",
+      "label": "Index",
+      "appendRow": "Append Row",
+      "deleteRow": "Delete Selected Row",
+      "resetAll": "reset all",
+      "apply": "apply",
+      "close": "close"
+    }
+  },
+  "toast": {
+    "completed": "completed",
+    "failed": "failed",
+    "warnings": "warnings",
+    "completedUpperCase": "Completed",
+    "failedUpperCase": "Failed"
+  },
+  "reloadApplicationModal": {
+    "title": "Reload required",
+    "content": "Application has been refreshed. Press OK to reload."
+  }
+}
