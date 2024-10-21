@@ -134,7 +134,8 @@ class RecordResponse(BaseModel):
         else:
             deserialized_key = key_serializer.deserialize_key(request.key, record_type.get_key_type())
 
-        record = db.load_one(record_type, deserialized_key)
+        # TODO: Review the use of is_record_optional flag here
+        record = db.load_one(record_type, deserialized_key, is_record_optional=True)
 
         # Get type declarations based on the actual record type
         type_decl_dict = (
