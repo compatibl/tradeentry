@@ -1,5 +1,0 @@
-# This submodule
--r package_requirements.txt
-
-# Other submodules from PyPI or an internal package repository
-runtime>=2.0.5
