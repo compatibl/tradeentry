@@ -73,9 +73,11 @@ class ConfusionMatrixPlot(MatplotlibPlot):
 
     def _load_style(self) -> ConfusionMatrixPlotStyle:
         """Load style object or create with default settings if not specified."""
-        style = Context.current().load_one(ConfusionMatrixPlotStyle, self.style)
-        style = style if self.style is not None else ConfusionMatrixPlotStyle()
-
+        style = Context.current().load_one(ConfusionMatrixPlotStyle, self.style, is_key_optional=True)
+        if style is None:
+            # Use default values if not found
+            style = ConfusionMatrixPlotStyle(plot_style_id="Default")
+            style.init_all()
         return style
 
     def _create_confusion_matrix(self) -> Tuple[pd.DataFrame, List[List[str]]]:

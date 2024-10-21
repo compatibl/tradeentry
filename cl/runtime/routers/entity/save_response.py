@@ -68,6 +68,7 @@ class SaveResponse(BaseModel):
                 record_type=type(record),
                 record_or_key=record.get_key(),
                 dataset=request.dataset,
+                is_record_optional=True,
             )
             if existing_record is not None:
                 raise UserError(f"Record with key {str(record)} already exists.")

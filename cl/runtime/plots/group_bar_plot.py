@@ -102,7 +102,9 @@ class GroupBarPlot(MatplotlibPlot):
 
     def _load_style(self) -> GroupBarPlotStyle:
         """Load style object or create with default settings if not specified."""
-        style = Context.current().load_one(GroupBarPlotStyle, self.style)
-        style = style if self.style is not None else GroupBarPlotStyle()
-
+        style = Context.current().load_one(GroupBarPlotStyle, self.style, is_key_optional=True)
+        if style is None:
+            # Use default values if not found
+            style = GroupBarPlotStyle(plot_style_id="Default")
+            style.init_all()
         return style

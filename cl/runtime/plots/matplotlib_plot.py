@@ -35,9 +35,11 @@ class MatplotlibPlot(Plot):
 
     def _load_style(self) -> PlotStyle:
         """Load style object or create with default settings if not specified."""
-        style = Context.current().load_one(PlotStyle, self.style)
-        style = style if self.style is not None else PlotStyle()
-
+        style = Context.current().load_one(PlotStyle, self.style, is_key_optional=True)
+        if style is None:
+            # Use default values if not found
+            style = PlotStyle(plot_style_id="Default")
+            style.init_all()
         return style
 
     def _get_pyplot_theme(self, style: PlotStyle) -> str:

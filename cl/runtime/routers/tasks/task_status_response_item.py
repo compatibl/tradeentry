@@ -75,7 +75,8 @@ class TaskStatusResponseItem(BaseModel):
             user_message = (
                 log_entry.message
                 if (
-                    (log_entry := context.load_one(LogEntry, task_run.log_entry)) is not None
+                    task_run.log_entry is not None and
+                    (log_entry := context.load_one(LogEntry, task_run.log_entry, is_record_optional=True)) is not None
                     and log_entry.level == LogEntryLevelEnum.USER_ERROR
                 )
                 else None
