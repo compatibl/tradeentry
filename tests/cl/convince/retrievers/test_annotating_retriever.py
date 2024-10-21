@@ -39,8 +39,8 @@ PARAM_SAMPLES = [
 
 def _test_extract(input_text: str, param_description: str, param_samples: List[str] | None = None) -> None:
     """Test extraction of the specified parameters from the entries."""
+    # TODO: Use samples in few-shot test
     param_samples_str = "".join(f"  - {x}\n" for x in param_samples) if param_samples is not None else None
-    input_entry = Entry(title=input_text)
     stub_full_llms = get_stub_full_llms()
     for llm in stub_full_llms:
         retriever = AnnotatingRetriever(
@@ -49,8 +49,8 @@ def _test_extract(input_text: str, param_description: str, param_samples: List[s
         )
         retriever.init_all()
         guard = RegressionGuard(channel=llm.llm_id)
-        param_value = retriever.retrieve(input_entry, param_description)
-        guard.write(f"Input Text: {input_entry.get_text()} Retrieved Value: {param_value}")
+        param_value = retriever.retrieve(retriever.retriever_id, input_text, param_description)
+        guard.write(f"Input Text: {input_text} Retrieved Value: {param_value}")
     RegressionGuard.verify_all()
 
 

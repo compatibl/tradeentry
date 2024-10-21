@@ -26,6 +26,7 @@ class Retriever(RetrieverKey, RecordMixin[RetrieverKey], ABC):
     def get_key(self) -> RetrieverKey:
         return RetrieverKey(retriever_id=self.retriever_id)
 
+    # TODO: Use keyword params
     @abstractmethod
     def retrieve(self,
                  entry_id: str,  # TODO: Generate instead
