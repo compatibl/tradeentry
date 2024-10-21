@@ -27,23 +27,3 @@ class RatesTradeEntry(TradeEntry):
 
     rates_trade: EntryKey = missing()
     """Entry for a rates trade."""
-
-    @classmethod
-    def create(
-            cls,
-            title: str,
-            *,
-            body: str | None = None,
-            data: str | None = None,
-    ) -> Self:
-        # TODO: This is a stub, requires implementation
-
-        # Create an instance of self and populate fields of the base class
-        result = cls.create_self(title, body=body, data=data)
-
-        # Create a type-specific entry record for further processing
-        result.rates_trade = RatesSwapEntry.create(title, body=body, data=data)
-
-        # Save to storage and return
-        Context.current().save_one(result)
-        return result

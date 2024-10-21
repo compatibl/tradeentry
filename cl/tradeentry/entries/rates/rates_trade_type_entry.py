@@ -29,23 +29,3 @@ class RatesTradeTypeEntry(Entry):
 
     rates_trade_type: RatesTradeTypeKey | None = None
     """Interest rate trade type captured from the entry (populated during processing)."""
-
-    @classmethod
-    def create(
-            cls,
-            title: str,
-            *,
-            body: str | None = None,
-            data: str | None = None,
-    ) -> Self:
-        # TODO: This is a stub, requires implementation
-
-        # Create an instance of self and populate fields of the base class
-        result = cls.create_self(title, body=body, data=data)
-
-        # TODO: Populate fields
-
-        # Save to storage and return
-        Context.current().save_one(result)
-        return result
-

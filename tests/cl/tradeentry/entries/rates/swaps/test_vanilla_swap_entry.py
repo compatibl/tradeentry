@@ -16,7 +16,7 @@ import pytest
 from typing import Dict, List, Tuple
 from matplotlib import pyplot as plt
 
-from cl.convince.prompts.extract.braces_extract_prompt import BracesExtractPrompt
+from cl.convince.prompts.extract.braces_extract_prompt import AnnotatingRetriever
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.regression_guard import RegressionGuard
@@ -91,11 +91,11 @@ def _test_extraction(entry: str, params: List[Tuple[str, str, List[str], str]]) 
                 if json_result is not None:
                     annotated_text = json_result.get("annotated_text", "None")
                     justification = json_result.get("justification", "None")
-                    extracted_text = BracesExtractPrompt._extract_in_braces(annotated_text, continue_on_error=True)
+                    extracted_text = AnnotatingRetriever._extract_in_braces(annotated_text, continue_on_error=True)
                     success = extracted_text.strip() == param_value.strip()  # TODO: Use specialized class for comparisons
                     success_count = success_count + 1 if success else success_count
                     success_str = "Y" if success else "N"
-                    guard.write(f"Success: {success_str} Extracted: {extracted_text} "
+                    guard.write(f"Success: {success_str} Retrieved: {extracted_text} "
                                 f"Annotated: {annotated_text} Justification: {justification}")
                 else:
                     guard.write("Error: Could not extract JSON.")

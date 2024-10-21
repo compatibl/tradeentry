@@ -32,27 +32,3 @@ class RatesSwapEntry(TradeEntry):
 
     legs: List[EntryKey] = missing()
     """List of swap legs."""
-
-    @classmethod
-    def create(
-            cls,
-            title: str,
-            *,
-            body: str | None = None,
-            data: str | None = None,
-    ) -> Self:
-
-        # TODO: This is a stub, requires implementation
-        
-        # Create an instance of self and populate fields of the base class
-        result = cls.create_self(title, body=body, data=data)
-        
-        # Process legs
-        result.legs = []
-        result.legs.append(FixedSwapLegEntry.create("FixedLeg"))
-        result.legs.append(FloatSwapLegEntry.create("FloatLeg"))
-        
-        # Save to storage and return
-        Context.current().save_one(result)
-        return result
-
