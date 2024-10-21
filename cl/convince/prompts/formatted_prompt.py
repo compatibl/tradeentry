@@ -13,49 +13,17 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.convince.prompts.prompt import Prompt
-from cl.runtime import RecordMixin
-from cl.runtime.log.exceptions.user_error import UserError
-from cl.runtime.primitive.case_util import CaseUtil
-from cl.runtime.records.dataclasses_extensions import missing
-from cl.convince.prompts.prompt_key import PromptKey
-from cl.runtime.serialization.dict_serializer import DictSerializer
-from cl.runtime.serialization.string_serializer import StringSerializer
-
-_data_serializer = DictSerializer()
-"""Serializer used to serialize params object for rendering the template."""
-
-_key_serializer = StringSerializer()
-"""Serializer used to serialize keys for error reporting."""
+from cl.convince.prompts.template_prompt import TemplatePrompt
+from cl.runtime.records.protocols import TDataDict
 
 
 @dataclass(slots=True, kw_only=True)
-class FormattedPrompt(Prompt):
+class FormattedPrompt(TemplatePrompt):
     """Uses Python interpolated string format for the template, param names are PascalCase in curly braces."""
 
-    template: str = missing()
-    """Uses Python interpolated string format for the template, param names are PascalCase in curly braces."""
-
-    def get_key(self) -> PromptKey:
-        return PromptKey(prompt_id=self.prompt_id)
-
-    def render(self, params: RecordMixin) -> str:
-        # Check params type
-        self._check_params_type(params)
-        # Serialize and convert keys to PascalCase
-        params_dict = _data_serializer.serialize_data(params)
-        params_dict_with_pascal_case_keys = {CaseUtil.snake_to_pascal_case(k): v for k, v in params_dict.items() if v is not None}
-        # Render
-        try:
-            result = self.template.format(**params_dict_with_pascal_case_keys)
-        except KeyError as e:
-            field_name = str(e)
-            params_key_str = _key_serializer.serialize_key(params.get_key())
-            present_keys_str = "".join(f"  - {x}\n" for x in params_dict_with_pascal_case_keys.keys())
-            raise UserError(f"Parameter required by prompt is either None or not a field of the parameters object.\n"
-                            f"Prompt key='{self.prompt_id}'\n"
-                            f"Parameter name: {field_name}\n"
-                            f"Parameters object type={type(params).__name__} and key='{params_key_str}'\n"
-                            f"Non-empty fields of the parameters object:\n{present_keys_str}\n")
+    def _render(self, dict_with_pascal_case_keys: TDataDict) -> str:
+        """Protected method performing the actual rendering, must throw KeyError if a parameter is missing."""
+        # Throws KeyError on missing parameter as required by the method specification
+        result = self.template.format(**dict_with_pascal_case_keys)
         return result
 

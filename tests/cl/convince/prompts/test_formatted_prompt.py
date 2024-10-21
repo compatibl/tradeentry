@@ -26,7 +26,6 @@ def test_formatted_prompt():
     """Smoke test."""
 
     with TestingContext():
-
         prompt = FormattedPrompt(prompt_id="Default", template=_TEMPLATE, params_type=StubPromptParams.__name__)
         guard = RegressionGuard()
         guard.write(prompt.render(StubPromptParams(str_opt="def", int_opt=456)))
