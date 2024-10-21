@@ -19,12 +19,12 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class RatesIndexEntryKey(KeyMixin):
-    """Floating interest rate index or currency (in case of currency, default index for the currency is used)."""
+class PayReceiveKey(KeyMixin):
+    """Determines if we pay or receive payments or periodic coupons for a trade or leg."""
 
-    entry_id: str = missing()
-    """String representation of the index or currency for which the meaning is recorded."""
+    pay_receive_id: str = missing()
+    """Unique PayReceive identifier."""
 
     @classmethod
     def get_key_type(cls) -> Type:
-        return RatesIndexEntryKey
+        return PayReceiveKey

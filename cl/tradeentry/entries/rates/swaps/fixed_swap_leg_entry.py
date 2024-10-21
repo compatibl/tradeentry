@@ -13,6 +13,12 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+
+from typing_extensions import Self
+
+from cl.convince.entries.entry_key import EntryKey
+from cl.runtime import Context
+from cl.runtime.records.dataclasses_extensions import missing
 from cl.tradeentry.entries.rates.swaps.rates_swap_leg_entry import RatesSwapLegEntry
 
 
@@ -20,5 +26,5 @@ from cl.tradeentry.entries.rates.swaps.rates_swap_leg_entry import RatesSwapLegE
 class FixedSwapLegEntry(RatesSwapLegEntry):
     """A series of interest rate payments with fixed coupon."""
 
-    fixed_rate: float | None = None
-    """Fixed rate in number format, or breakeven fixed rate if not specified."""
+    fixed_rate: EntryKey = missing()
+    """Fixed rate entry."""

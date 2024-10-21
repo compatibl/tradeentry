@@ -1,4 +1,0 @@
--r tools/tradeentry_install_requirements.txt
-convince>=0.0.3
-runtime>=2.0.5
-

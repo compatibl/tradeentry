@@ -13,17 +13,14 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+
+from cl.convince.entries.entry import Entry
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.rates.rates_spread_entry_key import RatesSpreadEntryKey
 
 
 @dataclass(slots=True, kw_only=True)
-class RatesSpreadEntry(RatesSpreadEntryKey, RecordMixin[RatesSpreadEntryKey]):
+class RatesSpreadEntry(Entry):
     """Maps interest rate spread string specified by the user to the numerical value."""
 
-    value: float = missing()
-    """Numerical value specified by the entry."""
-
-    def get_key(self) -> RatesSpreadEntryKey:
-        return RatesSpreadEntryKey(entry_id=self.entry_id)
+    rates_spread_bp: float = missing()
+    """Numerical value of the spread in basis points."""

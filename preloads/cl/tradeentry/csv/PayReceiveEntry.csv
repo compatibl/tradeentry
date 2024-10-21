@@ -1,7 +1,7 @@
-entry_id,value
-pay,Pay
-we pay,Pay
-short,Pay
-receive,Receive
-we receive,Receive
-long,Receive
+title,pay_receive
+Pay,Pay
+We pay,Pay
+Short,Pay
+Receive,Receive
+We receive,Receive
+Long,Receive

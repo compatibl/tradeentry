@@ -12,19 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
-from typing import Type
-from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.key_mixin import KeyMixin
+from cl.tradeentry.trades.pay_receive_fixed_key import PayReceiveFixedKey
+
+cls = PayReceiveFixedKey
 
 
-@dataclass(slots=True, kw_only=True)
-class RatesLegEntryKey(KeyMixin):
-    """Interest rate leg entry."""
+class PayReceiveFixedKeys:
+    """PayReceiveFixedKey constants."""
 
-    entry_id: str = missing()
-    """Text for which the meaning is recorded."""
+    PAY_FIXED: cls = cls(pay_receive_fixed_id="PayFixed")
+    """We pay fixed leg coupons."""
 
-    @classmethod
-    def get_key_type(cls) -> Type:
-        return RatesLegEntryKey
+    RECEIVE_FIXED: cls = cls(pay_receive_fixed_id="ReceiveFixed")
+    """We receive fixed leg coupons."""

@@ -1,5 +1,14 @@
--r tools/tradeentry_install_requirements.txt
--r tools/convince_install_requirements.txt
--r tools/runtime_install_requirements.txt
--r tools/runtime_build_requirements.txt
--r tools/runtime_test_requirements.txt
+# Submodule package requirements
+-r ./tools/cl/runtime/package_requirements.txt
+-r ./tools/cl/convince/package_requirements.txt
+-r ./tools/cl/tradeentry/package_requirements.txt
+
+# Submodule build requirements
+-r ./tools/cl/runtime/build_requirements.txt
+-r ./tools/cl/convince/build_requirements.txt
+-r ./tools/cl/tradeentry/build_requirements.txt
+
+# Submodule test requirements
+-r ./tools/cl/runtime/test_requirements.txt
+-r ./tools/cl/convince/test_requirements.txt
+-r ./tools/cl/tradeentry/test_requirements.txt

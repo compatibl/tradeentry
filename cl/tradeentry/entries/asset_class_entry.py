@@ -13,10 +13,12 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from typing_extensions import Self
 from cl.convince.entries.entry import Entry
-from cl.convince.entries.entry_status_enum import EntryStatusEnum
+from cl.convince.entries.entry_key import EntryKey
+from cl.runtime import Context
 from cl.tradeentry.trades.asset_class_key import AssetClassKey
-from cl.tradeentry.trades.asset_class_keys import AssetClassKeys
+from cl.tradeentry.trades.asset_class_keys import AssetClassKeys  # TODO: Use AssetClassKeys
 
 
 @dataclass(slots=True, kw_only=True)
@@ -24,15 +26,7 @@ class AssetClassEntry(Entry):
     """Capture asset class from user input for the entire trade."""
 
     asset_class: AssetClassKey | None = None
-    """Asset class captured from the entry (populated during processing)."""
+    """Asset class captured from the entry."""
 
-    def process(self) -> None:
-        # Recognize asset class
-        # TODO: Update to use AI
-        if self.entry_text == "Swap":
-            self.asset_class = AssetClassKeys.rates
-        elif self.entry_text == "VanillaSwap":
-            self.asset_class = AssetClassKeys.rates
-        else:
-            raise RuntimeError(f"Cannot extract asset class from {self.entry_text}")
-        self.entry_status = EntryStatusEnum.COMPLETED
+    asset_class_entry: EntryKey | None = None
+    """Asset-class-specific entry using the same title, body and data."""

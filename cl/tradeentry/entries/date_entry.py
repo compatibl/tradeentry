@@ -12,20 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import datetime as dt
-from abc import ABC
 from dataclasses import dataclass
+
+from cl.convince.entries.entry import Entry
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.date_entry_key import DateEntryKey
 
 
 @dataclass(slots=True, kw_only=True)
-class DateEntry(DateEntryKey, RecordMixin[DateEntryKey], ABC):
+class DateEntry(Entry):
     """Maps a date string specified by the user to a calendar date."""
 
-    value: dt.date = missing()
-    """Date specified by the entry."""
-
-    def get_key(self) -> DateEntryKey:
-        return DateEntryKey(entry_id=self.entry_id)
+    date: str | None = None
+    """Date specified by the entry in ISO-8601 yyyy-mm-dd string format."""

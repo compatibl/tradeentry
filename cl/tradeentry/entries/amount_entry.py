@@ -13,21 +13,18 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+
+from cl.convince.entries.entry import Entry
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.amount_entry_key import AmountEntryKey
-from cl.tradeentry.entries.currency_entry_key import CurrencyEntryKey
+from cl.convince.entries.entry_key import EntryKey
 
 
 @dataclass(slots=True, kw_only=True)
-class AmountEntry(AmountEntryKey, RecordMixin[AmountEntryKey]):
+class AmountEntry(Entry):
     """Amount with or without currency specification."""
 
-    value: float = missing()
-    """Numerical value specified by the entry."""
+    amount: float = missing()
+    """Numerical value for the amount including any units multiplier (e.g. 1,000,000 for 1m)."""
 
-    currency: CurrencyEntryKey | None = None
-    """Optional currency if specified along with the amount."""
-
-    def get_key(self) -> AmountEntryKey:
-        return AmountEntryKey(entry_id=self.entry_id)
+    currency_entry: EntryKey | None = None
+    """Optional entry for the currency if specified along with the amount."""

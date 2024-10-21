@@ -15,12 +15,9 @@
 from abc import ABC
 from dataclasses import dataclass
 from cl.convince.entries.entry import Entry
-from cl.tradeentry.trades.trade_key import TradeKey
 
 
 @dataclass(slots=True, kw_only=True)
 class TradeEntry(Entry, ABC):
     """Capture trade from user input."""
 
-    trade: TradeKey | None = None
-    """Trade captured from the entry (populated during processing)."""

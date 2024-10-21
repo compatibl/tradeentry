@@ -19,12 +19,12 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class AmountUnitsEntryKey(KeyMixin):
-    """Maps amount units string specified by the user to the numerical multiplier."""
+class PayReceiveFixedKey(KeyMixin):
+    """Determines if we pay or receive payments or periodic coupons for a trade or leg."""
 
-    entry_id: str = missing()
-    """Amount units string specified by the user."""
+    pay_receive_fixed_id: str = missing()
+    """Unique PayReceiveFixed identifier."""
 
     @classmethod
     def get_key_type(cls) -> Type:
-        return AmountUnitsEntryKey
+        return PayReceiveFixedKey

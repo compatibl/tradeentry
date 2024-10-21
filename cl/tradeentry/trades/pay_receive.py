@@ -12,19 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from abc import ABC
 from dataclasses import dataclass
-from typing import Type
-from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.key_mixin import KeyMixin
+from cl.runtime.records.record_mixin import RecordMixin
+from cl.tradeentry.trades.pay_receive_key import PayReceiveKey
 
 
 @dataclass(slots=True, kw_only=True)
-class PayFreqEntryKey(KeyMixin):
-    """Maps payment frequency string specified by the user to the standard payment frequency code."""
+class PayReceive(PayReceiveKey, RecordMixin[PayReceiveKey], ABC):
+    """Determines if we pay or receive payments or periodic coupons for a trade or leg."""
 
-    entry_id: str = missing()
-    """Payment frequency string specified by the user."""
+    comment: str | None = None
+    """Optional comment."""
 
-    @classmethod
-    def get_key_type(cls) -> Type:
-        return PayFreqEntryKey
+    def get_key(self) -> PayReceiveKey:
+        return PayReceiveKey(pay_receive_id=self.pay_receive_id)

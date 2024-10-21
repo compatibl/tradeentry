@@ -12,19 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
-from typing import Type
-from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.key_mixin import KeyMixin
+from cl.tradeentry.trades.pay_receive_key import PayReceiveKey
 
+cls = PayReceiveKey
 
-@dataclass(slots=True, kw_only=True)
-class RatesSpreadEntryKey(KeyMixin):
-    """Maps interest rate spread string specified by the user to the numerical value."""
+<<<<<<<< HEAD:tools/cl/runtime/fix_init_files.py
+    # Create __init__.py files in subdirectories except for tests
+    check_init_files(apply_fix=True, verbose=True)
+========
 
-    entry_id: str = missing()
-    """Interest rate spread string specified by the user."""
+class PayReceiveKeys:
+    """PayReceiveKey constants."""
 
-    @classmethod
-    def get_key_type(cls) -> Type:
-        return RatesSpreadEntryKey
+    PAY: cls = cls(pay_receive_id="Pay")
+    """We pay payments or periodic coupons."""
+
+    RECEIVE: cls = cls(pay_receive_id="Receive")
+    """We receive payments or periodic coupons."""
+>>>>>>>> origin/develop:cl/tradeentry/trades/pay_receive_keys.py

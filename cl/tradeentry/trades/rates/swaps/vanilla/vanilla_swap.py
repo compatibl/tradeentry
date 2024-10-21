@@ -15,7 +15,7 @@
 import datetime as dt
 from dataclasses import dataclass
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.tradeentry.trades.pay_receive_fixed_enum import PayReceiveFixedEnum
+from cl.tradeentry.trades.pay_receive_fixed_key import PayReceiveFixedKey
 from cl.tradeentry.trades.rates.rates_index_key import RatesIndexKey
 from cl.tradeentry.trades.trade import Trade
 
@@ -24,17 +24,17 @@ from cl.tradeentry.trades.trade import Trade
 class VanillaSwap(Trade):
     """Vanilla fixed-for-floating swap."""
 
-    pay_receive_fixed: PayReceiveFixedEnum = missing()
-    """Determines if we pay or receive payments or periodic coupons for a trade or leg."""
+    pay_receive_fixed: PayReceiveFixedKey = missing()
+    """Flag indicating if we pay or receive fixed leg coupons in a fixed-for-floating swap."""
 
-    effective_date: dt.date = missing()
-    """Effective date."""
+    effective_date: str = missing()
+    """Effective date in ISO-8601 yyyy-mm-dd string format."""
 
-    maturity_date: dt.date = missing()
-    """Maturity date."""
+    maturity_date: str = missing()
+    """Maturity date in ISO-8601 yyyy-mm-dd string format."""
 
     float_index: RatesIndexKey = missing()
     """Floating interest rate index."""
 
-    fixed_rate_pct: float = missing()
-    """Fixed rate in percent."""
+    fixed_rate_pct: float | None = None
+    """Fixed rate in percent or breakeven rate if not specified."""

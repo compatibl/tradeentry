@@ -16,7 +16,7 @@ import datetime as dt
 from dataclasses import dataclass
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.tradeentry.trades.freq_key import FreqKey
-from cl.tradeentry.trades.pay_receive_enum import PayReceiveEnum
+from cl.tradeentry.trades.pay_receive_key import PayReceiveKey
 from cl.tradeentry.trades.rates.rates_leg import RatesLeg
 
 
@@ -24,14 +24,14 @@ from cl.tradeentry.trades.rates.rates_leg import RatesLeg
 class RatesSwapLeg(RatesLeg):
     """Swap leg."""
 
-    pay_receive: PayReceiveEnum = missing()
-    """String representation of the Buy or Sell flag in the format specified by the user."""
+    pay_receive: PayReceiveKey = missing()
+    """Flag indicating if we pay or receive payments or periodic coupons for a trade or leg."""
 
-    effective_date: dt.date = missing()
-    """Effective date."""
+    effective_date: str = missing()
+    """Effective date in ISO-8601 yyyy-mm-dd string format."""
 
-    maturity_date: dt.date = missing()
-    """Maturity date."""
+    maturity_date: str = missing()
+    """Maturity date in ISO-8601 yyyy-mm-dd string format."""
 
     pay_freq: FreqKey = missing()
     """Payment frequency."""

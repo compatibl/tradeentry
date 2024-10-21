@@ -13,13 +13,10 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.records.record_mixin import RecordMixin
-from cl.tradeentry.entries.rates.rates_effective_date_entry_key import RatesEffectiveDateEntryKey
+from cl.convince.entries.entry import Entry
 
 
 @dataclass(slots=True, kw_only=True)
-class RatesEffectiveDateEntry(RatesEffectiveDateEntryKey, RecordMixin[RatesEffectiveDateEntryKey]):
+class RatesEffectiveDateEntry(Entry):
     """Trade or leg effective date defined as unadjusted date or time interval relative to another date."""
 
-    def get_key(self) -> RatesEffectiveDateEntryKey:
-        return RatesEffectiveDateEntryKey(entry_id=self.entry_id)

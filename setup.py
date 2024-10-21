@@ -3,7 +3,7 @@ import setuptools
 with open('./README.md', 'r') as readme_file:
     readme = readme_file.read()
 
-with open('./tools/cl/runtime/install_requirements.txt') as install_requirements:
+with open('./tools/cl/tradeentry/install_requirements.txt') as install_requirements:
     install_requires = [line.strip() for line in install_requirements.readlines()]
 
 setuptools.setup(
@@ -25,11 +25,6 @@ setuptools.setup(
         exclude=['tests', 'tests.*']
     ),
     package_dir={'': '.'},
-    package_data={
-        '': ['py.typed'],
-        'data': ['csv/**/*.csv', 'yaml/**/*.yaml', 'json/**/*.json'],
-    },
-    include_package_data=True,
     classifiers=[
         # Alpha - will attempt to avoid breaking changes but they remain possible
         'Development Status :: 3 - Alpha',

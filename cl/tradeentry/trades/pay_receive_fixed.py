@@ -12,19 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from abc import ABC
 from dataclasses import dataclass
-from typing import Type
-from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.key_mixin import KeyMixin
+from cl.runtime.records.record_mixin import RecordMixin
+from cl.tradeentry.trades.pay_receive_fixed_key import PayReceiveFixedKey
 
 
 @dataclass(slots=True, kw_only=True)
-class PayReceiveFixedEntryKey(KeyMixin):
-    """User input to determine if we pay or receive fixed leg coupons in a fixed-for-floating swap."""
+class PayReceiveFixed(PayReceiveFixedKey, RecordMixin[PayReceiveFixedKey], ABC):
+    """Determines if we pay or receive payments or periodic coupons for a trade or leg."""
 
-    entry_id: str = missing()
-    """User input to determine if we pay or receive fixed leg coupons in a fixed-for-floating swap."""
+    comment: str | None = None
+    """Optional comment."""
 
-    @classmethod
-    def get_key_type(cls) -> Type:
-        return PayReceiveFixedEntryKey
+    def get_key(self) -> PayReceiveFixedKey:
+        return PayReceiveFixedKey(pay_receive_fixed_id=self.pay_receive_fixed_id)

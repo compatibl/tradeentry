@@ -1,8 +1,8 @@
-entry_id,value,currency
-10m,10000000.0,
-ten million,10000000.0,
-$10m,10000000.0,"```json {""entry_id"": ""USD"", ""_type"": ""CurrencyEntryKey""}"
- USD 10m ,10000000.0,"```json {""entry_id"": ""USD"", ""_type"": ""CurrencyEntryKey""}"
-ten million dollars,10000000.0,"```json {""entry_id"": ""USD"", ""_type"": ""CurrencyEntryKey""}"
-€10m,10000000.0,"```json {""entry_id"": ""EUR"", ""_type"": ""CurrencyEntryKey""}"
-ten million euro,10000000.0,"```json {""entry_id"": ""EUR"", ""_type"": ""CurrencyEntryKey""}"
+title,amount,currency_entry
+10m,10000000,
+ten million,10000000,
+$10m,10000000,
+ USD 10m ,10000000,CurrencyEntry: USD
+ten million dollars,10000000,CurrencyEntry: USD
+€10m,10000000,CurrencyEntry: EUR
+ten million euro,10000000,CurrencyEntry: EUR
