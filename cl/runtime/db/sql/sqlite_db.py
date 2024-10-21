@@ -422,3 +422,28 @@ class SqliteDb(Db):
 
         result = os.path.join(db_dir, f"{filename}.sqlite")
         return result
+
+    def is_empty(self) -> bool:
+        """Return True if the database has no tables or all tables are empty."""
+        connection = self._get_connection()
+        cursor = connection.cursor()
+
+        # Check if there are any tables in the SQLite database
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        tables = cursor.fetchall()
+
+        # If no tables are present, the database is empty
+        if not tables:
+            return True
+
+        # Check if all tables are empty
+        for table_name in tables:
+            table_name = table_name['name']
+            cursor.execute(f'SELECT COUNT(*) FROM "{table_name}";')
+            count = cursor.fetchone()['COUNT(*)']
+
+            # If any table has data, the database is not empty
+            if count > 0:
+                return False
+
+        return True
