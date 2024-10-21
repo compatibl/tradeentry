@@ -17,25 +17,28 @@ from cl.convince.entries.entry import Entry
 
 
 @dataclass(slots=True, kw_only=True)
-class TenorEntry(Entry):
+class DateOrTenorEntry(Entry):
     """
-    Maps tenor entry to its precise specification as a time interval.
+    Can be specified as either a date or a tenor (length).
 
     Notes:
         - Fields are additive, however some combinations are not used in capital markets
     """
 
+    date: str | None = None
+    """The only field if specified as a date."""
+
     years: int | None = None
-    """Years component of the time interval."""
+    """Years component of the time interval (either this field or date can be specified but not both)."""
 
     months: int | None = None
-    """Months component of the time interval."""
+    """Months component of the time interval (either this field or date can be specified but not both)."""
 
     weeks: int | None = None
-    """Weeks component of the time interval."""
+    """Weeks component of the time interval (either this field or date can be specified but not both)."""
 
     days: int | None = None
-    """Days component of the time interval."""
+    """Days component of the time interval (either this field or date can be specified but not both)."""
 
     business_days: int | None = None
-    """Business days component of the time interval."""
+    """Business days component of the time interval (either this field or date can be specified but not both)."""
