@@ -14,13 +14,10 @@
 
 from abc import abstractmethod, ABC
 from dataclasses import dataclass
-
-from cl.convince.entries.entry_type_key import EntryTypeKey
 from cl.runtime import Context
 from cl.runtime.backend.core.user_key import UserKey
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.primitive.case_util import CaseUtil
-from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.convince.entries.entry_key import EntryKey
@@ -67,16 +64,10 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
         result = self.title
         return result
 
-    # TODO: Restore abstract when implemented @abstractmethod
+    # TODO: Restore abstract when implemented for all entries
     def run_propose(self) -> None:
         """Generate or regenerate the proposed value."""
-
-    def run_approve(self) -> None:  # TODO: Review
-        """Approve the manually set approved value, or proposed value if the approved value is not set."""
-        # Set approved_py to the user obtained from the current context and save
-        context = Context.current()
-        self.approved_by = context.user
-        context.save_one(self)
+        raise UserError(f"Propose handler is not yet implemented for {type(self).__name__}.")
 
     @classmethod
     def parse_required_bool(cls, field_value: str | None, *, field_name: str | None = None) -> bool:  # TODO: Move to Util class

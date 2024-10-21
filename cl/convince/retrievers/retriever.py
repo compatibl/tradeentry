@@ -14,13 +14,9 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Any, List
-
-from cl.convince.entries.entry import Entry
+from typing import List
 from cl.runtime import RecordMixin
-from cl.runtime.log.exceptions.user_error import UserError
 from cl.convince.retrievers.retriever_key import RetrieverKey
-from cl.runtime.schema.schema import Schema
 
 
 @dataclass(slots=True, kw_only=True)
@@ -32,15 +28,17 @@ class Retriever(RetrieverKey, RecordMixin[RetrieverKey], ABC):
 
     @abstractmethod
     def retrieve(self,
-                 entry: Entry,
+                 entry_id: str,  # TODO: Generate instead
+                 input_text: str,
                  param_description: str,
                  param_samples: List[str] | None = None
-                 ) -> Entry:
+                 ) -> str:
         """
         Retrieve the specified parameter from the entry and return it as a smaller entry.
 
         Args:
-            entry: The entry from which the data is extracted
+            entry_id: The identifier of the entry from which the data is extracted
+            input_text: The text from which the data is extracted
             param_description: Parameter description
             param_samples: Optional parameter value samples for a few-shot prompt
         """

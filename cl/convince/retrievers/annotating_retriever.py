@@ -75,21 +75,21 @@ class AnnotatingRetriever(Retriever):
             )  # TODO: Review the handling of defaults
 
     def retrieve(self,
-                 entry: Entry,
+                 entry_id: str,  # TODO: Generate instead
+                 input_text: str,
                  param_description: str,
                  param_samples: List[str] | None = None
-                 ) -> Entry:
+                 ) -> str:
         # Get LLM and prompt
         llm = Context.current().load_one(Llm, self.llm)
         prompt = Context.current().load_one(Prompt, self.prompt)
 
-        # Get entry text and strip starting and ending whitespace
-        input_text = entry.get_text()
+        # Strip starting and ending whitespace
         input_text = input_text.strip()  # TODO: Perform more advanced normalization
 
         # Create a retrieval record
         retrieval = Retrieval(
-            retrieval_id=f"{entry.entry_id}: {param_description}",
+            retrieval_id=f"{entry_id}: {param_description}",
             input_text=input_text,
             param_description=param_description,
             param_samples=param_samples,
