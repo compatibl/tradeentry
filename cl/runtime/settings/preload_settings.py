@@ -15,8 +15,8 @@
 import os
 from dataclasses import dataclass
 from typing import List
-from cl.runtime.config.config import Config
-from cl.runtime.config.config_key import ConfigKey
+from cl.runtime.configs.config import Config
+from cl.runtime.configs.config_key import ConfigKey
 from cl.runtime.context.context import Context
 from cl.runtime.file.csv_dir_reader import CsvDirReader
 from cl.runtime.records.dataclasses_extensions import field

@@ -15,7 +15,7 @@
 from abc import ABC
 from abc import abstractmethod
 from dataclasses import dataclass
-from cl.runtime.config.config_key import ConfigKey
+from cl.runtime.configs.config_key import ConfigKey
 from cl.runtime.records.record_mixin import RecordMixin
 
 
