@@ -1,2 +1,3 @@
 StrReq='abc' StrOpt='def' IntReq='123' IntOpt='456'
+StrReq='abc' StrOpt='' IntReq='123' IntOpt=''
 - str_req_list_1- str_req_list_2

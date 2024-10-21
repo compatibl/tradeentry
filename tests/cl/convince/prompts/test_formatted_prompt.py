@@ -26,9 +26,13 @@ def test_formatted_prompt():
     """Smoke test."""
 
     with TestingContext():
-        prompt = FormattedPrompt(prompt_id="Default", template=_TEMPLATE, params_type=StubPromptParams.__name__)
         guard = RegressionGuard()
+        prompt = FormattedPrompt(prompt_id="Default", template=_TEMPLATE, params_type=StubPromptParams.__name__)
+
+        # Simple prompt
         guard.write(prompt.render(StubPromptParams(str_opt="def", int_opt=456)))
+
+        # Formatted string raises an error when parameter is None
         try:
             prompt.render(StubPromptParams())
         except UserError as e:
