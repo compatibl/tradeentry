@@ -59,7 +59,7 @@ class TemplatePrompt(Prompt, ABC):
                             f"Prompt key='{self.prompt_id}'\n"
                             f"Parameter name: {field_name}\n"
                             f"Parameters object type={type(params).__name__} and key='{params_key_str}'\n"
-                            f"Non-empty fields of the parameters object:\n{present_keys_str}\n")
+                            f"Available non-empty fields of the parameters object:\n{present_keys_str}\n")
         return result
 
     @abstractmethod

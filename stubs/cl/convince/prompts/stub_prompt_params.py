@@ -13,8 +13,10 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from typing import List
 
 from cl.runtime import RecordMixin
+from cl.runtime.records.dataclasses_extensions import field
 from stubs.cl.convince.prompts.stub_prompt_params_key import StubPromptParamsKey
 
 
@@ -27,6 +29,9 @@ class StubPromptParams(StubPromptParamsKey, RecordMixin[StubPromptParamsKey]):
 
     str_opt: str | None = None
     """Optional string field."""
+
+    str_req_list: List[str] = field(default_factory=lambda: ["str_req_list_1", "str_req_list_2"])
+    """Required string list field."""
 
     int_req: int = 123
     """Required int field."""
