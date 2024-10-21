@@ -13,22 +13,17 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.settings.settings import Settings
+from typing import Type
+from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class OpenaiSettings(Settings):
-    """OpenAI settings."""
+class StubPromptParamsKey(KeyMixin):
+    """Stub prompt parameters of various primitive types."""
 
-    api_key: str
-    """OpenAI API key."""
-
-    def init(self) -> None:
-        """Same as __init__ but can be used when field values are set both during and after construction."""
-
-        if not isinstance(self.api_key, str):
-            raise RuntimeError(f"{type(self).__name__} field 'api_key' must be a string.")
+    prompt_params_id: str = "Default"
+    """Unique prompt params identifier."""
 
     @classmethod
-    def get_prefix(cls) -> str:
-        return "openai"
+    def get_key_type(cls) -> Type:
+        return StubPromptParamsKey

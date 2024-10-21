@@ -18,14 +18,14 @@ from enum import IntEnum
 class EntryStatusEnum(IntEnum):
     """Entry processing status."""
 
-    CREATED = 1
-    """The entry has been created."""
+    COMPLETED = 1
+    """Processing completed by AI or conventional code (excludes overrides and manual entries)."""
 
-    COMPLETED = 4
-    """Entry processing has been completed."""
+    ESCALATION = 2
+    """Escalated by AI or conventional code for human review, contains pertinent details to create an override."""
 
-    APPROVED = 4
-    """Entry processing result has been approved."""
+    OVERRIDE = 3
+    """Human override of a previously processed or escalated entry."""
 
-    ESCALATION = 4
-    """Entry processing result requires escalation."""
+    MANUAL = 4
+    """New manual entry by a human in the normal course of processing (not an override)."""

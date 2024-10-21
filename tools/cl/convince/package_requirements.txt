@@ -1,5 +1,5 @@
 anthropic>=0.34.2
 fireworks-ai>=0.15.1
 google-generativeai>=0.8.1
-regex>=2024.9.11
+jinja2>=3.1.4
 openai>=1.45.0

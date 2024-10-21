@@ -12,23 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from cl.runtime.settings.settings import Settings
+from cl.convince.entries.entry import Entry
+from cl.runtime.log.exceptions.user_error import UserError
 
 
 @dataclass(slots=True, kw_only=True)
-class OpenaiSettings(Settings):
-    """OpenAI settings."""
+class ManualEntry(Entry):
+    """Manual entry does not run AI and relies on the user exclusively for setting the approved value manually."""
 
-    api_key: str
-    """OpenAI API key."""
-
-    def init(self) -> None:
-        """Same as __init__ but can be used when field values are set both during and after construction."""
-
-        if not isinstance(self.api_key, str):
-            raise RuntimeError(f"{type(self).__name__} field 'api_key' must be a string.")
-
-    @classmethod
-    def get_prefix(cls) -> str:
-        return "openai"
+    def run_propose(self) -> None:
+        """Generate or regenerate the proposed value."""
+        raise UserError(f"Propose is not defined for ManualEntry as relies on the user exclusively "
+                        f"for setting the approved value manually.\nEntryId: {self.entry_id}")

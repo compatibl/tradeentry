@@ -12,23 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
-from cl.runtime.settings.settings import Settings
+
+import json
+from cl.convince.llms.json_response_util import JsonResponseUtil
 
 
-@dataclass(slots=True, kw_only=True)
-class OpenaiSettings(Settings):
-    """OpenAI settings."""
+def test_fix_json_format():
+    """Test JsonResponseUtil.fix_json_format."""
 
-    api_key: str
-    """OpenAI API key."""
-
-    def init(self) -> None:
-        """Same as __init__ but can be used when field values are set both during and after construction."""
-
-        if not isinstance(self.api_key, str):
-            raise RuntimeError(f"{type(self).__name__} field 'api_key' must be a string.")
-
-    @classmethod
-    def get_prefix(cls) -> str:
-        return "openai"
+    llm_response = """{"key": 'value'}"""
+    try:
+        llm_response_fixed: str = JsonResponseUtil.fix_json_format(llm_response)
+        llm_response_fixed = JsonResponseUtil.try_to_load_json_string(llm_response_fixed)
+        llm_response_dict = json.loads(llm_response_fixed)
+        print(llm_response_dict)
+    except json.JSONDecodeError as e:
+        print(f"JSON decode error: {e}")

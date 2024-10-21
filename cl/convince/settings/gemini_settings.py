@@ -23,8 +23,8 @@ class GeminiSettings(Settings):
     api_key: str
     """Gemini API key."""
 
-    def __post_init__(self):
-        """Perform validation and type conversions."""
+    def init(self) -> None:
+        """Same as __init__ but can be used when field values are set both during and after construction."""
 
         if not isinstance(self.api_key, str):
             raise RuntimeError(f"{type(self).__name__} field 'api_key' must be a string.")

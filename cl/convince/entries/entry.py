@@ -12,41 +12,91 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 from dataclasses import dataclass
+from cl.runtime import Context
+from cl.runtime.backend.core.user_key import UserKey
+from cl.runtime.log.exceptions.user_error import UserError
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.convince.entries.entry_key import EntryKey
-from cl.convince.entries.entry_status_enum import EntryStatusEnum
-from cl.convince.llms.llm_key import LlmKey
 
 
 @dataclass(slots=True, kw_only=True)
 class Entry(EntryKey, RecordMixin[EntryKey], ABC):
-    """Performs comprehension of the specified type on entry text."""
+    """Contains title, body and supporting data of user entry along with the entry processing result."""
 
-    parent_entry: EntryKey | None = None
-    """Parent entry (optional)."""
+    title: str = missing()
+    """Title of a long entry or complete description of a short one (included in MD5 hash)."""
 
-    entry_status: EntryStatusEnum = missing()
-    """Entry type."""
+    body: str | None = None
+    """Optional body of the entry if not completely described by the title (included in MD5 hash)."""
 
-    llm: LlmKey = missing()
-    """LLM used to process the entry."""
+    data: str | None = None
+    """Optional supporting data in YAML format (included in MD5 hash)."""
 
-    def __post_init__(self):
-        """Populate status if not specified."""
+    approved_by: UserKey | None = None
+    """User who recorded the approval."""
 
-        # Call __post_init__ from the base class
-        super(Entry, self).__post_init__()
-
-        if self.entry_status is None:
-            self.entry_status = EntryStatusEnum.CREATED
+    few_shot: bool | None = None
+    """If True, use this entry as a few-shot example."""
 
     def get_key(self) -> EntryKey:
-        return EntryKey(entry_type=self.entry_type, entry_text=self.entry_text)
+        return EntryKey(entry_id=self.entry_id)
 
-    @abstractmethod
-    def process(self) -> None:
-        """Process using the LLM specified in the entry record."""
+    def init(self) -> None:
+        """Generate entry_id in 'type: title' format followed by an MD5 hash of body and data if present."""
+        # Convert field types if necessary
+        if self.few_shot is not None and isinstance(self.few_shot, str):
+            self.few_shot = self.parse_optional_bool(self.few_shot, field_name="few_shot")
+        # Record type is part of the key
+        record_type = type(self).__name__
+        self.entry_id = self.get_entry_id(record_type, self.title, self.body, self.data)
+
+    def get_text(self) -> str:
+        """Get the complete text of the entry."""
+        # TODO: Support body and data
+        if self.body is not None:
+            raise RuntimeError("Entry 'body' field is not yet supported.")
+        if self.data is not None:
+            raise RuntimeError("Entry 'data' field is not yet supported.")
+        result = self.title
+        return result
+
+    # TODO: Restore abstract when implemented for all entries
+    def run_propose(self) -> None:
+        """Generate or regenerate the proposed value."""
+        raise UserError(f"Propose handler is not yet implemented for {type(self).__name__}.")
+
+    @classmethod
+    def parse_required_bool(cls, field_value: str | None, *, field_name: str | None = None) -> bool:  # TODO: Move to Util class
+        """Parse an optional boolean value."""
+        match field_value:
+            case None | "":
+                field_name = CaseUtil.snake_to_pascal_case(field_name)
+                for_field = f"for field {field_name}" if field_name is not None else " for a Y/N field"
+                raise UserError(f"The value {for_field} is empty. Valid values are Y or N.")
+            case "Y":
+                return True
+            case "N":
+                return False
+            case _:
+                field_name = CaseUtil.snake_to_pascal_case(field_name)
+                for_field = f" for field {field_name}" if field_name is not None else  " for a Y/N field"
+                raise UserError(f"The value {for_field} must be Y, N or an empty string.\nField value: {field_value}")
+
+    @classmethod
+    def parse_optional_bool(cls, field_value: str | None, *, field_name: str | None = None) -> bool | None:  # TODO: Move to Util class
+        """Parse an optional boolean value."""
+        match field_value:
+            case None | "":
+                return None
+            case "Y":
+                return True
+            case "N":
+                return False
+            case _:
+                field_name = CaseUtil.snake_to_pascal_case(field_name)
+                for_field = f" for field {field_name}" if field_name is not None else ""
+                raise UserError(f"The value{for_field} must be Y, N or an empty string.\nField value: {field_value}")

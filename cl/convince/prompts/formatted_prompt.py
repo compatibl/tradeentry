@@ -13,22 +13,17 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.settings.settings import Settings
+from cl.convince.prompts.template_prompt import TemplatePrompt
+from cl.runtime.records.protocols import TDataDict
 
 
 @dataclass(slots=True, kw_only=True)
-class OpenaiSettings(Settings):
-    """OpenAI settings."""
+class FormattedPrompt(TemplatePrompt):
+    """Uses Python interpolated string format for the template, param names are PascalCase in curly braces."""
 
-    api_key: str
-    """OpenAI API key."""
+    def _render(self, dict_with_pascal_case_keys: TDataDict) -> str:
+        """Protected method performing the actual rendering, must throw KeyError if a parameter is missing."""
+        # Throws KeyError on missing parameter as required by the method specification
+        result = self.template.format(**dict_with_pascal_case_keys)
+        return result
 
-    def init(self) -> None:
-        """Same as __init__ but can be used when field values are set both during and after construction."""
-
-        if not isinstance(self.api_key, str):
-            raise RuntimeError(f"{type(self).__name__} field 'api_key' must be a string.")
-
-    @classmethod
-    def get_prefix(cls) -> str:
-        return "openai"

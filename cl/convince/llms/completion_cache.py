@@ -19,10 +19,10 @@ from dataclasses import dataclass
 from typing import Any
 from typing import Dict
 from typing import Iterable
+from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.records.dataclasses_extensions import field
 from cl.runtime.settings.context_settings import ContextSettings
-from cl.runtime.settings.settings import Settings
-from cl.runtime.context.env_util import EnvUtil
+from cl.runtime.settings.project_settings import ProjectSettings
 
 _supported_extensions = ["csv"]
 """The list of supported output file extensions (formats)."""
@@ -75,7 +75,7 @@ class CompletionCache:
 
         # If not found, use base path relative to project root
         if base_dir is None:
-            project_root = Settings.get_project_root()
+            project_root = ProjectSettings.get_project_root()
             base_dir = os.path.join(project_root, "completions")
 
         if self.ext is not None:
@@ -189,7 +189,7 @@ class CompletionCache:
 
         # Add trial_id to the beginning of cached query key
         if trial_id is not None:
-            result = f"TrialID: {str(trial_id)} {result}"
+            result = f"TrialID: {str(trial_id)}\n{result}"
 
         # Normalize EOL
         result = cls.to_python_eol(result)

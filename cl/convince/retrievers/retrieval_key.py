@@ -13,22 +13,18 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.settings.settings import Settings
+from typing import Type
+from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class OpenaiSettings(Settings):
-    """OpenAI settings."""
+class RetrievalKey(KeyMixin):
+    """Retrieves the requested data from the text."""
 
-    api_key: str
-    """OpenAI API key."""
-
-    def init(self) -> None:
-        """Same as __init__ but can be used when field values are set both during and after construction."""
-
-        if not isinstance(self.api_key, str):
-            raise RuntimeError(f"{type(self).__name__} field 'api_key' must be a string.")
+    retrieval_id: str = missing()
+    """Unique retrieval identifier."""
 
     @classmethod
-    def get_prefix(cls) -> str:
-        return "openai"
+    def get_key_type(cls) -> Type:
+        return RetrievalKey

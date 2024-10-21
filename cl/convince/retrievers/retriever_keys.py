@@ -12,23 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from dataclasses import dataclass
-from cl.runtime.settings.settings import Settings
+from cl.convince.retrievers.retriever_key import RetrieverKey
+
+cls = RetrieverKey
 
 
-@dataclass(slots=True, kw_only=True)
-class OpenaiSettings(Settings):
-    """OpenAI settings."""
+class RetrieverKeys:
+    """RetrieverKey constants."""
 
-    api_key: str
-    """OpenAI API key."""
-
-    def init(self) -> None:
-        """Same as __init__ but can be used when field values are set both during and after construction."""
-
-        if not isinstance(self.api_key, str):
-            raise RuntimeError(f"{type(self).__name__} field 'api_key' must be a string.")
-
-    @classmethod
-    def get_prefix(cls) -> str:
-        return "openai"
+    ANNOTATING_RETRIEVER: cls = cls(retriever_id="AnnotatingRetriever")
+    """Instructs the model to surround the requested parameter by curly braces and uses the annotations to retrieve."""

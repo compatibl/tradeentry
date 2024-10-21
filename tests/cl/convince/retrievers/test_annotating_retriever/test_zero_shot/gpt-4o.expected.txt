@@ -1,0 +1,1 @@
+Input Text: Sell 10y SOFR swap at 3.45% Retrieved Value: 3.45%

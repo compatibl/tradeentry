@@ -13,22 +13,18 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.settings.settings import Settings
+from cl.convince.entries.entry import Entry
+from cl.convince.llms.llm_key import LlmKey
+from cl.convince.prompts.prompt_key import PromptKey
+from cl.runtime.records.dataclasses_extensions import missing
 
 
 @dataclass(slots=True, kw_only=True)
-class OpenaiSettings(Settings):
-    """OpenAI settings."""
+class PromptEntry(Entry):
+    """Uses an LLM prompt for the implementation."""
 
-    api_key: str
-    """OpenAI API key."""
+    llm: LlmKey = missing()
+    """LLM used to process the entry."""
 
-    def init(self) -> None:
-        """Same as __init__ but can be used when field values are set both during and after construction."""
-
-        if not isinstance(self.api_key, str):
-            raise RuntimeError(f"{type(self).__name__} field 'api_key' must be a string.")
-
-    @classmethod
-    def get_prefix(cls) -> str:
-        return "openai"
+    prompt: PromptKey = missing()
+    """Prompt used to process the entry."""

@@ -12,23 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from abc import ABC
 from dataclasses import dataclass
-from cl.runtime.settings.settings import Settings
+from cl.convince.entries.entry_type_key import EntryTypeKey
+from cl.runtime import RecordMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class OpenaiSettings(Settings):
-    """OpenAI settings."""
+class EntryType(EntryTypeKey, RecordMixin[EntryTypeKey], ABC):
+    """Unique entry type is assigned to each purpose of user input."""
 
-    api_key: str
-    """OpenAI API key."""
+    description: str | None = None
+    """Description of the entry type."""
 
-    def init(self) -> None:
-        """Same as __init__ but can be used when field values are set both during and after construction."""
-
-        if not isinstance(self.api_key, str):
-            raise RuntimeError(f"{type(self).__name__} field 'api_key' must be a string.")
-
-    @classmethod
-    def get_prefix(cls) -> str:
-        return "openai"
+    def get_key(self) -> EntryTypeKey:
+        return EntryTypeKey(entry_type_id=self.entry_type_id)
