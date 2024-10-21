@@ -3,8 +3,14 @@ import setuptools
 with open('./README.md', 'r') as readme_file:
     readme = readme_file.read()
 
-with open('./tools/cl/tradeentry/install_requirements.txt') as install_requirements:
-    install_requires = [line.strip() for line in install_requirements.readlines()]
+# Gather package requirements from all packages in monorepo
+package_requirements = []
+with open('./tools/cl/runtime/package_requirements.txt') as runtime_package_requirements:
+    package_requirements.extend(line.strip() for line in runtime_package_requirements.readlines())
+with open('./tools/cl/convince/package_requirements.txt') as convince_package_requirements:
+    package_requirements.extend(line.strip() for line in convince_package_requirements.readlines())
+with open('./tools/cl/tradeentry/package_requirements.txt') as tradeentry_package_requirements:
+    package_requirements.extend(line.strip() for line in tradeentry_package_requirements.readlines())
 
 setuptools.setup(
     name='tradeentry',
@@ -14,7 +20,7 @@ setuptools.setup(
     license='Apache Software License',
     long_description=readme,
     long_description_content_type='text/markdown',
-    install_requires=install_requires,
+    install_requires=package_requirements,
     url='https://github.com/compatibl/tradeentry',
     project_urls={
         'Source Code': 'https://github.com/compatibl/tradeentry',
