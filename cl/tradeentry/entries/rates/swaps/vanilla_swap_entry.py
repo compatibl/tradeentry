@@ -18,8 +18,14 @@ from cl.convince.retrievers.annotating_retriever import AnnotatingRetriever
 from cl.convince.entries.entry_key import EntryKey
 from cl.runtime import Context
 from cl.tradeentry.entries.fixed_rate_entry import FixedRateEntry
+from cl.tradeentry.entries.pay_receive_fixed_entry import PayReceiveFixedEntry
+from cl.tradeentry.entries.rates.rates_index_entry import RatesIndexEntry
 from cl.tradeentry.entries.trade_entry import TradeEntry
+from cl.tradeentry.entries.years_months_entry import YearsMonthsEntry
 
+_SIDE = "Floating rate index"
+_TENOR = "Tenor (length)"
+_FLOAT_INDEX = "Floating rate index"
 _FIXED_RATE = "Fixed rate"
 
 
@@ -35,6 +41,9 @@ class VanillaSwapEntry(TradeEntry):
 
     maturity_date: EntryKey | None = None
     """Trade or leg maturity date defined as unadjusted date or time interval relative to another date."""
+
+    tenor: EntryKey | None = None
+    """Swap tenor (length) in months or years."""
 
     float_index: EntryKey | None = None
     """Floating interest rate index or currency (in case of currency, default index for the currency is used)."""
@@ -55,6 +64,21 @@ class VanillaSwapEntry(TradeEntry):
         # Process fields
         context = Context.current()
         input_text = self.get_text()
+
+        # Pay or receive fixed flag is described side
+        pay_receive_fixed = PayReceiveFixedEntry(title=retriever.retrieve(self.entry_id, input_text, _SIDE))
+        context.save_one(pay_receive_fixed)
+        self.pay_receive_fixed = pay_receive_fixed.get_key()
+
+        # Tenor
+        tenor = YearsMonthsEntry(title=retriever.retrieve(self.entry_id, input_text, _TENOR))
+        context.save_one(tenor)
+        self.tenor = tenor.get_key()
+
+        # Floating rate index
+        float_index = RatesIndexEntry(title=retriever.retrieve(self.entry_id, input_text, _FLOAT_INDEX))
+        context.save_one(float_index)
+        self.float_index = float_index.get_key()
 
         # Fixed Rate
         fixed_rate = FixedRateEntry(title=retriever.retrieve(self.entry_id, input_text, _FIXED_RATE))
