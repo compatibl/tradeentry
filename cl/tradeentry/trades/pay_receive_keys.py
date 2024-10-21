@@ -16,10 +16,6 @@ from cl.tradeentry.trades.pay_receive_key import PayReceiveKey
 
 cls = PayReceiveKey
 
-<<<<<<<< HEAD:tools/cl/runtime/fix_init_files.py
-    # Create __init__.py files in subdirectories except for tests
-    check_init_files(apply_fix=True, verbose=True)
-========
 
 class PayReceiveKeys:
     """PayReceiveKey constants."""
@@ -29,4 +25,3 @@ class PayReceiveKeys:
 
     RECEIVE: cls = cls(pay_receive_id="Receive")
     """We receive payments or periodic coupons."""
->>>>>>>> origin/develop:cl/tradeentry/trades/pay_receive_keys.py
