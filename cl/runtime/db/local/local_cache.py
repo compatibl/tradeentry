@@ -55,8 +55,11 @@ class LocalCache:
         is_record_optional: bool = False,
     ) -> TRecord | None:
         # Check for an empty key
-        if not is_key_optional and record_or_key is None:
-            raise UserError(f"Key is None when trying to load record type {record_type.__name__} from DB.")
+        if record_or_key is None:
+            if is_key_optional:
+                return None
+            else:
+                raise UserError(f"Key is None when trying to load record type {record_type.__name__} from DB.")
 
         if record_or_key is None or getattr(record_or_key, "get_key", None) is not None:
             # Key instance is Record or None, return without lookup
