@@ -53,10 +53,11 @@ class GroupBarPlot(MatplotlibPlot):
         style = self._load_style()
         theme = self._get_pyplot_theme(style=style)
 
-        data = pd.DataFrame.from_records(
-            [self.values, self.bar_labels, self.group_labels],
-            index=['Value', 'Col', 'Row']
-        ).T.pivot_table(index="Row", columns="Col", values="Value", sort=False).astype(float)
+        data = (
+            pd.DataFrame.from_records([self.values, self.bar_labels, self.group_labels], index=["Value", "Col", "Row"])
+            .T.pivot_table(index="Row", columns="Col", values="Value", sort=False)
+            .astype(float)
+        )
 
         with plt.style.context(theme):
             fig = plt.figure()
@@ -101,7 +102,9 @@ class GroupBarPlot(MatplotlibPlot):
 
     def _load_style(self) -> GroupBarPlotStyle:
         """Load style object or create with default settings if not specified."""
-        style = Context.current().load_one(GroupBarPlotStyle, self.style)
-        style = style if self.style is not None else GroupBarPlotStyle()
-
+        style = Context.current().load_one(GroupBarPlotStyle, self.style, is_key_optional=True)
+        if style is None:
+            # Use default values if not found
+            style = GroupBarPlotStyle(plot_style_id="Default")
+            style.init_all()
         return style

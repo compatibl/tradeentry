@@ -12,13 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 from typing import List
-
 import networkx as nx
-
 from cl.runtime import RecordMixin
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.view.dag.dag_edge import DagEdge
@@ -44,11 +40,11 @@ class Dag(DagKey, RecordMixin[DagKey]):
 
     @staticmethod
     def auto_layout_dag(
-        dag: Dag,
+        dag: "Dag",
         layout_mode: DagLayoutEnum = DagLayoutEnum.SPRING,
         offset_x: int = 600,
         base_scale: int = 100,
-    ) -> Dag:
+    ) -> "Dag":
         """
         Set positions automatically for the passed DAG.
 
@@ -94,7 +90,7 @@ class Dag(DagKey, RecordMixin[DagKey]):
                     k=1 / (len(subgraph.nodes) ** 0.2),
                 )
             else:
-                raise Exception('Unsupported layout mode. Accepted layout modes: circular, planar, spring')
+                raise Exception("Unsupported layout mode. Accepted layout modes: circular, planar, spring")
             positions.update({node: (x + base_offset_x, y) for node, (x, y) in layout.items()})
             base_offset_x += offset_x
 
@@ -103,6 +99,16 @@ class Dag(DagKey, RecordMixin[DagKey]):
             node.position = DagNodePosition(x=float(x), y=float(y))
 
         return dag
+
+    @staticmethod
+    def build_edge_between_nodes(source: DagNode, target: DagNode, label: str | None = None) -> DagEdge:
+        """Create a connection between two DagNode instances."""
+        return DagEdge(
+            id_=f"e-{source.id_}-{target.id_}",
+            label=label,
+            source=source.id_,
+            target=target.id_,
+        )
 
     def _build_graph(self) -> nx.DiGraph:
         """Build networkx graph representation."""

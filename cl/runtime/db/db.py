@@ -19,14 +19,15 @@ from dataclasses import dataclass
 from typing import ClassVar
 from typing import Iterable
 from typing import Type
+from cl.runtime.db.db_key import DbKey
 from cl.runtime.records.class_info import ClassInfo
-from cl.runtime.records.protocols import KeyProtocol, TQuery
+from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.records.protocols import TKey
+from cl.runtime.records.protocols import TQuery
+from cl.runtime.records.protocols import TRecord
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.settings.context_settings import ContextSettings
-from cl.runtime.db.db_key import DbKey
-from cl.runtime.records.protocols import TKey
-from cl.runtime.records.protocols import TRecord
 
 
 @dataclass(slots=True, kw_only=True)
@@ -47,6 +48,8 @@ class Db(DbKey, RecordMixin[DbKey], ABC):
         *,
         dataset: str | None = None,
         identity: str | None = None,
+        is_key_optional: bool = False,
+        is_record_optional: bool = False,
     ) -> TRecord | None:
         """
         Load a single record using a key (if a record is passed instead of a key, it is returned without DB lookup)
@@ -56,6 +59,8 @@ class Db(DbKey, RecordMixin[DbKey], ABC):
             record_or_key: Record (returned without lookup) or key in object, tuple or string format
             dataset: If specified, append to the root dataset of the database
             identity: Identity token for database access and row-level security
+            is_key_optional: If True, return None when key is none found instead of an error
+            is_record_optional: If True, return None when record is not found instead of an error
         """
 
     @abstractmethod
@@ -206,7 +211,11 @@ class Db(DbKey, RecordMixin[DbKey], ABC):
             # Load from configuration if not set
             context_settings = ContextSettings.instance()  # TODO: Refactor to place this inside Context
             db_type = ClassInfo.get_class_type(context_settings.db_class)
+            context_id = context_settings.context_id.replace(".", ";")
             # TODO: Add code to obtain from preloads if only key is specified
-            Db.__default = db_type(db_id=context_settings.db_id)
+            if context_settings.db_uri:
+                Db.__default = db_type(db_id=context_id, client_uri=context_settings.db_uri)
+            else:
+                Db.__default = db_type(db_id=context_id)
 
         return Db.__default

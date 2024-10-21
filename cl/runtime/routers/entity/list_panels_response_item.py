@@ -15,7 +15,7 @@
 from __future__ import annotations
 from typing import List
 from pydantic import BaseModel
-from cl.runtime.primitive.string_util import StringUtil
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.schema import Schema
@@ -28,7 +28,7 @@ class ListPanelsResponseItem(BaseModel):
     """Name of the panel."""
 
     class Config:
-        alias_generator = StringUtil.snake_to_pascal_case
+        alias_generator = CaseUtil.snake_to_pascal_case
         populate_by_name = True
 
     @classmethod
@@ -37,10 +37,10 @@ class ListPanelsResponseItem(BaseModel):
 
         # TODO: Return saved view names
         type_ = Schema.get_type_by_short_name(request.type)
-        handlers_block = HandlerDeclareBlockDecl.get_type_methods(type_).handlers
+        handlers_block = HandlerDeclareBlockDecl.get_type_methods(type_, inherit=True).handlers
 
         if handlers_block is not None and handlers_block:
             return [
-                ListPanelsResponseItem(name=handler.label) for handler in handlers_block if handler.type_ == "viewer"
+                ListPanelsResponseItem(name=handler.label) for handler in handlers_block if handler.type_ == "Viewer"
             ]
         return []

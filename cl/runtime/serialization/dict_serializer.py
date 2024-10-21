@@ -21,14 +21,16 @@ from typing import List
 from typing import Tuple
 from typing import Type
 from typing import cast
-from inflection import camelize
 from cl.runtime.backend.core.base_type_info import BaseTypeInfo
 from cl.runtime.backend.core.tab_info import TabInfo
-from cl.runtime.primitive.string_util import StringUtil
+from cl.runtime.log.exceptions.user_error import UserError
+from cl.runtime.primitive.case_util import CaseUtil
+from cl.runtime.records.protocols import TDataDict
+from cl.runtime.records.protocols import TPrimitive
 from cl.runtime.records.protocols import is_key
 from cl.runtime.records.protocols import is_record
+from cl.runtime.records.record_util import RecordUtil
 from cl.runtime.serialization.sentinel_type import sentinel_value
-from cl.runtime.records.protocols import TDataDict
 
 # TODO: Initialize from settings
 alias_dict: Dict[Type, str] = dict()
@@ -113,6 +115,10 @@ class DictSerializer:
         """
         Serialize to dictionary containing primitive types, dictionaries, or iterables.
 
+        Notes:
+            Before serialization, invoke 'init' for each class in class hierarchy that implements it,
+            in the order from base to derived.
+
         Args:
             data: Object to serialize
             select_fields: Fields of data object which will be used for serialization. If None - use all fields.
@@ -121,11 +127,14 @@ class DictSerializer:
         if getattr(data, "__slots__", None) is not None:
             # Slots class, serialize as dictionary
 
+            # Invoke 'init' for each class in class hierarchy that implements it, in the order from base to derived
+            RecordUtil.init_all(data)
+
             # Get slots from this class and its bases in the order of declaration from base to derived
             all_slots = _get_class_hierarchy_slots(data.__class__)
             # Serialize slot values in the order of declaration except those that are None
             result = {
-                k if not self.pascalize_keys else camelize(k, uppercase_first_letter=True): (
+                k if not self.pascalize_keys else CaseUtil.snake_to_pascal_case_keep_trailing_underscore(k): (
                     v if v.__class__.__name__ in self.primitive_type_names else self.serialize_data(v)
                 )
                 for k in all_slots
@@ -168,16 +177,13 @@ class DictSerializer:
             # Cache type for subsequent reverse lookup
             type_dict = get_type_dict()
             type_dict[short_name] = type_
-            pascal_case_value = StringUtil.upper_to_pascal_case(data.name)
+            pascal_case_value = CaseUtil.upper_to_pascal_case(data.name)
             return {"_enum": short_name, "_name": pascal_case_value}
         else:
             raise RuntimeError(f"Cannot serialize data of type '{type(data)}'.")
 
     def deserialize_data(self, data: TDataDict):  # TODO: Check if None should be supported
-        """Deserialize from dictionary containing primitive types, dictionaries, or iterables."""
-
-        if self.pascalize_keys:
-            raise RuntimeError("Cannot deserialize if pascalize_keys=True.")
+        """Deserialize object from data, invoke init_all after deserialization."""
 
         if isinstance(data, dict):
             # Determine if the dictionary is a serialized dataclass or a dictionary
@@ -190,12 +196,34 @@ class DictSerializer:
                         f"Class not found for name or alias '{short_name}' during deserialization. "
                         f"Ensure all serialized classes are included in package import settings."
                     )
+
+                # Check if the class is abstract
+                if RecordUtil.is_abstract(deserialized_type):
+                    descendants = RecordUtil.get_non_abstract_descendants(deserialized_type)
+                    descendant_names = sorted(set([x.__name__ for x in descendants]))
+                    if len(descendant_names) > 0:
+                        descendant_names_str = ", ".join(descendant_names)
+                        raise UserError(
+                            f"Record {deserialized_type.__name__} cannot be created directly, "
+                            f"but the following descendant records can: {descendant_names_str}"
+                        )
+                    else:
+                        raise UserError(
+                            f"Record {deserialized_type.__name__} cannot be created directly "
+                            f"and there are no descendant records that can."
+                        )
+
                 deserialized_fields = {
-                    k: v if v.__class__.__name__ in self.primitive_type_names else self.deserialize_data(v)
+                    CaseUtil.pascale_to_snake_case_keep_trailing_underscore(k) if self.pascalize_keys else k: (
+                        v if v.__class__.__name__ in self.primitive_type_names else self.deserialize_data(v)
+                    )
                     for k, v in data.items()
                     if k != "_type"
                 }
                 result = deserialized_type(**deserialized_fields)  # noqa
+
+                # Invoke 'init' for each class in class hierarchy that implements it, in the order from base to derived
+                RecordUtil.init_all(result)
                 return result
             elif (short_name := data.get("_enum", None)) is not None:
                 # If _enum is specified, create an instance of _enum using _name
@@ -207,7 +235,7 @@ class DictSerializer:
                         f"Ensure all serialized enums are included in package import settings."
                     )
                 pascal_case_value = data["_name"]
-                upper_case_value = StringUtil.pascal_to_upper_case(pascal_case_value)
+                upper_case_value = CaseUtil.pascal_to_upper_case(pascal_case_value)
                 result = deserialized_type[upper_case_value]  # noqa
                 return result
             else:
@@ -237,3 +265,29 @@ class DictSerializer:
             return data
         else:
             raise RuntimeError(f"Cannot deserialize data of type '{type(data)}'.")
+
+    @classmethod
+    def _serialize_primitive(cls, value: TPrimitive, class_name: str) -> TPrimitive:
+        """Serialize primitive value applying the applicable conversion rules."""
+        # TODO: Use switch statement
+        if class_name == "bool":
+            return "Y" if value else "N"
+        else:
+            return value
+
+    @classmethod
+    def _deserialize_primitive(cls, value: TPrimitive, class_name: str) -> TPrimitive:
+        """Deserialize primitive value applying the applicable conversion rules."""
+        # TODO: Use switch statement
+        if class_name == "bool":
+            # TODO: Use switch statement
+            if isinstance(value, bool):
+                return value
+            elif value == "Y":
+                return True
+            elif value == "N":
+                return False
+            else:
+                raise RuntimeError(f"Serialized boolean field has value {value} but only Y or N are allowed.")
+        else:
+            return value

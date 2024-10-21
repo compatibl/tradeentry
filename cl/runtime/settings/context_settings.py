@@ -15,14 +15,18 @@
 from dataclasses import dataclass
 from typing import List
 from cl.runtime.settings.settings import Settings
+from cl.runtime.settings.settings import process_id
 
 
 @dataclass(slots=True, kw_only=True)
 class ContextSettings(Settings):
-    """Runtime context settings specifies default context parameters."""
+    """Default context parameters."""
+
+    context_id: str | None = None
+    """Context identifier, if not specified a time-ordered UUID will be used."""
 
     packages: List[str]
-    """List of packages to load in dot-delimited module prefix format, for example 'cl.runtime'."""
+    """List of packages to load in dot-delimited format, for example 'cl.runtime' or 'stubs.cl.runtime'."""
 
     log_class: str = "cl.runtime.log.file.file_log.FileLog"  # TODO: Deprecated, switch to class-specific fields
     """Default log class in module.ClassName format."""
@@ -30,17 +34,20 @@ class ContextSettings(Settings):
     db_class: str  # TODO: Deprecated, switch to class-specific fields
     """Default database class in module.ClassName format."""
 
-    db_id: str
-    """Default database identifier, if 'db_class' is a key it will be obtained from preloads."""
-
     db_temp_prefix: str = "temp;"
     """
     IMPORTANT: DELETING ALL RECORDS AND DROPPING THE DATABASE FROM CODE IS PERMITTED
     when both db_id and database name start with this prefix.
     """
 
-    def __post_init__(self):
-        """Perform validation and type conversions."""
+    db_uri: str | None = None
+    """Optional database URI to connect to the database. Required for basic mongo db data source."""
+
+    def init(self) -> None:
+        """Same as __init__ but can be used when field values are set both during and after construction."""
+
+        if self.context_id is not None and not isinstance(self.context_id, str):
+            raise RuntimeError(f"{type(self).__name__} field 'context_id' must be None or a string.")
 
         # TODO: Move to ValidationUtil or PrimitiveUtil class
         if isinstance(self.packages, list):
@@ -62,8 +69,6 @@ class ContextSettings(Settings):
             raise RuntimeError(
                 f"{type(self).__name__} field 'db_class' must be a string " f"in module.ClassName format."
             )
-        if not isinstance(self.db_id, str):
-            raise RuntimeError(f"{type(self).__name__} field 'context_id' must be a string.")
 
     @classmethod
     def get_prefix(cls) -> str:

@@ -17,7 +17,7 @@ from fastapi import APIRouter
 from starlette import status
 from starlette.responses import HTMLResponse
 from starlette.responses import RedirectResponse
-from cl.runtime.settings.settings import Settings
+from cl.runtime.settings.project_settings import ProjectSettings
 
 router = APIRouter()
 
@@ -56,7 +56,7 @@ async def get_app_index(_):
     RuntimeError: If the index.html file or static files directory is not found.
     """
 
-    static_dir = Settings.get_static_files_path()
+    static_dir = ProjectSettings.get_wwwroot()
     if static_dir:
         index_file = os.path.join(static_dir, "index.html")
         if os.path.isfile(index_file):

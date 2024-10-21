@@ -18,42 +18,13 @@ import inspect
 import pkgutil
 from typing import List
 import attrs
+from cl.runtime.prebuild.import_util import ImportUtil
 from cl.runtime.settings.context_settings import ContextSettings
 
 
-def _check_package(package_root: str) -> List[str]:  # TODO: Move this method to cl.runtime.testing module
-    """Check package for import errors."""
-    errors: List[str] = []
-    try:
-        package_import = __import__(package_root)
-    except ImportError as error:
-        raise Exception(f"Cannot import module: {error.name}. Check sys.path")
-
-    packages = list(pkgutil.walk_packages(path=package_import.__path__, prefix=package_import.__name__ + "."))
-    modules = [x for x in packages if not x.ispkg]
-    for m in modules:
-        try:
-            package_import = importlib.import_module(m.name)
-        except SyntaxError as error:
-            errors.append(f"Cannot import module: {m.name}. Error: {error.msg}. Line: {error.lineno}, {error.offset}")
-            continue
-        except Exception as error:
-            errors.append(f"Cannot import module: {m.name}. Error: {error.args}")
-
-    return errors
-
-
 def test_import():
-    # Get the list of packages
-    packages = ContextSettings.instance().packages
-
-    # Find errors in each package
-    errors = [item for sublist in map(_check_package, packages) for item in sublist]
-
-    # Report errors
-    if errors:  # TODO: Improve formatting of the report
-        print("\n".join(errors))
-    assert 0 == len(errors)
+    """Check that all imports succeed."""
+    ImportUtil.check_imports()
 
 
 if __name__ == "__main__":

@@ -19,7 +19,7 @@ from typing import List
 from typing import cast
 from pydantic import BaseModel
 from cl.runtime import Context
-from cl.runtime.primitive.string_util import StringUtil
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.routers.tasks.task_result_request import TaskResultRequest
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_run import TaskRun
@@ -40,7 +40,7 @@ class TaskResultResponseItem(BaseModel):
     """Key of the record."""
 
     class Config:
-        alias_generator = StringUtil.snake_to_pascal_case
+        alias_generator = CaseUtil.snake_to_pascal_case
         populate_by_name = True
 
     @classmethod
@@ -59,7 +59,7 @@ class TaskResultResponseItem(BaseModel):
 
             response_items.append(
                 TaskResultResponseItem(
-                    result=task_run.result,  # TODO: Use bytes for the response?
+                    result=task_run.result,
                     task_run_id=str(task_run.task_run_id),
                     key=task_obj.key_str if hasattr(task_obj, "key_str") else None,
                 ),

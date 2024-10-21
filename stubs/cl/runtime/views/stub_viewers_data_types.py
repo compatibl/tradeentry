@@ -16,8 +16,6 @@ import os.path
 from dataclasses import dataclass
 from logging import getLogger
 from cl.runtime.records.record_mixin import RecordMixin
-from cl.runtime.views.binary_content import BinaryContent
-from cl.runtime.views.binary_content_type_enum import BinaryContentTypeEnum
 from cl.runtime.view.dag.dag import Dag
 from cl.runtime.view.dag.dag_edge import DagEdge
 from cl.runtime.view.dag.dag_layout_enum import DagLayoutEnum
@@ -25,6 +23,9 @@ from cl.runtime.view.dag.dag_node_data import DagNodeData
 from cl.runtime.view.dag.nodes.add_text_node import AddTextNode
 from cl.runtime.view.dag.nodes.text_input_node import TextInputNode
 from cl.runtime.view.dag.nodes.text_output_node import TextOutputNode
+from cl.runtime.views.binary_content import BinaryContent
+from cl.runtime.views.binary_content_type_enum import BinaryContentTypeEnum
+from cl.runtime.views.pdf_view import PdfView
 from stubs.cl.runtime.views.stub_viewers_data_types_key import StubViewersDataTypesKey
 
 _logger = getLogger(__name__)
@@ -37,14 +38,14 @@ class StubViewersDataTypes(StubViewersDataTypesKey, RecordMixin[StubViewersDataT
     def get_key(self) -> StubViewersDataTypesKey:
         return StubViewersDataTypesKey(stub_id=self.stub_id)
 
-    def view_pdf(self) -> BinaryContent:
+    def view_pdf(self):
         """Shows a PDF document."""
 
         file_path = os.path.join(os.path.dirname(__file__), "stub_viewers_data_types.pdf")
         with open(file_path, mode="rb") as file:
             content = file.read()
-        pdf_content = BinaryContent(content=content, content_type=BinaryContentTypeEnum.PDF)
-        return pdf_content
+
+        return PdfView(pdf_bytes=content)
 
     def view_graph(self) -> Dag:
         """Shows a directed acyclic graph."""

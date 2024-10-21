@@ -13,12 +13,13 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from cl.runtime.backend.core.user_key import UserKey
 from cl.runtime.context.context import Context
 from cl.runtime.context.env_util import EnvUtil
+from cl.runtime.db.dataset_util import DatasetUtil
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.settings.settings import is_inside_test
-from cl.runtime.db.dataset_util import DatasetUtil
 
 
 @dataclass(slots=True, kw_only=True)
@@ -46,10 +47,15 @@ class TestingContext(Context):
             # Get test name in 'module.test_function' or 'module.TestClass.test_method' format inside a test
             context_settings = ContextSettings.instance()
 
+            # For the test, env name is dot-delimited test module, class in snake_case (if any), and method or function
+            env_name = EnvUtil.get_env_name()
+
             # Use test name in dot-delimited format for context_id unless specified by the caller
             if self.context_id is None:
-                env_name = EnvUtil.get_env_name()
                 self.context_id = env_name
+
+            # Set user to env name for unit testing
+            self.user = UserKey(username=env_name)
 
             # TODO: Set log field here explicitly instead of relying on implicit detection of test environment
             log_type = ClassInfo.get_class_type(context_settings.log_class)

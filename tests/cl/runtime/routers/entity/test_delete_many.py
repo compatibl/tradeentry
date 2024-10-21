@@ -27,14 +27,12 @@ def test_method():
 
     with TestingContext() as context:
         existing_records = [
-            StubDataclassDerivedRecord(id=f"existing_record_{i}", derived_field=f"value_{i}")
-            for i in range(5)
+            StubDataclassDerivedRecord(id=f"existing_record_{i}", derived_field=f"value_{i}") for i in range(5)
         ]
         context.save_many(existing_records)
 
         delete_records_payload = [
-            {"_key": record.id, "_t": "StubDataclassDerivedRecord"}
-            for record in existing_records[:3]
+            {"_key": record.id, "_t": "StubDataclassDerivedRecord"} for record in existing_records[:3]
         ]
         delete_records_request_obj = DeleteRequest(record_keys=delete_records_payload)
 
@@ -59,14 +57,12 @@ def test_api():
         test_app.include_router(entity_router.router, prefix="/entity", tags=["Entity"])
         with TestClient(test_app) as test_client:
             existing_records = [
-                StubDataclassDerivedRecord(id=f"existing_record_{i}", derived_field=f"value_{i}")
-                for i in range(5)
+                StubDataclassDerivedRecord(id=f"existing_record_{i}", derived_field=f"value_{i}") for i in range(5)
             ]
             context.save_many(existing_records)
 
             delete_records_payload = [
-                {"_key": record.id, "_t": "StubDataclassDerivedRecord"}
-                for record in existing_records[:3]
+                {"_key": record.id, "_t": "StubDataclassDerivedRecord"} for record in existing_records[:3]
             ]
             delete_records_request_obj = DeleteRequest(record_keys=delete_records_payload)
 

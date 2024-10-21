@@ -16,6 +16,7 @@ import datetime as dt
 import time
 from dataclasses import dataclass
 from cl.runtime import Context
+from cl.runtime.log.log_entry_key import LogEntryKey
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.records.dataclasses_extensions import missing
@@ -54,10 +55,16 @@ class TaskRun(TaskRunKey, RecordMixin[TaskRunKey]):
     progress: int | None = None
     """Task progress as percent integer from 0 to 100 when available."""
 
-    result: str | None = None  # TODO: Review the need for the result field in this record
-    """Result converted to string."""
+    message: str | None = None
+    """Optional exception message in string format."""
 
-    def __post_init__(self):
+    result: str | None = None
+    """Optional result in string format."""
+
+    log_entry: LogEntryKey | None = None
+    """Optional key of the associated log entry."""
+
+    def init(self):
         # Automatically generate time-ordered unique task run identifier in UUIDv7 format if not yet specified
         if self.task_run_id is None:
             self.task_run_id = str(OrderedUuid.create_one())

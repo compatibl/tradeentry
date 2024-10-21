@@ -15,8 +15,8 @@
 import os
 from dataclasses import dataclass
 from typing import List
-from cl.runtime.config.config import Config
-from cl.runtime.config.config_key import ConfigKey
+from cl.runtime.configs.config import Config
+from cl.runtime.configs.config_key import ConfigKey
 from cl.runtime.context.context import Context
 from cl.runtime.file.csv_dir_reader import CsvDirReader
 from cl.runtime.records.dataclasses_extensions import field
@@ -25,7 +25,7 @@ from cl.runtime.settings.settings import Settings
 
 @dataclass(slots=True, kw_only=True)
 class PreloadSettings(Settings):
-    """Runtime settings for preloading records from files."""
+    """Settings for preloading records from files."""
 
     dirs: List[str] | None = None
     """
@@ -41,8 +41,8 @@ class PreloadSettings(Settings):
     configs: List[str] | None = None
     """Method Config.run_configure will run for each specified config_id (the record must exist in preloads)."""
 
-    def __post_init__(self):
-        """Perform validation and type conversions."""
+    def init(self) -> None:
+        """Same as __init__ but can be used when field values are set both during and after construction."""
 
         # Convert to absolute paths if specified as relative paths and convert to list if single value is specified
         self.dirs = self.normalize_paths("dirs", self.dirs)
@@ -79,12 +79,12 @@ class PreloadSettings(Settings):
             if any(config_record is None for config_record in config_records):
                 keys_without_records = [key for key, record in zip(config_keys, config_records) if record is None]
                 keys_without_records_str = "\n".join(f"  - {key.config_id}" for key in keys_without_records)
-                preload_dirs_str = "\n".join(f"  - {x}" for x in self.dirs)
+                preload_dirs_str = "\n".join(f"  - {os.path.normpath(x)}" for x in self.dirs)
                 raise RuntimeError(
                     f"Preload directories in in 'PreloadSettings.configs' do not have config records "
                     f"for the following config_id specified in 'PreloadSettings.configs'.\n"
                     f"Missing config records:\n{keys_without_records_str}\n"
-                    f"Preload directories searched:\n{preload_dirs_str}"
+                    f"Preload directories searched (in priority order):\n{preload_dirs_str}"
                 )
 
             # Run configure for the specified records

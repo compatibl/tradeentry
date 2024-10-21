@@ -13,10 +13,8 @@
 # limitations under the License.
 
 from enum import IntEnum
-from cl.runtime.records.enum_util import enum_class
 
 
-@enum_class(label="Stub Int Enum New Label")
 class StubRelabeledIntEnum(IntEnum):
     """Stub enum with custom label that does not match the name."""
 

@@ -22,15 +22,16 @@ from typing import cast
 from pymongo import MongoClient
 from pymongo.database import Database
 from cl.runtime.context.context import Context
+from cl.runtime.db.db import Db
+from cl.runtime.db.mongo.mongo_filter_serializer import MongoFilterSerializer
+from cl.runtime.db.protocols import TKey
+from cl.runtime.db.protocols import TRecord
+from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.db.db import Db
-from cl.runtime.db.mongo.mongo_filter_serializer import MongoFilterSerializer
-from cl.runtime.db.protocols import TKey
-from cl.runtime.db.protocols import TRecord
 
 invalid_db_name_symbols = r'/\\. "$*<>:|?'
 """Invalid MongoDB database name symbols."""
@@ -65,11 +66,16 @@ class BasicMongoDb(Db):
         *,
         dataset: str | None = None,
         identity: str | None = None,
+        is_key_optional: bool = False,
+        is_record_optional: bool = False,
     ) -> TRecord | None:
+        # Check for an empty key
+        if not is_key_optional and record_or_key is None:
+            raise UserError(f"Key is None when trying to load record type {record_type.__name__} from DB.")
+
         if record_or_key is None or getattr(record_or_key, "get_key", None) is not None:
             # Record or None, return without lookup
             return cast(RecordProtocol, record_or_key)
-
         elif getattr(record_or_key, "get_key_type"):
             # Confirm dataset and identity are both None
             if dataset is not None:
@@ -91,8 +97,10 @@ class BasicMongoDb(Db):
                 result = data_serializer.deserialize_data(serialized_record)
                 return result
             else:
+                # Check if returning None is allowed
+                if not is_record_optional:
+                    raise UserError(f"{record_type.__name__} record is not found for key {record_or_key}")
                 return None
-
         else:
             raise RuntimeError(f"Type {record_or_key.__class__.__name__} is not a record or key.")
 
@@ -105,7 +113,17 @@ class BasicMongoDb(Db):
         identity: str | None = None,
     ) -> Iterable[TRecord | None] | None:
         # TODO: Implement directly for better performance
-        result = [self.load_one(record_type, x, dataset=dataset, identity=identity) for x in records_or_keys]
+        result = [
+            self.load_one(
+                record_type,
+                x,
+                dataset=dataset,
+                identity=identity,
+                is_key_optional=True,  # TODO: Keep the existing defaults for load_many
+                is_record_optional=True,  # TODO: Keep the existing defaults for load_many
+            )
+            for x in records_or_keys
+        ]
         return result
 
     def load_all(
@@ -184,6 +202,10 @@ class BasicMongoDb(Db):
         if record is None:
             return
 
+        # Call on_save if defined
+        if hasattr(record, "on_save"):
+            record.on_save()  # TODO: Refactor on_save
+
         # Confirm dataset and identity are both None
         if dataset is not None:
             raise RuntimeError("BasicMongo database type does not support datasets.")
@@ -215,18 +237,6 @@ class BasicMongoDb(Db):
         # TODO: Temporary, replace by independent implementation
         [self.save_one(x, dataset=dataset, identity=identity) for x in records]
         return
-
-        # Convert to (key_type, serialized_key, serialized_record) triples
-        serialized_data = [
-            (x.get_key_type(), key_serializer.serialize_key(x), data_serializer.serialize_data(x)) for x in records
-        ]
-
-        # Group by key_type
-        grouped_data = groupby(serialized_data, key=lambda x: x[0])
-
-        # Process separately for each base type
-        for key_type, data_for_key_type in grouped_data:
-            pass
 
     def delete_one(
         self,
@@ -295,7 +305,7 @@ class BasicMongoDb(Db):
     def _get_db(self) -> Database:
         """Get PyMongo database object."""
         db_name = self._get_db_name()
-        db_key = f"{self.client_uri}.{db_name}"
+        db_key = f"{self.client_uri}{db_name}"
         if (result := _db_dict.get(db_key, None)) is None:
             # Create if it does not exist
             client = self._get_client()
@@ -329,3 +339,8 @@ class BasicMongoDb(Db):
                 f"MongoDB does not support db_id='{db_id}' because "
                 f"it has {actual_bytes} bytes, exceeding the maximum of {max_bytes}."
             )
+
+    # TODO (Roman): move to base Db class?
+    def is_empty(self) -> bool:
+        """Return True if db has no collections."""
+        return len(self._get_db().list_collection_names()) == 0

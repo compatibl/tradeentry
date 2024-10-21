@@ -13,8 +13,6 @@
 # limitations under the License.
 
 import pytest
-import json
-import os
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from cl.runtime.routers.schema import schema_router
@@ -23,10 +21,6 @@ from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
 from cl.runtime.testing.regression_guard import RegressionGuard
 
 requests = [{"name": "UiAppState"}, {"name": "UiAppState", "user": "TestUser"}]
-
-expected_result_file_path = os.path.abspath(__file__).replace(".py", ".expected.json")
-with open(expected_result_file_path, "r", encoding="utf-8") as file:
-    expected_result = json.load(file)
 
 
 def test_method():
@@ -37,6 +31,7 @@ def test_method():
         request_obj = TypeRequest(**request)
         result_dict = TypeResponseUtil.get_type(request_obj)
         RegressionGuard().write(result_dict)
+    RegressionGuard.verify_all()
 
 
 def test_api():
@@ -58,9 +53,8 @@ def test_api():
             response = test_client.get("/schema/typeV2", headers=request_headers, params=request_params)
             assert response.status_code == 200
             result = response.json()
-
-            # Check result
-            assert result == expected_result
+            RegressionGuard().write(result)
+        RegressionGuard.verify_all()
 
 
 if __name__ == "__main__":

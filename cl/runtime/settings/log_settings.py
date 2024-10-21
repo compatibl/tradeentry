@@ -20,7 +20,7 @@ from cl.runtime.settings.settings import Settings
 
 @dataclass(slots=True, kw_only=True)
 class LogSettings(Settings):
-    """Runtime REST API settings."""
+    """REST API settings."""
 
     filename_format: str = "prefix-timestamp"
     """
@@ -38,8 +38,8 @@ class LogSettings(Settings):
     level: str = "info"
     """Log level using logging module conventions (lower, upper or mixed case can be used)."""
 
-    def __post_init__(self):
-        """Perform validation and type conversions."""
+    def init(self) -> None:
+        """Same as __init__ but can be used when field values are set both during and after construction."""
 
         # Convert logging level to uppercase and validate its values
         self.level = self.level.upper()

@@ -15,6 +15,7 @@
 import pytest
 import os
 from cl.runtime.settings.preload_settings import PreloadSettings
+from cl.runtime.testing.regression_guard import RegressionGuard
 
 
 def test_preload_settings():
@@ -23,8 +24,14 @@ def test_preload_settings():
     preload_settings = PreloadSettings.instance()
 
     # Check that all paths exist and are absolute paths
-    assert all(os.path.exists(dir_path) for dir_path in preload_settings.dirs)
-    assert all(os.path.isabs(dir_path) for dir_path in preload_settings.dirs)
+    errors = []
+    for dir_path in preload_settings.dirs:
+        if not os.path.exists(dir_path):
+            errors.append(f"   - Preload directory does not exist: {dir_path}\n")
+        if not os.path.isabs(dir_path):
+            errors.append(f"   - Preload directory path is not absolute: {dir_path}\n")
+    if errors:
+        raise RuntimeError("Preload directory errors:\n" + "".join(errors))
 
 
 if __name__ == "__main__":

@@ -23,17 +23,18 @@ from typing import Iterable
 from typing import Tuple
 from typing import Type
 from cl.runtime.context.context import Context
+from cl.runtime.db.db import Db
+from cl.runtime.db.protocols import TKey
+from cl.runtime.db.protocols import TRecord
+from cl.runtime.db.sql.sqlite_schema_manager import SqliteSchemaManager
 from cl.runtime.file.file_util import FileUtil
+from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
-from cl.runtime.settings.settings import Settings
-from cl.runtime.db.db import Db
-from cl.runtime.db.protocols import TKey
-from cl.runtime.db.protocols import TRecord
-from cl.runtime.db.sql.sqlite_schema_manager import SqliteSchemaManager
+from cl.runtime.settings.project_settings import ProjectSettings
 
 _connection_dict: Dict[str, sqlite3.Connection] = {}
 """Dict of Connection instances with db_id key stored outside the class to avoid serialization."""
@@ -99,8 +100,21 @@ class SqliteDb(Db):
         *,
         dataset: str | None = None,
         identity: str | None = None,
+        is_key_optional: bool = False,
+        is_record_optional: bool = False,
     ) -> TRecord | None:
-        return next(iter(self.load_many(record_type, [record_or_key], dataset=dataset, identity=identity)))
+        # Check for an empty key
+        if not is_key_optional and record_or_key is None:
+            raise UserError(f"Key is None when trying to load record type {record_type.__name__} from DB.")
+
+        # Delegate to load_many
+        result = next(iter(self.load_many(record_type, [record_or_key], dataset=dataset, identity=identity)))
+
+        # Check if the record was not found
+        if not is_record_optional and result is None:
+            raise UserError(f"{record_type.__name__} record is not found for key {record_or_key}")
+        return result
+
 
     def load_many(
         self,
@@ -232,6 +246,13 @@ class SqliteDb(Db):
         dataset: str | None = None,
         identity: str | None = None,
     ) -> None:
+
+        # Call on_save if defined
+        [
+            record.on_save() for record in records  # TODO: Refactor on_save
+            if record is not None and hasattr(record, "on_save")
+        ]
+
         serializer = FlatDictSerializer()
         schema_manager = self._get_schema_manager()
 
@@ -394,7 +415,7 @@ class SqliteDb(Db):
         FileUtil.check_valid_filename(filename)
 
         # Get dir for database
-        db_dir = Settings.get_databases_path()
+        db_dir = ProjectSettings.get_databases_dir()
 
         result = os.path.join(db_dir, f"{filename}.sqlite")
         return result

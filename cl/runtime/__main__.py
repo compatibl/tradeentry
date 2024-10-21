@@ -15,17 +15,18 @@
 import os
 import traceback
 import uuid
-import uvicorn
 import webbrowser
+import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-from starlette.responses import Response
+from starlette.responses import JSONResponse
 from starlette.staticfiles import StaticFiles
 from cl.runtime import Context
 from cl.runtime.context.process_context import ProcessContext
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.log.log_entry import LogEntry
 from cl.runtime.log.log_entry_level_enum import LogEntryLevelEnum
+from cl.runtime.log.user_log_entry import UserLogEntry
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.routers.app import app_router
 from cl.runtime.routers.auth import auth_router
@@ -36,7 +37,7 @@ from cl.runtime.routers.storage import storage_router
 from cl.runtime.routers.tasks import tasks_router
 from cl.runtime.settings.api_settings import ApiSettings
 from cl.runtime.settings.preload_settings import PreloadSettings
-from cl.runtime.settings.settings import Settings
+from cl.runtime.settings.project_settings import ProjectSettings
 from cl.runtime.tasks.celery.celery_queue import celery_delete_existing_tasks
 from cl.runtime.tasks.celery.celery_queue import celery_start_queue
 
@@ -56,17 +57,25 @@ async def handle_exception(request, exc, log_level):
     # Output traceback
     traceback.print_exception(exc)
 
+    # TODO (Roman): save all logs to db
     # Save log entry to the database
-    entry = LogEntry(
-        id=str(uuid.uuid4()),
+    log_type = UserLogEntry if isinstance(exc, UserError) else LogEntry
+    entry = log_type(  # noqa
         message=str(exc),
         level=log_level,
-        timestamp=DatetimeUtil.to_iso_int(DatetimeUtil.now()),
     )
+    entry.init()
     Context.current().save_one(entry)
 
+    # Message to display for user
+    user_message = str(exc) if log_level == LogEntryLevelEnum.USER_ERROR else None
+
     # Return 500 response to avoid exception handler multiple calls
-    return Response("Status code 500 in handle_exception", status_code=500)
+    # IMPORTANT:
+    # - If UserMessage is set it will be shown to the user on toast badge and bell becomes red,
+    # - Otherwise default message will be shown
+    # TODO: Make it possible to customize default message in client code or pass from settings via runtime
+    return JSONResponse({"UserMessage": user_message}, status_code=500)
 
 
 # Add RuntimeError exception handler
@@ -119,7 +128,7 @@ if __name__ == "__main__":
         celery_delete_existing_tasks()
 
         # Start Celery workers (will exit when the current process exits)
-        log_dir = os.path.join(Settings.get_project_root(), "logs")  # TODO: Make unique
+        log_dir = os.path.join(ProjectSettings.get_project_root(), "logs")  # TODO: Make unique
         celery_start_queue(log_dir=log_dir)
 
         # Preload data
@@ -128,21 +137,14 @@ if __name__ == "__main__":
         # Execute configure for each config_id specified in PreloadSettings.configs
         PreloadSettings.instance().configure()
 
-        # Find wwwroot directory relative to the location of __main__ rather than project root
-        wwwroot_dir = Settings.get_static_files_path()
+        # Find wwwroot directory, error if not found
+        wwwroot_dir = ProjectSettings.get_wwwroot()
 
-        if os.path.exists(wwwroot_dir):
-            # Launch UI if ui_path is found
-            server_app.mount("/", StaticFiles(directory=wwwroot_dir, html=True))
-            # Open new browser tab in the default browser
-            webbrowser.open_new_tab(f"http://{api_settings.host_name}:{api_settings.port}")
-        else:
-            raise RuntimeError(
-                f"Browser client JS directory {wwwroot_dir} is not found.\n"
-                f"  - If installed from GitHub:\n"
-                f"    - Use 'main' branch to run REST API and browser client from __main__ (includes wwwroot)\n"
-                f"    - Use 'main-sdk' branch to make calls from Python code only (excludes wwwroot)\n"
-            )
+        # Mount static client files
+        server_app.mount("/", StaticFiles(directory=wwwroot_dir, html=True))
+
+        # Open new browser tab in the default browser
+        webbrowser.open_new_tab(f"http://{api_settings.host_name}:{api_settings.port}")
 
         # Run Uvicorn using hostname and port specified by Dynaconf
         api_settings = ApiSettings.instance()

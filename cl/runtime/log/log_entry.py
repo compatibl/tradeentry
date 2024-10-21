@@ -16,6 +16,7 @@ from dataclasses import dataclass
 from cl.runtime import RecordMixin
 from cl.runtime.log.log_entry_key import LogEntryKey
 from cl.runtime.log.log_entry_level_enum import LogEntryLevelEnum
+from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.records.dataclasses_extensions import missing
 
 
@@ -32,8 +33,10 @@ class LogEntry(LogEntryKey, RecordMixin[LogEntryKey]):
     message: str = missing()
     """A descriptive message providing details about the event."""
 
-    timestamp: int = missing()
-    """A time when log event occurred."""
-
     def get_key(self) -> LogEntryKey:
-        return LogEntryKey(id=self.id)
+        return LogEntryKey(timestamp=self.timestamp)
+
+    def init(self) -> None:
+        """Same as __init__ but can be used when field values are set both during and after construction."""
+        if self.timestamp is None:
+            self.timestamp = OrderedUuid.to_readable_str(OrderedUuid.create_one())

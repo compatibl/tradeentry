@@ -15,7 +15,7 @@
 import inspect
 import os
 from typing import cast
-import inflection
+from cl.runtime.primitive.case_util import CaseUtil
 
 
 class EnvUtil:
@@ -153,7 +153,7 @@ class EnvUtil:
                         result = module_name
                 else:
                     # Convert class name to snake_case
-                    class_name = inflection.underscore(class_name)
+                    class_name = CaseUtil.pascal_to_snake_case(class_name)
 
                     # Remove repeated identical tokens to shorten the path
                     if module_name != class_name:

@@ -19,17 +19,22 @@ from typing import Final
 from uuid import UUID
 from celery import Celery
 from cl.runtime import Context
+from cl.runtime.log.exceptions.user_error import UserError
+from cl.runtime.log.log_entry import LogEntry
+from cl.runtime.log.log_entry_level_enum import LogEntryLevelEnum
+from cl.runtime.log.user_log_entry import UserLogEntry
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.ordered_uuid import OrderedUuid
+from cl.runtime.records.protocols import TDataDict
 from cl.runtime.records.protocols import is_key
 from cl.runtime.records.protocols import is_record
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.settings.context_settings import ContextSettings
-from cl.runtime.settings.settings import Settings
-from cl.runtime.records.protocols import TDataDict
+from cl.runtime.settings.project_settings import ProjectSettings
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
+from cl.runtime.tasks.task_queue_key import TaskQueueKey
 from cl.runtime.tasks.task_run import TaskRun
 from cl.runtime.tasks.task_run_key import TaskRunKey
 from cl.runtime.tasks.task_status_enum import TaskStatusEnum
@@ -40,11 +45,11 @@ CELERY_RUN_COMMAND_QUEUE: Final[str] = "run_command"
 CELERY_MAX_RETRIES: Final[int] = 3
 CELERY_TIME_LIMIT: Final[int] = 3600 * 2  # TODO: 2 hours (configure)
 
-databases_path = Settings.get_databases_path()
-db_id = ContextSettings.instance().db_id
+databases_dir = ProjectSettings.get_databases_dir()
+context_id = ContextSettings.instance().context_id
 
 # Get sqlite file name of celery broker based on database id in settings
-celery_file = os.path.join(databases_path, f"{db_id}.celery.sqlite")
+celery_file = os.path.join(databases_dir, f"{context_id}.celery.sqlite")
 
 celery_sqlite_uri = f"sqlalchemy+sqlite:///{celery_file}"
 
@@ -82,10 +87,33 @@ def execute_task(
             task = context.load_one(Task, task_key)
             task.execute()
         except Exception as e:  # noqa
+
+            # Get log entry type and level
+            if isinstance(e, UserError):
+                log_type = UserLogEntry
+                level = LogEntryLevelEnum.USER_ERROR
+            else:
+                log_type = LogEntry
+                level = LogEntryLevelEnum.ERROR
+
+            # Create log entry
+            log_entry = log_type(  # noqa
+                message=str(e),
+                level=level,
+            )
+            log_entry.init()
+
+            # Save log entry to the database
+            Context.current().save_one(log_entry)
+
             # Update task run record to report task failure
             task_run.update_time = DatetimeUtil.now()
             task_run.status = TaskStatusEnum.FAILED
-            task_run.result = str(e)
+            task_run.message = str(e)
+
+            # Add log entry key
+            task_run.log_entry = log_entry.get_key()
+
             context.save_one(task_run)
         else:
             # Update task run record to report task completion
@@ -189,7 +217,7 @@ class CeleryQueue(TaskQueue):
         # Create a task run record in Pending state
         task_run = TaskRun()
         task_run.task_run_id = task_run_id
-        task_run.queue = self.queue_id
+        task_run.queue = TaskQueueKey(queue_id=self.queue_id)
         task_run.task = task if is_key(task) else task.get_key()
         task_run.submit_time = submit_time
         task_run.update_time = submit_time

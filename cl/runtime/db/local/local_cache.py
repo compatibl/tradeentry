@@ -21,13 +21,14 @@ from typing import Iterable
 from typing import Type
 from typing import cast
 from typing_extensions import Self
-from cl.runtime.records.protocols import KeyProtocol
-from cl.runtime.records.protocols import RecordProtocol
-from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.records.protocols import TQuery
 from cl.runtime.db.dataset_util import DatasetUtil
 from cl.runtime.db.protocols import TKey
 from cl.runtime.db.protocols import TRecord
+from cl.runtime.log.exceptions.user_error import UserError
+from cl.runtime.records.protocols import KeyProtocol
+from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.records.protocols import TQuery
+from cl.runtime.serialization.string_serializer import StringSerializer
 
 key_serializer = StringSerializer()
 """Serializer for keys used in cache lookup."""
@@ -50,7 +51,13 @@ class LocalCache:
         *,
         dataset: str | None = None,
         identity: str | None = None,
+        is_key_optional: bool = False,
+        is_record_optional: bool = False,
     ) -> TRecord | None:
+        # Check for an empty key
+        if not is_key_optional and record_or_key is None:
+            raise UserError(f"Key is None when trying to load record type {record_type.__name__} from DB.")
+
         if record_or_key is None or getattr(record_or_key, "get_key", None) is not None:
             # Key instance is Record or None, return without lookup
             return cast(RecordProtocol, record_or_key)
@@ -63,12 +70,17 @@ class LocalCache:
             # Try to retrieve dataset dictionary, insert if it does not yet exist
             dataset_cache = self.__cache.setdefault(dataset, {})
 
-            # Try to retrieve table dictionary, return None if not found
-            if (table_cache := dataset_cache.setdefault(key_type, None)) is None:
+            # Try to retrieve table dictionary
+            if (table_cache := dataset_cache.setdefault(key_type, None)) is not None:
+                # Look up the record, defaults to None
+                result = table_cache.get(serialized_key, None)
+            else:
+                # Return None if not found
                 return None
 
-            # Look up the record, return None if not found
-            result = table_cache.get(serialized_key, None)
+            # Check if the record was not found
+            if not is_record_optional and result is None:
+                raise UserError(f"{record_type.__name__} record is not found for key {record_or_key}")
             return result
 
         else:
@@ -83,7 +95,16 @@ class LocalCache:
         identity: str | None = None,
     ) -> Iterable[TRecord | None] | None:
         # TODO: Implement directly for better performance
-        result = [self.load_one(record_type, x, dataset=dataset, identity=identity) for x in records_or_keys]
+        result = [
+            self.load_one(
+                record_type,
+                x,
+                dataset=dataset,
+                identity=identity,
+                is_key_optional=True,  # TODO: Keep the existing defaults for load_many
+                is_record_optional=True,  # TODO: Keep the existing defaults for load_many
+            )
+            for x in records_or_keys]
         return result
 
     def load_all(

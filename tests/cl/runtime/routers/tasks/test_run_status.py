@@ -29,8 +29,10 @@ from stubs.cl.runtime import StubHandlers
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_handlers_key import StubHandlersKey
 
 # Create handler task
-task = InstanceMethodTask.from_key(
-    task_id="abc", key=StubHandlersKey(stub_id="abc"), method=StubHandlers.run_instance_method_1a
+task = InstanceMethodTask.create(
+    task_id="abc",
+    record_or_key=StubHandlersKey(stub_id="abc"),
+    method_callable=StubHandlers.run_instance_method_1a,
 )
 
 # Get handler task key
@@ -45,6 +47,11 @@ task_runs = [
     TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatusEnum.FAILED),
     TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatusEnum.COMPLETED),
 ]
+
+# Init task runs
+for task_run in task_runs:
+    task_run.init()
+
 requests = [
     {
         "task_run_ids": [str(task_run.task_run_id) for task_run in task_runs],
@@ -57,7 +64,6 @@ requests = [
 def test_method():
     """Test coroutine for /tasks/run/status route."""
 
-    # TODO: Use TestingContext instead
     with TestingContext() as context:
         context.save_one(task)
         context.save_many(task_runs)

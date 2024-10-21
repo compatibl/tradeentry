@@ -1,8 +1,8 @@
 schema:
-  Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord.StubDataclassRecord:
+  stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record.StubDataclassRecord:
     _t: StubDataclassRecord
     Module:
-      ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassRecord
+      ModuleName: stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record
     Name: StubDataclassRecord
     Label: Stub Dataclass Record
     Comment: Stub record base class.

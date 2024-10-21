@@ -12,28 +12,35 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 from enum import Enum
 from typing import Any
 from typing import List
-from inflection import underscore, camelize
 from typing_extensions import Dict
-from cl.runtime.primitive.string_util import StringUtil
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.records.protocols import TDataDict
 from cl.runtime.records.protocols import is_key
+from cl.runtime.records.record_util import RecordUtil
 from cl.runtime.schema.element_decl import ElementDecl
 from cl.runtime.schema.type_decl import TypeDecl
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.dict_serializer import _get_class_hierarchy_slots
 from cl.runtime.serialization.dict_serializer import get_type_dict
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.records.protocols import TDataDict
 
 
+@dataclass(slots=True, kw_only=True)
 class UiDictSerializer(DictSerializer):
     """Serialization for slot-based classes to ui format dict (legacy format)."""
 
+    pascalize_keys: bool = True
+    """pascalize_keys is True by default."""
+
     def serialize_data(self, data, select_fields: List[str] | None = None):
-        # TODO (Roman): make serialization format deserializable
+
+        if not self.pascalize_keys:
+            raise RuntimeError("Expect ui serialization always with pascalized keys.")
 
         if data is None:
             return None
@@ -41,19 +48,25 @@ class UiDictSerializer(DictSerializer):
         if data.__class__.__name__ in self.primitive_type_names:
             return data
         elif isinstance(data, Enum):
-            # serialize enum as its name
-            serialized_enum = super().serialize_data(data, select_fields)
+            # Serialize enum as its name
+            serialized_enum = super(UiDictSerializer, self).serialize_data(data, select_fields)
             pascal_case_value = serialized_enum.get("_name")
             return pascal_case_value
         elif is_key(data):
-            # serialize key as string
+            # Serialize key as string
             key_serializer = StringSerializer()
             return key_serializer.serialize_key(data)
         elif isinstance(data, dict):
-            # serialize dict as list of dicts in format [{"key": [key], "value": [value_as_legacy_variant]}]
+            # Serialize dict as list of dicts in format [{"key": [key], "value": [value_as_legacy_variant]}]
             serialized_dict_items = []
-            for k, v in super().serialize_data(data).items():
+            for k, v in super(UiDictSerializer, self).serialize_data(data).items():
                 # TODO (Roman): support more value types in dict
+
+                # Apply custom format for None in dict
+                if v is None:
+                    serialized_dict_items.append({"key": k, "value": {"Empty": None}})
+                    continue
+
                 if isinstance(v, str):
                     value_type = "String"
                 elif isinstance(v, int):
@@ -67,18 +80,22 @@ class UiDictSerializer(DictSerializer):
 
             return serialized_dict_items
         elif getattr(data, "__slots__", None) is not None:
-            serialized_data = super().serialize_data(data, select_fields)
 
-            # replace "_type" with "_t"
+            # Invoke 'init' for each class in class hierarchy that implements it, in the order from base to derived
+            RecordUtil.init_all(data)
+
+            serialized_data = super(UiDictSerializer, self).serialize_data(data, select_fields)
+
+            # Replace "_type" with "_t"
             if "_type" in serialized_data:
                 serialized_data["_t"] = data.__class__.__name__
                 del serialized_data["_type"]
 
-            serialized_data = {k.removesuffix("_"): v for k, v in serialized_data.items()}
+            serialized_data = {k: v for k, v in serialized_data.items()}
 
             return serialized_data
         else:
-            return super().serialize_data(data, select_fields)
+            return super(UiDictSerializer, self).serialize_data(data, select_fields)
 
     def serialize_record_for_table(self, record: RecordProtocol) -> Dict[str, Any]:
         """
@@ -89,7 +106,7 @@ class UiDictSerializer(DictSerializer):
         key_serializer = StringSerializer()
         all_slots = _get_class_hierarchy_slots(record.__class__)
 
-        # get subset of slots which supported in table format
+        # Get subset of slots which supported in table format
         table_slots = [
             slot
             for slot in all_slots
@@ -103,15 +120,15 @@ class UiDictSerializer(DictSerializer):
             )
         ]
 
-        # serialize record to ui format using table_slots
+        # Serialize record to ui format using table_slots
         table_record: Dict[str, Any] = self.serialize_data(record, select_fields=table_slots)
 
-        # replace "_type" with "_t"
+        # Replace "_type" with "_t"
         if "_type" in table_record:
             table_record["_t"] = record.__class__.__name__
             del table_record["_type"]
 
-        # add "_key"
+        # Add "_key"
         table_record["_key"] = key_serializer.serialize_key(record.get_key())
 
         return table_record
@@ -123,6 +140,9 @@ class UiDictSerializer(DictSerializer):
         element_decl can be None for data with _t on root. Then, for nested fields will be used element decls from
         specific TypeDecl object.
         """
+
+        if not self.pascalize_keys:
+            raise RuntimeError("Expect ui serialization always with pascalized keys.")
 
         if isinstance(data, dict):
             if (short_name := data.get("_t")) is not None:
@@ -151,17 +171,16 @@ class UiDictSerializer(DictSerializer):
                     if field == "_t":
                         continue
 
-                    # TODO (Roman): check self.pascalize_keys
-                    # Apply force snake case conversion for field names
-                    field_in_snake_case = underscore(field)
+                    # Expect pascal case fields
+                    CaseUtil.check_pascal_case(field.removesuffix("_"))
 
-                    if (field_decl := type_decl_elements.get(field_in_snake_case)) is not None:
+                    if (field_decl := type_decl_elements.get(field)) is not None:
                         # Apply ui conversion for values recursively
-                        result[field_in_snake_case] = self.apply_ui_conversion(value, field_decl)
+                        result[field] = self.apply_ui_conversion(value, field_decl)
                     else:
                         # If element decl is not found for field in data raise RuntimeError
                         raise RuntimeError(
-                            f'Data conflicts with type declaration. Field "{field_in_snake_case}" not found '
+                            f'Data conflicts with type declaration. Field "{field}" not found '
                             f'in "{short_name}" type elements.'
                         )
 
@@ -173,7 +192,7 @@ class UiDictSerializer(DictSerializer):
             if (enum := element_decl.enum) is not None:
                 # Get enum type from element decl and convert value to dict supported by DictSerializer
                 enum_type_name = enum.name
-                return {"_enum": enum_type_name, "_name": StringUtil.upper_to_pascal_case(data)}
+                return {"_enum": enum_type_name, "_name": CaseUtil.upper_to_pascal_case(data)}
 
             elif (key := element_decl.key_) is not None:
                 # Get key type from element decl

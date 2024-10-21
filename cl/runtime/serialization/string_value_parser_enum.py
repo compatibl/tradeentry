@@ -19,7 +19,9 @@ from types import DynamicClassAttribute
 from typing import Any
 from typing import Dict
 from typing import Final
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.protocols import is_key
+from cl.runtime.serialization.dict_serializer import DictSerializer
 
 
 class StringValueCustomTypeEnum(IntEnum):
@@ -65,14 +67,17 @@ class StringValueCustomTypeEnum(IntEnum):
     """Key type."""
 
 
-
-CUSTOM_TYPE_VALUE_TO_NAME: Final[Dict[StringValueCustomTypeEnum, str]] = {StringValueCustomTypeEnum.DICT: "json"}
-"""Enum value to name mapping."""
-
 CUSTOM_TYPE_NAME_TO_VALUE: Final[Dict[str, StringValueCustomTypeEnum]] = {
-    v: k for k, v in CUSTOM_TYPE_VALUE_TO_NAME.items()
+    # CaseUtil.upper_to_snake_case(member.name): member for member in StringValueCustomTypeEnum
+    "bool": StringValueCustomTypeEnum.BOOL,
+    "json": StringValueCustomTypeEnum.DICT,
 }
-"""Name to enum value mapping. Reversed mapping."""
+"""Name to enum value mapping."""
+
+CUSTOM_TYPE_VALUE_TO_NAME: Final[Dict[StringValueCustomTypeEnum, str]] = {
+    v: k for k, v in CUSTOM_TYPE_NAME_TO_VALUE.items()
+}
+"""Enum value to name mapping."""
 
 
 class StringValueParser:
@@ -91,7 +96,7 @@ class StringValueParser:
         )
 
         type_prefix = f"```{type_name} "
-        return type_prefix + value
+        return type_prefix + DictSerializer._serialize_primitive(value, type_name)
 
     @classmethod
     def parse(cls, value: str) -> (str, StringValueCustomTypeEnum | None):
@@ -105,7 +110,7 @@ class StringValueParser:
             "any_string_without_prefix" -> "any_string_without_prefix", None
         """
 
-        # check if value starts with type info prefix using regex
+        # Check if value starts with type info prefix using regex
         typed_value_pattern = re.compile("```(?P<type>.*?) .*")
         typed_value_match = typed_value_pattern.match(value)
 
@@ -120,7 +125,8 @@ class StringValueParser:
             value_custom_type = (
                 custom_type
                 if ((custom_type := CUSTOM_TYPE_NAME_TO_VALUE.get(value_custom_type)) is not None)
-                else StringValueCustomTypeEnum[value_custom_type]
+                # TODO: Use CaseUtil.snake_to_upper_case when case is standardized
+                else StringValueCustomTypeEnum[value_custom_type.upper()]
             )
 
             return value_without_prefix, value_custom_type

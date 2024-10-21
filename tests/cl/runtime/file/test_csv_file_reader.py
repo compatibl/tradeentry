@@ -14,35 +14,47 @@
 
 import pytest
 import os
+from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.file.csv_file_reader import CsvFileReader
-from cl.runtime.settings.settings import Settings
-from cl.runtime.db.local.local_cache import LocalCache
 from stubs.cl.runtime import StubDataclassDerivedRecord
+from stubs.cl.runtime import StubDataclassNestedFields
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassRecordKey
 
 
-def test_smoke():
+def test_csv_file_reader():
     """Test CsvFileReader class."""
-
-    project_root = Settings.get_project_root()
-    file_path = os.path.join(project_root, "preloads/stubs/cl/runtime/csv/StubDataclassDerivedRecord.csv")
 
     # Create a new instance of local cache for the test
     with TestingContext() as context:
+        env_dir = EnvUtil.get_env_dir()
+        file_path = os.path.join(env_dir, "StubDataclassDerivedRecord.csv")
         # TODO: Change the API not to take record type or make it optional
         file_reader = CsvFileReader(record_type=StubDataclassDerivedRecord, file_path=file_path)
         file_reader.read()
 
+        file_path = os.path.join(env_dir, "StubDataclassNestedFields.csv")
+        file_reader = CsvFileReader(record_type=StubDataclassNestedFields, file_path=file_path)
+        file_reader.read()
+
         # Verify
         # TODO: Check count using load_all or count method of Db when created
-        for i in range(1, 2):
+        for i in range(1, 3):
             key = StubDataclassRecordKey(id=f"derived_id_{i}")
             record = context.load_one(StubDataclassRecord, key)
             assert record == StubDataclassDerivedRecord(
                 id=f"derived_id_{i}", derived_field=f"test_derived_field_value_{i}"
             )
+
+        for i in range(1, 4):
+            expected_record = StubDataclassNestedFields(
+                primitive=f"nested_primitive_{i}",
+                embedded_1=StubDataclassRecordKey(id=f"embedded_key_id_{i}a"),
+                embedded_2=StubDataclassRecordKey(id=f"embedded_key_id_{i}b"),
+            )
+            record = context.load_one(StubDataclassNestedFields, expected_record.get_key())
+            assert record == expected_record
 
 
 if __name__ == "__main__":

@@ -18,7 +18,6 @@ from abc import ABC
 from abc import abstractmethod
 from dataclasses import MISSING
 from dataclasses import dataclass
-from pathlib import Path
 from typing import ClassVar
 from typing import Dict
 from typing import Iterable
@@ -29,9 +28,22 @@ from dotenv import load_dotenv
 from dynaconf import Dynaconf
 from typing_extensions import Self
 from cl.runtime.context.env_util import EnvUtil
+from cl.runtime.primitive.ordered_uuid import OrderedUuid
+from cl.runtime.records.record_util import RecordUtil
+from cl.runtime.settings.project_settings import SETTINGS_FILES_ENVVAR
+from cl.runtime.settings.project_settings import ProjectSettings
 
 # Load dotenv first (the priority order is envvars first, then dotenv, then settings.yaml and .secrets.yaml)
 load_dotenv()
+
+process_id = (
+    OrderedUuid.to_readable_str(OrderedUuid.create_one())
+    .replace(":", "-")
+    .replace(".", "-")
+    .replace("T", "-")
+    .replace("Z", "")
+)
+"""Process timestamp is OrderedUuid in readable string format created during the Python process launch."""
 
 # Determine if we are inside a test and store the result in a global variable for performance
 is_inside_test = EnvUtil.is_inside_test()
@@ -46,8 +58,12 @@ _all_settings = Dynaconf(
     environments=True,
     envvar_prefix="CL",
     env_switcher="CL_SETTINGS_ENV",
-    envvar="CL_SETTINGS_FILE",
-    settings_files=["settings.yaml", ".secrets.yaml"],
+    envvar=SETTINGS_FILES_ENVVAR,
+    settings_files=[
+        # Specify the exact path to prevent uncertainty associated with searching in multiple directories
+        os.path.normpath(os.path.join(ProjectSettings.get_project_root(), "settings.yaml")),
+        os.path.normpath(os.path.join(ProjectSettings.get_project_root(), ".secrets.yaml")),
+    ],
     dotenv_override=True,
 )
 """
@@ -81,10 +97,6 @@ _dotenv_file_path = find_dotenv_output if (find_dotenv_output := find_dotenv()) 
 
 _dotenv_dir_path = os.path.dirname(_dotenv_file_path) if _dotenv_file_path is not None else None
 """Absolute path to .env directory if found, None otherwise."""
-
-# TODO (Roman): make _main_path unrelated to __file__
-_main_path = Path(__file__).parents[1].joinpath("__main__.py")
-"""Path to __main__.py file as entrypoint of program."""
 
 
 @dataclass(slots=True, kw_only=True)
@@ -186,13 +198,16 @@ class Settings(ABC):
             # TODO: Can custom deserializer that removes trailing and leading _ can be used without cyclic reference?
             result = cls(**settings_dict)
 
+            # Invoke init method for each class hierarchy member from base to derived
+            RecordUtil.init_all(result)
+
             # Cache the result
             cls.__settings_dict[cls] = result
 
         return result
 
     @classmethod
-    def get_project_root(cls) -> str:
+    def get_project_root(cls) -> str:  # TODO: Merge with the version from ProjectSettings
         """
         Returns absolute path of the directory containing .env file, and if not present the directory
         containing the first Dynaconf settings file found. Error message if neither is found.
@@ -206,39 +221,22 @@ class Settings(ABC):
             return _dynaconf_dir_path
         else:
             raise RuntimeError(
-                f"Cannot resolve relative preload path value {path} for {field_name} when "
-                "neither .env nor dynaconf settings file is present to use as project root."
+                "Cannot get project root because neither .env file nor dynaconf settings file are found. "
+                "Project root is defined based on the location of these two files (with .env having a priority)."
             )
 
     @classmethod
-    def get_databases_path(cls) -> str:
-        """Returns absolute path to dir for databases."""
-        project_root = Settings.get_project_root()
-        db_dir = os.path.join(project_root, "databases")
-        if not os.path.exists(db_dir):
-            # Create the directory if does not exist
-            os.makedirs(db_dir)
-        return db_dir
-
-    @classmethod
-    def get_main_path(cls) -> Path:
-        """Returns path to __main__.py file."""
-        return _main_path
-
-    @classmethod
-    def get_static_files_path(cls) -> Path:
-        """Returns path to wwwroot directory containing ui static files."""
-        return cls.get_main_path().parents[2] / "wwwroot"
-
-    @classmethod
-    def normalize_paths(cls, field_name: str, field_value: Iterable[str] | str) -> List[str]:
+    def normalize_paths(cls, field_name: str, field_value: Iterable[str] | str | None) -> List[str]:
         """
         Convert to absolute path if path relative to the location of .env or Dynaconf file is specified
         and convert to list if single value is specified.
         """
 
-        # Check that the argument is either a string or an iterable
-        if isinstance(field_value, str):
+        # Check that the argument is either None, a string or, an iterable
+        if field_value is None:
+            # Accept None and treat it as an empty list
+            return []
+        elif isinstance(field_value, str):
             paths = [field_value]
         elif hasattr(field_value, "__iter__"):
             paths = list(field_value)
@@ -252,14 +250,14 @@ class Settings(ABC):
         return result
 
     @classmethod
-    def normalize_path(cls, field_name: str, field_value: str) -> str:
+    def normalize_path(cls, field_name: str, field_value: str | None) -> str:
         """Convert to absolute path if path relative to the location of .env or Dynaconf file is specified."""
 
-        # Check that 'field_value' is a string
-        if isinstance(field_value, str):
-            path = field_value
-        elif field_value is None or field_value == "":
+        if field_value is None or field_value == "":
             raise RuntimeError(f"Field '{field_name}' in class '{cls.__name__}' has an empty element.")
+        elif isinstance(field_value, str):
+            # Check that 'field_value' is a string
+            path = field_value
         else:
             raise RuntimeError(
                 f"Field '{field_name}' in class '{cls.__name__}' has an element "

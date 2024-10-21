@@ -18,7 +18,7 @@ from cl.runtime.settings.settings import Settings
 
 @dataclass(slots=True, kw_only=True)
 class ApiSettings(Settings):
-    """Runtime REST API settings."""
+    """REST API settings."""
 
     host_name: str = "localhost"
     """REST API host name (either host name or IP can be used to access the API)."""
@@ -29,8 +29,8 @@ class ApiSettings(Settings):
     port: int = 7008
     """REST API port."""
 
-    def __post_init__(self):
-        """Perform validation and type conversions."""
+    def init(self) -> None:
+        """Same as __init__ but can be used when field values are set both during and after construction."""
 
         if not isinstance(self.host_name, str):
             raise RuntimeError(f"{type(self).__name__} field 'host_name' must be a string.")

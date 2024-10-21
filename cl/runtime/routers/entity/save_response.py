@@ -14,6 +14,7 @@
 
 from pydantic import BaseModel
 from cl.runtime import Context
+from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.routers.entity.save_request import SaveRequest
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.serialization.ui_dict_serializer import UiDictSerializer
@@ -46,7 +47,7 @@ class SaveResponse(BaseModel):
             ui_record["OpenedTabs"] = [
                 {
                     **{k: v for k, v in item.items() if k != "Type"},
-                    "Type_": {**item["Type"], "_t": "BaseTypeInfo"},
+                    "Type": {**item["Type"], "_t": "BaseTypeInfo"},
                     "_t": "TabInfo",
                 }
                 for item in opened_tabs
@@ -67,9 +68,10 @@ class SaveResponse(BaseModel):
                 record_type=type(record),
                 record_or_key=record.get_key(),
                 dataset=request.dataset,
+                is_record_optional=True,
             )
             if existing_record is not None:
-                raise RuntimeError(f"Record with key {str(record)} already exists.")
+                raise UserError(f"Record with key {str(record)} already exists.")
 
         if request.old_record_key is not None and request.old_record_key != key_serializer.serialize_key(record):
             old_record_key_obj = key_serializer.deserialize_key(request.old_record_key, type(record.get_key()))

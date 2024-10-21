@@ -17,21 +17,19 @@ import dataclasses
 from typing import Any
 from typing import Dict
 from typing import List
-import inflection
 from pydantic import BaseModel
 from pydantic import Field
 from cl.runtime import Context
 from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.backend.core.ui_app_state_key import UiAppStateKey
-from cl.runtime.backend.core.ui_type_state import UiTypeState
 from cl.runtime.backend.core.user_key import UserKey
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
 from cl.runtime.routers.storage.record_request import RecordRequest
 from cl.runtime.schema.field_decl import primitive_types  # TODO: Move definition to a separate module
 from cl.runtime.schema.schema import Schema
-from cl.runtime.schema.type_decl import pascalize
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.serialization.ui_dict_serializer import UiDictSerializer
 
@@ -80,7 +78,11 @@ def to_legacy_dict(node: Dict[str, Any] | List[Dict[str, Any]] | str) -> Dict[st
     if isinstance(node, dict):
         # Skip nodes that have the value of None
         # Remove suffix _ from field names if present
-        result = {pascalize(k.removesuffix("_")): to_legacy_dict(v) for k, v in node.items() if v is not None}
+        result = {
+            CaseUtil.snake_to_pascal_case(k.removesuffix("_")): to_legacy_dict(v)
+            for k, v in node.items()
+            if v is not None
+        }
         return result
     elif isinstance(node, list):
         # Skip nodes that have the value of None
@@ -113,7 +115,7 @@ class RecordResponse(BaseModel):
             record_type = Schema.get_type_by_short_name(request.type)
         else:
             key_tokens = request.key.split(";")
-            key_module = inflection.underscore(key_tokens[0])
+            key_module = CaseUtil.pascal_to_snake_case(key_tokens[0])
             key_class = key_tokens[1]
 
             # record_type = Schema.get_type_by_short_name(request.type)
@@ -132,7 +134,8 @@ class RecordResponse(BaseModel):
         else:
             deserialized_key = key_serializer.deserialize_key(request.key, record_type.get_key_type())
 
-        record = db.load_one(record_type, deserialized_key)
+        # TODO: Review the use of is_record_optional flag here
+        record = db.load_one(record_type, deserialized_key, is_record_optional=True)
 
         # Get type declarations based on the actual record type
         type_decl_dict = (
@@ -149,7 +152,7 @@ class RecordResponse(BaseModel):
 
         # TODO: Optimize speed using dacite or similar library
 
-        ui_serializer = UiDictSerializer(pascalize_keys=True)
+        ui_serializer = UiDictSerializer()
         # serialize record to ui format
         record_dict_in_legacy_format = ui_serializer.serialize_data(record)
 

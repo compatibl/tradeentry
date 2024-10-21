@@ -44,7 +44,7 @@ def test_data_serialization():
         StubDataclassSingleton,
     ]
 
-    serializer = UiDictSerializer(pascalize_keys=False)
+    serializer = UiDictSerializer()
 
     for sample_type in sample_types:
         obj_1 = sample_type()

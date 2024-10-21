@@ -31,8 +31,10 @@ from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_handlers_key import
 
 # Create handler tasks
 tasks = [
-    InstanceMethodTask.from_key(
-        task_id=f"{i}", key=StubHandlersKey(stub_id=f"{i}"), method=StubHandlers.run_instance_method_1a
+    InstanceMethodTask.create(
+        task_id=f"{i}",
+        record_or_key=StubHandlersKey(stub_id=f"{i}"),
+        method_callable=StubHandlers.run_instance_method_1a,
     )
     for i in range(2)
 ]
@@ -45,9 +47,13 @@ task_keys_str = [key_serializer.serialize_key(task.get_key()) for task in tasks]
 t = DatetimeUtil.now()
 queue_key = handler_queue.get_key()
 task_runs = [
-    TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatusEnum.COMPLETED, result=b"result")
+    TaskRun(queue=queue_key, task=task, submit_time=t, update_time=t, status=TaskStatusEnum.COMPLETED, result="result")
     for task in tasks
 ]
+
+# Init task runs
+for task_run in task_runs:
+    task_run.init()
 
 stub_handlers = StubHandlers()
 key_serializer = StringSerializer()

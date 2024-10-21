@@ -23,7 +23,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 class UserKey(KeyMixin):
     """User which is allowed to log in."""
 
-    username: str = missing()
+    username: str = missing()  # TODO: Consider renaming to user_id, requires matching UI and auth changes
     """Unique user identifier."""
 
     @classmethod

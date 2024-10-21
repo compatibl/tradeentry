@@ -13,11 +13,14 @@
 # limitations under the License.
 
 from abc import abstractmethod
+from typing import Callable
 from typing import Generic
+from typing import Type
 from typing import TypeVar
 from cl.runtime.records.protocols import KeyProtocol
+from cl.runtime.records.record_util import RecordUtil
 
-TKey = TypeVar("TKey", bound=KeyProtocol)
+TKey = TypeVar("TKey", bound=KeyProtocol)  # TODO: Remove duplicate TKey definition
 
 
 class RecordMixin(Generic[TKey]):
@@ -32,3 +35,7 @@ class RecordMixin(Generic[TKey]):
     @abstractmethod
     def get_key(self) -> TKey:
         """Return a new key object whose fields populated from self, do not return self."""
+
+    def init_all(self) -> None:
+        """Invoke 'init' for each class in the order from base to derived, then validate against schema."""
+        RecordUtil.init_all(self)

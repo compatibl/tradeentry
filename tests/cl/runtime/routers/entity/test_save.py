@@ -22,13 +22,21 @@ from cl.runtime.routers.entity.save_response import SaveResponse
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassRecordKey
 
+# Test save record payloads
+create_record_payload = {"Id": "new_record", "DerivedField": "test", "_t": "StubDataclassDerivedRecord"}
+
+update_record_payload = {
+    "Id": "existing_record",
+    "DerivedField": "new_value",
+    "_t": "StubDataclassDerivedRecord",
+}
+
 
 def test_method():
     """Test coroutine for /entity/save route."""
 
     with TestingContext() as context:
         # Test saving new record
-        create_record_payload = {"id": "new_record", "derived_field": "test", "_t": "StubDataclassDerivedRecord"}
         save_new_record_request_obj = SaveRequest(record_dict=create_record_payload)
 
         save_new_record_result = SaveResponse.save_entity(save_new_record_request_obj)
@@ -45,11 +53,6 @@ def test_method():
         assert records_count == 1
 
         # Test updating existing record
-        update_record_payload = {
-            "id": "existing_record",
-            "derived_field": "new_value",
-            "_t": "StubDataclassDerivedRecord",
-        }
         existing_record = StubDataclassDerivedRecord(id="existing_record", derived_field="old_value")
         context.save_one(existing_record)
         update_record_request_obj = SaveRequest(record_dict=update_record_payload, old_record_key="existing_record")
@@ -79,7 +82,6 @@ def test_api():
         test_app.include_router(entity_router.router, prefix="/entity", tags=["Entity"])
         with TestClient(test_app) as test_client:
             # Test saving new record
-            create_record_payload = {"id": "new_record", "derived_field": "test", "_t": "StubDataclassDerivedRecord"}
             save_new_record_request_obj = SaveRequest(record_dict=create_record_payload)
             request_params = {
                 "old_record_key": save_new_record_request_obj.old_record_key,
@@ -105,11 +107,6 @@ def test_api():
             assert records_count == 1
 
             # Test updating existing record
-            update_record_payload = {
-                "id": "existing_record",
-                "derived_field": "new_value",
-                "_t": "StubDataclassDerivedRecord",
-            }
             existing_record = StubDataclassDerivedRecord(id="existing_record", derived_field="old_value")
             context.save_one(existing_record)
             update_record_request_obj = SaveRequest(record_dict=update_record_payload, old_record_key="existing_record")

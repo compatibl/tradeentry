@@ -13,19 +13,20 @@
 # limitations under the License.
 
 import datetime as dt
-from typing import Any
-from typing import Protocol
-from typing import Type
-from typing import TypeGuard
 from enum import Enum
+from typing import Any
 from typing import Dict
 from typing import List
 from typing import Literal
+from typing import Protocol
 from typing import Tuple
-from uuid import UUID
+from typing import Type
+from typing import TypeGuard
 from typing import TypeVar
+from typing import runtime_checkable
+from uuid import UUID
 
-TPrimitive = str | float | bool | int | dt.date | dt.time | dt.datetime | UUID | bytes
+TPrimitive = str | float | bool | int | dt.date | dt.time | dt.datetime | UUID | bytes | None
 """Supported primitive value types for serialized data in dictionary format."""
 
 TDataField = Dict[str, "TDataField"] | List["TDataField"] | TPrimitive | Enum | None
@@ -56,7 +57,11 @@ TRecord = TypeVar("TRecord")
 TKey = TypeVar("TKey")
 """Generic type parameter for the key."""
 
+TEnum = TypeVar("TEnum", bound=Enum)
+"""Generic type parameter for an enum."""
 
+
+@runtime_checkable
 class KeyProtocol(Protocol):
     """Protocol implemented by keys and also required for records which are derived from keys."""
 
@@ -76,7 +81,7 @@ class InitProtocol:
     """Protocol implemented by objects that require initialization."""
 
     def init(self) -> None:
-        """Similar to __init__ but uses previously set fields instead of parameters."""
+        """Same as __init__ but can be used when field values are set both during and after construction."""
 
 
 class ValidateProtocol:

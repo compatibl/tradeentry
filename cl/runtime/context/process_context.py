@@ -13,13 +13,15 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from getpass import getuser
+from cl.runtime.backend.core.user_key import UserKey
 from cl.runtime.context.context import Context
 from cl.runtime.context.testing_context import TestingContext
-from cl.runtime.log.log import Log
+from cl.runtime.db.dataset_util import DatasetUtil
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.settings.context_settings import ContextSettings
 from cl.runtime.settings.settings import is_inside_test
-from cl.runtime.db.dataset_util import DatasetUtil
+from cl.runtime.settings.settings import process_id
 
 
 @dataclass(slots=True, kw_only=True)
@@ -41,19 +43,25 @@ class ProcessContext(Context):
             context_settings = ContextSettings.instance()
 
             # Use db_id from settings for context_id unless specified by the caller
-            if self.context_id is None:
-                self.context_id = context_settings.db_id
+            if context_settings.context_id is not None:
+                self.context_id = context_settings.context_id
+            else:
+                self.context_id = process_id
+
+            # Set user
+            # TODO: Set in based on auth for enterprise cloud deployments
+            # TODO: Use LastName, FirstName format for enterprise if possible
+            self.user = UserKey(username=getuser())
 
             # Create the log class specified in settings
             log_type = ClassInfo.get_class_type(context_settings.log_class)
             self.log = log_type(log_id=self.context_id)
 
-            # Use context_id converted to semicolon-delimited format for db_id
-            db_id = self.context_id.replace(".", ";")
-
             # Create the database class specified in settings
             db_type = ClassInfo.get_class_type(context_settings.db_class)
-            self.db = db_type(db_id=db_id)
+
+            # Use context_id as db_id
+            self.db = db_type(db_id=self.context_id)
 
             # Root dataset
             self.dataset = DatasetUtil.root()

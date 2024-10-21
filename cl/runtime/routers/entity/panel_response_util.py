@@ -28,11 +28,21 @@ from cl.runtime.routers.response_util import to_record_dict
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.string_serializer import StringSerializer
+from cl.runtime.serialization.ui_dict_serializer import UiDictSerializer
+from cl.runtime.view.dag.dag import Dag
+from cl.runtime.views.binary_content import BinaryContent
+from cl.runtime.views.html_view import HtmlView
 from cl.runtime.views.key_view import KeyView
+from cl.runtime.views.pdf_view import PdfView
 from cl.runtime.views.plot_view import PlotView
 from cl.runtime.views.png_view import PngView
+from cl.runtime.views.script import Script
 
 PanelResponseData = Dict[str, Any] | List[Dict[str, Any]] | None
+
+
+ui_serializer = UiDictSerializer()
+"""Ui serializer."""
 
 
 class PanelResponseUtil(BaseModel):
@@ -49,11 +59,11 @@ class PanelResponseUtil(BaseModel):
         type_ = Schema.get_type_by_short_name(request.type)
 
         # Check if the selected type has the needed viewer and get its name (only viewer's label is provided)
-        handlers = HandlerDeclareBlockDecl.get_type_methods(type_).handlers
+        handlers = HandlerDeclareBlockDecl.get_type_methods(type_, inherit=True).handlers
         if (
             handlers is not None
             and handlers
-            and (found_viewers := [h.name for h in handlers if h.label == request.panel_id and h.type_ == "viewer"])
+            and (found_viewers := [h.name for h in handlers if h.label == request.panel_id and h.type_ == "Viewer"])
         ):
             viewer_name: str = found_viewers[0]
         else:
@@ -61,7 +71,7 @@ class PanelResponseUtil(BaseModel):
 
         # Deserialize key from string to object
         serializer = StringSerializer()
-        key_obj = serializer.deserialize_key(data=request.key, type_=type_)
+        key_obj = serializer.deserialize_key(data=request.key, type_=type_.get_key_type())
 
         # Get database from the current context
         db = Context.current().db
@@ -119,6 +129,34 @@ class PanelResponseUtil(BaseModel):
                 "ContentType": "Png",
                 "_t": "BinaryContent",
             }
+        elif isinstance(view, HtmlView):
+            # Return ui format dict of binary data
+            return {
+                "Content": base64.b64encode(view.html_bytes).decode(),
+                "ContentType": "Html",
+                "_t": "BinaryContent",
+            }
+        elif isinstance(view, PdfView):
+            # Return ui format dict of binary PDF view data
+            return {
+                "Content": base64.b64encode(view.pdf_bytes).decode(),
+                "ContentType": "Pdf",
+                "_t": "BinaryContent",
+            }
+        elif isinstance(view, Dag):
+            # Serialize Dag using ui serialization
+            view_dict = ui_serializer.serialize_data(view)
+
+            # Set _t with legacy Dag type name
+            view_dict["_t"] = "DAG"
+
+            # Return Dag view
+            return view_dict
+        elif isinstance(view, Script):
+            # Return script
+            view_dict: dict = to_legacy_dict(to_record_dict(view))
+            view_dict["Language"] = view_dict.pop("Language").capitalize()
+            return view_dict
         elif isinstance(view, Dict):
             # Return if is already dict
             return view

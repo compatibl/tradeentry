@@ -48,8 +48,8 @@ def test_smoke():
             method_callable = sample_input[1]
             task = InstanceMethodTask.create(
                 task_id="abc",
-                method_callable=method_callable,
                 record_or_key=record_or_key,
+                method_callable=method_callable,
             )
             task.execute()
 

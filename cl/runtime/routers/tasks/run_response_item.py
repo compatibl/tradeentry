@@ -16,7 +16,7 @@ from __future__ import annotations
 import traceback
 from typing import List
 from pydantic import BaseModel
-from cl.runtime.primitive.string_util import StringUtil
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseItem
 from cl.runtime.routers.tasks.run_request import RunRequest
@@ -39,7 +39,7 @@ class RunResponseItem(BaseModel):
     """Key of the record."""
 
     class Config:
-        alias_generator = StringUtil.snake_to_pascal_case
+        alias_generator = CaseUtil.snake_to_pascal_case
         populate_by_name = True
 
     @classmethod
@@ -57,7 +57,10 @@ class RunResponseItem(BaseModel):
             # TODO: Add request.arguments_ and type_
             if serialized_key is not None:
                 # Key is not None, this is an instance method
-                key_type = Schema.get_type_by_short_name(request.table)
+
+                # Get key type based on table in request
+                key_type = Schema.get_type_by_short_name(request.table).get_key_type()  # noqa
+
                 key_type_str = f"{key_type.__module__}.{key_type.__name__}"
                 handler_task = InstanceMethodTask(
                     task_id=f"{key_type_str}:{serialized_key}:{request.method}",  # TODO Include parameters or use GUID

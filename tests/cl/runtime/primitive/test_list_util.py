@@ -17,7 +17,7 @@ from cl.runtime.primitive.list_util import ListUtil
 
 
 def test_is_empty():
-    """Smoke test for functions in StringUtil."""
+    """Smoke test for functions in CaseUtil."""
     assert ListUtil.is_empty(None)
     assert ListUtil.is_empty([])
     assert not ListUtil.is_empty([1])

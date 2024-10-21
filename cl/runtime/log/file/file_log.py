@@ -20,12 +20,13 @@ from concurrent_log_handler import ConcurrentRotatingFileHandler
 from cl.runtime.log.log import Log
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.settings.log_settings import LogSettings
-from cl.runtime.settings.settings import Settings
+from cl.runtime.settings.project_settings import ProjectSettings
 
 
 def _get_log_filename() -> str:
     """Generate log filename during import and use it throughout the session."""
 
+    # TODO: Refactor to use a unique directory name instead
     # Generate log file name
     log_settings = LogSettings.instance()
     log_filename_format = log_settings.filename_format
@@ -48,7 +49,7 @@ def _get_log_filename() -> str:
             )
 
     # Create log directory and filename relative to project root
-    project_root = Settings.get_project_root()
+    project_root = ProjectSettings.get_project_root()
     log_dir = os.path.join(project_root, "logs")
     result = os.path.join(log_dir, result)
 
@@ -89,5 +90,8 @@ class FileLog(Log):
         )
         file_log_handler.setFormatter(file_log_formatter)
 
+        console_handler = logging.StreamHandler()
+        console_handler.setFormatter(file_log_formatter)
+
         # TODO: Add another handler that saves records
-        return [file_log_handler]
+        return [file_log_handler, console_handler]

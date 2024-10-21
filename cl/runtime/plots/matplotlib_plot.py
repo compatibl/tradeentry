@@ -17,9 +17,10 @@ import os
 from abc import abstractmethod
 from dataclasses import dataclass
 from matplotlib import pyplot as plt
-from cl.runtime import View, Context
-from cl.runtime.plots.plot import Plot
+from cl.runtime import Context
+from cl.runtime import View
 from cl.runtime.context.env_util import EnvUtil
+from cl.runtime.plots.plot import Plot
 from cl.runtime.plots.plot_style import PlotStyle
 from cl.runtime.views.png_view import PngView
 
@@ -34,9 +35,11 @@ class MatplotlibPlot(Plot):
 
     def _load_style(self) -> PlotStyle:
         """Load style object or create with default settings if not specified."""
-        style = Context.current().load_one(PlotStyle, self.style)
-        style = style if self.style is not None else PlotStyle()
-
+        style = Context.current().load_one(PlotStyle, self.style, is_key_optional=True)
+        if style is None:
+            # Use default values if not found
+            style = PlotStyle(plot_style_id="Default")
+            style.init_all()
         return style
 
     def _get_pyplot_theme(self, style: PlotStyle) -> str:

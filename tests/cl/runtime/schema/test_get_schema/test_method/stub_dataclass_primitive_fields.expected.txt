@@ -1,6 +1,6 @@
 _t: StubDataclassPrimitiveFields
 Module:
-  ModuleName: Stubs.Cl.Runtime.Records.ForDataclasses.StubDataclassPrimitiveFields
+  ModuleName: stubs.cl.runtime.records.for_dataclasses.stub_dataclass_primitive_fields
 Name: StubDataclassPrimitiveFields
 Label: Stub Dataclass Primitive Fields
 Comment: Stub record whose elements are primitive types.
@@ -48,7 +48,7 @@ Elements:
   Comment: Stub field.
 - Enum:
     Module:
-      ModuleName: Stubs.Cl.Runtime.Records.Enum.StubIntEnum
+      ModuleName: stubs.cl.runtime.records.enum.stub_int_enum
     Name: StubIntEnum
   Name: KeyEnumField
   Comment: Stub field.
@@ -94,7 +94,7 @@ Elements:
   Comment: Stub field.
 - Enum:
     Module:
-      ModuleName: Stubs.Cl.Runtime.Records.Enum.StubIntEnum
+      ModuleName: stubs.cl.runtime.records.enum.stub_int_enum
     Name: StubIntEnum
   Name: ObjEnumField
   Comment: Stub field.

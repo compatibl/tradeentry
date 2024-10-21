@@ -1,0 +1,12 @@
+Testing _Base:
+> _Base.init
+Testing _Derived:
+> _Base.init
+>> _Derived.init
+Testing _DerivedFromDerivedWithInit:
+> _Base.init
+>> _Derived.init
+>>> _DerivedFromDerivedWithInit.init
+Testing _DerivedFromDerivedWithoutInit:
+> _Base.init
+>> _Derived.init
