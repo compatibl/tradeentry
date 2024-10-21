@@ -22,21 +22,21 @@ def test_project_settings():
     """Test ProjectSettings class."""
 
     # Relative to the location of this test module
-    two_level_root_dir = os.path.normpath(Path(__file__).parents[6])
-    one_level_root_dir = os.path.normpath(Path(__file__).parents[5])
+    two_level_root_dir = os.path.normpath(Path(__file__).parents[5])
+    one_level_root_dir = os.path.normpath(Path(__file__).parents[4])
 
     # Create settings
     project_settings = ProjectSettings.instance()
 
     # Check project root
-    if ProjectSettings.project_levels == 1:
-        assert project_settings.project_root == two_level_root_dir
+    if project_settings.project_levels == 1:
+        assert project_settings.project_root == one_level_root_dir
         assert project_settings.get_package_root("cl.runtime") == project_settings.project_root
         assert project_settings.get_source_root("cl.runtime") == os.path.normpath(
             os.path.join(project_settings.project_root, "cl", "runtime")
         )
     elif project_settings.project_levels == 2:
-        assert project_settings.project_root == one_level_root_dir
+        assert project_settings.project_root == two_level_root_dir
         assert project_settings.get_package_root("cl.runtime") == os.path.normpath(
             os.path.join(project_settings.project_root, "runtime")
         )
