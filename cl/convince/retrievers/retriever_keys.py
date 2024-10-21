@@ -12,15 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.convince.prompts.prompt_key import PromptKey
+from cl.convince.retrievers.retriever_key import RetrieverKey
 
-cls = PromptKey
-
-
-class PromptKeys:
-    """PromptKey constants."""
-
-    ANNOTATING_RETRIEVER_PROMPT: cls = cls(prompt_id="AnnotatingRetrieverPrompt")
-    """Instructs the model to surround the requested parameter by curly braces for subsequent retrieval."""
+cls = RetrieverKey
 
 
+class RetrieverKeys:
+    """RetrieverKey constants."""
+
+    ANNOTATING_RETRIEVER: cls = cls(retriever_id="AnnotatingRetriever")
+    """Instructs the model to surround the requested parameter by curly braces and uses the annotations to retrieve."""

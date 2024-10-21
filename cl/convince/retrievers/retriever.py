@@ -12,17 +12,35 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import abstractmethod, ABC
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from typing import Any, List
 
-from cl.convince.llms.llm_key import LlmKey
-from cl.convince.prompts.prompt import Prompt
+from cl.convince.entries.entry import Entry
+from cl.runtime import RecordMixin
+from cl.runtime.log.exceptions.user_error import UserError
+from cl.convince.retrievers.retriever_key import RetrieverKey
+from cl.runtime.schema.schema import Schema
 
 
 @dataclass(slots=True, kw_only=True)
-class ExtractPrompt(Prompt, ABC):
-    """Extracts the requested parameter from the text."""
+class Retriever(RetrieverKey, RecordMixin[RetrieverKey], ABC):
+    """Retrieves the requested data from the text."""
+
+    def get_key(self) -> RetrieverKey:
+        return RetrieverKey(retriever_id=self.retriever_id)
 
     @abstractmethod
-    def extract(self, llm: LlmKey, text: str, param: str) -> str:
-        """Extract the specified parameter from the text."""
+    def retrieve(self,
+                 entry: Entry,
+                 param_description: str,
+                 param_samples: List[str] | None = None
+                 ) -> Entry:
+        """
+        Retrieve the specified parameter from the entry and return it as a smaller entry.
+
+        Args:
+            entry: The entry from which the data is extracted
+            param_description: Parameter description
+            param_samples: Optional parameter value samples for a few-shot prompt
+        """

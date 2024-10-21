@@ -12,15 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.convince.prompts.prompt_key import PromptKey
-
-cls = PromptKey
-
-
-class PromptKeys:
-    """PromptKey constants."""
-
-    ANNOTATING_RETRIEVER_PROMPT: cls = cls(prompt_id="AnnotatingRetrieverPrompt")
-    """Instructs the model to surround the requested parameter by curly braces for subsequent retrieval."""
+from dataclasses import dataclass
+from typing import Type
+from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.records.key_mixin import KeyMixin
 
 
+@dataclass(slots=True, kw_only=True)
+class RetrieverKey(KeyMixin):
+    """Retrieves the requested data from the text."""
+
+    retriever_id: str = missing()
+    """Unique retriever identifier."""
+
+    @classmethod
+    def get_key_type(cls) -> Type:
+        return RetrieverKey

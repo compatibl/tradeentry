@@ -14,11 +14,16 @@
 
 import re
 from dataclasses import dataclass
-
+from typing import List
 from cl.convince.entries.entry import Entry
+from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.llms.llm import Llm
 from cl.convince.llms.llm_key import LlmKey
-from cl.convince.prompts.extract.extract_prompt import ExtractPrompt
+from cl.convince.prompts.formatted_prompt import FormattedPrompt
+from cl.convince.prompts.prompt import Prompt
+from cl.convince.prompts.prompt_key import PromptKey
+from cl.convince.retrievers.retrieval import Retrieval
+from cl.convince.retrievers.retriever import Retriever
 from cl.runtime import Context
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.primitive.string_util import StringUtil
@@ -31,37 +36,74 @@ _TRIPLE_BACKTICKS_RE = re.compile(r'```(.*?)```', re.DOTALL)
 _BRACES_RE = re.compile(r'\{(.*?)\}')
 """Regex for text between curly braces."""
 
+_TEMPLATE = """You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{{
+    "success": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    "annotated_text": "<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,"
+    "justification": "<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>"
+}}
+Input text: ```{InputText}```
+Parameter description: ```{ParamDescription}```
+"""
+
 
 @dataclass(slots=True, kw_only=True)
-class BracesExtractPrompt(ExtractPrompt):
-    """Instructs the model to surround the requested parameter by curly braces."""
+class AnnotatingRetriever(Retriever):
+    """Instructs the model to surround the requested parameter by curly braces and uses the annotations to retrieve."""
 
-    preamble: str = missing()
-    """Preamble is placed at the beginning of the prompt."""
+    llm: LlmKey = missing()
+    """LLM used to perform the retrieval."""
 
-    request: str = missing()
-    """Request is placed at the end of the prompt."""
+    prompt: PromptKey = missing()
+    """Prompt used to perform the retrieval."""
 
-    def extract(self, llm_key: LlmKey, input_text: str, param_description: str) -> str:  # TODO: Add TrialID prefix here
+    def init(self) -> None:
+        """Same as __init__ but can be used when field values are set both during and after construction."""
+        if self.llm is None:
+            self.llm = GptLlm(llm_id="gpt-4o")  # TODO: Review the handling of defaults
+        if self.prompt is None:
+            self.prompt = FormattedPrompt(
+                prompt_id="AnnotatingRetriever",
+                params_type=Retrieval.__name__,
+                template=_TEMPLATE,
+            )  # TODO: Review the handling of defaults
 
-        # Get LLM
-        llm = Context.current().load_one(Llm, llm_key)
-        if llm is None:
-            raise UserError(f"LLM record {llm_key.llm_id} is not found.")
+    def retrieve(self,
+                 entry: Entry,
+                 param_description: str,
+                 param_samples: List[str] | None = None
+                 ) -> Entry:
+        # Get LLM and prompt
+        llm = Context.current().load_one(Llm, self.llm)
+        prompt = Context.current().load_one(Prompt, self.prompt)
 
-        # Strip whitespace from the original text
-        input_text = input_text.strip()
+        # Get entry text and strip starting and ending whitespace
+        input_text = entry.get_text()
+        input_text = input_text.strip()  # TODO: Perform more advanced normalization
+
+        # Create a retrieval record
+        retrieval = Retrieval(
+            retrieval_id=f"{entry.entry_id}: {param_description}",
+            input_text=input_text,
+            param_description=param_description,
+            param_samples=param_samples,
+        )
 
         # Create braces extraction prompt
-        formatted_request = self.request.format(input_text=input_text, param_description=param_description)
-        formatted_prompt = f"""{self.preamble}{formatted_request}"""
+        rendered_prompt = prompt.render(params=retrieval)
 
         trial_count = 2
         for trial_index in range(trial_count):
             is_last_trial = (trial_index == trial_count - 1)
             try:
                 # Get text annotated with braces and check that the only difference is braces and whitespace
-                completion = llm.completion(formatted_prompt, trial_id=trial_index)
+                completion = llm.completion(rendered_prompt, trial_id=trial_index)
 
                 # Extract the results
                 json_result = extract_json(completion)  # TODO(Major): Do not depend on stubs
@@ -105,8 +147,16 @@ class BracesExtractPrompt(ExtractPrompt):
 
                 # Combine and return from inside the loop
                 # TODO: Determine if numbered combination works better
-                result = " ".join(matches)
-                return result
+                param_value = " ".join(matches)
+
+                # Populate the output fields and save the retrieval object for validation
+                retrieval.success = True
+                retrieval.param_value = param_value
+                retrieval.justification = justification
+                Context.current().save_one(retrieval)
+
+                # Return only the parameter value
+                return param_value
 
             except Exception as e:
                 if is_last_trial:
