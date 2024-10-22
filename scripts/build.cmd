@@ -10,7 +10,7 @@ if exist dist rmdir /s /q dist
 
 echo.
 echo Build wheel
-python setup.py bdist_wheel
+python -m build --wheel
 
 echo.
 echo Delete egg-info and build directories after building, wheel is in dist

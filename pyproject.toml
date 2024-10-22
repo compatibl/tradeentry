@@ -16,3 +16,7 @@ force-exclude = '''
   | dist
 )/
 '''
+
+[build-system]
+requires = ["setuptools>=58.1.0", "wheel>=0.38.4"]
+build-backend = "setuptools.build_meta"
