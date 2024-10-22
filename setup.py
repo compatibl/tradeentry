@@ -3,8 +3,8 @@ import setuptools
 with open('./README.md', 'r') as readme_file:
     readme = readme_file.read()
 
-with open('./tools/cl/runtime/install_requirements.txt') as install_requirements:
-    install_requires = [line.strip() for line in install_requirements.readlines()]
+with open('./tools/cl/runtime/package_requirements.txt') as package_requirements:
+    install_requires = [line.strip() for line in package_requirements.readlines()]
 
 setuptools.setup(
     name='cl-runtime',

@@ -1,2 +1,0 @@
-# This submodule
--r package_requirements.txt
