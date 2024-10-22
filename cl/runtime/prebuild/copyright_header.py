@@ -109,7 +109,7 @@ def check_copyright_headers(
 
         # Use default exclude patterns if not specified by the caller
         if exclude_patterns is None:
-            exclude_patterns = ["__init__.py"]
+            exclude_patterns = ["__init__.py", "_version.py"]
 
         # Apply to each element of root_paths
         for root_path in package_root_paths:
