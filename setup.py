@@ -3,8 +3,15 @@ import setuptools
 with open('./README.md', 'r') as readme_file:
     readme = readme_file.read()
 
-with open('./tools/cl/tradeentry/install_requirements.txt') as install_requirements:
-    install_requires = [line.strip() for line in install_requirements.readlines()]
+# Internal requirements (exclude when building from monorepo)
+install_requires = [
+    "runtime>=2.0.5",
+    "convince>=0.0.3"
+]
+
+# Third-party requirements
+with open('./tools/cl/tradeentry/package_requirements.txt') as tradeentry_package_requirements:
+    install_requires.extend(line.strip() for line in tradeentry_package_requirements.readlines())
 
 setuptools.setup(
     name='tradeentry',
