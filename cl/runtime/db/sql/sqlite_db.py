@@ -118,7 +118,6 @@ class SqliteDb(Db):
             raise UserError(f"{record_type.__name__} record is not found for key {record_or_key}")
         return result
 
-
     def load_many(
         self,
         record_type: Type[TRecord],
@@ -252,7 +251,8 @@ class SqliteDb(Db):
 
         # Call on_save if defined
         [
-            record.on_save() for record in records  # TODO: Refactor on_save
+            record.on_save()
+            for record in records  # TODO: Refactor on_save
             if record is not None and hasattr(record, "on_save")
         ]
 

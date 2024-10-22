@@ -89,4 +89,3 @@ class HeatMapPlot(MatplotlibPlot):
             style = HeatMapPlotStyle(plot_style_id="Default")
             style.init_all()
         return style
-

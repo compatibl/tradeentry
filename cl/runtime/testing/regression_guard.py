@@ -347,10 +347,10 @@ class RegressionGuard:
 
     def __cmp_files(self, file_path_a: str, file_path_b: str) -> bool:
         """Compare two files ignoring line endings."""
-        with open(file_path_a, 'r') as file_a, open(file_path_b, 'r') as file_b:
+        with open(file_path_a, "r") as file_a, open(file_path_b, "r") as file_b:
             for line_a, line_b in zip(file_a, file_b):
                 # Strip line endings before comparing
-                if line_a.rstrip('\r\n') != line_b.rstrip('\r\n'):
+                if line_a.rstrip("\r\n") != line_b.rstrip("\r\n"):
                     return False
             # Check if there are any remaining lines in either file
             if file_a.readline() or file_b.readline():

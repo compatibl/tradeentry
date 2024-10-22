@@ -16,9 +16,10 @@ import logging
 from contextlib import contextmanager
 from contextvars import ContextVar
 from dataclasses import dataclass
-from typing import Iterator, Optional
 from typing import Iterable
+from typing import Iterator
 from typing import List
+from typing import Optional
 from typing import Type
 from cl.runtime.backend.core.user_key import UserKey
 from cl.runtime.context.context_key import ContextKey
@@ -43,7 +44,7 @@ The following root context types can be used in the outermost 'with' clause:
     - TestingContext: Context for running unit tests
 """
 
-_context_stack: ContextVar[Optional[List["Context"]]] = ContextVar('context_stack', default=None)
+_context_stack: ContextVar[Optional[List["Context"]]] = ContextVar("context_stack", default=None)
 """
 Context adds self to the stack on __enter__ and removes self on __exit__.
 Each asynchronous context has its own stack.
@@ -76,7 +77,6 @@ class Context(ContextKey, RecordMixin[ContextKey]):
 
     is_deserialized: bool = False
     """Use this flag to determine if this context instance has been deserialized from data."""
-
 
     def __post_init__(self):
         """Set fields to their values in 'Context.current()' if not specified."""
