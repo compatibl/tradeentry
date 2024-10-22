@@ -1,24 +1,25 @@
 # Default environment
 default:
-    # Documented in LogSettings class
-    runtime_log_level: info
-    runtime_log_filename_prefix: main
 
-    # Documented in ContextSettings class
-    runtime_context_packages:
-        - cl.runtime
-        - stubs.cl.runtime
-    runtime_context_db_class: cl.runtime.db.sql.sqlite_db.SqliteDb
+  # Documented in LogSettings class
+  runtime_log_level: info
+  runtime_log_filename_prefix: main
 
-    # Documented in ApiSettings class
-    runtime_api_host_name: localhost
-    runtime_api_host_ip: 127.0.0.1
-    runtime_api_port: 7008
+  # Documented in ContextSettings class
+  runtime_context_packages:
+      - cl.runtime
+      - stubs.cl.runtime
+  runtime_context_db_class: cl.runtime.db.sql.sqlite_db.SqliteDb
 
-    # Documented in PreloadSettings class
-    runtime_preload_dirs:
-        - preloads/cl
-        - preloads/stubs
+  # Documented in ApiSettings class
+  runtime_api_host_name: localhost
+  runtime_api_host_ip: 127.0.0.1
+  runtime_api_port: 7008
+
+  # Documented in PreloadSettings class
+  runtime_preload_dirs:
+      - preloads/cl
+      - preloads/stubs
 
   # Documented in PreloadSettings class
   runtime_preload_configs:
@@ -26,6 +27,7 @@ default:
 
 # Test environment
 test:
-    # Documented in LogSettings class
-    runtime_log_filename_prefix: tests
+
+  # Documented in LogSettings class
+  runtime_log_filename_prefix: tests
 
