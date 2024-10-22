@@ -19,7 +19,7 @@ from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.regression_guard import RegressionGuard
 from stubs.cl.convince.experiments.stub_llms import get_stub_full_llms
-from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json
+from cl.convince.retrievers.retriever_util import RetrieverUtil
 from stubs.cl.tradeentry.experiments.stub_tag_utils import add_line_numbers
 from stubs.cl.tradeentry.experiments.stub_tag_utils import fields_to_text
 from stubs.cl.tradeentry.experiments.stub_trade_checker import StubFormattedStringChecker
@@ -93,7 +93,7 @@ def _testing_formatted_string(trade_description: str, run_count: int) -> plt.Fig
         for trial_id in range(run_count):
             result = llm.completion(prompt, trial_id=trial_id)
 
-            json_result = extract_json(result)
+            json_result = RetrieverUtil.extract_json(result)
             guard = RegressionGuard(channel=llm.llm_id)
             if json_result is not None:
                 guard.write(str(json_result))

@@ -19,7 +19,7 @@ from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.llm import Llm
 from stubs.cl.convince.experiments.stub_llms import get_stub_full_llms
-from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json
+from cl.convince.retrievers.retriever_util import RetrieverUtil
 from stubs.cl.tradeentry.experiments.stub_string_utils import sanitize_string
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_basis_swap_entry
@@ -89,7 +89,7 @@ def test_swap_leg_type():
 
                 correct_answers_count = 0
                 for result in results:
-                    extracted_output = extract_json(result)
+                    extracted_output = RetrieverUtil.extract_json(result)
                     correct_answers_count += int(_is_correct_answer(str(extracted_output), correct_answer))
                 plot_bar_labels.append(llm.llm_id)
                 plot_group_labels.append(trade_label)
