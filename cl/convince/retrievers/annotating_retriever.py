@@ -28,7 +28,7 @@ from cl.runtime import Context
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.primitive.string_util import StringUtil
 from cl.runtime.records.dataclasses_extensions import missing
-from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json
+from cl.convince.retrievers.retriever_util import RetrieverUtil
 
 _TRIPLE_BACKTICKS_RE = re.compile(r'```(.*?)```', re.DOTALL)
 """Regex for text between triple backticks."""
@@ -106,7 +106,7 @@ class AnnotatingRetriever(Retriever):
                 completion = llm.completion(rendered_prompt, trial_id=trial_index)
 
                 # Extract the results
-                json_result = extract_json(completion)  # TODO(Major): Do not depend on stubs
+                json_result = RetrieverUtil.extract_json(completion)  # TODO(Major): Do not depend on stubs
                 if json_result is None:
                     raise UserError(f"NCould not extract JSON from the LLM response. LLM response:\n{completion}\n")
                 success_text = json_result.get("success", None)
