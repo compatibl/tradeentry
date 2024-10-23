@@ -32,6 +32,7 @@ from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key
+from cl.runtime.records.record_util import RecordUtil
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
 from cl.runtime.settings.project_settings import ProjectSettings
@@ -217,10 +218,14 @@ class SqliteDb(Db):
         cursor = self._get_connection().cursor()
         cursor.execute(sql_statement, subtype_names)
 
+        # TODO: Implement sort in query and restore yield to support large collections
+        result = []
         for data in cursor.fetchall():
-            # TODO (Roman): select only needed columns on db side.
+            # TODO (Roman): Select only needed columns on db side.
             data = {reversed_columns_mapping[k]: v for k, v in data.items() if v is not None}
-            yield serializer.deserialize_data(data)
+            result.append(serializer.deserialize_data(data))
+
+        return RecordUtil.sort_records_by_key(result)
 
     def load_filter(
         self,
