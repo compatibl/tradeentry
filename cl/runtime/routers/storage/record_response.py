@@ -129,8 +129,9 @@ class RecordResponse(BaseModel):
         key_serializer = StringSerializer()
 
         # TODO (Roman): UiAppState record request from FE should have key in proper format where user is embedded key
-        if record_type == UiAppState:
-            deserialized_key = UiAppStateKey(user=UserKey(username=request.key))
+        if record_type == UiAppState and "KEY" not in request.key:
+            # TODO: Ensure user is specified in all deployment scenarios instead of using default value
+            deserialized_key = UiAppStateKey(user=UserKey(username=request.key or "root"))
         else:
             deserialized_key = key_serializer.deserialize_key(request.key, record_type.get_key_type())
 
