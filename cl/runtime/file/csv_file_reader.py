@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import csv
+import os
 from dataclasses import dataclass
 from typing import Any
 from typing import Dict
@@ -24,6 +25,7 @@ from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.primitive.char_util import CharUtil
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.schema.element_decl import ElementDecl
+from cl.runtime.schema.schema import Schema
 from cl.runtime.schema.type_decl import TypeDecl
 from cl.runtime.serialization.dict_serializer import get_type_dict
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
@@ -36,9 +38,6 @@ serializer = FlatDictSerializer()
 @dataclass(slots=True, kw_only=True)
 class CsvFileReader(Reader):
     """Load records from a single CSV file into the context database."""
-
-    record_type: Type
-    """Absolute path to the CSV file including extension."""
 
     file_path: str
     """Absolute path to the CSV file including extension."""
@@ -106,8 +105,20 @@ class CsvFileReader(Reader):
     def _deserialize_row(self, row_dict: Dict[str, Any]) -> RecordProtocol:
         """Deserialize row into a record."""
 
+        # Record type is ClassName without extension in PascalCase
+        filename = os.path.basename(self.file_path)
+        filename_without_extension, _ = os.path.splitext(filename)
+
+        if not CaseUtil.is_pascal_case(filename_without_extension):
+            dirname = os.path.dirname(filename)
+            raise RuntimeError(f"Filename of a CSV preload file {filename} in directory {dirname} must be "
+                               f"ClassName or its alias in PascalCase without module.")
+
+        # Get record type
+        record_type = Schema.get_type_by_short_name(filename_without_extension)
+
         # Get TypeDecl object for record type
-        type_decl = TypeDecl.for_type(self.record_type)
+        type_decl = TypeDecl.for_type(record_type)
 
         # Construct name to element decl map
         type_decl_elements = (
@@ -127,12 +138,12 @@ class CsvFileReader(Reader):
 
             if element_decl is None:
                 raise UserError(
-                    f"Field '{k}' is not defined in record '{self.record_type.__name__}' "
+                    f"Field '{k}' is not defined in record '{record_type.__name__}' "
                     f"while its value '{v}' is present in CSV input."
                 )
 
             # Prepare csv value using element decl
             prepared_row[k] = self._prepare_csv_value(v, element_decl)
 
-        prepared_row["_type"] = self.record_type.__name__
+        prepared_row["_type"] = record_type.__name__
         return serializer.deserialize_data(prepared_row)

@@ -31,11 +31,11 @@ def test_csv_file_reader():
         env_dir = EnvUtil.get_env_dir()
         file_path = os.path.join(env_dir, "StubDataclassDerivedRecord.csv")
         # TODO: Change the API not to take record type or make it optional
-        file_reader = CsvFileReader(record_type=StubDataclassDerivedRecord, file_path=file_path)
+        file_reader = CsvFileReader(file_path=file_path)
         file_reader.read()
 
         file_path = os.path.join(env_dir, "StubDataclassNestedFields.csv")
-        file_reader = CsvFileReader(record_type=StubDataclassNestedFields, file_path=file_path)
+        file_reader = CsvFileReader(file_path=file_path)
         file_reader.read()
 
         # Verify
