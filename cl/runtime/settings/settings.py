@@ -257,16 +257,18 @@ class Settings(ABC):
             raise RuntimeError(f"Field '{field_name}' in class '{cls.__name__}' has an empty element.")
         elif isinstance(field_value, str):
             # Check that 'field_value' is a string
-            path = field_value
+            result = field_value
         else:
             raise RuntimeError(
                 f"Field '{field_name}' in class '{cls.__name__}' has an element "
                 f"with type {type(field_value)} which is not a string."
             )
 
-        if not os.path.isabs(path):
+        if not os.path.isabs(result):
             project_root = cls.get_project_root()
-            path = os.path.join(project_root, path)
+            result = os.path.join(project_root, result)
 
-        # Return as absolute path string
-        return str(path)
+        # Return as a normalized path string
+        result = os.path.normpath(result)
+        return result
+
