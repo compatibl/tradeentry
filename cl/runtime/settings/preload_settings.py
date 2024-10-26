@@ -16,7 +16,6 @@ import os
 from dataclasses import dataclass
 from typing import List
 from cl.runtime.configs.config import Config
-from cl.runtime.configs.config_key import ConfigKey
 from cl.runtime.context.context import Context
 from cl.runtime.file.csv_file_reader import CsvFileReader
 from cl.runtime.settings.settings import Settings
@@ -37,9 +36,6 @@ class PreloadSettings(Settings):
         - For JSON, the data is in json/ClassName/.../KeyToken1;KeyToken2.json where ... is optional dataset
     """
 
-    configs: List[str] | None = None
-    """Method Config.run_configure will run for each specified config_id (the record must exist in preloads)."""
-
     def init(self) -> None:
         """Same as __init__ but can be used when field values are set both during and after construction."""
 
@@ -50,8 +46,8 @@ class PreloadSettings(Settings):
     def get_prefix(cls) -> str:
         return "runtime_preload"
 
-    def preload(self) -> None:
-        """Preload from the specified directory paths."""
+    def save_and_configure(self) -> None:
+        """Save records from preload directory to DB and execute run_configure on all preloaded Config records."""
 
         # Get current context
         context = Context.current()
@@ -60,28 +56,11 @@ class PreloadSettings(Settings):
         csv_files = self._get_files("csv")
         [CsvFileReader(file_path=csv_file).read() for csv_file in csv_files]
 
-    def configure(self) -> None:
-        """Execute configure for each config_id specified in PreloadSettings.configs."""
-        if self.configs is not None and len(self.configs) > 0:
+        # TODO: Process YAML and JSON preloads
 
-            # Load configs
-            config_keys = [ConfigKey(config_id=config_id) for config_id in self.configs]
-            config_records = list(Context.current().load_many(Config, config_keys))
-
-            # Error message if a config is not found # TODO: Move to database allow_missing_record is implemented
-            if any(config_record is None for config_record in config_records):
-                keys_without_records = [key for key, record in zip(config_keys, config_records) if record is None]
-                keys_without_records_str = "\n".join(f"  - {key.config_id}" for key in keys_without_records)
-                preload_dirs_str = "\n".join(f"  - {os.path.normpath(x)}" for x in self.dirs)
-                raise RuntimeError(
-                    f"Preload directories in in 'PreloadSettings.configs' do not have config records "
-                    f"for the following config_id specified in 'PreloadSettings.configs'.\n"
-                    f"Missing config records:\n{keys_without_records_str}\n"
-                    f"Preload directories searched (in priority order):\n{preload_dirs_str}"
-                )
-
-            # Run configure for the specified records
-            tuple(config_record.run_configure() for config_record in config_records)
+        # Execute run_config on all preloaded Config records
+        config_records = Context.current().load_all(Config)
+        tuple(config_record.run_configure() for config_record in config_records)
 
     def _get_files(self, ext: str) -> List[str]:
         # Return empty list if no dirs are specified in settings
