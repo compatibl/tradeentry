@@ -25,10 +25,6 @@ default:
     - preloads/cl
     - preloads/stubs
 
-  # Documented in PreloadSettings class
-  runtime_preload_configs:
-    - stubs.cl.runtime
-
 # Test environment
 test:
 
