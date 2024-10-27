@@ -1,5 +1,5 @@
 RequestID,Query,Completion
-2024-09-26T04:24:38.050Z-7d529cc95bfc211d7c82,"TrialID: 0
+2024-09-26-04-24-38-050-7d529cc95bfc211d7c82,"TrialID: 0
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -29,7 +29,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:38.977Z-7721b852f974a10e536b,"TrialID: 1
+2024-09-26-04-24-38-977-7721b852f974a10e536b,"TrialID: 1
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -59,7 +59,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:40.002Z-71d0b694728a362069bb,"TrialID: 2
+2024-09-26-04-24-40-002-71d0b694728a362069bb,"TrialID: 2
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -89,7 +89,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:40.831Z-7332a26b0d7f699d71c8,"TrialID: 3
+2024-09-26-04-24-40-831-7332a26b0d7f699d71c8,"TrialID: 3
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -119,7 +119,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:41.687Z-747280a005bf8d46b679,"TrialID: 4
+2024-09-26-04-24-41-687-747280a005bf8d46b679,"TrialID: 4
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -147,37 +147,7 @@ Tenor: 5y
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:24:42.701Z-7ee0961058bacdd8f9b3,"TrialID: 5
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Swap Details:
-Notional: 10,000,000,000
-Bank pays: 6M USD Term SOFR, semi-annual, act/360
-Bank receives: USD fixed 3.45%, semi-annual, act/360
-Notional exchange: None
-Start date: 10 November 2009
-Tenor: 5y
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```
-
-Let me know if you need any further assistance!"
-2024-09-26T04:24:43.665Z-77b3b961d50bd7054936,"TrialID: 6
+2024-09-26-04-24-42-701-7ee0961058bacdd8f9b3,"TrialID: 5
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -207,7 +177,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:44.602Z-7302aa4cf5a6cafcff58,"TrialID: 7
+2024-09-26-04-24-43-665-77b3b961d50bd7054936,"TrialID: 6
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -237,35 +207,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:45.373Z-7150ac874a2dbaa0590e,"TrialID: 8
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Swap Details:
-Notional: 10,000,000,000
-Bank pays: 6M USD Term SOFR, semi-annual, act/360
-Bank receives: USD fixed 3.45%, semi-annual, act/360
-Notional exchange: None
-Start date: 10 November 2009
-Tenor: 5y
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:24:46.132Z-733096e34ca227765521,"TrialID: 9
+2024-09-26-04-24-44-602-7302aa4cf5a6cafcff58,"TrialID: 7
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -295,7 +237,35 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:46.951Z-759187009666c1d5ae9a,"TrialID: 10
+2024-09-26-04-24-45-373-7150ac874a2dbaa0590e,"TrialID: 8
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Swap Details:
+Notional: 10,000,000,000
+Bank pays: 6M USD Term SOFR, semi-annual, act/360
+Bank receives: USD fixed 3.45%, semi-annual, act/360
+Notional exchange: None
+Start date: 10 November 2009
+Tenor: 5y
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-24-46-132-733096e34ca227765521,"TrialID: 9
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -325,7 +295,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:47.533Z-7cd38b42fc7d436ee008,"TrialID: 11
+2024-09-26-04-24-46-951-759187009666c1d5ae9a,"TrialID: 10
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -355,7 +325,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:48.258Z-7912a5bc1aa5ad8d5586,"TrialID: 12
+2024-09-26-04-24-47-533-7cd38b42fc7d436ee008,"TrialID: 11
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -385,7 +355,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:48.959Z-7e51ae04488e4895f2dd,"TrialID: 13
+2024-09-26-04-24-48-258-7912a5bc1aa5ad8d5586,"TrialID: 12
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -415,63 +385,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:49.883Z-7ce19cf833da4de31b47,"TrialID: 14
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Swap Details:
-Notional: 10,000,000,000
-Bank pays: 6M USD Term SOFR, semi-annual, act/360
-Bank receives: USD fixed 3.45%, semi-annual, act/360
-Notional exchange: None
-Start date: 10 November 2009
-Tenor: 5y
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:24:50.609Z-702194373024dff8ec68,"TrialID: 15
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Swap Details:
-Notional: 10,000,000,000
-Bank pays: 6M USD Term SOFR, semi-annual, act/360
-Bank receives: USD fixed 3.45%, semi-annual, act/360
-Notional exchange: None
-Start date: 10 November 2009
-Tenor: 5y
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:24:51.262Z-7b63bcd45a9154b4703d,"TrialID: 16
+2024-09-26-04-24-48-959-7e51ae04488e4895f2dd,"TrialID: 13
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -501,7 +415,63 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:51.831Z-7313817fbc9a1b3e61f0,"TrialID: 17
+2024-09-26-04-24-49-883-7ce19cf833da4de31b47,"TrialID: 14
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Swap Details:
+Notional: 10,000,000,000
+Bank pays: 6M USD Term SOFR, semi-annual, act/360
+Bank receives: USD fixed 3.45%, semi-annual, act/360
+Notional exchange: None
+Start date: 10 November 2009
+Tenor: 5y
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-24-50-609-702194373024dff8ec68,"TrialID: 15
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Swap Details:
+Notional: 10,000,000,000
+Bank pays: 6M USD Term SOFR, semi-annual, act/360
+Bank receives: USD fixed 3.45%, semi-annual, act/360
+Notional exchange: None
+Start date: 10 November 2009
+Tenor: 5y
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-24-51-262-7b63bcd45a9154b4703d,"TrialID: 16
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -531,7 +501,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:52.409Z-7fd1895d74f48c250cf7,"TrialID: 18
+2024-09-26-04-24-51-831-7313817fbc9a1b3e61f0,"TrialID: 17
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -561,7 +531,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:53.602Z-7f6293d89deedc67ba99,"TrialID: 19
+2024-09-26-04-24-52-409-7fd1895d74f48c250cf7,"TrialID: 18
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -591,7 +561,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:54.156Z-79d296d442f3197e4119,"TrialID: 20
+2024-09-26-04-24-53-602-7f6293d89deedc67ba99,"TrialID: 19
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -621,7 +591,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:54.734Z-7e73a869ec7981cfffc1,"TrialID: 21
+2024-09-26-04-24-54-156-79d296d442f3197e4119,"TrialID: 20
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -651,7 +621,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:55.398Z-7293875d6d9f164cb4b9,"TrialID: 22
+2024-09-26-04-24-54-734-7e73a869ec7981cfffc1,"TrialID: 21
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -681,7 +651,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:56.397Z-72f0bf63ff57932486d4,"TrialID: 23
+2024-09-26-04-24-55-398-7293875d6d9f164cb4b9,"TrialID: 22
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -711,7 +681,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:57.246Z-72128d7bc3a62317d23e,"TrialID: 24
+2024-09-26-04-24-56-397-72f0bf63ff57932486d4,"TrialID: 23
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -741,7 +711,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:57.992Z-7d3391cc7e99ebceae21,"TrialID: 25
+2024-09-26-04-24-57-246-72128d7bc3a62317d23e,"TrialID: 24
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -771,7 +741,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:58.768Z-7f728b266ba4b38e3bda,"TrialID: 26
+2024-09-26-04-24-57-992-7d3391cc7e99ebceae21,"TrialID: 25
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -801,7 +771,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:24:59.481Z-7ef2a57b1c988996dd27,"TrialID: 27
+2024-09-26-04-24-58-768-7f728b266ba4b38e3bda,"TrialID: 26
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -831,7 +801,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:25:00.163Z-7d229519bbee1cebf1d6,"TrialID: 28
+2024-09-26-04-24-59-481-7ef2a57b1c988996dd27,"TrialID: 27
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -861,7 +831,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:25:00.880Z-79b19d11da2cce28540f,"TrialID: 29
+2024-09-26-04-25-00-163-7d229519bbee1cebf1d6,"TrialID: 28
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -891,7 +861,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:25:01.390Z-78f1846af0f27b402460,"TrialID: 30
+2024-09-26-04-25-00-880-79b19d11da2cce28540f,"TrialID: 29
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -921,7 +891,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:25:02.031Z-7d30bd3a119d77fc7376,"TrialID: 31
+2024-09-26-04-25-01-390-78f1846af0f27b402460,"TrialID: 30
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -951,63 +921,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:25:02.844Z-7960906fcb81f04611fa,"TrialID: 32
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Swap Details:
-Notional: 10,000,000,000
-Bank pays: 6M USD Term SOFR, semi-annual, act/360
-Bank receives: USD fixed 3.45%, semi-annual, act/360
-Notional exchange: None
-Start date: 10 November 2009
-Tenor: 5y
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:25:03.571Z-7421b2022bb73d9c44d0,"TrialID: 33
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Swap Details:
-Notional: 10,000,000,000
-Bank pays: 6M USD Term SOFR, semi-annual, act/360
-Bank receives: USD fixed 3.45%, semi-annual, act/360
-Notional exchange: None
-Start date: 10 November 2009
-Tenor: 5y
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:25:04.241Z-7f40a3da45eced1031cc,"TrialID: 34
+2024-09-26-04-25-02-031-7d30bd3a119d77fc7376,"TrialID: 31
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1037,7 +951,63 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:25:04.815Z-7811a1d204ebd5d41980,"TrialID: 35
+2024-09-26-04-25-02-844-7960906fcb81f04611fa,"TrialID: 32
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Swap Details:
+Notional: 10,000,000,000
+Bank pays: 6M USD Term SOFR, semi-annual, act/360
+Bank receives: USD fixed 3.45%, semi-annual, act/360
+Notional exchange: None
+Start date: 10 November 2009
+Tenor: 5y
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-25-03-571-7421b2022bb73d9c44d0,"TrialID: 33
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Swap Details:
+Notional: 10,000,000,000
+Bank pays: 6M USD Term SOFR, semi-annual, act/360
+Bank receives: USD fixed 3.45%, semi-annual, act/360
+Notional exchange: None
+Start date: 10 November 2009
+Tenor: 5y
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-25-04-241-7f40a3da45eced1031cc,"TrialID: 34
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1067,63 +1037,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:25:05.524Z-744292aca033b9d9d522,"TrialID: 36
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Swap Details:
-Notional: 10,000,000,000
-Bank pays: 6M USD Term SOFR, semi-annual, act/360
-Bank receives: USD fixed 3.45%, semi-annual, act/360
-Notional exchange: None
-Start date: 10 November 2009
-Tenor: 5y
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:25:06.145Z-7bf2942d99891de159db,"TrialID: 37
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Swap Details:
-Notional: 10,000,000,000
-Bank pays: 6M USD Term SOFR, semi-annual, act/360
-Bank receives: USD fixed 3.45%, semi-annual, act/360
-Notional exchange: None
-Start date: 10 November 2009
-Tenor: 5y
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:25:06.774Z-7cf1bb5bae68883f963f,"TrialID: 38
+2024-09-26-04-25-04-815-7811a1d204ebd5d41980,"TrialID: 35
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1153,7 +1067,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:25:07.332Z-75c2a7b11ab78d500a9d,"TrialID: 39
+2024-09-26-04-25-05-524-744292aca033b9d9d522,"TrialID: 36
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1181,67 +1095,7 @@ Tenor: 5y
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:25:08.051Z-71a38a02f7262361af67,"TrialID: 40
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Swap Details:
-Notional: 10,000,000,000
-Bank pays: 6M USD Term SOFR, semi-annual, act/360
-Bank receives: USD fixed 3.45%, semi-annual, act/360
-Notional exchange: None
-Start date: 10 November 2009
-Tenor: 5y
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```
-
-Let me know if you need any further assistance!"
-2024-09-26T04:25:08.947Z-72b2a2f1a1b75676392a,"TrialID: 41
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Swap Details:
-Notional: 10,000,000,000
-Bank pays: 6M USD Term SOFR, semi-annual, act/360
-Bank receives: USD fixed 3.45%, semi-annual, act/360
-Notional exchange: None
-Start date: 10 November 2009
-Tenor: 5y
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```
-
-Let me know if you need any further assistance!"
-2024-09-26T04:25:09.625Z-7641b2bd3df8bcf1b0d1,"TrialID: 42
+2024-09-26-04-25-06-145-7bf2942d99891de159db,"TrialID: 37
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1269,7 +1123,7 @@ Tenor: 5y
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:25:10.255Z-7e81ab9a1c4dc337cbf3,"TrialID: 43
+2024-09-26-04-25-06-774-7cf1bb5bae68883f963f,"TrialID: 38
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1299,7 +1153,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:25:11.220Z-7f63805efd51685b277f,"TrialID: 44
+2024-09-26-04-25-07-332-75c2a7b11ab78d500a9d,"TrialID: 39
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1327,37 +1181,7 @@ Tenor: 5y
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:25:11.868Z-7b31a192823e2bff17ad,"TrialID: 45
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Swap Details:
-Notional: 10,000,000,000
-Bank pays: 6M USD Term SOFR, semi-annual, act/360
-Bank receives: USD fixed 3.45%, semi-annual, act/360
-Notional exchange: None
-Start date: 10 November 2009
-Tenor: 5y
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```
-
-Let me know if you need any further assistance!"
-2024-09-26T04:25:12.577Z-72c2b4e8b4c31d00d227,"TrialID: 46
+2024-09-26-04-25-08-051-71a38a02f7262361af67,"TrialID: 40
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1387,35 +1211,7 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:25:13.220Z-7462804ffc0935bf3677,"TrialID: 47
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Swap Details:
-Notional: 10,000,000,000
-Bank pays: 6M USD Term SOFR, semi-annual, act/360
-Bank receives: USD fixed 3.45%, semi-annual, act/360
-Notional exchange: None
-Start date: 10 November 2009
-Tenor: 5y
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:25:13.777Z-7a61a1390dcf5a8075ed,"TrialID: 48
+2024-09-26-04-25-08-947-72b2a2f1a1b75676392a,"TrialID: 41
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1445,7 +1241,35 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:25:14.661Z-7f238768e974b2ac330d,"TrialID: 49
+2024-09-26-04-25-09-625-7641b2bd3df8bcf1b0d1,"TrialID: 42
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Swap Details:
+Notional: 10,000,000,000
+Bank pays: 6M USD Term SOFR, semi-annual, act/360
+Bank receives: USD fixed 3.45%, semi-annual, act/360
+Notional exchange: None
+Start date: 10 November 2009
+Tenor: 5y
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-25-10-255-7e81ab9a1c4dc337cbf3,"TrialID: 43
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1475,7 +1299,183 @@ Tenor: 5y
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:25:15.238Z-7341979e2442c946beea,"TrialID: 0
+2024-09-26-04-25-11-220-7f63805efd51685b277f,"TrialID: 44
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Swap Details:
+Notional: 10,000,000,000
+Bank pays: 6M USD Term SOFR, semi-annual, act/360
+Bank receives: USD fixed 3.45%, semi-annual, act/360
+Notional exchange: None
+Start date: 10 November 2009
+Tenor: 5y
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-25-11-868-7b31a192823e2bff17ad,"TrialID: 45
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Swap Details:
+Notional: 10,000,000,000
+Bank pays: 6M USD Term SOFR, semi-annual, act/360
+Bank receives: USD fixed 3.45%, semi-annual, act/360
+Notional exchange: None
+Start date: 10 November 2009
+Tenor: 5y
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```
+
+Let me know if you need any further assistance!"
+2024-09-26-04-25-12-577-72c2b4e8b4c31d00d227,"TrialID: 46
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Swap Details:
+Notional: 10,000,000,000
+Bank pays: 6M USD Term SOFR, semi-annual, act/360
+Bank receives: USD fixed 3.45%, semi-annual, act/360
+Notional exchange: None
+Start date: 10 November 2009
+Tenor: 5y
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```
+
+Let me know if you need any further assistance!"
+2024-09-26-04-25-13-220-7462804ffc0935bf3677,"TrialID: 47
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Swap Details:
+Notional: 10,000,000,000
+Bank pays: 6M USD Term SOFR, semi-annual, act/360
+Bank receives: USD fixed 3.45%, semi-annual, act/360
+Notional exchange: None
+Start date: 10 November 2009
+Tenor: 5y
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-25-13-777-7a61a1390dcf5a8075ed,"TrialID: 48
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Swap Details:
+Notional: 10,000,000,000
+Bank pays: 6M USD Term SOFR, semi-annual, act/360
+Bank receives: USD fixed 3.45%, semi-annual, act/360
+Notional exchange: None
+Start date: 10 November 2009
+Tenor: 5y
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```
+
+Let me know if you need any further assistance!"
+2024-09-26-04-25-14-661-7f238768e974b2ac330d,"TrialID: 49
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Swap Details:
+Notional: 10,000,000,000
+Bank pays: 6M USD Term SOFR, semi-annual, act/360
+Bank receives: USD fixed 3.45%, semi-annual, act/360
+Notional exchange: None
+Start date: 10 November 2009
+Tenor: 5y
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```
+
+Let me know if you need any further assistance!"
+2024-09-26-04-25-15-238-7341979e2442c946beea,"TrialID: 0
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1502,7 +1502,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:15.957Z-7302bf1aae6f39618c58,"TrialID: 1
+2024-09-26-04-25-15-957-7302bf1aae6f39618c58,"TrialID: 1
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1529,7 +1529,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:16.601Z-7c10815408ee6f068216,"TrialID: 2
+2024-09-26-04-25-16-601-7c10815408ee6f068216,"TrialID: 2
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1556,7 +1556,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:17.273Z-7e539c2d317b42b33098,"TrialID: 3
+2024-09-26-04-25-17-273-7e539c2d317b42b33098,"TrialID: 3
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1583,7 +1583,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:17.898Z-76729289b755f9ad3554,"TrialID: 4
+2024-09-26-04-25-17-898-76729289b755f9ad3554,"TrialID: 4
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1610,7 +1610,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:18.557Z-7c82ab0d01c9adf721f1,"TrialID: 5
+2024-09-26-04-25-18-557-7c82ab0d01c9adf721f1,"TrialID: 5
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1637,7 +1637,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:19.065Z-7e22a1915f12de12f2aa,"TrialID: 6
+2024-09-26-04-25-19-065-7e22a1915f12de12f2aa,"TrialID: 6
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1664,7 +1664,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:19.716Z-76438f616290adea2ae5,"TrialID: 7
+2024-09-26-04-25-19-716-76438f616290adea2ae5,"TrialID: 7
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1691,7 +1691,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:20.397Z-7560a6d034348bf67656,"TrialID: 8
+2024-09-26-04-25-20-397-7560a6d034348bf67656,"TrialID: 8
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1718,7 +1718,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:20.930Z-75138e221691dbcdf33a,"TrialID: 9
+2024-09-26-04-25-20-930-75138e221691dbcdf33a,"TrialID: 9
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1745,7 +1745,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:21.408Z-70c38daa317510ff9d86,"TrialID: 10
+2024-09-26-04-25-21-408-70c38daa317510ff9d86,"TrialID: 10
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1772,7 +1772,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:22.110Z-75c08d8043dfd32cf12b,"TrialID: 11
+2024-09-26-04-25-22-110-75c08d8043dfd32cf12b,"TrialID: 11
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1799,7 +1799,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:22.963Z-7353a20279a5b6ea7921,"TrialID: 12
+2024-09-26-04-25-22-963-7353a20279a5b6ea7921,"TrialID: 12
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1826,7 +1826,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:23.670Z-7710a81ef788580b38c3,"TrialID: 13
+2024-09-26-04-25-23-670-7710a81ef788580b38c3,"TrialID: 13
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1853,7 +1853,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:24.311Z-71a1bd572545bd81b7fb,"TrialID: 14
+2024-09-26-04-25-24-311-71a1bd572545bd81b7fb,"TrialID: 14
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1880,7 +1880,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:24.938Z-78a0a5677d1101b228bf,"TrialID: 15
+2024-09-26-04-25-24-938-78a0a5677d1101b228bf,"TrialID: 15
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1907,7 +1907,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:25.638Z-75d08c3bea5745391e24,"TrialID: 16
+2024-09-26-04-25-25-638-75d08c3bea5745391e24,"TrialID: 16
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1934,7 +1934,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:26.292Z-75039c483984df6ec0b1,"TrialID: 17
+2024-09-26-04-25-26-292-75039c483984df6ec0b1,"TrialID: 17
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1961,7 +1961,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:26.962Z-70c0bfa5ff7f09ee7cd1,"TrialID: 18
+2024-09-26-04-25-26-962-70c0bfa5ff7f09ee7cd1,"TrialID: 18
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -1988,7 +1988,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:27.598Z-7663bef320ce3a3e9ec7,"TrialID: 19
+2024-09-26-04-25-27-598-7663bef320ce3a3e9ec7,"TrialID: 19
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2015,7 +2015,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:28.298Z-75b1ba132c8c04b2eb2a,"TrialID: 20
+2024-09-26-04-25-28-298-75b1ba132c8c04b2eb2a,"TrialID: 20
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2042,7 +2042,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:29.203Z-72d09966f7f1c15a4c4a,"TrialID: 21
+2024-09-26-04-25-29-203-72d09966f7f1c15a4c4a,"TrialID: 21
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2069,7 +2069,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:29.972Z-71628e91708b0e6fc5f2,"TrialID: 22
+2024-09-26-04-25-29-972-71628e91708b0e6fc5f2,"TrialID: 22
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2096,7 +2096,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:30.567Z-70b3a60c1022ba304049,"TrialID: 23
+2024-09-26-04-25-30-567-70b3a60c1022ba304049,"TrialID: 23
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2123,7 +2123,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:31.041Z-7fa39547c2b189e7cedc,"TrialID: 24
+2024-09-26-04-25-31-041-7fa39547c2b189e7cedc,"TrialID: 24
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2150,7 +2150,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:31.498Z-7190a09bb68f3ee01317,"TrialID: 25
+2024-09-26-04-25-31-498-7190a09bb68f3ee01317,"TrialID: 25
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2177,7 +2177,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:32.110Z-7761b9af589f42ff7678,"TrialID: 26
+2024-09-26-04-25-32-110-7761b9af589f42ff7678,"TrialID: 26
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2204,7 +2204,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:32.857Z-7b03a8b1f52e9f3cb1f1,"TrialID: 27
+2024-09-26-04-25-32-857-7b03a8b1f52e9f3cb1f1,"TrialID: 27
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2231,7 +2231,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:33.563Z-7170a3de0a09103cd806,"TrialID: 28
+2024-09-26-04-25-33-563-7170a3de0a09103cd806,"TrialID: 28
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2258,7 +2258,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:34.069Z-7d1190aadd48786d0919,"TrialID: 29
+2024-09-26-04-25-34-069-7d1190aadd48786d0919,"TrialID: 29
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2285,7 +2285,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:34.826Z-7d40887947e8d9897c12,"TrialID: 30
+2024-09-26-04-25-34-826-7d40887947e8d9897c12,"TrialID: 30
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2312,7 +2312,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:35.528Z-71829695d8fdee607f1a,"TrialID: 31
+2024-09-26-04-25-35-528-71829695d8fdee607f1a,"TrialID: 31
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2339,7 +2339,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:36.239Z-7f639bb8bdad8003dad4,"TrialID: 32
+2024-09-26-04-25-36-239-7f639bb8bdad8003dad4,"TrialID: 32
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2366,7 +2366,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:37.324Z-7ab180a54ec795b33d18,"TrialID: 33
+2024-09-26-04-25-37-324-7ab180a54ec795b33d18,"TrialID: 33
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2393,7 +2393,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:38.219Z-74b0ac01497d280197ca,"TrialID: 34
+2024-09-26-04-25-38-219-74b0ac01497d280197ca,"TrialID: 34
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2420,7 +2420,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:38.864Z-7320a909bd3160aeafdf,"TrialID: 35
+2024-09-26-04-25-38-864-7320a909bd3160aeafdf,"TrialID: 35
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2447,7 +2447,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:39.520Z-7930bfbdbd9021bd9a6e,"TrialID: 36
+2024-09-26-04-25-39-520-7930bfbdbd9021bd9a6e,"TrialID: 36
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2474,7 +2474,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:40.191Z-7703ae5b9d190354e2df,"TrialID: 37
+2024-09-26-04-25-40-191-7703ae5b9d190354e2df,"TrialID: 37
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2501,7 +2501,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:41.061Z-75b1a621368689f320cb,"TrialID: 38
+2024-09-26-04-25-41-061-75b1a621368689f320cb,"TrialID: 38
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2528,7 +2528,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:41.681Z-7d31b7a00d92f5b2600e,"TrialID: 39
+2024-09-26-04-25-41-681-7d31b7a00d92f5b2600e,"TrialID: 39
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2555,7 +2555,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:42.188Z-72219a35722e2ba05bf7,"TrialID: 40
+2024-09-26-04-25-42-188-72219a35722e2ba05bf7,"TrialID: 40
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2582,7 +2582,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:42.750Z-74d1a4717125bde58f3d,"TrialID: 41
+2024-09-26-04-25-42-750-74d1a4717125bde58f3d,"TrialID: 41
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2609,7 +2609,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:43.396Z-7022a58ee08424a8f618,"TrialID: 42
+2024-09-26-04-25-43-396-7022a58ee08424a8f618,"TrialID: 42
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2636,7 +2636,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:44.090Z-7350b34abb471abfa112,"TrialID: 43
+2024-09-26-04-25-44-090-7350b34abb471abfa112,"TrialID: 43
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2663,7 +2663,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:44.797Z-7ad18ef95b6e0a5fefd6,"TrialID: 44
+2024-09-26-04-25-44-797-7ad18ef95b6e0a5fefd6,"TrialID: 44
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2690,7 +2690,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:45.585Z-75e09620afb62bcef5a9,"TrialID: 45
+2024-09-26-04-25-45-585-75e09620afb62bcef5a9,"TrialID: 45
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2717,7 +2717,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:46.254Z-7021818eee4644d08da0,"TrialID: 46
+2024-09-26-04-25-46-254-7021818eee4644d08da0,"TrialID: 46
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2744,7 +2744,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:46.897Z-75c383dc5e78adba6725,"TrialID: 47
+2024-09-26-04-25-46-897-75c383dc5e78adba6725,"TrialID: 47
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2771,7 +2771,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:47.580Z-7fa2bbe5d1e8f843bbe2,"TrialID: 48
+2024-09-26-04-25-47-580-7fa2bbe5d1e8f843bbe2,"TrialID: 48
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2798,7 +2798,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:48.183Z-7122ab8db827a2c5906f,"TrialID: 49
+2024-09-26-04-25-48-183-7122ab8db827a2c5906f,"TrialID: 49
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2825,7 +2825,7 @@ Client receives 12M Term SOFR (act/360, annual)
   ""SecondLegType"": ""Floating""
 }
 ```"
-2024-09-26T04:25:48.846Z-7673adaac73e410c4080,"TrialID: 0
+2024-09-26-04-25-48-846-7673adaac73e410c4080,"TrialID: 0
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2854,7 +2854,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:25:49.651Z-7a739d73d0db8ea41bb7,"TrialID: 1
+2024-09-26-04-25-49-651-7a739d73d0db8ea41bb7,"TrialID: 1
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2883,7 +2883,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:25:50.254Z-7f239366a16c7c8ac10c,"TrialID: 2
+2024-09-26-04-25-50-254-7f239366a16c7c8ac10c,"TrialID: 2
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2912,7 +2912,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:25:50.878Z-7af093ffa6f8b64032d1,"TrialID: 3
+2024-09-26-04-25-50-878-7af093ffa6f8b64032d1,"TrialID: 3
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2941,7 +2941,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:25:51.443Z-7011b677594849d3771f,"TrialID: 4
+2024-09-26-04-25-51-443-7011b677594849d3771f,"TrialID: 4
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2970,7 +2970,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:25:52.042Z-7b218272f674219732c1,"TrialID: 5
+2024-09-26-04-25-52-042-7b218272f674219732c1,"TrialID: 5
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -2999,7 +2999,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:25:52.712Z-73e1a44d235539df5c3d,"TrialID: 6
+2024-09-26-04-25-52-712-73e1a44d235539df5c3d,"TrialID: 6
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3028,7 +3028,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:25:53.377Z-733291cb1a68b78c9dd8,"TrialID: 7
+2024-09-26-04-25-53-377-733291cb1a68b78c9dd8,"TrialID: 7
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3057,7 +3057,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:25:53.947Z-7143ac623fc3f38bde86,"TrialID: 8
+2024-09-26-04-25-53-947-7143ac623fc3f38bde86,"TrialID: 8
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3086,7 +3086,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:25:54.683Z-7712b20b3ba4c30318f8,"TrialID: 9
+2024-09-26-04-25-54-683-7712b20b3ba4c30318f8,"TrialID: 9
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3115,7 +3115,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:25:55.522Z-7630a575f2c175b22042,"TrialID: 10
+2024-09-26-04-25-55-522-7630a575f2c175b22042,"TrialID: 10
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3144,7 +3144,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:25:56.215Z-742198ebc8ea55f20c82,"TrialID: 11
+2024-09-26-04-25-56-215-742198ebc8ea55f20c82,"TrialID: 11
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3173,7 +3173,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:25:56.848Z-79a0939abba943c6c8b0,"TrialID: 12
+2024-09-26-04-25-56-848-79a0939abba943c6c8b0,"TrialID: 12
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3202,7 +3202,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:25:57.552Z-7fa1a449587b23a32f93,"TrialID: 13
+2024-09-26-04-25-57-552-7fa1a449587b23a32f93,"TrialID: 13
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3231,7 +3231,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:25:58.339Z-7f11a98b8e022313d26e,"TrialID: 14
+2024-09-26-04-25-58-339-7f11a98b8e022313d26e,"TrialID: 14
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3260,7 +3260,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:25:59.028Z-7b82942093fd54c9154c,"TrialID: 15
+2024-09-26-04-25-59-028-7b82942093fd54c9154c,"TrialID: 15
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3289,7 +3289,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:25:59.673Z-7ee3a6724ae779c1003c,"TrialID: 16
+2024-09-26-04-25-59-673-7ee3a6724ae779c1003c,"TrialID: 16
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3318,7 +3318,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:00.520Z-78e0ba72b987e375964c,"TrialID: 17
+2024-09-26-04-26-00-520-78e0ba72b987e375964c,"TrialID: 17
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3347,7 +3347,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:01.104Z-7be2aacb0990795d3745,"TrialID: 18
+2024-09-26-04-26-01-104-7be2aacb0990795d3745,"TrialID: 18
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3376,7 +3376,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:01.893Z-7040a0306bd88dcee506,"TrialID: 19
+2024-09-26-04-26-01-893-7040a0306bd88dcee506,"TrialID: 19
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3405,7 +3405,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:02.631Z-7af2865133d17136a1a7,"TrialID: 20
+2024-09-26-04-26-02-631-7af2865133d17136a1a7,"TrialID: 20
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3434,7 +3434,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:03.172Z-7613ac5fcade4eb9bc17,"TrialID: 21
+2024-09-26-04-26-03-172-7613ac5fcade4eb9bc17,"TrialID: 21
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3463,7 +3463,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:03.767Z-7d4389cba314e9f26d18,"TrialID: 22
+2024-09-26-04-26-03-767-7d4389cba314e9f26d18,"TrialID: 22
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3492,7 +3492,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:04.494Z-7ab388afd1eb59b7516c,"TrialID: 23
+2024-09-26-04-26-04-494-7ab388afd1eb59b7516c,"TrialID: 23
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3521,7 +3521,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:05.250Z-749085cb1dd2b3614141,"TrialID: 24
+2024-09-26-04-26-05-250-749085cb1dd2b3614141,"TrialID: 24
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3550,7 +3550,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:06.004Z-7983b83c4646b6fd5ce7,"TrialID: 25
+2024-09-26-04-26-06-004-7983b83c4646b6fd5ce7,"TrialID: 25
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3579,7 +3579,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:07.045Z-7c5183abe1710facf4f1,"TrialID: 26
+2024-09-26-04-26-07-045-7c5183abe1710facf4f1,"TrialID: 26
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3608,7 +3608,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:08.143Z-70d1972f49004cbf8212,"TrialID: 27
+2024-09-26-04-26-08-143-70d1972f49004cbf8212,"TrialID: 27
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3637,7 +3637,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:08.965Z-7b70b4181ef5c1fcf9d3,"TrialID: 28
+2024-09-26-04-26-08-965-7b70b4181ef5c1fcf9d3,"TrialID: 28
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3666,7 +3666,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:09.605Z-70e2993f5300f5ff297c,"TrialID: 29
+2024-09-26-04-26-09-605-70e2993f5300f5ff297c,"TrialID: 29
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3695,7 +3695,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:10.207Z-7ef08cd2155c37a35047,"TrialID: 30
+2024-09-26-04-26-10-207-7ef08cd2155c37a35047,"TrialID: 30
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3724,7 +3724,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:10.868Z-7b7383e962fe5ab2f1f2,"TrialID: 31
+2024-09-26-04-26-10-868-7b7383e962fe5ab2f1f2,"TrialID: 31
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3753,7 +3753,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:11.488Z-7c23b9c8bd14fcf635fb,"TrialID: 32
+2024-09-26-04-26-11-488-7c23b9c8bd14fcf635fb,"TrialID: 32
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3782,7 +3782,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:12.044Z-7b23ba04831fa089aeca,"TrialID: 33
+2024-09-26-04-26-12-044-7b23ba04831fa089aeca,"TrialID: 33
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3811,7 +3811,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:12.673Z-79318812ce584ab38835,"TrialID: 34
+2024-09-26-04-26-12-673-79318812ce584ab38835,"TrialID: 34
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3840,7 +3840,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:13.389Z-7ce099dd4593fd966211,"TrialID: 35
+2024-09-26-04-26-13-389-7ce099dd4593fd966211,"TrialID: 35
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3869,7 +3869,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:13.959Z-7213bbfa22a3609d90e2,"TrialID: 36
+2024-09-26-04-26-13-959-7213bbfa22a3609d90e2,"TrialID: 36
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3898,7 +3898,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:14.551Z-7511b6fb47ca3ac41bc5,"TrialID: 37
+2024-09-26-04-26-14-551-7511b6fb47ca3ac41bc5,"TrialID: 37
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3927,7 +3927,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:15.073Z-7721be690a27647aabab,"TrialID: 38
+2024-09-26-04-26-15-073-7721be690a27647aabab,"TrialID: 38
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3956,7 +3956,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:15.568Z-779288ecab9314237fbf,"TrialID: 39
+2024-09-26-04-26-15-568-779288ecab9314237fbf,"TrialID: 39
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -3985,7 +3985,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:16.197Z-781189e8fa0d96cb66ae,"TrialID: 40
+2024-09-26-04-26-16-197-781189e8fa0d96cb66ae,"TrialID: 40
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -4014,7 +4014,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:16.668Z-7b21a3a23a8f8b2d73e6,"TrialID: 41
+2024-09-26-04-26-16-668-7b21a3a23a8f8b2d73e6,"TrialID: 41
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -4043,7 +4043,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:17.391Z-7b529584f53bfef6fc9c,"TrialID: 42
+2024-09-26-04-26-17-391-7b529584f53bfef6fc9c,"TrialID: 42
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -4072,7 +4072,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:18.086Z-7463bf0f8e5d38e32469,"TrialID: 43
+2024-09-26-04-26-18-086-7463bf0f8e5d38e32469,"TrialID: 43
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -4101,7 +4101,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:18.658Z-7082a77e9011d67098e6,"TrialID: 44
+2024-09-26-04-26-18-658-7082a77e9011d67098e6,"TrialID: 44
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -4130,7 +4130,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:19.239Z-7840a8e989a43c2368a5,"TrialID: 45
+2024-09-26-04-26-19-239-7840a8e989a43c2368a5,"TrialID: 45
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -4159,7 +4159,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:19.859Z-7062a46e675a8f8b93b5,"TrialID: 46
+2024-09-26-04-26-19-859-7062a46e675a8f8b93b5,"TrialID: 46
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -4188,7 +4188,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:20.433Z-7bc0ade61248858af9a8,"TrialID: 47
+2024-09-26-04-26-20-433-7bc0ade61248858af9a8,"TrialID: 47
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -4217,7 +4217,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:21.234Z-77d1aeb9e5ae56dd02a6,"TrialID: 48
+2024-09-26-04-26-21-234-77d1aeb9e5ae56dd02a6,"TrialID: 48
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -4246,7 +4246,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:21.899Z-75628e1aec4985eecd24,"TrialID: 49
+2024-09-26-04-26-21-899-75628e1aec4985eecd24,"TrialID: 49
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -4275,7 +4275,7 @@ Floor: We sell a USD floor at zero (6M USD Term SOFR)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:22.394Z-723085f45e21cb8102a8,"TrialID: 0
+2024-09-26-04-26-22-394-723085f45e21cb8102a8,"TrialID: 0
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -4315,7 +4315,7 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:22.958Z-7dc398c2231ce50d8b13,"TrialID: 1
+2024-09-26-04-26-22-958-7dc398c2231ce50d8b13,"TrialID: 1
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -4355,7 +4355,7 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:23.601Z-7321a88c266ba4d1305a,"TrialID: 2
+2024-09-26-04-26-23-601-7321a88c266ba4d1305a,"TrialID: 2
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -4395,7 +4395,7 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:24.187Z-74719568a9f9356cd88c,"TrialID: 3
+2024-09-26-04-26-24-187-74719568a9f9356cd88c,"TrialID: 3
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -4435,169 +4435,7 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:24.839Z-7541af833310bc4abf8d,"TrialID: 4
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Notional: amortizing, as per schedule below
-Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
-Party A receives: USD fixed 3.20%, semi-annual, act/360
-Notional exchange: None
-Start: 10 November 2009
-Tenor: 5 years
-Notional Schedule
-Notional Amount Schedule	
-Effective From: Notional Amount: (USD)
-10-Nov-09 100,000,000.00
-10-May-10 100,000,000.00
-10-Nov-10 100,000,000.00
-10-May-11 100,000,000.00
-10-Nov-11 90,000,000.00
-10-May-12 80,000,000.00
-10-Nov-12 70,000,000.00
-10-May-13 60,000,000.00
-10-Nov-13 50,000,000.00
-10-May-14 25,000,000.00
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```
-
-Let me know if you need any further assistance!"
-2024-09-26T04:26:25.527Z-7b509724dc0401fb9a81,"TrialID: 5
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Notional: amortizing, as per schedule below
-Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
-Party A receives: USD fixed 3.20%, semi-annual, act/360
-Notional exchange: None
-Start: 10 November 2009
-Tenor: 5 years
-Notional Schedule
-Notional Amount Schedule	
-Effective From: Notional Amount: (USD)
-10-Nov-09 100,000,000.00
-10-May-10 100,000,000.00
-10-Nov-10 100,000,000.00
-10-May-11 100,000,000.00
-10-Nov-11 90,000,000.00
-10-May-12 80,000,000.00
-10-Nov-12 70,000,000.00
-10-May-13 60,000,000.00
-10-Nov-13 50,000,000.00
-10-May-14 25,000,000.00
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:26:26.036Z-79d0bb1d3eb015d933fe,"TrialID: 6
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Notional: amortizing, as per schedule below
-Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
-Party A receives: USD fixed 3.20%, semi-annual, act/360
-Notional exchange: None
-Start: 10 November 2009
-Tenor: 5 years
-Notional Schedule
-Notional Amount Schedule	
-Effective From: Notional Amount: (USD)
-10-Nov-09 100,000,000.00
-10-May-10 100,000,000.00
-10-Nov-10 100,000,000.00
-10-May-11 100,000,000.00
-10-Nov-11 90,000,000.00
-10-May-12 80,000,000.00
-10-Nov-12 70,000,000.00
-10-May-13 60,000,000.00
-10-Nov-13 50,000,000.00
-10-May-14 25,000,000.00
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:26:26.664Z-75f19d27585cf4a2f14e,"TrialID: 7
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Notional: amortizing, as per schedule below
-Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
-Party A receives: USD fixed 3.20%, semi-annual, act/360
-Notional exchange: None
-Start: 10 November 2009
-Tenor: 5 years
-Notional Schedule
-Notional Amount Schedule	
-Effective From: Notional Amount: (USD)
-10-Nov-09 100,000,000.00
-10-May-10 100,000,000.00
-10-Nov-10 100,000,000.00
-10-May-11 100,000,000.00
-10-Nov-11 90,000,000.00
-10-May-12 80,000,000.00
-10-Nov-12 70,000,000.00
-10-May-13 60,000,000.00
-10-Nov-13 50,000,000.00
-10-May-14 25,000,000.00
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:26:27.373Z-7a0192eaac6a60f43e53,"TrialID: 8
+2024-09-26-04-26-24-839-7541af833310bc4abf8d,"TrialID: 4
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -4639,7 +4477,127 @@ Effective From: Notional Amount: (USD)
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:26:28.032Z-73a0a1fe52a2d8ad9a7e,"TrialID: 9
+2024-09-26-04-26-25-527-7b509724dc0401fb9a81,"TrialID: 5
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Notional: amortizing, as per schedule below
+Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
+Party A receives: USD fixed 3.20%, semi-annual, act/360
+Notional exchange: None
+Start: 10 November 2009
+Tenor: 5 years
+Notional Schedule
+Notional Amount Schedule	
+Effective From: Notional Amount: (USD)
+10-Nov-09 100,000,000.00
+10-May-10 100,000,000.00
+10-Nov-10 100,000,000.00
+10-May-11 100,000,000.00
+10-Nov-11 90,000,000.00
+10-May-12 80,000,000.00
+10-Nov-12 70,000,000.00
+10-May-13 60,000,000.00
+10-Nov-13 50,000,000.00
+10-May-14 25,000,000.00
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-26-26-036-79d0bb1d3eb015d933fe,"TrialID: 6
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Notional: amortizing, as per schedule below
+Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
+Party A receives: USD fixed 3.20%, semi-annual, act/360
+Notional exchange: None
+Start: 10 November 2009
+Tenor: 5 years
+Notional Schedule
+Notional Amount Schedule	
+Effective From: Notional Amount: (USD)
+10-Nov-09 100,000,000.00
+10-May-10 100,000,000.00
+10-Nov-10 100,000,000.00
+10-May-11 100,000,000.00
+10-Nov-11 90,000,000.00
+10-May-12 80,000,000.00
+10-Nov-12 70,000,000.00
+10-May-13 60,000,000.00
+10-Nov-13 50,000,000.00
+10-May-14 25,000,000.00
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-26-26-664-75f19d27585cf4a2f14e,"TrialID: 7
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Notional: amortizing, as per schedule below
+Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
+Party A receives: USD fixed 3.20%, semi-annual, act/360
+Notional exchange: None
+Start: 10 November 2009
+Tenor: 5 years
+Notional Schedule
+Notional Amount Schedule	
+Effective From: Notional Amount: (USD)
+10-Nov-09 100,000,000.00
+10-May-10 100,000,000.00
+10-Nov-10 100,000,000.00
+10-May-11 100,000,000.00
+10-Nov-11 90,000,000.00
+10-May-12 80,000,000.00
+10-Nov-12 70,000,000.00
+10-May-13 60,000,000.00
+10-Nov-13 50,000,000.00
+10-May-14 25,000,000.00
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-26-27-373-7a0192eaac6a60f43e53,"TrialID: 8
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -4681,47 +4639,7 @@ Effective From: Notional Amount: (USD)
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:26:28.754Z-7c23b4bb0b402cb89e6b,"TrialID: 10
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Notional: amortizing, as per schedule below
-Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
-Party A receives: USD fixed 3.20%, semi-annual, act/360
-Notional exchange: None
-Start: 10 November 2009
-Tenor: 5 years
-Notional Schedule
-Notional Amount Schedule	
-Effective From: Notional Amount: (USD)
-10-Nov-09 100,000,000.00
-10-May-10 100,000,000.00
-10-Nov-10 100,000,000.00
-10-May-11 100,000,000.00
-10-Nov-11 90,000,000.00
-10-May-12 80,000,000.00
-10-Nov-12 70,000,000.00
-10-May-13 60,000,000.00
-10-Nov-13 50,000,000.00
-10-May-14 25,000,000.00
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:26:29.440Z-7c0193ad58d071f7e987,"TrialID: 11
+2024-09-26-04-26-28-032-73a0a1fe52a2d8ad9a7e,"TrialID: 9
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -4763,7 +4681,7 @@ Effective From: Notional Amount: (USD)
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:26:30.335Z-73f0b269118623786b08,"TrialID: 12
+2024-09-26-04-26-28-754-7c23b4bb0b402cb89e6b,"TrialID: 10
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -4803,7 +4721,7 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:30.864Z-762087e87a4fa738b949,"TrialID: 13
+2024-09-26-04-26-29-440-7c0193ad58d071f7e987,"TrialID: 11
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -4845,7 +4763,7 @@ Effective From: Notional Amount: (USD)
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:26:31.405Z-7aa1b602750c45ff4f25,"TrialID: 14
+2024-09-26-04-26-30-335-73f0b269118623786b08,"TrialID: 12
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -4885,207 +4803,7 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:32.092Z-7693867a5e97053d8859,"TrialID: 15
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Notional: amortizing, as per schedule below
-Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
-Party A receives: USD fixed 3.20%, semi-annual, act/360
-Notional exchange: None
-Start: 10 November 2009
-Tenor: 5 years
-Notional Schedule
-Notional Amount Schedule	
-Effective From: Notional Amount: (USD)
-10-Nov-09 100,000,000.00
-10-May-10 100,000,000.00
-10-Nov-10 100,000,000.00
-10-May-11 100,000,000.00
-10-Nov-11 90,000,000.00
-10-May-12 80,000,000.00
-10-Nov-12 70,000,000.00
-10-May-13 60,000,000.00
-10-Nov-13 50,000,000.00
-10-May-14 25,000,000.00
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:26:32.753Z-7bd2bea3099c53cdec34,"TrialID: 16
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Notional: amortizing, as per schedule below
-Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
-Party A receives: USD fixed 3.20%, semi-annual, act/360
-Notional exchange: None
-Start: 10 November 2009
-Tenor: 5 years
-Notional Schedule
-Notional Amount Schedule	
-Effective From: Notional Amount: (USD)
-10-Nov-09 100,000,000.00
-10-May-10 100,000,000.00
-10-Nov-10 100,000,000.00
-10-May-11 100,000,000.00
-10-Nov-11 90,000,000.00
-10-May-12 80,000,000.00
-10-Nov-12 70,000,000.00
-10-May-13 60,000,000.00
-10-Nov-13 50,000,000.00
-10-May-14 25,000,000.00
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:26:33.371Z-70208dd13ecd4bd85d89,"TrialID: 17
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Notional: amortizing, as per schedule below
-Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
-Party A receives: USD fixed 3.20%, semi-annual, act/360
-Notional exchange: None
-Start: 10 November 2009
-Tenor: 5 years
-Notional Schedule
-Notional Amount Schedule	
-Effective From: Notional Amount: (USD)
-10-Nov-09 100,000,000.00
-10-May-10 100,000,000.00
-10-Nov-10 100,000,000.00
-10-May-11 100,000,000.00
-10-Nov-11 90,000,000.00
-10-May-12 80,000,000.00
-10-Nov-12 70,000,000.00
-10-May-13 60,000,000.00
-10-Nov-13 50,000,000.00
-10-May-14 25,000,000.00
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:26:34.015Z-7742944062eacf415b98,"TrialID: 18
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Notional: amortizing, as per schedule below
-Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
-Party A receives: USD fixed 3.20%, semi-annual, act/360
-Notional exchange: None
-Start: 10 November 2009
-Tenor: 5 years
-Notional Schedule
-Notional Amount Schedule	
-Effective From: Notional Amount: (USD)
-10-Nov-09 100,000,000.00
-10-May-10 100,000,000.00
-10-Nov-10 100,000,000.00
-10-May-11 100,000,000.00
-10-Nov-11 90,000,000.00
-10-May-12 80,000,000.00
-10-Nov-12 70,000,000.00
-10-May-13 60,000,000.00
-10-Nov-13 50,000,000.00
-10-May-14 25,000,000.00
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:26:34.624Z-72e0accc0d3f46ac1c9f,"TrialID: 19
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Notional: amortizing, as per schedule below
-Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
-Party A receives: USD fixed 3.20%, semi-annual, act/360
-Notional exchange: None
-Start: 10 November 2009
-Tenor: 5 years
-Notional Schedule
-Notional Amount Schedule	
-Effective From: Notional Amount: (USD)
-10-Nov-09 100,000,000.00
-10-May-10 100,000,000.00
-10-Nov-10 100,000,000.00
-10-May-11 100,000,000.00
-10-Nov-11 90,000,000.00
-10-May-12 80,000,000.00
-10-Nov-12 70,000,000.00
-10-May-13 60,000,000.00
-10-Nov-13 50,000,000.00
-10-May-14 25,000,000.00
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:26:35.304Z-7712b44a08a3ebae2da3,"TrialID: 20
+2024-09-26-04-26-30-864-762087e87a4fa738b949,"TrialID: 13
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -5127,7 +4845,7 @@ Effective From: Notional Amount: (USD)
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:26:36.296Z-740286c347dce6fdc37d,"TrialID: 21
+2024-09-26-04-26-31-405-7aa1b602750c45ff4f25,"TrialID: 14
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -5167,7 +4885,7 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:36.960Z-7782bf9230f25cca0724,"TrialID: 22
+2024-09-26-04-26-32-092-7693867a5e97053d8859,"TrialID: 15
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -5207,7 +4925,167 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:37.445Z-77b3bd3d0682974e108b,"TrialID: 23
+2024-09-26-04-26-32-753-7bd2bea3099c53cdec34,"TrialID: 16
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Notional: amortizing, as per schedule below
+Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
+Party A receives: USD fixed 3.20%, semi-annual, act/360
+Notional exchange: None
+Start: 10 November 2009
+Tenor: 5 years
+Notional Schedule
+Notional Amount Schedule	
+Effective From: Notional Amount: (USD)
+10-Nov-09 100,000,000.00
+10-May-10 100,000,000.00
+10-Nov-10 100,000,000.00
+10-May-11 100,000,000.00
+10-Nov-11 90,000,000.00
+10-May-12 80,000,000.00
+10-Nov-12 70,000,000.00
+10-May-13 60,000,000.00
+10-Nov-13 50,000,000.00
+10-May-14 25,000,000.00
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-26-33-371-70208dd13ecd4bd85d89,"TrialID: 17
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Notional: amortizing, as per schedule below
+Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
+Party A receives: USD fixed 3.20%, semi-annual, act/360
+Notional exchange: None
+Start: 10 November 2009
+Tenor: 5 years
+Notional Schedule
+Notional Amount Schedule	
+Effective From: Notional Amount: (USD)
+10-Nov-09 100,000,000.00
+10-May-10 100,000,000.00
+10-Nov-10 100,000,000.00
+10-May-11 100,000,000.00
+10-Nov-11 90,000,000.00
+10-May-12 80,000,000.00
+10-Nov-12 70,000,000.00
+10-May-13 60,000,000.00
+10-Nov-13 50,000,000.00
+10-May-14 25,000,000.00
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-26-34-015-7742944062eacf415b98,"TrialID: 18
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Notional: amortizing, as per schedule below
+Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
+Party A receives: USD fixed 3.20%, semi-annual, act/360
+Notional exchange: None
+Start: 10 November 2009
+Tenor: 5 years
+Notional Schedule
+Notional Amount Schedule	
+Effective From: Notional Amount: (USD)
+10-Nov-09 100,000,000.00
+10-May-10 100,000,000.00
+10-Nov-10 100,000,000.00
+10-May-11 100,000,000.00
+10-Nov-11 90,000,000.00
+10-May-12 80,000,000.00
+10-Nov-12 70,000,000.00
+10-May-13 60,000,000.00
+10-Nov-13 50,000,000.00
+10-May-14 25,000,000.00
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-26-34-624-72e0accc0d3f46ac1c9f,"TrialID: 19
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Notional: amortizing, as per schedule below
+Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
+Party A receives: USD fixed 3.20%, semi-annual, act/360
+Notional exchange: None
+Start: 10 November 2009
+Tenor: 5 years
+Notional Schedule
+Notional Amount Schedule	
+Effective From: Notional Amount: (USD)
+10-Nov-09 100,000,000.00
+10-May-10 100,000,000.00
+10-Nov-10 100,000,000.00
+10-May-11 100,000,000.00
+10-Nov-11 90,000,000.00
+10-May-12 80,000,000.00
+10-Nov-12 70,000,000.00
+10-May-13 60,000,000.00
+10-Nov-13 50,000,000.00
+10-May-14 25,000,000.00
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-26-35-304-7712b44a08a3ebae2da3,"TrialID: 20
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -5249,7 +5127,87 @@ Effective From: Notional Amount: (USD)
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:26:37.946Z-7a20959418835645d66d,"TrialID: 24
+2024-09-26-04-26-36-296-740286c347dce6fdc37d,"TrialID: 21
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Notional: amortizing, as per schedule below
+Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
+Party A receives: USD fixed 3.20%, semi-annual, act/360
+Notional exchange: None
+Start: 10 November 2009
+Tenor: 5 years
+Notional Schedule
+Notional Amount Schedule	
+Effective From: Notional Amount: (USD)
+10-Nov-09 100,000,000.00
+10-May-10 100,000,000.00
+10-Nov-10 100,000,000.00
+10-May-11 100,000,000.00
+10-Nov-11 90,000,000.00
+10-May-12 80,000,000.00
+10-Nov-12 70,000,000.00
+10-May-13 60,000,000.00
+10-Nov-13 50,000,000.00
+10-May-14 25,000,000.00
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-26-36-960-7782bf9230f25cca0724,"TrialID: 22
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Notional: amortizing, as per schedule below
+Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
+Party A receives: USD fixed 3.20%, semi-annual, act/360
+Notional exchange: None
+Start: 10 November 2009
+Tenor: 5 years
+Notional Schedule
+Notional Amount Schedule	
+Effective From: Notional Amount: (USD)
+10-Nov-09 100,000,000.00
+10-May-10 100,000,000.00
+10-Nov-10 100,000,000.00
+10-May-11 100,000,000.00
+10-Nov-11 90,000,000.00
+10-May-12 80,000,000.00
+10-Nov-12 70,000,000.00
+10-May-13 60,000,000.00
+10-Nov-13 50,000,000.00
+10-May-14 25,000,000.00
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-26-37-445-77b3bd3d0682974e108b,"TrialID: 23
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -5291,7 +5249,7 @@ Effective From: Notional Amount: (USD)
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:26:38.747Z-72038887b35291b59b14,"TrialID: 25
+2024-09-26-04-26-37-946-7a20959418835645d66d,"TrialID: 24
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -5333,7 +5291,7 @@ Effective From: Notional Amount: (USD)
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:26:39.299Z-7371a6da5a26857ad062,"TrialID: 26
+2024-09-26-04-26-38-747-72038887b35291b59b14,"TrialID: 25
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -5375,127 +5333,7 @@ Effective From: Notional Amount: (USD)
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:26:40.097Z-7af3bdf7c9a276032b89,"TrialID: 27
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Notional: amortizing, as per schedule below
-Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
-Party A receives: USD fixed 3.20%, semi-annual, act/360
-Notional exchange: None
-Start: 10 November 2009
-Tenor: 5 years
-Notional Schedule
-Notional Amount Schedule	
-Effective From: Notional Amount: (USD)
-10-Nov-09 100,000,000.00
-10-May-10 100,000,000.00
-10-Nov-10 100,000,000.00
-10-May-11 100,000,000.00
-10-Nov-11 90,000,000.00
-10-May-12 80,000,000.00
-10-Nov-12 70,000,000.00
-10-May-13 60,000,000.00
-10-Nov-13 50,000,000.00
-10-May-14 25,000,000.00
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:26:40.759Z-71309c208801e8fc85a4,"TrialID: 28
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Notional: amortizing, as per schedule below
-Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
-Party A receives: USD fixed 3.20%, semi-annual, act/360
-Notional exchange: None
-Start: 10 November 2009
-Tenor: 5 years
-Notional Schedule
-Notional Amount Schedule	
-Effective From: Notional Amount: (USD)
-10-Nov-09 100,000,000.00
-10-May-10 100,000,000.00
-10-Nov-10 100,000,000.00
-10-May-11 100,000,000.00
-10-Nov-11 90,000,000.00
-10-May-12 80,000,000.00
-10-Nov-12 70,000,000.00
-10-May-13 60,000,000.00
-10-Nov-13 50,000,000.00
-10-May-14 25,000,000.00
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:26:41.481Z-7db18e4a330e676ec027,"TrialID: 29
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Notional: amortizing, as per schedule below
-Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
-Party A receives: USD fixed 3.20%, semi-annual, act/360
-Notional exchange: None
-Start: 10 November 2009
-Tenor: 5 years
-Notional Schedule
-Notional Amount Schedule	
-Effective From: Notional Amount: (USD)
-10-Nov-09 100,000,000.00
-10-May-10 100,000,000.00
-10-Nov-10 100,000,000.00
-10-May-11 100,000,000.00
-10-Nov-11 90,000,000.00
-10-May-12 80,000,000.00
-10-Nov-12 70,000,000.00
-10-May-13 60,000,000.00
-10-Nov-13 50,000,000.00
-10-May-14 25,000,000.00
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:26:42.131Z-7db2be552e1e9861a6f0,"TrialID: 30
+2024-09-26-04-26-39-299-7371a6da5a26857ad062,"TrialID: 26
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -5537,7 +5375,7 @@ Effective From: Notional Amount: (USD)
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:26:42.705Z-72d29a4fcff99e62c1d2,"TrialID: 31
+2024-09-26-04-26-40-097-7af3bdf7c9a276032b89,"TrialID: 27
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -5577,7 +5415,7 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:43.426Z-7fa1b4929eb8da5420ad,"TrialID: 32
+2024-09-26-04-26-40-759-71309c208801e8fc85a4,"TrialID: 28
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -5617,7 +5455,7 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:44.201Z-7852a1a2a71c263429fd,"TrialID: 33
+2024-09-26-04-26-41-481-7db18e4a330e676ec027,"TrialID: 29
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -5657,167 +5495,7 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:45.049Z-7cc3ae5c416989d809cd,"TrialID: 34
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Notional: amortizing, as per schedule below
-Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
-Party A receives: USD fixed 3.20%, semi-annual, act/360
-Notional exchange: None
-Start: 10 November 2009
-Tenor: 5 years
-Notional Schedule
-Notional Amount Schedule	
-Effective From: Notional Amount: (USD)
-10-Nov-09 100,000,000.00
-10-May-10 100,000,000.00
-10-Nov-10 100,000,000.00
-10-May-11 100,000,000.00
-10-Nov-11 90,000,000.00
-10-May-12 80,000,000.00
-10-Nov-12 70,000,000.00
-10-May-13 60,000,000.00
-10-Nov-13 50,000,000.00
-10-May-14 25,000,000.00
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:26:45.615Z-7ce09c6db6e75b50ea6f,"TrialID: 35
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Notional: amortizing, as per schedule below
-Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
-Party A receives: USD fixed 3.20%, semi-annual, act/360
-Notional exchange: None
-Start: 10 November 2009
-Tenor: 5 years
-Notional Schedule
-Notional Amount Schedule	
-Effective From: Notional Amount: (USD)
-10-Nov-09 100,000,000.00
-10-May-10 100,000,000.00
-10-Nov-10 100,000,000.00
-10-May-11 100,000,000.00
-10-Nov-11 90,000,000.00
-10-May-12 80,000,000.00
-10-Nov-12 70,000,000.00
-10-May-13 60,000,000.00
-10-Nov-13 50,000,000.00
-10-May-14 25,000,000.00
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:26:46.258Z-7bd2b61627a369a0c211,"TrialID: 36
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Notional: amortizing, as per schedule below
-Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
-Party A receives: USD fixed 3.20%, semi-annual, act/360
-Notional exchange: None
-Start: 10 November 2009
-Tenor: 5 years
-Notional Schedule
-Notional Amount Schedule	
-Effective From: Notional Amount: (USD)
-10-Nov-09 100,000,000.00
-10-May-10 100,000,000.00
-10-Nov-10 100,000,000.00
-10-May-11 100,000,000.00
-10-Nov-11 90,000,000.00
-10-May-12 80,000,000.00
-10-Nov-12 70,000,000.00
-10-May-13 60,000,000.00
-10-Nov-13 50,000,000.00
-10-May-14 25,000,000.00
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:26:46.852Z-71a0a85b663ca9847b2c,"TrialID: 37
-You will be given the input below in the form of description of trade entry.
-
-Return only JSON with following keys:
-* Cap - bool, true if there is a cap in this trade
-* Floor - bool, true if there is a floor in this trade
-* FirstLegType - enum with values Floating and Fixed,
-* SecondLegType - enum with values Floating and Fixed.
-
-Description of trade entry:
-```
-Notional: amortizing, as per schedule below
-Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
-Party A receives: USD fixed 3.20%, semi-annual, act/360
-Notional exchange: None
-Start: 10 November 2009
-Tenor: 5 years
-Notional Schedule
-Notional Amount Schedule	
-Effective From: Notional Amount: (USD)
-10-Nov-09 100,000,000.00
-10-May-10 100,000,000.00
-10-Nov-10 100,000,000.00
-10-May-11 100,000,000.00
-10-Nov-11 90,000,000.00
-10-May-12 80,000,000.00
-10-Nov-12 70,000,000.00
-10-May-13 60,000,000.00
-10-Nov-13 50,000,000.00
-10-May-14 25,000,000.00
-```","Here is the JSON output:
-
-```
-{
-  ""Cap"": false,
-  ""Floor"": false,
-  ""FirstLegType"": ""Floating"",
-  ""SecondLegType"": ""Fixed""
-}
-```"
-2024-09-26T04:26:47.360Z-7ea2806b11e369c98c87,"TrialID: 38
+2024-09-26-04-26-42-131-7db2be552e1e9861a6f0,"TrialID: 30
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -5859,7 +5537,7 @@ Effective From: Notional Amount: (USD)
 ```
 
 Let me know if you need any further assistance!"
-2024-09-26T04:26:47.954Z-7e82b9ce815ea727d4ee,"TrialID: 39
+2024-09-26-04-26-42-705-72d29a4fcff99e62c1d2,"TrialID: 31
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -5899,7 +5577,7 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:48.694Z-7de0ad256f73d906d1df,"TrialID: 40
+2024-09-26-04-26-43-426-7fa1b4929eb8da5420ad,"TrialID: 32
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -5939,7 +5617,7 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:49.236Z-7200bd5856a176d0fa73,"TrialID: 41
+2024-09-26-04-26-44-201-7852a1a2a71c263429fd,"TrialID: 33
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -5979,7 +5657,7 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:49.876Z-7d4099c00cdc3e95853c,"TrialID: 42
+2024-09-26-04-26-45-049-7cc3ae5c416989d809cd,"TrialID: 34
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -6019,7 +5697,7 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:50.444Z-7a508a335707e6971eaa,"TrialID: 43
+2024-09-26-04-26-45-615-7ce09c6db6e75b50ea6f,"TrialID: 35
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -6059,7 +5737,7 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:50.966Z-7330b105466beca9a4e6,"TrialID: 44
+2024-09-26-04-26-46-258-7bd2b61627a369a0c211,"TrialID: 36
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -6099,7 +5777,7 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:51.434Z-7830b4723255fc494554,"TrialID: 45
+2024-09-26-04-26-46-852-71a0a85b663ca9847b2c,"TrialID: 37
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -6139,7 +5817,49 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:51.940Z-7f01ba8a758652934c2b,"TrialID: 46
+2024-09-26-04-26-47-360-7ea2806b11e369c98c87,"TrialID: 38
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Notional: amortizing, as per schedule below
+Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
+Party A receives: USD fixed 3.20%, semi-annual, act/360
+Notional exchange: None
+Start: 10 November 2009
+Tenor: 5 years
+Notional Schedule
+Notional Amount Schedule	
+Effective From: Notional Amount: (USD)
+10-Nov-09 100,000,000.00
+10-May-10 100,000,000.00
+10-Nov-10 100,000,000.00
+10-May-11 100,000,000.00
+10-Nov-11 90,000,000.00
+10-May-12 80,000,000.00
+10-Nov-12 70,000,000.00
+10-May-13 60,000,000.00
+10-Nov-13 50,000,000.00
+10-May-14 25,000,000.00
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```
+
+Let me know if you need any further assistance!"
+2024-09-26-04-26-47-954-7e82b9ce815ea727d4ee,"TrialID: 39
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -6179,7 +5899,7 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:52.488Z-75608de30ea48c7e2e0d,"TrialID: 47
+2024-09-26-04-26-48-694-7de0ad256f73d906d1df,"TrialID: 40
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -6219,7 +5939,7 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:53.108Z-7460b475052db6fccd51,"TrialID: 48
+2024-09-26-04-26-49-236-7200bd5856a176d0fa73,"TrialID: 41
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:
@@ -6259,7 +5979,287 @@ Effective From: Notional Amount: (USD)
   ""SecondLegType"": ""Fixed""
 }
 ```"
-2024-09-26T04:26:53.904Z-7b409caa3456ec8a2cb4,"TrialID: 49
+2024-09-26-04-26-49-876-7d4099c00cdc3e95853c,"TrialID: 42
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Notional: amortizing, as per schedule below
+Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
+Party A receives: USD fixed 3.20%, semi-annual, act/360
+Notional exchange: None
+Start: 10 November 2009
+Tenor: 5 years
+Notional Schedule
+Notional Amount Schedule	
+Effective From: Notional Amount: (USD)
+10-Nov-09 100,000,000.00
+10-May-10 100,000,000.00
+10-Nov-10 100,000,000.00
+10-May-11 100,000,000.00
+10-Nov-11 90,000,000.00
+10-May-12 80,000,000.00
+10-Nov-12 70,000,000.00
+10-May-13 60,000,000.00
+10-Nov-13 50,000,000.00
+10-May-14 25,000,000.00
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-26-50-444-7a508a335707e6971eaa,"TrialID: 43
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Notional: amortizing, as per schedule below
+Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
+Party A receives: USD fixed 3.20%, semi-annual, act/360
+Notional exchange: None
+Start: 10 November 2009
+Tenor: 5 years
+Notional Schedule
+Notional Amount Schedule	
+Effective From: Notional Amount: (USD)
+10-Nov-09 100,000,000.00
+10-May-10 100,000,000.00
+10-Nov-10 100,000,000.00
+10-May-11 100,000,000.00
+10-Nov-11 90,000,000.00
+10-May-12 80,000,000.00
+10-Nov-12 70,000,000.00
+10-May-13 60,000,000.00
+10-Nov-13 50,000,000.00
+10-May-14 25,000,000.00
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-26-50-966-7330b105466beca9a4e6,"TrialID: 44
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Notional: amortizing, as per schedule below
+Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
+Party A receives: USD fixed 3.20%, semi-annual, act/360
+Notional exchange: None
+Start: 10 November 2009
+Tenor: 5 years
+Notional Schedule
+Notional Amount Schedule	
+Effective From: Notional Amount: (USD)
+10-Nov-09 100,000,000.00
+10-May-10 100,000,000.00
+10-Nov-10 100,000,000.00
+10-May-11 100,000,000.00
+10-Nov-11 90,000,000.00
+10-May-12 80,000,000.00
+10-Nov-12 70,000,000.00
+10-May-13 60,000,000.00
+10-Nov-13 50,000,000.00
+10-May-14 25,000,000.00
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-26-51-434-7830b4723255fc494554,"TrialID: 45
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Notional: amortizing, as per schedule below
+Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
+Party A receives: USD fixed 3.20%, semi-annual, act/360
+Notional exchange: None
+Start: 10 November 2009
+Tenor: 5 years
+Notional Schedule
+Notional Amount Schedule	
+Effective From: Notional Amount: (USD)
+10-Nov-09 100,000,000.00
+10-May-10 100,000,000.00
+10-Nov-10 100,000,000.00
+10-May-11 100,000,000.00
+10-Nov-11 90,000,000.00
+10-May-12 80,000,000.00
+10-Nov-12 70,000,000.00
+10-May-13 60,000,000.00
+10-Nov-13 50,000,000.00
+10-May-14 25,000,000.00
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-26-51-940-7f01ba8a758652934c2b,"TrialID: 46
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Notional: amortizing, as per schedule below
+Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
+Party A receives: USD fixed 3.20%, semi-annual, act/360
+Notional exchange: None
+Start: 10 November 2009
+Tenor: 5 years
+Notional Schedule
+Notional Amount Schedule	
+Effective From: Notional Amount: (USD)
+10-Nov-09 100,000,000.00
+10-May-10 100,000,000.00
+10-Nov-10 100,000,000.00
+10-May-11 100,000,000.00
+10-Nov-11 90,000,000.00
+10-May-12 80,000,000.00
+10-Nov-12 70,000,000.00
+10-May-13 60,000,000.00
+10-Nov-13 50,000,000.00
+10-May-14 25,000,000.00
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-26-52-488-75608de30ea48c7e2e0d,"TrialID: 47
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Notional: amortizing, as per schedule below
+Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
+Party A receives: USD fixed 3.20%, semi-annual, act/360
+Notional exchange: None
+Start: 10 November 2009
+Tenor: 5 years
+Notional Schedule
+Notional Amount Schedule	
+Effective From: Notional Amount: (USD)
+10-Nov-09 100,000,000.00
+10-May-10 100,000,000.00
+10-Nov-10 100,000,000.00
+10-May-11 100,000,000.00
+10-Nov-11 90,000,000.00
+10-May-12 80,000,000.00
+10-Nov-12 70,000,000.00
+10-May-13 60,000,000.00
+10-Nov-13 50,000,000.00
+10-May-14 25,000,000.00
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-26-53-108-7460b475052db6fccd51,"TrialID: 48
+You will be given the input below in the form of description of trade entry.
+
+Return only JSON with following keys:
+* Cap - bool, true if there is a cap in this trade
+* Floor - bool, true if there is a floor in this trade
+* FirstLegType - enum with values Floating and Fixed,
+* SecondLegType - enum with values Floating and Fixed.
+
+Description of trade entry:
+```
+Notional: amortizing, as per schedule below
+Party A pays: 6M USD Term SOFR (floating), semi-annual, act/360
+Party A receives: USD fixed 3.20%, semi-annual, act/360
+Notional exchange: None
+Start: 10 November 2009
+Tenor: 5 years
+Notional Schedule
+Notional Amount Schedule	
+Effective From: Notional Amount: (USD)
+10-Nov-09 100,000,000.00
+10-May-10 100,000,000.00
+10-Nov-10 100,000,000.00
+10-May-11 100,000,000.00
+10-Nov-11 90,000,000.00
+10-May-12 80,000,000.00
+10-Nov-12 70,000,000.00
+10-May-13 60,000,000.00
+10-Nov-13 50,000,000.00
+10-May-14 25,000,000.00
+```","Here is the JSON output:
+
+```
+{
+  ""Cap"": false,
+  ""Floor"": false,
+  ""FirstLegType"": ""Floating"",
+  ""SecondLegType"": ""Fixed""
+}
+```"
+2024-09-26-04-26-53-904-7b409caa3456ec8a2cb4,"TrialID: 49
 You will be given the input below in the form of description of trade entry.
 
 Return only JSON with following keys:

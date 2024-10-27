@@ -1,5 +1,5 @@
 RequestID,Query,Completion
-2024-09-25T22:17:29.489Z-7d50ae3eb6329f2e29c9,"TrialID: 0
+2024-09-25-22-17-29-489-7d50ae3eb6329f2e29c9,"TrialID: 0
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -66,7 +66,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}, {""data"": ""1bn"", ""formatted_row"": ""1: Floored USD IRS Swap""}]
 }
 '''"
-2024-09-25T22:17:33.565Z-7041927193e6d533b337,"TrialID: 1
+2024-09-25-22-17-33-565-7041927193e6d533b337,"TrialID: 1
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -133,7 +133,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:17:38.296Z-7a738230a7d4e022566e,"TrialID: 2
+2024-09-25-22-17-38-296-7a738230a7d4e022566e,"TrialID: 2
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -200,7 +200,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}, {""data"": ""1bn"", ""formatted_row"": ""1: Floored USD IRS Swap""}]
 }
 '''"
-2024-09-25T22:17:43.963Z-7bb1837f0fbf4b9cb180,"TrialID: 3
+2024-09-25-22-17-43-963-7bb1837f0fbf4b9cb180,"TrialID: 3
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -267,7 +267,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}]
 }
 '''"
-2024-09-25T22:17:48.739Z-713398254fa0cfcd6b02,"TrialID: 4
+2024-09-25-22-17-48-739-713398254fa0cfcd6b02,"TrialID: 4
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -334,7 +334,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:17:52.936Z-7342893909fe7a436a79,"TrialID: 5
+2024-09-25-22-17-52-936-7342893909fe7a436a79,"TrialID: 5
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -401,7 +401,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}]
 }
 '''"
-2024-09-25T22:17:57.386Z-76f38073b698c9b4ddf4,"TrialID: 6
+2024-09-25-22-17-57-386-76f38073b698c9b4ddf4,"TrialID: 6
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -468,7 +468,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:18:00.983Z-78b18b239adf3f2cc25b,"TrialID: 7
+2024-09-25-22-18-00-983-78b18b239adf3f2cc25b,"TrialID: 7
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -535,7 +535,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:18:06.192Z-7f529fdfc2c4413bc498,"TrialID: 8
+2024-09-25-22-18-06-192-7f529fdfc2c4413bc498,"TrialID: 8
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -602,7 +602,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:18:10.086Z-7de2a6457312aa5c3ff9,"TrialID: 9
+2024-09-25-22-18-10-086-7de2a6457312aa5c3ff9,"TrialID: 9
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -669,7 +669,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:18:15.213Z-7782a3c91d626bff6edc,"TrialID: 10
+2024-09-25-22-18-15-213-7782a3c91d626bff6edc,"TrialID: 10
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -736,7 +736,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}]
 }
 '''"
-2024-09-25T22:18:19.804Z-77c3b9a15d4fb2fab9b9,"TrialID: 11
+2024-09-25-22-18-19-804-77c3b9a15d4fb2fab9b9,"TrialID: 11
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -803,7 +803,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}]
 }
 '''"
-2024-09-25T22:18:24.415Z-77c1a7da92adaaa0c391,"TrialID: 12
+2024-09-25-22-18-24-415-77c1a7da92adaaa0c391,"TrialID: 12
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -870,7 +870,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:18:28.941Z-74228ea4d913943b095e,"TrialID: 13
+2024-09-25-22-18-28-941-74228ea4d913943b095e,"TrialID: 13
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -937,7 +937,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:18:32.986Z-7ec3a2639c9aa7c489c2,"TrialID: 14
+2024-09-25-22-18-32-986-7ec3a2639c9aa7c489c2,"TrialID: 14
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -1004,7 +1004,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:18:37.059Z-735296f35e29c64c43dd,"TrialID: 15
+2024-09-25-22-18-37-059-735296f35e29c64c43dd,"TrialID: 15
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -1071,7 +1071,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:18:40.685Z-7153ab30efb80ab8584d,"TrialID: 16
+2024-09-25-22-18-40-685-7153ab30efb80ab8584d,"TrialID: 16
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -1138,7 +1138,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}, {""data"": ""1bn"", ""formatted_row"": ""1: Floored USD IRS Swap""}]
 }
 '''"
-2024-09-25T22:18:44.866Z-7270be2b72d70562561d,"TrialID: 17
+2024-09-25-22-18-44-866-7270be2b72d70562561d,"TrialID: 17
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -1205,7 +1205,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}]
 }
 '''"
-2024-09-25T22:18:50.265Z-7232a97620f30bf632f3,"TrialID: 18
+2024-09-25-22-18-50-265-7232a97620f30bf632f3,"TrialID: 18
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -1272,7 +1272,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}]
 }
 '''"
-2024-09-25T22:18:54.642Z-7ff0ab027dd4a48cbd41,"TrialID: 19
+2024-09-25-22-18-54-642-7ff0ab027dd4a48cbd41,"TrialID: 19
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -1339,7 +1339,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:18:58.466Z-7f20ae69e28537993c23,"TrialID: 20
+2024-09-25-22-18-58-466-7f20ae69e28537993c23,"TrialID: 20
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -1406,7 +1406,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}]
 }
 '''"
-2024-09-25T22:19:03.172Z-7861b269aef3aed33b5b,"TrialID: 21
+2024-09-25-22-19-03-172-7861b269aef3aed33b5b,"TrialID: 21
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -1473,7 +1473,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}, {""data"": ""1bn"", ""formatted_row"": ""1: Floored USD IRS Swap""}]
 }
 '''"
-2024-09-25T22:19:07.290Z-71b1a93dc527a59ccd57,"TrialID: 22
+2024-09-25-22-19-07-290-71b1a93dc527a59ccd57,"TrialID: 22
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -1540,7 +1540,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:19:10.931Z-7ab3a048c356172e97c7,"TrialID: 23
+2024-09-25-22-19-10-931-7ab3a048c356172e97c7,"TrialID: 23
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -1607,7 +1607,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}, {""data"": ""1bn"", ""formatted_row"": ""1: Floored USD IRS Swap""}]
 }
 '''"
-2024-09-25T22:19:15.854Z-7e238fc91ed18b92b283,"TrialID: 24
+2024-09-25-22-19-15-854-7e238fc91ed18b92b283,"TrialID: 24
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -1674,7 +1674,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:19:20.913Z-764296965dd0d5e05a71,"TrialID: 25
+2024-09-25-22-19-20-913-764296965dd0d5e05a71,"TrialID: 25
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -1741,7 +1741,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:19:25.147Z-7bc08a6c68fe35c52161,"TrialID: 26
+2024-09-25-22-19-25-147-7bc08a6c68fe35c52161,"TrialID: 26
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -1808,7 +1808,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:19:29.920Z-72e2bda6760628d0f807,"TrialID: 27
+2024-09-25-22-19-29-920-72e2bda6760628d0f807,"TrialID: 27
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -1875,7 +1875,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}, {""data"": ""1bn"", ""formatted_row"": ""1: Floored USD IRS Swap""}]
 }
 '''"
-2024-09-25T22:19:33.830Z-71c1852d50aa79691e96,"TrialID: 28
+2024-09-25-22-19-33-830-71c1852d50aa79691e96,"TrialID: 28
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -1942,7 +1942,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": {""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}
 }
 '''"
-2024-09-25T22:19:37.792Z-75d09e593e35b1ba9229,"TrialID: 29
+2024-09-25-22-19-37-792-75d09e593e35b1ba9229,"TrialID: 29
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -2009,7 +2009,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}]
 }
 '''"
-2024-09-25T22:19:44.019Z-7152b95669d2641240bd,"TrialID: 30
+2024-09-25-22-19-44-019-7152b95669d2641240bd,"TrialID: 30
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -2076,7 +2076,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:19:49.664Z-78119c9793b10d4db3f5,"TrialID: 31
+2024-09-25-22-19-49-664-78119c9793b10d4db3f5,"TrialID: 31
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -2143,7 +2143,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}]
 }
 '''"
-2024-09-25T22:19:53.084Z-7f5398514d3dd802922e,"TrialID: 32
+2024-09-25-22-19-53-084-7f5398514d3dd802922e,"TrialID: 32
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -2210,7 +2210,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:19:57.534Z-74e2b6e8549c3085bf11,"TrialID: 33
+2024-09-25-22-19-57-534-74e2b6e8549c3085bf11,"TrialID: 33
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -2277,7 +2277,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:20:01.829Z-77f0863f2a063fdadf5f,"TrialID: 34
+2024-09-25-22-20-01-829-77f0863f2a063fdadf5f,"TrialID: 34
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -2344,7 +2344,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:20:05.742Z-71f2a9a021e7fd2b5f87,"TrialID: 35
+2024-09-25-22-20-05-742-71f2a9a021e7fd2b5f87,"TrialID: 35
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -2411,7 +2411,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:20:09.296Z-7e309b4b7b117b555682,"TrialID: 36
+2024-09-25-22-20-09-296-7e309b4b7b117b555682,"TrialID: 36
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -2478,7 +2478,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}, {""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}]
 }
 '''"
-2024-09-25T22:20:13.333Z-75209d5805b01801a356,"TrialID: 37
+2024-09-25-22-20-13-333-75209d5805b01801a356,"TrialID: 37
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -2545,7 +2545,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}]
 }
 '''"
-2024-09-25T22:20:17.002Z-7612b9fea578938c8f27,"TrialID: 38
+2024-09-25-22-20-17-002-7612b9fea578938c8f27,"TrialID: 38
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -2612,7 +2612,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:20:20.725Z-74f392512bb1f55d5266,"TrialID: 39
+2024-09-25-22-20-20-725-74f392512bb1f55d5266,"TrialID: 39
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -2679,7 +2679,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}]
 }
 '''"
-2024-09-25T22:20:24.964Z-77c0b77b694f2f41ee35,"TrialID: 40
+2024-09-25-22-20-24-964-77c0b77b694f2f41ee35,"TrialID: 40
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -2746,7 +2746,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:20:29.101Z-71f1ac9c3e9134d2928e,"TrialID: 41
+2024-09-25-22-20-29-101-71f1ac9c3e9134d2928e,"TrialID: 41
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -2813,7 +2813,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:20:33.640Z-7113ba22d114a24977ec,"TrialID: 42
+2024-09-25-22-20-33-640-7113ba22d114a24977ec,"TrialID: 42
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -2880,7 +2880,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}]
 }
 '''"
-2024-09-25T22:20:37.901Z-72329f6aec9d974e4a38,"TrialID: 43
+2024-09-25-22-20-37-901-72329f6aec9d974e4a38,"TrialID: 43
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -2947,7 +2947,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}]
 }
 '''"
-2024-09-25T22:20:41.814Z-7633989c8f8e0a6603bb,"TrialID: 44
+2024-09-25-22-20-41-814-7633989c8f8e0a6603bb,"TrialID: 44
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -3014,7 +3014,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: USD {NotionalAmount}""}]
 }
 '''"
-2024-09-25T22:20:45.462Z-7dd2b5601f82732cd7a6,"TrialID: 45
+2024-09-25-22-20-45-462-7dd2b5601f82732cd7a6,"TrialID: 45
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -3081,7 +3081,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:20:50.044Z-790182135f0237f27c48,"TrialID: 46
+2024-09-25-22-20-50-044-790182135f0237f27c48,"TrialID: 46
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -3148,7 +3148,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": {""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}
 }
 '''"
-2024-09-25T22:20:54.277Z-7b329ae5e6e84bf1a9d6,"TrialID: 47
+2024-09-25-22-20-54-277-7b329ae5e6e84bf1a9d6,"TrialID: 47
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -3215,7 +3215,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:20:58.544Z-78309c4643d6d249c854,"TrialID: 48
+2024-09-25-22-20-58-544-78309c4643d6d249c854,"TrialID: 48
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
@@ -3282,7 +3282,7 @@ Enclose json in triple single quotes and ensure that it is parsable.","Here is t
     ""NotionalAmount"": [{""data"": ""1bn"", ""formatted_row"": ""2: Notional: {NotionalAmount} USD""}]
 }
 '''"
-2024-09-25T22:21:02.727Z-72c2a0fcfdd70bda1347,"TrialID: 49
+2024-09-25-22-21-02-727-72c2a0fcfdd70bda1347,"TrialID: 49
 You will be given a description of a trade entry with numbered rows, followed by a list of fields to identify within that text.
 Your task is to find relevant information about the field and reference to place in the row where you found the information.
 
