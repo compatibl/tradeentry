@@ -51,7 +51,7 @@ def _is_correct_answer(answer: str, trade_description: str, correct_answers: Lis
     )
 
 
-def _test_surrounding_leg(trade_description: str, run_count: int, llm: Llm) -> List[str]:
+def _test_brace_annotation(trade_description: str, run_count: int, llm: Llm) -> List[str]:
 
     prompt = PROMPT_TEMPLATE.format(text=trade_description)
 
@@ -68,7 +68,7 @@ def _test_surrounding_leg(trade_description: str, run_count: int, llm: Llm) -> L
     return results
 
 
-def test_surrounding_leg():
+def test_brace_annotation():
     with TestingContext():
         run_count = 50
         correct_answers = [
@@ -105,7 +105,7 @@ def test_surrounding_leg():
 
         for llm in stub_full_llms:
             for trade, correct_answer, trade_label in zip(trades, correct_answers, trade_labels):
-                results = _test_surrounding_leg(trade, run_count, llm)
+                results = _test_brace_annotation(trade, run_count, llm)
 
                 correct_answers_count = 0
                 for result in results:
