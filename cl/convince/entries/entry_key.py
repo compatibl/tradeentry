@@ -36,7 +36,7 @@ _DISALLOWED_TITLE_SUBSTRINGS = {
 """These substrings are not allowed in title."""
 
 _MD5_HEX_RE = re.compile(r'^[0-9a-f]+$')
-"""Regext for MD5 hex."""
+"""Regex for MD5 hex."""
 
 
 @dataclass(slots=True, kw_only=True)
