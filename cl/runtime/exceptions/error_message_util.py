@@ -21,7 +21,7 @@ class ErrorMessageUtil:
     """Helper class for formatting error messages."""
 
     @classmethod
-    def short_value(
+    def value_caused_an_error(
             cls,
             value: Any,
             *,
@@ -50,9 +50,9 @@ class ErrorMessageUtil:
             of_what = ""
 
         if value is not None:
-            return f"The value '{str(value)}' {of_what}"
+            return f"The value '{str(value)}' {of_what}caused an error:"
         else:
-            return f"An empty value {of_what}"
+            return f"An empty value {of_what}caused an error:"
 
     @classmethod
     def of_field(
