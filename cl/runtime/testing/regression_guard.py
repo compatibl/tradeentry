@@ -197,7 +197,7 @@ class RegressionGuard:
             exc_text_merged = "\n".join(exc_text_blocks)
             raise RuntimeError(exc_text_merged)
 
-    def verify(self, *, silent: bool = True) -> bool:
+    def verify(self, *, silent: bool = False) -> bool:
         """
         Verify for this regression guard that 'channel.received.ext' is the same as 'channel.expected.ext'.
         Defaults to silent=True (no exception) to permit other tests to proceed.
