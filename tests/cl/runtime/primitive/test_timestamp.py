@@ -18,6 +18,7 @@ from typing import Iterable
 from uuid import UUID
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.timestamp import Timestamp
+from cl.runtime.testing.regression_guard import RegressionGuard
 
 
 def is_ordered(values: Iterable[str]):
@@ -48,7 +49,7 @@ def test_create_many():
     assert is_ordered(result)
 
 
-def test_to_datetime():
+def test_time_ordering():
     """Test Timestamp.to_datetime method."""
 
     # Allow for 3ms tolerance between timer reading of UUIDv7 generator and datetime.now method
@@ -70,6 +71,20 @@ def test_to_datetime():
         # Check that timestamp is rounded to 1ms and has UTC timezone
         assert datetime_result.microsecond % 1000 == 0
         assert datetime_result.tzinfo == dt.timezone.utc
+
+
+def test_validate():
+    """Test Timestamp.validate method."""
+    guard = RegressionGuard()
+    try:
+        Timestamp.validate("123")
+    except Exception as e:
+        guard.write(e)
+    try:
+        Timestamp.validate("2024-09-25T23:00:29.307Z-7030856bcce0da7fdbdf")
+    except Exception as e:
+        guard.write(e)
+    RegressionGuard.verify(guard)
 
 
 if __name__ == "__main__":
