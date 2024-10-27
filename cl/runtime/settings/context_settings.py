@@ -15,7 +15,6 @@
 from dataclasses import dataclass
 from typing import List
 from cl.runtime.settings.settings import Settings
-from cl.runtime.settings.settings import process_id
 
 
 @dataclass(slots=True, kw_only=True)
