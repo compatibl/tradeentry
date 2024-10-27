@@ -24,7 +24,6 @@ from cl.runtime.log.log_entry import LogEntry
 from cl.runtime.log.log_entry_level_enum import LogEntryLevelEnum
 from cl.runtime.log.user_log_entry import UserLogEntry
 from cl.runtime.primitive.datetime_util import DatetimeUtil
-from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.records.protocols import TDataDict
 from cl.runtime.records.protocols import is_key
 from cl.runtime.records.protocols import is_record
@@ -206,28 +205,17 @@ class CeleryQueue(TaskQueue):
         if is_record(task):
             context.save_one(task)
 
-        # Create task run identifier and convert to string
-        task_run_uuid = OrderedUuid.create_one()
-        task_run_id = str(task_run_uuid)
-
-        # Get timestamp from task_run_id
-        task_run_uuid = UUID(task_run_id)
-        submit_time = OrderedUuid.datetime_of(task_run_uuid)
-
         # Create a task run record in Pending state
         task_run = TaskRun()
-        task_run.task_run_id = task_run_id
         task_run.queue = TaskQueueKey(queue_id=self.queue_id)
         task_run.task = task if is_key(task) else task.get_key()
-        task_run.submit_time = submit_time
-        task_run.update_time = submit_time
         task_run.status = TaskStatusEnum.PENDING
         context.save_one(task_run)
 
         # Pass parameters to the Celery task signature
         context_data = context_serializer.serialize_data(context)
         execute_task_signature = execute_task.s(
-            task_run_id,
+            task_run.task_run_id,
             context_data,
         )
 

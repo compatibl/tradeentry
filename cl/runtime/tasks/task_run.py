@@ -18,7 +18,7 @@ from dataclasses import dataclass
 from cl.runtime import Context
 from cl.runtime.log.log_entry_key import LogEntryKey
 from cl.runtime.primitive.datetime_util import DatetimeUtil
-from cl.runtime.primitive.ordered_uuid import OrderedUuid
+from cl.runtime.primitive.timestamp import Timestamp
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.tasks.task_key import TaskKey
@@ -65,9 +65,17 @@ class TaskRun(TaskRunKey, RecordMixin[TaskRunKey]):
     """Optional key of the associated log entry."""
 
     def init(self):
-        # Automatically generate time-ordered unique task run identifier in UUIDv7 format if not yet specified
+        # Automatically generate time-ordered unique task run identifier in UUIDv7 format if not specified
         if self.task_run_id is None:
-            self.task_run_id = str(OrderedUuid.create_one())
+            self.task_run_id = Timestamp.create()
+
+        # Use timestamp for submit time if not specified
+        if self.submit_time is None:
+            self.submit_time = Timestamp.to_datetime(self.task_run_id)
+
+        # Use now for update time if not specified
+        if self.update_time is None:
+            self.update_time = DatetimeUtil.now()
 
     def get_key(self) -> TaskRunKey:
         return TaskRunKey(task_run_id=self.task_run_id)

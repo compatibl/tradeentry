@@ -14,7 +14,6 @@
 
 import pytest
 from cl.runtime.context.testing_context import TestingContext
-from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.tasks.celery.celery_queue import CeleryQueue
 from cl.runtime.tasks.celery.celery_queue import execute_task
@@ -49,19 +48,10 @@ def test_method(celery_test_queue_fixture):
         task = _create_task(task_id)
         context.save_one(task)
 
-        # Create task run identifier and convert to string
-        task_run_uuid = OrderedUuid.create_one()
-        task_run_id = str(task_run_uuid)
-
-        submit_time = OrderedUuid.datetime_of(task_run_uuid)
-
         # Create a task run record in Pending state
         task_run = TaskRun()
-        task_run.task_run_id = task_run_id
         task_run.queue = TaskQueueKey(queue_id="test_queue")
         task_run.task = task
-        task_run.submit_time = submit_time
-        task_run.update_time = submit_time
         task_run.status = TaskStatusEnum.PENDING
 
         # Save task run record which means task is submitted
