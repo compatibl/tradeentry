@@ -51,9 +51,9 @@ class ErrorMessageUtil:
             of_what = ""
 
         if value is not None:
-            return f"The value '{str(value)}' {of_what}caused an error:"
+            return f"The value '{str(value)}' {of_what}caused an error."
         else:
-            return f"An empty value {of_what}caused an error:"
+            return f"An empty value {of_what}caused an error."
 
     @classmethod
     def of_field(
