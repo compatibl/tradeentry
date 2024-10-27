@@ -39,13 +39,13 @@ load_dotenv()
 _process_timestamp = Timestamp.create()
 """Unique UUIDv7-based timestamp set during the Python process launch."""
 
-# Determine if we are inside a test and store the result in a global variable for performance
-is_inside_test = EnvUtil.is_inside_test()
+# True if we are inside a test, the result is cached in Settings for performance
+_is_inside_test = EnvUtil.is_inside_test()
 
 # Select Dynaconf test environment when invoked from the pytest or UnitTest test runner.
 # Other runners not detected automatically, in which case the Dynaconf environment must be
 # configured in settings explicitly.
-if is_inside_test:
+if _is_inside_test:
     os.environ["CL_SETTINGS_ENV"] = "test"
 
 _all_settings = Dynaconf(
@@ -99,6 +99,9 @@ class Settings(ABC):
 
     process_timestamp: ClassVar[str] = _process_timestamp
     """Unique UUIDv7-based timestamp set during the Python process launch."""
+
+    is_inside_test: ClassVar[bool] = _is_inside_test
+    """True if we are inside a test."""
 
     __settings_dict: ClassVar[Dict[Type, Settings]] = {}
     """Dictionary of initialized settings objects indexed by the the settings class type."""

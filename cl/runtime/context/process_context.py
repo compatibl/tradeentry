@@ -20,7 +20,7 @@ from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.db.dataset_util import DatasetUtil
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.settings.context_settings import ContextSettings
-from cl.runtime.settings.settings import is_inside_test, Settings
+from cl.runtime.settings.settings import Settings
 
 
 @dataclass(slots=True, kw_only=True)
@@ -33,7 +33,7 @@ class ProcessContext(Context):
         # Do not execute this code on deserialized context instances (e.g. when they are passed to a task queue)
         if not self.is_deserialized:
             # Confirm we are not inside a test, error otherwise
-            if is_inside_test:
+            if Settings.is_inside_test:
                 raise RuntimeError(
                     f"'{type(self).__name__}' is used inside a test, " f"use '{TestingContext.__name__}' instead."
                 )
