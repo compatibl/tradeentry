@@ -15,7 +15,6 @@
 import re
 from dataclasses import dataclass
 from typing import Type
-
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.primitive.string_util import StringUtil
@@ -35,7 +34,7 @@ _DISALLOWED_TITLE_SUBSTRINGS = {
 }
 """These substrings are not allowed in title."""
 
-_MD5_HEX_RE = re.compile(r'^[0-9a-f]+$')
+_MD5_HEX_RE = re.compile(r"^[0-9a-f]+$")
 """Regex for MD5 hex."""
 
 
@@ -57,11 +56,11 @@ class EntryKey(KeyMixin):
 
     @classmethod
     def get_entry_id(
-            cls,
-            record_type: str,
-            title: str,
-            body: str | None = None,
-            data: str | None = None,
+        cls,
+        record_type: str,
+        title: str,
+        body: str | None = None,
+        data: str | None = None,
     ) -> str:
         """Create the unique identifier from parameters."""
 
@@ -76,8 +75,10 @@ class EntryKey(KeyMixin):
         title_substrings = [name for sub, name in _DISALLOWED_TITLE_SUBSTRINGS.items() if sub in title]
         if title_substrings:
             title_substrings_str = "\n".join(title_substrings)
-            raise UserError(f"Field 'title' contains the following disallowed substrings:\n{title_substrings_str}\n. "
-                            f"Field text:\n{title}")
+            raise UserError(
+                f"Field 'title' contains the following disallowed substrings:\n{title_substrings_str}\n. "
+                f"Field text:\n{title}"
+            )
 
         # Combine ClassName with title
         type_and_title = f"{record_type}: {title}"
@@ -124,4 +125,5 @@ class EntryKey(KeyMixin):
             raise UserError(
                 f"EntryId format must be either '{{RecordType}}: {{Title}}' "
                 f"or '{{RecordType}}: {{Title}} (MD5: {{lowercase hexadecimal}})'.\n"
-                f"EntryId: '{entry_id}'")
+                f"EntryId: '{entry_id}'"
+            )

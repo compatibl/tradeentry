@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from dataclasses import dataclass
 from typing import List
 from cl.runtime import RecordMixin
@@ -28,12 +29,13 @@ class Retriever(RetrieverKey, RecordMixin[RetrieverKey], ABC):
 
     # TODO: Use keyword params
     @abstractmethod
-    def retrieve(self,
-                 entry_id: str,  # TODO: Generate instead
-                 input_text: str,
-                 param_description: str,
-                 param_samples: List[str] | None = None
-                 ) -> str:
+    def retrieve(
+        self,
+        entry_id: str,  # TODO: Generate instead
+        input_text: str,
+        param_description: str,
+        param_samples: List[str] | None = None,
+    ) -> str:
         """
         Retrieve the specified parameter from the entry and return it as a smaller entry.
 

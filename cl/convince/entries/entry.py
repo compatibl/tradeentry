@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import abstractmethod, ABC
+from abc import ABC
+from abc import abstractmethod
 from dataclasses import dataclass
 from cl.runtime import Context
 from cl.runtime.backend.core.user_key import UserKey
@@ -70,7 +71,9 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
         raise UserError(f"Propose handler is not yet implemented for {type(self).__name__}.")
 
     @classmethod
-    def parse_required_bool(cls, field_value: str | None, *, field_name: str | None = None) -> bool:  # TODO: Move to Util class
+    def parse_required_bool(
+        cls, field_value: str | None, *, field_name: str | None = None
+    ) -> bool:  # TODO: Move to Util class
         """Parse an optional boolean value."""
         match field_value:
             case None | "":
@@ -83,11 +86,13 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
                 return False
             case _:
                 field_name = CaseUtil.snake_to_pascal_case(field_name)
-                for_field = f" for field {field_name}" if field_name is not None else  " for a Y/N field"
+                for_field = f" for field {field_name}" if field_name is not None else " for a Y/N field"
                 raise UserError(f"The value {for_field} must be Y, N or an empty string.\nField value: {field_value}")
 
     @classmethod
-    def parse_optional_bool(cls, field_value: str | None, *, field_name: str | None = None) -> bool | None:  # TODO: Move to Util class
+    def parse_optional_bool(
+        cls, field_value: str | None, *, field_name: str | None = None
+    ) -> bool | None:  # TODO: Move to Util class
         """Parse an optional boolean value."""
         match field_value:
             case None | "":

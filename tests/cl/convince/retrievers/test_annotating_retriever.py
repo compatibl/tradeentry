@@ -14,13 +14,11 @@
 
 import pytest
 from typing import List
-
-from cl.convince.entries.entry import Entry
-from cl.convince.retrievers.annotating_retriever import AnnotatingRetriever
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.testing.regression_guard import RegressionGuard
+from cl.convince.entries.entry import Entry
+from cl.convince.retrievers.annotating_retriever import AnnotatingRetriever
 from stubs.cl.convince.experiments.stub_llms import get_stub_full_llms
-
 
 ENTRY_TEXT = "Sell 10y SOFR swap at 3.45%"
 PARAM_DESCRIPTION = "Fixed rate."

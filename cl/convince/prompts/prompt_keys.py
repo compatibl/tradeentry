@@ -22,5 +22,3 @@ class PromptKeys:
 
     ANNOTATING_RETRIEVER_PROMPT: cls = cls(prompt_id="AnnotatingRetrieverPrompt")
     """Instructs the model to surround the requested parameter by curly braces for subsequent retrieval."""
-
-

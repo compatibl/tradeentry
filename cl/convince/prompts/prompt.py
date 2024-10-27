@@ -12,16 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from dataclasses import dataclass
 from typing import Any
-
 from cl.runtime import RecordMixin
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.convince.prompts.prompt_key import PromptKey
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.schema.schema import Schema
+from cl.convince.prompts.prompt_key import PromptKey
 
 
 @dataclass(slots=True, kw_only=True)
@@ -43,5 +43,7 @@ class Prompt(PromptKey, RecordMixin[PromptKey], ABC):
         params_type = Schema.get_type_by_short_name(self.params_type)
         if not isinstance(params, params_type):
             actual_type_str = type(params).__name__
-            raise UserError(f"Parameters object for prompt {self.prompt_id} has type {actual_type_str} which "
-                            f"is not a subclass of the expected type {self.params_type}.")
+            raise UserError(
+                f"Parameters object for prompt {self.prompt_id} has type {actual_type_str} which "
+                f"is not a subclass of the expected type {self.params_type}."
+            )

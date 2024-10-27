@@ -15,6 +15,10 @@
 import re
 from dataclasses import dataclass
 from typing import List
+from cl.runtime import Context
+from cl.runtime.log.exceptions.user_error import UserError
+from cl.runtime.primitive.string_util import StringUtil
+from cl.runtime.records.dataclasses_extensions import missing
 from cl.convince.entries.entry import Entry
 from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.llms.llm import Llm
@@ -24,16 +28,12 @@ from cl.convince.prompts.prompt import Prompt
 from cl.convince.prompts.prompt_key import PromptKey
 from cl.convince.retrievers.retrieval import Retrieval
 from cl.convince.retrievers.retriever import Retriever
-from cl.runtime import Context
-from cl.runtime.log.exceptions.user_error import UserError
-from cl.runtime.primitive.string_util import StringUtil
-from cl.runtime.records.dataclasses_extensions import missing
 from cl.convince.retrievers.retriever_util import RetrieverUtil
 
-_TRIPLE_BACKTICKS_RE = re.compile(r'```(.*?)```', re.DOTALL)
+_TRIPLE_BACKTICKS_RE = re.compile(r"```(.*?)```", re.DOTALL)
 """Regex for text between triple backticks."""
 
-_BRACES_RE = re.compile(r'\{(.*?)\}')
+_BRACES_RE = re.compile(r"\{(.*?)\}")
 """Regex for text between curly braces."""
 
 _TEMPLATE = """You will be provided with an input text and a description of a parameter.
@@ -74,12 +74,13 @@ class AnnotatingRetriever(Retriever):
                 template=_TEMPLATE,
             )  # TODO: Review the handling of defaults
 
-    def retrieve(self,
-                 entry_id: str,  # TODO: Generate instead
-                 input_text: str,
-                 param_description: str,
-                 param_samples: List[str] | None = None
-                 ) -> str:
+    def retrieve(
+        self,
+        entry_id: str,  # TODO: Generate instead
+        input_text: str,
+        param_description: str,
+        param_samples: List[str] | None = None,
+    ) -> str:
         # Get LLM and prompt
         llm = Context.current().load_one(Llm, self.llm)
         prompt = Context.current().load_one(Prompt, self.prompt)
@@ -100,7 +101,7 @@ class AnnotatingRetriever(Retriever):
 
         trial_count = 2
         for trial_index in range(trial_count):
-            is_last_trial = (trial_index == trial_count - 1)
+            is_last_trial = trial_index == trial_count - 1
             try:
                 # Get text annotated with braces and check that the only difference is braces and whitespace
                 completion = llm.completion(rendered_prompt, trial_id=trial_index)
@@ -128,12 +129,16 @@ class AnnotatingRetriever(Retriever):
                         else:
                             # Otherwise report an error
                             # TODO: Use unified diff
-                            raise UserError(f"Annotated text has changes other than curly braces.\n"
-                                            f"Input text: ```{input_text}```\n"
-                                            f"Annotated text: ```{annotated_text}```\n")
+                            raise UserError(
+                                f"Annotated text has changes other than curly braces.\n"
+                                f"Input text: ```{input_text}```\n"
+                                f"Annotated text: ```{annotated_text}```\n"
+                            )
                 else:
-                    raise RuntimeError(f"Extraction success reported by {llm.llm_id}, however "
-                                       f"the annotated text is empty. Input text:\n{input_text}\n")
+                    raise RuntimeError(
+                        f"Extraction success reported by {llm.llm_id}, however "
+                        f"the annotated text is empty. Input text:\n{input_text}\n"
+                    )
 
                 # Extract data inside braces
                 matches = re.findall(_BRACES_RE, annotated_text)
@@ -142,8 +147,10 @@ class AnnotatingRetriever(Retriever):
                         if not is_last_trial:
                             continue
                         else:
-                            raise UserError(f"Nested curly braces are present in annotated text.\n"
-                                            f"Annotated text: ```{annotated_text}```\n")
+                            raise UserError(
+                                f"Nested curly braces are present in annotated text.\n"
+                                f"Annotated text: ```{annotated_text}```\n"
+                            )
 
                 # Combine and return from inside the loop
                 # TODO: Determine if numbered combination works better
@@ -161,18 +168,22 @@ class AnnotatingRetriever(Retriever):
             except Exception as e:
                 if is_last_trial:
                     # Rethrow only when the last trial is reached
-                    raise UserError(f"Unable to extract parameter from the input text after {trial_count} trials.\n"
-                                    f"Input text: {input_text}\n"
-                                    f"Parameter description: {param_description}\n"
-                                    f"Last trial error information: {str(e)}\n")
+                    raise UserError(
+                        f"Unable to extract parameter from the input text after {trial_count} trials.\n"
+                        f"Input text: {input_text}\n"
+                        f"Parameter description: {param_description}\n"
+                        f"Last trial error information: {str(e)}\n"
+                    )
                 else:
                     # Otherwise log the error details and continue
                     pass  # TODO: Log failure with info message level
 
         # The method should always return from the loop, adding as a backup in case this changes in the future
-        raise UserError(f"Unable to extract parameter from the input text.\n"
-                        f"Input text: {input_text}\n"
-                        f"Parameter description: {param_description}\n")
+        raise UserError(
+            f"Unable to extract parameter from the input text.\n"
+            f"Input text: {input_text}\n"
+            f"Parameter description: {param_description}\n"
+        )
 
     @classmethod
     def _extract_annotated(cls, text: str) -> str:
@@ -186,7 +197,9 @@ class AnnotatingRetriever(Retriever):
         return result
 
     @classmethod
-    def _extract_in_braces(cls, annotated_text: str, *, continue_on_error: bool | None = None) -> str | None:  # TODO: Move to Util class
+    def _extract_in_braces(
+        cls, annotated_text: str, *, continue_on_error: bool | None = None
+    ) -> str | None:  # TODO: Move to Util class
         """
         Extract the blocks inside curly braces.
 
@@ -199,14 +212,16 @@ class AnnotatingRetriever(Retriever):
             if continue_on_error:
                 return None
             else:
-                raise UserError(f"No curly braces are present in annotated text.\n"
-                                f"Annotated text: ```{annotated_text}```\n")
+                raise UserError(
+                    f"No curly braces are present in annotated text.\n" f"Annotated text: ```{annotated_text}```\n"
+                )
         if any("{" in match or "}" in match for match in matches):
             if continue_on_error:
                 return None
             else:
-                raise UserError(f"Nested curly braces are present in annotated text.\n"
-                                f"Annotated text: ```{annotated_text}```\n")
+                raise UserError(
+                    f"Nested curly braces are present in annotated text.\n" f"Annotated text: ```{annotated_text}```\n"
+                )
 
         # Combine using semicolon delimiter and return
         result = ";".join(matches)
@@ -217,4 +232,3 @@ class AnnotatingRetriever(Retriever):
         # Remove triple backticks and curly brackets
         result = text.replace("`", "").strip().replace("{", "").replace("}", "").strip()
         return result
-

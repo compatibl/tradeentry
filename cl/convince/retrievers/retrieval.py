@@ -14,7 +14,6 @@
 
 from dataclasses import dataclass
 from typing import List
-
 from cl.runtime import RecordMixin
 from cl.convince.retrievers.retrieval_key import RetrievalKey
 

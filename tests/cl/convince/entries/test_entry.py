@@ -13,12 +13,11 @@
 # limitations under the License.
 
 import pytest
-
-from cl.convince.entries.entry_type_key import EntryTypeKey
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.entries.entry import Entry
 from cl.convince.entries.entry_key import EntryKey
+from cl.convince.entries.entry_type_key import EntryTypeKey
 
 
 def test_get_entry_id():

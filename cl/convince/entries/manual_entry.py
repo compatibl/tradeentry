@@ -12,10 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from dataclasses import dataclass
-from cl.convince.entries.entry import Entry
 from cl.runtime.log.exceptions.user_error import UserError
+from cl.convince.entries.entry import Entry
 
 
 @dataclass(slots=True, kw_only=True)
@@ -24,5 +25,7 @@ class ManualEntry(Entry):
 
     def run_propose(self) -> None:
         """Generate or regenerate the proposed value."""
-        raise UserError(f"Propose is not defined for ManualEntry as relies on the user exclusively "
-                        f"for setting the approved value manually.\nEntryId: {self.entry_id}")
+        raise UserError(
+            f"Propose is not defined for ManualEntry as relies on the user exclusively "
+            f"for setting the approved value manually.\nEntryId: {self.entry_id}"
+        )
