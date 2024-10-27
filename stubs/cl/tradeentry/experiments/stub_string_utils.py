@@ -29,7 +29,7 @@ def extract_between_backticks(text: str) -> Optional[str]:
     return matches[0]
 
 
-def sanitize_string(string: str) -> str:
+def normalize_string(string: str) -> str:  # TODO: Move to StringUtil or another helper class
     """
     Removes newlines and extra spaces from a string.
     """

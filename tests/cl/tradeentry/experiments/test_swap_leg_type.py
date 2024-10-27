@@ -20,7 +20,7 @@ from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.llm import Llm
 from cl.convince.retrievers.retriever_util import RetrieverUtil
 from stubs.cl.convince.experiments.stub_llms import get_stub_full_llms
-from stubs.cl.tradeentry.experiments.stub_string_utils import sanitize_string
+from stubs.cl.tradeentry.experiments.stub_string_utils import normalize_string
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_basis_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_fixed_for_floating_swap_entry
@@ -41,10 +41,10 @@ Description of trade entry:
 
 
 def _is_correct_answer(answer: str, correct_answer: str) -> bool:
-    sanitized_answer = sanitize_string(answer)
-    sanitized_correct_answer = sanitize_string(correct_answer)
+    normalized_answer = normalize_string(answer)
+    normalized_correct_answer = normalize_string(correct_answer)
 
-    return sanitized_answer == sanitized_correct_answer
+    return normalized_answer == normalized_correct_answer
 
 
 def _testing_swap_leg_type(trade_description: str, run_count: int, llm: Llm) -> List[str]:

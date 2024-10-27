@@ -20,7 +20,7 @@ from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.llm import Llm
 from stubs.cl.convince.experiments.stub_llms import get_stub_full_llms
 from stubs.cl.tradeentry.experiments.stub_string_utils import extract_between_backticks
-from stubs.cl.tradeentry.experiments.stub_string_utils import sanitize_string
+from stubs.cl.tradeentry.experiments.stub_string_utils import normalize_string
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_basis_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_fixed_for_floating_swap_entry
@@ -43,10 +43,10 @@ Enclose you output text in triple backticks."""
 
 
 def _is_correct_answer(answer: str, trade_description: str, correct_answers: List[str]) -> bool:
-    sanitized_answer = sanitize_string(answer)
-    sanitized_trade_description = sanitize_string(trade_description)
+    normalized_answer = normalize_string(answer)
+    normalized_trade_description = normalize_string(trade_description)
 
-    return sanitized_answer.replace("{", "").replace("}", "") == sanitized_trade_description and all(
+    return normalized_answer.replace("{", "").replace("}", "") == normalized_trade_description and all(
         correct_answer in answer for correct_answer in correct_answers
     )
 
