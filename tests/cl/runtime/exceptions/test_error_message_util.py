@@ -17,6 +17,23 @@ from cl.runtime.exceptions.error_message_util import ErrorMessageUtil
 from cl.runtime.testing.regression_guard import RegressionGuard
 
 
+def test_short_value():
+    """Test for ErrorMessageUtil.short_value method."""
+    guard = RegressionGuard()
+    guard.write(ErrorMessageUtil.short_value(value=123))
+    guard.write(ErrorMessageUtil.short_value(value=123, value_name="sample_value_name"))
+    guard.write(ErrorMessageUtil.short_value(value=123, value_name="sample_value_name", method_name="sample_function"))
+    guard.write(ErrorMessageUtil.short_value(value=123, method_name="sample_function"))
+    guard.write(ErrorMessageUtil.short_value(value=123, method_name="sample_method", data_type="SampleRecord"))
+    guard.write(ErrorMessageUtil.short_value(
+        value=123,
+        value_name="sample_value_name",
+        method_name="sample_method",
+        data_type="SampleRecord"
+    ))
+    RegressionGuard.verify_all()
+
+
 def test_of_field():
     """Test for ErrorMessageUtil.of_field method."""
     guard = RegressionGuard()
