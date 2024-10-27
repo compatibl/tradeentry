@@ -14,13 +14,13 @@
 
 import datetime as dt
 import re
-from typing import List, Type
+from typing import List
+from typing import Type
 from uuid import UUID
 import uuid_utils
-
 from cl.runtime.exceptions.error_message_util import ErrorMessageUtil
 
-_ISO_DELIMITED_FORMAT_RE = re.compile(r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z-[a-f0-9]{20}$')
+_ISO_DELIMITED_FORMAT_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z-[a-f0-9]{20}$")
 """Regex for the legacy UUIDv7-based timestamp format where the datetime component uses ISO-8601 delimiters."""
 
 
@@ -97,12 +97,12 @@ class Timestamp:
 
     @classmethod
     def to_datetime(
-            cls,
-            timestamp: str,
-            *,
-            value_name: str | None = None,
-            method_name: str | None = None,
-            data_type: Type | str | None = None,
+        cls,
+        timestamp: str,
+        *,
+        value_name: str | None = None,
+        method_name: str | None = None,
+        data_type: Type | str | None = None,
     ) -> dt.datetime:
         """
         Return the UTC datetime component of a UUIDv7 based timestamp time-ordered dash-delimited string format.
@@ -122,11 +122,13 @@ class Timestamp:
                 method_name=method_name,
                 data_type=data_type,
             )
-            raise RuntimeError(f"""{value_description}:
+            raise RuntimeError(
+                f"""{value_description}:
 - It uses legacy format with ISO-8601 delimiters for the datetime component: yyyy-MM-ddThh:mm:ss.fffZ-hex(20)
 - Convert to the new format by replacing all delimiters by dash so that the timestamp can be used in filenames
 - New format example: yyyy-MM-dd-hh-mm-ss-fff-hex(20)
-""")
+"""
+            )
 
         # Validate
         tokens = timestamp.split("-")
@@ -137,10 +139,12 @@ class Timestamp:
                 method_name=method_name,
                 data_type=data_type,
             )
-            raise RuntimeError(f"""{value_description}:
+            raise RuntimeError(
+                f"""{value_description}:
 - The value does not conform to the expected format yyyy-MM-dd-hh-mm-ss-fff-hex(20)
 - It has {len(tokens)} dash-delimited tokens instead of 8
-""")
+"""
+            )
 
         year, month, day, hour, minute, second, millisecond, suffix = tuple(tokens)
 
@@ -154,7 +158,7 @@ class Timestamp:
                 int(hour),
                 int(minute),
                 int(second),
-                1000*int(millisecond),
+                1000 * int(millisecond),
                 tzinfo=dt.timezone.utc,
             )
             # Validate the hex component
@@ -169,21 +173,23 @@ class Timestamp:
                 method_name=method_name,
                 data_type=data_type,
             )
-            raise RuntimeError(f"""{value_description}:
+            raise RuntimeError(
+                f"""{value_description}:
 - The value does not conform to the expected format yyyy-MM-dd-hh-mm-ss-fff-hex(20)
 - It causes the following parsing error:
 {e}
-""")
+"""
+            )
         return result
 
     @classmethod
     def validate(
-            cls,
-            timestamp: str,
-            *,
-            value_name: str | None = None,
-            method_name: str | None = None,
-            data_type: Type | str | None = None,
+        cls,
+        timestamp: str,
+        *,
+        value_name: str | None = None,
+        method_name: str | None = None,
+        data_type: Type | str | None = None,
     ) -> None:
         """
         Validate that the argument is a UUIDv7 based timestamp in time-ordered dash-delimited string format.
@@ -208,9 +214,7 @@ class Timestamp:
 
         # Check type
         if (value_type_name := type(value).__name__) != "UUID":
-            raise RuntimeError(
-                f"An object of type '{value_type_name}' was provided while UUIDv7 was expected."
-            )
+            raise RuntimeError(f"An object of type '{value_type_name}' was provided while UUIDv7 was expected.")
 
         # Check version
         if value.version != 7:

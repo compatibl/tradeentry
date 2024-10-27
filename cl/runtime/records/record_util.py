@@ -18,13 +18,16 @@ from dataclasses import fields
 from dataclasses import is_dataclass
 from types import NoneType
 from types import UnionType
-from typing import List, Iterable, Any
+from typing import Any
+from typing import Iterable
+from typing import List
 from typing import Type
 from typing import Union
 from typing import get_args
 from typing import get_origin
 from cl.runtime.log.exceptions.user_error import UserError
-from cl.runtime.records.protocols import RecordProtocol, is_record
+from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.records.protocols import is_record
 
 
 class RecordUtil:
@@ -156,7 +159,7 @@ Note: In case of containers, type mismatch may be in one of the items.
         # TODO (Roman): Check string key fields in nested keys
         sort_records: Any = []
         for record in records:
-        	# TODO: Refactor to use a key serializer
+            # TODO: Refactor to use a key serializer
             key_slots = record.get_key().__slots__ if is_record(record) else tuple()  # noqa
             str_key_values = [v for slot in key_slots if isinstance((v := getattr(record, slot)), str)]
             sort_key = ";".join(str_key_values)

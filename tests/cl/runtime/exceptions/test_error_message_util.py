@@ -22,15 +22,18 @@ def test_value_caused_an_error():
     guard = RegressionGuard()
     guard.write(ErrorMessageUtil.value_caused_an_error(value=123))
     guard.write(ErrorMessageUtil.value_caused_an_error(value=123, value_name="sample_value_name"))
-    guard.write(ErrorMessageUtil.value_caused_an_error(value=123, value_name="sample_value_name", method_name="sample_function"))
+    guard.write(
+        ErrorMessageUtil.value_caused_an_error(value=123, value_name="sample_value_name", method_name="sample_function")
+    )
     guard.write(ErrorMessageUtil.value_caused_an_error(value=123, method_name="sample_function"))
-    guard.write(ErrorMessageUtil.value_caused_an_error(value=123, method_name="sample_method", data_type="SampleRecord"))
-    guard.write(ErrorMessageUtil.value_caused_an_error(
-        value=123,
-        value_name="sample_value_name",
-        method_name="sample_method",
-        data_type="SampleRecord"
-    ))
+    guard.write(
+        ErrorMessageUtil.value_caused_an_error(value=123, method_name="sample_method", data_type="SampleRecord")
+    )
+    guard.write(
+        ErrorMessageUtil.value_caused_an_error(
+            value=123, value_name="sample_value_name", method_name="sample_method", data_type="SampleRecord"
+        )
+    )
     guard.verify()
 
 
@@ -52,11 +55,9 @@ def test_of_param():
     guard.write(ErrorMessageUtil.of_param(param_name="sample_param", method_name="sample_function"))
     guard.write(ErrorMessageUtil.of_param(method_name="sample_function"))
     guard.write(ErrorMessageUtil.of_param(method_name="sample_method", data_type="SampleRecord"))
-    guard.write(ErrorMessageUtil.of_param(
-        param_name="sample_param",
-        method_name="sample_method",
-        data_type="SampleRecord"
-    ))
+    guard.write(
+        ErrorMessageUtil.of_param(param_name="sample_param", method_name="sample_method", data_type="SampleRecord")
+    )
     guard.verify()
 
 

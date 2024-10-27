@@ -111,8 +111,10 @@ class CsvFileReader(Reader):
 
         if not CaseUtil.is_pascal_case(filename_without_extension):
             dirname = os.path.dirname(filename)
-            raise RuntimeError(f"Filename of a CSV preload file {filename} in directory {dirname} must be "
-                               f"ClassName or its alias in PascalCase without module.")
+            raise RuntimeError(
+                f"Filename of a CSV preload file {filename} in directory {dirname} must be "
+                f"ClassName or its alias in PascalCase without module."
+            )
 
         # Get record type
         record_type = Schema.get_type_by_short_name(filename_without_extension)

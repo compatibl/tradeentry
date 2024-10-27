@@ -272,4 +272,3 @@ class Settings(ABC):
         # Return as a normalized path string
         result = os.path.normpath(result)
         return result
-

@@ -443,9 +443,9 @@ class SqliteDb(Db):
 
         # Check if all tables are empty
         for table_name in tables:
-            table_name = table_name['name']
+            table_name = table_name["name"]
             cursor.execute(f'SELECT COUNT(*) FROM "{table_name}";')
-            count = cursor.fetchone()['COUNT(*)']
+            count = cursor.fetchone()["COUNT(*)"]
 
             # If any table has data, the database is not empty
             if count > 0:

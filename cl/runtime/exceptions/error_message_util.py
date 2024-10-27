@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Type, Any
+from typing import Any
+from typing import Type
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.primitive.string_util import StringUtil
 
@@ -22,12 +23,12 @@ class ErrorMessageUtil:
 
     @classmethod
     def value_caused_an_error(
-            cls,
-            value: Any,
-            *,
-            value_name: str | None = None,
-            method_name: str | None = None,
-            data_type: Type | str | None = None,
+        cls,
+        value: Any,
+        *,
+        value_name: str | None = None,
+        method_name: str | None = None,
+        data_type: Type | str | None = None,
     ) -> str:
         """
         Description of a variable, field or parameter value followed by space suitable for short values (value first).
@@ -56,10 +57,10 @@ class ErrorMessageUtil:
 
     @classmethod
     def of_field(
-            cls,
-            *,
-            field_name: str | None = None,
-            data_type: Type | str | None = None,
+        cls,
+        *,
+        field_name: str | None = None,
+        data_type: Type | str | None = None,
     ) -> str:
         """
         Descriptive field name followed by space.
@@ -92,11 +93,11 @@ class ErrorMessageUtil:
 
     @classmethod
     def of_param(
-            cls,
-            *,
-            param_name: str | None = None,
-            method_name: str | None = None,
-            data_type: Type | str | None = None,
+        cls,
+        *,
+        param_name: str | None = None,
+        method_name: str | None = None,
+        data_type: Type | str | None = None,
     ) -> str:
         """
         Descriptive field name followed by space or empty string if details are not provided.
@@ -115,7 +116,7 @@ class ErrorMessageUtil:
             field_str = "of a parameter "
         else:
             return ""
-            
+
         # Convert class name
         if data_type is not None:
             data_type = data_type.__name__ if isinstance(data_type, type) else str(data_type)
