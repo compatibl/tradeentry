@@ -140,6 +140,10 @@ class RegressionGuard:
             value: Data to be recorded, accepted data types depend on the specified file extension
         """
 
+        # Perform type conversion
+        if isinstance(value, Exception):
+            value = f"Raises {type(value).__name__} with the message:\n{str(value)}"
+
         # Delegate to a previously created guard with the same combination of output_path and ext if exists
         if self.__delegate_to is not None:
             self.__delegate_to.write(value)
