@@ -14,14 +14,12 @@
 
 from dataclasses import dataclass
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.experiments.experiment_key import ExperimentKey
 from cl.runtime.experiments.trial import Trial
-from cl.runtime.experiments.trial_key import TrialKey
 
 
 @dataclass(slots=True, kw_only=True)
 class ClassifierTrial(Trial):
-    """Records the result of a single category (class label) assignment trial."""
+    """Run and analyze the results of a single classification (category assignment) trial."""
 
-    category: bool = missing()
-    """Category (class label) assigned by this trial."""
+    classifier_result: str = missing()
+    """Category assigned by this trial."""

@@ -21,10 +21,17 @@ from cl.runtime.experiments.trial_key import TrialKey
 
 @dataclass(slots=True, kw_only=True)
 class Trial(TrialKey, RecordMixin[TrialKey]):
-    """Contains results for a single trial of an experiment."""
+    """Run and store the result of a single trial for the specified experiment."""
 
     experiment: ExperimentKey = missing()
     """Experiment for which the trial is performed."""
 
+    trial_label: str = missing()
+    """Identifier of the trial is unique within the experiment."""
+
     def get_key(self) -> TrialKey:
         return TrialKey(trial_id=self.trial_id)
+
+    def init(self) -> None:
+        """Generate trial_id in 'ExperimentId: TrialLabel' format."""
+        self.trial_id = self.get_trial_id(self.experiment, self.trial_label)

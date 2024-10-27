@@ -20,7 +20,8 @@ from cl.runtime.experiments.experiment_key import ExperimentKey
 
 @dataclass(slots=True, kw_only=True)
 class Experiment(ExperimentKey, RecordMixin[ExperimentKey], ABC):
-    """An experiment is performed by running multiple trials and performing statistical analysis of the results."""
+    """Run and analyze the results of multiple trials."""
 
     def get_key(self) -> ExperimentKey:
         return ExperimentKey(experiment_id=self.experiment_id)
+

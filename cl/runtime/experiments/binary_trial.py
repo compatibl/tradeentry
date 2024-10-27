@@ -20,7 +20,7 @@ from cl.runtime.experiments.trial_key import TrialKey
 
 @dataclass(slots=True, kw_only=True)
 class BinaryTrial(Trial):
-    """Records the result of a single binary (success/failure) trial."""
+    """Run and analyze the results of a single binary (pass/fail) trial."""
 
-    success: bool = missing()
-    """True for success and False for failure."""
+    binary_result: bool = missing()
+    """True for pass and False for fail."""

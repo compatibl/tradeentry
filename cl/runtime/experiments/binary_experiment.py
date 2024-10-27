@@ -21,7 +21,7 @@ from cl.runtime.experiments.experiment_key import ExperimentKey
 
 @dataclass(slots=True, kw_only=True)
 class BinaryExperiment(Experiment):
-    """Analyze the results of binary (success/failure) trials."""
+    """Run and analyze the results of multiple binary (pass/fail) trials."""
 
     def get_key(self) -> ExperimentKey:
         return ExperimentKey(experiment_id=self.experiment_id)

@@ -17,5 +17,5 @@ from cl.runtime.experiments.experiment import Experiment
 
 
 @dataclass(slots=True, kw_only=True)
-class CategoricalExperiment(Experiment):
-    """Analyze the results of category (class label) assignment trials."""
+class ClassifierExperiment(Experiment):
+    """Run and analyze the results of multiple classification (category assignment) trials."""
