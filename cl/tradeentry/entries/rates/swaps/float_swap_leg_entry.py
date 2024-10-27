@@ -13,11 +13,9 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-
 from typing_extensions import Self
-
-from cl.convince.entries.entry_key import EntryKey
 from cl.runtime import Context
+from cl.convince.entries.entry_key import EntryKey
 from cl.tradeentry.entries.rates.swaps.rates_swap_leg_entry import RatesSwapLegEntry
 
 

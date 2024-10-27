@@ -13,9 +13,8 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-
-from cl.convince.entries.entry import Entry
 from cl.runtime.records.dataclasses_extensions import missing
+from cl.convince.entries.entry import Entry
 from cl.tradeentry.trades.pay_receive_key import PayReceiveKey
 
 

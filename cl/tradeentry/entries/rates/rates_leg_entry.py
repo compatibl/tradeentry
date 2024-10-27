@@ -14,9 +14,8 @@
 
 from abc import ABC
 from dataclasses import dataclass
-
-from cl.convince.entries.entry import Entry
 from cl.runtime.records.dataclasses_extensions import missing
+from cl.convince.entries.entry import Entry
 from cl.tradeentry.trades.rates.rates_leg_key import RatesLegKey
 
 
@@ -26,4 +25,3 @@ class RatesLegEntry(Entry, ABC):
 
     leg: RatesLegKey = missing()
     """Interest rate leg."""
-

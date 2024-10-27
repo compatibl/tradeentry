@@ -13,10 +13,10 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from cl.runtime import Context
+from cl.convince.entries.entry_key import EntryKey
 from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.retrievers.annotating_retriever import AnnotatingRetriever
-from cl.convince.entries.entry_key import EntryKey
-from cl.runtime import Context
 from cl.tradeentry.entries.date_or_tenor_entry import DateOrTenorEntry
 from cl.tradeentry.entries.fixed_rate_entry import FixedRateEntry
 from cl.tradeentry.entries.pay_receive_fixed_entry import PayReceiveFixedEntry

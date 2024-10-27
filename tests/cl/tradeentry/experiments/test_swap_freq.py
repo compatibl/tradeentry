@@ -14,13 +14,12 @@
 
 import pytest
 from typing import List
-
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.llm import Llm
-from stubs.cl.convince.experiments.stub_llms import get_stub_full_llms
 from cl.convince.retrievers.retriever_util import RetrieverUtil
+from stubs.cl.convince.experiments.stub_llms import get_stub_full_llms
 
 PROMPT_TEMPLATE = """Trade or leg description contains the following text. 
 

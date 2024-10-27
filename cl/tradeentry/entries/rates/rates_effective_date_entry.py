@@ -19,4 +19,3 @@ from cl.convince.entries.entry import Entry
 @dataclass(slots=True, kw_only=True)
 class RatesEffectiveDateEntry(Entry):
     """Trade or leg effective date defined as unadjusted date or time interval relative to another date."""
-
