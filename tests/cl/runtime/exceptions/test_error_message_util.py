@@ -31,7 +31,7 @@ def test_value_caused_an_error():
         method_name="sample_method",
         data_type="SampleRecord"
     ))
-    RegressionGuard.verify_all()
+    guard.verify()
 
 
 def test_of_field():
@@ -41,7 +41,7 @@ def test_of_field():
     guard.write(ErrorMessageUtil.of_field(field_name="sample_field"))
     guard.write(ErrorMessageUtil.of_field(field_name="sample_field", data_type="SampleRecord"))
     guard.write(ErrorMessageUtil.of_field(data_type="SampleRecord"))
-    RegressionGuard.verify_all()
+    guard.verify()
 
 
 def test_of_param():
@@ -57,7 +57,7 @@ def test_of_param():
         method_name="sample_method",
         data_type="SampleRecord"
     ))
-    RegressionGuard.verify_all()
+    guard.verify()
 
 
 if __name__ == "__main__":

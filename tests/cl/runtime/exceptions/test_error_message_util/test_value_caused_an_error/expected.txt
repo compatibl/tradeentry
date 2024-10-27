@@ -1,6 +1,6 @@
-The value '123' 
-The value '123' of SampleValueName 
-The value '123' of parameter SampleValueName in function SampleFunction 
-The value '123' of a parameter in function SampleFunction 
-The value '123' of a parameter in method SampleMethod of SampleRecord 
-The value '123' of parameter SampleValueName in method SampleMethod of SampleRecord 
+The value '123' caused an error:
+The value '123' of SampleValueName caused an error:
+The value '123' of parameter SampleValueName in function SampleFunction caused an error:
+The value '123' of a parameter in function SampleFunction caused an error:
+The value '123' of a parameter in method SampleMethod of SampleRecord caused an error:
+The value '123' of parameter SampleValueName in method SampleMethod of SampleRecord caused an error:
