@@ -16,8 +16,8 @@ import pytest
 import os
 from typing import List
 from cl.runtime.context.env_util import EnvUtil
-from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.convince.llms.completion_cache import CompletionCache
+from cl.runtime.primitive.timestamp import Timestamp
 
 module_path = __file__.removesuffix(".py")
 
@@ -56,10 +56,8 @@ def _check_cache_files_eol(base_dir: str, channels: List[str]):
 
 
 def _get_request_id() -> str:
-    """Get random request ID."""
-    # Generate OrderedUuid and convert to readable ordered string in date-hash format
-    request_uuid = OrderedUuid.create_one()
-    request_id = OrderedUuid.to_readable_str(request_uuid)
+    """Get request ID."""
+    request_id = Timestamp.create()
     return request_id
 
 
