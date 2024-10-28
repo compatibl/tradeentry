@@ -13,13 +13,9 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.experiments.trial import Trial
+from cl.runtime.experiments.binary_experiment import BinaryExperiment
 
 
 @dataclass(slots=True, kw_only=True)
-class BinaryTrial(Trial):
-    """Run and analyze the results of a single binary (pass/fail) trial."""
-
-    binary_result: bool = missing()
-    """True for pass and False for fail."""
+class StubBinaryExperiment(BinaryExperiment):
+    """Stub implementation of BinaryExperiment."""

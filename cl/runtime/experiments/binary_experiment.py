@@ -12,16 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
 from dataclasses import dataclass
-from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.experiments.experiment import Experiment
-from cl.runtime.experiments.experiment_key import ExperimentKey
 
 
 @dataclass(slots=True, kw_only=True)
 class BinaryExperiment(Experiment):
     """Run and analyze the results of multiple binary (pass/fail) trials."""
 
-    def get_key(self) -> ExperimentKey:
-        return ExperimentKey(experiment_id=self.experiment_id)
