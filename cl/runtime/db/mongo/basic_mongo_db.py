@@ -221,9 +221,12 @@ class BasicMongoDb(Db):
         db = self._get_db()
         collection = db[collection_name]
 
-        # Serialize record data and key
-        serialized_key = key_serializer.serialize_key(record)
+        # Serialize data, this also executes 'init_all' method
         serialized_record = data_serializer.serialize_data(record)
+
+        # Serialize key
+        # TODO: Consider getting the key first instead of serializing the entire record
+        serialized_key = key_serializer.serialize_key(record)
 
         # Use update_one with upsert=True to insert if not present or update if present
         # TODO (Roman): update_one does not affect fields not presented in record. Changed to replace_one
