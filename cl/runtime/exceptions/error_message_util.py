@@ -22,7 +22,7 @@ class ErrorMessageUtil:
     """Helper class for formatting error messages."""
 
     @classmethod
-    def value_caused_an_error(
+    def value_preamble(  # TODO: Improve to support long or multi-line value string.
         cls,
         value: Any,
         *,
@@ -31,7 +31,7 @@ class ErrorMessageUtil:
         data_type: Type | str | None = None,
     ) -> str:
         """
-        Description of a variable, field or parameter value followed by space suitable for short values (value first).
+        Return "The value '{value}' of {description} caused an error."
 
         Args:
             value: The value for which the error is reported
@@ -63,7 +63,7 @@ class ErrorMessageUtil:
         data_type: Type | str | None = None,
     ) -> str:
         """
-        Descriptive field name followed by space.
+        Return "of field {description}" or the empty string if parameters are None.
 
         Args:
             field_name: Parameter or field name for formatting the error message (optional)
@@ -100,7 +100,7 @@ class ErrorMessageUtil:
         data_type: Type | str | None = None,
     ) -> str:
         """
-        Descriptive field name followed by space or empty string if details are not provided.
+        Return "of parameter {description}" or the empty string if parameters are None.
 
         Args:
             param_name: Parameter name for formatting the error message (optional)

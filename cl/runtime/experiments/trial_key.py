@@ -44,7 +44,7 @@ class TrialKey(KeyMixin):
         """Generate trial_id in 'ExperimentId: TrialLabel' format."""
         if experiment is None:
             raise UserError(
-                ErrorMessageUtil.value_caused_an_error(
+                ErrorMessageUtil.value_preamble(
                     value=None,
                     value_name="experiment",
                     data_type="TrialKey",
@@ -52,7 +52,7 @@ class TrialKey(KeyMixin):
             )
         if experiment.experiment_id is None:
             raise UserError(
-                ErrorMessageUtil.value_caused_an_error(
+                ErrorMessageUtil.value_preamble(
                     value=None,
                     value_name="experiment_id",
                     data_type="ExperimentKey",
@@ -60,7 +60,7 @@ class TrialKey(KeyMixin):
             )
         if trial_label is None:
             raise UserError(
-                ErrorMessageUtil.value_caused_an_error(
+                ErrorMessageUtil.value_preamble(
                     value=None,
                     value_name="trial_label",
                     data_type="TrialKey",

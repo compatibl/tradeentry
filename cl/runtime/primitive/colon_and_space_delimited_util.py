@@ -34,7 +34,7 @@ class ColonAndSpaceDelimitedUtil:
         tokens = value.split(": ")
         if len(tokens) != token_count:
             if token_count > 1:
-                msg = ErrorMessageUtil.value_caused_an_error(
+                msg = ErrorMessageUtil.value_preamble(
                     value,
                     value_name=value_name if value_name is not None else "a colon-and-space-delimited identifier",
                     method_name=method_name,
@@ -48,7 +48,7 @@ contains the colon-and-space-delimiter.
 """
                 )
             elif token_count == 1:
-                msg = ErrorMessageUtil.value_caused_an_error(
+                msg = ErrorMessageUtil.value_preamble(
                     value,
                     value_name=(
                         value_name
