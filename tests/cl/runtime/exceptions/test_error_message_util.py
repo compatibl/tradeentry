@@ -17,21 +17,21 @@ from cl.runtime.exceptions.error_message_util import ErrorMessageUtil
 from cl.runtime.testing.regression_guard import RegressionGuard
 
 
-def test_value_preamble():
-    """Test for ErrorMessageUtil.value_preamble method."""
+def test_value_error():
+    """Test for ErrorMessageUtil.value_error method."""
     guard = RegressionGuard()
-    guard.write(ErrorMessageUtil.value_preamble(value=123))
-    guard.write(ErrorMessageUtil.value_preamble(value=123, value_name="sample_value_name"))
+    guard.write(ErrorMessageUtil.value_error(value=123))
+    guard.write(ErrorMessageUtil.value_error(value=123, value_name="sample_value_name"))
     guard.write(
-        ErrorMessageUtil.value_preamble(value=123, value_name="sample_value_name", method_name="sample_function")
+        ErrorMessageUtil.value_error(value=123, value_name="sample_value_name", method_name="sample_function",)
     )
-    guard.write(ErrorMessageUtil.value_preamble(value=123, method_name="sample_function"))
+    guard.write(ErrorMessageUtil.value_error(value=123, method_name="sample_function"))
     guard.write(
-        ErrorMessageUtil.value_preamble(value=123, method_name="sample_method", data_type="SampleRecord")
+        ErrorMessageUtil.value_error(value=123, method_name="sample_method", data_type="SampleRecord",)
     )
     guard.write(
-        ErrorMessageUtil.value_preamble(
-            value=123, value_name="sample_value_name", method_name="sample_method", data_type="SampleRecord"
+        ErrorMessageUtil.value_error(
+            value=123, value_name="sample_value_name", method_name="sample_method", data_type="SampleRecord",
         )
     )
     guard.verify()

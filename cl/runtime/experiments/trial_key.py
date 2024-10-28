@@ -43,28 +43,22 @@ class TrialKey(KeyMixin):
     def get_trial_id(cls, experiment: ExperimentKey, trial_label: str) -> str:
         """Generate trial_id in 'ExperimentId: TrialLabel' format."""
         if experiment is None:
-            raise UserError(
-                ErrorMessageUtil.value_preamble(
-                    value=None,
-                    value_name="experiment",
-                    data_type="TrialKey",
-                )
+            raise ErrorMessageUtil.value_error(
+                value=None,
+                value_name="experiment",
+                data_type="TrialKey",
             )
         if experiment.experiment_id is None:
-            raise UserError(
-                ErrorMessageUtil.value_preamble(
-                    value=None,
-                    value_name="experiment_id",
-                    data_type="ExperimentKey",
-                )
+            raise ErrorMessageUtil.value_error(
+                value=None,
+                value_name="experiment_id",
+                data_type="ExperimentKey",
             )
         if trial_label is None:
-            raise UserError(
-                ErrorMessageUtil.value_preamble(
-                    value=None,
-                    value_name="trial_label",
-                    data_type="TrialKey",
-                )
+            raise ErrorMessageUtil.value_error(
+                value=None,
+                value_name="trial_label",
+                data_type="TrialKey",
             )
         trial_id = f"{experiment.experiment_id}: {trial_label}"
         cls.check_trial_id(trial_id)

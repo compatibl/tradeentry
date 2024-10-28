@@ -116,34 +116,30 @@ class Timestamp:
 
         # Provide a specific error message for the ISO-delimited legacy format
         if len(timestamp) == 45 and re.match(_ISO_DELIMITED_FORMAT_RE, timestamp):
-            value_preamble = ErrorMessageUtil.value_preamble(
+            raise ErrorMessageUtil.value_error(
                 timestamp,
-                value_name=value_name if value_name is not None else "Timestamp",
-                method_name=method_name,
-                data_type=data_type,
-            )
-            raise RuntimeError(
-                f"""{value_preamble}
+                details=f"""
 - It uses legacy format with ISO-8601 delimiters for the datetime component: yyyy-MM-ddThh:mm:ss.fffZ-hex(20)
 - Convert to the new format by replacing all delimiters by dash so that the timestamp can be used in filenames
 - New format example: yyyy-MM-dd-hh-mm-ss-fff-hex(20)
-"""
+""",
+                value_name=value_name if value_name is not None else "Timestamp",
+                method_name=method_name,
+                data_type=data_type,
             )
 
         # Validate
         tokens = timestamp.split("-")
         if len(timestamp) != 44 or len(tokens) != 8:
-            value_preamble = ErrorMessageUtil.value_preamble(
+            raise ErrorMessageUtil.value_error(
                 timestamp,
+                details=f"""
+- The value does not conform to the expected format yyyy-MM-dd-hh-mm-ss-fff-hex(20)
+- It has {len(tokens)} dash-delimited tokens instead of 8
+""",
                 value_name=value_name if value_name is not None else "Timestamp",
                 method_name=method_name,
                 data_type=data_type,
-            )
-            raise RuntimeError(
-                f"""{value_preamble}
-- The value does not conform to the expected format yyyy-MM-dd-hh-mm-ss-fff-hex(20)
-- It has {len(tokens)} dash-delimited tokens instead of 8
-"""
             )
 
         year, month, day, hour, minute, second, millisecond, suffix = tuple(tokens)
@@ -167,18 +163,16 @@ class Timestamp:
             if not suffix.startswith("7"):
                 raise ValueError(f"Hex component of UUIDv7 timestamp '{timestamp}' does not start from 7.")
         except ValueError as e:
-            value_preamble = ErrorMessageUtil.value_preamble(
+            raise ErrorMessageUtil.value_error(
                 timestamp,
-                value_name=value_name if value_name is not None else "Timestamp",
-                method_name=method_name,
-                data_type=data_type,
-            )
-            raise RuntimeError(
-                f"""{value_preamble}
+                details=f"""
 - The value does not conform to the expected format yyyy-MM-dd-hh-mm-ss-fff-hex(20)
 - It causes the following parsing error:
 {e}
-"""
+""",
+                value_name=value_name if value_name is not None else "Timestamp",
+                method_name=method_name,
+                data_type=data_type,
             )
         return result
 

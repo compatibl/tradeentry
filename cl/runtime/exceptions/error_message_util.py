@@ -14,6 +14,8 @@
 
 from typing import Any
 from typing import Type
+
+from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.primitive.string_util import StringUtil
 
@@ -22,19 +24,21 @@ class ErrorMessageUtil:
     """Helper class for formatting error messages."""
 
     @classmethod
-    def value_preamble(
+    def value_error(
         cls,
         value: Any,
+        details: str | None = None,
         *,
         value_name: str | None = None,
         method_name: str | None = None,
         data_type: Type | str | None = None,
-    ) -> str:
+    ) -> Exception:
         """
         Return "The value '{value}' of {description} caused an error."
 
         Args:
             value: The value for which the error is reported
+            details: Further details about the error (optional)
             value_name: Variable, field or parameter name for formatting the error message (optional)
             method_name: Method or function name for formatting the error message (optional)
             data_type: Class type or name for formatting the error message (optional)
@@ -50,10 +54,16 @@ class ErrorMessageUtil:
         else:
             of_what = ""
 
-        if value is not None:
-            return f"The following value {of_what}caused an error:\n{str(value)}"
+        if StringUtil.is_not_empty(details):
+            details_msg = f"\nFurther details:\n\n{details.strip()}\n"
         else:
-            return f"An empty value {of_what}caused an error."
+            details_msg = ""
+
+        if value is not None:
+            error_msg = f"The following value {of_what}caused an error:\n\n{str(value)}\n{details_msg}"
+        else:
+            error_msg = f"An empty value {of_what}caused an error.\n{details_msg}"
+        return UserError(error_msg)
 
     @classmethod
     def _of_field(

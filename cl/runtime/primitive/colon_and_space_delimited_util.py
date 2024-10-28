@@ -34,22 +34,21 @@ class ColonAndSpaceDelimitedUtil:
         tokens = value.split(": ")
         if len(tokens) != token_count:
             if token_count > 1:
-                msg = ErrorMessageUtil.value_preamble(
+                raise ErrorMessageUtil.value_error(
                     value,
+                    details=f"""
+It must contain exactly {token_count} colon-and-space-delimited tokens.
+The likely reason is that one of the constituent tokens already
+contains the colon-and-space-delimiter.
+""",
                     value_name=value_name if value_name is not None else "a colon-and-space-delimited identifier",
                     method_name=method_name,
                     data_type=data_type,
                 )
-                raise UserError(
-                    f"""{msg}
-It must contain exactly {token_count} colon-and-space-delimited tokens.
-The likely reason is that one of the constituent tokens already
-contains the colon-and-space-delimiter.
-"""
-                )
             elif token_count == 1:
-                msg = ErrorMessageUtil.value_preamble(
+                raise ErrorMessageUtil.value_error(
                     value,
+                    details="It must not contain the colon-and-space-delimiter.",
                     value_name=(
                         value_name
                         if value_name is not None
@@ -58,6 +57,5 @@ contains the colon-and-space-delimiter.
                     method_name=method_name,
                     data_type=data_type,
                 )
-                raise UserError(f"{msg}\nIt must not contain the colon-and-space-delimiter.\n")
             else:
                 raise RuntimeError(f"Token count {token_count} must be 1 or higher.")
