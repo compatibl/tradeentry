@@ -22,14 +22,14 @@ class ColonAndSpaceDelimitedUtil:
 
     @classmethod
     def validate(
-            cls,
-            value: str,
-            token_count: int,
-            *,
-            value_name: str | None = None,
-            method_name: str | None = None,
-            data_type: Type | str | None = None,
-        ) -> None:
+        cls,
+        value: str,
+        token_count: int,
+        *,
+        value_name: str | None = None,
+        method_name: str | None = None,
+        data_type: Type | str | None = None,
+    ) -> None:
         """Error message if the value does not have exactly 'token_count' colon-and-space-delimited tokens."""
         tokens = value.split(": ")
         if len(tokens) != token_count:
@@ -40,16 +40,21 @@ class ColonAndSpaceDelimitedUtil:
                     method_name=method_name,
                     data_type=data_type,
                 )
-                raise UserError(f"""{msg}
+                raise UserError(
+                    f"""{msg}
 It must contain exactly {token_count} colon-and-space-delimited tokens.
 The likely reason is that one of the constituent tokens already
 contains the colon-and-space-delimiter.
-""")
+"""
+                )
             elif token_count == 1:
                 msg = ErrorMessageUtil.value_caused_an_error(
                     value,
-                    value_name=value_name if
-                    value_name is not None else "a single token of a colon-and-space-delimited identifier",
+                    value_name=(
+                        value_name
+                        if value_name is not None
+                        else "a single token of a colon-and-space-delimited identifier"
+                    ),
                     method_name=method_name,
                     data_type=data_type,
                 )

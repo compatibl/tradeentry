@@ -14,8 +14,8 @@
 
 from abc import ABC
 from dataclasses import dataclass
-from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.experiments.experiment_key import ExperimentKey
+from cl.runtime.records.record_mixin import RecordMixin
 
 
 @dataclass(slots=True, kw_only=True)
@@ -24,4 +24,3 @@ class Experiment(ExperimentKey, RecordMixin[ExperimentKey], ABC):
 
     def get_key(self) -> ExperimentKey:
         return ExperimentKey(experiment_id=self.experiment_id)
-

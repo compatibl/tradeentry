@@ -40,4 +40,3 @@ class LogEntry(LogEntryKey, RecordMixin[LogEntryKey]):
         """Same as __init__ but can be used when field values are set both during and after construction."""
         if self.timestamp is None:
             self.timestamp = Timestamp.create()
-
