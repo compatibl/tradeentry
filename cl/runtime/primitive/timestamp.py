@@ -123,7 +123,7 @@ class Timestamp:
                 data_type=data_type,
             )
             raise RuntimeError(
-                f"""{value_description}:
+                f"""{value_description}
 - It uses legacy format with ISO-8601 delimiters for the datetime component: yyyy-MM-ddThh:mm:ss.fffZ-hex(20)
 - Convert to the new format by replacing all delimiters by dash so that the timestamp can be used in filenames
 - New format example: yyyy-MM-dd-hh-mm-ss-fff-hex(20)
@@ -140,7 +140,7 @@ class Timestamp:
                 data_type=data_type,
             )
             raise RuntimeError(
-                f"""{value_description}:
+                f"""{value_description}
 - The value does not conform to the expected format yyyy-MM-dd-hh-mm-ss-fff-hex(20)
 - It has {len(tokens)} dash-delimited tokens instead of 8
 """
@@ -174,7 +174,7 @@ class Timestamp:
                 data_type=data_type,
             )
             raise RuntimeError(
-                f"""{value_description}:
+                f"""{value_description}
 - The value does not conform to the expected format yyyy-MM-dd-hh-mm-ss-fff-hex(20)
 - It causes the following parsing error:
 {e}
