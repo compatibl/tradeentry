@@ -38,25 +38,25 @@ def test_value_preamble():
 
 
 def test_of_field():
-    """Test for ErrorMessageUtil.of_field method."""
+    """Test for ErrorMessageUtil._of_field method."""
     guard = RegressionGuard()
-    assert ErrorMessageUtil.of_field() == ""
-    guard.write(ErrorMessageUtil.of_field(field_name="sample_field"))
-    guard.write(ErrorMessageUtil.of_field(field_name="sample_field", data_type="SampleRecord"))
-    guard.write(ErrorMessageUtil.of_field(data_type="SampleRecord"))
+    assert ErrorMessageUtil._of_field() == ""
+    guard.write(ErrorMessageUtil._of_field(field_name="sample_field"))
+    guard.write(ErrorMessageUtil._of_field(field_name="sample_field", data_type="SampleRecord"))
+    guard.write(ErrorMessageUtil._of_field(data_type="SampleRecord"))
     guard.verify()
 
 
 def test_of_param():
-    """Test for ErrorMessageUtil.of_param method."""
+    """Test for ErrorMessageUtil._of_param method."""
     guard = RegressionGuard()
-    assert ErrorMessageUtil.of_param() == ""
-    guard.write(ErrorMessageUtil.of_param(param_name="sample_param"))
-    guard.write(ErrorMessageUtil.of_param(param_name="sample_param", method_name="sample_function"))
-    guard.write(ErrorMessageUtil.of_param(method_name="sample_function"))
-    guard.write(ErrorMessageUtil.of_param(method_name="sample_method", data_type="SampleRecord"))
+    assert ErrorMessageUtil._of_param() == ""
+    guard.write(ErrorMessageUtil._of_param(param_name="sample_param"))
+    guard.write(ErrorMessageUtil._of_param(param_name="sample_param", method_name="sample_function"))
+    guard.write(ErrorMessageUtil._of_param(method_name="sample_function"))
+    guard.write(ErrorMessageUtil._of_param(method_name="sample_method", data_type="SampleRecord"))
     guard.write(
-        ErrorMessageUtil.of_param(param_name="sample_param", method_name="sample_method", data_type="SampleRecord")
+        ErrorMessageUtil._of_param(param_name="sample_param", method_name="sample_method", data_type="SampleRecord")
     )
     guard.verify()
 

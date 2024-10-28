@@ -40,9 +40,9 @@ class ErrorMessageUtil:
             data_type: Class type or name for formatting the error message (optional)
         """
         if method_name is not None:
-            of_what = cls.of_param(param_name=value_name, method_name=method_name, data_type=data_type)
+            of_what = cls._of_param(param_name=value_name, method_name=method_name, data_type=data_type)
         elif data_type is not None:
-            of_what = cls.of_field(field_name=value_name, data_type=data_type)
+            of_what = cls._of_field(field_name=value_name, data_type=data_type)
         elif value_name is not None:
             if CaseUtil.is_snake_case(value_name):
                 value_name = CaseUtil.snake_to_pascal_case(value_name)
@@ -56,7 +56,7 @@ class ErrorMessageUtil:
             return f"An empty value {of_what}caused an error."
 
     @classmethod
-    def of_field(
+    def _of_field(
         cls,
         *,
         field_name: str | None = None,
@@ -92,7 +92,7 @@ class ErrorMessageUtil:
         return result
 
     @classmethod
-    def of_param(
+    def _of_param(
         cls,
         *,
         param_name: str | None = None,
