@@ -15,6 +15,7 @@
 import pytest
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.tasks.static_method_task import StaticMethodTask
+from cl.runtime.tasks.task_queue_key import TaskQueueKey
 from stubs.cl.runtime import StubHandlers
 
 
@@ -30,7 +31,12 @@ def test_create():
         for sample_input in sample_inputs:
             record_type = sample_input[0]
             method_callable = sample_input[1]
-            task = StaticMethodTask.create(task_id="abc", record_type=record_type, method_callable=method_callable)
+            task = StaticMethodTask.create(
+                task_id="abc",
+                queue=TaskQueueKey(queue_id="NoQueue"),  # The task will be executed without saving
+                record_type=record_type,
+                method_callable=method_callable
+            )
             task.execute()
 
 

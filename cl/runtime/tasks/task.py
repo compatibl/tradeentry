@@ -16,6 +16,7 @@ from abc import ABC
 from abc import abstractmethod
 from dataclasses import dataclass
 from cl.runtime.context.context import Context
+from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
@@ -26,19 +27,16 @@ from cl.runtime.tasks.task_run_key import TaskRunKey
 @dataclass(slots=True, kw_only=True)
 class Task(TaskKey, RecordMixin[TaskKey], ABC):
     """
-    The task 'execute' method is invoked by the queue to which the task is submitted.
+    The queue specified in the 'queue' field will invoke the 'execute' method.
 
     Notes:
-        - The task may be invoked sequentially or in parallel with other tasks
-        - The task may be invoked in a different process, thread or machine than the submitting code
-          and must be able to acquire the resources required by its 'execute' method in all of these cases
-        - The queue creates a new TaskRun record every time the task is submitted
-        - The TaskRun record is periodically updated by the queue with the run status
-        - The TaskRun record must never be created or modified by the task itself
+        - A task may be executed sequentially or in parallel with other tasks
+        - A task may be executed in a different process, thread or machine than the submitting code
+          and must be able to acquire the required resources to run in all of these scenarios
     """
 
-    parent: TaskKey | None = None
-    """Parent task (most actions on the parent or further ancestors will also apply to this task)."""
+    queue: TaskQueueKey = missing()
+    """The queue that will execute the task once it is saved."""
 
     def get_key(self) -> TaskKey:
         return TaskKey(task_id=self.task_id)
@@ -46,13 +44,3 @@ class Task(TaskKey, RecordMixin[TaskKey], ABC):
     @abstractmethod
     def execute(self) -> None:
         """Invoked by the queue to which the task is submitted."""
-
-    def run_submit(self, queue: TaskQueueKey) -> TaskRunKey:
-        """Submit task to the specified queue."""
-
-        # Get current context
-        context = Context.current()
-
-        queue_obj = context.load_one(TaskQueue, queue)  # TODO: Optimize for multiple calls
-        task_run_key = queue_obj.submit_task(self)
-        return task_run_key

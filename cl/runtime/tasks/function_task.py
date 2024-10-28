@@ -20,6 +20,7 @@ from typing_extensions import Self
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.tasks.callable_task import CallableTask
 from cl.runtime.tasks.task_key import TaskKey
+from cl.runtime.tasks.task_queue_key import TaskQueueKey
 
 
 @dataclass(slots=True, kw_only=True)
@@ -37,6 +38,13 @@ class FunctionTask(CallableTask):
         raise NotImplementedError()
 
     @classmethod
-    def from_type(cls, *, task_id: str, record_type: Type, method: Callable, parent: TaskKey | None = None) -> Self:
+    def create(
+            cls,
+            *,
+            task_id: str,
+            queue: TaskQueueKey,
+            record_type: Type,
+            method: Callable,
+    ) -> Self:
         """Create from static or class handler method callable."""
         raise NotImplementedError()

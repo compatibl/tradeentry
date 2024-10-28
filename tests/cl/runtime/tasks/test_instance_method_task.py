@@ -15,6 +15,7 @@
 import pytest
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.tasks.instance_method_task import InstanceMethodTask
+from cl.runtime.tasks.task_queue_key import TaskQueueKey
 from stubs.cl.runtime import StubHandlers
 
 
@@ -48,6 +49,7 @@ def test_smoke():
             method_callable = sample_input[1]
             task = InstanceMethodTask.create(
                 task_id="abc",
+                queue=TaskQueueKey(queue_id="NoQueue"),  # The task will be executed without saving
                 record_or_key=record_or_key,
                 method_callable=method_callable,
             )

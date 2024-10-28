@@ -26,6 +26,7 @@ from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.tasks.callable_task import CallableTask
 from cl.runtime.tasks.task_key import TaskKey
+from cl.runtime.tasks.task_queue_key import TaskQueueKey
 
 key_serializer = StringSerializer()
 param_dict_serializer = DictSerializer()  # TODO: Support complex params
@@ -71,7 +72,7 @@ class InstanceMethodTask(CallableTask):
         cls,
         *,
         task_id: str,
-        parent: TaskKey | None = None,
+        queue: TaskQueueKey,
         record_or_key: KeyProtocol | None = None,
         method_callable: Callable,
     ) -> Self:
@@ -83,13 +84,13 @@ class InstanceMethodTask(CallableTask):
 
         Args:
             task_id: Unique task identifier
-            parent: Parent task (optional)
+            queue: Queue that will execute the task
             record_or_key: Record or its key
             method_callable: Callable bound to a class (ClassName.method_name) or its instance (obj.method_name)
         """
 
         # Populate known fields
-        result = cls(task_id=task_id, parent=parent)
+        result = cls(task_id=task_id, queue=queue)
 
         # Get key type and key
         key_type = record_or_key.get_key_type()

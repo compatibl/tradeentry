@@ -64,6 +64,7 @@ class RunResponseItem(BaseModel):
                 key_type_str = f"{key_type.__module__}.{key_type.__name__}"
                 handler_task = InstanceMethodTask(
                     task_id=f"{key_type_str}:{serialized_key}:{request.method}",  # TODO Include parameters or use GUID
+                    queue=handler_queue.get_key(),
                     key_type_str=key_type_str,
                     key_str=serialized_key,
                     method_name=request.method,
@@ -74,12 +75,13 @@ class RunResponseItem(BaseModel):
                 record_type_str = f"{record_type.__module__}.{record_type.__name__}"
                 handler_task = StaticMethodTask(
                     task_id=f"{record_type_str}:{request.method}",  # TODO Include parameters or use GUID
+                    queue=handler_queue.get_key(),
                     type_str=record_type_str,
                     method_name=request.method,
                 )
 
             # Submit task and record its task_run_id
-            task_run_key = handler_queue.submit_task(handler_task)
+            task_run_key = handler_queue.submit_task(handler_task)  # TODO: Rely on query instead
             response_items.append(RunResponseItem(key=serialized_key, task_run_id=task_run_key.task_run_id))
 
         return response_items

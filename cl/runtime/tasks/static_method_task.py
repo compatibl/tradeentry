@@ -22,6 +22,7 @@ from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.schema.schema import Schema
 from cl.runtime.tasks.callable_task import CallableTask
 from cl.runtime.tasks.task_key import TaskKey
+from cl.runtime.tasks.task_queue_key import TaskQueueKey
 
 
 @dataclass(slots=True, kw_only=True)
@@ -49,12 +50,17 @@ class StaticMethodTask(CallableTask):
 
     @classmethod
     def create(
-        cls, *, task_id: str, parent: TaskKey | None = None, record_type: Type, method_callable: Callable
+            cls,
+            *,
+            task_id: str,
+            queue: TaskQueueKey,
+            record_type: Type,
+            method_callable: Callable,
     ) -> Self:
         """Create from @staticmethod callable and record type."""
 
         # Populate known fields
-        result = cls(task_id=task_id, parent=parent)
+        result = cls(task_id=task_id, queue=queue)
         result.type_str = f"{record_type.__module__}.{record_type.__name__}"
 
         # Check that __self__ is either absent (@staticmethod) or is a class (@classmethod)

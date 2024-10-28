@@ -172,30 +172,18 @@ def celery_start_queue(*, log_dir: str) -> None:
 
 @dataclass(slots=True, kw_only=True)
 class CeleryQueue(TaskQueue):
-    """Submits tasks to Celery workers."""
+    """Execute tasks using Celery."""
 
     # max_workers: int = missing()  # TODO: Implement support for max_workers
     """The maximum number of processes running concurrently."""
 
     # TODO: @abstractmethod
-    def start_workers(self) -> None:
+    def start_queue(self) -> None:
         """Start queue workers."""
 
     # TODO: @abstractmethod
-    def stop_workers(self) -> None:
+    def stop_queue(self) -> None:
         """Cancel all active runs and stop queue workers."""
-
-    # TODO: @abstractmethod
-    def cancel_all(self) -> None:
-        """Cancel all active runs but do not stop queue workers."""
-
-    # TODO: @abstractmethod
-    def pause_all(self) -> None:
-        """Do not start new runs and send pause command to the existing runs."""
-
-    # TODO: @abstractmethod
-    def resume_all(self) -> None:
-        """Resume starting new runs and send resume command to existing runs."""
 
     def submit_task(self, task: TaskKey) -> TaskRunKey:
         # Get current context
