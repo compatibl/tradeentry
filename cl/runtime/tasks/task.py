@@ -27,20 +27,20 @@ from cl.runtime.tasks.task_run_key import TaskRunKey
 @dataclass(slots=True, kw_only=True)
 class Task(TaskKey, RecordMixin[TaskKey], ABC):
     """
-    The queue specified in the 'queue' field will invoke the 'execute' method.
+    The queue specified in the 'queue' field will invoke the 'run_task' method.
 
     Notes:
-        - A task may be executed sequentially or in parallel with other tasks
-        - A task may be executed in a different process, thread or machine than the submitting code
+        - A task may run sequentially or in parallel with other tasks
+        - A task may run in a different process, thread or machine than the submitting code
           and must be able to acquire the required resources to run in all of these scenarios
     """
 
     queue: TaskQueueKey = missing()
-    """The queue that will execute the task once it is saved."""
+    """The queue that will run the task once it is saved."""
 
     def get_key(self) -> TaskKey:
         return TaskKey(task_id=self.task_id)
 
     @abstractmethod
-    def execute(self) -> None:
+    def run_task(self) -> None:
         """Invoked by the queue to which the task is submitted."""

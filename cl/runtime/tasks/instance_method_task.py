@@ -45,7 +45,7 @@ class InstanceMethodTask(CallableTask):
     method_name: str = missing()
     """The name of instance method in snake_case or PascalCase format, do not use for @classmethod or @staticmethod."""
 
-    def execute(self) -> Any:
+    def run_task(self) -> Any:
         """Invoke the specified class instance method handler."""
 
         # Get current context
@@ -84,7 +84,7 @@ class InstanceMethodTask(CallableTask):
 
         Args:
             task_id: Unique task identifier
-            queue: Queue that will execute the task
+            queue: Queue that will run the task
             record_or_key: Record or its key
             method_callable: Callable bound to a class (ClassName.method_name) or its instance (obj.method_name)
         """

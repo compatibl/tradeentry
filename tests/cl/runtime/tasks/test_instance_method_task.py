@@ -53,7 +53,7 @@ def test_smoke():
                 record_or_key=record_or_key,
                 method_callable=method_callable,
             )
-            task.execute()
+            task.run_task()
 
 
 if __name__ == "__main__":

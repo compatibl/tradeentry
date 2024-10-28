@@ -69,7 +69,7 @@ def execute_task(
     task_run_id: str,
     context_data: TDataDict,
 ) -> None:
-    """Invoke execute method of the specified task."""
+    """Invoke 'run_task' method of the specified task."""
 
     # Set is_deserialized flag in context data, will be used to skip some of the initialization code
     context_data["is_deserialized"] = True
@@ -81,10 +81,10 @@ def execute_task(
             task_run_key = TaskRunKey(task_run_id=task_run_id)
             task_run = context.load_one(TaskRun, task_run_key)
 
-            # Load and execute the task object
+            # Load and run the task
             task_key = task_run.task
             task = context.load_one(Task, task_key)
-            task.execute()
+            task.run_task()
         except Exception as e:  # noqa
 
             # Get log entry type and level

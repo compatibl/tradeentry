@@ -21,6 +21,6 @@ from cl.runtime.testing.regression_guard import RegressionGuard
 class StubTask(Task):
     """Reports its task_id to RegressionGuard during execution."""
 
-    def execute(self) -> None:
+    def run_task(self) -> None:
         """Reports its task_id to RegressionGuard during execution."""
         RegressionGuard().write(f"Executing StubTask: {self.task_id}")

@@ -37,7 +37,7 @@ def test_create():
                 record_type=record_type,
                 method_callable=method_callable
             )
-            task.execute()
+            task.run_task()
 
 
 if __name__ == "__main__":

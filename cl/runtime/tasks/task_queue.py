@@ -23,11 +23,11 @@ from cl.runtime.tasks.task_run_key import TaskRunKey
 @dataclass(slots=True, kw_only=True)
 class TaskQueue(TaskQueueKey, ABC):
     """
-    Run a query on tasks, execute all returned tasks sequentially or in parallel, then repeat.
+    Run a query on tasks, run all returned tasks sequentially or in parallel, then repeat.
 
     Notes:
-        - A task may be executed sequentially or in parallel with other tasks
-        - A task may be executed in a different process, thread or machine than the submitting code
+        - A task may run sequentially or in parallel with other tasks
+        - A task may run in a different process, thread or machine than the submitting code
           and must be able to acquire the required resources to run in all of these scenarios
         - The TaskRun record is periodically updated by the queue with the run status and result
     """
@@ -37,7 +37,7 @@ class TaskQueue(TaskQueueKey, ABC):
 
     @abstractmethod
     def start_queue(self) -> None:
-        """Run a query on tasks, execute all returned tasks sequentially or in parallel, then repeat."""
+        """Run a query on tasks, run all returned tasks sequentially or in parallel, then repeat."""
 
     @abstractmethod
     def stop_queue(self) -> None:

@@ -29,7 +29,7 @@ class ProcessQueue(TaskQueue):
             tasks = context.load_all(Task)
             tasks = [task for task in tasks if task.queue.queue_id == queue_id ]  # TODO: Use DB query
             for task in tasks:
-                task.execute()
+                task.run_task()
 
     def stop_queue(self) -> None:
         raise NotImplementedError()
