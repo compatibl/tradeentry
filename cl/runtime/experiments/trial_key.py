@@ -14,7 +14,7 @@
 
 from dataclasses import dataclass
 from typing import Type
-from cl.runtime.exceptions.error_message_util import ErrorMessageUtil
+from cl.runtime.exceptions.error_util import ErrorUtil
 from cl.runtime.experiments.experiment_key import ExperimentKey
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.primitive.colon_and_space_delimited_util import ColonAndSpaceDelimitedUtil
@@ -43,19 +43,19 @@ class TrialKey(KeyMixin):
     def get_trial_id(cls, experiment: ExperimentKey, trial_label: str) -> str:
         """Generate trial_id in 'ExperimentId: TrialLabel' format."""
         if experiment is None:
-            raise ErrorMessageUtil.value_error(
+            raise ErrorUtil.value_error(
                 value=None,
                 value_name="experiment",
                 data_type="TrialKey",
             )
         if experiment.experiment_id is None:
-            raise ErrorMessageUtil.value_error(
+            raise ErrorUtil.value_error(
                 value=None,
                 value_name="experiment_id",
                 data_type="ExperimentKey",
             )
         if trial_label is None:
-            raise ErrorMessageUtil.value_error(
+            raise ErrorUtil.value_error(
                 value=None,
                 value_name="trial_label",
                 data_type="TrialKey",

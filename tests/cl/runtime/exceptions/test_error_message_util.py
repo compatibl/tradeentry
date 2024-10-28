@@ -13,24 +13,24 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.exceptions.error_message_util import ErrorMessageUtil
+from cl.runtime.exceptions.error_util import ErrorUtil
 from cl.runtime.testing.regression_guard import RegressionGuard
 
 
 def test_value_error():
-    """Test for ErrorMessageUtil.value_error method."""
+    """Test for ErrorUtil.value_error method."""
     guard = RegressionGuard()
-    guard.write(ErrorMessageUtil.value_error(value=123))
-    guard.write(ErrorMessageUtil.value_error(value=123, value_name="sample_value_name"))
+    guard.write(ErrorUtil.value_error(value=123))
+    guard.write(ErrorUtil.value_error(value=123, value_name="sample_value_name"))
     guard.write(
-        ErrorMessageUtil.value_error(value=123, value_name="sample_value_name", method_name="sample_function",)
+        ErrorUtil.value_error(value=123, value_name="sample_value_name", method_name="sample_function",)
     )
-    guard.write(ErrorMessageUtil.value_error(value=123, method_name="sample_function"))
+    guard.write(ErrorUtil.value_error(value=123, method_name="sample_function"))
     guard.write(
-        ErrorMessageUtil.value_error(value=123, method_name="sample_method", data_type="SampleRecord",)
+        ErrorUtil.value_error(value=123, method_name="sample_method", data_type="SampleRecord",)
     )
     guard.write(
-        ErrorMessageUtil.value_error(
+        ErrorUtil.value_error(
             value=123, value_name="sample_value_name", method_name="sample_method", data_type="SampleRecord",
         )
     )
@@ -38,25 +38,25 @@ def test_value_error():
 
 
 def test_of_field():
-    """Test for ErrorMessageUtil._of_field method."""
+    """Test for ErrorUtil._of_field method."""
     guard = RegressionGuard()
-    assert ErrorMessageUtil._of_field() == ""
-    guard.write(ErrorMessageUtil._of_field(field_name="sample_field"))
-    guard.write(ErrorMessageUtil._of_field(field_name="sample_field", data_type="SampleRecord"))
-    guard.write(ErrorMessageUtil._of_field(data_type="SampleRecord"))
+    assert ErrorUtil._of_field() == ""
+    guard.write(ErrorUtil._of_field(field_name="sample_field"))
+    guard.write(ErrorUtil._of_field(field_name="sample_field", data_type="SampleRecord"))
+    guard.write(ErrorUtil._of_field(data_type="SampleRecord"))
     guard.verify()
 
 
 def test_of_param():
-    """Test for ErrorMessageUtil._of_param method."""
+    """Test for ErrorUtil._of_param method."""
     guard = RegressionGuard()
-    assert ErrorMessageUtil._of_param() == ""
-    guard.write(ErrorMessageUtil._of_param(param_name="sample_param"))
-    guard.write(ErrorMessageUtil._of_param(param_name="sample_param", method_name="sample_function"))
-    guard.write(ErrorMessageUtil._of_param(method_name="sample_function"))
-    guard.write(ErrorMessageUtil._of_param(method_name="sample_method", data_type="SampleRecord"))
+    assert ErrorUtil._of_param() == ""
+    guard.write(ErrorUtil._of_param(param_name="sample_param"))
+    guard.write(ErrorUtil._of_param(param_name="sample_param", method_name="sample_function"))
+    guard.write(ErrorUtil._of_param(method_name="sample_function"))
+    guard.write(ErrorUtil._of_param(method_name="sample_method", data_type="SampleRecord"))
     guard.write(
-        ErrorMessageUtil._of_param(param_name="sample_param", method_name="sample_method", data_type="SampleRecord")
+        ErrorUtil._of_param(param_name="sample_param", method_name="sample_method", data_type="SampleRecord")
     )
     guard.verify()
 

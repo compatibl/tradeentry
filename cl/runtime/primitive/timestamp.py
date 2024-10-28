@@ -18,7 +18,7 @@ from typing import List
 from typing import Type
 from uuid import UUID
 import uuid_utils
-from cl.runtime.exceptions.error_message_util import ErrorMessageUtil
+from cl.runtime.exceptions.error_util import ErrorUtil
 
 _ISO_DELIMITED_FORMAT_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z-[a-f0-9]{20}$")
 """Regex for the legacy UUIDv7-based timestamp format where the datetime component uses ISO-8601 delimiters."""
@@ -116,7 +116,7 @@ class Timestamp:
 
         # Provide a specific error message for the ISO-delimited legacy format
         if len(timestamp) == 45 and re.match(_ISO_DELIMITED_FORMAT_RE, timestamp):
-            raise ErrorMessageUtil.value_error(
+            raise ErrorUtil.value_error(
                 timestamp,
                 details=f"""
 - It uses legacy format with ISO-8601 delimiters for the datetime component: yyyy-MM-ddThh:mm:ss.fffZ-hex(20)
@@ -131,7 +131,7 @@ class Timestamp:
         # Validate
         tokens = timestamp.split("-")
         if len(timestamp) != 44 or len(tokens) != 8:
-            raise ErrorMessageUtil.value_error(
+            raise ErrorUtil.value_error(
                 timestamp,
                 details=f"""
 - The value does not conform to the expected format yyyy-MM-dd-hh-mm-ss-fff-hex(20)
@@ -163,7 +163,7 @@ class Timestamp:
             if not suffix.startswith("7"):
                 raise ValueError(f"Hex component of UUIDv7 timestamp '{timestamp}' does not start from 7.")
         except ValueError as e:
-            raise ErrorMessageUtil.value_error(
+            raise ErrorUtil.value_error(
                 timestamp,
                 details=f"""
 - The value does not conform to the expected format yyyy-MM-dd-hh-mm-ss-fff-hex(20)

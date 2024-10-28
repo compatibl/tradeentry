@@ -20,8 +20,8 @@ from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.primitive.string_util import StringUtil
 
 
-class ErrorMessageUtil:
-    """Helper class for formatting error messages."""
+class ErrorUtil:
+    """Helper class for creating exception objects with detailed error messages."""
 
     @classmethod
     def value_error(

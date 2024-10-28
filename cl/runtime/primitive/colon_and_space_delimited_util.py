@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from typing import Type
-from cl.runtime.exceptions.error_message_util import ErrorMessageUtil
+from cl.runtime.exceptions.error_util import ErrorUtil
 from cl.runtime.log.exceptions.user_error import UserError
 
 
@@ -34,7 +34,7 @@ class ColonAndSpaceDelimitedUtil:
         tokens = value.split(": ")
         if len(tokens) != token_count:
             if token_count > 1:
-                raise ErrorMessageUtil.value_error(
+                raise ErrorUtil.value_error(
                     value,
                     details=f"""
 It must contain exactly {token_count} colon-and-space-delimited tokens.
@@ -46,7 +46,7 @@ contains the colon-and-space-delimiter.
                     data_type=data_type,
                 )
             elif token_count == 1:
-                raise ErrorMessageUtil.value_error(
+                raise ErrorUtil.value_error(
                     value,
                     details="It must not contain the colon-and-space-delimiter.",
                     value_name=(
