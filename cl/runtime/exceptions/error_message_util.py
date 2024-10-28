@@ -22,7 +22,7 @@ class ErrorMessageUtil:
     """Helper class for formatting error messages."""
 
     @classmethod
-    def value_preamble(  # TODO: Improve to support long or multi-line value string.
+    def value_preamble(
         cls,
         value: Any,
         *,
@@ -51,7 +51,7 @@ class ErrorMessageUtil:
             of_what = ""
 
         if value is not None:
-            return f"The value '{str(value)}' {of_what}caused an error."
+            return f"The following value {of_what}caused an error:\n{str(value)}"
         else:
             return f"An empty value {of_what}caused an error."
 
