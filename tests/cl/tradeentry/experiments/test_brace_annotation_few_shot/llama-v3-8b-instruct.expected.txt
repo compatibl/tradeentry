@@ -1,0 +1,140 @@
+Here is my response in JSON format:
+
+{
+  "success": "Y",
+  "annotated_text": "Sell {Buy or Sell} 10y SOFR swap at 3.45%",
+  "justification": "The parameter 'Buy or Sell' was found in the input text and surrounded with curly braces."
+}
+Here is the response in JSON format:
+
+{
+    "success": "Y",
+    "annotated_text": "Sell {Buy or Sell} 10y SOFR swap at 3.45%",
+    "justification": "The word 'Sell' is found in the input text, which matches the parameter description 'The words Buy or Sell, or the words Pay Fixed or Receive Fixed'."
+}
+Here is the response in JSON format:
+
+{
+    "success": "Y",
+    "annotated_text": "Sell {Sell} 10y SOFR swap at 3.45%",
+    "justification": "The parameter 'Sell' is found in the input text, and it matches the description"
+}
+Here is the response in JSON format:
+
+{
+    "success": "Y",
+    "annotated_text": "Sell {Buy or Sell} 10y SOFR swap at 3.45%",
+    "justification": "The word 'Sell' matches the description of the parameter."
+}
+Here is the response:
+
+{
+  "success": "Y",
+  "annotated_text": "Sell {Buy or Sell} 10y SOFR swap at 3.45%",
+  "justification": "The word 'Sell' matches the parameter description."
+}
+Here is the result:
+
+{
+    "success": "Y",
+    "annotated_text": "Sell {Buy or Sell} 10y SOFR swap at 3.45%",
+    "justification": "Found the word 'Sell' which matches the parameter description"
+}
+Here is the response:
+
+{
+    "success": "Y",
+    "annotated_text": "Sell {Sell} 10y SOFR swap at 3.45%",
+    "justification": "The parameter 'Buy or Sell' is found in the input text and surrounded by curly braces."
+}
+Here is the response in JSON format:
+
+{
+    "success": "Y",
+    "annotated_text": "Sell {Buy or Sell} 10y SOFR swap at 3.45%",
+    "justification": "The requested parameter 'Buy or Sell' was found in the input text and enclosed in curly braces."
+}
+Here is the output in JSON format:
+
+{
+    "success": "Y",
+    "annotated_text": "Sell {Buy or Sell} 10y SOFR swap at 3.45%",
+    "justification": "The parameter 'Buy or Sell' is found in the input text."
+}
+Here is the response:
+```
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y {Sell} SOFR swap at 3.45%",
+    "justification": "The parameter 'Sell' was found in the input text."
+}
+```
+Here is the response in JSON format:
+
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The parameter 'The words Buy or Sell, or the words Pay Fixed or Receive Fixed' matches the word 'Sell' in the input text."
+}
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The parameter description includes 'Buy' and 'Sell' words, and the input text matches the 'Sell' word."
+}
+Here is the response in JSON format:
+
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The parameter 'Sell' is present in the input text, which matches the expected description."
+}
+Here is the response:
+
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the word 'Sell', which matches the parameter description."
+}
+Here is the response in JSON format:
+
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The parameter is found in the input text with the value 'Sell'."
+}
+Here is the response:
+
+{
+    "success": "Y",
+    "annotated_text": "Sell {Sell} 10y SOFR swap at 3.45%",
+    "justification": "The parameter description matches the word 'Sell' in the input text, which is wrapped in curly braces."
+}
+Here is the response in JSON format:
+
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The word 'Sell' matches the description of the parameter, which is 'The words Buy or Sell, or the words Pay Fixed or Receive Fixed'."
+}
+Here is the response:
+```
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The words 'Sell' match the parameter description, which contains the words 'Sell' or 'Buy'."
+}
+```
+Here is the response:
+
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The parameter 'Sell' was found in the input text."
+}
+Here is the response in JSON format:
+
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the keyword 'Sell' which matches the parameter description"
+}

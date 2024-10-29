@@ -1,0 +1,72 @@
+Sell 10y SOFR swap at 3.45%
+Sell 10y SOFR swap at 3.55%
+{
+    "analysis": "The two trade descriptions exhibit a high degree of similarity in terms of the given parameter, as they both contain the word 'Sell' and do not contain the words 'Buy', 'Pay Fixed', or 'Receive Fixed', with the only difference being the numerical value of the swap rate, which is not a relevant factor in this comparison.",
+    "similarity_score": 100
+}
+Sell 10y SOFR swap at 3.45%
+Sell 10y LIBOR swap at 3.45%
+{
+    "analysis": "The two trades exhibit strong similarities in the context of the given parameter, as both descriptions start with the word 'Sell', indicating the same direction of the trade, and neither mentions 'Buy', 'Pay Fixed', or 'Receive Fixed', which are the other possible options for this parameter, thus demonstrating a high degree of similarity.",
+    "similarity_score": 100
+}
+Sell 10y SOFR swap at 3.45%
+Sell 10y LIBOR swap at 3.55%
+{
+    "analysis": "The two trades share a similar structure and wording, with both starting with the action 'Sell' and specifying a swap type and rate, differing only in the swap type (SOFR vs LIBOR) and rate value, which are not relevant to the given parameter of Buy/Sell or Pay Fixed/Receive Fixed, indicating a high degree of similarity.",
+    "similarity_score": 90
+}
+Sell 10y SOFR swap at 3.45%
+Sell 5y LIBOR swap at 3.55%
+{
+    "analysis": "The two trades share a similar structure and wording, with both starting with a directional verb ('Sell') and followed by a description of the swap, which suggests a high degree of similarity in terms of the given parameter, despite differences in the specific details of the swap (e.g., 10y SOFR vs 5y LIBOR, 3.45% vs 3.55%),",
+    "similarity_score": 90
+}
+Sell 10y SOFR swap at 3.45%
+Bank sells 5y LIBOR swap at 3.55%
+{
+    "analysis": "The trades share a similar structure and wording, with both describing a directional action (Sell/Bank sells) and a type of swap, but differ in the specific action and swap type, which are the key factors influencing the similarity score in the context of the given parameter.",
+    "similarity_score": 60
+}
+Sell 10y SOFR swap at 3.45%
+Bank sells 10y SOFR swap at 3.45%
+{
+    "analysis": "The two trade descriptions are very similar, with the main difference being the addition of 'Bank' in the second description, which does not affect the parameter of interest, and both descriptions contain the word 'Sell', which is the key factor in the given parameter, making them highly similar.",
+    "similarity_score": 95
+}
+Sell 10y SOFR swap at 3.45%
+Short 10y SOFR fixed at 3.45%
+{
+    "analysis": "The two trades exhibit strong similarities in the context of the given parameter, as both describe a 10-year SOFR swap transaction, with the main difference being the use of 'Sell' versus 'Short' and 'at' versus 'fixed at', which convey the same meaning, and the words 'Pay Fixed' or 'Receive Fixed' are not explicitly present in either trade, but the structure and wording imply a fixed leg, making them highly similar.",
+    "similarity_score": 90
+}
+Sell 10y SOFR swap at 3.45%
+10y SOFR payer at 3.45%
+{
+    "analysis": "The trades show a high degree of similarity in terms of the given parameter, as both describe a 10y SOFR swap, with the main difference being the use of 'Sell' versus 'payer' to indicate the direction of the trade, which can be considered equivalent in this context, and the absence of 'Buy' or 'Pay Fixed'/'Receive Fixed' in both descriptions.",
+    "similarity_score": 80
+}
+Sell 10y SOFR swap at 3.45%
+Short 10y LIBOR fixed at 3.45%
+{
+    "analysis": "The trades show similarity in the context of the given parameter as both describe a fixed rate transaction, with 'Sell' and 'Short' conveying a similar notion of paying a fixed rate, although the wording and structure differ slightly, with 'SOFR swap' and 'LIBOR fixed' describing different underlying instruments, but the focus on the parameter is on the action of paying or receiving a fixed rate, which is similar in both trades.",
+    "similarity_score": 80
+}
+Sell 10y SOFR swap at 3.45%
+7y SOFR payer at 2.55%
+{
+    "analysis": "The trades differ in the direction of the trade, with the basic trade being a sell and the evaluated trade being a payer, which implies a buy, and also differ in the wording, with 'swap' vs 'payer', but share a similar structure and wording style, with a rate specified at the end.",
+    "similarity_score": 40
+}
+Sell 10y SOFR swap at 3.45%
+Buy 10y SOFR swap at 3.45%
+{
+    "analysis": "The two trades differ only in the direction of the trade (Buy vs Sell), while maintaining the same swap type, tenor, and rate, which suggests a high degree of similarity in terms of the given parameter, with the key difference being the direction of the trade.",
+    "similarity_score": 80
+}
+Sell 10y SOFR swap at 3.45%
+Buy 5y LIBOR swap at 3.55%
+{
+    "analysis": "The trades differ in the direction of the trade (Sell vs Buy) and the type of swap (SOFR vs LIBOR), but share a similar structure and wording, with both describing a swap trade with a fixed rate, which influenced my decision to assign a moderate similarity score.",
+    "similarity_score": 40
+}

@@ -1,0 +1,13 @@
+                Basic Trade                   Evaluated Trade  claude-3-5-sonnet-20240620  llama-v3-70b-instruct  gpt-4o
+Sell 10y SOFR swap at 3.45%       Sell 10y SOFR swap at 3.55%                         100                    100     100
+Sell 10y SOFR swap at 3.45%      Sell 10y LIBOR swap at 3.45%                         100                    100     100
+Sell 10y SOFR swap at 3.45%      Sell 10y LIBOR swap at 3.55%                         100                     90     100
+Sell 10y SOFR swap at 3.45%       Sell 5y LIBOR swap at 3.55%                         100                     90     100
+Sell 10y SOFR swap at 3.45% Bank sells 5y LIBOR swap at 3.55%                          95                     60      90
+Sell 10y SOFR swap at 3.45% Bank sells 10y SOFR swap at 3.45%                          98                     95      95
+Sell 10y SOFR swap at 3.45%     Short 10y SOFR fixed at 3.45%                          95                     90      90
+Sell 10y SOFR swap at 3.45%           10y SOFR payer at 3.45%                          95                     80      10
+Sell 10y SOFR swap at 3.45%    Short 10y LIBOR fixed at 3.45%                          90                     80      30
+Sell 10y SOFR swap at 3.45%            7y SOFR payer at 2.55%                          95                     40      20
+Sell 10y SOFR swap at 3.45%        Buy 10y SOFR swap at 3.45%                           0                     80       5
+Sell 10y SOFR swap at 3.45%        Buy 5y LIBOR swap at 3.55%                           0                     40       1
