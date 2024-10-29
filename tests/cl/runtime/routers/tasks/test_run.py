@@ -21,8 +21,8 @@ from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseIte
 from cl.runtime.routers.tasks.run_request import RunRequest
 from cl.runtime.routers.tasks.run_response_item import RunResponseItem
 from cl.runtime.serialization.string_serializer import StringSerializer
-from cl.runtime.tasks.task_run import TaskRun
-from cl.runtime.tasks.task_run_key import TaskRunKey
+from cl.runtime.tasks.task import Task
+from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.testing.pytest.pytest_fixtures import celery_test_queue_fixture
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubHandlers
@@ -86,7 +86,7 @@ def test_method(celery_test_queue_fixture):
             request_object = RunRequest(**request)
             response_items = RunResponseItem.run_tasks(request_object)
             [
-                TaskRun.wait_for_completion(TaskRunKey(task_run_id=response_item.task_run_id))
+                Task.wait_for_completion(TaskKey(task_id=response_item.task_run_id))
                 for response_item in response_items
             ]
             actual_records = list(context.load_many(StubDataclassRecord, expected_keys))
@@ -128,7 +128,7 @@ def test_api(celery_test_queue_fixture):
                 request_object = RunRequest(**request)
                 response_items = RunResponseItem.run_tasks(request_object)
                 [
-                    TaskRun.wait_for_completion(TaskRunKey(task_run_id=response_item.task_run_id))
+                    Task.wait_for_completion(TaskKey(task_id=response_item.task_run_id))
                     for response_item in response_items
                 ]
                 actual_records = list(context.load_many(StubDataclassRecord, expected_keys))

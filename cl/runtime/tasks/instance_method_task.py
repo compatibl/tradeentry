@@ -71,7 +71,6 @@ class InstanceMethodTask(CallableTask):
     def create(
         cls,
         *,
-        task_id: str,
         queue: TaskQueueKey,
         record_or_key: KeyProtocol | None = None,
         method_callable: Callable,
@@ -83,14 +82,13 @@ class InstanceMethodTask(CallableTask):
             - The key is required if the callable is for a class rather than an instance.
 
         Args:
-            task_id: Unique task identifier
             queue: Queue that will run the task
             record_or_key: Record or its key
             method_callable: Callable bound to a class (ClassName.method_name) or its instance (obj.method_name)
         """
 
         # Populate known fields
-        result = cls(task_id=task_id, queue=queue)
+        result = cls(queue=queue)
 
         # Get key type and key
         key_type = record_or_key.get_key_type()

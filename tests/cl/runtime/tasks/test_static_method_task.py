@@ -32,7 +32,6 @@ def test_create():
             record_type = sample_input[0]
             method_callable = sample_input[1]
             task = StaticMethodTask.create(
-                task_id="abc",
                 queue=TaskQueueKey(queue_id="NoQueue"),  # The task will be executed without saving
                 record_type=record_type,
                 method_callable=method_callable

@@ -21,14 +21,14 @@ from cl.runtime.records.key_mixin import KeyMixin
 @dataclass(slots=True, kw_only=True)
 class TaskQueueKey(KeyMixin):
     """
-    Invokes the 'run_task' method of the submitted tasks sequentially or in parallel with other tasks.
+    Run a query on tasks, run all returned tasks sequentially or in parallel, then repeat.
 
     Notes:
-        - The task may run in a different process, thread or machine than the submitting code
-          and must be able to acquire the resources required by its 'run_task' method in all of these cases
-        - The queue creates a new TaskRun record every time the task is submitted
-        - The TaskRun record is periodically updated by the queue with the run status and result
-        - The TaskRun record must never be modified by the task itself
+        - A task may run sequentially or in parallel with other tasks
+        - A task may run in a different process, thread or machine than the submitting code
+          and must be able to acquire the required resources to run in all of these scenarios
+        - The queue updates 'status' field of the task as it progresses from its initial Pending state through
+          the Running and optionally Paused state and ending in one of Completed, Failed, or Cancelled states
     """
 
     queue_id: str = missing()

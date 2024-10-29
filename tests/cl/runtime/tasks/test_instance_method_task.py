@@ -48,7 +48,6 @@ def test_smoke():
             record_or_key = sample_input[0]
             method_callable = sample_input[1]
             task = InstanceMethodTask.create(
-                task_id="abc",
                 queue=TaskQueueKey(queue_id="NoQueue"),  # The task will be executed without saving
                 record_or_key=record_or_key,
                 method_callable=method_callable,

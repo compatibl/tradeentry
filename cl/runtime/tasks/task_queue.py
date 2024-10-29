@@ -15,9 +15,7 @@
 from abc import ABC
 from abc import abstractmethod
 from dataclasses import dataclass
-from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue_key import TaskQueueKey
-from cl.runtime.tasks.task_run_key import TaskRunKey
 
 
 @dataclass(slots=True, kw_only=True)
@@ -29,7 +27,8 @@ class TaskQueue(TaskQueueKey, ABC):
         - A task may run sequentially or in parallel with other tasks
         - A task may run in a different process, thread or machine than the submitting code
           and must be able to acquire the required resources to run in all of these scenarios
-        - The TaskRun record is periodically updated by the queue with the run status and result
+        - The queue updates 'status' field of the task as it progresses from its initial Pending state through
+          the Running and optionally Paused state and ending in one of Completed, Failed, or Cancelled states
     """
 
     def get_key(self) -> TaskQueueKey:

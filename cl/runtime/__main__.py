@@ -27,7 +27,6 @@ from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.log.log_entry import LogEntry
 from cl.runtime.log.log_entry_level_enum import LogEntryLevelEnum
 from cl.runtime.log.user_log_entry import UserLogEntry
-from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.routers.app import app_router
 from cl.runtime.routers.auth import auth_router
 from cl.runtime.routers.entity import entity_router

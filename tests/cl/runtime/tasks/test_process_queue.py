@@ -32,7 +32,7 @@ def test_process_queue():
 
         # Create and save tasks
         task_count = 2
-        tasks = [StubTask(task_id=f"{i}", queue=queue_key) for i in range(task_count)]
+        tasks = [StubTask(label=f"{i}", queue=queue_key) for i in range(task_count)]
         context.save_many(tasks)
 
         # Start queue

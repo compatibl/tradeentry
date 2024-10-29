@@ -34,8 +34,6 @@ from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
 from cl.runtime.tasks.task_queue_key import TaskQueueKey
-from cl.runtime.tasks.task_run import TaskRun
-from cl.runtime.tasks.task_run_key import TaskRunKey
 from cl.runtime.tasks.task_status_enum import TaskStatusEnum
 
 CELERY_MAX_WORKERS = 4
@@ -66,7 +64,7 @@ context_serializer = DictSerializer()
 
 @celery_app.task(max_retries=0)  # Do not retry failed tasks
 def execute_task(
-    task_run_id: str,
+    task_id: str,
     context_data: TDataDict,
 ) -> None:
     """Invoke 'run_task' method of the specified task."""
@@ -77,15 +75,23 @@ def execute_task(
     # Deserialize context from 'context_data' parameter to run with the same settings as the caller context
     with context_serializer.deserialize_data(context_data) as context:
 
+        # Record the start time
+        start_time = DatetimeUtil.now()
         try:
-            task_run_key = TaskRunKey(task_run_id=task_run_id)
-            task_run = context.load_one(TaskRun, task_run_key)
-
-            # Load and run the task
-            task_key = task_run.task
+            # Load the task
+            task_key = TaskKey(task_id=task_id)
             task = context.load_one(Task, task_key)
+
+            # Set status to Running
+            task.status = TaskStatusEnum.RUNNING
+            context.save_one(task)
+
+            # Run the task
             task.run_task()
         except Exception as e:  # noqa
+
+            # Record the end time
+            end_time = DatetimeUtil.now()
 
             # Get log entry type and level
             if isinstance(e, UserError):
@@ -106,19 +112,22 @@ def execute_task(
             Context.current().save_one(log_entry)
 
             # Update task run record to report task failure
-            task_run.update_time = DatetimeUtil.now()
-            task_run.status = TaskStatusEnum.FAILED
-            task_run.message = str(e)
-
-            # Add log entry key
-            task_run.log_entry = log_entry.get_key()
-
-            context.save_one(task_run)
+            task.status = TaskStatusEnum.FAILED
+            task.progress_pct = 100.0
+            task.elapsed_sec = 0.0  # TODO: Implement
+            task.remaining_sec = 0.0
+            task.error_message = str(e)
+            context.save_one(task)
         else:
+            # Record the end time
+            end_time = DatetimeUtil.now()
+
             # Update task run record to report task completion
-            task_run.update_time = DatetimeUtil.now()
-            task_run.status = TaskStatusEnum.COMPLETED
-            context.save_one(task_run)
+            task.status = TaskStatusEnum.COMPLETED
+            task.progress_pct = 100.0
+            task.elapsed_sec = 0.0  # TODO: Implement
+            task.remaining_sec = 0.0
+            context.save_one(task)
 
 
 def celery_start_queue_callable(*, log_dir: str) -> None:
@@ -185,25 +194,14 @@ class CeleryQueue(TaskQueue):
     def stop_queue(self) -> None:
         """Cancel all active runs and stop queue workers."""
 
-    def submit_task(self, task: TaskKey) -> TaskRunKey:
-        # Get current context
+    def submit_task(self, task: TaskKey):
+        # Get and serialize current context
         context = Context.current()
-
-        # Save task if provided as record rather than key
-        if is_record(task):
-            context.save_one(task)
-
-        # Create a task run record in Pending state
-        task_run = TaskRun()
-        task_run.queue = TaskQueueKey(queue_id=self.queue_id)
-        task_run.task = task if is_key(task) else task.get_key()
-        task_run.status = TaskStatusEnum.PENDING
-        context.save_one(task_run)
+        context_data = context_serializer.serialize_data(context)
 
         # Pass parameters to the Celery task signature
-        context_data = context_serializer.serialize_data(context)
         execute_task_signature = execute_task.s(
-            task_run.task_run_id,
+            task.task_id,
             context_data,
         )
 
@@ -213,4 +211,3 @@ class CeleryQueue(TaskQueue):
             ignore_result=True,  # TODO: Do not publish to the Celery result backend
         )
 
-        return task_run.get_key()

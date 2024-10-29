@@ -52,7 +52,6 @@ class StaticMethodTask(CallableTask):
     def create(
             cls,
             *,
-            task_id: str,
             queue: TaskQueueKey,
             record_type: Type,
             method_callable: Callable,
@@ -60,7 +59,7 @@ class StaticMethodTask(CallableTask):
         """Create from @staticmethod callable and record type."""
 
         # Populate known fields
-        result = cls(task_id=task_id, queue=queue)
+        result = cls(queue=queue)
         result.type_str = f"{record_type.__module__}.{record_type.__name__}"
 
         # Check that __self__ is either absent (@staticmethod) or is a class (@classmethod)
