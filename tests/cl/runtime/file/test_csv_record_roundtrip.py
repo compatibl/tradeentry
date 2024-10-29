@@ -92,7 +92,7 @@ def save_test_records(entries: List[RecordProtocol]) -> Tuple[List[RecordProtoco
 
 def read_records_from_csv(file_path: Path, entry_type: Type[RecordProtocol]):
     loader = CsvFileReader(file_path=str(file_path.absolute()))
-    loader.read()
+    loader.read_and_save()
 
 
 def test_roundtrip():

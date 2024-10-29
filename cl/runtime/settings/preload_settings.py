@@ -54,7 +54,7 @@ class PreloadSettings(Settings):
 
         # Process CSV preloads
         csv_files = self._get_files("csv")
-        [CsvFileReader(file_path=csv_file).read() for csv_file in csv_files]
+        [CsvFileReader(file_path=csv_file).read_and_save() for csv_file in csv_files]
 
         # TODO: Process YAML and JSON preloads
 

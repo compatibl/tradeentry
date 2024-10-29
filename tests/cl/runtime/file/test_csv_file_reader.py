@@ -32,15 +32,15 @@ def test_csv_file_reader():
         file_path = os.path.join(env_dir, "StubDataclassDerivedRecord.csv")
         # TODO: Change the API not to take record type or make it optional
         file_reader = CsvFileReader(file_path=file_path)
-        file_reader.read()
+        file_reader.read_and_save()
 
         file_path = os.path.join(env_dir, "StubDataclassNestedFields.csv")
         file_reader = CsvFileReader(file_path=file_path)
-        file_reader.read()
+        file_reader.read_and_save()
 
         file_path = os.path.join(env_dir, "StubDataclassComposite.csv")
         file_reader = CsvFileReader(file_path=file_path)
-        file_reader.read()
+        file_reader.read_and_save()
 
         # Verify
         # TODO: Check count using load_all or count method of Db when created
