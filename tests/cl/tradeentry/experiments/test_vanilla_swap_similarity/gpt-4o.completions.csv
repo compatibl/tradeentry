@@ -251,3 +251,311 @@ Present your response in JSON with the following format:
     ""similarity_score"": 10
 }
 ```"
+2024-10-29-17-08-32-924-7833a440d178e73ecd84,"TrialID: 0
+Act as a Senior Quantitative Analyst tasked with evaluating the similarity in how a specific parameter 
+is described in two different trades.
+
+Your goal is to provide a similarity score from 1 to 100, where 1 means completely different and 100 means identical.
+Pay close attention to the format and wording of how the parameter is described, but ignore the difference in numbers
+for this parameter as well as other parameters within the trade.
+
+Here is the description of the first trade:
+```
+Sell 10y SOFR swap at 3.45%
+```
+
+Here is the description of the second trade:
+```
+Sell 5y SOFR swap at 2.90%
+```
+
+The parameter for comparison is described as follows:
+```
+The words Buy or Sell, or the words Pay Fixed or Receive Fixed
+```
+
+Analyze the two trade descriptions, focusing on their similarities and differences how this parameter is described.
+Consider the structure, wording, and overall format of the trade descriptions, but ignore any specific numerical
+values that may differ.
+
+Provide a detailed justification for your similarity assessment, explaining the key factors that influenced your decision.
+Consider both the similarities and the differences you observed.
+
+After your justification, assign a similarity score from 1 to 100, where:
+0 = The trades are completely different in terms of the given parameter
+100 = The trades are identical in terms of the given parameter
+
+Present your response in JSON with the following format:
+{
+    ""analysis"": <Your detailed justification for the similarity assessment, single line>,
+    ""similarity_score"": <Your numerical score between 0 and 100>
+}","```json
+{
+    ""analysis"": ""Both trade descriptions use the word 'Sell' to describe the action being taken on the SOFR swap. The specific word 'Sell' is identical in both descriptions, indicating the same action being referenced in each trade. The structure and phrasing around this parameter are consistent between the two trades, with 'Sell' directly preceding the other details of the swap, suggesting very high similarity in the wording and format for the given parameter."",
+    ""similarity_score"": 100
+}
+```"
+2024-10-29-17-08-41-164-7c30a417fdcdd3a7ab97,"TrialID: 0
+Act as a Senior Quantitative Analyst tasked with evaluating the similarity in how a specific parameter 
+is described in two different trades.
+
+Your goal is to provide a similarity score from 1 to 100, where 1 means completely different and 100 means identical.
+Pay close attention to the format and wording of how the parameter is described, but ignore the difference in numbers
+for this parameter as well as other parameters within the trade.
+
+Here is the description of the first trade:
+```
+Sell 10y SOFR swap at 3.45%
+```
+
+Here is the description of the second trade:
+```
+Sell 5y ESTR swap at 2.90%
+```
+
+The parameter for comparison is described as follows:
+```
+The words Buy or Sell, or the words Pay Fixed or Receive Fixed
+```
+
+Analyze the two trade descriptions, focusing on their similarities and differences how this parameter is described.
+Consider the structure, wording, and overall format of the trade descriptions, but ignore any specific numerical
+values that may differ.
+
+Provide a detailed justification for your similarity assessment, explaining the key factors that influenced your decision.
+Consider both the similarities and the differences you observed.
+
+After your justification, assign a similarity score from 1 to 100, where:
+0 = The trades are completely different in terms of the given parameter
+100 = The trades are identical in terms of the given parameter
+
+Present your response in JSON with the following format:
+{
+    ""analysis"": <Your detailed justification for the similarity assessment, single line>,
+    ""similarity_score"": <Your numerical score between 0 and 100>
+}","```json
+{
+    ""analysis"": ""Both trade descriptions use the word 'Sell' to describe the parameter in question, with identical capitalization and placement within the sentence structure—beginning the description with 'Sell' followed by details of the trade. The wording and format are consistent, indicating strong similarity in how this parameter is described."",
+    ""similarity_score"": 100
+}
+```"
+2024-10-29-17-08-46-607-7f13a1ca079cf0c75791,"TrialID: 0
+Act as a Senior Quantitative Analyst tasked with evaluating the similarity in how a specific parameter 
+is described in two different trades.
+
+Your goal is to provide a similarity score from 1 to 100, where 1 means completely different and 100 means identical.
+Pay close attention to the format and wording of how the parameter is described, but ignore the difference in numbers
+for this parameter as well as other parameters within the trade.
+
+Here is the description of the first trade:
+```
+Sell 10y SOFR swap at 3.45%
+```
+
+Here is the description of the second trade:
+```
+We receive fixed on 5y SOFR swap at 2.90%
+```
+
+The parameter for comparison is described as follows:
+```
+The words Buy or Sell, or the words Pay Fixed or Receive Fixed
+```
+
+Analyze the two trade descriptions, focusing on their similarities and differences how this parameter is described.
+Consider the structure, wording, and overall format of the trade descriptions, but ignore any specific numerical
+values that may differ.
+
+Provide a detailed justification for your similarity assessment, explaining the key factors that influenced your decision.
+Consider both the similarities and the differences you observed.
+
+After your justification, assign a similarity score from 1 to 100, where:
+0 = The trades are completely different in terms of the given parameter
+100 = The trades are identical in terms of the given parameter
+
+Present your response in JSON with the following format:
+{
+    ""analysis"": <Your detailed justification for the similarity assessment, single line>,
+    ""similarity_score"": <Your numerical score between 0 and 100>
+}","```json
+{
+    ""analysis"": ""The key parameter for comparison focuses on the wording related to the position with regard to fixed payments. In the first trade, the parameter is described as 'Sell,' indicating an active disposition to provide fixed rate payments, whereas in the second trade, it is described as 'receive fixed,' which expresses the opposite position of accepting fixed payments. While both descriptions involve the role with respect to fixed cash flows, their wording and approach effectively convey opposing actions: the first indicating pay fixed and the second receive fixed. Despite this difference in terms of action, both are clear about their respective positions concerning the fixed rate, highlighting the structural similarity in how the information about the fixed payment role is conveyed, though their specific meaning is directly opposite."",
+    ""similarity_score"": 20
+}
+```"
+2024-10-29-17-08-53-635-7f71a7f95cf3d599475b,"TrialID: 0
+Act as a Senior Quantitative Analyst tasked with evaluating the similarity in how a specific parameter 
+is described in two different trades.
+
+Your goal is to provide a similarity score from 1 to 100, where 1 means completely different and 100 means identical.
+Pay close attention to the format and wording of how the parameter is described, but ignore the difference in numbers
+for this parameter as well as other parameters within the trade.
+
+Here is the description of the first trade:
+```
+Sell 10y SOFR swap at 3.45%
+```
+
+Here is the description of the second trade:
+```
+We pay fixed on 5y SOFR swap at 2.90%
+```
+
+The parameter for comparison is described as follows:
+```
+The words Buy or Sell, or the words Pay Fixed or Receive Fixed
+```
+
+Analyze the two trade descriptions, focusing on their similarities and differences how this parameter is described.
+Consider the structure, wording, and overall format of the trade descriptions, but ignore any specific numerical
+values that may differ.
+
+Provide a detailed justification for your similarity assessment, explaining the key factors that influenced your decision.
+Consider both the similarities and the differences you observed.
+
+After your justification, assign a similarity score from 1 to 100, where:
+0 = The trades are completely different in terms of the given parameter
+100 = The trades are identical in terms of the given parameter
+
+Present your response in JSON with the following format:
+{
+    ""analysis"": <Your detailed justification for the similarity assessment, single line>,
+    ""similarity_score"": <Your numerical score between 0 and 100>
+}","```json
+{
+    ""analysis"": ""The first trade uses the wording 'Sell,' while the second trade uses 'Pay fixed.' Both expressions relate to the same economic action of exchanging a fixed interest rate for a floating one in a swap, essentially describing the party's obligation to pay a fixed rate. However, the terms are not identical: 'Sell' suggests a broader financial transaction context, whereas 'Pay fixed' explicitly describes the swap payment direction. The descriptions differ in word choice and explicitly mentioned actions but share a common underlying economic meaning, leading to a moderate similarity score."",
+    ""similarity_score"": 60
+}
+```"
+2024-10-29-17-09-00-955-7b7289709062df42e757,"TrialID: 0
+Act as a Senior Quantitative Analyst tasked with evaluating the similarity in how a specific parameter 
+is described in two different trades.
+
+Your goal is to provide a similarity score from 1 to 100, where 1 means completely different and 100 means identical.
+Pay close attention to the format and wording of how the parameter is described, but ignore the difference in numbers
+for this parameter as well as other parameters within the trade.
+
+Here is the description of the first trade:
+```
+Sell 10y SOFR swap at 3.45%
+```
+
+Here is the description of the second trade:
+```
+Client pays fixed on 5y ESTR swap at breakeven rate
+```
+
+The parameter for comparison is described as follows:
+```
+The words Buy or Sell, or the words Pay Fixed or Receive Fixed
+```
+
+Analyze the two trade descriptions, focusing on their similarities and differences how this parameter is described.
+Consider the structure, wording, and overall format of the trade descriptions, but ignore any specific numerical
+values that may differ.
+
+Provide a detailed justification for your similarity assessment, explaining the key factors that influenced your decision.
+Consider both the similarities and the differences you observed.
+
+After your justification, assign a similarity score from 1 to 100, where:
+0 = The trades are completely different in terms of the given parameter
+100 = The trades are identical in terms of the given parameter
+
+Present your response in JSON with the following format:
+{
+    ""analysis"": <Your detailed justification for the similarity assessment, single line>,
+    ""similarity_score"": <Your numerical score between 0 and 100>
+}","```json
+{
+    ""analysis"": ""The parameter of interest focuses on how the action of the trade is described: 'Sell' versus 'Pay Fixed'. Both phrases indicate an outgoing flow or obligation, yet are phrased differently in the context of swaps. 'Sell' in 'Sell 10y SOFR swap' implies a position where the trader is giving up the swap, potentially implying they receive something in return, which, outside of detailed context, might imply paying a fixed in traditional swap terminology. 'Pay Fixed' explicitly describes the obligation of paying a fixed rate, which is analogous to what 'sell' in a financial context often leads to but stated explicitly. Thus, the similarity lies in both terms implying outgoing cash flow, although 'Pay Fixed' is more direct about this obligation in a swap transaction. The phasing is different in terms of explicit versus implicit language, leading to partial similarity."",
+    ""similarity_score"": 40
+}
+```"
+2024-10-29-17-09-09-648-7440ac0907e976fd09de,"TrialID: 0
+Act as a Senior Quantitative Analyst tasked with evaluating the similarity in how a specific parameter 
+is described in two different trades.
+
+Your goal is to provide a similarity score from 1 to 100, where 1 means completely different and 100 means identical.
+Pay close attention to the format and wording of how the parameter is described, but ignore the difference in numbers
+for this parameter as well as other parameters within the trade.
+
+Here is the description of the first trade:
+```
+Sell 10y SOFR swap at 3.45%
+```
+
+Here is the description of the second trade:
+```
+SOFR swap, we receive fixed at 2.90%, 10y tenor
+```
+
+The parameter for comparison is described as follows:
+```
+The words Buy or Sell, or the words Pay Fixed or Receive Fixed
+```
+
+Analyze the two trade descriptions, focusing on their similarities and differences how this parameter is described.
+Consider the structure, wording, and overall format of the trade descriptions, but ignore any specific numerical
+values that may differ.
+
+Provide a detailed justification for your similarity assessment, explaining the key factors that influenced your decision.
+Consider both the similarities and the differences you observed.
+
+After your justification, assign a similarity score from 1 to 100, where:
+0 = The trades are completely different in terms of the given parameter
+100 = The trades are identical in terms of the given parameter
+
+Present your response in JSON with the following format:
+{
+    ""analysis"": <Your detailed justification for the similarity assessment, single line>,
+    ""similarity_score"": <Your numerical score between 0 and 100>
+}","```json
+{
+    ""analysis"": ""The first trade uses 'Sell' to indicate the fixed leg's position while the second trade uses 'receive fixed,' which conveys a different action regarding the fixed leg. Both describe the position concerning the fixed rate leg, but since one indicates paying ('Sell') and the other indicates the opposite ('receive fixed'), the difference in terminology leads to a substantial difference in interpretation. Although both trades describe opposite actions in terms of cash flow with respect to the fixed leg, they still discuss the involvement of the fixed leg in terms of the overall swap context, creating a recognizable, albeit limited, connection."",
+    ""similarity_score"": 30
+}
+```"
+2024-10-29-17-09-16-248-733399e05d7775b011c3,"TrialID: 0
+Act as a Senior Quantitative Analyst tasked with evaluating the similarity in how a specific parameter 
+is described in two different trades.
+
+Your goal is to provide a similarity score from 1 to 100, where 1 means completely different and 100 means identical.
+Pay close attention to the format and wording of how the parameter is described, but ignore the difference in numbers
+for this parameter as well as other parameters within the trade.
+
+Here is the description of the first trade:
+```
+Sell 10y SOFR swap at 3.45%
+```
+
+Here is the description of the second trade:
+```
+Vanilla swap on 3m Term SOFR at 2.90%, we pay fixed, 10y maturity
+```
+
+The parameter for comparison is described as follows:
+```
+The words Buy or Sell, or the words Pay Fixed or Receive Fixed
+```
+
+Analyze the two trade descriptions, focusing on their similarities and differences how this parameter is described.
+Consider the structure, wording, and overall format of the trade descriptions, but ignore any specific numerical
+values that may differ.
+
+Provide a detailed justification for your similarity assessment, explaining the key factors that influenced your decision.
+Consider both the similarities and the differences you observed.
+
+After your justification, assign a similarity score from 1 to 100, where:
+0 = The trades are completely different in terms of the given parameter
+100 = The trades are identical in terms of the given parameter
+
+Present your response in JSON with the following format:
+{
+    ""analysis"": <Your detailed justification for the similarity assessment, single line>,
+    ""similarity_score"": <Your numerical score between 0 and 100>
+}","```json
+{
+    ""analysis"": ""The first trade uses the word 'Sell' indicating the party is going to pay the fixed rate, while the second trade explicitly mentions 'we pay fixed'. Both descriptions communicate the same intention to pay a fixed rate in the swap, although they use different phrases. 'Sell' in the context of swaps generally implies paying fixed, comparable to 'Pay Fixed' in the second trade. This makes them similar in substance, but the wording and phrasing differ as the first trade uses a shorthand 'Sell' for indicating 'Pay Fixed', whereas the second describes this explicitly. The wording using 'Sell' versus 'Pay Fixed' introduces a moderate difference in format and clarity, tipping the similarity less than perfect due to this minor variance."",
+    ""similarity_score"": 85
+}
+```"

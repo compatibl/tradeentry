@@ -1,42 +1,42 @@
 Sell 10y SOFR swap at 3.45%
 Sell 5y SOFR swap at 2.90%
 {
-    "analysis": "Both trades use the word 'Sell' at the beginning, which is an exact match for the parameter focusing on 'Buy or Sell'. The trades are identical in this aspect, despite differences in tenor (10y vs 5y) and rate (3.45% vs 2.90%) which are not relevant to the specified parameter. The use of 'SOFR swap' in both trades further reinforces the similarity in structure and format.",
+    "analysis": "Both trade descriptions use the word 'Sell' at the beginning to describe the action, which is exactly identical in terms of the specified parameter. The structure and format of presenting this information is consistent across both trades. The only differences lie in the tenor (10y vs 5y) and the rate (3.45% vs 2.90%), but these are not relevant to the parameter we're comparing. The use of 'Sell' in both cases indicates the same directional stance in the trades, perfectly matching the parameter description.",
     "similarity_score": 100
 }
 Sell 10y SOFR swap at 3.45%
 Sell 5y ESTR swap at 2.90%
 {
-    "analysis": "Both trades use the word 'Sell' at the beginning, which is the key aspect of the given parameter. This indicates a strong similarity in the action being taken. The trades differ in other aspects such as the tenor (10y vs 5y) and the reference rate (SOFR vs ESTR), but these differences are not relevant to the specified parameter of comparison.",
+    "analysis": "Both trade descriptions use the word 'Sell' at the beginning, which is an exact match for the parameter being compared. The structure is identical in this aspect, with 'Sell' followed by the swap details. The only differences are in the specifics of the swap (10y vs 5y, SOFR vs ESTR) and the rates, which we're instructed to ignore for this comparison. Given that the parameter is described in exactly the same way in both trades, there is a perfect match for this specific aspect.",
     "similarity_score": 100
 }
 Sell 10y SOFR swap at 3.45%
 We receive fixed on 5y SOFR swap at 2.90%
 {
-    "analysis": "Both trades involve similar actions related to SOFR swaps, but they differ in the specific action described. The basic trade uses 'Sell' which is equivalent to 'receive fixed', while the trade to be evaluated explicitly states 'receive fixed'. This alignment in the direction of the trade (receiving fixed) is a strong similarity. However, the wording is not identical, with one using 'Sell' and the other using 'receive fixed'. The different terminology used to express the same concept slightly reduces the similarity score.",
+    "analysis": "The parameter is described differently in the two trades, but they convey similar information. The first trade uses 'Sell' which is directly mentioned in the parameter description. The second trade uses 'receive fixed' which is equivalent to 'Sell' in swap terminology and is also mentioned in the parameter description. Both phrases indicate the same side of the trade, albeit using different terminology. The slight difference in wording and the fact that one uses a direct term from the parameter description while the other uses an equivalent term results in a high but not perfect similarity score.",
     "similarity_score": 90
 }
 Sell 10y SOFR swap at 3.45%
 We pay fixed on 5y SOFR swap at 2.90%
 {
-    "analysis": "The trades show significant differences in the key parameter. The basic trade uses 'Sell' which is equivalent to 'Receive Fixed', while the evaluated trade uses 'We pay fixed' which is the opposite. This fundamental difference in direction is crucial. However, both trades do explicitly mention the direction of the swap, which prevents the score from being at the absolute minimum.",
-    "similarity_score": 10
+    "analysis": "Both trades use equivalent terminology to describe the direction of the swap, but with different wording. The first trade uses 'Sell' which is equivalent to 'pay fixed' in swap terminology, while the second trade explicitly states 'We pay fixed'. Although the exact wording differs, they convey the same meaning in terms of the swap direction. The slight difference in phrasing and the use of 'We' in the second trade prevents a perfect similarity score.",
+    "similarity_score": 95
 }
 Sell 10y SOFR swap at 3.45%
 Client pays fixed on 5y ESTR swap at breakeven rate
 {
-    "analysis": "The trades differ significantly in terms of the specified parameter. The basic trade uses 'Sell' which is explicitly mentioned in the parameter, while the trade to be evaluated uses 'pays fixed' which is also mentioned in the parameter but represents the opposite side of the trade. This fundamental difference in trade direction is a key factor in the low similarity score, despite both phrases being included in the parameter description.",
-    "similarity_score": 20
+    "analysis": "Both trades use similar language to describe the direction of the trade, but there are notable differences. The first trade uses 'Sell' which is explicitly mentioned in the parameter description. The second trade uses 'Client pays fixed' which is semantically equivalent to 'Pay Fixed', also mentioned in the parameter description. While they convey the same general idea (the direction of the trade), the specific wording differs. The second trade adds additional context by mentioning 'Client', which is not present in the first trade. Despite these differences, both descriptions effectively communicate the direction of the trade using terminology consistent with the parameter description.",
+    "similarity_score": 80
 }
 Sell 10y SOFR swap at 3.45%
 SOFR swap, we receive fixed at 2.90%, 10y tenor
 {
-    "analysis": "Both trades describe a SOFR swap with a 10-year tenor, which is similar. The key difference lies in how the direction is expressed. The basic trade uses 'Sell' while the evaluated trade uses 'receive fixed'. These terms are equivalent in swap terminology, as selling a swap means receiving the fixed rate. Therefore, despite the different wording, the trades are functionally identical in terms of the given parameter.",
-    "similarity_score": 95
+    "analysis": "The trades show moderate similarity in describing the parameter. Both trades mention the direction of the fixed leg, but use different wording. The first trade uses 'Sell' which implies paying fixed, while the second explicitly states 'receive fixed'. The difference in terminology and the fact that one is more explicit than the other reduces the similarity score. However, they both convey the same essential information about the direction of the fixed leg in the swap.",
+    "similarity_score": 70
 }
 Sell 10y SOFR swap at 3.45%
 Vanilla swap on 3m Term SOFR at 2.90%, we pay fixed, 10y maturity
 {
-    "analysis": "The basic trade uses 'Sell' which implies receiving fixed, while the evaluated trade explicitly states 'we pay fixed'. These are opposite directions in terms of the given parameter. However, both trades involve a fixed leg in a swap transaction, which provides a slight similarity. The difference in direction (sell/receive vs. pay) is the primary factor in the low similarity score.",
-    "similarity_score": 10
+    "analysis": "The two trade descriptions show some similarity in how the parameter is described, but also notable differences. The first trade explicitly uses 'Sell', which directly matches one of the specified words for comparison. The second trade uses 'we pay fixed', which is equivalent to 'Pay Fixed' in the parameter description. While both descriptions convey similar information about the direction of the trade, they use different wording and structure to do so. The first is more concise and direct, while the second embeds this information within a longer description. This difference in presentation and wording reduces the overall similarity.",
+    "similarity_score": 70
 }
