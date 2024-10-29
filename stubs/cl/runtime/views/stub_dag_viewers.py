@@ -12,12 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os.path
 from dataclasses import dataclass
-from logging import getLogger
-from typing import List
-from typing_extensions import Self
-from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.view.dag.dag import Dag
 from cl.runtime.view.dag.dag_edge import DagEdge
 from cl.runtime.view.dag.dag_layout_enum import DagLayoutEnum
@@ -25,60 +20,12 @@ from cl.runtime.view.dag.dag_node_data import DagNodeData
 from cl.runtime.view.dag.nodes.add_text_node import AddTextNode
 from cl.runtime.view.dag.nodes.text_input_node import TextInputNode
 from cl.runtime.view.dag.nodes.text_output_node import TextOutputNode
-from cl.runtime.views.pdf_view import PdfView
-from stubs.cl.runtime.views.stub_data_viewers_key import StubDataViewersKey
-
-_logger = getLogger(__name__)
+from stubs.cl.runtime.views.stub_viewers import StubViewers
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataViewers(StubDataViewersKey, RecordMixin[StubDataViewersKey]):
-    """Stub record base class."""
-
-    def get_key(self) -> StubDataViewersKey:
-        return StubDataViewersKey(stub_id=self.stub_id)
-
-    def view_self(self) -> Self:
-        """This viewer will open by default instead of the editor."""
-        return self
-
-    def view_none(self) -> str | None:
-        """Viewer with optional return type returning None."""
-        return None
-
-    def view_string(self) -> str:
-        """Viewer returning a string."""
-        return """A sample multiline string returned by a viewer.
-Line 1
-Line 2
-Line 3
-"""
-
-    def view_key(self) -> StubDataViewersKey:
-        """Viewer returning a key."""
-        return self.get_key()
-
-    def view_record(self) -> Self:
-        """Viewer returning a record."""
-        return self
-
-    def view_key_list(self) -> List[StubDataViewersKey]:
-        """Stub viewer returning a list of keys."""
-        return 3 * [self.get_key()]
-
-    def view_record_list(self) -> List[Self]:
-        """Stub viewer returning a list of records."""
-        return 3 * [self]
-
-    def view_markdown(self):
-        """Viewer returning Markdown."""
-        return {
-            "_t": "Script",
-            "Name": None,
-            "Language": "Markdown",
-            "Body": ["# Viewer with UI element", "### _Script_"],
-            "WordWrap": None,
-        }
+class StubDagViewers(StubViewers):
+    """Stub viewers for DAGs."""
 
     def view_dag(self) -> Dag:
         """Stub viewer returning a DAG."""
@@ -110,20 +57,3 @@ Line 3
         )
 
         return Dag.auto_layout_dag(dag, layout_mode=DagLayoutEnum.PLANAR, base_scale=180)
-
-    def _view_with_params(self, param1: str = "Test", param2: str = None):  # TODO: Not supported in this release
-        """Stub viewer with optional parameters."""
-        return {
-            "_t": "Script",
-            "Name": None,
-            "Language": "Markdown",
-            "Body": [f"# Viewer with optional parameters", f"### Param1: {param1}", f"### Param2: {param2}"],
-            "WordWrap": None,
-        }
-
-    def _view_pdf(self):  # TODO: Not supported in this release
-        """Stub viewer returning a PDF document."""
-        file_path = os.path.join(os.path.dirname(__file__), "stub_data_viewers.pdf")
-        with open(file_path, mode="rb") as file:
-            content = file.read()
-        return PdfView(pdf_bytes=content)

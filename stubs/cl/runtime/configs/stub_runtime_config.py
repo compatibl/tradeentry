@@ -16,7 +16,7 @@ from dataclasses import dataclass
 from cl.runtime.configs.config import Config
 from cl.runtime.context.context import Context
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
-from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
+from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord, StubFileViewers, StubDagViewers
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassDictFields
 from stubs.cl.runtime import StubDataclassDictListFields
@@ -57,12 +57,18 @@ class StubRuntimeConfig(Config):
             StubDataclassPrimitiveFields(key_str_field=f"K{i}") for i in range(10)
         ]
 
-        stub_viewers_records = [StubDataViewers(stub_id=f"L{i}") for i in range(10)]
-        stub_handlers_records = [StubHandlers(stub_id=f"M{i}") for i in range(10)]
-        stub_viewers_data_records = [StubDataViewers(stub_id=f"N{i}") for i in range(10)]
-        stub_plot_viewers = [StubPlotViewers(stub_id=f"O{i}") for i in range(10)]
-
         stub_dataclass_singleton_record = [StubDataclassSingleton()]
+
+        # Records with stub handlers
+        stub_handlers_records = [StubHandlers(stub_id=f"M{i}") for i in range(10)]
+
+        # Records with stub viewers
+        stub_viewers_records = [
+            StubDataViewers(stub_id=f"StubDataViewers"),
+            StubFileViewers(stub_id=f"StubFileViewers"),
+            StubDagViewers(stub_id=f"StubDagViewers"),
+            StubPlotViewers(stub_id=f"StubPlotViewers"),
+        ]
 
         all_records = [
             *stub_dataclass_records,
@@ -79,8 +85,6 @@ class StubRuntimeConfig(Config):
             *stub_dataclass_singleton_record,
             *stub_viewers_records,
             *stub_handlers_records,
-            *stub_viewers_data_records,
-            *stub_plot_viewers,
         ]
 
         # save stubs to db

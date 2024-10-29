@@ -16,21 +16,17 @@ from dataclasses import dataclass
 from pathlib import Path
 import pandas as pd
 from cl.runtime import Context
-from cl.runtime import RecordMixin
 from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.plots.confusion_matrix_plot import ConfusionMatrixPlot
 from cl.runtime.plots.confusion_matrix_plot_style import ConfusionMatrixPlotStyle
 from cl.runtime.records.record_mixin import TKey
 from cl.runtime.views.plot_view import PlotView
-from stubs.cl.runtime.views.stub_plot_viewers_key import StubPlotViewersKey
+from stubs.cl.runtime.views.stub_viewers import StubViewers
 
 
 @dataclass(slots=True, kw_only=True)
-class StubPlotViewers(StubPlotViewersKey, RecordMixin[StubPlotViewersKey]):
+class StubPlotViewers(StubViewers):
     """Class with plot viewers."""
-
-    def get_key(self) -> TKey:
-        return StubPlotViewersKey(stub_id=self.stub_id)
 
     @classmethod
     def _create_confusion_matrix_plot(cls):
