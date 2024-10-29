@@ -5,25 +5,14 @@ Name: StubDataclassNestedFields
 Label: Stub Dataclass Nested Fields
 Comment: Stub derived class.
 DisplayKind: Basic
+Inherit:
+  Module:
+    ModuleName: stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record
+  Name: StubDataclassRecord
 Elements:
 - Value:
     Type: String
-  Name: Primitive
-  Comment: String key element.
-- _t: stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record_key.StubDataclassRecordKey
-  Key:
-    Module:
-      ModuleName: stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record_key
-    Name: StubDataclassRecordKey
-  Name: Embedded1
-  Comment: Embedded key 1.
-- _t: stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record_key.StubDataclassRecordKey
-  Key:
-    Module:
-      ModuleName: stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record_key
-    Name: StubDataclassRecordKey
-  Name: Embedded2
-  Comment: Embedded key 2.
+  Name: Id
 - _t: stubs.cl.runtime.records.for_dataclasses.stub_dataclass_data.StubDataclassData
   Data:
     Module:
@@ -74,7 +63,5 @@ Elements:
   Name: RecordAsKeyField
   Comment: Stub field with key type initialized to record type instance.
 Keys:
-- Primitive
-- Embedded1
-- Embedded2
+- Id
 

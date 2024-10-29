@@ -25,7 +25,7 @@ from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
-from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
+from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord, StubDataclassComposite
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassDictFields
 from stubs.cl.runtime import StubDataclassDictListFields
@@ -46,7 +46,8 @@ key_serializer = StringSerializer()
 
 stub_entries: List[List[RecordProtocol]] = [  # noqa
     [StubDataclassRecord(id=f"abc1_n{i}") for i in range(5)],
-    [StubDataclassNestedFields(primitive=f"abc2_n{i}") for i in range(5)],
+    [StubDataclassNestedFields(id=f"abc2_n{i}") for i in range(5)],
+    [StubDataclassComposite(primitive=f"abc{i}") for i in range(5)],
     [StubDataclassDerivedRecord(id=f"abc3_n{i}") for i in range(5)],
     [StubDataclassDerivedFromDerivedRecord(id=f"abc4_n{i}") for i in range(5)],
     [StubDataclassOtherDerivedRecord(id=f"abc5_n{i}") for i in range(5)],

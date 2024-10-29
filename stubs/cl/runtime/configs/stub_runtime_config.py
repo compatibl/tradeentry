@@ -23,6 +23,7 @@ from stubs.cl.runtime import StubDataclassDictListFields
 from stubs.cl.runtime import StubDataclassListDictFields
 from stubs.cl.runtime import StubDataclassListFields
 from stubs.cl.runtime import StubDataclassNestedFields
+from stubs.cl.runtime import StubDataclassComposite
 from stubs.cl.runtime import StubDataclassOptionalFields
 from stubs.cl.runtime import StubDataclassOtherDerivedRecord
 from stubs.cl.runtime import StubDataclassPrimitiveFields
@@ -41,8 +42,9 @@ class StubRuntimeConfig(Config):
         """Populate the current or default database with stub records."""
 
         # Create stub instances
+        stub_dataclass_composite = [StubDataclassComposite(primitive=f"abc{i}") for i in range(10)]
         stub_dataclass_records = [StubDataclassRecord(id=f"A{i}") for i in range(10)]
-        stub_dataclass_nested_fields = [StubDataclassNestedFields(primitive=f"B{i}") for i in range(10)]
+        stub_dataclass_nested_fields = [StubDataclassNestedFields(id=f"B{i}") for i in range(10)]
         stub_dataclass_derived_records = [StubDataclassDerivedRecord(id=f"C{i}") for i in range(10)]
         stub_dataclass_derived_from_derived_records = [
             StubDataclassDerivedFromDerivedRecord(id=f"D{i}") for i in range(10)
@@ -58,8 +60,6 @@ class StubRuntimeConfig(Config):
         ]
 
         stub_dataclass_singleton_record = [StubDataclassSingleton()]
-
-        # Records with stub handlers
         stub_handlers_records = [StubHandlers(stub_id=f"M{i}") for i in range(10)]
 
         # Records with stub viewers
@@ -71,6 +71,7 @@ class StubRuntimeConfig(Config):
         ]
 
         all_records = [
+            *stub_dataclass_composite,
             *stub_dataclass_records,
             *stub_dataclass_nested_fields,
             *stub_dataclass_derived_records,

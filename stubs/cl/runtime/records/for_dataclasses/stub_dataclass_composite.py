@@ -13,42 +13,17 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses_extensions import field
-from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.record_mixin import RecordMixin
-from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_data import StubDataclassData
-from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_derived_data import StubDataclassDerivedData
-from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_derived_from_derived_data import (
-    StubDataclassDerivedFromDerivedData,
-)
-from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecord
-from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecordKey
+from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_composite_key import StubDataclassCompositeKey
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataclassNestedFields(StubDataclassRecord):
-    """Stub derived class."""
+class StubDataclassComposite(StubDataclassCompositeKey, RecordMixin[StubDataclassCompositeKey]):
+    """Stub for a composite key that contains other key fields."""
 
-    base_field: StubDataclassData = field(default_factory=StubDataclassData)
-    """Stub field."""
-
-    derived_field: StubDataclassDerivedData = field(default_factory=StubDataclassDerivedData)
-    """Stub field."""
-
-    derived_from_derived_field: StubDataclassDerivedFromDerivedData = field(
-        default_factory=StubDataclassDerivedFromDerivedData
-    )
-    """Stub field."""
-
-    polymorphic_field: StubDataclassData = field(default_factory=StubDataclassDerivedData)
-    """Declared StubDataclassData but provided an instance of StubDataclassDerivedData."""
-
-    polymorphic_derived_field: StubDataclassDerivedData = field(default_factory=StubDataclassDerivedFromDerivedData)
-    """Declared StubDataclassDerivedData but provided an instance of StubDataclassDerivedFromDerivedData."""
-
-    key_field: StubDataclassRecordKey = field(default_factory=lambda: StubDataclassRecordKey(id="uvw"))
-    """Stub field."""
-
-    record_as_key_field: StubDataclassRecordKey = field(default_factory=lambda: StubDataclassRecord())
-    """Stub field with key type initialized to record type instance."""
-
+    def get_key(self) -> StubDataclassCompositeKey:
+        return StubDataclassCompositeKey(
+            primitive=self.primitive,
+            embedded_1=self.embedded_1,
+            embedded_2=self.embedded_2,
+        )

@@ -81,7 +81,7 @@ def test_load_filter():
         filter_obj = StubDataclassDerivedRecord(id=None, derived_field="a")
         loaded_records = context.load_filter(StubDataclassDerivedRecord, filter_obj)
         assert len(loaded_records) == len(matching_records)
-        assert all(x.derived_field == filter_obj.derived_field for x in loaded_records)
+        assert all(x.derived_str_field == filter_obj.derived_str_field for x in loaded_records)
 
 
 @pytest.mark.skip("Requires MongoDB server.")  # TODO: Switch test to MongoMock

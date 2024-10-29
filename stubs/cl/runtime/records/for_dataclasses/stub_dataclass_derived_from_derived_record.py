@@ -22,5 +22,5 @@ from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_derived_record impo
 class StubDataclassDerivedFromDerivedRecord(StubDataclassDerivedRecord):
     """Two levels in inheritance hierarchy away from StubDataclassRecord."""
 
-    derived_from_derived_field: str = "derived_from_derived"
+    derived_from_derived_str_field: str = "derived_from_derived"
     """Stub field."""

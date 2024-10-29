@@ -22,5 +22,5 @@ from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_data import StubDat
 class StubDataclassDerivedData(StubDataclassData):
     """Stub derived data type."""
 
-    derived_field: str = "derived"
+    derived_str_field: str = "derived"
     """Stub field."""

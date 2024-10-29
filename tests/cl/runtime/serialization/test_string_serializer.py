@@ -14,7 +14,7 @@
 
 import pytest
 from cl.runtime.serialization.string_serializer import StringSerializer
-from stubs.cl.runtime import StubDataclassListFields
+from stubs.cl.runtime import StubDataclassListFields, StubDataclassComposite
 from stubs.cl.runtime import StubDataclassNestedFields
 from stubs.cl.runtime import StubDataclassOptionalFields
 from stubs.cl.runtime import StubDataclassPrimitiveFields
@@ -29,6 +29,7 @@ def test_key_serialization():
         StubDataclassPrimitiveFields,
         StubDataclassListFields,
         StubDataclassNestedFields,
+        StubDataclassComposite,
         StubDataclassOptionalFields,
     ]
 

@@ -21,8 +21,8 @@ from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubD
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataclassNestedFieldsKey(KeyMixin):
-    """Stub derived class."""
+class StubDataclassCompositeKey(KeyMixin):
+    """Stub for a composite key that contains other key fields."""
 
     primitive: str = "abc"
     """String key element."""
@@ -35,4 +35,4 @@ class StubDataclassNestedFieldsKey(KeyMixin):
 
     @classmethod
     def get_key_type(cls) -> Type:
-        return StubDataclassNestedFieldsKey
+        return StubDataclassCompositeKey

@@ -1,0 +1,4 @@
+primitive,embedded_1,embedded_2
+nested_primitive_1,embedded_key_id_1a,embedded_key_id_1b
+nested_primitive_2,embedded_key_id_2a,embedded_key_id_2b
+nested_primitive_3,embedded_key_id_3a,embedded_key_id_3b

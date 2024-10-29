@@ -16,7 +16,7 @@ import pytest
 from cl.runtime.db.protocols import TKey
 from cl.runtime.records.record_util import RecordUtil
 from cl.runtime.testing.regression_guard import RegressionGuard
-from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
+from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord, StubDataclassComposite
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassDictFields
 from stubs.cl.runtime import StubDataclassDictListFields
@@ -96,7 +96,8 @@ def test_validate():
     samples = [
         StubDataclassOptionalFields(id="abc7"),
         StubDataclassRecord(id="abc1"),
-        StubDataclassNestedFields(primitive="abc2"),
+        StubDataclassNestedFields(id="abc2"),
+        StubDataclassComposite(),
         StubDataclassDerivedRecord(id="abc3"),
         StubDataclassDerivedFromDerivedRecord(id="abc4"),
         StubDataclassOtherDerivedRecord(id="abc5"),

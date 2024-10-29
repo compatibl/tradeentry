@@ -17,7 +17,7 @@ import os
 from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.file.csv_file_reader import CsvFileReader
-from stubs.cl.runtime import StubDataclassDerivedRecord
+from stubs.cl.runtime import StubDataclassDerivedRecord, StubDataclassComposite
 from stubs.cl.runtime import StubDataclassNestedFields
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassRecordKey
@@ -38,22 +38,33 @@ def test_csv_file_reader():
         file_reader = CsvFileReader(file_path=file_path)
         file_reader.read()
 
+        file_path = os.path.join(env_dir, "StubDataclassComposite.csv")
+        file_reader = CsvFileReader(file_path=file_path)
+        file_reader.read()
+
         # Verify
         # TODO: Check count using load_all or count method of Db when created
         for i in range(1, 3):
             key = StubDataclassRecordKey(id=f"derived_id_{i}")
             record = context.load_one(StubDataclassRecord, key)
             assert record == StubDataclassDerivedRecord(
-                id=f"derived_id_{i}", derived_field=f"test_derived_field_value_{i}"
+                id=f"derived_id_{i}", derived_str_field=f"test_derived_str_field_value_{i}"
             )
 
         for i in range(1, 4):
             expected_record = StubDataclassNestedFields(
+                id=f"nested_{i}",
+            )
+            record = context.load_one(StubDataclassNestedFields, expected_record.get_key())
+            assert record == expected_record
+
+        for i in range(1, 4):
+            expected_record = StubDataclassComposite(
                 primitive=f"nested_primitive_{i}",
                 embedded_1=StubDataclassRecordKey(id=f"embedded_key_id_{i}a"),
                 embedded_2=StubDataclassRecordKey(id=f"embedded_key_id_{i}b"),
             )
-            record = context.load_one(StubDataclassNestedFields, expected_record.get_key())
+            record = context.load_one(StubDataclassComposite, expected_record.get_key())
             assert record == expected_record
 
 

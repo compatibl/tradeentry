@@ -14,7 +14,7 @@
 
 import pytest
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
-from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
+from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord, StubDataclassComposite
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassDictFields
 from stubs.cl.runtime import StubDataclassDictListFields
@@ -32,6 +32,7 @@ def test_data_serialization():
     sample_types = [
         StubDataclassRecord,
         StubDataclassNestedFields,
+        StubDataclassComposite,
         StubDataclassDerivedRecord,
         StubDataclassDerivedFromDerivedRecord,
         StubDataclassOtherDerivedRecord,

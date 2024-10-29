@@ -19,7 +19,7 @@ from typing import Iterable
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.db.sql.sqlite_db import SqliteDb
 from cl.runtime.records.class_info import ClassInfo
-from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
+from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord, StubDataclassComposite
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassDictFields
 from stubs.cl.runtime import StubDataclassDictListFields
@@ -63,7 +63,8 @@ def test_complex_records():
     with TestingContext(db_class=db_class) as context:
         samples = [
             StubDataclassRecord(id="abc1"),
-            StubDataclassNestedFields(primitive="abc2"),
+            StubDataclassNestedFields(id="abc2"),
+            StubDataclassComposite(),
             StubDataclassDerivedRecord(id="abc3"),
             StubDataclassDerivedFromDerivedRecord(id="abc4"),
             StubDataclassOtherDerivedRecord(id="abc5"),
@@ -89,7 +90,8 @@ def test_basic_operations():
     with TestingContext(db_class=db_class) as context:
         samples = [
             StubDataclassRecord(id="abc1"),
-            StubDataclassNestedFields(primitive="abc2"),
+            StubDataclassNestedFields(id="abc2"),
+            StubDataclassComposite(),
             StubDataclassDerivedRecord(id="abc3"),
             StubDataclassDerivedFromDerivedRecord(id="abc4"),
             StubDataclassOtherDerivedRecord(id="abc5"),
