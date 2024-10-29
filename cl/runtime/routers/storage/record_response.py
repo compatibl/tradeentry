@@ -13,15 +13,19 @@
 # limitations under the License.
 
 from __future__ import annotations
+
 import dataclasses
+from pydantic import BaseModel
+from pydantic import Field
 from typing import Any
 from typing import Dict
 from typing import List
-from pydantic import BaseModel
-from pydantic import Field
+
 from cl.runtime import Context
 from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.backend.core.ui_app_state_key import UiAppStateKey
+from cl.runtime.backend.core.ui_type_state import UiTypeState
+from cl.runtime.backend.core.ui_type_state_key import UiTypeStateKey
 from cl.runtime.backend.core.user_key import UserKey
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.class_info import ClassInfo
@@ -29,7 +33,9 @@ from cl.runtime.routers.schema.type_request import TypeRequest
 from cl.runtime.routers.schema.type_response_util import TypeResponseUtil
 from cl.runtime.routers.storage.record_request import RecordRequest
 from cl.runtime.schema.field_decl import primitive_types  # TODO: Move definition to a separate module
+from cl.runtime.schema.module_decl_key import ModuleDeclKey
 from cl.runtime.schema.schema import Schema
+from cl.runtime.schema.type_decl_key import TypeDeclKey
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.serialization.ui_dict_serializer import UiDictSerializer
 
@@ -132,11 +138,52 @@ class RecordResponse(BaseModel):
         if record_type == UiAppState and "KEY" not in request.key:
             # TODO: Ensure user is specified in all deployment scenarios instead of using default value
             deserialized_key = UiAppStateKey(user=UserKey(username=request.key or "root"))
+        elif record_type == UiTypeState and "KEY" not in request.key:
+            # Construct the UiTypeStateKey by parsing the key value
+            splitted_key = request.key.split(";")
+            type_state_record_module, type_state_record_type_name, *_ = splitted_key
+            username = splitted_key[-1] if len(splitted_key) == 3 else None
+
+            deserialized_key = UiTypeStateKey(
+                user=UserKey(username=username or "root"),
+                type_=TypeDeclKey(
+                    name=type_state_record_type_name,
+                    module=ModuleDeclKey(module_name=type_state_record_module)
+                ),
+            )
         else:
             deserialized_key = key_serializer.deserialize_key(request.key, record_type.get_key_type())
 
         # TODO: Review the use of is_record_optional flag here
         record = db.load_one(record_type, deserialized_key, is_record_optional=True)
+        if not record and record_type == UiTypeState:
+            # TODO (Yauheni): remove temporary workaround of pinning handlers for all requested types
+            type_state_record_type = Schema.get_type_by_short_name(type_state_record_type_name)
+            type_state_record_type_schema = Schema.for_type(type_state_record_type)
+
+            # Iterate over type declarations to get all handlers
+            all_handlers = []
+            for decl_dict in type_state_record_type_schema.values():
+                declare_block = decl_dict.get("Declare")
+                if not declare_block:
+                    continue
+
+                handlers_block = declare_block.get("Handlers")
+                if not handlers_block:
+                    continue
+
+                all_handlers.extend(
+                    [
+                        handler_name for handler_decl in handlers_block
+                        if (handler_name := handler_decl.get("Name")) not in all_handlers
+                    ]
+                )
+
+            record = UiTypeState(
+                user=deserialized_key.user,
+                type_=deserialized_key.type_,
+                pinned_handlers=all_handlers,
+            )
 
         # Get type declarations based on the actual record type
         type_decl_dict = (
