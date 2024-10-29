@@ -18,6 +18,10 @@ from abc import ABC
 from abc import abstractmethod
 from dataclasses import dataclass
 from cl.runtime.context.context import Context
+from cl.runtime.log.exceptions.user_error import UserError
+from cl.runtime.log.log_entry import LogEntry
+from cl.runtime.log.log_entry_level_enum import LogEntryLevelEnum
+from cl.runtime.log.user_log_entry import UserLogEntry
 from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.primitive.timestamp import Timestamp
 from cl.runtime.records.dataclasses_extensions import missing
@@ -84,8 +88,63 @@ class Task(TaskKey, RecordMixin[TaskKey], ABC):
             self.progress_pct = 0.0
 
     @abstractmethod
+    def _execute(self) -> None:
+        """Run payload without updating status or handling exceptions (protected, callers should invoke 'run_task')."""
+
     def run_task(self) -> None:
-        """Invoked by the queue to which the task is submitted."""
+        """Invoke execute with task status updates and exception handling."""
+        # Record the start time
+        start_time = DatetimeUtil.now()
+
+        context = Context.current()
+        try:
+            # Set status to Running and save
+            self.status = TaskStatusEnum.RUNNING
+            context.save_one(self)
+
+            # Run the payload
+            self._execute()
+
+        except Exception as e:  # noqa
+
+            # Record the end time
+            end_time = DatetimeUtil.now()
+
+            # Get log entry type and level
+            if isinstance(e, UserError):
+                log_type = UserLogEntry
+                level = LogEntryLevelEnum.USER_ERROR
+            else:
+                log_type = LogEntry
+                level = LogEntryLevelEnum.ERROR
+
+            # Create log entry
+            log_entry = log_type(  # noqa
+                message=str(e),
+                level=level,
+            )
+            log_entry.init()
+
+            # Save log entry to the database
+            Context.current().save_one(log_entry)
+
+            # Update task run record to report task failure
+            self.status = TaskStatusEnum.FAILED
+            self.progress_pct = 100.0
+            self.elapsed_sec = 0.0  # TODO: Implement
+            self.remaining_sec = 0.0
+            self.error_message = str(e)
+            context.save_one(self)
+        else:
+            # Record the end time
+            end_time = DatetimeUtil.now()
+
+            # Update task run record to report task completion
+            self.status = TaskStatusEnum.COMPLETED
+            self.progress_pct = 100.0
+            self.elapsed_sec = 0.0  # TODO: Implement
+            self.remaining_sec = 0.0
+            context.save_one(self)
 
     @classmethod
     def wait_for_completion(cls, task_key: TaskKey, timeout_sec: int = 10) -> None:  # TODO: Rename or move

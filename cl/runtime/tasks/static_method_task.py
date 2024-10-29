@@ -35,7 +35,7 @@ class StaticMethodTask(CallableTask):
     method_name: str = missing()
     """The name of @staticmethod in snake_case or PascalCase format."""
 
-    def run_task(self) -> None:
+    def _execute(self) -> None:
         """Invoke the specified @staticmethod or @classmethod."""
 
         # Get record type from fully qualified name in module.ClassName format

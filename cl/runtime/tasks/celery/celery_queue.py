@@ -75,59 +75,10 @@ def execute_task(
     # Deserialize context from 'context_data' parameter to run with the same settings as the caller context
     with context_serializer.deserialize_data(context_data) as context:
 
-        # Record the start time
-        start_time = DatetimeUtil.now()
-        try:
-            # Load the task
-            task_key = TaskKey(task_id=task_id)
-            task = context.load_one(Task, task_key)
-
-            # Set status to Running
-            task.status = TaskStatusEnum.RUNNING
-            context.save_one(task)
-
-            # Run the task
-            task.run_task()
-        except Exception as e:  # noqa
-
-            # Record the end time
-            end_time = DatetimeUtil.now()
-
-            # Get log entry type and level
-            if isinstance(e, UserError):
-                log_type = UserLogEntry
-                level = LogEntryLevelEnum.USER_ERROR
-            else:
-                log_type = LogEntry
-                level = LogEntryLevelEnum.ERROR
-
-            # Create log entry
-            log_entry = log_type(  # noqa
-                message=str(e),
-                level=level,
-            )
-            log_entry.init()
-
-            # Save log entry to the database
-            Context.current().save_one(log_entry)
-
-            # Update task run record to report task failure
-            task.status = TaskStatusEnum.FAILED
-            task.progress_pct = 100.0
-            task.elapsed_sec = 0.0  # TODO: Implement
-            task.remaining_sec = 0.0
-            task.error_message = str(e)
-            context.save_one(task)
-        else:
-            # Record the end time
-            end_time = DatetimeUtil.now()
-
-            # Update task run record to report task completion
-            task.status = TaskStatusEnum.COMPLETED
-            task.progress_pct = 100.0
-            task.elapsed_sec = 0.0  # TODO: Implement
-            task.remaining_sec = 0.0
-            context.save_one(task)
+        # Load and run the task
+        task_key = TaskKey(task_id=task_id)
+        task = context.load_one(Task, task_key)
+        task.run_task()
 
 
 def celery_start_queue_callable(*, log_dir: str) -> None:

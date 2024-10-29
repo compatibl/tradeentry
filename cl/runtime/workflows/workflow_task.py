@@ -28,7 +28,7 @@ class WorkflowTask(Task):
     phases: List[WorkflowPhaseKey] = missing()
     """Tasks run in parallel in the order of phases, however each phase waits until its prerequisites are completed."""
 
-    def run_task(self) -> None:
+    def _execute(self) -> None:
         # Get current context
         context = Context.current()
 

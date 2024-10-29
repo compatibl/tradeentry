@@ -45,8 +45,8 @@ class InstanceMethodTask(CallableTask):
     method_name: str = missing()
     """The name of instance method in snake_case or PascalCase format, do not use for @classmethod or @staticmethod."""
 
-    def run_task(self) -> Any:
-        """Invoke the specified class instance method handler."""
+    def _execute(self) -> None:
+        """Invoke the specified instance method."""
 
         # Get current context
         context = Context.current()

@@ -33,8 +33,8 @@ class FunctionTask(CallableTask):
     function_name: str = missing()
     """Function name in snake_case or PascalCase format."""
 
-    def run_task(self) -> None:
-        """Invoke the specified static or class method handler."""
+    def _execute(self) -> None:
+        """Invoke the specified function."""
         raise NotImplementedError()
 
     @classmethod
