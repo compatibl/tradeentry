@@ -15,8 +15,26 @@
 from dataclasses import dataclass
 from typing import List
 from typing_extensions import Self
+
+from stubs.cl.runtime import StubDataclassRecordKey, StubDataclassRecord, StubDataclassNestedFields, \
+    StubDataclassListFields, StubDataclassComposite, StubDataclassCompositeKey
 from stubs.cl.runtime.views.stub_viewers import StubViewers
 from stubs.cl.runtime.views.stub_viewers_key import StubViewersKey
+
+nested_fields_key = StubDataclassRecordKey(id="nested_1")
+"""Key returned by the viewer."""
+
+nested_fields_record = StubDataclassNestedFields()
+"""Record returned by the viewer."""
+
+list_fields_record = StubDataclassListFields()
+"""Record returned by the viewer."""
+
+composite_key = StubDataclassCompositeKey()
+"""Record returned by the viewer."""
+
+composite_record = StubDataclassComposite()
+"""Record returned by the viewer."""
 
 
 @dataclass(slots=True, kw_only=True)
@@ -25,27 +43,39 @@ class StubDataViewers(StubViewers):
 
     def view_self(self) -> Self:
         """This viewer will open by default instead of the editor."""
-        return self
+        return nested_fields_key
 
     def view_none(self) -> str | None:
         """Viewer with optional return type returning None."""
         return None
 
-    def view_key(self) -> StubViewersKey:
+    def view_nested_fields_key(self) -> StubDataclassRecordKey:
         """Viewer returning a key."""
-        return self.get_key()
+        return nested_fields_key
 
-    def view_record(self) -> Self:
+    def view_composite_key(self) -> StubDataclassCompositeKey:
+        """Viewer returning a key."""
+        return composite_key
+
+    def view_nested_fields_record(self) -> StubDataclassNestedFields:
         """Viewer returning a record."""
-        return self
+        return nested_fields_record
 
-    def view_key_list(self) -> List[StubViewersKey]:
+    def view_list_fields_record(self) -> StubDataclassListFields:
+        """Viewer returning a record."""
+        return list_fields_record
+
+    def view_composite_record(self) -> StubDataclassComposite:
+        """Viewer returning a key."""
+        return composite_record
+
+    def view_key_list(self) -> List[StubDataclassRecordKey]:
         """Stub viewer returning a list of keys."""
-        return 3 * [self.get_key()]
+        return 3 * [nested_fields_key]
 
-    def view_record_list(self) -> List[Self]:
+    def view_record_list(self) -> List[StubDataclassNestedFields]:
         """Stub viewer returning a list of records."""
-        return 3 * [self]
+        return 3 * [nested_fields_record]
 
     def _view_string(self) -> str:  # TODO: Not yet supported, currenly must wrap into Script content
         """Viewer returning a string."""
