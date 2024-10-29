@@ -15,6 +15,8 @@
 import os.path
 from dataclasses import dataclass
 from logging import getLogger
+from typing import List
+from typing_extensions import Self
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.runtime.view.dag.dag import Dag
 from cl.runtime.view.dag.dag_edge import DagEdge
@@ -23,33 +25,65 @@ from cl.runtime.view.dag.dag_node_data import DagNodeData
 from cl.runtime.view.dag.nodes.add_text_node import AddTextNode
 from cl.runtime.view.dag.nodes.text_input_node import TextInputNode
 from cl.runtime.view.dag.nodes.text_output_node import TextOutputNode
-from cl.runtime.views.binary_content import BinaryContent
-from cl.runtime.views.binary_content_type_enum import BinaryContentTypeEnum
 from cl.runtime.views.pdf_view import PdfView
-from stubs.cl.runtime.views.stub_viewers_data_types_key import StubViewersDataTypesKey
+from stubs.cl.runtime.views.stub_instance_viewers_key import StubInstanceViewersKey
 
 _logger = getLogger(__name__)
 
 
 @dataclass(slots=True, kw_only=True)
-class StubViewersDataTypes(StubViewersDataTypesKey, RecordMixin[StubViewersDataTypesKey]):
+class StubInstanceViewers(StubInstanceViewersKey, RecordMixin[StubInstanceViewersKey]):
     """Stub record base class."""
 
-    def get_key(self) -> StubViewersDataTypesKey:
-        return StubViewersDataTypesKey(stub_id=self.stub_id)
+    def get_key(self) -> StubInstanceViewersKey:
+        return StubInstanceViewersKey(stub_id=self.stub_id)
 
-    def view_pdf(self):
-        """Shows a PDF document."""
+    def view_self(self) -> Self:
+        """This viewer will open by default instead of the editor."""
+        return self
 
-        file_path = os.path.join(os.path.dirname(__file__), "stub_viewers_data_types.pdf")
-        with open(file_path, mode="rb") as file:
-            content = file.read()
+    def view_none(self) -> str | None:
+        """Viewer with optional return type returning None."""
+        return None
 
-        return PdfView(pdf_bytes=content)
+    def view_string(self) -> str:
+        """Viewer returning a string."""
+        return """A sample multiline string returned by a viewer.
+Line 1
+Line 2
+Line 3
+"""
 
-    def view_graph(self) -> Dag:
-        """Shows a directed acyclic graph."""
+    def view_key(self) -> StubInstanceViewersKey:
+        """Viewer returning a key."""
+        return self.get_key()
 
+    def view_record(self) -> Self:
+        """Viewer returning a record."""
+        return self
+
+    def view_key_list(self) -> List[StubInstanceViewersKey]:
+        """Stub viewer returning a list of keys."""
+        return 3 * [self.get_key()]
+
+    def view_record_list(self) -> List[Self]:
+        """Stub viewer returning a list of records."""
+        return 3 * [self]
+
+    def view_markdown(self):
+        """Viewer returning Markdown."""
+        return {
+            "_t": "Script",
+            "Name": None,
+            "Language": "Markdown",
+            "Body": ["# Viewer with UI element", "### _Script_"],
+            "WordWrap": None,
+        }
+
+    def view_dag(self) -> Dag:
+        """Stub viewer returning a DAG."""
+
+        # TODO: Switch to the new DAG classes
         dag = Dag(
             name="dag_data",
             nodes=[
@@ -76,3 +110,20 @@ class StubViewersDataTypes(StubViewersDataTypesKey, RecordMixin[StubViewersDataT
         )
 
         return Dag.auto_layout_dag(dag, layout_mode=DagLayoutEnum.PLANAR, base_scale=180)
+
+    def _view_with_params(self, param1: str = "Test", param2: str = None):  # TODO: Not supported in this release
+        """Stub viewer with optional parameters."""
+        return {
+            "_t": "Script",
+            "Name": None,
+            "Language": "Markdown",
+            "Body": [f"# Viewer with optional parameters", f"### Param1: {param1}", f"### Param2: {param2}"],
+            "WordWrap": None,
+        }
+
+    def _view_pdf(self):  # TODO: Not supported in this release
+        """Stub viewer returning a PDF document."""
+        file_path = os.path.join(os.path.dirname(__file__), "stub_instance_viewers.pdf")
+        with open(file_path, mode="rb") as file:
+            content = file.read()
+        return PdfView(pdf_bytes=content)

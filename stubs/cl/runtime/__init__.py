@@ -25,4 +25,4 @@ from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_singleton import St
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_handlers import StubHandlers
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_viewers import StubViewers
 from stubs.cl.runtime.views.stub_plots import StubPlots
-from stubs.cl.runtime.views.stub_viewers_data_types import StubViewersDataTypes
+from stubs.cl.runtime.views.stub_instance_viewers import StubInstanceViewers
