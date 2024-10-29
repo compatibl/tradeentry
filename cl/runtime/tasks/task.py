@@ -45,7 +45,7 @@ class Task(TaskKey, RecordMixin[TaskKey], ABC):
     """
 
     label: str | None = None  # TODO: Make required
-    """Task label for information purposes only (should not be used in processing)."""
+    """Label for information purposes only (should not be used in processing)."""
 
     queue: TaskQueueKey = missing()
     """The queue that will run the task once it is saved."""

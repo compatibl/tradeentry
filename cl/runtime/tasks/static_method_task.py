@@ -18,6 +18,7 @@ from typing import Callable
 from typing import Type
 from typing_extensions import Self
 from cl.runtime import ClassInfo
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.schema.schema import Schema
 from cl.runtime.tasks.callable_task import CallableTask
@@ -80,4 +81,8 @@ class StaticMethodTask(CallableTask):
                 f"Callable '{method_callable.__qualname__}' for task_id='{result.task_id}' does not "
                 f"have two dot-delimited tokens indicating it is not a method bound to a class."
             )
+
+        # Set label and return
+        method_name_pascal_case = CaseUtil.snake_to_pascal_case(result.method_name)
+        result.label = f"{record_type.__name__};{method_name_pascal_case}"
         return result

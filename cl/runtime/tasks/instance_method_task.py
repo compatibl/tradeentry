@@ -19,6 +19,7 @@ from typing import Callable
 from typing_extensions import Self
 from cl.runtime import ClassInfo
 from cl.runtime.context.context import Context
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.schema.schema import Schema
@@ -106,4 +107,7 @@ class InstanceMethodTask(CallableTask):
                 f"have two dot-delimited tokens indicating it is not a method bound to a class."
             )
 
+        # Set label and return
+        method_name_pascal_case = CaseUtil.snake_to_pascal_case(result.method_name)
+        result.label = f"{key_type.__name__};{result.key_str};{method_name_pascal_case}"
         return result

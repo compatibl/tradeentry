@@ -41,7 +41,6 @@ class FunctionTask(CallableTask):
     def create(
             cls,
             *,
-            task_id: str,
             queue: TaskQueueKey,
             record_type: Type,
             method: Callable,

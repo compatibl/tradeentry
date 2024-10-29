@@ -64,7 +64,10 @@ class RunResponseItem(BaseModel):
                 key_type = Schema.get_type_by_short_name(request.table).get_key_type()  # noqa
 
                 key_type_str = f"{key_type.__module__}.{key_type.__name__}"
+                method_name_pascal_case = CaseUtil.snake_to_pascal_case(request.method)
+                label = f"{key_type.__name__};{serialized_key};{method_name_pascal_case}"
                 handler_task = InstanceMethodTask(
+                    label=label,
                     queue=handler_queue.get_key(),
                     key_type_str=key_type_str,
                     key_str=serialized_key,
@@ -73,8 +76,11 @@ class RunResponseItem(BaseModel):
             else:
                 # Key is None, this is a @classmethod or @staticmethod
                 record_type = Schema.get_type_by_short_name(request.table)
-                record_type_str = f"{record_type.__module__}.{record_type.__name__}"
+                u = f"{record_type.__module__}.{record_type.__name__}"
+                method_name_pascal_case = CaseUtil.snake_to_pascal_case(request.method)
+                label = f"{record_type.__name__};{method_name_pascal_case}"
                 handler_task = StaticMethodTask(
+                    label=label,
                     queue=handler_queue.get_key(),
                     type_str=record_type_str,
                     method_name=request.method,
