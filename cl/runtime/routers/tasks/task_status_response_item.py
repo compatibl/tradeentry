@@ -26,15 +26,15 @@ from cl.runtime.routers.tasks.task_status_request import TaskStatusRequest
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
 
-LEGACY_TASK_STATUS_NAMES_MAP: Dict[str, str] = {
+LEGACY_TASK_STATUS_NAMES_MAP: Dict[str, str] = {  # TODO: Update UI to sync the status list
     "PENDING": "Submitted",
     "RUNNING": "Running",
-    "PAUSED": "Paused",
+    "AWAITING": "Paused",
     "COMPLETED": "Completed",
     "FAILED": "Failed",
     "CANCELLED": "Cancelled",
 }
-"""Status name to legacy status name map according to ui convention."""
+"""Status name to legacy status name map according to UI convention."""
 
 
 class TaskStatusResponseItem(BaseModel):

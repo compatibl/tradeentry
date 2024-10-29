@@ -27,8 +27,8 @@ class TaskStatusEnum(IntEnum):
     RUNNING = 2
     """The task is running."""
 
-    PAUSED = 3
-    """The task is paused."""
+    AWAITING = 3
+    """The task is awaiting completion of other tasks and will have priority for subsequent execution."""
 
     COMPLETED = 4
     """The task has been completed (successful completion)."""

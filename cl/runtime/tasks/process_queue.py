@@ -43,19 +43,26 @@ class ProcessQueue(TaskQueue):
         no_task_cycles = 0
         while True:
             # Get pending tasks
-            tasks = context.load_all(Task)
-            tasks = [
-                task for task in tasks
+            # TODO: Use DB queries with filter by queue field
+            all_tasks = context.load_all(Task)
+            awaiting_tasks = [
+                task for task in all_tasks
+                if task.queue.queue_id == queue_id
+                and task.status == TaskStatusEnum.AWAITING
+            ]
+            pending_tasks = [
+                task for task in all_tasks
                 if task.queue.queue_id == queue_id
                 and task.status == TaskStatusEnum.PENDING
-            ]  # TODO: Use DB query
+            ]
 
-            if tasks:
+            # Awaiting tasks have priority over pending tasks
+            queued_tasks = awaiting_tasks + pending_tasks
+
+            if queued_tasks:
                 # Run found tasks sequentially
-                for task in tasks:
+                for task in queued_tasks:
                     task.run_task()
-                # Pause for 1 sec when there are tasks
-                pause_sec = 1
                 # Reset timeout and no task cycles counter
                 timeout_at = DatetimeUtil.now() + timeout_delta if timeout_delta is not None else None
                 no_task_cycles = 0
