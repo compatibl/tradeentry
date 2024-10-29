@@ -80,12 +80,15 @@ def test_vanilla_swap_similarity():
         run_count = 1
         basic_trade = "Sell 10y SOFR swap at 3.45%"
         parameter_description = "The words Buy or Sell, or the words Pay Fixed or Receive Fixed"
-        evaluated_trades = ["Sell 10y SOFR swap at 3.55%", "Sell 10y LIBOR swap at 3.45%",
-                            "Sell 10y LIBOR swap at 3.55%", "Sell 5y LIBOR swap at 3.55%",
-                            "Bank sells 5y LIBOR swap at 3.55%", "Bank sells 10y SOFR swap at 3.45%",
-                            "Short 10y SOFR fixed at 3.45%", "10y SOFR payer at 3.45%",
-                            "Short 10y LIBOR fixed at 3.45%", "7y SOFR payer at 2.55%",
-                            "Buy 10y SOFR swap at 3.45%", "Buy 5y LIBOR swap at 3.55%"]
+        evaluated_trades = [
+            "Sell 5y SOFR swap at 2.90%",
+            "Sell 5y ESTR swap at 2.90%",
+            "We receive fixed on 5y SOFR swap at 2.90%",
+            "We pay fixed on 5y SOFR swap at 2.90%",
+            "Client pays fixed on 5y ESTR swap at breakeven rate",
+            "SOFR swap, we receive fixed at 2.90%, 10y tenor",
+            "Vanilla swap on 3m Term SOFR at 2.90%, we pay fixed, 10y maturity",
+        ]
         summary_results = []
         stub_full_llms = get_stub_full_llms()
         for evaluated_trade in evaluated_trades:
