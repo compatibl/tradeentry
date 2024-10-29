@@ -1,6 +1,2 @@
 Running StubTask with label: 0
 Running StubTask with label: 1
-Running StubTask with label: 0
-Running StubTask with label: 1
-Running StubTask with label: 0
-Running StubTask with label: 1

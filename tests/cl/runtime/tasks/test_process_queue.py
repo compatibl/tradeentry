@@ -28,6 +28,7 @@ def test_process_queue():
 
         # Create queue
         queue = ProcessQueue(queue_id="test_process_queue")
+        queue.timeout_sec = 2
         queue_key = queue.get_key()
 
         # Create and save tasks

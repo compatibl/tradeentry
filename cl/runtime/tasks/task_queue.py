@@ -31,6 +31,9 @@ class TaskQueue(TaskQueueKey, ABC):
           the Running and optionally Paused state and ending in one of Completed, Failed, or Cancelled states
     """
 
+    timeout_sec: int = 10
+    """Optional timeout in seconds, queue will stop after reaching this timeout."""
+
     def get_key(self) -> TaskQueueKey:
         return TaskQueueKey(queue_id=self.queue_id)
 

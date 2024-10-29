@@ -12,24 +12,62 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import datetime as dt
+import time
 from dataclasses import dataclass
 from cl.runtime import Context
+from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_queue import TaskQueue
+from cl.runtime.tasks.task_status_enum import TaskStatusEnum
 
 
 @dataclass(slots=True, kw_only=True)
 class ProcessQueue(TaskQueue):
     """Execute tasks sequentially within the queue process."""
 
+    def init(self) -> None:
+        # Set default queue timeout with no tasks to 10 min
+        if self.timeout_sec is None:
+            self.timeout_sec = 10
+
     def start_queue(self) -> None:
         context = Context.current()
         queue_id = self.queue_id
-        for i in range(3):  # TODO:
+
+        # Set timeout
+        timeout_delta = dt.timedelta(seconds=self.timeout_sec) if self.timeout_sec is not None else None
+        timeout_at = DatetimeUtil.now() + timeout_delta if timeout_delta is not None else None
+
+        # Set the counter of while loop cycles with no tasks
+        no_task_cycles = 0
+        while True:
+            # Get pending tasks
             tasks = context.load_all(Task)
-            tasks = [task for task in tasks if task.queue.queue_id == queue_id ]  # TODO: Use DB query
-            for task in tasks:
-                task.run_task()
+            tasks = [
+                task for task in tasks
+                if task.queue.queue_id == queue_id
+                and task.status == TaskStatusEnum.PENDING
+            ]  # TODO: Use DB query
+
+            if tasks:
+                # Run found tasks sequentially
+                for task in tasks:
+                    task.run_task()
+                # Pause for 1 sec when there are tasks
+                pause_sec = 1
+                # Reset timeout and no task cycles counter
+                timeout_at = DatetimeUtil.now() + timeout_delta if timeout_delta is not None else None
+                no_task_cycles = 0
+            else:
+                if timeout_at is not None and DatetimeUtil.now() > timeout_at:
+                    break
+                else:
+                    no_task_cycles = no_task_cycles + 1
+
+            # Pause for 1 sec more for each no_task_cycle up to 10 sec
+            sleep_sec = min(round(pow(2, no_task_cycles)), 8)
+            time.sleep(sleep_sec)
 
     def stop_queue(self) -> None:
         raise NotImplementedError()
