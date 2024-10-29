@@ -37,7 +37,7 @@ def test_process_queue():
         context.save_many(tasks)
 
         # Start queue
-        queue.start_queue()
+        queue.run_start_queue()
 
         # Stop queue
         # TODO: Stop queue

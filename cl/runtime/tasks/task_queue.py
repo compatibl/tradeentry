@@ -38,10 +38,10 @@ class TaskQueue(TaskQueueKey, ABC):
         return TaskQueueKey(queue_id=self.queue_id)
 
     @abstractmethod
-    def start_queue(self) -> None:
+    def run_start_queue(self) -> None:
         """Run a query on tasks, run all returned tasks sequentially or in parallel, then repeat."""
 
     @abstractmethod
-    def stop_queue(self) -> None:
+    def run_stop_queue(self) -> None:
         """Exit after completing all currently executing tasks."""
 

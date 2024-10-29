@@ -138,11 +138,11 @@ class CeleryQueue(TaskQueue):
     """The maximum number of processes running concurrently."""
 
     # TODO: @abstractmethod
-    def start_queue(self) -> None:
+    def run_start_queue(self) -> None:
         """Start queue workers."""
 
     # TODO: @abstractmethod
-    def stop_queue(self) -> None:
+    def run_stop_queue(self) -> None:
         """Cancel all active runs and stop queue workers."""
 
     def submit_task(self, task: TaskKey):

@@ -31,7 +31,7 @@ class ProcessQueue(TaskQueue):
         if self.timeout_sec is None:
             self.timeout_sec = 10
 
-    def start_queue(self) -> None:
+    def run_start_queue(self) -> None:
         context = Context.current()
         queue_id = self.queue_id
 
@@ -76,5 +76,5 @@ class ProcessQueue(TaskQueue):
             sleep_sec = min(round(pow(2, no_task_cycles)), 8)
             time.sleep(sleep_sec)
 
-    def stop_queue(self) -> None:
+    def run_stop_queue(self) -> None:
         raise NotImplementedError()
