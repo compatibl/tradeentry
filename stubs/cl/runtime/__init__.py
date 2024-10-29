@@ -23,6 +23,5 @@ from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_primitive_fields im
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecordKey
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_singleton import StubDataclassSingleton
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_handlers import StubHandlers
-from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_viewers import StubViewers
-from stubs.cl.runtime.views.stub_plots import StubPlots
-from stubs.cl.runtime.views.stub_instance_viewers import StubInstanceViewers
+from stubs.cl.runtime.views.stub_plot_viewers import StubPlotViewers
+from stubs.cl.runtime.views.stub_data_viewers import StubDataViewers

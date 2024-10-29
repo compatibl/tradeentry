@@ -26,17 +26,17 @@ from cl.runtime.view.dag.nodes.add_text_node import AddTextNode
 from cl.runtime.view.dag.nodes.text_input_node import TextInputNode
 from cl.runtime.view.dag.nodes.text_output_node import TextOutputNode
 from cl.runtime.views.pdf_view import PdfView
-from stubs.cl.runtime.views.stub_instance_viewers_key import StubInstanceViewersKey
+from stubs.cl.runtime.views.stub_data_viewers_key import StubDataViewersKey
 
 _logger = getLogger(__name__)
 
 
 @dataclass(slots=True, kw_only=True)
-class StubInstanceViewers(StubInstanceViewersKey, RecordMixin[StubInstanceViewersKey]):
+class StubDataViewers(StubDataViewersKey, RecordMixin[StubDataViewersKey]):
     """Stub record base class."""
 
-    def get_key(self) -> StubInstanceViewersKey:
-        return StubInstanceViewersKey(stub_id=self.stub_id)
+    def get_key(self) -> StubDataViewersKey:
+        return StubDataViewersKey(stub_id=self.stub_id)
 
     def view_self(self) -> Self:
         """This viewer will open by default instead of the editor."""
@@ -54,7 +54,7 @@ Line 2
 Line 3
 """
 
-    def view_key(self) -> StubInstanceViewersKey:
+    def view_key(self) -> StubDataViewersKey:
         """Viewer returning a key."""
         return self.get_key()
 
@@ -62,7 +62,7 @@ Line 3
         """Viewer returning a record."""
         return self
 
-    def view_key_list(self) -> List[StubInstanceViewersKey]:
+    def view_key_list(self) -> List[StubDataViewersKey]:
         """Stub viewer returning a list of keys."""
         return 3 * [self.get_key()]
 
@@ -123,7 +123,7 @@ Line 3
 
     def _view_pdf(self):  # TODO: Not supported in this release
         """Stub viewer returning a PDF document."""
-        file_path = os.path.join(os.path.dirname(__file__), "stub_instance_viewers.pdf")
+        file_path = os.path.join(os.path.dirname(__file__), "stub_data_viewers.pdf")
         with open(file_path, mode="rb") as file:
             content = file.read()
         return PdfView(pdf_bytes=content)

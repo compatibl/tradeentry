@@ -11,29 +11,36 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import inspect
+from typing import Type, List
 
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
+
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
 from cl.runtime.routers.entity.list_panels_response_item import ListPanelsResponseItem
+from stubs.cl.runtime import StubDataViewers
+
+
+def _get_viewer_names_in_pascal_case(record_type: Type) -> List[str]:
+    """Get methods with name that starts from 'view_'."""
+    result = []
+    for name, func in inspect.getmembers(record_type, predicate=inspect.isfunction):
+        if name.startswith("view_"):
+            name = name.removeprefix("view_")
+            name_in_pascal_case = CaseUtil.snake_to_title_case(name)
+            result.append(name_in_pascal_case)
+    return result
+
 
 requests = [
-    {"type": "StubViewers"},
-    {"type": "StubViewers", "key": "L"},
-    {"type": "StubViewers", "key": "L", "dataset": "xyz"},
-    {"type": "StubViewers", "key": "L", "dataset": "xyz", "user": "TestUser"},
-]
-expected_result = [
-    {"Name": "Instance 1A"},
-    {"Name": "Instance 1B"},
-    {"Name": "Instance 1C"},
-    {"Name": "Instance 1D"},
-    {"Name": "Instance 2A"},
-    {"Name": "Instance 2B"},
-    {"Name": "Instance 2C"},
-    {"Name": "Instance 3A"},
+    {"type": "StubDataViewers"},
+    {"type": "StubDataViewers", "key": "L"},
+    {"type": "StubDataViewers", "key": "L", "dataset": "xyz"},
+    {"type": "StubDataViewers", "key": "L", "dataset": "xyz", "user": "TestUser"},
 ]
 
 
@@ -52,7 +59,9 @@ def test_method():
         assert all(isinstance(x, ListPanelsResponseItem) for x in result)
 
         # Check if each item in the result is a valid ListPanelsResponseItem instance
-        assert result == [ListPanelsResponseItem(**x) for x in expected_result]
+        panel_names_set = set(x.name for x in result)
+        expected_panel_names_set = set(_get_viewer_names_in_pascal_case(StubDataViewers))
+        assert panel_names_set == expected_panel_names_set
 
 
 def test_api():
@@ -75,8 +84,10 @@ def test_api():
             assert response.status_code == 200
             result = response.json()
 
-            # Check result
-            assert result == expected_result
+            # Check if each item in the result is a valid ListPanelsResponseItem instance
+            panel_names_set = set(x["Name"] for x in result)
+            expected_panel_names_set = set(_get_viewer_names_in_pascal_case(StubDataViewers))
+            assert panel_names_set == expected_panel_names_set
 
 
 if __name__ == "__main__":

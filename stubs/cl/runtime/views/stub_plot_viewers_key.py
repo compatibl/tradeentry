@@ -19,7 +19,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class StubPlotsKey(KeyMixin):
+class StubPlotViewersKey(KeyMixin):
     """Key for class with plot viewers."""
 
     stub_id: str = field()
@@ -27,4 +27,4 @@ class StubPlotsKey(KeyMixin):
 
     @classmethod
     def get_key_type(cls) -> Type:
-        return StubPlotsKey
+        return StubPlotViewersKey

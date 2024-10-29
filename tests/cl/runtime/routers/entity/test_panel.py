@@ -20,18 +20,18 @@ from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.entity.panel_request import PanelRequest
 from cl.runtime.routers.entity.panel_response_util import PanelResponseUtil
 from cl.runtime.serialization.string_serializer import StringSerializer
-from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_viewers import StubViewers
+from stubs.cl.runtime import StubDataViewers
 
 # create stub with viewers
-stub_viewers = StubViewers()
+stub_viewers = StubDataViewers()
 key_serializer = StringSerializer()
 key_str = key_serializer.serialize_key(stub_viewers.get_key())
 
 
 requests = [
-    {"type": "StubViewers", "panel_id": "View Instance 1A", "key": key_str},
-    {"type": "StubViewers", "panel_id": "View Instance 1B", "key": key_str},
-    {"type": "StubViewers", "panel_id": "View Instance 1C", "key": key_str},
+    {"type": "StubDataViewers", "panel_id": "View Instance 1A", "key": key_str},
+    {"type": "StubDataViewers", "panel_id": "View Instance 1B", "key": key_str},
+    {"type": "StubDataViewers", "panel_id": "View Instance 1C", "key": key_str},
 ]
 
 expected_results = [
@@ -45,7 +45,7 @@ expected_results = [
         }
     },
     {"ViewOf": None},
-    {"ViewOf": {"StubId": key_str, "_t": "StubViewersKey"}},
+    {"ViewOf": {"StubId": key_str, "_t": "StubDataViewersKey"}},
 ]
 
 

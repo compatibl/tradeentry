@@ -22,20 +22,20 @@ from cl.runtime.plots.confusion_matrix_plot import ConfusionMatrixPlot
 from cl.runtime.plots.confusion_matrix_plot_style import ConfusionMatrixPlotStyle
 from cl.runtime.records.record_mixin import TKey
 from cl.runtime.views.plot_view import PlotView
-from stubs.cl.runtime.views.stub_plots_key import StubPlotsKey
+from stubs.cl.runtime.views.stub_plot_viewers_key import StubPlotViewersKey
 
 
 @dataclass(slots=True, kw_only=True)
-class StubPlots(StubPlotsKey, RecordMixin[StubPlotsKey]):
+class StubPlotViewers(StubPlotViewersKey, RecordMixin[StubPlotViewersKey]):
     """Class with plot viewers."""
 
     def get_key(self) -> TKey:
-        return StubPlotsKey(stub_id=self.stub_id)
+        return StubPlotViewersKey(stub_id=self.stub_id)
 
     @classmethod
     def _create_confusion_matrix_plot(cls):
         """Create confusion matrix plot from data in csv."""
-        raw_data = pd.read_csv(Path(__file__).resolve().parent / "./confusion_matrix_plot.csv")
+        raw_data = pd.read_csv(Path(__file__).resolve().parent / "./stub_plot_viewers_confusion_matrix.csv")
 
         matrix_plot_style = ConfusionMatrixPlotStyle()
         matrix_plot_style.dark_theme = UiAppState.get_current_user_app_theme() == "Dark"

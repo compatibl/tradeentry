@@ -18,7 +18,7 @@ from cl.runtime.records.key_mixin import KeyMixin
 
 
 @dataclass(slots=True, kw_only=True)
-class StubInstanceViewersKey(KeyMixin):
+class StubDataViewersKey(KeyMixin):
     """Stub record base class."""
 
     stub_id: str = "abc"
@@ -26,4 +26,4 @@ class StubInstanceViewersKey(KeyMixin):
 
     @classmethod
     def get_key_type(cls) -> Type:
-        return StubInstanceViewersKey
+        return StubDataViewersKey
