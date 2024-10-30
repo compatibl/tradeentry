@@ -15,6 +15,9 @@
 import re
 from dataclasses import dataclass
 from typing import Type
+
+from typing_extensions import Self
+
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.primitive.string_util import StringUtil
@@ -53,6 +56,18 @@ class EntryKey(KeyMixin):
     @classmethod
     def get_key_type(cls) -> Type:
         return EntryKey
+
+    @classmethod
+    def get_entry_key(
+        cls,
+        description: str,
+        body: str | None = None,
+        data: str | None = None,
+    ) -> Self:
+        """Create the unique identifier from parameters."""
+        record_type = cls.__name__
+        result = EntryKey(entry_id=cls.get_entry_id(record_type, description, body=body, data=data))
+        return result
 
     @classmethod
     def get_entry_id(

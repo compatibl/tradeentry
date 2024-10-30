@@ -72,6 +72,9 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
 
     def run_reset(self) -> None:
         """Clear all output  fields and verification flag."""
+        if self.verified:
+            raise UserError(f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Reset."
+                            f"This is a safety feature to prevent overwriting verified entries. ")
         record_type = type(self)
         result = record_type(
             description=self.description,
