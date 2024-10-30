@@ -85,7 +85,11 @@ class AmountEntry(Entry):
         input_text = self.get_text()
 
         # Extract the amount
-        amount_str = retriever.retrieve(self.entry_id, input_text, _NUMERICAL_VALUE, is_required=True)
+        amount_str = retriever.retrieve(
+            input_text=input_text,
+            param_description=_NUMERICAL_VALUE,
+            is_required=True,
+        )
         self.amount = self._parse_and_check_amount(amount_str)
 
         # Save self to DB
