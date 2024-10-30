@@ -13,7 +13,8 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses_extensions import missing
+from cl.runtime.exceptions.error_util import ErrorUtil
+from cl.runtime.primitive.float_util import FloatUtil
 from cl.convince.entries.entry import Entry
 from cl.convince.entries.entry_key import EntryKey
 
@@ -22,8 +23,43 @@ from cl.convince.entries.entry_key import EntryKey
 class AmountEntry(Entry):
     """Amount with or without currency specification."""
 
-    amount: float = missing()
+    amount: float | None = None
     """Numerical value for the amount including any units multiplier (e.g. 1,000,000 for 1m)."""
 
     currency_entry: EntryKey | None = None
     """Optional entry for the currency if specified along with the amount."""
+
+    def init(self) -> None:
+        # Perform check only if the amount is set
+        if self.amount is not None:
+
+            # Convert to float value if provided as a string, detailed error message if the conversion fails
+            if isinstance(self.amount, str):
+                try:
+                    self.amount = float(self.amount)
+                except Exception as e:  # noqa
+                    # Rethrow with details
+                    raise ErrorUtil.value_error(
+                        self.amount,
+                        details=f"Conversion of amount to a floating number failed.\n{e}",
+                        value_name="amount",
+                        data_type=AmountEntry.__name__,
+                    )
+
+            # Check range with tolerance
+            if FloatUtil.less(self.amount, 0.0):
+                raise ErrorUtil.value_error(
+                    self.amount,
+                    details=f"The amount is negative.",
+                    value_name="amount",
+                    data_type=AmountEntry.__name__,
+                )
+            elif FloatUtil.less(self.amount, 1.0):
+                raise ErrorUtil.value_error(
+                    self.amount,
+                    details=f"""
+    The amount is less than one. Choosing the units that require fractional amounts 
+    is contrary to the capital markets conventions.""",
+                    value_name="amount",
+                    data_type=AmountEntry.__name__,
+                )
