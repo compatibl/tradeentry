@@ -16,10 +16,7 @@ from dataclasses import dataclass
 from pathlib import Path
 import pandas as pd
 from cl.runtime import Context
-from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.plots.confusion_matrix_plot import ConfusionMatrixPlot
-from cl.runtime.plots.confusion_matrix_plot_style import ConfusionMatrixPlotStyle
-from cl.runtime.records.record_mixin import TKey
 from cl.runtime.views.plot_view import PlotView
 from stubs.cl.runtime.views.stub_viewers import StubViewers
 

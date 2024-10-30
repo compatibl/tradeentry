@@ -19,7 +19,6 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 from cl.runtime import Context
-from cl.runtime.plots.heat_map_plot_style import HeatMapPlotStyle
 from cl.runtime.plots.matplotlib_plot import MatplotlibPlot
 from cl.runtime.plots.matplotlib_util import MatplotlibUtil
 from cl.runtime.plots.plot import Plot
@@ -53,8 +52,7 @@ class HeatMapPlot(MatplotlibPlot):
 
     def _create_figure(self) -> plt.Figure:
         # Load style object or create with default settings if not specified
-        style = self._load_style()
-        theme = self._get_pyplot_theme(style=style)
+        theme = self._get_pyplot_theme()
 
         received_df, expected_df = (
             pd.DataFrame.from_records([values, self.col_labels, self.row_labels], index=["Value", "Col", "Row"])
@@ -80,12 +78,3 @@ class HeatMapPlot(MatplotlibPlot):
             fig.tight_layout()
 
         return fig
-
-    def _load_style(self) -> HeatMapPlotStyle:
-        """Load style object or create with default settings if not specified."""
-        style = Context.current().load_one(HeatMapPlotStyle, self.style, is_key_optional=True)
-        if style is None:
-            # Use default values if not found
-            style = HeatMapPlotStyle(plot_style_id="Default")
-            style.init_all()
-        return style

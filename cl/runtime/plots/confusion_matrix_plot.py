@@ -20,7 +20,6 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 from cl.runtime import Context
-from cl.runtime.plots.confusion_matrix_plot_style import ConfusionMatrixPlotStyle
 from cl.runtime.plots.matplotlib_plot import MatplotlibPlot
 from cl.runtime.plots.matplotlib_util import MatplotlibUtil
 from cl.runtime.plots.matrix_util import MatrixUtil
@@ -46,10 +45,12 @@ class ConfusionMatrixPlot(MatplotlibPlot):
     y_label: str | None = "Correct"
     """y-axis label."""
 
+    label_font_size: int = 6
+    """Font size of cell labels."""
+
     def _create_figure(self) -> plt.Figure:
         # Load style object or create with default settings if not specified
-        style = self._load_style()
-        theme = self._get_pyplot_theme(style=style)
+        theme = self._get_pyplot_theme()
 
         # TODO: consider moving
         data, annotation_text = self._create_confusion_matrix()
@@ -60,7 +61,7 @@ class ConfusionMatrixPlot(MatplotlibPlot):
             cmap = LinearSegmentedColormap.from_list("rg", ["g", "y", "r"], N=256)
 
             im = MatplotlibUtil.heatmap(data.values, data.index.tolist(), data.columns.tolist(), ax=axes, cmap=cmap)
-            MatplotlibUtil.annotate_heatmap(im, labels=annotation_text, textcolors="black", size=style.label_font_size)
+            MatplotlibUtil.annotate_heatmap(im, labels=annotation_text, textcolors="black", size=self.label_font_size)
 
             # Set figure and axes labels
             axes.set_xlabel(self.x_label)
@@ -70,15 +71,6 @@ class ConfusionMatrixPlot(MatplotlibPlot):
             fig.tight_layout()
 
         return fig
-
-    def _load_style(self) -> ConfusionMatrixPlotStyle:
-        """Load style object or create with default settings if not specified."""
-        style = Context.current().load_one(ConfusionMatrixPlotStyle, self.style, is_key_optional=True)
-        if style is None:
-            # Use default values if not found
-            style = ConfusionMatrixPlotStyle(plot_style_id="Default")
-            style.init_all()
-        return style
 
     def _create_confusion_matrix(self) -> Tuple[pd.DataFrame, List[List[str]]]:
         raw_data = pd.DataFrame({"Actual": self.expected_categories, "Predicted": self.received_categories})

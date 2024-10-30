@@ -22,7 +22,6 @@ from cl.runtime import View
 from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.plots.plot import Plot
-from cl.runtime.plots.plot_style import PlotStyle
 from cl.runtime.views.png_view import PngView
 
 
@@ -33,22 +32,6 @@ class MatplotlibPlot(Plot):
     @abstractmethod
     def _create_figure(self) -> plt.Figure:
         """Return Matplotlib figure object for the plot."""
-
-    def _load_style(self) -> PlotStyle:
-        """Load style object or create with default settings if not specified."""
-        style = Context.current().load_one(PlotStyle, self.style, is_key_optional=True)
-        if style is None:
-            # Use default values if not found
-            style = PlotStyle(plot_style_id="Default")
-            style.init_all()
-        return style
-
-    def _get_pyplot_theme(self, style: PlotStyle) -> str:
-        """Get value to be set as matplotlib.pyplot theme."""
-        is_dark_theme = UiAppState.get_current_user_app_theme() == "Dark"  # TODO: Move to PlotSettings
-        theme = "dark_background" if is_dark_theme else "default"
-
-        return theme
 
     def get_view(self) -> View:
         """Return a view object for the plot, implement using 'create_figure' method."""
@@ -91,3 +74,9 @@ class MatplotlibPlot(Plot):
         # Save
         file_path = os.path.join(base_dir, f"{self.plot_id}.png")
         fig.savefig(file_path, transparent=transparent)
+
+    def _get_pyplot_theme(self) -> str:
+        """Get value to be set as matplotlib.pyplot theme."""
+        is_dark_theme = UiAppState.get_current_user_app_theme() == "Dark"  # TODO: Move to PlotSettings
+        theme = "dark_background" if is_dark_theme else "default"
+        return theme

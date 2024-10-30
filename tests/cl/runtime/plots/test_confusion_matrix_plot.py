@@ -19,7 +19,6 @@ import pandas as pd
 from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.plots.confusion_matrix_plot import ConfusionMatrixPlot
-from cl.runtime.plots.confusion_matrix_plot_style import ConfusionMatrixPlotStyle
 from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
 
 
@@ -43,7 +42,6 @@ def test_dark_theme(local_dir_fixture):
         plot.title = "Confusion Matrix"
         plot.expected_categories = raw_data["True Category"].values.tolist()
         plot.received_categories = raw_data["Predicted"].values.tolist()
-        plot.style = ConfusionMatrixPlotStyle(dark_theme=True)
         plot.save_png()
 
 

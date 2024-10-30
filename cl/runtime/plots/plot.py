@@ -16,16 +16,12 @@ from abc import ABC
 from abc import abstractmethod
 from dataclasses import dataclass
 from cl.runtime.plots.plot_key import PlotKey
-from cl.runtime.plots.plot_style_key import PlotStyleKey
 from cl.runtime.records.record_mixin import RecordMixin
 
 
 @dataclass(slots=True, kw_only=True)
 class Plot(PlotKey, RecordMixin[PlotKey], ABC):
     """Base class for plot objects."""
-
-    style: PlotStyleKey | None = None
-    """Color and layout options."""
 
     def get_key(self) -> PlotKey:
         return PlotKey(plot_id=self.plot_id)

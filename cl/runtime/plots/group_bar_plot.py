@@ -18,7 +18,6 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 from cl.runtime import Context
-from cl.runtime.plots.group_bar_plot_style import GroupBarPlotStyle
 from cl.runtime.plots.matplotlib_plot import MatplotlibPlot
 from cl.runtime.records.dataclasses_extensions import field
 
@@ -50,8 +49,7 @@ class GroupBarPlot(MatplotlibPlot):
 
     def _create_figure(self) -> plt.Figure:
         # Load style object or create with default settings if not specified
-        style = self._load_style()
-        theme = self._get_pyplot_theme(style=style)
+        theme = self._get_pyplot_theme()
 
         data = (
             pd.DataFrame.from_records([self.values, self.bar_labels, self.group_labels], index=["Value", "Col", "Row"])
@@ -99,12 +97,3 @@ class GroupBarPlot(MatplotlibPlot):
             axes.legend()
 
         return fig
-
-    def _load_style(self) -> GroupBarPlotStyle:
-        """Load style object or create with default settings if not specified."""
-        style = Context.current().load_one(GroupBarPlotStyle, self.style, is_key_optional=True)
-        if style is None:
-            # Use default values if not found
-            style = GroupBarPlotStyle(plot_style_id="Default")
-            style.init_all()
-        return style
