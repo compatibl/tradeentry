@@ -22,7 +22,17 @@ from cl.runtime.primitive.float_util import FloatUtil
 from cl.convince.entries.entry import Entry
 from cl.convince.entries.entry_key import EntryKey
 
-_NUMERICAL_VALUE = "Numerical value of the amount excluding any units."
+_NUMERICAL_VALUE = """Numerical value of the amount consisting only of digits excluding any currency symbols such as
+'$', 'USD' or 'dollars' and excluding any unit suffix such as 'm' or 'millions', 'b' or 'bn' or 'billions', etc.
+Ensure you do not include anything other than digits, even if additional non-digit symbols are not separated by a space
+from the digits which may happen especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100}m
+"""
 _CURRENCY = "Currency as ISO-4217 code or natural language description if present."
 
 
@@ -31,7 +41,7 @@ class AmountEntry(Entry):
     """Amount with or without currency specification."""
 
     amount: float | None = None
-    """Numerical value for the amount including any units multiplier (e.g. 1,000,000 for 1m)."""
+    """Numerical value for the amount excluding any units multiplier (e.g. 10 for 10m)."""
 
     currency_entry: EntryKey | None = None
     """Optional entry for the currency if specified along with the amount."""
