@@ -33,19 +33,3 @@ class Retriever(RetrieverKey, RecordMixin[RetrieverKey], ABC):
         if self.retriever_id is None:
             self.retriever_id = Timestamp.create()
 
-    # TODO: Use keyword params
-    @abstractmethod
-    def retrieve(
-        self,
-        input_text: str,
-        param_description: str,
-        param_samples: List[str] | None = None,
-    ) -> str | None:
-        """
-        Retrieve the specified parameter from the entry (return None if the parameter is not found).
-
-        Args:
-            input_text: The text from which the data is extracted
-            param_description: Parameter description
-            param_samples: Optional parameter value samples for a few-shot prompt
-        """

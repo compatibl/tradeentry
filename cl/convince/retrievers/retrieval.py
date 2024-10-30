@@ -13,32 +13,28 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from typing import List
+
+from cl.convince.retrievers.retriever_key import RetrieverKey
 from cl.runtime import RecordMixin
 from cl.convince.retrievers.retrieval_key import RetrievalKey
+from cl.runtime.primitive.timestamp import Timestamp
+from cl.runtime.records.dataclasses_extensions import missing
 
 
 @dataclass(slots=True, kw_only=True)
-class Retrieval(RetrievalKey, RecordMixin[RetrievalKey]):
-    """Retrieves the requested data from the text."""
+class Retrieval(RetrievalKey, RecordMixin[RetrievalKey]):  # TODO: Derive from Task
+    """Records inputs and results of a retrieval."""
 
-    input_text: str
-    """Text from which the parameter is retrieved."""
+    retriever: RetrieverKey = missing()
+    """Retriever which generated this retrieval."""
 
-    param_description: str
-    """Description of the retrieved parameter."""
-
-    param_samples: List[str] | None = None
-    """Samples of possible retrieved parameter values for few-shot prompts."""
-
-    success: bool | None = None
-    """True for success and False for failure (populated after the retrieval and may be used by a validating prompt)."""
-
-    param_value: str | None = None
-    """Value of the extracted parameter (populated after the retrieval and may be used by a validating prompt)."""
-
-    justification: str | None = None
-    """Justification (populated after the retrieval and may be used by a validating prompt)."""
+    trial_label: str | None = None
+    """Optional trial label when running multiple trials."""
 
     def get_key(self) -> RetrievalKey:
         return RetrievalKey(retrieval_id=self.retrieval_id)
+
+    def init(self) -> None:
+        """Same as __init__ but can be used when field values are set both during and after construction."""
+        if self.retrieval_id is None:
+            self.retrieval_id = Timestamp.create()

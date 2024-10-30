@@ -23,8 +23,8 @@ from cl.convince.prompts.prompt_key import PromptKey
 class PromptEntry(Entry):
     """Uses an LLM prompt for the implementation."""
 
-    llm: LlmKey = missing()
-    """LLM used to process the entry."""
-
     prompt: PromptKey = missing()
     """Prompt used to process the entry."""
+
+    llm: LlmKey | None = None
+    """LLM used to process the entry."""

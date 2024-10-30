@@ -15,6 +15,8 @@
 import re
 from dataclasses import dataclass
 from typing import List
+
+from cl.convince.retrievers.annotating_retrieval import AnnotatingRetrieval
 from cl.runtime import Context
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.primitive.string_util import StringUtil
@@ -76,46 +78,64 @@ class AnnotatingRetriever(Retriever):
 
     def retrieve(
         self,
+        *,
         input_text: str,
         param_description: str,
+        is_required: bool = False,
         param_samples: List[str] | None = None,
-    ) -> str:
+    ) -> str | None:
         # Get LLM and prompt
-        llm = Context.current().load_one(Llm, self.llm)
-        prompt = Context.current().load_one(Prompt, self.prompt)
-
-        # Strip starting and ending whitespace
-        input_text = input_text.strip()  # TODO: Perform more advanced normalization
-
-        # Create a retrieval record
-        retrieval = Retrieval(
-            input_text=input_text,
-            param_description=param_description,
-            param_samples=param_samples,
-        )
-
-        # Create braces extraction prompt
-        rendered_prompt = prompt.render(params=retrieval)
+        context = Context.current()
+        llm = context.load_one(Llm, self.llm)
+        prompt = context.load_one(Prompt, self.prompt)
 
         trial_count = 2
         for trial_index in range(trial_count):
+            trial_label = str(trial_index)
             is_last_trial = trial_index == trial_count - 1
             try:
+                # Strip starting and ending whitespace
+                input_text = input_text.strip()  # TODO: Perform more advanced normalization
+
+                # Create a retrieval record and populate it with inputs, each trial will have a new one
+                retrieval = AnnotatingRetrieval(
+                    retriever=self.get_key(),
+                    trial_label=trial_label,
+                    input_text=input_text,
+                    param_description=param_description,
+                    param_samples=param_samples,
+                )
+
+                # Create a brace extraction prompt using input parameters
+                rendered_prompt = prompt.render(params=retrieval)
+
                 # Get text annotated with braces and check that the only difference is braces and whitespace
-                completion = llm.completion(rendered_prompt, trial_id=trial_index)
+                completion = llm.completion(rendered_prompt, trial_id=trial_label)
 
                 # Extract the results
-                json_result = RetrieverUtil.extract_json(completion)  # TODO(Major): Do not depend on stubs
-                if json_result is None:
-                    raise UserError(f"Could not extract JSON from the LLM response. LLM response:\n{completion}\n")
-                success_text = json_result.get("success", None)
-                annotated_text = json_result.get("annotated_text", None)
-                justification = json_result.get("justification", None)
+                json_result = RetrieverUtil.extract_json(completion)
+                if json_result is not None:
+                    retrieval.success = json_result.get("success", None)
+                    annotated_text = json_result.get("annotated_text", None)
+                    justification = json_result.get("justification", None)
+                    context.save_one(retrieval)
+                else:
+                    retrieval.success = "N"
+                    retrieval.justification = (f"Could not extract JSON from the LLM response. "
+                                               f"LLM response:\n{completion}\n")
+                    context.save_one(retrieval)
+                    raise UserError(retrieval.justification)
 
-                # Go to the next trial in case of failure
-                success = Entry.parse_required_bool(success_text, field_name="success_text")
+                # Return None if not found
+                success = Entry.parse_required_bool(retrieval.success, field_name="success")
                 if not success:
-                    continue
+                    # Parameter is not found
+                    if is_required:
+                        # Required, continue with the next trial
+                        continue
+                    else:
+                        # Optional, return None
+                        return None
 
                 if StringUtil.is_not_empty(annotated_text):
                     # Compare after removing the curly brackets
@@ -158,7 +178,7 @@ class AnnotatingRetriever(Retriever):
                 retrieval.success = True
                 retrieval.param_value = param_value
                 retrieval.justification = justification
-                Context.current().save_one(retrieval)
+                context.save_one(retrieval)
 
                 # Return only the parameter value
                 return param_value
