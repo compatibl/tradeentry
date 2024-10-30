@@ -41,10 +41,13 @@ class AmountEntry(Entry):
     """Amount with or without currency specification."""
 
     amount: float | None = None
-    """Numerical value for the amount excluding any units multiplier (e.g. 10 for 10m)."""
+    """Numerical value for the amount excluding any units multiplier or currency (e.g. '10' for '$10m')."""
+
+    units_entry: EntryKey | None = None
+    """Optional entry for the units specified along with the numerical amount (e.g. 'm' for '$10m')."""
 
     currency_entry: EntryKey | None = None
-    """Optional entry for the currency if specified along with the amount."""
+    """Optional entry for the currency if specified along with the amount (e.g. '$' for '$10m')."""
 
     def init(self) -> None:
         # Perform amount checks only if it is set
