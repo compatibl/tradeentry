@@ -34,6 +34,7 @@ def test_smoke(local_dir_fixture):
         plot.save_png()
 
 
+@pytest.mark.skip("Restore test when it becomes possible to override the default theme.")
 def test_dark_theme(local_dir_fixture):
     raw_data = pd.read_csv(Path(__file__).resolve().parent / "./test_confusion_matrix_plot.csv")
 

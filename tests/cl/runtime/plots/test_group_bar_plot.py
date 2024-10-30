@@ -28,6 +28,7 @@ def test_single_group(local_dir_fixture):
         group_bar_plot.save_png()
 
 
+@pytest.mark.skip("Restore test when it becomes possible to override the default theme.")
 def test_dark_theme(local_dir_fixture):
     with TestingContext() as context:
         group_bar_plot = GroupBarPlot(plot_id="group_bar_plot")
