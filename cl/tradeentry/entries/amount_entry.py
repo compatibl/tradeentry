@@ -22,10 +22,11 @@ from cl.runtime.primitive.float_util import FloatUtil
 from cl.convince.entries.entry import Entry
 from cl.convince.entries.entry_key import EntryKey
 
-_NUMERICAL_VALUE = """Numerical value of the amount consisting only of digits excluding any currency symbols such as
-'$', 'USD' or 'dollars' and excluding any unit suffix such as 'm' or 'millions', 'b' or 'bn' or 'billions', etc.
-Ensure you do not include anything other than digits, even if additional non-digit symbols are not separated by a space
-from the digits which may happen especially with the currency amount.
+_NUMERICAL_VALUE = """Numerical value of the amount (e.g. '10') or its text representation (e.g. 'ten') 
+excluding any currency symbols such as '$', 'USD' or 'dollars' and excluding any units (multiplier) such as 
+'m' or 'millions', 'b' or 'bn' or 'billions'.
+Ensure you do not include anything other than digits, even if additional non-digit symbols are not
+separated by a space from the digits which may happen especially with the currency amount.
 
 Pay attention to the examples where you initially provided an incorrect answer:
 
@@ -40,7 +41,7 @@ _CURRENCY = "Currency as ISO-4217 code or natural language description if presen
 class AmountEntry(Entry):
     """Amount with or without currency specification."""
 
-    amount: float | None = None
+    amount: float | None = None  # TODO: Make it number entry
     """Numerical value for the amount excluding any units multiplier or currency (e.g. '10' for '$10m')."""
 
     units_entry: EntryKey | None = None
@@ -83,8 +84,8 @@ class AmountEntry(Entry):
         context = Context.current()
         input_text = self.get_text()
 
-        # Pay or receive fixed flag is described side
-        amount_str = retriever.retrieve(self.entry_id, input_text, _NUMERICAL_VALUE)
+        # Extract the amount
+        amount_str = retriever.retrieve(self.entry_id, input_text, _NUMERICAL_VALUE, is_required=True)
         self.amount = self._parse_and_check_amount(amount_str)
 
         # Save self to DB
