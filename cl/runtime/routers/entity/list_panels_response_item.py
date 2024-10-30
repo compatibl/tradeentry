@@ -15,11 +15,15 @@
 from __future__ import annotations
 from typing import List
 from pydantic import BaseModel
+
+from cl.runtime import Context
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.handler_declare_decl import HandlerDeclareDecl
 from cl.runtime.schema.schema import Schema
+
+from cl.runtime.serialization.string_serializer import StringSerializer
 
 
 class ListPanelsResponseItem(BaseModel):
@@ -40,8 +44,21 @@ class ListPanelsResponseItem(BaseModel):
         """Implements /entity/list_panels route."""
 
         # TODO: Return saved view names
-        type_ = Schema.get_type_by_short_name(request.type)
-        handlers_block = HandlerDeclareBlockDecl.get_type_methods(type_, inherit=True).handlers
+        request_type = Schema.get_type_by_short_name(request.type)
+
+        # Get actual type from record if request.key is not None
+        if request.key is not None:
+            key_serializer = StringSerializer()
+
+            # Deserialize ui key
+            key = key_serializer.deserialize_key(request.key, request_type.get_key_type())
+
+            record = Context.current().load_one(request_type, key)
+            actual_type = type(record)
+        else:
+            actual_type = request_type
+
+        handlers_block = HandlerDeclareBlockDecl.get_type_methods(actual_type, inherit=True).handlers
 
         if handlers_block is not None and handlers_block:
             return [

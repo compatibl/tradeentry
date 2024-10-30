@@ -58,17 +58,6 @@ class PanelResponseUtil(BaseModel):
         # Get type of the record
         type_ = Schema.get_type_by_short_name(request.type)
 
-        # Check if the selected type has the needed viewer and get its name (only viewer's label is provided)
-        handlers = HandlerDeclareBlockDecl.get_type_methods(type_, inherit=True).handlers
-        if (
-            handlers is not None
-            and handlers
-            and (found_viewers := [h.name for h in handlers if h.label == request.panel_id and h.type_ == "Viewer"])
-        ):
-            viewer_name: str = found_viewers[0]
-        else:
-            raise Exception(f"Type {request.type} has no view with the name {request.panel_id}.")
-
         # Deserialize key from string to object
         serializer = StringSerializer()
         key_obj = serializer.deserialize_key(data=request.key, type_=type_.get_key_type())
@@ -78,10 +67,22 @@ class PanelResponseUtil(BaseModel):
 
         # Load record from the database
         record = db.load_one(type_, key_obj, dataset=request.dataset)
+        record_type = type(record)
         if record is None:
             raise RuntimeError(
                 f"Record with type {request.type} and key {request.key} is not found in dataset {request.dataset}."
             )
+
+        # Check if the selected type has the needed viewer and get its name (only viewer's label is provided)
+        handlers = HandlerDeclareBlockDecl.get_type_methods(record_type, inherit=True).handlers
+        if (
+            handlers is not None
+            and handlers
+            and (found_viewers := [h.name for h in handlers if h.label == request.panel_id and h.type_ == "Viewer"])
+        ):
+            viewer_name: str = found_viewers[0]
+        else:
+            raise Exception(f"Type {record_type.__name__} has no view with the name {request.panel_id}.")
 
         # Call the viewer and get the result
         viewer = getattr(record, viewer_name)
