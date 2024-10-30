@@ -25,6 +25,10 @@ default:
     - preloads/cl
     - preloads/stubs
 
+  # Documented in TradeEntrySettings class
+  tradeentry_mini_llm: gpt-4o-mini
+  tradeentry_full_llm: gpt-4o
+
 # Test environment
 test:
 
