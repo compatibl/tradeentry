@@ -37,6 +37,9 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
     data: str | None = None
     """Optional supporting data in YAML format (included in MD5 hash)."""
 
+    lang: str | None = "en"
+    """ISO 639-1 two-letter lowercase language code (defaults to 'en')."""
+
     approved_by: UserKey | None = None
     """User who recorded the approval."""
 
