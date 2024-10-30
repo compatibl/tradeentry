@@ -67,22 +67,46 @@ class VanillaSwapEntry(TradeEntry):
         input_text = self.get_text()
 
         # Pay or receive fixed flag is described side
-        pay_receive_fixed = PayReceiveFixedEntry(description=retriever.retrieve(self.entry_id, input_text, _SIDE))
+        pay_receive_fixed = PayReceiveFixedEntry(
+            description=retriever.retrieve(
+                input_text=input_text,
+                param_description=_SIDE,
+                is_required=False,
+            )
+        )
         context.save_one(pay_receive_fixed)
         self.pay_receive_fixed = pay_receive_fixed.get_key()
 
         # Tenor
-        maturity = DateOrTenorEntry(description=retriever.retrieve(self.entry_id, input_text, _MATURITY))
+        maturity = DateOrTenorEntry(
+            description=retriever.retrieve(
+                input_text=input_text,
+                param_description=_MATURITY,
+                is_required=False,
+            )
+        )
         context.save_one(maturity)
         self.maturity = maturity.get_key()
 
         # Floating rate index
-        float_index = RatesIndexEntry(description=retriever.retrieve(self.entry_id, input_text, _FLOAT_INDEX))
+        float_index = RatesIndexEntry(
+            description=retriever.retrieve(
+                input_text=input_text,
+                param_description=_FLOAT_INDEX,
+                is_required=False,
+            )
+        )
         context.save_one(float_index)
         self.float_index = float_index.get_key()
 
         # Fixed Rate
-        fixed_rate = FixedRateEntry(description=retriever.retrieve(self.entry_id, input_text, _FIXED_RATE))
+        fixed_rate = FixedRateEntry(
+            description=retriever.retrieve(
+                input_text=input_text,
+                param_description=_FIXED_RATE,
+                is_required=False,
+            )
+        )
         context.save_one(fixed_rate)
         self.fixed_rate = fixed_rate.get_key()
 
