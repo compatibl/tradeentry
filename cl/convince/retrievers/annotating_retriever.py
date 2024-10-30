@@ -76,7 +76,6 @@ class AnnotatingRetriever(Retriever):
 
     def retrieve(
         self,
-        entry_id: str,  # TODO: Generate instead
         input_text: str,
         param_description: str,
         param_samples: List[str] | None = None,
@@ -90,7 +89,6 @@ class AnnotatingRetriever(Retriever):
 
         # Create a retrieval record
         retrieval = Retrieval(
-            retrieval_id=f"{entry_id}: {param_description}",
             input_text=input_text,
             param_description=param_description,
             param_samples=param_samples,
@@ -109,7 +107,7 @@ class AnnotatingRetriever(Retriever):
                 # Extract the results
                 json_result = RetrieverUtil.extract_json(completion)  # TODO(Major): Do not depend on stubs
                 if json_result is None:
-                    raise UserError(f"NCould not extract JSON from the LLM response. LLM response:\n{completion}\n")
+                    raise UserError(f"Could not extract JSON from the LLM response. LLM response:\n{completion}\n")
                 success_text = json_result.get("success", None)
                 annotated_text = json_result.get("annotated_text", None)
                 justification = json_result.get("justification", None)
