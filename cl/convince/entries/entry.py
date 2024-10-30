@@ -26,13 +26,13 @@ from cl.convince.entries.entry_key import EntryKey
 
 @dataclass(slots=True, kw_only=True)
 class Entry(EntryKey, RecordMixin[EntryKey], ABC):
-    """Contains title, body and supporting data of user entry along with the entry processing result."""
+    """Contains description, body and supporting data of user entry along with the entry processing result."""
 
-    title: str = missing()
-    """Title of a long entry or complete description of a short one (included in MD5 hash)."""
+    description: str = missing()
+    """Description exactly as provided by the user (included in MD5 hash)."""
 
     body: str | None = None
-    """Optional body of the entry if not completely described by the title (included in MD5 hash)."""
+    """Optional text following the description exactly as provided by the user (included in MD5 hash)."""
 
     data: str | None = None
     """Optional supporting data in YAML format (included in MD5 hash)."""
@@ -47,13 +47,13 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
         return EntryKey(entry_id=self.entry_id)
 
     def init(self) -> None:
-        """Generate entry_id in 'type: title' format followed by an MD5 hash of body and data if present."""
+        """Generate entry_id in 'type: description' format followed by an MD5 hash of body and data if present."""
         # Convert field types if necessary
         if self.few_shot is not None and isinstance(self.few_shot, str):
             self.few_shot = self.parse_optional_bool(self.few_shot, field_name="few_shot")
         # Record type is part of the key
         record_type = type(self).__name__
-        self.entry_id = self.get_entry_id(record_type, self.title, self.body, self.data)
+        self.entry_id = self.get_entry_id(record_type, self.description, self.body, self.data)
 
     def get_text(self) -> str:
         """Get the complete text of the entry."""
@@ -62,7 +62,7 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
             raise RuntimeError("Entry 'body' field is not yet supported.")
         if self.data is not None:
             raise RuntimeError("Entry 'data' field is not yet supported.")
-        result = self.title
+        result = self.description
         return result
 
     # TODO: Restore abstract when implemented for all entries
@@ -74,7 +74,7 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
         """Clear all proposed fields (i.e., the fields not present in the base Entry class)."""
         record_type = type(self)
         result = record_type(
-            title=self.title,
+            description=self.description,
             body=self.body,
             data=self.data,
             approved_by=self.approved_by,

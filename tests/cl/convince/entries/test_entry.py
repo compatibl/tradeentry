@@ -28,17 +28,17 @@ def test_get_entry_id():
     # Record type
     record_type = "SampleEntryType"
 
-    # Check with type and title only
-    guard.write(EntryKey.get_entry_id(record_type, "Sample Title"))
+    # Check with type and description only
+    guard.write(EntryKey.get_entry_id(record_type, "Sample Description"))
 
     # Check with body
-    guard.write(EntryKey.get_entry_id(record_type, "Sample Title", body="Sample Body"))
+    guard.write(EntryKey.get_entry_id(record_type, "Sample Description", body="Sample Body"))
 
     # Check with data
-    guard.write(EntryKey.get_entry_id(record_type, "Sample Title", data="Sample Data"))
+    guard.write(EntryKey.get_entry_id(record_type, "Sample Description", data="Sample Data"))
 
     # Check with both
-    guard.write(EntryKey.get_entry_id(record_type, "Sample Title", body="Sample Body", data="Sample Data"))
+    guard.write(EntryKey.get_entry_id(record_type, "Sample Description", body="Sample Body", data="Sample Data"))
 
     # Verify
     guard.verify_all()
@@ -47,16 +47,16 @@ def test_get_entry_id():
 def test_check_entry_id():
     """Test EntryKey.create_key method."""
 
-    EntryKey.check_entry_id("SampleEntryType: Sample Title")
-    EntryKey.check_entry_id("SampleEntryType: Sample Title (MD5: 00000000000000000000000000000000)")
+    EntryKey.check_entry_id("SampleEntryType: Sample Description")
+    EntryKey.check_entry_id("SampleEntryType: Sample Description (MD5: 00000000000000000000000000000000)")
     with pytest.raises(UserError):
-        EntryKey.check_entry_id("Sample Title")
+        EntryKey.check_entry_id("Sample Description")
     with pytest.raises(UserError):
-        EntryKey.check_entry_id("SampleEntryType: Sample Title (MD5: 00000000000000000000000000000000")
+        EntryKey.check_entry_id("SampleEntryType: Sample Description (MD5: 00000000000000000000000000000000")
     with pytest.raises(UserError):
-        EntryKey.check_entry_id("SampleEntryType: Sample Title (MD5: 000000000000000000000000000000000")
+        EntryKey.check_entry_id("SampleEntryType: Sample Description (MD5: 000000000000000000000000000000000")
     with pytest.raises(UserError):
-        EntryKey.check_entry_id("SampleEntryType: Sample Title (md5: 0000000000000000000000000000000")
+        EntryKey.check_entry_id("SampleEntryType: Sample Description (md5: 0000000000000000000000000000000")
 
 
 if __name__ == "__main__":
