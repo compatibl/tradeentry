@@ -23,7 +23,8 @@ from cl.tradeentry.entries.pay_receive_fixed_entry import PayReceiveFixedEntry
 from cl.tradeentry.entries.rates.rates_index_entry import RatesIndexEntry
 from cl.tradeentry.entries.trade_entry import TradeEntry
 
-_SIDE = "The words Buy or Sell, or the words Pay Fixed or Receive Fixed"
+_SIDE = ("The words Buy or Sell, or the words Pay Fixed (which for this trade type means Buy) "
+         "or Receive Fixed (which for this trade type means Sell).")
 _MATURITY = "Either maturity date as a date, or tenor (length) as the number of years and/or months"
 _FLOAT_INDEX = "Floating rate index"
 _FIXED_RATE = "Fixed rate"

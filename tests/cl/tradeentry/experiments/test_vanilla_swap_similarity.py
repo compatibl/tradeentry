@@ -24,14 +24,20 @@ from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.llm import Llm
 from stubs.cl.convince.experiments.stub_llms import get_stub_mini_llms, get_stub_full_llms
 
-_TEMPLATE = """You are tasked with evaluating the similarity between two trades in the context of a specific parameter. Your goal is to provide a similarity score from 1 to 100, where 1 means completely different and 100 means identical. Pay close attention to the format and wording of the trades, but do not focus on numerical differences.
+_TEMPLATE = """Act as a Senior Quantitative Analyst tasked with evaluating the similarity in how the description of
+a specific parameter is placed within the description of two different trades, so your junior colleague can be
+provided an example of how to properly separate the description of this parameter from the rest of the trade.
 
-Here is the description of the basic trade:
+Your goal is to provide a similarity score from 1 to 100, where 1 means completely different and 100 means identical.
+Pay close attention to the format and wording of how the parameter is described, but ignore any differences between
+numerical or textual values of this parameter as well as other parameters within the trade.
+
+Here is the description of the first trade:
 ```
 {BasicTrade}
 ```
 
-Here is the description of the trade to be evaluated:
+Here is the description of the second trade:
 ```
 {EvaluatedTrade}
 ```
@@ -41,9 +47,13 @@ The parameter for comparison is described as follows:
 {ParameterDescription}
 ```
 
-Analyze the two trade descriptions, focusing on their similarities and differences in the context of the given parameter. Consider the structure, wording, and overall format of the trades, but do not place emphasis on specific numerical values that may differ.
+Analyze the two trade descriptions, focusing only on the similarities and differences how this parameter is
+placed within the trade description.
+Consider the structure, wording, and overall format of the trade descriptions, but ignore any differences between
+numerical or textual values of this parameter as well as other parameters within the trade.
 
-Provide a detailed justification for your similarity assessment, explaining the key factors that influenced your decision. Consider both the similarities and the differences you observed.
+Provide a detailed justification for your similarity assessment, explaining the key factors that influenced your decision.
+Consider both the similarities and the differences you observed.
 
 After your justification, assign a similarity score from 1 to 100, where:
 0 = The trades are completely different in terms of the given parameter
@@ -77,9 +87,10 @@ def _test_vanilla_swap_similarity(basic_trade: str, evaluated_trade: str, parame
 
 def test_vanilla_swap_similarity():
     with TestingContext():
-        run_count = 1
+        run_count = 2
         basic_trade = "Sell 10y SOFR swap at 3.45%"
-        parameter_description = "The words Buy or Sell, or the words Pay Fixed or Receive Fixed"
+        parameter_description = ("The words Buy or Sell, or the words Pay Fixed (which for this trade type means Buy) "
+                                 "or Receive Fixed (which for this trade type means Sell).")
         evaluated_trades = [
             "Sell 5y SOFR swap at 2.90%",
             "Sell 5y ESTR swap at 2.90%",
