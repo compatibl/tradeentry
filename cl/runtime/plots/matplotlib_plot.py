@@ -19,6 +19,7 @@ from dataclasses import dataclass
 from matplotlib import pyplot as plt
 from cl.runtime import Context
 from cl.runtime import View
+from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.plots.plot import Plot
 from cl.runtime.plots.plot_style import PlotStyle
@@ -44,7 +45,8 @@ class MatplotlibPlot(Plot):
 
     def _get_pyplot_theme(self, style: PlotStyle) -> str:
         """Get value to be set as matplotlib.pyplot theme."""
-        theme = "dark_background" if self.style is not None and style.dark_theme else "default"
+        is_dark_theme = UiAppState.get_current_user_app_theme() == "Dark"  # TODO: Move to PlotSettings
+        theme = "dark_background" if is_dark_theme else "default"
 
         return theme
 
@@ -55,8 +57,8 @@ class MatplotlibPlot(Plot):
         fig = self._create_figure()
 
         # Check if transparency required
-        style = self._load_style()
-        transparent = self.style is not None and style.dark_theme
+        is_dark_theme = UiAppState.get_current_user_app_theme() == "Dark"  # TODO: Move to PlotSettings
+        transparent = is_dark_theme
 
         # Save to bytes
         png_buffer = io.BytesIO()
@@ -74,8 +76,8 @@ class MatplotlibPlot(Plot):
         fig = self._create_figure()
 
         # Check if transparency required
-        style = self._load_style()
-        transparent = self.style is not None and style.dark_theme
+        is_dark_theme = UiAppState.get_current_user_app_theme() == "Dark"  # TODO: Move to PlotSettings
+        transparent = is_dark_theme
 
         # Create directory if does not exist
         base_dir = EnvUtil.get_env_dir()
