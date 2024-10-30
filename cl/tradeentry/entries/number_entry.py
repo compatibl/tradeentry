@@ -41,7 +41,7 @@ class NumberEntry(Entry):
     value: float | None = missing()
     """Numerical value (output)."""
 
-    def run_propose(self) -> None:
+    def run_generate(self) -> None:
         """Retrieve parameters from this entry and save the resulting entries."""
         if self.verified:
             raise UserError(f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Propose."
@@ -57,7 +57,7 @@ class NumberEntry(Entry):
                     details=f"Numerical description of a number with suffix could not be parsed "
                             f"using language code {self.lang}.",
                     value_name="number",
-                    method_name="run_propose",
+                    method_name="run_generate",
                     data_type=NumberEntry.__name__,
                 )
         else:
@@ -70,7 +70,7 @@ class NumberEntry(Entry):
                     self.description,
                     details=f"Text description of a number could not be parsed using language code {self.lang}.",
                     value_name="number",
-                    method_name="run_propose",
+                    method_name="run_generate",
                     data_type=NumberEntry.__name__,
                 )
 
@@ -98,7 +98,7 @@ class NumberEntry(Entry):
                     self.description,
                     details=f"Text description of a number could not be parsed using language code {self.lang}.",
                     value_name="number",
-                    method_name="run_propose",
+                    method_name="run_generate",
                     data_type=NumberEntry.__name__,
                 )
             if scale_unit is None:
@@ -117,7 +117,7 @@ class NumberEntry(Entry):
                     self.description,
                     details=f"Unknown number scale units '{scale_unit}'.",
                     value_name="scale_unit",
-                    method_name="run_propose",
+                    method_name="run_generate",
                     data_type=NumberEntry.__name__,
                 )
         else:

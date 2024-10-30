@@ -61,7 +61,7 @@ class AmountEntry(Entry):
     currency: EntryKey | None = None
     """Optional entry for the currency if specified along with the amount (e.g. '$' for '$10m')."""
 
-    def run_propose(self) -> None:
+    def run_generate(self) -> None:
         """Retrieve parameters from this entry and save the resulting entries."""
 
         if self.verified:

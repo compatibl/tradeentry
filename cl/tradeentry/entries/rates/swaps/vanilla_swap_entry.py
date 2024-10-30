@@ -53,7 +53,7 @@ class VanillaSwapEntry(TradeEntry):
     fixed_rate: EntryKey | None = None
     """Fixed rate entry or breakeven rate if not specified."""
 
-    def run_propose(self) -> None:
+    def run_generate(self) -> None:
         """Retrieve parameters from this entry and save the resulting entries."""
         if self.verified:
             raise UserError(f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Propose."
