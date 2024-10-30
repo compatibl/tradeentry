@@ -40,9 +40,6 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
     lang: str | None = "en"
     """ISO 639-1 two-letter lowercase language code (defaults to 'en')."""
 
-    approved_by: UserKey | None = None
-    """User who recorded the approval."""
-
     verified: bool | None = None
     """If True, use this entry as a few-shot sample."""
 
@@ -73,17 +70,26 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
         """Generate or regenerate the proposed value."""
         raise UserError(f"Propose handler is not yet implemented for {type(self).__name__}.")
 
-    def run_clear_proposed(self) -> None:
-        """Clear all proposed fields (i.e., the fields not present in the base Entry class)."""
+    def run_reset(self) -> None:
+        """Clear all output  fields and verification flag."""
         record_type = type(self)
         result = record_type(
             description=self.description,
             body=self.body,
             data=self.data,
-            approved_by=self.approved_by,
-            verified=self.verified,
+            lang=self.lang,
         )
         Context.current().save_one(result)
+
+    def run_mark_verified(self) -> None:
+        """Mark verified."""
+        self.verified = True
+        Context.current().save_one(self)
+
+    def run_unmark_verified(self) -> None:
+        """Unmark verified."""
+        self.verified = False
+        Context.current().save_one(self)
 
     @classmethod
     def parse_required_bool(
