@@ -29,7 +29,7 @@ class AnnotatingRetrieval(Retrieval):
     """Description of the retrieved parameter (input)."""
 
     is_required: bool = missing()
-    """If False, not found is considered a success."""
+    """If False, not found is considered a success (input)."""
 
     param_samples: List[str] | None = None
     """Samples of possible retrieved parameter values for few-shot prompts (input)."""
@@ -37,8 +37,11 @@ class AnnotatingRetrieval(Retrieval):
     success: str | None = None
     """Y for success and N for failure (output)."""
 
-    param_value: str | None = None
-    """Value of the extracted parameter (output)."""
+    annotated_text: str | None = None
+    """Annotated text (output)."""
 
     justification: str | None = None
     """Justification (output)."""
+
+    output_text: str | None = None
+    """Output text inside one or several curly brace blocks (output)."""

@@ -81,7 +81,7 @@ class AnnotatingRetriever(Retriever):
         *,
         input_text: str,
         param_description: str,
-        is_required: bool = False,
+        is_required: bool = False,  # TODO: Make this parameter required
         param_samples: List[str] | None = None,
     ) -> str | None:
         # Get LLM and prompt
@@ -91,21 +91,24 @@ class AnnotatingRetriever(Retriever):
 
         trial_count = 2
         for trial_index in range(trial_count):
+
+            # Generate trial label
             trial_label = str(trial_index)
             is_last_trial = trial_index == trial_count - 1
+
+            # Strip starting and ending whitespace
+            input_text = input_text.strip()  # TODO: Perform more advanced normalization
+
+            # Create a retrieval record and populate it with inputs, each trial will have a new one
+            retrieval = AnnotatingRetrieval(
+                retriever=self.get_key(),
+                trial_label=trial_label,
+                input_text=input_text,
+                param_description=param_description,
+                is_required=is_required,
+                param_samples=param_samples,
+            )
             try:
-                # Strip starting and ending whitespace
-                input_text = input_text.strip()  # TODO: Perform more advanced normalization
-
-                # Create a retrieval record and populate it with inputs, each trial will have a new one
-                retrieval = AnnotatingRetrieval(
-                    retriever=self.get_key(),
-                    trial_label=trial_label,
-                    input_text=input_text,
-                    param_description=param_description,
-                    param_samples=param_samples,
-                )
-
                 # Create a brace extraction prompt using input parameters
                 rendered_prompt = prompt.render(params=retrieval)
 
@@ -116,8 +119,8 @@ class AnnotatingRetriever(Retriever):
                 json_result = RetrieverUtil.extract_json(completion)
                 if json_result is not None:
                     retrieval.success = json_result.get("success", None)
-                    annotated_text = json_result.get("annotated_text", None)
-                    justification = json_result.get("justification", None)
+                    retrieval.annotated_text = json_result.get("annotated_text", None)
+                    retrieval.justification = json_result.get("justification", None)
                     context.save_one(retrieval)
                 else:
                     retrieval.success = "N"
@@ -137,9 +140,9 @@ class AnnotatingRetriever(Retriever):
                         # Optional, return None
                         return None
 
-                if StringUtil.is_not_empty(annotated_text):
+                if StringUtil.is_not_empty(retrieval.annotated_text):
                     # Compare after removing the curly brackets
-                    to_compare = self._deannotate(annotated_text)
+                    to_compare = self._deannotate(retrieval.annotated_text)
                     if to_compare != input_text:
                         if not is_last_trial:
                             # Continue if not the last trial
@@ -150,7 +153,7 @@ class AnnotatingRetriever(Retriever):
                             raise UserError(
                                 f"Annotated text has changes other than curly braces.\n"
                                 f"Input text: ```{input_text}```\n"
-                                f"Annotated text: ```{annotated_text}```\n"
+                                f"Annotated text: ```{retrieval.annotated_text}```\n"
                             )
                 else:
                     raise RuntimeError(
@@ -159,7 +162,7 @@ class AnnotatingRetriever(Retriever):
                     )
 
                 # Extract data inside braces
-                matches = re.findall(_BRACES_RE, annotated_text)
+                matches = re.findall(_BRACES_RE, retrieval.annotated_text)
                 for match in matches:
                     if "{" in match or "}" in match:
                         if not is_last_trial:
@@ -167,25 +170,23 @@ class AnnotatingRetriever(Retriever):
                         else:
                             raise UserError(
                                 f"Nested curly braces are present in annotated text.\n"
-                                f"Annotated text: ```{annotated_text}```\n"
+                                f"Annotated text: ```{retrieval.annotated_text}```\n"
                             )
 
                 # Combine and return from inside the loop
                 # TODO: Determine if numbered combination works better
-                param_value = " ".join(matches)
-
-                # Populate the output fields and save the retrieval object for validation
-                retrieval.success = True
-                retrieval.param_value = param_value
-                retrieval.justification = justification
+                retrieval.output_text = " ".join(matches)
                 context.save_one(retrieval)
 
                 # Return only the parameter value
-                return param_value
+                return retrieval.output_text
 
             except Exception as e:
                 if is_last_trial:
                     # Rethrow only when the last trial is reached
+                    retrieval.success = "N"
+                    retrieval.justification = str(e)
+                    context.save_one(retrieval)
                     raise UserError(
                         f"Unable to extract parameter from the input text after {trial_count} trials.\n"
                         f"Input text: {input_text}\n"
@@ -193,8 +194,8 @@ class AnnotatingRetriever(Retriever):
                         f"Last trial error information: {str(e)}\n"
                     )
                 else:
-                    # Otherwise log the error details and continue
-                    pass  # TODO: Log failure with info message level
+                    # Otherwise continue
+                    pass
 
         # The method should always return from the loop, adding as a backup in case this changes in the future
         raise UserError(
