@@ -64,17 +64,17 @@ def test_brace_annotation_few_shot():
         run_count = 10
         correct_answer = "{Sell} 10y SOFR swap at 3.45%"
         trade = "Sell 10y SOFR swap at 3.45%"
-        labels = ["Without examples", "With examples", "With examples and mistakes"]
+        labels = ["Zero-Shot", "Few-Shot", "Adverse Few-Shot"]
         plot_bar_labels = []
         plot_group_labels = []
         plot_values = []
 
-        examples = {"Without examples": "",
-                    "With examples": """
+        examples = {"Zero-Shot": "",
+                    "Few-Shot": """
 Examples:
 Input: Buy 5y LIBOR swap at 2.25%
 Annotated: {Buy} 5y LIBOR swap at 2.25%""",
-                    "With examples and mistakes": """
+                    "Adverse Few-Shot": """
 Here are examples of correct annotations and common mistakes:
 
 Correct annotation:
