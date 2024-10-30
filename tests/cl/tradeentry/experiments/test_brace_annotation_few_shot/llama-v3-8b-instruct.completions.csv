@@ -1,5 +1,5 @@
 RequestID,Query,Completion
-2024-10-28-13-45-17-855-7f9393f3e08196944972,"TrialID: 0
+2024-10-29-16-47-09-351-7060a9951a165b1825d5,"TrialID: 0
 You will be provided with an input text and a description of a parameter.
 Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
 Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
@@ -14,61 +14,14 @@ The JSON must have the following keys:
 }
 
 Input text: ```Sell 10y SOFR swap at 3.45%```
-Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
-None","Here is my response in JSON format:
-
-{
-  ""success"": ""Y"",
-  ""annotated_text"": ""Sell {Buy or Sell} 10y SOFR swap at 3.45%"",
-  ""justification"": ""The parameter 'Buy or Sell' was found in the input text and surrounded with curly braces.""
-}"
-2024-10-28-13-45-18-858-74e39ccef7f328011de0,"TrialID: 1
-You will be provided with an input text and a description of a parameter.
-Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
-Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
-
-You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
-The JSON must have the following keys:
-
-{
-    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
-    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
-    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
-}
-
-Input text: ```Sell 10y SOFR swap at 3.45%```
-Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
-None","Here is the response in JSON format:
-
-{
-    ""success"": ""Y"",
-    ""annotated_text"": ""Sell {Buy or Sell} 10y SOFR swap at 3.45%"",
-    ""justification"": ""The word 'Sell' is found in the input text, which matches the parameter description 'The words Buy or Sell, or the words Pay Fixed or Receive Fixed'.""
-}"
-2024-10-28-13-45-19-864-7593b88aad9dab6f37eb,"TrialID: 2
-You will be provided with an input text and a description of a parameter.
-Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
-Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
-
-You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
-The JSON must have the following keys:
-
-{
-    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
-    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
-    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
-}
-
-Input text: ```Sell 10y SOFR swap at 3.45%```
-Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
-None","Here is the response in JSON format:
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```","Here is the reply in JSON format:
 
 {
     ""success"": ""Y"",
     ""annotated_text"": ""Sell {Sell} 10y SOFR swap at 3.45%"",
-    ""justification"": ""The parameter 'Sell' is found in the input text, and it matches the description""
+    ""justification"": ""The word 'Sell' is a part of the parameter description and was found in the input text.""
 }"
-2024-10-28-13-45-20-884-74b3a739dc53dffee464,"TrialID: 3
+2024-10-29-16-47-11-385-7ab2bfe7861814e1a09c,"TrialID: 1
 You will be provided with an input text and a description of a parameter.
 Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
 Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
@@ -83,15 +36,14 @@ The JSON must have the following keys:
 }
 
 Input text: ```Sell 10y SOFR swap at 3.45%```
-Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
-None","Here is the response in JSON format:
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```","Here is the response:
 
 {
     ""success"": ""Y"",
     ""annotated_text"": ""Sell {Buy or Sell} 10y SOFR swap at 3.45%"",
-    ""justification"": ""The word 'Sell' matches the description of the parameter.""
+    ""justification"": ""The parameter 'Buy or Sell' was found in the input text and surrounded by curly braces.""
 }"
-2024-10-28-13-45-21-810-7251bee7056930adb136,"TrialID: 4
+2024-10-29-16-47-12-210-7363aa1bd06b40094b19,"TrialID: 2
 You will be provided with an input text and a description of a parameter.
 Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
 Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
@@ -106,38 +58,14 @@ The JSON must have the following keys:
 }
 
 Input text: ```Sell 10y SOFR swap at 3.45%```
-Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
-None","Here is the response:
-
-{
-  ""success"": ""Y"",
-  ""annotated_text"": ""Sell {Buy or Sell} 10y SOFR swap at 3.45%"",
-  ""justification"": ""The word 'Sell' matches the parameter description.""
-}"
-2024-10-28-13-45-22-741-7d519e61f3995df0a877,"TrialID: 5
-You will be provided with an input text and a description of a parameter.
-Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
-Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
-
-You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
-The JSON must have the following keys:
-
-{
-    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
-    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
-    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
-}
-
-Input text: ```Sell 10y SOFR swap at 3.45%```
-Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
-None","Here is the result:
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```","Here is the response in JSON format:
 
 {
     ""success"": ""Y"",
     ""annotated_text"": ""Sell {Buy or Sell} 10y SOFR swap at 3.45%"",
-    ""justification"": ""Found the word 'Sell' which matches the parameter description""
+    ""justification"": ""The parameter is found in the text, and its value is 'Sell'. The keywords 'Sell' are surrounded by curly braces to indicate its presence.""
 }"
-2024-10-28-13-45-23-651-76d188f1291138f9d975,"TrialID: 6
+2024-10-29-16-47-12-988-7482894b0e7c55d34f2e,"TrialID: 3
 You will be provided with an input text and a description of a parameter.
 Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
 Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
@@ -152,38 +80,14 @@ The JSON must have the following keys:
 }
 
 Input text: ```Sell 10y SOFR swap at 3.45%```
-Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
-None","Here is the response:
-
-{
-    ""success"": ""Y"",
-    ""annotated_text"": ""Sell {Sell} 10y SOFR swap at 3.45%"",
-    ""justification"": ""The parameter 'Buy or Sell' is found in the input text and surrounded by curly braces.""
-}"
-2024-10-28-13-45-24-500-751088f52d972169a7f4,"TrialID: 7
-You will be provided with an input text and a description of a parameter.
-Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
-Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
-
-You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
-The JSON must have the following keys:
-
-{
-    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
-    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
-    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
-}
-
-Input text: ```Sell 10y SOFR swap at 3.45%```
-Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
-None","Here is the response in JSON format:
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```","Here is the output:
 
 {
     ""success"": ""Y"",
     ""annotated_text"": ""Sell {Buy or Sell} 10y SOFR swap at 3.45%"",
-    ""justification"": ""The requested parameter 'Buy or Sell' was found in the input text and enclosed in curly braces.""
+    ""justification"": ""The parameter 'Buy or Sell' was found in the input text and surrounded with curly braces.""
 }"
-2024-10-28-13-45-25-440-764381deb792a67e0068,"TrialID: 8
+2024-10-29-16-47-13-564-7592b5244bdf1ba8eb1c,"TrialID: 4
 You will be provided with an input text and a description of a parameter.
 Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
 Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
@@ -198,15 +102,14 @@ The JSON must have the following keys:
 }
 
 Input text: ```Sell 10y SOFR swap at 3.45%```
-Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
-None","Here is the output in JSON format:
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```","Here is the response in JSON format:
 
 {
     ""success"": ""Y"",
     ""annotated_text"": ""Sell {Buy or Sell} 10y SOFR swap at 3.45%"",
-    ""justification"": ""The parameter 'Buy or Sell' is found in the input text.""
+    ""justification"": ""The parameter 'Buy or Sell' was found in the input text and annotated with curly braces.""
 }"
-2024-10-28-13-45-26-384-79239e1f67457757c8ad,"TrialID: 9
+2024-10-29-16-47-14-307-7672a6d05a850b9a43ef,"TrialID: 5
 You will be provided with an input text and a description of a parameter.
 Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
 Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
@@ -221,16 +124,102 @@ The JSON must have the following keys:
 }
 
 Input text: ```Sell 10y SOFR swap at 3.45%```
-Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
-None","Here is the response:
-```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```","Here is the response:
+
 {
     ""success"": ""Y"",
-    ""annotated_text"": ""{Sell} 10y {Sell} SOFR swap at 3.45%"",
-    ""justification"": ""The parameter 'Sell' was found in the input text.""
+    ""annotated_text"": ""Sell {Buy or Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The word 'Sell' matches the description of the parameter, which includes the words 'Buy or Sell'.""
+}"
+2024-10-29-16-47-15-021-7f739c27e17976240130,"TrialID: 6
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
 }
-```"
-2024-10-28-13-45-27-325-7170a3200f43d711e65f,"TrialID: 0
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```","Here is the response:
+
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""Sell {Buy or Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The parameter 'Buy or Sell' was found in the input text.""
+}"
+2024-10-29-16-47-15-726-74b2b34926055c7f4cee,"TrialID: 7
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```","Here is the response:
+
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""Sell {Buy or Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The parameter 'Buy or Sell' was found in the input text.""
+}"
+2024-10-29-16-47-16-411-794290b9dfa61cb77048,"TrialID: 8
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```","Here is the response in JSON format:
+
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""Sell {Buy or Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The word 'Sell' is the parameter being sought, and it appears in the input text.""
+}"
+2024-10-29-16-47-17-300-73c2b7f75e66cf87c27d,"TrialID: 9
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```","Here is the output:
+
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""Sell {Buy or Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The word 'Sell' is found in the input text, which matches the description of the parameter.""
+}"
+2024-10-29-16-47-17-927-78c094c96a2f990052f5,"TrialID: 0
 You will be provided with an input text and a description of a parameter.
 Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
 Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
@@ -248,15 +237,587 @@ Input text: ```Sell 10y SOFR swap at 3.45%```
 Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
 
 Examples:
-Input text: Buy 5y LIBOR swap at 2.25%
-Output text: {Buy} 5y LIBOR swap at 2.25%","Here is the response in JSON format:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: {Buy} 5y LIBOR swap at 2.25%","Here is the response in JSON format:
+
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The word 'Sell' is found in the input text and matches the parameter description.""
+}"
+2024-10-29-16-47-18-665-7c439f587c41e16e705d,"TrialID: 1
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
+
+Examples:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: {Buy} 5y LIBOR swap at 2.25%","Here is the response in JSON format:
+
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The parameter 'Sell' is present in the input text.""
+}"
+2024-10-29-16-47-19-431-78b1ae08bbf4d8a69f86,"TrialID: 2
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
+
+Examples:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: {Buy} 5y LIBOR swap at 2.25%","{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The word 'Sell' is found in the input text, which matches the parameter description 'The words Buy or Sell'""
+}"
+2024-10-29-16-47-20-181-73d391054e6e9b8ca130,"TrialID: 3
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
+
+Examples:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: {Buy} 5y LIBOR swap at 2.25%","Here is the response in JSON format:
+
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""Sell {Buy or Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The word 'Sell' matches the parameter description.""
+}"
+2024-10-29-16-47-20-927-76f1927c823c2e189dd1,"TrialID: 4
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
+
+Examples:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: {Buy} 5y LIBOR swap at 2.25%","{
+  ""success"": ""Y"",
+  ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
+  ""justification"": ""The word 'Sell' is a part of the parameter description and is present in the input text.""
+}"
+2024-10-29-16-47-21-699-76b18c4b3c453d17c1e7,"TrialID: 5
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
+
+Examples:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: {Buy} 5y LIBOR swap at 2.25%","{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The parameter 'Sell' was found in the input text.""
+}"
+2024-10-29-16-47-22-280-7ac3a71eb95ad804ce2e,"TrialID: 6
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
+
+Examples:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: {Buy} 5y LIBOR swap at 2.25%","Here is the response:
+
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""Sell {Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""I found the parameter 'Buy or Sell' in the input text""
+}"
+2024-10-29-16-47-22-987-7083ae7af47ee2cc9e5e,"TrialID: 7
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
+
+Examples:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: {Buy} 5y LIBOR swap at 2.25%","Here is the response:
+
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""Sell {Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The word 'Sell' is found in the input text and matches the description of the parameter""
+}"
+2024-10-29-16-47-23-581-70028d3cb47c60414b1b,"TrialID: 8
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
+
+Examples:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: {Buy} 5y LIBOR swap at 2.25%","Here is the response in JSON format:
+
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The word 'Sell' matches the parameter description 'The words Buy or Sell'.""
+}
+
+Note: The word 'Sell' in the input text matches the parameter description ""The words Buy or Sell"", so it is surrounded by curly braces in the annotated text."
+2024-10-29-16-47-25-534-7b81b23e888f58bafad5,"TrialID: 9
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
+
+Examples:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: {Buy} 5y LIBOR swap at 2.25%","Here is the response:
+
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The requested parameter 'Sell' was found in the input text.""
+}"
+2024-10-29-16-47-26-190-75d1aead7935d9ffb771,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
+
+Here are examples of correct annotations and common mistakes:
+
+Correct annotation:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: ""{Buy} 5y LIBOR swap at 2.25%""
+
+Common mistake 1 - Annotating irrelevant information:
+Input: Bank sells 5y LIBOR swap at 3.55%
+Incorrect: {Bank sells} 5y LIBOR swap at 3.55%
+Correct: Bank {sells} 5y LIBOR swap at 3.55%
+
+Common mistake 2 - Add field name after the value:
+Input: Buy 7y LIBOR swap at 3.75%
+Incorrect: Buy {Buy or Sell} 7y LIBOR swap at 3.75%
+Correct: {Buy} 7y LIBOR swap at 3.75%","{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The word 'Sell' matches the parameter description 'The words Buy or Sell'""
+}"
+2024-10-29-16-47-26-814-73019704431c12f7de8c,"TrialID: 1
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
+
+Here are examples of correct annotations and common mistakes:
+
+Correct annotation:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: ""{Buy} 5y LIBOR swap at 2.25%""
+
+Common mistake 1 - Annotating irrelevant information:
+Input: Bank sells 5y LIBOR swap at 3.55%
+Incorrect: {Bank sells} 5y LIBOR swap at 3.55%
+Correct: Bank {sells} 5y LIBOR swap at 3.55%
+
+Common mistake 2 - Add field name after the value:
+Input: Buy 7y LIBOR swap at 3.75%
+Incorrect: Buy {Buy or Sell} 7y LIBOR swap at 3.75%
+Correct: {Buy} 7y LIBOR swap at 3.75%","Here is the output:
+
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The parameter 'Sell or Buy' was found in the input text.""
+}"
+2024-10-29-16-47-27-529-7db28d4ea489d2b78463,"TrialID: 2
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
+
+Here are examples of correct annotations and common mistakes:
+
+Correct annotation:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: ""{Buy} 5y LIBOR swap at 2.25%""
+
+Common mistake 1 - Annotating irrelevant information:
+Input: Bank sells 5y LIBOR swap at 3.55%
+Incorrect: {Bank sells} 5y LIBOR swap at 3.55%
+Correct: Bank {sells} 5y LIBOR swap at 3.55%
+
+Common mistake 2 - Add field name after the value:
+Input: Buy 7y LIBOR swap at 3.75%
+Incorrect: Buy {Buy or Sell} 7y LIBOR swap at 3.75%
+Correct: {Buy} 7y LIBOR swap at 3.75%","Here is the response:
+
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The word 'Sell' matches the description of the parameter 'The words Buy or Sell, or the words Pay Fixed or Receive Fixed'.""
+}"
+2024-10-29-16-47-28-344-7f71908819955ec99cc5,"TrialID: 3
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
+
+Here are examples of correct annotations and common mistakes:
+
+Correct annotation:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: ""{Buy} 5y LIBOR swap at 2.25%""
+
+Common mistake 1 - Annotating irrelevant information:
+Input: Bank sells 5y LIBOR swap at 3.55%
+Incorrect: {Bank sells} 5y LIBOR swap at 3.55%
+Correct: Bank {sells} 5y LIBOR swap at 3.55%
+
+Common mistake 2 - Add field name after the value:
+Input: Buy 7y LIBOR swap at 3.75%
+Incorrect: Buy {Buy or Sell} 7y LIBOR swap at 3.75%
+Correct: {Buy} 7y LIBOR swap at 3.75%","Here is the response in JSON format:
+
+```
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The word 'Sell' is the information about the parameter 'The words Buy or Sell, or the words Pay Fixed or Receive Fixed' found in the input text.""
+}
+```"
+2024-10-29-16-47-29-005-7c31bdbd2ac2a8a9dd74,"TrialID: 4
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
+
+Here are examples of correct annotations and common mistakes:
+
+Correct annotation:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: ""{Buy} 5y LIBOR swap at 2.25%""
+
+Common mistake 1 - Annotating irrelevant information:
+Input: Bank sells 5y LIBOR swap at 3.55%
+Incorrect: {Bank sells} 5y LIBOR swap at 3.55%
+Correct: Bank {sells} 5y LIBOR swap at 3.55%
+
+Common mistake 2 - Add field name after the value:
+Input: Buy 7y LIBOR swap at 3.75%
+Incorrect: Buy {Buy or Sell} 7y LIBOR swap at 3.75%
+Correct: {Buy} 7y LIBOR swap at 3.75%","Here is the output in JSON format:
+
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The annotation is successful because the parameter 'The words Buy or Sell' is present in the input text, which is 'Sell'.""
+}"
+2024-10-29-16-47-29-738-7c03acb2e14adabb1129,"TrialID: 5
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
+
+Here are examples of correct annotations and common mistakes:
+
+Correct annotation:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: ""{Buy} 5y LIBOR swap at 2.25%""
+
+Common mistake 1 - Annotating irrelevant information:
+Input: Bank sells 5y LIBOR swap at 3.55%
+Incorrect: {Bank sells} 5y LIBOR swap at 3.55%
+Correct: Bank {sells} 5y LIBOR swap at 3.55%
+
+Common mistake 2 - Add field name after the value:
+Input: Buy 7y LIBOR swap at 3.75%
+Incorrect: Buy {Buy or Sell} 7y LIBOR swap at 3.75%
+Correct: {Buy} 7y LIBOR swap at 3.75%","Here is the response in JSON format:
+
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The parameter 'The words Buy or Sell, or the words Pay Fixed or Receive Fixed' matches the word 'Sell' in the input text, which is the first word in the input text.""
+}"
+2024-10-29-16-47-30-458-7de38fb0a43ee09f0351,"TrialID: 6
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
+
+Here are examples of correct annotations and common mistakes:
+
+Correct annotation:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: ""{Buy} 5y LIBOR swap at 2.25%""
+
+Common mistake 1 - Annotating irrelevant information:
+Input: Bank sells 5y LIBOR swap at 3.55%
+Incorrect: {Bank sells} 5y LIBOR swap at 3.55%
+Correct: Bank {sells} 5y LIBOR swap at 3.55%
+
+Common mistake 2 - Add field name after the value:
+Input: Buy 7y LIBOR swap at 3.75%
+Incorrect: Buy {Buy or Sell} 7y LIBOR swap at 3.75%
+Correct: {Buy} 7y LIBOR swap at 3.75%","Here is the response:
+
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The word 'Sell' is found in the input text, which matches the parameter description 'The words Buy or Sell, or the words Pay Fixed or Receive Fixed'""
+}"
+2024-10-29-16-47-31-127-7fa0b7a6a4786c108574,"TrialID: 7
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
+
+Here are examples of correct annotations and common mistakes:
+
+Correct annotation:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: ""{Buy} 5y LIBOR swap at 2.25%""
+
+Common mistake 1 - Annotating irrelevant information:
+Input: Bank sells 5y LIBOR swap at 3.55%
+Incorrect: {Bank sells} 5y LIBOR swap at 3.55%
+Correct: Bank {sells} 5y LIBOR swap at 3.55%
+
+Common mistake 2 - Add field name after the value:
+Input: Buy 7y LIBOR swap at 3.75%
+Incorrect: Buy {Buy or Sell} 7y LIBOR swap at 3.75%
+Correct: {Buy} 7y LIBOR swap at 3.75%","Here is the response:
+
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The parameter 'The words Buy or Sell, or the words Pay Fixed or Receive Fixed' matches with the word 'Sell' in the input text, so I annotated it with curly braces.""
+}"
+2024-10-29-16-47-31-877-7f41b072cfc3615e6136,"TrialID: 8
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
+
+Here are examples of correct annotations and common mistakes:
+
+Correct annotation:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: ""{Buy} 5y LIBOR swap at 2.25%""
+
+Common mistake 1 - Annotating irrelevant information:
+Input: Bank sells 5y LIBOR swap at 3.55%
+Incorrect: {Bank sells} 5y LIBOR swap at 3.55%
+Correct: Bank {sells} 5y LIBOR swap at 3.55%
+
+Common mistake 2 - Add field name after the value:
+Input: Buy 7y LIBOR swap at 3.75%
+Incorrect: Buy {Buy or Sell} 7y LIBOR swap at 3.75%
+Correct: {Buy} 7y LIBOR swap at 3.75%","Here is the output in JSON format:
 
 {
     ""success"": ""Y"",
     ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
     ""justification"": ""The parameter 'The words Buy or Sell, or the words Pay Fixed or Receive Fixed' matches the word 'Sell' in the input text.""
 }"
-2024-10-28-13-45-28-368-7fa3b8f9c99135be6230,"TrialID: 1
+2024-10-29-16-47-32-604-77528472ad1d11277493,"TrialID: 9
 You will be provided with an input text and a description of a parameter.
 Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
 Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
@@ -273,219 +834,24 @@ The JSON must have the following keys:
 Input text: ```Sell 10y SOFR swap at 3.45%```
 Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
 
-Examples:
-Input text: Buy 5y LIBOR swap at 2.25%
-Output text: {Buy} 5y LIBOR swap at 2.25%","{
-    ""success"": ""Y"",
-    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
-    ""justification"": ""The parameter description includes 'Buy' and 'Sell' words, and the input text matches the 'Sell' word.""
-}"
-2024-10-28-13-45-29-281-79e2b92c68306ca54623,"TrialID: 2
-You will be provided with an input text and a description of a parameter.
-Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
-Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+Here are examples of correct annotations and common mistakes:
 
-You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
-The JSON must have the following keys:
+Correct annotation:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: ""{Buy} 5y LIBOR swap at 2.25%""
 
-{
-    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
-    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
-    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
-}
+Common mistake 1 - Annotating irrelevant information:
+Input: Bank sells 5y LIBOR swap at 3.55%
+Incorrect: {Bank sells} 5y LIBOR swap at 3.55%
+Correct: Bank {sells} 5y LIBOR swap at 3.55%
 
-Input text: ```Sell 10y SOFR swap at 3.45%```
-Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
-
-Examples:
-Input text: Buy 5y LIBOR swap at 2.25%
-Output text: {Buy} 5y LIBOR swap at 2.25%","Here is the response in JSON format:
+Common mistake 2 - Add field name after the value:
+Input: Buy 7y LIBOR swap at 3.75%
+Incorrect: Buy {Buy or Sell} 7y LIBOR swap at 3.75%
+Correct: {Buy} 7y LIBOR swap at 3.75%","Here is the response:
 
 {
     ""success"": ""Y"",
     ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
-    ""justification"": ""The parameter 'Sell' is present in the input text, which matches the expected description.""
-}"
-2024-10-28-13-45-30-737-7002aabd6457ca9d3bd0,"TrialID: 3
-You will be provided with an input text and a description of a parameter.
-Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
-Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
-
-You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
-The JSON must have the following keys:
-
-{
-    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
-    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
-    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
-}
-
-Input text: ```Sell 10y SOFR swap at 3.45%```
-Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
-
-Examples:
-Input text: Buy 5y LIBOR swap at 2.25%
-Output text: {Buy} 5y LIBOR swap at 2.25%","Here is the response:
-
-{
-    ""success"": ""Y"",
-    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
-    ""justification"": ""The input text contains the word 'Sell', which matches the parameter description.""
-}"
-2024-10-28-13-45-31-709-78e0aa08ff681bd9c1fe,"TrialID: 4
-You will be provided with an input text and a description of a parameter.
-Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
-Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
-
-You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
-The JSON must have the following keys:
-
-{
-    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
-    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
-    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
-}
-
-Input text: ```Sell 10y SOFR swap at 3.45%```
-Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
-
-Examples:
-Input text: Buy 5y LIBOR swap at 2.25%
-Output text: {Buy} 5y LIBOR swap at 2.25%","Here is the response in JSON format:
-
-{
-    ""success"": ""Y"",
-    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
-    ""justification"": ""The parameter is found in the input text with the value 'Sell'.""
-}"
-2024-10-28-13-45-32-697-7131b03d0ffc5d710cbc,"TrialID: 5
-You will be provided with an input text and a description of a parameter.
-Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
-Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
-
-You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
-The JSON must have the following keys:
-
-{
-    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
-    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
-    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
-}
-
-Input text: ```Sell 10y SOFR swap at 3.45%```
-Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
-
-Examples:
-Input text: Buy 5y LIBOR swap at 2.25%
-Output text: {Buy} 5y LIBOR swap at 2.25%","Here is the response:
-
-{
-    ""success"": ""Y"",
-    ""annotated_text"": ""Sell {Sell} 10y SOFR swap at 3.45%"",
-    ""justification"": ""The parameter description matches the word 'Sell' in the input text, which is wrapped in curly braces.""
-}"
-2024-10-28-13-45-33-632-791185c6198fbfa46bdf,"TrialID: 6
-You will be provided with an input text and a description of a parameter.
-Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
-Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
-
-You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
-The JSON must have the following keys:
-
-{
-    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
-    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
-    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
-}
-
-Input text: ```Sell 10y SOFR swap at 3.45%```
-Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
-
-Examples:
-Input text: Buy 5y LIBOR swap at 2.25%
-Output text: {Buy} 5y LIBOR swap at 2.25%","Here is the response in JSON format:
-
-{
-    ""success"": ""Y"",
-    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
-    ""justification"": ""The word 'Sell' matches the description of the parameter, which is 'The words Buy or Sell, or the words Pay Fixed or Receive Fixed'.""
-}"
-2024-10-28-13-45-34-665-7a01b1fe7fd4d5d8576c,"TrialID: 7
-You will be provided with an input text and a description of a parameter.
-Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
-Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
-
-You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
-The JSON must have the following keys:
-
-{
-    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
-    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
-    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
-}
-
-Input text: ```Sell 10y SOFR swap at 3.45%```
-Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
-
-Examples:
-Input text: Buy 5y LIBOR swap at 2.25%
-Output text: {Buy} 5y LIBOR swap at 2.25%","Here is the response:
-```
-{
-    ""success"": ""Y"",
-    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
-    ""justification"": ""The words 'Sell' match the parameter description, which contains the words 'Sell' or 'Buy'.""
-}
-```"
-2024-10-28-13-45-35-649-76939073299ddedd7a62,"TrialID: 8
-You will be provided with an input text and a description of a parameter.
-Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
-Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
-
-You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
-The JSON must have the following keys:
-
-{
-    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
-    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
-    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
-}
-
-Input text: ```Sell 10y SOFR swap at 3.45%```
-Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
-
-Examples:
-Input text: Buy 5y LIBOR swap at 2.25%
-Output text: {Buy} 5y LIBOR swap at 2.25%","Here is the response:
-
-{
-    ""success"": ""Y"",
-    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
-    ""justification"": ""The parameter 'Sell' was found in the input text.""
-}"
-2024-10-28-13-45-36-688-70c2a8d6a89bcca34001,"TrialID: 9
-You will be provided with an input text and a description of a parameter.
-Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
-Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
-
-You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
-The JSON must have the following keys:
-
-{
-    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
-    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
-    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
-}
-
-Input text: ```Sell 10y SOFR swap at 3.45%```
-Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Receive Fixed```
-
-Examples:
-Input text: Buy 5y LIBOR swap at 2.25%
-Output text: {Buy} 5y LIBOR swap at 2.25%","Here is the response in JSON format:
-
-{
-    ""success"": ""Y"",
-    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
-    ""justification"": ""The input text contains the keyword 'Sell' which matches the parameter description""
+    ""justification"": ""The parameter 'The words Buy or Sell, or the words Pay Fixed or Receive Fixed' matches the word 'Sell' in the input text, so I surrounded it with curly braces.""
 }"

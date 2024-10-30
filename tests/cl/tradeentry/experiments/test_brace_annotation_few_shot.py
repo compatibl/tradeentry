@@ -64,23 +64,40 @@ def test_brace_annotation_few_shot():
         run_count = 10
         correct_answer = "{Sell} 10y SOFR swap at 3.45%"
         trade = "Sell 10y SOFR swap at 3.45%"
-        labels = ["Without examples", "With examples"]
+        labels = ["Without examples", "With examples", "With examples and mistakes"]
         plot_bar_labels = []
         plot_group_labels = []
         plot_values = []
 
-        examples = """
+        examples = {"Without examples": "",
+                    "With examples": """
 Examples:
-Input text: Buy 5y LIBOR swap at 2.25%
-Output text: {Buy} 5y LIBOR swap at 2.25%"""
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: {Buy} 5y LIBOR swap at 2.25%""",
+                    "With examples and mistakes": """
+Here are examples of correct annotations and common mistakes:
+
+Correct annotation:
+Input: Buy 5y LIBOR swap at 2.25%
+Annotated: "{Buy} 5y LIBOR swap at 2.25%"
+
+Common mistake 1 - Annotating irrelevant information:
+Input: Bank sells 5y LIBOR swap at 3.55%
+Incorrect: {Bank sells} 5y LIBOR swap at 3.55%
+Correct: Bank {sells} 5y LIBOR swap at 3.55%
+
+Common mistake 2 - Add field name after the value:
+Input: Buy 7y LIBOR swap at 3.75%
+Incorrect: Buy {Buy or Sell} 7y LIBOR swap at 3.75%
+Correct: {Buy} 7y LIBOR swap at 3.75%"""
+                    }
 
         # Create Llm objects for test
         stub_mini_llms = get_stub_mini_llms()
 
         for llm in stub_mini_llms:
             for label in labels:
-                results = _test_brace_annotation_few_shot(trade, run_count, llm,
-                                                          examples if label == "With examples" else None)
+                results = _test_brace_annotation_few_shot(trade, run_count, llm, examples[label])
 
                 correct_answers_count = 0
                 for result in results:
