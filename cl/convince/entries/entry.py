@@ -41,7 +41,7 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
     """User who recorded the approval."""
 
     few_shot: bool | None = None
-    """If True, use this entry as a few-shot example."""
+    """If True, use this entry as a few-shot sample."""
 
     def get_key(self) -> EntryKey:
         return EntryKey(entry_id=self.entry_id)
@@ -69,6 +69,18 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
     def run_propose(self) -> None:
         """Generate or regenerate the proposed value."""
         raise UserError(f"Propose handler is not yet implemented for {type(self).__name__}.")
+
+    def run_clear_proposed(self) -> None:
+        """Clear all proposed fields (i.e., the fields not present in the base Entry class)."""
+        record_type = type(self)
+        result = record_type(
+            title=self.title,
+            body=self.body,
+            data=self.data,
+            approved_by=self.approved_by,
+            few_shot=self.few_shot,
+        )
+        Context.current().save_one(result)
 
     @classmethod
     def parse_required_bool(
