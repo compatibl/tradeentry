@@ -1,9 +1,9 @@
-description,amount,currency_entry
-10m,10000000,
-ten million,10000000,
-$10m,10000000,
-USD 10m,10000000,CurrencyEntry: USD
-"USD 10,000,000",10000000,CurrencyEntry: USD
-ten million dollars,10000000,CurrencyEntry: USD
-€10m,10000000,CurrencyEntry: EUR
-ten million euro,10000000,CurrencyEntry: EUR
+description,amount,currency
+10m,NumberEntry: 10m,
+ten million,NumberEntry: ten million,
+$10m,NumberEntry: 10m,
+USD 10m,NumberEntry: 10m,CurrencyEntry: USD
+"USD 10,000,000",NumberEntry: 10000000,CurrencyEntry: USD
+ten million dollars,NumberEntry: ten million,CurrencyEntry: USD
+€10m,NumberEntry: 10m,CurrencyEntry: EUR
+ten million euro,NumberEntry: ten million,CurrencyEntry: EUR

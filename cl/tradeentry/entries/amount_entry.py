@@ -21,58 +21,43 @@ from cl.runtime.exceptions.error_util import ErrorUtil
 from cl.runtime.primitive.float_util import FloatUtil
 from cl.convince.entries.entry import Entry
 from cl.convince.entries.entry_key import EntryKey
+from cl.tradeentry.entries.currency_entry import CurrencyEntry
+from cl.tradeentry.entries.number_entry import NumberEntry
 
-_NUMERICAL_VALUE = """Numerical value of the amount (e.g. '10') or its text representation (e.g. 'ten') 
-excluding any currency symbols such as '$', 'USD' or 'dollars' and excluding any units (multiplier) such as 
-'m' or 'millions', 'b' or 'bn' or 'billions'.
-Ensure you do not include anything other than digits, even if additional non-digit symbols are not
-separated by a space from the digits which may happen especially with the currency amount.
+_AMOUNT = """Numerical value of the amount (including possible space, commas and other
+decimal point and thousands separators between digits) or its text representation (e.g. 'ten') 
+including any scale unit such as  'm' or 'millions', 'b' or 'bn' or 'billions' but excluding any
+currency symbols such as '$', 'USD' or 'dollars'.
+
+Ensure you do not include anything other than digits and scale units, even if additional non-digit
+symbols such as a currency symbol are not separated by a space from the digits which may happen
+especially with the currency amount.
 
 Pay attention to the examples where you initially provided an incorrect answer:
 
 Input: $100m
 Your answer: {$100}m
-Correct answer: ${100}m
+Correct answer: ${100m}
 
 Input: USD 100,000,000
 Your answer: USD {100},000,000
 Correct answer: USD {100,000,000}
 """
-_CURRENCY = "Currency as ISO-4217 code or natural language description if present."
+
+_CURRENCY = """Currency symbol, natural language description or ISO-4217 code.
+Semicolon-delimited examples: $; dollar; USD
+"""
 
 
 @dataclass(slots=True, kw_only=True)
 class AmountEntry(Entry):
     """Amount with or without currency specification."""
 
-    amount: float | None = None  # TODO: Make it number entry
+    amount: EntryKey | None = None
     """Numerical value for the amount excluding any units multiplier or currency (e.g. '10' for '$10m')."""
 
-    units_entry: EntryKey | None = None
-    """Optional entry for the units specified along with the numerical amount (e.g. 'm' for '$10m')."""
-
-    currency_entry: EntryKey | None = None
+    currency: EntryKey | None = None
     """Optional entry for the currency if specified along with the amount (e.g. '$' for '$10m')."""
-
-    def init(self) -> None:
-        # Perform amount checks only if it is set
-        if self.amount is not None:
-            if isinstance(self.amount, float):
-                # Check value
-                self._check_amount(self.amount)
-            elif isinstance(self.amount, int):
-                # Check value after converting to float
-                self._check_amount(float(self.amount))
-            elif isinstance(self.amount, str):
-                # Convert to float value and check value
-                self.amount = self._parse_and_check_amount(self.amount)
-            else:
-                raise ErrorUtil.value_error(
-                    self.amount,
-                    details=f"The amount is neither a string nor a numerical value.",
-                    value_name="amount",
-                    data_type=AmountEntry.__name__,
-                )
 
     def run_propose(self) -> None:
         """Retrieve parameters from this entry and save the resulting entries."""
@@ -88,13 +73,34 @@ class AmountEntry(Entry):
         context = Context.current()
         input_text = self.get_text()
 
-        # Extract the amount
-        amount_str = retriever.retrieve(
+        # Currency symbol preprocessing to avoid JSON formatting issues
+        # when the LLM attempts to escape the symbol (e.g. \$ or '\$')
+        # TODO: Use a configurable list
+        input_text = input_text.replace("$US", "USD")
+        input_text = input_text.replace("$", "USD")
+        input_text = input_text.replace("$CA", "CAD")
+        input_text = input_text.replace("€", "EUR")
+
+        # Currency description
+        currency_description = retriever.retrieve(
             input_text=input_text,
-            param_description=_NUMERICAL_VALUE,
+            param_description=_CURRENCY,
+            is_required=False,
+        )
+        if currency_description is not None:
+            currency = CurrencyEntry(description=currency_description)
+            context.save_one(currency)
+            self.currency = currency.get_key()
+        
+        # Extract the currency if present
+        amount_description = retriever.retrieve(
+            input_text=input_text,
+            param_description=_AMOUNT,
             is_required=True,
         )
-        self.amount = self._parse_and_check_amount(amount_str)
+        amount = NumberEntry(description=amount_description)
+        context.save_one(amount)
+        self.amount = amount.get_key()
 
         # Save self to DB
         Context.current().save_one(self)
