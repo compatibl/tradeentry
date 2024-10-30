@@ -43,7 +43,7 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
     approved_by: UserKey | None = None
     """User who recorded the approval."""
 
-    few_shot: bool | None = None
+    verified: bool | None = None
     """If True, use this entry as a few-shot sample."""
 
     def get_key(self) -> EntryKey:
@@ -52,8 +52,8 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
     def init(self) -> None:
         """Generate entry_id in 'type: description' format followed by an MD5 hash of body and data if present."""
         # Convert field types if necessary
-        if self.few_shot is not None and isinstance(self.few_shot, str):
-            self.few_shot = self.parse_optional_bool(self.few_shot, field_name="few_shot")
+        if self.verified is not None and isinstance(self.verified, str):
+            self.verified = self.parse_optional_bool(self.verified, field_name="verified")
         # Record type is part of the key
         record_type = type(self).__name__
         self.entry_id = self.get_entry_id(record_type, self.description, self.body, self.data)
@@ -81,7 +81,7 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
             body=self.body,
             data=self.data,
             approved_by=self.approved_by,
-            few_shot=self.few_shot,
+            verified=self.verified,
         )
         Context.current().save_one(result)
 
