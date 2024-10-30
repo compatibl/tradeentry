@@ -18,11 +18,13 @@ from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.retrievers.annotating_retriever import AnnotatingRetriever
 from cl.runtime import Context
 from cl.runtime.exceptions.error_util import ErrorUtil
+from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.primitive.float_util import FloatUtil
 from cl.convince.entries.entry import Entry
 from cl.convince.entries.entry_key import EntryKey
 from cl.tradeentry.entries.currency_entry import CurrencyEntry
 from cl.tradeentry.entries.number_entry import NumberEntry
+from cl.tradeentry.trades.currency import Currency
 
 _AMOUNT = """Numerical value of the amount (including possible space, commas and other
 decimal point and thousands separators between digits) or its text representation (e.g. 'ten') 
@@ -61,16 +63,20 @@ class AmountEntry(Entry):
 
     def run_propose(self) -> None:
         """Retrieve parameters from this entry and save the resulting entries."""
+
+        if self.verified:
+            raise UserError(f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Generate."
+                            f"This is a safety feature to prevent overwriting verified entries. ")
+
         # Get retriever
-        # TODO: Make configurable
+        context = Context.current()
         retriever = AnnotatingRetriever(
-            retriever_id="test_annotating_retriever",
+            retriever_id="AnnotatingRetriever",
             llm=GptLlm(llm_id="gpt-4o"),
         )
         retriever.init_all()
 
         # Process fields
-        context = Context.current()
         input_text = self.get_text()
 
         # Currency symbol preprocessing to avoid JSON formatting issues
@@ -81,6 +87,9 @@ class AmountEntry(Entry):
         input_text = input_text.replace("$CA", "CAD")
         input_text = input_text.replace("€", "EUR")
 
+        # Any unverified component will set this field to False
+        verified = True
+
         # Currency description
         currency_description = retriever.retrieve(
             input_text=input_text,
@@ -88,9 +97,15 @@ class AmountEntry(Entry):
             is_required=False,
         )
         if currency_description is not None:
-            currency = CurrencyEntry(description=currency_description, lang=self.lang)
-            context.save_one(currency)
-            self.currency = currency.get_key()
+            # Try to load an existing entry using reverse lookup
+            self.currency = CurrencyEntry.get_entry_key(currency_description)
+            if (loaded := context.load_one(CurrencyEntry, self.currency, is_record_optional=True)) is None:
+                # Save only if does not exist
+                currency = CurrencyEntry(description=currency_description, lang=self.lang)
+                context.save_one(currency)
+            else:
+                # Otherwise update the verified status
+                verified = verified and loaded.verified
         
         # Extract the currency if present
         amount_description = retriever.retrieve(
@@ -98,11 +113,19 @@ class AmountEntry(Entry):
             param_description=_AMOUNT,
             is_required=True,
         )
-        amount = NumberEntry(description=amount_description, lang=self.lang)
-        context.save_one(amount)
-        self.amount = amount.get_key()
+        if amount_description is not None:
+            # Try to load an existing entry using reverse lookup
+            self.amount = NumberEntry.get_entry_key(amount_description)
+            if (loaded := context.load_one(NumberEntry, self.amount, is_record_optional=True)) is None:
+                # Save only if does not exist
+                amount = NumberEntry(description=amount_description, lang=self.lang)
+                context.save_one(amount)
+            else:
+                # Otherwise update the verified status
+                verified = verified and loaded.verified
 
-        # Save self to DB
+        # Set verified status and save self to DB
+        self.verified = verified
         Context.current().save_one(self)
 
     @classmethod

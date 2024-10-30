@@ -43,6 +43,9 @@ class NumberEntry(Entry):
 
     def run_propose(self) -> None:
         """Retrieve parameters from this entry and save the resulting entries."""
+        if self.verified:
+            raise UserError(f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Propose."
+                            f"This is a safety feature to prevent overwriting verified entries. ")
         # First non-AI text2num library to parse a number with suffix
         if (value := self._parse_number_with_suffix(self.description)) is not None:
             # Use parsed value

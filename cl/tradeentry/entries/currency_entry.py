@@ -19,6 +19,7 @@ from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.retrievers.multiple_choice_retriever import MultipleChoiceRetriever
 from cl.runtime import Context
 from cl.runtime.exceptions.error_util import ErrorUtil
+from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.convince.entries.entry import Entry
 from cl.tradeentry.trades.currency import Currency
@@ -40,6 +41,9 @@ class CurrencyEntry(Entry):
 
     def run_propose(self) -> None:
         """Retrieve parameters from this entry and save the resulting entries."""
+        if self.verified:
+            raise UserError(f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Propose."
+                            f"This is a safety feature to prevent overwriting verified entries. ")
         # Get retriever
         # TODO: Make configurable
         retriever = MultipleChoiceRetriever(

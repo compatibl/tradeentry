@@ -17,6 +17,7 @@ from cl.runtime import Context
 from cl.convince.entries.entry_key import EntryKey
 from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.retrievers.annotating_retriever import AnnotatingRetriever
+from cl.runtime.log.exceptions.user_error import UserError
 from cl.tradeentry.entries.date_or_tenor_entry import DateOrTenorEntry
 from cl.tradeentry.entries.fixed_rate_entry import FixedRateEntry
 from cl.tradeentry.entries.pay_receive_fixed_entry import PayReceiveFixedEntry
@@ -54,6 +55,9 @@ class VanillaSwapEntry(TradeEntry):
 
     def run_propose(self) -> None:
         """Retrieve parameters from this entry and save the resulting entries."""
+        if self.verified:
+            raise UserError(f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Propose."
+                            f"This is a safety feature to prevent overwriting verified entries. ")
         # Get retriever
         # TODO: Make configurable
         retriever = AnnotatingRetriever(
