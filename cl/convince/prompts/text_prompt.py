@@ -12,21 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
-from abc import abstractmethod
 from dataclasses import dataclass
-from typing import Any
-from cl.runtime import RecordMixin
-from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.protocols import RecordProtocol
-from cl.runtime.schema.schema import Schema
-from cl.convince.prompts.prompt_key import PromptKey
+from cl.convince.prompts.prompt import Prompt
 
 
 @dataclass(slots=True, kw_only=True)
-class Prompt(PromptKey, RecordMixin[PromptKey], ABC):
-    """Parameterized LLM prompt template rendered using a parameters object."""
+class TextPrompt(Prompt):
+    """Text prompt with no parameter substitution."""
 
-    def get_key(self) -> PromptKey:
-        return PromptKey(prompt_id=self.prompt_id)
+    text: str = missing()
+    """Text of the prompt."""
+

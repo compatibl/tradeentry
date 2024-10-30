@@ -15,15 +15,16 @@
 from abc import ABC
 from abc import abstractmethod
 from dataclasses import dataclass
+from typing import Any
 from cl.runtime import RecordMixin
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import TDataDict
+from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.convince.prompts.prompt import Prompt
-from cl.convince.prompts.prompt_key import PromptKey
 
 _data_serializer = DictSerializer()
 """Serializer used to serialize params object for rendering the template."""
@@ -39,8 +40,8 @@ class TemplatePrompt(Prompt, ABC):
     template: str = missing()
     """Uses a template to render the prompt, param names are PascalCase in curly braces."""
 
-    def get_key(self) -> PromptKey:
-        return PromptKey(prompt_id=self.prompt_id)
+    params_type: str = missing()
+    """Record whose pascalized fields are used as template parameters in ClassName format."""
 
     def render(self, params: RecordMixin) -> str:
         """Use data from the parameters object of 'params_type' to render the template."""
@@ -70,3 +71,16 @@ class TemplatePrompt(Prompt, ABC):
     @abstractmethod
     def _render(self, dict_with_pascal_case_keys: TDataDict) -> str:
         """Protected method performing the actual rendering, must throw KeyError if a parameter is missing."""
+
+    def _check_params_type(self, params: Any) -> None:
+        """Check that params object is an instance of the right type."""
+        if params is None:
+            raise UserError(f"Params field is empty for prompt '{self.prompt_id}'.")
+        params_type = Schema.get_type_by_short_name(self.params_type)
+        if not isinstance(params, params_type):
+            actual_type_str = type(params).__name__
+            raise UserError(
+                f"Parameters object for prompt {self.prompt_id} has type {actual_type_str} which "
+                f"is not a subclass of the expected type {self.params_type}."
+            )
+
