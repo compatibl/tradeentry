@@ -66,7 +66,7 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
         return result
 
     # TODO: Restore abstract when implemented for all entries
-    def run_propose(self) -> None:
+    def run_generate(self) -> None:
         """Generate or regenerate the proposed value."""
         raise UserError(f"Propose handler is not yet implemented for {type(self).__name__}.")
 
