@@ -43,27 +43,38 @@ class NumberEntry(Entry):
 
     def run_propose(self) -> None:
         """Retrieve parameters from this entry and save the resulting entries."""
-        # Use non-AI text2num library with multi-language support to parse
-        language_code = "en"
-
-        # First try parsing a number with suffix
-        if (value := self._parse_number_with_suffix(self.description, language_code=language_code)) is not None:
+        # First non-AI text2num library to parse a number with suffix
+        if (value := self._parse_number_with_suffix(self.description)) is not None:
             # Use parsed value
-            self.value = value
-        else:
-            # Try to parse a word description
             try:
-                self.value = text2num(self.description, "en")  # TODO: Make language configurable or try multiple
+                self.value = float(value)
             except Exception as e:  # noqa
                 raise ErrorUtil.value_error(
                     self.description,
-                    details=f"Text description of a number could not be parsed using language code {language_code}.",
+                    details=f"Numerical description of a number with suffix could not be parsed "
+                            f"using language code {self.lang}.",
+                    value_name="number",
+                    method_name="run_propose",
+                    data_type=NumberEntry.__name__,
+                )
+        else:
+            # Try to parse a word description
+            try:
+                value = text2num(self.description, self.lang)
+                self.value = float(value)
+            except Exception as e:  # noqa
+                raise ErrorUtil.value_error(
+                    self.description,
+                    details=f"Text description of a number could not be parsed using language code {self.lang}.",
                     value_name="number",
                     method_name="run_propose",
                     data_type=NumberEntry.__name__,
                 )
 
-    def _parse_number_with_suffix(self, description: str, *, language_code: str) -> float | None:
+        # Save
+        Context.current().save_one(self)
+
+    def _parse_number_with_suffix(self, description: str) -> float | None:
         """Parse number with suffix for thousands, million or billion."""
 
         # TODO: Adjust for non-US number conventions
@@ -72,6 +83,7 @@ class NumberEntry(Entry):
 
         # Convert to lowercase and match to regex
         description = description.lower()
+        # TODO: Make regex and scale unit mapping dependent on self.lang
         match = _NUMBER_WITH_SUFFIX_RE.match(description)
         if match:
             number, _, scale_unit = match.groups()
@@ -81,7 +93,7 @@ class NumberEntry(Entry):
             except Exception as e:  # noqa
                 raise ErrorUtil.value_error(
                     self.description,
-                    details=f"Text description of a number could not be parsed using language code {language_code}.",
+                    details=f"Text description of a number could not be parsed using language code {self.lang}.",
                     value_name="number",
                     method_name="run_propose",
                     data_type=NumberEntry.__name__,

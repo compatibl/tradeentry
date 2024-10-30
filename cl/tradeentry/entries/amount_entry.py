@@ -88,7 +88,7 @@ class AmountEntry(Entry):
             is_required=False,
         )
         if currency_description is not None:
-            currency = CurrencyEntry(description=currency_description)
+            currency = CurrencyEntry(description=currency_description, lang=self.lang)
             context.save_one(currency)
             self.currency = currency.get_key()
         
@@ -98,7 +98,7 @@ class AmountEntry(Entry):
             param_description=_AMOUNT,
             is_required=True,
         )
-        amount = NumberEntry(description=amount_description)
+        amount = NumberEntry(description=amount_description, lang=self.lang)
         context.save_one(amount)
         self.amount = amount.get_key()
 
