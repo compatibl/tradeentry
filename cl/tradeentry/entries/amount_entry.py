@@ -33,6 +33,10 @@ Pay attention to the examples where you initially provided an incorrect answer:
 Input: $100m
 Your answer: {$100}m
 Correct answer: ${100}m
+
+Input: USD 100,000,000
+Your answer: USD {100},000,000
+Correct answer: USD {100,000,000}
 """
 _CURRENCY = "Currency as ISO-4217 code or natural language description if present."
 
