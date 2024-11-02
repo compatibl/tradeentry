@@ -53,8 +53,9 @@ class ListPanelsResponseItem(BaseModel):
             # Deserialize ui key
             key = key_serializer.deserialize_key(request.key, request_type.get_key_type())
 
-            record = Context.current().load_one(request_type, key)
-            actual_type = type(record)
+            # If the record is not found, display panel tabs for the base type
+            record = Context.current().load_one(request_type, key, is_record_optional=True)
+            actual_type = request_type if record is None else type(record)
         else:
             actual_type = request_type
 
