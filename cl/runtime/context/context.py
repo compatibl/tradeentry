@@ -15,7 +15,7 @@
 import logging
 from contextvars import ContextVar
 from dataclasses import dataclass
-from typing import Iterable
+from typing import Iterable, Dict
 from typing import List
 from typing import Optional
 from typing import Type
@@ -64,6 +64,9 @@ class Context(ContextKey, RecordMixin[ContextKey]):
 
     dataset: str = missing()
     """Dataset of the context, 'Context.current().dataset' is used if not specified."""
+
+    secrets: Dict[str, str] | None = None
+    """Context-specific secrets take precedence over those defined via Dynaconf."""
 
     is_deserialized: bool = False
     """Use this flag to determine if this context instance has been deserialized from data."""
