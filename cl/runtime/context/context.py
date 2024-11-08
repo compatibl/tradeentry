@@ -13,11 +13,9 @@
 # limitations under the License.
 
 import logging
-from contextlib import contextmanager
 from contextvars import ContextVar
 from dataclasses import dataclass
 from typing import Iterable
-from typing import Iterator
 from typing import List
 from typing import Optional
 from typing import Type
@@ -44,19 +42,11 @@ The following root context types can be used in the outermost 'with' clause:
     - TestingContext: Context for running unit tests
 """
 
-_context_stack: ContextVar[Optional[List["Context"]]] = ContextVar("context_stack", default=None)
+context_stack_var: ContextVar[Optional[List["Context"]]] = ContextVar("context_stack_var", default=None)
 """
 Context adds self to the stack on __enter__ and removes self on __exit__.
 Each asynchronous context has its own stack.
 """
-
-
-@contextmanager
-def request_cycle_context() -> Iterator[None]:
-    """Context manager to create isolated queue of contexts"""
-    token = _context_stack.set([])
-    yield
-    _context_stack.reset(token)
 
 
 @dataclass(slots=True, kw_only=True)
@@ -112,7 +102,9 @@ class Context(ContextKey, RecordMixin[ContextKey]):
     @classmethod
     def current(cls):
         """Return the current context or None if not set."""
-        context_stack = _context_stack.get()
+
+        # Get context stack for the current asynchronous environment
+        context_stack = context_stack_var.get()
         if context_stack and len(context_stack) > 0:
             return context_stack[-1]
         else:
@@ -124,11 +116,12 @@ class Context(ContextKey, RecordMixin[ContextKey]):
     def __enter__(self):
         """Supports 'with' operator for resource disposal."""
 
-        context_stack = _context_stack.get()
+        # Get context stack for the current asynchronous environment
+        context_stack = context_stack_var.get()
         if context_stack is None:
             # Context activated without middleware, create a new context stack
             context_stack = []
-            _context_stack.set(context_stack)
+            context_stack_var.set(context_stack)
 
         # Check if self is already the current context
         if context_stack and context_stack[-1] is self:
@@ -161,7 +154,8 @@ class Context(ContextKey, RecordMixin[ContextKey]):
             # Save occurred error to self db
             self.save_one(log_entry)
 
-        context_stack = _context_stack.get()
+        # Get context stack for the current asynchronous environment
+        context_stack = context_stack_var.get()
 
         if context_stack is None or not bool(context_stack):
             raise RuntimeError("Current context must not be cleared inside 'with Context(...)' clause.")

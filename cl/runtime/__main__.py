@@ -22,6 +22,7 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
 from starlette.staticfiles import StaticFiles
 from cl.runtime import Context
+from cl.runtime.routers.context_middleware import ContextMiddleware
 from cl.runtime.context.process_context import ProcessContext
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.log.log_entry import LogEntry
@@ -111,6 +112,9 @@ server_app.add_middleware(
     allow_methods=["*"],  # Specify allowed HTTP methods, e.g., ["GET", "POST"]
     allow_headers=["*"],  # Specify allowed headers, e.g., ["Content-Type", "Authorization"]
 )
+
+# Middleware for executing each API call in isolated context
+server_app.add_middleware(ContextMiddleware)
 
 # Routers
 server_app.include_router(app_router.router, prefix="", tags=["App"])
