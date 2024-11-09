@@ -21,13 +21,24 @@ class OpenaiSettings(Settings):
     """OpenAI settings."""
 
     api_key: str
-    """OpenAI API key."""
+    """The key for making REST API calls, ensure this key is stored in .secrets.yaml rather than settings.yaml."""
+
+    api_base_url: str | None = None
+    """
+    Base URL inclusive of protocol version for the REST API (optional, passed as 'base_url' to OpenAI SDK).
+    
+    Notes:
+        Specify this URL for providers other than OpenAI that use OpenAI REST API protocol,
+        for example 'https://api.fireworks.ai/inference/v1'.
+    """
 
     def init(self) -> None:
         """Same as __init__ but can be used when field values are set both during and after construction."""
 
         if not isinstance(self.api_key, str):
             raise RuntimeError(f"{type(self).__name__} field 'api_key' must be a string.")
+        if self.api_base_url is not None and not isinstance(self.api_base_url, str):
+            raise RuntimeError(f"{type(self).__name__} field 'api_base_url' must be None or a string.")
 
     @classmethod
     def get_prefix(cls) -> str:
