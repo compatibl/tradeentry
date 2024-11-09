@@ -16,13 +16,15 @@ import pytest
 from cl.runtime.settings.api_settings import ApiSettings
 
 
-def test_smoke():
-    """Test ApiSettings class."""
+def test_defaults():
+    """Test defaults for ApiSettings class."""
 
     api_settings = ApiSettings.instance()
-    assert api_settings.host_name == "localhost"
-    assert api_settings.host_ip == "127.0.0.1"
+    assert api_settings.hostname == "localhost"
     assert api_settings.port == 7008
+    assert api_settings.allow_credentials
+    assert api_settings.allow_methods == ["*"]
+    assert api_settings.allow_headers == ["*"]
 
 
 if __name__ == "__main__":
