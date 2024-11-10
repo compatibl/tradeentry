@@ -17,6 +17,8 @@ from typing import ClassVar
 from openai import OpenAI
 from cl.convince.llms.llm import Llm
 from cl.convince.settings.openai_settings import OpenaiSettings
+from cl.runtime.context.context_util import ContextUtil
+from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.primitive.float_util import FloatUtil
 
 
@@ -79,8 +81,15 @@ class GptLlm(Llm):
     def _get_client(cls) -> OpenAI:
         """Instantiate and cache the OpenAI client instance."""
         if cls._client is None:
+
+            # Try loading API key from context.secrets first and then from settings
+            api_key = ContextUtil.get_secret("OPENAI_API_KEY") or OpenaiSettings.instance().api_key
+            if api_key is None:
+                raise UserError(
+                    "Provide OPENAI_API_KEY in Account > My Keys (users) or using Dynaconf (developers).")
+
             cls._client = OpenAI(
-                api_key=OpenaiSettings.instance().api_key,
+                api_key=api_key,
                 base_url=OpenaiSettings.instance().api_base_url,
             )
         return cls._client

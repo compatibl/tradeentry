@@ -20,13 +20,13 @@ from cl.runtime.settings.settings import Settings
 class AnthropicSettings(Settings):
     """Anthropic settings."""
 
-    api_key: str
-    """Anthropic API key."""
+    api_key: str | None = None
+    """The key for making REST API calls, ensure this key is stored in .secrets.yaml rather than settings.yaml."""
 
     def init(self) -> None:
         """Same as __init__ but can be used when field values are set both during and after construction."""
 
-        if not isinstance(self.api_key, str):
+        if self.api_key is not None and not isinstance(self.api_key, str):
             raise RuntimeError(f"{type(self).__name__} field 'api_key' must be a string.")
 
     @classmethod

@@ -20,7 +20,7 @@ from cl.runtime.settings.settings import Settings
 class OpenaiSettings(Settings):
     """OpenAI settings."""
 
-    api_key: str
+    api_key: str | None = None
     """The key for making REST API calls, ensure this key is stored in .secrets.yaml rather than settings.yaml."""
 
     api_base_url: str | None = None
@@ -35,7 +35,7 @@ class OpenaiSettings(Settings):
     def init(self) -> None:
         """Same as __init__ but can be used when field values are set both during and after construction."""
 
-        if not isinstance(self.api_key, str):
+        if self.api_key is not None and not isinstance(self.api_key, str):
             raise RuntimeError(f"{type(self).__name__} field 'api_key' must be a string.")
         if self.api_base_url is not None and not isinstance(self.api_base_url, str):
             raise RuntimeError(f"{type(self).__name__} field 'api_base_url' must be None or a string.")
