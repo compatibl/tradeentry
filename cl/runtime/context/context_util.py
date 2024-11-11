@@ -23,8 +23,8 @@ class ContextUtil:
     """Helper methods for Context."""
 
     @classmethod
-    def get_secret(cls, key: str) -> str | None:
-        """Get the secret value for the specified key from Context.current().secrets, return None if not found."""
+    def decrypt_secret(cls, key: str) -> str | None:
+        """Decrypt the specified key in Context.current().secrets, return None if not found."""
 
         # Get secrets field of the current context, return None if not specified
         secrets = Context.current().secrets

@@ -66,7 +66,7 @@ def test_decrypt_secret():
         value = "secret_value"
         encrypted_value = _encrypt_value(value)
         context.secrets[key] = encrypted_value
-        secret_value_decrypted = ContextUtil.get_secret(key)
+        secret_value_decrypted = ContextUtil.decrypt_secret(key)
         assert secret_value_decrypted == value
 
 
