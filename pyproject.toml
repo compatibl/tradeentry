@@ -16,3 +16,10 @@ force-exclude = '''
   | dist
 )/
 '''
+
+[build-system]
+requires = ["setuptools>=58.1.0", "wheel>=0.38.4"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
