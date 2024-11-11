@@ -15,7 +15,7 @@
 from dataclasses import dataclass
 import google.generativeai as gemini  # noqa
 from cl.convince.llms.llm import Llm
-from cl.convince.settings.gemini_settings import GeminiSettings
+from cl.convince.settings.google_settings import GoogleSettings
 from cl.runtime.context.context_util import ContextUtil
 from cl.runtime.log.exceptions.user_error import UserError
 
@@ -37,7 +37,7 @@ class GeminiLlm(Llm):
         model_name = self.model_name if self.model_name is not None else self.llm_id
 
         # Try loading API key from context.secrets first and then from settings
-        api_key = ContextUtil.decrypt_secret("GOOGLE_API_KEY") or GeminiSettings.instance().api_key
+        api_key = ContextUtil.decrypt_secret("GOOGLE_API_KEY") or GoogleSettings.instance().api_key
         if api_key is None:
             raise UserError("Provide GOOGLE_API_KEY in Account > My Keys (users) or using Dynaconf (developers).")
         gemini.configure(api_key=api_key)

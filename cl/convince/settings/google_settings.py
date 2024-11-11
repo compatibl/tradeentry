@@ -17,7 +17,7 @@ from cl.runtime.settings.settings import Settings
 
 
 @dataclass(slots=True, kw_only=True)
-class GeminiSettings(Settings):
+class GoogleSettings(Settings):
     """Google Gemini settings."""
 
     api_key: str | None = None
@@ -31,4 +31,4 @@ class GeminiSettings(Settings):
 
     @classmethod
     def get_prefix(cls) -> str:
-        return "gemini"
+        return "google"
