@@ -14,7 +14,10 @@
 
 import pytest
 from typing import List
+
+from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.experiments.experiment import Experiment
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.llm import Llm
@@ -51,13 +54,16 @@ def _is_correct_answer(answer: str, trade_description: str, correct_answers: Lis
     )
 
 
-def _test_brace_annotation(trade_description: str, run_count: int, llm: Llm) -> List[str]:
+def _test_brace_annotation(
+    trade_description: str,
+    run_count: int,
+    llm: Llm,
+) -> List[str]:
 
     prompt = PROMPT_TEMPLATE.format(text=trade_description)
 
     results = []
     for trial_id in range(run_count):
-
         result = llm.completion(prompt, trial_id=trial_id)
 
         guard = RegressionGuard(channel=llm.llm_id)

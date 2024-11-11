@@ -12,7 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import dateparser
 from dataclasses import dataclass
+
+from cl.runtime import Context
+from cl.runtime.exceptions.error_util import ErrorUtil
+from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.convince.entries.entry import Entry
 
@@ -23,3 +28,24 @@ class DateEntry(Entry):
 
     date: str | None = None
     """Date specified by the entry in ISO-8601 yyyy-mm-dd string format."""
+
+    def run_generate(self) -> None:
+        """Retrieve parameters from this entry and save the resulting entries."""
+        if self.verified:
+            raise UserError(f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Propose."
+                            f"This is a safety feature to prevent overwriting verified entries. ")
+
+        # TODO: Check if the entry already exists in DB
+
+        # Parse date
+        if date := dateparser.parse(self.description):
+            self.date = date.strftime('%Y-%m-%d')
+            Context.current().save_one(self)
+        else:
+            raise ErrorUtil.value_error(
+                self.description,
+                details=f"Date '{self.description}' can't be parsed.",
+                value_name="date",
+                method_name="run_generate",
+                data_type=DateEntry.__name__,
+            )

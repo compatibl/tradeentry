@@ -14,7 +14,10 @@
 
 import pytest
 from typing import List
+
+from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.experiments.experiment import Experiment
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.llm import Llm
@@ -47,7 +50,11 @@ def _is_correct_answer(answer: str, correct_answer: str) -> bool:
     return normalized_answer == normalized_correct_answer
 
 
-def _testing_swap_leg_type(trade_description: str, run_count: int, llm: Llm) -> List[str]:
+def _testing_swap_leg_type(
+    trade_description: str,
+    run_count: int,
+    llm: Llm,
+) -> List[str]:
     prompt = PROMPT_TEMPLATE.format(input_text=trade_description)
 
     results = []

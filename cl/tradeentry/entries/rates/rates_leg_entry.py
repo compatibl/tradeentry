@@ -23,5 +23,5 @@ from cl.tradeentry.trades.rates.rates_leg_key import RatesLegKey
 class RatesLegEntry(Entry, ABC):
     """Interest rate leg entry."""
 
-    leg: RatesLegKey = missing()
+    leg: RatesLegKey | None = None
     """Interest rate leg."""

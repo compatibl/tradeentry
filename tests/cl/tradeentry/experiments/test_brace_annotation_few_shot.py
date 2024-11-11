@@ -15,9 +15,10 @@
 import pytest
 from typing import List
 
-from cl.convince.entries.entry import Entry
 from cl.convince.retrievers.retriever_util import RetrieverUtil
+from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.experiments.experiment import Experiment
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.llm import Llm
@@ -42,13 +43,17 @@ Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Recei
 """
 
 
-def _test_brace_annotation_few_shot(trade_description: str, run_count: int, llm: Llm, examples: str = "") -> List[str]:
+def _test_brace_annotation_few_shot(
+    trade_description: str,
+    run_count: int,
+    llm: Llm,
+    examples: str = "",
+) -> List[str]:
 
     prompt = _TEMPLATE.format(InputText=trade_description, Examples=examples)
 
     results = []
     for trial_id in range(run_count):
-
         result = llm.completion(prompt, trial_id=trial_id)
 
         guard = RegressionGuard(channel=llm.llm_id)

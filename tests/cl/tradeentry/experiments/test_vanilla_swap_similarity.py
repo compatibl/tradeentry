@@ -16,13 +16,14 @@ import pandas as pd
 import pytest
 from typing import List
 
-from cl.convince.entries.entry import Entry
 from cl.convince.retrievers.retriever_util import RetrieverUtil
+from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.context.testing_context import TestingContext
-from cl.runtime.plots.group_bar_plot import GroupBarPlot
+from cl.runtime.experiments.experiment import Experiment
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.llm import Llm
-from stubs.cl.convince.experiments.stub_llms import get_stub_mini_llms, get_stub_full_llms
+from stubs.cl.convince.experiments.stub_llms import get_stub_full_llms
+
 
 _TEMPLATE = """Act as a Senior Quantitative Analyst tasked with evaluating the similarity in how the description of
 a specific parameter is placed within the description of two different trades, so your junior colleague can be
@@ -67,14 +68,19 @@ Present your response in JSON with the following format:
 """
 
 
-def _test_vanilla_swap_similarity(basic_trade: str, evaluated_trade: str, parameter_description: str, run_count: int, llm: Llm,) -> List[str]:
+def _test_vanilla_swap_similarity(
+    basic_trade: str,
+    evaluated_trade: str,
+    parameter_description: str,
+    run_count: int,
+    llm: Llm,
+) -> List[str]:
 
     prompt = _TEMPLATE.format(BasicTrade=basic_trade, EvaluatedTrade=evaluated_trade,
                               ParameterDescription=parameter_description)
 
     results = []
     for trial_id in range(run_count):
-
         result = llm.completion(prompt, trial_id=trial_id)
 
         guard = RegressionGuard(channel=llm.llm_id)
@@ -86,6 +92,7 @@ def _test_vanilla_swap_similarity(basic_trade: str, evaluated_trade: str, parame
 
 
 def test_vanilla_swap_similarity():
+
     with TestingContext():
         run_count = 2
         basic_trade = "Sell 10y SOFR swap at 3.45%"
@@ -105,7 +112,13 @@ def test_vanilla_swap_similarity():
         for evaluated_trade in evaluated_trades:
             summary_result_row = {'Basic Trade': basic_trade, 'Evaluated Trade': evaluated_trade}
             for llm in stub_full_llms:
-                results = _test_vanilla_swap_similarity(basic_trade, evaluated_trade, parameter_description, run_count, llm)
+                results = _test_vanilla_swap_similarity(
+                    basic_trade,
+                    evaluated_trade,
+                    parameter_description,
+                    run_count,
+                    llm,
+                )
                 for result in results:
                     json_result = RetrieverUtil.extract_json(result)
                     if json_result is None:

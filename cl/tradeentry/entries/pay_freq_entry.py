@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.records.dataclasses_extensions import missing
+
 from cl.convince.entries.entry import Entry
 from cl.tradeentry.trades.freq_key import FreqKey
 
@@ -22,5 +22,5 @@ from cl.tradeentry.trades.freq_key import FreqKey
 class PayFreqEntry(Entry):
     """Maps payment frequency string specified by the user to frequency specification."""
 
-    pay_freq: FreqKey = missing()
+    pay_freq: FreqKey | None = None
     """Payment frequency."""

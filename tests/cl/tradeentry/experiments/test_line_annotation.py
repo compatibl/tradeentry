@@ -15,7 +15,10 @@
 import pytest
 from typing import Dict
 from matplotlib import pyplot as plt
+
+from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.experiments.experiment import Experiment
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.retrievers.retriever_util import RetrieverUtil
