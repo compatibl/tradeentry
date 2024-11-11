@@ -83,7 +83,7 @@ class GptLlm(Llm):
         if cls._client is None:
 
             # Try loading API key from context.secrets first and then from settings
-            api_key = ContextUtil.get_secret("OPENAI_API_KEY") or OpenaiSettings.instance().api_key
+            api_key = ContextUtil.decrypt_secret("OPENAI_API_KEY") or OpenaiSettings.instance().api_key
             if api_key is None:
                 raise UserError(
                     "Provide OPENAI_API_KEY in Account > My Keys (users) or using Dynaconf (developers).")

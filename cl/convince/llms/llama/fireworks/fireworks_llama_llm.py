@@ -45,7 +45,7 @@ class FireworksLlamaLlm(LlamaLlm):
 <|start_header_id|>assistant<|end_header_id|>"""
 
         # Try loading API key from context.secrets first and then from settings
-        api_key = ContextUtil.get_secret("FIREWORKS_API_KEY") or FireworksSettings.instance().api_key
+        api_key = ContextUtil.decrypt_secret("FIREWORKS_API_KEY") or FireworksSettings.instance().api_key
         if api_key is None:
             raise UserError(
                 "Provide FIREWORKS_API_KEY in Account > My Keys (users) or using Dynaconf (developers).")
