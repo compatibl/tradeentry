@@ -1,5 +1,5 @@
 RequestID,Query,Completion
-2024-10-21-07-33-52-054-7fe2b7e0b00ec4490d8e,"TrialID: 0
+2024-10-21T07:33:52.054Z-7fe2b7e0b00ec4490d8e,"TrialID: 0
 You will be provided with an input text and a description of a parameter.
 Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
 Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
@@ -20,7 +20,7 @@ Parameter description: ```The words Buy or Sell, or the words Pay Fixed or Recei
     ""justification"": ""The word 'Sell' is part of the parameter description and is surrounded by curly braces.""
 }
 ```"
-2024-10-21-07-33-53-293-72f3a6ccc77bc33c808c,"TrialID: 0
+2024-10-21T07:33:53.293Z-72f3a6ccc77bc33c808c,"TrialID: 0
 You will be provided with an input text and a description of a parameter.
 Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
 Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
@@ -41,7 +41,7 @@ Parameter description: ```Either maturity date as a date, or tenor (length) as t
     ""justification"": ""The input text contains '10y', which indicates a tenor (length) of 10 years. This matches the parameter description that mentions the length of the swap can be in years.""
 }
 ```"
-2024-10-21-07-33-57-157-70309b2153f508e61463,"TrialID: 0
+2024-10-21T07:33:57.157Z-70309b2153f508e61463,"TrialID: 0
 You will be provided with an input text and a description of a parameter.
 Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
 Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
@@ -62,7 +62,7 @@ Parameter description: ```Floating rate index```","```json
     ""justification"": ""The floating rate index mentioned in the input text is 'SOFR', which stands for Secured Overnight Financing Rate.""
 }
 ```"
-2024-10-21-07-33-58-366-72c288373d1d784b45b4,"TrialID: 0
+2024-10-21T07:33:58.366Z-72c288373d1d784b45b4,"TrialID: 0
 You will be provided with an input text and a description of a parameter.
 Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
 Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
@@ -81,5 +81,1587 @@ Parameter description: ```Fixed rate```","```json
     ""success"": ""Y"",
     ""annotated_text"": ""Sell 10y SOFR swap at {3.45%}"",
     ""justification"": ""The value '3.45%' in the input text is identified as the fixed rate for the SOFR swap, based on context and financial convention.""
+}
+```"
+2024-10-30-09-54-17-955-77a0983d53cbd041dd03,"TrialID: 0
+You will be provided with an input text, a description of a parameter, and possible values of this parameter.
+Your goal is to extract the value of the parameter from the provided input text.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": ""<Y if you successfully extracted the parameter value and it matches one of the provided choices and N otherwise. This field is required.>"",
+    ""param_value"": ""<Parameter value you extracted which matches one of the provided choices. Leave this field empty in case of failure.>"",
+    ""justification"": ""<Justification for the parameter value you extracted in case of success or the reason why you were not able to find the parameter in case of failure. This field is required.>""
+}
+Input text: ```$```
+Parameter description: ```Currency code in strict ISO-4217 format of three uppercase letters, no variations allowed.```
+Semicolon-delimited list of valid choices: ```['CAD', 'EUR', 'GBP', 'USD']```
+
+Keep in mind that unless the input text unambiguously, without any doubt, corresponds the parameter value you extracted,
+you must report failure and not return any value. It is not acceptable to guess what the parameter could be be based
+on hints in the input text.","```json
+{
+    ""success"": ""N"",
+    ""param_value"": """",
+    ""justification"": ""The input text '$' does not contain an unambiguous currency code in the strict ISO-4217 format from the provided list of valid choices ('CAD', 'EUR', 'GBP', 'USD').""
+}
+```"
+2024-10-30-09-54-43-370-73a0bbd69db5a2c8b207,"TrialID: 1
+You will be provided with an input text, a description of a parameter, and possible values of this parameter.
+Your goal is to extract the value of the parameter from the provided input text.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": ""<Y if you successfully extracted the parameter value and it matches one of the provided choices and N otherwise. This field is required.>"",
+    ""param_value"": ""<Parameter value you extracted which matches one of the provided choices. Leave this field empty in case of failure.>"",
+    ""justification"": ""<Justification for the parameter value you extracted in case of success or the reason why you were not able to find the parameter in case of failure. This field is required.>""
+}
+Input text: ```$```
+Parameter description: ```Currency code in strict ISO-4217 format of three uppercase letters, no variations allowed.```
+Semicolon-delimited list of valid choices: ```['CAD', 'EUR', 'GBP', 'USD']```
+
+Keep in mind that unless the input text unambiguously, without any doubt, corresponds the parameter value you extracted,
+you must report failure and not return any value. It is not acceptable to guess what the parameter could be be based
+on hints in the input text.","```json
+{
+    ""success"": ""N"",
+    ""param_value"": """",
+    ""justification"": ""The input text '$' does not contain any currency code in the strict ISO-4217 format of three uppercase letters. Therefore, it cannot be extracted successfully as one of the provided valid choices: ['CAD', 'EUR', 'GBP', 'USD'].""
+}
+```"
+2024-10-30-10-00-50-589-7782b428c0d55d13be92,"TrialID: 0
+You will be provided with an input text, a description of a parameter, and possible values of this parameter.
+Your goal is to extract the value of the parameter from the provided input text.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": ""<Y if you successfully extracted the parameter value and it matches one of the provided choices and N otherwise. This field is required.>"",
+    ""param_value"": ""<Parameter value you extracted which matches one of the provided choices. Leave this field empty in case of failure.>"",
+    ""justification"": ""<Justification for the parameter value you extracted in case of success or the reason why you were not able to find the parameter in case of failure. This field is required.>""
+}
+Input text: ```$```
+Parameter description: ```Currency code in strict ISO-4217 format of three uppercase letters, no variations allowed.```
+Semicolon-delimited list of valid choices: ```['CAD', 'EUR', 'GBP', 'USD']```
+
+Keep in mind that the input text does not need to be one of the valid choices. Rather, you must use your knowledge as
+Senior Quantitative Analyst to determine if the input has the same meaning or maps to one of the valid choices,
+without necessarily being exactly the same or having the same format.
+
+Examples:
+  - When input text is $, a valid choice may be USD
+  - When input text is %, a valid choice may be percent","```json
+{
+    ""success"": ""Y"",
+    ""param_value"": ""USD"",
+    ""justification"": ""The input text '$' is commonly used as a symbol for the US Dollar, which maps to the currency code 'USD' according to the ISO-4217 format.""
+}
+```"
+2024-10-30-10-01-05-357-7673aa47375423a3a160,"TrialID: 0
+You will be provided with an input text, a description of a parameter, and possible values of this parameter.
+Your goal is to extract the value of the parameter from the provided input text.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": ""<Y if you successfully extracted the parameter value and it matches one of the provided choices and N otherwise. This field is required.>"",
+    ""param_value"": ""<Parameter value you extracted which matches one of the provided choices. Leave this field empty in case of failure.>"",
+    ""justification"": ""<Justification for the parameter value you extracted in case of success or the reason why you were not able to find the parameter in case of failure. This field is required.>""
+}
+Input text: ```CA$```
+Parameter description: ```Currency code in strict ISO-4217 format of three uppercase letters, no variations allowed.```
+Semicolon-delimited list of valid choices: ```['CAD', 'EUR', 'GBP', 'USD']```
+
+Keep in mind that the input text does not need to be one of the valid choices. Rather, you must use your knowledge as
+Senior Quantitative Analyst to determine if the input has the same meaning or maps to one of the valid choices,
+without necessarily being exactly the same or having the same format.
+
+Examples:
+  - When input text is $, a valid choice may be USD
+  - When input text is %, a valid choice may be percent","```json
+{
+    ""success"": ""Y"",
+    ""param_value"": ""CAD"",
+    ""justification"": ""The input text 'CA$' is a common representation of the Canadian Dollar, which corresponds to the ISO-4217 currency code 'CAD'. Thus, it maps to one of the valid choices provided.""
+}
+```"
+2024-10-30-10-01-07-646-78538f4b5152446bbf88,"TrialID: 0
+You will be provided with an input text, a description of a parameter, and possible values of this parameter.
+Your goal is to extract the value of the parameter from the provided input text.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": ""<Y if you successfully extracted the parameter value and it matches one of the provided choices and N otherwise. This field is required.>"",
+    ""param_value"": ""<Parameter value you extracted which matches one of the provided choices. Leave this field empty in case of failure.>"",
+    ""justification"": ""<Justification for the parameter value you extracted in case of success or the reason why you were not able to find the parameter in case of failure. This field is required.>""
+}
+Input text: ```CAD```
+Parameter description: ```Currency code in strict ISO-4217 format of three uppercase letters, no variations allowed.```
+Semicolon-delimited list of valid choices: ```['CAD', 'EUR', 'GBP', 'USD']```
+
+Keep in mind that the input text does not need to be one of the valid choices. Rather, you must use your knowledge as
+Senior Quantitative Analyst to determine if the input has the same meaning or maps to one of the valid choices,
+without necessarily being exactly the same or having the same format.
+
+Examples:
+  - When input text is $, a valid choice may be USD
+  - When input text is %, a valid choice may be percent","```json
+{
+    ""success"": ""Y"",
+    ""param_value"": ""CAD"",
+    ""justification"": ""The input text 'CAD' is exactly one of the valid ISO-4217 currency codes provided in the choices.""
+}
+```"
+2024-10-30-10-01-27-126-7a01852c8d7fea887699,"TrialID: 0
+You will be provided with an input text, a description of a parameter, and possible values of this parameter.
+Your goal is to extract the value of the parameter from the provided input text.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": ""<Y if you successfully extracted the parameter value and it matches one of the provided choices and N otherwise. This field is required.>"",
+    ""param_value"": ""<Parameter value you extracted which matches one of the provided choices. Leave this field empty in case of failure.>"",
+    ""justification"": ""<Justification for the parameter value you extracted in case of success or the reason why you were not able to find the parameter in case of failure. This field is required.>""
+}
+Input text: ```EUR```
+Parameter description: ```Currency code in strict ISO-4217 format of three uppercase letters, no variations allowed.```
+Semicolon-delimited list of valid choices: ```['CAD', 'EUR', 'GBP', 'USD']```
+
+Keep in mind that the input text does not need to be one of the valid choices. Rather, you must use your knowledge as
+Senior Quantitative Analyst to determine if the input has the same meaning or maps to one of the valid choices,
+without necessarily being exactly the same or having the same format.
+
+Examples:
+  - When input text is $, a valid choice may be USD
+  - When input text is %, a valid choice may be percent","```json
+{
+    ""success"": ""Y"",
+    ""param_value"": ""EUR"",
+    ""justification"": ""The input text 'EUR' is already in the strict ISO-4217 format and matches one of the valid currency codes provided in the list of choices.""
+}
+```"
+2024-10-30-10-01-28-269-7ff2aca6622da4b914d5,"TrialID: 0
+You will be provided with an input text, a description of a parameter, and possible values of this parameter.
+Your goal is to extract the value of the parameter from the provided input text.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": ""<Y if you successfully extracted the parameter value and it matches one of the provided choices and N otherwise. This field is required.>"",
+    ""param_value"": ""<Parameter value you extracted which matches one of the provided choices. Leave this field empty in case of failure.>"",
+    ""justification"": ""<Justification for the parameter value you extracted in case of success or the reason why you were not able to find the parameter in case of failure. This field is required.>""
+}
+Input text: ```US dollar```
+Parameter description: ```Currency code in strict ISO-4217 format of three uppercase letters, no variations allowed.```
+Semicolon-delimited list of valid choices: ```['CAD', 'EUR', 'GBP', 'USD']```
+
+Keep in mind that the input text does not need to be one of the valid choices. Rather, you must use your knowledge as
+Senior Quantitative Analyst to determine if the input has the same meaning or maps to one of the valid choices,
+without necessarily being exactly the same or having the same format.
+
+Examples:
+  - When input text is $, a valid choice may be USD
+  - When input text is %, a valid choice may be percent","```json
+{
+    ""success"": ""Y"",
+    ""param_value"": ""USD"",
+    ""justification"": ""The input text 'US dollar' corresponds to the currency code 'USD' in ISO-4217 format, which is one of the valid choices.""
+}
+```"
+2024-10-30-10-01-31-530-7f108c2ad903dcdaab6e,"TrialID: 0
+You will be provided with an input text, a description of a parameter, and possible values of this parameter.
+Your goal is to extract the value of the parameter from the provided input text.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": ""<Y if you successfully extracted the parameter value and it matches one of the provided choices and N otherwise. This field is required.>"",
+    ""param_value"": ""<Parameter value you extracted which matches one of the provided choices. Leave this field empty in case of failure.>"",
+    ""justification"": ""<Justification for the parameter value you extracted in case of success or the reason why you were not able to find the parameter in case of failure. This field is required.>""
+}
+Input text: ```US$```
+Parameter description: ```Currency code in strict ISO-4217 format of three uppercase letters, no variations allowed.```
+Semicolon-delimited list of valid choices: ```['CAD', 'EUR', 'GBP', 'USD']```
+
+Keep in mind that the input text does not need to be one of the valid choices. Rather, you must use your knowledge as
+Senior Quantitative Analyst to determine if the input has the same meaning or maps to one of the valid choices,
+without necessarily being exactly the same or having the same format.
+
+Examples:
+  - When input text is $, a valid choice may be USD
+  - When input text is %, a valid choice may be percent","```json
+{
+    ""success"": ""Y"",
+    ""param_value"": ""USD"",
+    ""justification"": ""The input text 'US$' is commonly used as a shorthand or symbol for the United States Dollar, which corresponds to 'USD' in ISO-4217 format. Thus, 'US$' is mapped to the valid choice 'USD'.""
+}
+```"
+2024-10-30-10-01-33-513-7022a31ac896ef9eaa32,"TrialID: 0
+You will be provided with an input text, a description of a parameter, and possible values of this parameter.
+Your goal is to extract the value of the parameter from the provided input text.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": ""<Y if you successfully extracted the parameter value and it matches one of the provided choices and N otherwise. This field is required.>"",
+    ""param_value"": ""<Parameter value you extracted which matches one of the provided choices. Leave this field empty in case of failure.>"",
+    ""justification"": ""<Justification for the parameter value you extracted in case of success or the reason why you were not able to find the parameter in case of failure. This field is required.>""
+}
+Input text: ```USD```
+Parameter description: ```Currency code in strict ISO-4217 format of three uppercase letters, no variations allowed.```
+Semicolon-delimited list of valid choices: ```['CAD', 'EUR', 'GBP', 'USD']```
+
+Keep in mind that the input text does not need to be one of the valid choices. Rather, you must use your knowledge as
+Senior Quantitative Analyst to determine if the input has the same meaning or maps to one of the valid choices,
+without necessarily being exactly the same or having the same format.
+
+Examples:
+  - When input text is $, a valid choice may be USD
+  - When input text is %, a valid choice may be percent","```json
+{
+    ""success"": ""Y"",
+    ""param_value"": ""USD"",
+    ""justification"": ""The input text 'USD' is an exact match with one of the valid choices 'USD', and it adheres to the strict ISO-4217 format of three uppercase letters.""
+}
+```"
+2024-10-30-10-01-35-308-76b0984d397e55f2675f,"TrialID: 0
+You will be provided with an input text, a description of a parameter, and possible values of this parameter.
+Your goal is to extract the value of the parameter from the provided input text.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": ""<Y if you successfully extracted the parameter value and it matches one of the provided choices and N otherwise. This field is required.>"",
+    ""param_value"": ""<Parameter value you extracted which matches one of the provided choices. Leave this field empty in case of failure.>"",
+    ""justification"": ""<Justification for the parameter value you extracted in case of success or the reason why you were not able to find the parameter in case of failure. This field is required.>""
+}
+Input text: ```dollar```
+Parameter description: ```Currency code in strict ISO-4217 format of three uppercase letters, no variations allowed.```
+Semicolon-delimited list of valid choices: ```['CAD', 'EUR', 'GBP', 'USD']```
+
+Keep in mind that the input text does not need to be one of the valid choices. Rather, you must use your knowledge as
+Senior Quantitative Analyst to determine if the input has the same meaning or maps to one of the valid choices,
+without necessarily being exactly the same or having the same format.
+
+Examples:
+  - When input text is $, a valid choice may be USD
+  - When input text is %, a valid choice may be percent","```json
+{
+    ""success"": ""Y"",
+    ""param_value"": ""USD"",
+    ""justification"": ""The input text 'dollar' refers to the United States Dollar, which corresponds to the currency code 'USD' in the ISO-4217 format. 'USD' is one of the valid choices provided.""
+}
+```"
+2024-10-30-10-01-36-939-7a208146a7ffadfc5619,"TrialID: 0
+You will be provided with an input text, a description of a parameter, and possible values of this parameter.
+Your goal is to extract the value of the parameter from the provided input text.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": ""<Y if you successfully extracted the parameter value and it matches one of the provided choices and N otherwise. This field is required.>"",
+    ""param_value"": ""<Parameter value you extracted which matches one of the provided choices. Leave this field empty in case of failure.>"",
+    ""justification"": ""<Justification for the parameter value you extracted in case of success or the reason why you were not able to find the parameter in case of failure. This field is required.>""
+}
+Input text: ```euro```
+Parameter description: ```Currency code in strict ISO-4217 format of three uppercase letters, no variations allowed.```
+Semicolon-delimited list of valid choices: ```['CAD', 'EUR', 'GBP', 'USD']```
+
+Keep in mind that the input text does not need to be one of the valid choices. Rather, you must use your knowledge as
+Senior Quantitative Analyst to determine if the input has the same meaning or maps to one of the valid choices,
+without necessarily being exactly the same or having the same format.
+
+Examples:
+  - When input text is $, a valid choice may be USD
+  - When input text is %, a valid choice may be percent","```json
+{
+    ""success"": ""Y"",
+    ""param_value"": ""EUR"",
+    ""justification"": ""The input text 'euro' refers to the currency used by many countries in the European Union, which is represented by the ISO-4217 currency code 'EUR'.""
+}
+```"
+2024-10-30-10-01-38-733-72f1b7b583e074697614,"TrialID: 0
+You will be provided with an input text, a description of a parameter, and possible values of this parameter.
+Your goal is to extract the value of the parameter from the provided input text.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": ""<Y if you successfully extracted the parameter value and it matches one of the provided choices and N otherwise. This field is required.>"",
+    ""param_value"": ""<Parameter value you extracted which matches one of the provided choices. Leave this field empty in case of failure.>"",
+    ""justification"": ""<Justification for the parameter value you extracted in case of success or the reason why you were not able to find the parameter in case of failure. This field is required.>""
+}
+Input text: ```€```
+Parameter description: ```Currency code in strict ISO-4217 format of three uppercase letters, no variations allowed.```
+Semicolon-delimited list of valid choices: ```['CAD', 'EUR', 'GBP', 'USD']```
+
+Keep in mind that the input text does not need to be one of the valid choices. Rather, you must use your knowledge as
+Senior Quantitative Analyst to determine if the input has the same meaning or maps to one of the valid choices,
+without necessarily being exactly the same or having the same format.
+
+Examples:
+  - When input text is $, a valid choice may be USD
+  - When input text is %, a valid choice may be percent","```json
+{
+    ""success"": ""Y"",
+    ""param_value"": ""EUR"",
+    ""justification"": ""The input text '€' is the symbol for the Euro currency, which corresponds to the ISO-4217 currency code 'EUR'. This matches one of the provided choices.""
+}
+```"
+2024-10-30-10-33-59-811-77d0a9dec182e56dd722,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed (which for this trade type means Buy) or Receive Fixed (which for this trade type means Sell).```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{Sell} 10y SOFR swap at 3.45%"",
+    ""justification"": ""The text contains the word 'Sell', which is explicitly mentioned in the parameter description as a piece of information to be surrounded by curly braces.""
+}
+```"
+2024-10-30-10-34-01-651-78538ef638a6e5d82df4,"TrialID: 1
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```Sell 10y SOFR swap at 3.45%```
+Parameter description: ```The words Buy or Sell, or the words Pay Fixed (which for this trade type means Buy) or Receive Fixed (which for this trade type means Sell).```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""```{Sell} 10y SOFR swap at 3.45%```"",
+    ""justification"": ""The input text contains the word 'Sell', which is directly mentioned in the parameter description as a piece of information related to the parameter.""
+}
+```"
+2024-10-30-10-43-43-214-7363b5d45a290799ec08,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```$10m```
+Parameter description: ```Numerical value of the amount (e.g. '10') or its text representation (e.g. 'ten') 
+excluding any currency symbols such as '$', 'USD' or 'dollars' and excluding any units (multiplier) such as 
+'m' or 'millions', 'b' or 'bn' or 'billions'.
+Ensure you do not include anything other than digits, even if additional non-digit symbols are not
+separated by a space from the digits which may happen especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100}m
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""${10}m"",
+    ""justification"": ""The numerical value of the amount '10' is identified in the input text as required by the parameter description. It is surrounded by the currency symbol '$' and the unit symbol 'm', both of which should be excluded. Thus, '10' is marked within curly braces.""
+}
+```"
+2024-10-30-10-44-00-985-79038d23c51f25d6f1da,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```10m```
+Parameter description: ```Numerical value of the amount (e.g. '10') or its text representation (e.g. 'ten') 
+excluding any currency symbols such as '$', 'USD' or 'dollars' and excluding any units (multiplier) such as 
+'m' or 'millions', 'b' or 'bn' or 'billions'.
+Ensure you do not include anything other than digits, even if additional non-digit symbols are not
+separated by a space from the digits which may happen especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100}m
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{10}m"",
+    ""justification"": ""The input text '10m' contains the numerical value '10' which is the amount without any currency symbols or units. Only the digits '10' are relevant according to the parameter description.""
+}
+```"
+2024-10-30-10-44-02-783-798395290b97018ef567,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```USD 10,000,000```
+Parameter description: ```Numerical value of the amount (e.g. '10') or its text representation (e.g. 'ten') 
+excluding any currency symbols such as '$', 'USD' or 'dollars' and excluding any units (multiplier) such as 
+'m' or 'millions', 'b' or 'bn' or 'billions'.
+Ensure you do not include anything other than digits, even if additional non-digit symbols are not
+separated by a space from the digits which may happen especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100}m
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""USD {10},000,000"",
+    ""justification"": ""The numerical value '10' can be extracted from the input as a part of the full amount. It fits the criteria by excluding the currency symbol 'USD' and the units 'millions'.""
+}
+```"
+2024-10-30-10-44-04-287-7111a46165091904d525,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```USD 10m```
+Parameter description: ```Numerical value of the amount (e.g. '10') or its text representation (e.g. 'ten') 
+excluding any currency symbols such as '$', 'USD' or 'dollars' and excluding any units (multiplier) such as 
+'m' or 'millions', 'b' or 'bn' or 'billions'.
+Ensure you do not include anything other than digits, even if additional non-digit symbols are not
+separated by a space from the digits which may happen especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100}m
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""USD {10}m"",
+    ""justification"": ""The numerical value of the amount is '10'. It is the number without any currency symbols or units.""
+}
+```"
+2024-10-30-10-44-06-288-76c387b7be74427f3bcf,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```ten million```
+Parameter description: ```Numerical value of the amount (e.g. '10') or its text representation (e.g. 'ten') 
+excluding any currency symbols such as '$', 'USD' or 'dollars' and excluding any units (multiplier) such as 
+'m' or 'millions', 'b' or 'bn' or 'billions'.
+Ensure you do not include anything other than digits, even if additional non-digit symbols are not
+separated by a space from the digits which may happen especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100}m
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{ten} million"",
+    ""justification"": ""The parameter description specifies a numerical value or its text representation excluding any symbols or units. In the input text, 'ten' is the text representation of a numerical value, which matches the description.""
+}
+```"
+2024-10-30-10-44-10-034-7653aa584d1886ba0ef5,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```ten million dollars```
+Parameter description: ```Numerical value of the amount (e.g. '10') or its text representation (e.g. 'ten') 
+excluding any currency symbols such as '$', 'USD' or 'dollars' and excluding any units (multiplier) such as 
+'m' or 'millions', 'b' or 'bn' or 'billions'.
+Ensure you do not include anything other than digits, even if additional non-digit symbols are not
+separated by a space from the digits which may happen especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100}m
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""ten {million} {dollars}"",
+    ""justification"": ""The input text 'ten million dollars' contains the text representation of a numerical value 'ten', which relates to the parameter as it is the text representation of a number. Based on the description, 'million' and 'dollars' are units and not part of the valid parameter information.""
+}
+```"
+2024-10-30-10-44-18-269-78e280aaeaf54e5f3d6e,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```ten million euro```
+Parameter description: ```Numerical value of the amount (e.g. '10') or its text representation (e.g. 'ten') 
+excluding any currency symbols such as '$', 'USD' or 'dollars' and excluding any units (multiplier) such as 
+'m' or 'millions', 'b' or 'bn' or 'billions'.
+Ensure you do not include anything other than digits, even if additional non-digit symbols are not
+separated by a space from the digits which may happen especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100}m
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""ten {million} euro"",
+    ""justification"": ""The input text contains the numerical value 'ten million euro'. The parameter description requires identifying either numeric or text representation of the amount, excluding currency symbols and units. Despite 'million' being part of the phrase, it needs to be included in the curly braces as per the requirement of focusing on the numeric representation.""
+}
+```"
+2024-10-30-10-44-19-935-7412854e7104a814c97c,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```€10m```
+Parameter description: ```Numerical value of the amount (e.g. '10') or its text representation (e.g. 'ten') 
+excluding any currency symbols such as '$', 'USD' or 'dollars' and excluding any units (multiplier) such as 
+'m' or 'millions', 'b' or 'bn' or 'billions'.
+Ensure you do not include anything other than digits, even if additional non-digit symbols are not
+separated by a space from the digits which may happen especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100}m
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""€{10}m"",
+    ""justification"": ""The input text '€10m' contains a numerical value '10' which represents the amount, excluding the currency symbol '€' and unit 'm'.""
+}
+```"
+2024-10-30-10-51-01-614-7dc396dc72292f94d9c4,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```USD 10,000,000```
+Parameter description: ```Numerical value of the amount (e.g. '10') or its text representation (e.g. 'ten') 
+excluding any currency symbols such as '$', 'USD' or 'dollars' and excluding any units (multiplier) such as 
+'m' or 'millions', 'b' or 'bn' or 'billions'.
+Ensure you do not include anything other than digits, even if additional non-digit symbols are not
+separated by a space from the digits which may happen especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100}m
+
+Input: USD 100,000,000
+Your answer: USD {100},000,000
+Correct answer: USD {100,000,000}
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""USD {10,000,000}"",
+    ""justification"": ""The parameter description specifies to include only the numerical part of the amount, excluding any currency symbols like 'USD' or units like 'm' or 'millions'. Therefore, '10,000,000' is the correct numerical value of the amount without any symbols or units.""
+}
+```"
+2024-10-30-10-51-38-714-7a13a0a324b54d2cbb11,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```$10m```
+Parameter description: ```Numerical value of the amount (e.g. '10') or its text representation (e.g. 'ten') 
+excluding any currency symbols such as '$', 'USD' or 'dollars' and excluding any units (multiplier) such as 
+'m' or 'millions', 'b' or 'bn' or 'billions'.
+Ensure you do not include anything other than digits, even if additional non-digit symbols are not
+separated by a space from the digits which may happen especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100}m
+
+Input: USD 100,000,000
+Your answer: USD {100},000,000
+Correct answer: USD {100,000,000}
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""${10}m"",
+    ""justification"": ""The input text '$10m' contains a numerical value '10' that matches the parameter description of being numerical digits representing an amount, explicitly excluding currency symbols and multipliers.""
+}
+```"
+2024-10-30-10-51-43-726-7c70a00f2ca47f5dce2c,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```10m```
+Parameter description: ```Numerical value of the amount (e.g. '10') or its text representation (e.g. 'ten') 
+excluding any currency symbols such as '$', 'USD' or 'dollars' and excluding any units (multiplier) such as 
+'m' or 'millions', 'b' or 'bn' or 'billions'.
+Ensure you do not include anything other than digits, even if additional non-digit symbols are not
+separated by a space from the digits which may happen especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100}m
+
+Input: USD 100,000,000
+Your answer: USD {100},000,000
+Correct answer: USD {100,000,000}
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{10}m"",
+    ""justification"": ""The numerical value of the amount is '10', which is extracted from the input '10m'. The 'm' is excluded from the brackets as it represents a unit (multiplier), not part of the numerical amount.""
+}
+```"
+2024-10-30-10-51-47-271-7833a0a08245c9ad99b5,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```USD 10m```
+Parameter description: ```Numerical value of the amount (e.g. '10') or its text representation (e.g. 'ten') 
+excluding any currency symbols such as '$', 'USD' or 'dollars' and excluding any units (multiplier) such as 
+'m' or 'millions', 'b' or 'bn' or 'billions'.
+Ensure you do not include anything other than digits, even if additional non-digit symbols are not
+separated by a space from the digits which may happen especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100}m
+
+Input: USD 100,000,000
+Your answer: USD {100},000,000
+Correct answer: USD {100,000,000}
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""USD {10}m"",
+    ""justification"": ""The numerical value of the amount is '10', which is surrounded by curly braces as per the parameter description. The currency symbol 'USD' and the unit 'm' are excluded.""
+}
+```"
+2024-10-30-10-51-48-313-76e3b5082148a4593537,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```ten million```
+Parameter description: ```Numerical value of the amount (e.g. '10') or its text representation (e.g. 'ten') 
+excluding any currency symbols such as '$', 'USD' or 'dollars' and excluding any units (multiplier) such as 
+'m' or 'millions', 'b' or 'bn' or 'billions'.
+Ensure you do not include anything other than digits, even if additional non-digit symbols are not
+separated by a space from the digits which may happen especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100}m
+
+Input: USD 100,000,000
+Your answer: USD {100},000,000
+Correct answer: USD {100,000,000}
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{ten} million"",
+    ""justification"": ""The parameter description specifies identifying the numerical value's text representation, excluding multipliers like 'million.' In the input text 'ten million,' 'ten' is the text representation of the numerical value, thus correctly annotated.""
+}
+```"
+2024-10-30-10-51-50-360-7a108dbbbaa3f6966162,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```ten million dollars```
+Parameter description: ```Numerical value of the amount (e.g. '10') or its text representation (e.g. 'ten') 
+excluding any currency symbols such as '$', 'USD' or 'dollars' and excluding any units (multiplier) such as 
+'m' or 'millions', 'b' or 'bn' or 'billions'.
+Ensure you do not include anything other than digits, even if additional non-digit symbols are not
+separated by a space from the digits which may happen especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100}m
+
+Input: USD 100,000,000
+Your answer: USD {100},000,000
+Correct answer: USD {100,000,000}
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""ten {million} dollars"",
+    ""justification"": ""The text representation of the numerical value 'million' was found and highlighted because it matches the description of the parameter as a text representation of a number, excluding currency symbols and units.""
+}
+```"
+2024-10-30-10-51-51-660-769085a951c1b6ede60f,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```ten million euro```
+Parameter description: ```Numerical value of the amount (e.g. '10') or its text representation (e.g. 'ten') 
+excluding any currency symbols such as '$', 'USD' or 'dollars' and excluding any units (multiplier) such as 
+'m' or 'millions', 'b' or 'bn' or 'billions'.
+Ensure you do not include anything other than digits, even if additional non-digit symbols are not
+separated by a space from the digits which may happen especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100}m
+
+Input: USD 100,000,000
+Your answer: USD {100},000,000
+Correct answer: USD {100,000,000}
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""ten {million} euro"",
+    ""justification"": ""The input text 'ten million euro' includes the parameter 'million', which is part of the text representation of the numerical amount, fitting the description given which asked to recognize parts of the amount such as 'millions' and 'billions'.""
+}
+```"
+2024-10-30-10-51-58-646-71a0a07c9679c9a6dc3a,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```€10m```
+Parameter description: ```Numerical value of the amount (e.g. '10') or its text representation (e.g. 'ten') 
+excluding any currency symbols such as '$', 'USD' or 'dollars' and excluding any units (multiplier) such as 
+'m' or 'millions', 'b' or 'bn' or 'billions'.
+Ensure you do not include anything other than digits, even if additional non-digit symbols are not
+separated by a space from the digits which may happen especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100}m
+
+Input: USD 100,000,000
+Your answer: USD {100},000,000
+Correct answer: USD {100,000,000}
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""€{10}m"",
+    ""justification"": ""The numeric value '10' was identified within the input text as the amount excluding any currency symbols and units like 'm'. This value was correctly surrounded by curly braces.""
+}
+```"
+2024-10-30-11-18-49-446-7693acfe092e9304cc2d,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```$10m```
+Parameter description: ```Currency symbol, natural language description or ISO-4217 code.
+Semicolon-delimited examples: $; dollar; USD
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{${}10m}"",
+    ""justification"": ""The input text includes a dollar sign '$', which is a currency symbol and matches the parameter description.""
+}
+```"
+2024-10-30-11-18-50-561-7b72b3ed0c4c22c22fef,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```$10m```
+Parameter description: ```Currency symbol, natural language description or ISO-4217 code.
+Semicolon-delimited examples: $; dollar; USD
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{'$'}10m"",
+    ""justification"": ""The input text contains the currency symbol '$', which matches the example provided in the parameter description.""
+}
+```"
+2024-10-30-11-18-51-663-7433a06e76b5f725b9bb,"TrialID: 1
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```$10m```
+Parameter description: ```Currency symbol, natural language description or ISO-4217 code.
+Semicolon-delimited examples: $; dollar; USD
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{\\$}10m"",
+    ""justification"": ""The input text contains the currency symbol '$', which matches the parameter description.""
+}
+```"
+2024-10-30-11-21-41-746-7ea2a0331cc452559102,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```10m```
+Parameter description: ```Currency symbol, natural language description or ISO-4217 code.
+Semicolon-delimited examples: $; dollar; USD
+```","```json
+{
+    ""success"": ""N"",
+    ""annotated_text"": """",
+    ""justification"": ""The input text '10m' does not contain any currency symbol, natural language description, or ISO-4217 code as described in the parameter description. Examples provided include currency symbols like '$', descriptions like 'dollar', or codes like 'USD'. None of these are present in the input text.""
+}
+```"
+2024-10-30-12-36-23-886-7c52b206552b6574dc22,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```USD10m```
+Parameter description: ```Currency symbol, natural language description or ISO-4217 code.
+Semicolon-delimited examples: $; dollar; USD
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{USD}10m"",
+    ""justification"": ""The input text contains 'USD', which is an ISO-4217 code for currency. It matches the provided examples for the parameter.""
+}
+```"
+2024-10-30-12-36-35-800-7072bc02d2cdbcdd3695,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```USD10m```
+Parameter description: ```Numerical value of the amount (including possible space, commas and other
+decimal point and thousands separators between digits) or its text representation (e.g. 'ten') 
+including any scale unit such as  'm' or 'millions', 'b' or 'bn' or 'billions' but excluding any
+currency symbols such as '$', 'USD' or 'dollars'.
+
+Ensure you do not include anything other than digits and scale units, even if additional non-digit
+symbols such as a currency symbol are not separated by a space from the digits which may happen
+especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100m}
+
+Input: USD 100,000,000
+Your answer: USD {100},000,000
+Correct answer: USD {100,000,000}
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""USD{10m}"",
+    ""justification"": ""The annotation correctly identifies the numerical value '10' and the scale unit 'm'. The currency symbol 'USD' is not included in the annotations as per the given instructions.""
+}
+```"
+2024-10-30-13-07-01-465-7f809065f1ca082ce8dc,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```10m```
+Parameter description: ```Numerical value of the amount (including possible space, commas and other
+decimal point and thousands separators between digits) or its text representation (e.g. 'ten') 
+including any scale unit such as  'm' or 'millions', 'b' or 'bn' or 'billions' but excluding any
+currency symbols such as '$', 'USD' or 'dollars'.
+
+Ensure you do not include anything other than digits and scale units, even if additional non-digit
+symbols such as a currency symbol are not separated by a space from the digits which may happen
+especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100m}
+
+Input: USD 100,000,000
+Your answer: USD {100},000,000
+Correct answer: USD {100,000,000}
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{10m}"",
+    ""justification"": ""The input '10m' consists of a numerical value '10' and a scale unit 'm', which fits the description of the parameter by including an amount and a scale unit without any currency symbols.""
+}
+```"
+2024-10-30-13-07-02-995-75e1817dbedf61c8b349,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```USD 10,000,000```
+Parameter description: ```Currency symbol, natural language description or ISO-4217 code.
+Semicolon-delimited examples: $; dollar; USD
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{USD} 10,000,000"",
+    ""justification"": ""The input text contains the currency symbol 'USD', which is listed as an example in the parameter description.""
+}
+```"
+2024-10-30-13-07-03-948-7d6383d8288a74991a7e,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```USD 10,000,000```
+Parameter description: ```Numerical value of the amount (including possible space, commas and other
+decimal point and thousands separators between digits) or its text representation (e.g. 'ten') 
+including any scale unit such as  'm' or 'millions', 'b' or 'bn' or 'billions' but excluding any
+currency symbols such as '$', 'USD' or 'dollars'.
+
+Ensure you do not include anything other than digits and scale units, even if additional non-digit
+symbols such as a currency symbol are not separated by a space from the digits which may happen
+especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100m}
+
+Input: USD 100,000,000
+Your answer: USD {100},000,000
+Correct answer: USD {100,000,000}
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""USD {10,000,000}"",
+    ""justification"": ""The parameter describes a numerical value including any scale unit, but excludes currency symbols. In the input text 'USD 10,000,000', the '10,000,000' is the numerical value with a thousands separator, correctly matching the parameter description while excluding the currency symbol 'USD'.""
+}
+```"
+2024-10-30-13-07-05-398-7a929831a89f04889b47,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```USD 10m```
+Parameter description: ```Currency symbol, natural language description or ISO-4217 code.
+Semicolon-delimited examples: $; dollar; USD
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{USD} 10m"",
+    ""justification"": ""The input text contains 'USD', which is an ISO-4217 code for currency, matching the parameter description.""
+}
+```"
+2024-10-30-13-07-06-267-7832ac43370eb789781b,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```USD 10m```
+Parameter description: ```Numerical value of the amount (including possible space, commas and other
+decimal point and thousands separators between digits) or its text representation (e.g. 'ten') 
+including any scale unit such as  'm' or 'millions', 'b' or 'bn' or 'billions' but excluding any
+currency symbols such as '$', 'USD' or 'dollars'.
+
+Ensure you do not include anything other than digits and scale units, even if additional non-digit
+symbols such as a currency symbol are not separated by a space from the digits which may happen
+especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100m}
+
+Input: USD 100,000,000
+Your answer: USD {100},000,000
+Correct answer: USD {100,000,000}
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""USD {10m}"",
+    ""justification"": ""The text '10m' fits the description as it is a numerical value of the amount, including a scale unit 'm', while excluding the currency symbol 'USD'.""
+}
+```"
+2024-10-30-13-07-07-498-7650b256f7f989bfc795,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```ten million```
+Parameter description: ```Currency symbol, natural language description or ISO-4217 code.
+Semicolon-delimited examples: $; dollar; USD
+```","```json
+{
+    ""success"": ""N"",
+    ""annotated_text"": """",
+    ""justification"": ""The input text 'ten million' does not contain any currency symbol, natural language currency description, or ISO-4217 code. Therefore, no piece of information could be annotated based on the given parameter description.""
+}
+```"
+2024-10-30-13-07-09-171-7fc38f58ce4eb634df3e,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```ten million```
+Parameter description: ```Numerical value of the amount (including possible space, commas and other
+decimal point and thousands separators between digits) or its text representation (e.g. 'ten') 
+including any scale unit such as  'm' or 'millions', 'b' or 'bn' or 'billions' but excluding any
+currency symbols such as '$', 'USD' or 'dollars'.
+
+Ensure you do not include anything other than digits and scale units, even if additional non-digit
+symbols such as a currency symbol are not separated by a space from the digits which may happen
+especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100m}
+
+Input: USD 100,000,000
+Your answer: USD {100},000,000
+Correct answer: USD {100,000,000}
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{ten million}"",
+    ""justification"": ""The input 'ten million' is a text representation of a numerical value with the scale unit 'million', which matches the parameter description criteria for numerical values described.""
+}
+```"
+2024-10-30-13-07-10-068-7ec3a9dbb0bbf4b29d69,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```ten million dollars```
+Parameter description: ```Currency symbol, natural language description or ISO-4217 code.
+Semicolon-delimited examples: $; dollar; USD
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""ten million {dollars}"",
+    ""justification"": ""The input text contains the word 'dollars', which matches the natural language description of the currency symbol 'dollar' provided in the parameter description.""
+}
+```"
+2024-10-30-13-07-11-129-706192cb9791fca9d0dc,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```ten million dollars```
+Parameter description: ```Numerical value of the amount (including possible space, commas and other
+decimal point and thousands separators between digits) or its text representation (e.g. 'ten') 
+including any scale unit such as  'm' or 'millions', 'b' or 'bn' or 'billions' but excluding any
+currency symbols such as '$', 'USD' or 'dollars'.
+
+Ensure you do not include anything other than digits and scale units, even if additional non-digit
+symbols such as a currency symbol are not separated by a space from the digits which may happen
+especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100m}
+
+Input: USD 100,000,000
+Your answer: USD {100},000,000
+Correct answer: USD {100,000,000}
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{ten million} dollars"",
+    ""justification"": ""The text 'ten million' represents the numerical value of the amount using a text representation and includes a scale unit 'million'. 'dollars' is a currency symbol which should be excluded according to the parameter description.""
+}
+```"
+2024-10-30-13-07-12-566-7661a4d0b2a51afb41c1,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```ten million euro```
+Parameter description: ```Currency symbol, natural language description or ISO-4217 code.
+Semicolon-delimited examples: $; dollar; USD
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""ten million {euro}"",
+    ""justification"": ""The input text contains the word 'euro,' which is a natural language description of a currency, making it relevant to the parameter description.""
+}
+```"
+2024-10-30-13-07-13-423-7c63a930cf8b186e6211,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```ten million euro```
+Parameter description: ```Numerical value of the amount (including possible space, commas and other
+decimal point and thousands separators between digits) or its text representation (e.g. 'ten') 
+including any scale unit such as  'm' or 'millions', 'b' or 'bn' or 'billions' but excluding any
+currency symbols such as '$', 'USD' or 'dollars'.
+
+Ensure you do not include anything other than digits and scale units, even if additional non-digit
+symbols such as a currency symbol are not separated by a space from the digits which may happen
+especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100m}
+
+Input: USD 100,000,000
+Your answer: USD {100},000,000
+Correct answer: USD {100,000,000}
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{ten million} euro"",
+    ""justification"": ""The parameter description specifies we are looking for a numerical value or its text representation, including any scale unit but excluding currency symbols. In the input text 'ten million euro', 'ten million' is a textual representation of a numerical value along with its scale unit, 'million'. Therefore, 'ten million' is correctly surrounded by curly braces.""
+}
+```"
+2024-10-30-13-07-15-419-71539d9ea0c946e556fc,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```EUR10m```
+Parameter description: ```Currency symbol, natural language description or ISO-4217 code.
+Semicolon-delimited examples: $; dollar; USD
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{EUR}10m"",
+    ""justification"": ""The input text contains 'EUR', which is the ISO-4217 currency code for Euro, matching the parameter description.""
+}
+```"
+2024-10-30-13-07-16-537-72428926c38a92a5b9c7,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```EUR10m```
+Parameter description: ```Numerical value of the amount (including possible space, commas and other
+decimal point and thousands separators between digits) or its text representation (e.g. 'ten') 
+including any scale unit such as  'm' or 'millions', 'b' or 'bn' or 'billions' but excluding any
+currency symbols such as '$', 'USD' or 'dollars'.
+
+Ensure you do not include anything other than digits and scale units, even if additional non-digit
+symbols such as a currency symbol are not separated by a space from the digits which may happen
+especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100m}
+
+Input: USD 100,000,000
+Your answer: USD {100},000,000
+Correct answer: USD {100,000,000}
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""EUR{10m}"",
+    ""justification"": ""The input 'EUR10m' contains a numerical value with a scale unit '10m' which matches the requirement of being the numerical value excluding the currency symbol 'EUR'.""
+}
+```"
+2024-10-30-13-39-45-904-7b32ac2737738ecd48ab,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```dix millions d'euros```
+Parameter description: ```Currency symbol, natural language description or ISO-4217 code.
+Semicolon-delimited examples: $; dollar; USD
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""dix millions {d'euros}"",
+    ""justification"": ""The input text contains the phrase 'd'euros', which is a natural language description indicating the currency is euros.""
+}
+```"
+2024-10-30-13-39-47-398-7a5291369d6911954fdb,"TrialID: 0
+You will be provided with an input text and a description of a parameter.
+Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
+Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": <Y if at least one piece of information was found and N otherwise. This parameter is required.>
+    ""annotated_text"": ""<The input text where each piece of information about this parameter is surrounded by curly braces. There should be no changes other than adding curly braces, even to whitespace. Leave this field empty in case of failure.>,""
+    ""justification"": ""<Justification for your annotations in case of success or the reason why you were not able to find the parameter in case of failure.>""
+}
+Input text: ```dix millions d'euros```
+Parameter description: ```Numerical value of the amount (including possible space, commas and other
+decimal point and thousands separators between digits) or its text representation (e.g. 'ten') 
+including any scale unit such as  'm' or 'millions', 'b' or 'bn' or 'billions' but excluding any
+currency symbols such as '$', 'USD' or 'dollars'.
+
+Ensure you do not include anything other than digits and scale units, even if additional non-digit
+symbols such as a currency symbol are not separated by a space from the digits which may happen
+especially with the currency amount.
+
+Pay attention to the examples where you initially provided an incorrect answer:
+
+Input: $100m
+Your answer: {$100}m
+Correct answer: ${100m}
+
+Input: USD 100,000,000
+Your answer: USD {100},000,000
+Correct answer: USD {100,000,000}
+```","```json
+{
+    ""success"": ""Y"",
+    ""annotated_text"": ""{dix millions} d'euros"",
+    ""justification"": ""The input text contains a text representation of a numerical value, 'dix millions', which matches the parameter description criteria of a numerical value including any scale unit but excluding the currency symbol.""
+}
+```"
+2024-10-30-13-40-44-049-7dd18aecdc23ea496723,"TrialID: 0
+You will be provided with an input text, a description of a parameter, and possible values of this parameter.
+Your goal is to extract the value of the parameter from the provided input text.
+
+You must reply with JSON formatted strictly according to the JSON specification in which all values are strings.
+The JSON must have the following keys:
+
+{
+    ""success"": ""<Y if you successfully extracted the parameter value and it matches one of the provided choices and N otherwise. This field is required.>"",
+    ""param_value"": ""<Parameter value you extracted which matches one of the provided choices. Leave this field empty in case of failure.>"",
+    ""justification"": ""<Justification for the parameter value you extracted in case of success or the reason why you were not able to find the parameter in case of failure. This field is required.>""
+}
+Input text: ```d'euros```
+Parameter description: ```Currency code in strict ISO-4217 format of three uppercase letters, no variations allowed.```
+Semicolon-delimited list of valid choices: ```['CAD', 'EUR', 'GBP', 'USD']```
+
+Keep in mind that the input text does not need to be one of the valid choices. Rather, you must use your knowledge as
+Senior Quantitative Analyst to determine if the input has the same meaning or maps to one of the valid choices,
+without necessarily being exactly the same or having the same format.
+
+Examples:
+  - When input text is $, a valid choice may be USD
+  - When input text is %, a valid choice may be percent","```json
+{
+    ""success"": ""Y"",
+    ""param_value"": ""EUR"",
+    ""justification"": ""The input text 'd'euros' refers to euros, and the ISO-4217 currency code for Euros is 'EUR', which is one of the valid choices.""
 }
 ```"
