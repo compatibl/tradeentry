@@ -107,7 +107,8 @@ class LocalCache:
                 is_key_optional=True,  # TODO: Keep the existing defaults for load_many
                 is_record_optional=True,  # TODO: Keep the existing defaults for load_many
             )
-            for x in records_or_keys]
+            for x in records_or_keys
+        ]
         return result
 
     def load_all(

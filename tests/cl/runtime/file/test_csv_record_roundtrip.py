@@ -25,6 +25,7 @@ from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
+from stubs.cl.runtime import StubDataclassComposite
 from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassDictFields
@@ -46,7 +47,8 @@ key_serializer = StringSerializer()
 
 stub_entries: List[List[RecordProtocol]] = [  # noqa
     [StubDataclassRecord(id=f"abc1_n{i}") for i in range(5)],
-    [StubDataclassNestedFields(primitive=f"abc2_n{i}") for i in range(5)],
+    [StubDataclassNestedFields(id=f"abc2_n{i}") for i in range(5)],
+    [StubDataclassComposite(primitive=f"abc{i}") for i in range(5)],
     [StubDataclassDerivedRecord(id=f"abc3_n{i}") for i in range(5)],
     [StubDataclassDerivedFromDerivedRecord(id=f"abc4_n{i}") for i in range(5)],
     [StubDataclassOtherDerivedRecord(id=f"abc5_n{i}") for i in range(5)],
@@ -90,8 +92,8 @@ def save_test_records(entries: List[RecordProtocol]) -> Tuple[List[RecordProtoco
 
 
 def read_records_from_csv(file_path: Path, entry_type: Type[RecordProtocol]):
-    loader = CsvFileReader(record_type=entry_type, file_path=str(file_path.absolute()))
-    loader.read()
+    loader = CsvFileReader(file_path=str(file_path.absolute()))
+    loader.read_and_save()
 
 
 def test_roundtrip():

@@ -17,12 +17,14 @@ import sqlite3
 from cl.runtime.db.sql.sqlite_db import dict_factory
 from cl.runtime.db.sql.sqlite_schema_manager import SqliteSchemaManager
 from cl.runtime.schema.schema import Schema
+from cl.runtime.testing.regression_guard import RegressionGuard
 from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassDictFields
 from stubs.cl.runtime import StubDataclassDictListFields
 from stubs.cl.runtime import StubDataclassListDictFields
 from stubs.cl.runtime import StubDataclassListFields
+from stubs.cl.runtime import StubDataclassNestedFields
 from stubs.cl.runtime import StubDataclassOtherDerivedRecord
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassRecordKey
@@ -41,6 +43,7 @@ def test_get_subtypes_in_hierarchy():
         StubDataclassListDictFields,
         StubDataclassListFields,
         StubDataclassOtherDerivedRecord,
+        StubDataclassNestedFields,
     }
 
     assert len(types_in_hierarchy) == len(expected_types)
@@ -68,11 +71,10 @@ def test_get_key_class():
 
 def test_get_columns_mapping():
     test_type = StubDataclassDerivedFromDerivedRecord
-
     expected_columns = {
         "_type": "_type",
         "id": "StubDataclassRecordKey.id",
-        "derived_field": "StubDataclassDerivedRecord.derived_field",
+        "derived_str_field": "StubDataclassDerivedRecord.derived_str_field",
         "str_dict": "StubDataclassDictFields.str_dict",
         "float_dict": "StubDataclassDictFields.float_dict",
         "date_dict": "StubDataclassDictFields.date_dict",
@@ -98,9 +100,10 @@ def test_get_columns_mapping():
         "other_derived": "StubDataclassOtherDerivedRecord.other_derived",
     }
 
+    guard = RegressionGuard()
     resolved_columns = SqliteSchemaManager().get_columns_mapping(test_type)
-
-    assert expected_columns == resolved_columns
+    tuple(guard.write(f"key={key} value={value}") for key, value in resolved_columns.items())
+    guard.verify()
 
 
 if __name__ == "__main__":

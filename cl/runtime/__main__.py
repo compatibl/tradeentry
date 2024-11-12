@@ -27,9 +27,9 @@ from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.log.log_entry import LogEntry
 from cl.runtime.log.log_entry_level_enum import LogEntryLevelEnum
 from cl.runtime.log.user_log_entry import UserLogEntry
-from cl.runtime.primitive.datetime_util import DatetimeUtil
 from cl.runtime.routers.app import app_router
 from cl.runtime.routers.auth import auth_router
+from cl.runtime.routers.context_middleware import ContextMiddleware
 from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.health import health_router
 from cl.runtime.routers.schema import schema_router
@@ -96,22 +96,21 @@ async def http_user_error_handler(request, exc):
     return await handle_exception(request, exc, log_level=LogEntryLevelEnum.USER_ERROR)
 
 
-# Get Runtime settings from Dynaconf
+# Get CORSMiddleware settings defined in Dynaconf from ApiSettings
 api_settings = ApiSettings.instance()
-
-# Permit origins based on either hostname or host IP
-origins = [
-    f"{api_settings.host_name}:{api_settings.port}",
-    f"{api_settings.host_ip}:{api_settings.port}",
-]
-
 server_app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],  # Specify allowed HTTP methods, e.g., ["GET", "POST"]
-    allow_headers=["*"],  # Specify allowed headers, e.g., ["Content-Type", "Authorization"]
+    allow_origins=api_settings.allow_origins,
+    allow_origin_regex=api_settings.allow_origin_regex,
+    allow_credentials=api_settings.allow_credentials,
+    allow_methods=api_settings.allow_methods,
+    allow_headers=api_settings.allow_headers,
+    expose_headers=api_settings.expose_headers,
+    max_age=api_settings.max_age,
 )
+
+# Middleware for executing each API call in isolated context
+server_app.add_middleware(ContextMiddleware)
 
 # Routers
 server_app.include_router(app_router.router, prefix="", tags=["App"])
@@ -131,11 +130,8 @@ if __name__ == "__main__":
         log_dir = os.path.join(ProjectSettings.get_project_root(), "logs")  # TODO: Make unique
         celery_start_queue(log_dir=log_dir)
 
-        # Preload data
-        PreloadSettings.instance().preload()
-
-        # Execute configure for each config_id specified in PreloadSettings.configs
-        PreloadSettings.instance().configure()
+        # Save records from preload directory to DB and execute run_configure on all preloaded Config records
+        PreloadSettings.instance().save_and_configure()
 
         # Find wwwroot directory, error if not found
         wwwroot_dir = ProjectSettings.get_wwwroot()
@@ -143,9 +139,10 @@ if __name__ == "__main__":
         # Mount static client files
         server_app.mount("/", StaticFiles(directory=wwwroot_dir, html=True))
 
-        # Open new browser tab in the default browser
-        webbrowser.open_new_tab(f"http://{api_settings.host_name}:{api_settings.port}")
+        # Open new browser tab in the default browser using http protocol.
+        # It will switch to https if cert is present.
+        webbrowser.open_new_tab(f"http://{api_settings.hostname}:{api_settings.port}")
 
         # Run Uvicorn using hostname and port specified by Dynaconf
         api_settings = ApiSettings.instance()
-        uvicorn.run(server_app, host=api_settings.host_name, port=api_settings.port)
+        uvicorn.run(server_app, host=api_settings.hostname, port=api_settings.port)

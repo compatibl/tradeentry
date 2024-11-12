@@ -32,6 +32,7 @@ from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
 from cl.runtime.records.protocols import is_key
+from cl.runtime.records.record_util import RecordUtil
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.flat_dict_serializer import FlatDictSerializer
 from cl.runtime.settings.project_settings import ProjectSettings
@@ -117,7 +118,6 @@ class SqliteDb(Db):
         if not is_record_optional and result is None:
             raise UserError(f"{record_type.__name__} record is not found for key {record_or_key}")
         return result
-
 
     def load_many(
         self,
@@ -218,10 +218,14 @@ class SqliteDb(Db):
         cursor = self._get_connection().cursor()
         cursor.execute(sql_statement, subtype_names)
 
+        # TODO: Implement sort in query and restore yield to support large collections
+        result = []
         for data in cursor.fetchall():
-            # TODO (Roman): select only needed columns on db side.
+            # TODO (Roman): Select only needed columns on db side.
             data = {reversed_columns_mapping[k]: v for k, v in data.items() if v is not None}
-            yield serializer.deserialize_data(data)
+            result.append(serializer.deserialize_data(data))
+
+        return RecordUtil.sort_records_by_key(result)
 
     def load_filter(
         self,
@@ -252,7 +256,8 @@ class SqliteDb(Db):
 
         # Call on_save if defined
         [
-            record.on_save() for record in records  # TODO: Refactor on_save
+            record.on_save()
+            for record in records  # TODO: Refactor on_save
             if record is not None and hasattr(record, "on_save")
         ]
 
@@ -422,3 +427,28 @@ class SqliteDb(Db):
 
         result = os.path.join(db_dir, f"{filename}.sqlite")
         return result
+
+    def is_empty(self) -> bool:
+        """Return True if the database has no tables or all tables are empty."""
+        connection = self._get_connection()
+        cursor = connection.cursor()
+
+        # Check if there are any tables in the SQLite database
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        tables = cursor.fetchall()
+
+        # If no tables are present, the database is empty
+        if not tables:
+            return True
+
+        # Check if all tables are empty
+        for table_name in tables:
+            table_name = table_name["name"]
+            cursor.execute(f'SELECT COUNT(*) FROM "{table_name}";')
+            count = cursor.fetchone()["COUNT(*)"]
+
+            # If any table has data, the database is not empty
+            if count > 0:
+                return False
+
+        return True

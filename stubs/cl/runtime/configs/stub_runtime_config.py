@@ -13,11 +13,11 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.backend.core.ui_app_state import UiAppState
-from cl.runtime.backend.core.user_key import UserKey
 from cl.runtime.configs.config import Config
 from cl.runtime.context.context import Context
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
+from stubs.cl.runtime import StubDagViewers
+from stubs.cl.runtime import StubDataclassComposite
 from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassDictFields
@@ -30,10 +30,10 @@ from stubs.cl.runtime import StubDataclassOtherDerivedRecord
 from stubs.cl.runtime import StubDataclassPrimitiveFields
 from stubs.cl.runtime import StubDataclassRecord
 from stubs.cl.runtime import StubDataclassSingleton
+from stubs.cl.runtime import StubDataViewers
+from stubs.cl.runtime import StubFileViewers
 from stubs.cl.runtime import StubHandlers
-from stubs.cl.runtime import StubPlots
-from stubs.cl.runtime import StubViewers
-from stubs.cl.runtime import StubViewersDataTypes
+from stubs.cl.runtime import StubPlotViewers
 
 
 @dataclass(slots=True, kw_only=True)
@@ -44,8 +44,9 @@ class StubRuntimeConfig(Config):
         """Populate the current or default database with stub records."""
 
         # Create stub instances
+        stub_dataclass_composite = [StubDataclassComposite(primitive=f"abc{i}") for i in range(10)]
         stub_dataclass_records = [StubDataclassRecord(id=f"A{i}") for i in range(10)]
-        stub_dataclass_nested_fields = [StubDataclassNestedFields(primitive=f"B{i}") for i in range(10)]
+        stub_dataclass_nested_fields = [StubDataclassNestedFields(id=f"B{i}") for i in range(10)]
         stub_dataclass_derived_records = [StubDataclassDerivedRecord(id=f"C{i}") for i in range(10)]
         stub_dataclass_derived_from_derived_records = [
             StubDataclassDerivedFromDerivedRecord(id=f"D{i}") for i in range(10)
@@ -60,14 +61,19 @@ class StubRuntimeConfig(Config):
             StubDataclassPrimitiveFields(key_str_field=f"K{i}") for i in range(10)
         ]
 
-        stub_viewers_records = [StubViewers(stub_id=f"L{i}") for i in range(10)]
-        stub_handlers_records = [StubHandlers(stub_id=f"M{i}") for i in range(10)]
-        stub_viewers_data_records = [StubViewersDataTypes(stub_id=f"N{i}") for i in range(10)]
-        stub_plots = [StubPlots(stub_id=f"O{i}") for i in range(10)]
-
         stub_dataclass_singleton_record = [StubDataclassSingleton()]
+        stub_handlers_records = [StubHandlers(stub_id=f"M{i}") for i in range(10)]
+
+        # Records with stub viewers
+        stub_viewers_records = [
+            StubDataViewers(stub_id=f"StubDataViewers"),
+            StubFileViewers(stub_id=f"StubFileViewers"),
+            StubDagViewers(stub_id=f"StubDagViewers"),
+            StubPlotViewers(stub_id=f"StubPlotViewers"),
+        ]
 
         all_records = [
+            *stub_dataclass_composite,
             *stub_dataclass_records,
             *stub_dataclass_nested_fields,
             *stub_dataclass_derived_records,
@@ -82,8 +88,6 @@ class StubRuntimeConfig(Config):
             *stub_dataclass_singleton_record,
             *stub_viewers_records,
             *stub_handlers_records,
-            *stub_viewers_data_records,
-            *stub_plots,
         ]
 
         # save stubs to db

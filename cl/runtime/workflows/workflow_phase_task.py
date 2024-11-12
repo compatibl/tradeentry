@@ -25,5 +25,5 @@ class WorkflowPhaseTask(Task):
     phase: WorkflowPhaseKey = missing()
     """Tasks run in parallel in the order of phases, however each phase waits until its prerequisites are completed."""
 
-    def execute(self) -> None:
+    def _execute(self) -> None:
         raise NotImplementedError()

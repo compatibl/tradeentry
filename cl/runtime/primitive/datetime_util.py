@@ -18,7 +18,7 @@ from math import ceil
 from math import floor
 from typing import Callable
 from typing import Tuple
-from cl.runtime.primitive.ordered_uuid import OrderedUuid
+from cl.runtime.primitive.timestamp import Timestamp
 
 # Compile the regex pattern for datetime in ISO-8601 format yyyy-mm-ddThh:mm:ss.fffZ
 datetime_pattern = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$")
@@ -30,7 +30,9 @@ class DatetimeUtil:
     @classmethod
     def now(cls) -> dt.datetime:
         """Current datetime in UTC timezone rounded to the nearest whole milliseconds to match UUIDv7 RFC-9562 spec."""
-        return OrderedUuid.datetime_of(OrderedUuid.create_one())
+        # Use Timestamp which relies on uuid_utils to avoid time ordering errors due to the difference
+        # in how dt.datetime and uuid_utils read the system timer
+        return Timestamp.to_datetime(Timestamp.create())
 
     @classmethod
     def round(cls, value: dt.datetime) -> dt.datetime:

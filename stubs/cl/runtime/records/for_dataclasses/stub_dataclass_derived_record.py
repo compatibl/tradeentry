@@ -20,7 +20,7 @@ from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubD
 class StubDataclassDerivedRecord(StubDataclassRecord):
     """Stub derived class."""
 
-    derived_field: str = "derived"
+    derived_str_field: str = "derived"
     """Stub field."""
 
     def non_virtual_derived_handler(self) -> None:

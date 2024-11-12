@@ -20,7 +20,7 @@ from cl.runtime.records.dataclasses_extensions import missing
 
 @dataclass(slots=True, kw_only=True)
 class PlotView(View):
-    """Plot key or object."""
+    """Plot key or record."""
 
     plot: PlotKey = missing()
-    """Plot key or object."""
+    """Plot key or record."""

@@ -24,18 +24,17 @@ from cl.runtime.log.log_entry_level_enum import LogEntryLevelEnum
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.routers.tasks.task_status_request import TaskStatusRequest
 from cl.runtime.tasks.task import Task
-from cl.runtime.tasks.task_run import TaskRun
-from cl.runtime.tasks.task_run_key import TaskRunKey
+from cl.runtime.tasks.task_key import TaskKey
 
-LEGACY_TASK_STATUS_NAMES_MAP: Dict[str, str] = {
+LEGACY_TASK_STATUS_NAMES_MAP: Dict[str, str] = {  # TODO: Update UI to sync the status list
     "PENDING": "Submitted",
     "RUNNING": "Running",
-    "PAUSED": "Paused",
+    "AWAITING": "Paused",
     "COMPLETED": "Completed",
     "FAILED": "Failed",
     "CANCELLED": "Cancelled",
 }
-"""Status name to legacy status name map according to ui convention."""
+"""Status name to legacy status name map according to UI convention."""
 
 
 class TaskStatusResponseItem(BaseModel):
@@ -64,29 +63,19 @@ class TaskStatusResponseItem(BaseModel):
         # Get current context
         context = Context.current()
 
-        task_run_keys = [TaskRunKey(task_run_id=x) for x in request.task_run_ids]  # TODO: Update if task_run_id is UUID
-        task_runs = cast(Iterable[TaskRun], context.load_many(TaskRun, task_run_keys))
+        task_keys = [TaskKey(task_id=x) for x in request.task_run_ids]  # TODO: Update if task_run_id is UUID
+        tasks = cast(Iterable[Task], context.load_many(Task, task_keys))
 
         response_items = []
-        for task_run in task_runs:
-            task_obj = context.load_one(Task, task_run.task)
-
-            # Displayed to the user in case of UserError
-            user_message = (
-                log_entry.message
-                if (
-                    task_run.log_entry is not None and
-                    (log_entry := context.load_one(LogEntry, task_run.log_entry, is_record_optional=True)) is not None
-                    and log_entry.level == LogEntryLevelEnum.USER_ERROR
-                )
-                else None
-            )
+        for task in tasks:
+            # TODO: Add support message depending on exception type
+            user_message = task.error_message
 
             response_items.append(
                 TaskStatusResponseItem(
-                    status_code=LEGACY_TASK_STATUS_NAMES_MAP.get(task_run.status.name),
-                    task_run_id=str(task_run.task_run_id),
-                    key=task_obj.key_str if hasattr(task_obj, "key_str") else None,
+                    status_code=LEGACY_TASK_STATUS_NAMES_MAP.get(task.status.name),
+                    task_run_id=str(task.task_id),
+                    key=str(task.task_id),
                     user_message=user_message,
                 ),
             )

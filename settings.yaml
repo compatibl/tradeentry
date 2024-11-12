@@ -16,18 +16,27 @@ default:
   runtime_context_db_class: cl.runtime.db.sql.sqlite_db.SqliteDb
 
   # Documented in ApiSettings class
-  runtime_api_host_name: localhost
-  runtime_api_host_ip: 127.0.0.1
+  #   - Default CORSMiddleware settings are only applied on localhost
+  #   - If this group of settings is omitted, the app will run on localhost:7008
+  runtime_api_hostname: localhost
   runtime_api_port: 7008
+
+  # CORSMiddleware settings in ApiSettings class, uncomment and modify if not running in localhost
+  # runtime_api_allow_origins:
+  #   - 127.0.0.1
+  # runtime_api_allow_origin_regex: null
+  # runtime_api_allow_credentials: True
+  # runtime_api_allow_methods:
+  #   - "*"
+  # runtime_api_allow_headers:
+  #   - "*"
+  # runtime_api_expose_headers: null
+  # runtime_api_max_age: null
 
   # Documented in PreloadSettings class
   runtime_preload_dirs:
     - preloads/cl
     - preloads/stubs
-
-  # Documented in PreloadSettings class
-  runtime_preload_configs:
-    - stubs.cl.runtime
 
 # Test environment
 test:

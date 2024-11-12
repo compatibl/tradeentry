@@ -15,7 +15,6 @@
 import pytest
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
-from cl.runtime.plots.group_bar_plot_style import GroupBarPlotStyle
 from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
 
 
@@ -28,13 +27,13 @@ def test_single_group(local_dir_fixture):
         group_bar_plot.save_png()
 
 
+@pytest.mark.skip("Restore test when it becomes possible to override the default theme.")
 def test_dark_theme(local_dir_fixture):
     with TestingContext() as context:
         group_bar_plot = GroupBarPlot(plot_id="group_bar_plot")
         group_bar_plot.group_labels = ["Single Group"] * 2
         group_bar_plot.bar_labels = ["Bar 1", "Bar 2"]
         group_bar_plot.values = [85.5, 92]
-        group_bar_plot.style = GroupBarPlotStyle(dark_theme=True)
         group_bar_plot.save_png()
 
 
@@ -108,7 +107,6 @@ def test_4_groups_5_bars(local_dir_fixture):
             81.8,  # "Metric 5"
         ]
         group_bar_plot.value_ticks = list(range(0, 101, 10))
-        group_bar_plot.style = GroupBarPlotStyle(dark_theme=True)
         group_bar_plot.save_png()
 
 

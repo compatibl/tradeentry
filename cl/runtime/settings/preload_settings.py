@@ -16,10 +16,8 @@ import os
 from dataclasses import dataclass
 from typing import List
 from cl.runtime.configs.config import Config
-from cl.runtime.configs.config_key import ConfigKey
 from cl.runtime.context.context import Context
-from cl.runtime.file.csv_dir_reader import CsvDirReader
-from cl.runtime.records.dataclasses_extensions import field
+from cl.runtime.file.csv_file_reader import CsvFileReader
 from cl.runtime.settings.settings import Settings
 
 
@@ -38,9 +36,6 @@ class PreloadSettings(Settings):
         - For JSON, the data is in json/ClassName/.../KeyToken1;KeyToken2.json where ... is optional dataset
     """
 
-    configs: List[str] | None = None
-    """Method Config.run_configure will run for each specified config_id (the record must exist in preloads)."""
-
     def init(self) -> None:
         """Same as __init__ but can be used when field values are set both during and after construction."""
 
@@ -51,62 +46,43 @@ class PreloadSettings(Settings):
     def get_prefix(cls) -> str:
         return "runtime_preload"
 
-    def preload(self) -> None:
-        """Preload from the specified directory paths."""
+    def save_and_configure(self) -> None:
+        """Save records from preload directory to DB and execute run_configure on all preloaded Config records."""
 
         # Get current context
         context = Context.current()
 
-        # Preload CSV data
-        csv_dirs = self._find_type_root_dirs("csv")
-        for csv_dir in csv_dirs:
-            csv_reader = CsvDirReader(dir_path=csv_dir)
-            # TODO: Rename to preload or other name to avoid conflict with RecordMixin
-            csv_reader.read()
+        # Process CSV preloads
+        csv_files = self._get_files("csv")
+        [CsvFileReader(file_path=csv_file).read_and_save() for csv_file in csv_files]
 
-        yaml_dirs = self._find_type_root_dirs("yaml")
-        json_dirs = self._find_type_root_dirs("json")
+        # TODO: Process YAML and JSON preloads
 
-    def configure(self) -> None:
-        """Execute configure for each config_id specified in PreloadSettings.configs."""
-        if self.configs is not None and len(self.configs) > 0:
+        # Execute run_config on all preloaded Config records
+        config_records = Context.current().load_all(Config)
+        tuple(config_record.run_configure() for config_record in config_records)
 
-            # Load configs
-            config_keys = [ConfigKey(config_id=config_id) for config_id in self.configs]
-            config_records = list(Context.current().load_many(Config, config_keys))
-
-            # Error message if a config is not found # TODO: Move to database allow_missing_record is implemented
-            if any(config_record is None for config_record in config_records):
-                keys_without_records = [key for key, record in zip(config_keys, config_records) if record is None]
-                keys_without_records_str = "\n".join(f"  - {key.config_id}" for key in keys_without_records)
-                preload_dirs_str = "\n".join(f"  - {os.path.normpath(x)}" for x in self.dirs)
-                raise RuntimeError(
-                    f"Preload directories in in 'PreloadSettings.configs' do not have config records "
-                    f"for the following config_id specified in 'PreloadSettings.configs'.\n"
-                    f"Missing config records:\n{keys_without_records_str}\n"
-                    f"Preload directories searched (in priority order):\n{preload_dirs_str}"
-                )
-
-            # Run configure for the specified records
-            tuple(config_record.run_configure() for config_record in config_records)
-
-    def _find_type_root_dirs(self, root_name: str) -> List[str]:
+    def _get_files(self, ext: str) -> List[str]:
         # Return empty list if no dirs are specified in settings
         if self.dirs is None or len(self.dirs) == 0:
             return []
 
-        # Set of directories to skip
-        exclude_dirs = {"csv", "yaml", "json"}
+        # Normalize dirs to remove redundant slash at the end
+        dirs = [os.path.normpath(x) for x in self.dirs]
+
+        # Add dot prefix from ext if not included
+        ext = f".{ext}" if not ext.startswith(".") else ext
 
         # Walk through the directory tree for each specified preload dir
         result = []
-        for preload_dir in self.dirs:
+        for preload_dir in dirs:
             for dir_path, dir_names, filenames in os.walk(preload_dir):
-                if root_name in dir_names:
-                    result.append(os.path.join(os.path.abspath(dir_path), root_name))
 
-                # Remove excluded directories from dir_names to prevent os.walk from continuing
-                # to search inside preload file type roots
-                dir_names[:] = [d for d in dir_names if d not in exclude_dirs]
+                dir_name = os.path.basename(dir_path)
+                if not dir_name.startswith("."):
+                    # Add files with extension ext except from a dot-prefixed directory
+                    result.extend(os.path.normpath(os.path.join(dir_path, f)) for f in filenames if f.endswith(ext))
 
+                # Modify list in place to exclude dot-prefixed directories
+                dir_names[:] = [d for d in dir_names if not d.startswith(".")]
         return result

@@ -14,20 +14,17 @@
 
 from dataclasses import dataclass
 from cl.runtime.records.dataclasses_extensions import field
-from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.record_mixin import RecordMixin
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_data import StubDataclassData
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_derived_data import StubDataclassDerivedData
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_derived_from_derived_data import (
     StubDataclassDerivedFromDerivedData,
 )
-from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_nested_fields_key import StubDataclassNestedFieldsKey
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecord
 from stubs.cl.runtime.records.for_dataclasses.stub_dataclass_record import StubDataclassRecordKey
 
 
 @dataclass(slots=True, kw_only=True)
-class StubDataclassNestedFields(StubDataclassNestedFieldsKey, RecordMixin[StubDataclassNestedFieldsKey]):
+class StubDataclassNestedFields(StubDataclassRecord):
     """Stub derived class."""
 
     base_field: StubDataclassData = field(default_factory=StubDataclassData)
@@ -52,8 +49,3 @@ class StubDataclassNestedFields(StubDataclassNestedFieldsKey, RecordMixin[StubDa
 
     record_as_key_field: StubDataclassRecordKey = field(default_factory=lambda: StubDataclassRecord())
     """Stub field with key type initialized to record type instance."""
-
-    def get_key(self) -> StubDataclassNestedFieldsKey:
-        return StubDataclassNestedFieldsKey(
-            primitive=self.primitive, embedded_1=self.embedded_1, embedded_2=self.embedded_2
-        )

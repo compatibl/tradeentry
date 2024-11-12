@@ -18,10 +18,12 @@ from typing import Callable
 from typing import Type
 from typing_extensions import Self
 from cl.runtime import ClassInfo
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.schema.schema import Schema
 from cl.runtime.tasks.callable_task import CallableTask
 from cl.runtime.tasks.task_key import TaskKey
+from cl.runtime.tasks.task_queue_key import TaskQueueKey
 
 
 @dataclass(slots=True, kw_only=True)
@@ -34,7 +36,7 @@ class StaticMethodTask(CallableTask):
     method_name: str = missing()
     """The name of @staticmethod in snake_case or PascalCase format."""
 
-    def execute(self) -> None:
+    def _execute(self) -> None:
         """Invoke the specified @staticmethod or @classmethod."""
 
         # Get record type from fully qualified name in module.ClassName format
@@ -49,12 +51,16 @@ class StaticMethodTask(CallableTask):
 
     @classmethod
     def create(
-        cls, *, task_id: str, parent: TaskKey | None = None, record_type: Type, method_callable: Callable
+        cls,
+        *,
+        queue: TaskQueueKey,
+        record_type: Type,
+        method_callable: Callable,
     ) -> Self:
         """Create from @staticmethod callable and record type."""
 
         # Populate known fields
-        result = cls(task_id=task_id, parent=parent)
+        result = cls(queue=queue)
         result.type_str = f"{record_type.__module__}.{record_type.__name__}"
 
         # Check that __self__ is either absent (@staticmethod) or is a class (@classmethod)
@@ -75,4 +81,8 @@ class StaticMethodTask(CallableTask):
                 f"Callable '{method_callable.__qualname__}' for task_id='{result.task_id}' does not "
                 f"have two dot-delimited tokens indicating it is not a method bound to a class."
             )
+
+        # Set label and return
+        method_name_pascal_case = CaseUtil.snake_to_pascal_case(result.method_name)
+        result.label = f"{record_type.__name__};{method_name_pascal_case}"
         return result

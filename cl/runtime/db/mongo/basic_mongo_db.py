@@ -14,7 +14,6 @@
 
 import re
 from dataclasses import dataclass
-from itertools import groupby
 from typing import Dict
 from typing import Iterable
 from typing import Type
@@ -29,6 +28,7 @@ from cl.runtime.db.protocols import TRecord
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.records.protocols import RecordProtocol
+from cl.runtime.records.record_util import RecordUtil
 from cl.runtime.schema.schema import Schema
 from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
@@ -158,7 +158,7 @@ class BasicMongoDb(Db):
                 serialized_record
             )  # TODO: Convert to comprehension for performance
             result.append(record)
-        return result
+        return RecordUtil.sort_records_by_key(result)
 
     def load_filter(
         self,
@@ -221,9 +221,12 @@ class BasicMongoDb(Db):
         db = self._get_db()
         collection = db[collection_name]
 
-        # Serialize record data and key
-        serialized_key = key_serializer.serialize_key(record)
+        # Serialize data, this also executes 'init_all' method
         serialized_record = data_serializer.serialize_data(record)
+
+        # Serialize key
+        # TODO: Consider getting the key first instead of serializing the entire record
+        serialized_key = key_serializer.serialize_key(record)
 
         # Use update_one with upsert=True to insert if not present or update if present
         # TODO (Roman): update_one does not affect fields not presented in record. Changed to replace_one

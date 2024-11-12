@@ -14,26 +14,32 @@
 
 from dataclasses import dataclass
 from typing import Type
+from cl.runtime.primitive.timestamp import Timestamp
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.key_mixin import KeyMixin
+from cl.runtime.records.protocols import is_key
 
 
 @dataclass(slots=True, kw_only=True)
 class TaskKey(KeyMixin):
     """
-    The task 'execute' method is invoked by the queue to which the task is submitted.
+    The task 'run_task' method is invoked by the queue to which the task is submitted.
 
     Notes:
-        - The task may be invoked sequentially or in parallel with other tasks
-        - The task may be invoked in a different process, thread or machine than the submitting code
-          and must be able to acquire the resources required by its 'execute' method in all of these cases
-        - The queue creates a new TaskRun record every time the task is submitted
-        - The TaskRun record is periodically updated by the queue with the run status and result
-        - The TaskRun record must never be modified by the task itself
+        - The task may run sequentially or in parallel with other tasks
+        - The task may run in a different process, thread or machine than the submitting code
+          and must be able to acquire the resources required by its 'run_task' method in all of these cases
+        - The queue updates 'status' field of the task as it progresses from its initial Pending state through
+          the Running and optionally Paused state and ending in one of Completed, Failed, or Cancelled states
     """
 
     task_id: str = missing()
     """Unique task identifier."""
+
+    def init(self) -> None:
+        # Check only if inside a key, will be set automatically if inside a record
+        if is_key(self):
+            Timestamp.validate(self.task_id, value_name="task_id", data_type="TaskKey")
 
     @classmethod
     def get_key_type(cls) -> Type:

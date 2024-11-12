@@ -28,7 +28,7 @@ from dotenv import load_dotenv
 from dynaconf import Dynaconf
 from typing_extensions import Self
 from cl.runtime.context.env_util import EnvUtil
-from cl.runtime.primitive.ordered_uuid import OrderedUuid
+from cl.runtime.primitive.timestamp import Timestamp
 from cl.runtime.records.record_util import RecordUtil
 from cl.runtime.settings.project_settings import SETTINGS_FILES_ENVVAR
 from cl.runtime.settings.project_settings import ProjectSettings
@@ -36,22 +36,16 @@ from cl.runtime.settings.project_settings import ProjectSettings
 # Load dotenv first (the priority order is envvars first, then dotenv, then settings.yaml and .secrets.yaml)
 load_dotenv()
 
-process_id = (
-    OrderedUuid.to_readable_str(OrderedUuid.create_one())
-    .replace(":", "-")
-    .replace(".", "-")
-    .replace("T", "-")
-    .replace("Z", "")
-)
-"""Process timestamp is OrderedUuid in readable string format created during the Python process launch."""
+_process_timestamp = Timestamp.create()
+"""Unique UUIDv7-based timestamp set during the Python process launch."""
 
-# Determine if we are inside a test and store the result in a global variable for performance
-is_inside_test = EnvUtil.is_inside_test()
+# True if we are inside a test, the result is cached in Settings for performance
+_is_inside_test = EnvUtil.is_inside_test()
 
 # Select Dynaconf test environment when invoked from the pytest or UnitTest test runner.
 # Other runners not detected automatically, in which case the Dynaconf environment must be
 # configured in settings explicitly.
-if is_inside_test:
+if _is_inside_test:
     os.environ["CL_SETTINGS_ENV"] = "test"
 
 _all_settings = Dynaconf(
@@ -102,6 +96,12 @@ _dotenv_dir_path = os.path.dirname(_dotenv_file_path) if _dotenv_file_path is no
 @dataclass(slots=True, kw_only=True)
 class Settings(ABC):
     """Base class for a singleton settings object."""
+
+    process_timestamp: ClassVar[str] = _process_timestamp
+    """Unique UUIDv7-based timestamp set during the Python process launch."""
+
+    is_inside_test: ClassVar[bool] = _is_inside_test
+    """True if we are inside a test."""
 
     __settings_dict: ClassVar[Dict[Type, Settings]] = {}
     """Dictionary of initialized settings objects indexed by the the settings class type."""
@@ -257,16 +257,17 @@ class Settings(ABC):
             raise RuntimeError(f"Field '{field_name}' in class '{cls.__name__}' has an empty element.")
         elif isinstance(field_value, str):
             # Check that 'field_value' is a string
-            path = field_value
+            result = field_value
         else:
             raise RuntimeError(
                 f"Field '{field_name}' in class '{cls.__name__}' has an element "
                 f"with type {type(field_value)} which is not a string."
             )
 
-        if not os.path.isabs(path):
+        if not os.path.isabs(result):
             project_root = cls.get_project_root()
-            path = os.path.join(project_root, path)
+            result = os.path.join(project_root, result)
 
-        # Return as absolute path string
-        return str(path)
+        # Return as a normalized path string
+        result = os.path.normpath(result)
+        return result

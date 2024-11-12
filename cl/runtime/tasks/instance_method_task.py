@@ -19,6 +19,7 @@ from typing import Callable
 from typing_extensions import Self
 from cl.runtime import ClassInfo
 from cl.runtime.context.context import Context
+from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.protocols import KeyProtocol
 from cl.runtime.schema.schema import Schema
@@ -26,6 +27,7 @@ from cl.runtime.serialization.dict_serializer import DictSerializer
 from cl.runtime.serialization.string_serializer import StringSerializer
 from cl.runtime.tasks.callable_task import CallableTask
 from cl.runtime.tasks.task_key import TaskKey
+from cl.runtime.tasks.task_queue_key import TaskQueueKey
 
 key_serializer = StringSerializer()
 param_dict_serializer = DictSerializer()  # TODO: Support complex params
@@ -44,8 +46,8 @@ class InstanceMethodTask(CallableTask):
     method_name: str = missing()
     """The name of instance method in snake_case or PascalCase format, do not use for @classmethod or @staticmethod."""
 
-    def execute(self) -> Any:
-        """Invoke the specified class instance method handler."""
+    def _execute(self) -> None:
+        """Invoke the specified instance method."""
 
         # Get current context
         context = Context.current()
@@ -70,8 +72,7 @@ class InstanceMethodTask(CallableTask):
     def create(
         cls,
         *,
-        task_id: str,
-        parent: TaskKey | None = None,
+        queue: TaskQueueKey,
         record_or_key: KeyProtocol | None = None,
         method_callable: Callable,
     ) -> Self:
@@ -82,14 +83,13 @@ class InstanceMethodTask(CallableTask):
             - The key is required if the callable is for a class rather than an instance.
 
         Args:
-            task_id: Unique task identifier
-            parent: Parent task (optional)
+            queue: Queue that will run the task
             record_or_key: Record or its key
             method_callable: Callable bound to a class (ClassName.method_name) or its instance (obj.method_name)
         """
 
         # Populate known fields
-        result = cls(task_id=task_id, parent=parent)
+        result = cls(queue=queue)
 
         # Get key type and key
         key_type = record_or_key.get_key_type()
@@ -107,4 +107,7 @@ class InstanceMethodTask(CallableTask):
                 f"have two dot-delimited tokens indicating it is not a method bound to a class."
             )
 
+        # Set label and return
+        method_name_pascal_case = CaseUtil.snake_to_pascal_case(result.method_name)
+        result.label = f"{key_type.__name__};{result.key_str};{method_name_pascal_case}"
         return result

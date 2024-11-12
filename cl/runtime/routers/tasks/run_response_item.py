@@ -16,6 +16,7 @@ from __future__ import annotations
 import traceback
 from typing import List
 from pydantic import BaseModel
+from cl.runtime import Context
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.routers.tasks.run_error_response_item import RunErrorResponseItem
@@ -62,8 +63,11 @@ class RunResponseItem(BaseModel):
                 key_type = Schema.get_type_by_short_name(request.table).get_key_type()  # noqa
 
                 key_type_str = f"{key_type.__module__}.{key_type.__name__}"
+                method_name_pascal_case = CaseUtil.snake_to_pascal_case(request.method)
+                label = f"{key_type.__name__};{serialized_key};{method_name_pascal_case}"
                 handler_task = InstanceMethodTask(
-                    task_id=f"{key_type_str}:{serialized_key}:{request.method}",  # TODO Include parameters or use GUID
+                    label=label,
+                    queue=handler_queue.get_key(),
                     key_type_str=key_type_str,
                     key_str=serialized_key,
                     method_name=request.method,
@@ -71,15 +75,19 @@ class RunResponseItem(BaseModel):
             else:
                 # Key is None, this is a @classmethod or @staticmethod
                 record_type = Schema.get_type_by_short_name(request.table)
-                record_type_str = f"{record_type.__module__}.{record_type.__name__}"
+                u = f"{record_type.__module__}.{record_type.__name__}"
+                method_name_pascal_case = CaseUtil.snake_to_pascal_case(request.method)
+                label = f"{record_type.__name__};{method_name_pascal_case}"
                 handler_task = StaticMethodTask(
-                    task_id=f"{record_type_str}:{request.method}",  # TODO Include parameters or use GUID
+                    label=label,
+                    queue=handler_queue.get_key(),
                     type_str=record_type_str,
                     method_name=request.method,
                 )
 
-            # Submit task and record its task_run_id
-            task_run_key = handler_queue.submit_task(handler_task)
-            response_items.append(RunResponseItem(key=serialized_key, task_run_id=task_run_key.task_run_id))
+            # Save and submit task
+            Context.current().save_one(handler_task)
+            handler_queue.submit_task(handler_task)  # TODO: Rely on query instead
+            response_items.append(RunResponseItem(key=serialized_key, task_run_id=handler_task.task_id))
 
         return response_items

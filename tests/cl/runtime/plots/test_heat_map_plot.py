@@ -15,7 +15,6 @@
 import pytest
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.plots.heat_map_plot import HeatMapPlot
-from cl.runtime.plots.heat_map_plot_style import HeatMapPlotStyle
 from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
 
 expected_values = [
@@ -88,10 +87,9 @@ def test_smoke(local_dir_fixture):
         heat_map_plot.save_png()
 
 
+@pytest.mark.skip("Restore test when it becomes possible to override the default theme.")
 def test_dark_theme(local_dir_fixture):
     with TestingContext() as context:
-        heat_map_plot_style = HeatMapPlotStyle()
-        heat_map_plot_style.dark_theme = True
 
         row_labels = []
 

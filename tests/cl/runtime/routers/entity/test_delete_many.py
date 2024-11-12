@@ -27,7 +27,7 @@ def test_method():
 
     with TestingContext() as context:
         existing_records = [
-            StubDataclassDerivedRecord(id=f"existing_record_{i}", derived_field=f"value_{i}") for i in range(5)
+            StubDataclassDerivedRecord(id=f"existing_record_{i}", derived_str_field=f"value_{i}") for i in range(5)
         ]
         context.save_many(existing_records)
 
@@ -46,7 +46,7 @@ def test_method():
         # Check that the first 3 records are deleted
         for non_deleted_record, record_in_db in zip(existing_records[3:], records_in_db):
             assert non_deleted_record.id == record_in_db.id
-            assert non_deleted_record.derived_field == record_in_db.derived_field
+            assert non_deleted_record.derived_str_field == record_in_db.derived_str_field
 
 
 def test_api():
@@ -57,7 +57,7 @@ def test_api():
         test_app.include_router(entity_router.router, prefix="/entity", tags=["Entity"])
         with TestClient(test_app) as test_client:
             existing_records = [
-                StubDataclassDerivedRecord(id=f"existing_record_{i}", derived_field=f"value_{i}") for i in range(5)
+                StubDataclassDerivedRecord(id=f"existing_record_{i}", derived_str_field=f"value_{i}") for i in range(5)
             ]
             context.save_many(existing_records)
 
@@ -81,7 +81,7 @@ def test_api():
             # Check that the first 3 records are deleted
             for non_deleted_record, record_in_db in zip(existing_records[3:], records_in_db):
                 assert non_deleted_record.id == record_in_db.id
-                assert non_deleted_record.derived_field == record_in_db.derived_field
+                assert non_deleted_record.derived_str_field == record_in_db.derived_str_field
 
 
 if __name__ == "__main__":

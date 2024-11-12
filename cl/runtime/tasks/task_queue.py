@@ -15,47 +15,32 @@
 from abc import ABC
 from abc import abstractmethod
 from dataclasses import dataclass
-from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue_key import TaskQueueKey
-from cl.runtime.tasks.task_run_key import TaskRunKey
 
 
 @dataclass(slots=True, kw_only=True)
 class TaskQueue(TaskQueueKey, ABC):
     """
-    Invokes the 'execute' method of the submitted tasks sequentially or in parallel with other tasks.
+    Run a query on tasks, run all returned tasks sequentially or in parallel, then repeat.
 
     Notes:
-        - The task may be invoked in a different process, thread or machine than the submitting code
-          and must be able to acquire the resources required by its 'execute' method in all of these cases
-        - The queue creates a new TaskRun record every time the task is submitted
-        - The TaskRun record is periodically updated by the queue with the run status and result
-        - The TaskRun record must never be modified by the task itself
+        - A task may run sequentially or in parallel with other tasks
+        - A task may run in a different process, thread or machine than the submitting code
+          and must be able to acquire the required resources to run in all of these scenarios
+        - The queue updates 'status' field of the task as it progresses from its initial Pending state through
+          the Running and optionally Paused state and ending in one of Completed, Failed, or Cancelled states
     """
+
+    timeout_sec: int = 10
+    """Optional timeout in seconds, queue will stop after reaching this timeout."""
 
     def get_key(self) -> TaskQueueKey:
         return TaskQueueKey(queue_id=self.queue_id)
 
     @abstractmethod
-    def start_workers(self) -> None:
-        """Start queue workers."""
+    def run_start_queue(self) -> None:
+        """Run a query on tasks, run all returned tasks sequentially or in parallel, then repeat."""
 
     @abstractmethod
-    def stop_workers(self) -> None:
-        """Cancel all active runs and stop queue workers."""
-
-    @abstractmethod
-    def cancel_all(self) -> None:
-        """Cancel all active runs but do not stop queue workers."""
-
-    @abstractmethod
-    def pause_all(self) -> None:
-        """Do not start new runs and send pause command to the existing runs."""
-
-    @abstractmethod
-    def resume_all(self) -> None:
-        """Resume starting new runs and send resume command to existing runs."""
-
-    @abstractmethod
-    def submit_task(self, task: TaskKey) -> TaskRunKey:
-        """Submit task to this queue (all further access to the task run is provided via the returned TaskRunKey)."""
+    def run_stop_queue(self) -> None:
+        """Exit after completing all currently executing tasks."""

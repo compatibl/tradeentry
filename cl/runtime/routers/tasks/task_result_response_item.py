@@ -22,8 +22,7 @@ from cl.runtime import Context
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.routers.tasks.task_result_request import TaskResultRequest
 from cl.runtime.tasks.task import Task
-from cl.runtime.tasks.task_run import TaskRun
-from cl.runtime.tasks.task_run_key import TaskRunKey
+from cl.runtime.tasks.task_key import TaskKey
 
 
 class TaskResultResponseItem(BaseModel):
@@ -50,18 +49,17 @@ class TaskResultResponseItem(BaseModel):
         # Get current context
         context = Context.current()
 
-        task_run_keys = [TaskRunKey(task_run_id=x) for x in request.task_run_ids]  # TODO: Use =UUID(x)
-        task_runs = cast(Iterable[TaskRun], context.load_many(TaskRun, task_run_keys))
+        task_keys = [TaskKey(task_id=x) for x in request.task_run_ids]
+        tasks = cast(Iterable[Task], context.load_many(Task, task_keys))
+        context.save_many(tasks)
 
         response_items = []
-        for task_run in task_runs:
-            task_obj = context.load_one(Task, task_run.task)
-
+        for task in tasks:
             response_items.append(
                 TaskResultResponseItem(
-                    result=task_run.result,
-                    task_run_id=str(task_run.task_run_id),
-                    key=task_obj.key_str if hasattr(task_obj, "key_str") else None,
+                    result=task.status,
+                    task_run_id=str(task.task_id),
+                    key=str(task.task_id),
                 ),
             )
 

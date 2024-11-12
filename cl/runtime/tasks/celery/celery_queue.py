@@ -24,7 +24,6 @@ from cl.runtime.log.log_entry import LogEntry
 from cl.runtime.log.log_entry_level_enum import LogEntryLevelEnum
 from cl.runtime.log.user_log_entry import UserLogEntry
 from cl.runtime.primitive.datetime_util import DatetimeUtil
-from cl.runtime.primitive.ordered_uuid import OrderedUuid
 from cl.runtime.records.protocols import TDataDict
 from cl.runtime.records.protocols import is_key
 from cl.runtime.records.protocols import is_record
@@ -35,8 +34,6 @@ from cl.runtime.tasks.task import Task
 from cl.runtime.tasks.task_key import TaskKey
 from cl.runtime.tasks.task_queue import TaskQueue
 from cl.runtime.tasks.task_queue_key import TaskQueueKey
-from cl.runtime.tasks.task_run import TaskRun
-from cl.runtime.tasks.task_run_key import TaskRunKey
 from cl.runtime.tasks.task_status_enum import TaskStatusEnum
 
 CELERY_MAX_WORKERS = 4
@@ -67,10 +64,10 @@ context_serializer = DictSerializer()
 
 @celery_app.task(max_retries=0)  # Do not retry failed tasks
 def execute_task(
-    task_run_id: str,
+    task_id: str,
     context_data: TDataDict,
 ) -> None:
-    """Invoke execute method of the specified task."""
+    """Invoke 'run_task' method of the specified task."""
 
     # Set is_deserialized flag in context data, will be used to skip some of the initialization code
     context_data["is_deserialized"] = True
@@ -78,48 +75,10 @@ def execute_task(
     # Deserialize context from 'context_data' parameter to run with the same settings as the caller context
     with context_serializer.deserialize_data(context_data) as context:
 
-        try:
-            task_run_key = TaskRunKey(task_run_id=task_run_id)
-            task_run = context.load_one(TaskRun, task_run_key)
-
-            # Load and execute the task object
-            task_key = task_run.task
-            task = context.load_one(Task, task_key)
-            task.execute()
-        except Exception as e:  # noqa
-
-            # Get log entry type and level
-            if isinstance(e, UserError):
-                log_type = UserLogEntry
-                level = LogEntryLevelEnum.USER_ERROR
-            else:
-                log_type = LogEntry
-                level = LogEntryLevelEnum.ERROR
-
-            # Create log entry
-            log_entry = log_type(  # noqa
-                message=str(e),
-                level=level,
-            )
-            log_entry.init()
-
-            # Save log entry to the database
-            Context.current().save_one(log_entry)
-
-            # Update task run record to report task failure
-            task_run.update_time = DatetimeUtil.now()
-            task_run.status = TaskStatusEnum.FAILED
-            task_run.message = str(e)
-
-            # Add log entry key
-            task_run.log_entry = log_entry.get_key()
-
-            context.save_one(task_run)
-        else:
-            # Update task run record to report task completion
-            task_run.update_time = DatetimeUtil.now()
-            task_run.status = TaskStatusEnum.COMPLETED
-            context.save_one(task_run)
+        # Load and run the task
+        task_key = TaskKey(task_id=task_id)
+        task = context.load_one(Task, task_key)
+        task.run_task()
 
 
 def celery_start_queue_callable(*, log_dir: str) -> None:
@@ -173,61 +132,27 @@ def celery_start_queue(*, log_dir: str) -> None:
 
 @dataclass(slots=True, kw_only=True)
 class CeleryQueue(TaskQueue):
-    """Submits tasks to Celery workers."""
+    """Execute tasks using Celery."""
 
     # max_workers: int = missing()  # TODO: Implement support for max_workers
     """The maximum number of processes running concurrently."""
 
     # TODO: @abstractmethod
-    def start_workers(self) -> None:
+    def run_start_queue(self) -> None:
         """Start queue workers."""
 
     # TODO: @abstractmethod
-    def stop_workers(self) -> None:
+    def run_stop_queue(self) -> None:
         """Cancel all active runs and stop queue workers."""
 
-    # TODO: @abstractmethod
-    def cancel_all(self) -> None:
-        """Cancel all active runs but do not stop queue workers."""
-
-    # TODO: @abstractmethod
-    def pause_all(self) -> None:
-        """Do not start new runs and send pause command to the existing runs."""
-
-    # TODO: @abstractmethod
-    def resume_all(self) -> None:
-        """Resume starting new runs and send resume command to existing runs."""
-
-    def submit_task(self, task: TaskKey) -> TaskRunKey:
-        # Get current context
+    def submit_task(self, task: TaskKey):
+        # Get and serialize current context
         context = Context.current()
-
-        # Save task if provided as record rather than key
-        if is_record(task):
-            context.save_one(task)
-
-        # Create task run identifier and convert to string
-        task_run_uuid = OrderedUuid.create_one()
-        task_run_id = str(task_run_uuid)
-
-        # Get timestamp from task_run_id
-        task_run_uuid = UUID(task_run_id)
-        submit_time = OrderedUuid.datetime_of(task_run_uuid)
-
-        # Create a task run record in Pending state
-        task_run = TaskRun()
-        task_run.task_run_id = task_run_id
-        task_run.queue = TaskQueueKey(queue_id=self.queue_id)
-        task_run.task = task if is_key(task) else task.get_key()
-        task_run.submit_time = submit_time
-        task_run.update_time = submit_time
-        task_run.status = TaskStatusEnum.PENDING
-        context.save_one(task_run)
+        context_data = context_serializer.serialize_data(context)
 
         # Pass parameters to the Celery task signature
-        context_data = context_serializer.serialize_data(context)
         execute_task_signature = execute_task.s(
-            task_run_id,
+            task.task_id,
             context_data,
         )
 
@@ -236,5 +161,3 @@ class CeleryQueue(TaskQueue):
             retry=False,  # Do not retry in case the task fails
             ignore_result=True,  # TODO: Do not publish to the Celery result backend
         )
-
-        return task_run.get_key()

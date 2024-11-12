@@ -19,7 +19,7 @@ from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.db.dataset_util import DatasetUtil
 from cl.runtime.records.class_info import ClassInfo
 from cl.runtime.settings.context_settings import ContextSettings
-from cl.runtime.settings.settings import is_inside_test
+from cl.runtime.settings.settings import Settings
 
 
 @dataclass(slots=True, kw_only=True)
@@ -41,7 +41,7 @@ class TestingContext(Context):
         # Do not execute this code on deserialized context instances (e.g. when they are passed to a task queue)
         if not self.is_deserialized:
             # Confirm we are inside a test, error otherwise
-            if not is_inside_test:
+            if not Settings.is_inside_test:
                 raise RuntimeError(f"TestingContext created outside a test.")
 
             # Get test name in 'module.test_function' or 'module.TestClass.test_method' format inside a test

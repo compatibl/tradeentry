@@ -140,6 +140,10 @@ class RegressionGuard:
             value: Data to be recorded, accepted data types depend on the specified file extension
         """
 
+        # Perform type conversion
+        if isinstance(value, Exception):
+            value = f"Raises {type(value).__name__} with the message:\n{str(value)}"
+
         # Delegate to a previously created guard with the same combination of output_path and ext if exists
         if self.__delegate_to is not None:
             self.__delegate_to.write(value)
@@ -197,7 +201,7 @@ class RegressionGuard:
             exc_text_merged = "\n".join(exc_text_blocks)
             raise RuntimeError(exc_text_merged)
 
-    def verify(self, *, silent: bool = True) -> bool:
+    def verify(self, *, silent: bool = False) -> bool:
         """
         Verify for this regression guard that 'channel.received.ext' is the same as 'channel.expected.ext'.
         Defaults to silent=True (no exception) to permit other tests to proceed.
@@ -347,10 +351,10 @@ class RegressionGuard:
 
     def __cmp_files(self, file_path_a: str, file_path_b: str) -> bool:
         """Compare two files ignoring line endings."""
-        with open(file_path_a, 'r') as file_a, open(file_path_b, 'r') as file_b:
+        with open(file_path_a, "r") as file_a, open(file_path_b, "r") as file_b:
             for line_a, line_b in zip(file_a, file_b):
                 # Strip line endings before comparing
-                if line_a.rstrip('\r\n') != line_b.rstrip('\r\n'):
+                if line_a.rstrip("\r\n") != line_b.rstrip("\r\n"):
                     return False
             # Check if there are any remaining lines in either file
             if file_a.readline() or file_b.readline():

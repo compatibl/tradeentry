@@ -25,6 +25,8 @@ from cl.runtime.routers.storage.datasets_request import DatasetsRequest
 from cl.runtime.routers.storage.env_response import EnvResponse
 from cl.runtime.routers.storage.record_request import RecordRequest
 from cl.runtime.routers.storage.record_response import RecordResponse
+from cl.runtime.routers.storage.save_permanently_request import SavePermanentlyRequest
+from cl.runtime.routers.storage.save_permanently_response import SavePermanentlyResponse
 from cl.runtime.routers.storage.select_request import SelectRequest
 from cl.runtime.routers.storage.select_response import SelectResponse
 from cl.runtime.routers.user_request import UserRequest
@@ -93,3 +95,10 @@ async def storage_select(
             type_=type_, query_dict=query_dict, threshold=threshold, skip=skip, module=module, table_format=table_format
         )
     )
+
+
+@router.post("/record/save_permanently", status_code=200)
+async def save_permanently(request: Request, body: SavePermanentlyRequest) -> SavePermanentlyResponse:
+    """Save records to the database on the disk."""
+
+    return SavePermanentlyResponse.save_permanently(request=body)

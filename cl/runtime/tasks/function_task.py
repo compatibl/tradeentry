@@ -20,6 +20,7 @@ from typing_extensions import Self
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.tasks.callable_task import CallableTask
 from cl.runtime.tasks.task_key import TaskKey
+from cl.runtime.tasks.task_queue_key import TaskQueueKey
 
 
 @dataclass(slots=True, kw_only=True)
@@ -32,11 +33,17 @@ class FunctionTask(CallableTask):
     function_name: str = missing()
     """Function name in snake_case or PascalCase format."""
 
-    def execute(self) -> None:
-        """Invoke the specified static or class method handler."""
+    def _execute(self) -> None:
+        """Invoke the specified function."""
         raise NotImplementedError()
 
     @classmethod
-    def from_type(cls, *, task_id: str, record_type: Type, method: Callable, parent: TaskKey | None = None) -> Self:
+    def create(
+        cls,
+        *,
+        queue: TaskQueueKey,
+        record_type: Type,
+        method: Callable,
+    ) -> Self:
         """Create from static or class handler method callable."""
         raise NotImplementedError()
