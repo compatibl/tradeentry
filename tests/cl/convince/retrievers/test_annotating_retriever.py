@@ -47,10 +47,7 @@ def _test_extract(input_text: str, param_description: str, param_samples: List[s
         )
         retriever.init_all()
         guard = RegressionGuard(channel=llm.llm_id)
-        param_value = retriever.retrieve(
-            input_text=input_text,
-            param_description=param_description
-        )
+        param_value = retriever.retrieve(input_text=input_text, param_description=param_description)
         guard.write(f"Input Text: {input_text} Retrieved Value: {param_value}")
     RegressionGuard.verify_all()
 

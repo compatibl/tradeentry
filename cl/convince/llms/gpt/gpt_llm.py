@@ -15,11 +15,11 @@
 from dataclasses import dataclass
 from typing import ClassVar
 from openai import OpenAI
-from cl.convince.llms.llm import Llm
-from cl.convince.settings.openai_settings import OpenaiSettings
 from cl.runtime.context.context_util import ContextUtil
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.primitive.float_util import FloatUtil
+from cl.convince.llms.llm import Llm
+from cl.convince.settings.openai_settings import OpenaiSettings
 
 
 @dataclass(slots=True, kw_only=True)
@@ -50,8 +50,10 @@ class GptLlm(Llm):
                 self.temperature = float(self.temperature)
                 # Compare with tolerance in case it is calculated by a formula
                 if FloatUtil.less(self.temperature, 0.0) or FloatUtil.more(self.temperature, 1.0):
-                    raise RuntimeError(f"{type(self).__name__} field temperature={self.temperature} "
-                                       f"is outside the range from 0 to 1.")
+                    raise RuntimeError(
+                        f"{type(self).__name__} field temperature={self.temperature} "
+                        f"is outside the range from 0 to 1."
+                    )
                 # Ensure that roundoff error does not move it out of range
                 self.temperature = min(max(self.temperature, 0.0), 1.0)
             else:
@@ -85,8 +87,7 @@ class GptLlm(Llm):
             # Try loading API key from context.secrets first and then from settings
             api_key = ContextUtil.decrypt_secret("OPENAI_API_KEY") or OpenaiSettings.instance().api_key
             if api_key is None:
-                raise UserError(
-                    "Provide OPENAI_API_KEY in Account > My Keys (users) or using Dynaconf (developers).")
+                raise UserError("Provide OPENAI_API_KEY in Account > My Keys (users) or using Dynaconf (developers).")
 
             cls._client = OpenAI(
                 api_key=api_key,

@@ -14,9 +14,9 @@
 
 from abc import ABC
 from dataclasses import dataclass
-from cl.convince.llms.llm_key import LlmKey
 from cl.runtime.experiments.binary_experiment import BinaryExperiment
 from cl.runtime.records.dataclasses_extensions import missing
+from cl.convince.llms.llm_key import LlmKey
 
 
 @dataclass(slots=True, kw_only=True)

@@ -23,4 +23,3 @@ class TextPrompt(Prompt):
 
     text: str = missing()
     """Text of the prompt."""
-

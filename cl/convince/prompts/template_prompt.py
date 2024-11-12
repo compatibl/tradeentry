@@ -83,4 +83,3 @@ class TemplatePrompt(Prompt, ABC):
                 f"Parameters object for prompt {self.prompt_id} has type {actual_type_str} which "
                 f"is not a subclass of the expected type {self.params_type}."
             )
-

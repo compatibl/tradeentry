@@ -14,8 +14,8 @@
 
 from dataclasses import dataclass
 from typing import List
-from cl.convince.retrievers.retrieval import Retrieval
 from cl.runtime.records.dataclasses_extensions import missing
+from cl.convince.retrievers.retrieval import Retrieval
 
 
 @dataclass(slots=True, kw_only=True)

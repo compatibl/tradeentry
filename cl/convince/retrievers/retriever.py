@@ -17,8 +17,8 @@ from abc import abstractmethod
 from dataclasses import dataclass
 from typing import List
 from cl.runtime import RecordMixin
-from cl.convince.retrievers.retriever_key import RetrieverKey
 from cl.runtime.primitive.timestamp import Timestamp
+from cl.convince.retrievers.retriever_key import RetrieverKey
 
 
 @dataclass(slots=True, kw_only=True)
@@ -32,4 +32,3 @@ class Retriever(RetrieverKey, RecordMixin[RetrieverKey], ABC):
         """Same as __init__ but can be used when field values are set both during and after construction."""
         if self.retriever_id is None:
             self.retriever_id = Timestamp.create()
-

@@ -15,9 +15,7 @@
 import re
 from dataclasses import dataclass
 from typing import Type
-
 from typing_extensions import Self
-
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.primitive.string_util import StringUtil

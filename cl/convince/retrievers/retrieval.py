@@ -13,12 +13,11 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-
-from cl.convince.retrievers.retriever_key import RetrieverKey
 from cl.runtime import RecordMixin
-from cl.convince.retrievers.retrieval_key import RetrievalKey
 from cl.runtime.primitive.timestamp import Timestamp
 from cl.runtime.records.dataclasses_extensions import missing
+from cl.convince.retrievers.retrieval_key import RetrievalKey
+from cl.convince.retrievers.retriever_key import RetrieverKey
 
 
 @dataclass(slots=True, kw_only=True)

@@ -15,8 +15,6 @@
 import re
 from dataclasses import dataclass
 from typing import List
-
-from cl.convince.retrievers.annotating_retrieval import AnnotatingRetrieval
 from cl.runtime import Context
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.primitive.string_util import StringUtil
@@ -28,6 +26,7 @@ from cl.convince.llms.llm_key import LlmKey
 from cl.convince.prompts.formatted_prompt import FormattedPrompt
 from cl.convince.prompts.prompt import Prompt
 from cl.convince.prompts.prompt_key import PromptKey
+from cl.convince.retrievers.annotating_retrieval import AnnotatingRetrieval
 from cl.convince.retrievers.retrieval import Retrieval
 from cl.convince.retrievers.retriever import Retriever
 from cl.convince.retrievers.retriever_util import RetrieverUtil
@@ -124,8 +123,9 @@ class AnnotatingRetriever(Retriever):
                     context.save_one(retrieval)
                 else:
                     retrieval.success = "N"
-                    retrieval.justification = (f"Could not extract JSON from the LLM response. "
-                                               f"LLM response:\n{completion}\n")
+                    retrieval.justification = (
+                        f"Could not extract JSON from the LLM response. " f"LLM response:\n{completion}\n"
+                    )
                     context.save_one(retrieval)
                     raise UserError(retrieval.justification)
 

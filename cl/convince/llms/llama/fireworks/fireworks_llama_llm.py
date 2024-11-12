@@ -14,11 +14,10 @@
 
 from dataclasses import dataclass
 import fireworks.client  # noqa
-from cl.convince.llms.llama.llama_llm import LlamaLlm
-from cl.convince.settings.fireworks_settings import FireworksSettings
-
 from cl.runtime.context.context_util import ContextUtil
 from cl.runtime.log.exceptions.user_error import UserError
+from cl.convince.llms.llama.llama_llm import LlamaLlm
+from cl.convince.settings.fireworks_settings import FireworksSettings
 
 
 @dataclass(slots=True, kw_only=True)
@@ -47,8 +46,7 @@ class FireworksLlamaLlm(LlamaLlm):
         # Try loading API key from context.secrets first and then from settings
         api_key = ContextUtil.decrypt_secret("FIREWORKS_API_KEY") or FireworksSettings.instance().api_key
         if api_key is None:
-            raise UserError(
-                "Provide FIREWORKS_API_KEY in Account > My Keys (users) or using Dynaconf (developers).")
+            raise UserError("Provide FIREWORKS_API_KEY in Account > My Keys (users) or using Dynaconf (developers).")
         fireworks.client.api_key = api_key
 
         response = fireworks.client.Completion.create(

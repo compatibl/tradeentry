@@ -15,10 +15,10 @@
 from dataclasses import dataclass
 from typing import ClassVar
 from anthropic import Anthropic
-from cl.convince.llms.llm import Llm
-from cl.convince.settings.anthropic_settings import AnthropicSettings
 from cl.runtime.context.context_util import ContextUtil
 from cl.runtime.log.exceptions.user_error import UserError
+from cl.convince.llms.llm import Llm
+from cl.convince.settings.anthropic_settings import AnthropicSettings
 
 
 @dataclass(slots=True, kw_only=True)
