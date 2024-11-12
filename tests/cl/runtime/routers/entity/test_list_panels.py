@@ -12,13 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import inspect
-from typing import Type, List
-
 import pytest
+import inspect
+from typing import List
+from typing import Type
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.routers.entity import entity_router
@@ -77,7 +76,11 @@ def test_api():
             for request in requests:
                 # Split request headers and query
                 request_headers = {"user": request.get("user")}
-                request_params = {"type": request.get("type"), "key": request.get("key"), "dataset": request.get("dataset")}
+                request_params = {
+                    "type": request.get("type"),
+                    "key": request.get("key"),
+                    "dataset": request.get("dataset"),
+                }
 
                 # Eliminate empty keys
                 request_headers = {k: v for k, v in request_headers.items() if v is not None}

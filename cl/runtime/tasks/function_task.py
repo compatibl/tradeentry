@@ -39,11 +39,11 @@ class FunctionTask(CallableTask):
 
     @classmethod
     def create(
-            cls,
-            *,
-            queue: TaskQueueKey,
-            record_type: Type,
-            method: Callable,
+        cls,
+        *,
+        queue: TaskQueueKey,
+        record_type: Type,
+        method: Callable,
     ) -> Self:
         """Create from static or class handler method callable."""
         raise NotImplementedError()

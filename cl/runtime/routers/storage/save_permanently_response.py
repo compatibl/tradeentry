@@ -14,13 +14,12 @@
 
 from collections import defaultdict
 from pathlib import Path
-from typing import Iterable, Type, DefaultDict
-
+from typing import DefaultDict
+from typing import Iterable
+from typing import Type
 from urllib import parse
-
 import pandas as pd
 from pydantic import BaseModel
-
 from cl.runtime import Context
 from cl.runtime.db.protocols import TRecord
 from cl.runtime.file.file_util import FileUtil
@@ -65,7 +64,7 @@ class SavePermanentlyResponse(BaseModel):
 
         # TODO (Bohdan): Check if it makes sense to have a config which format/extension to use.
         #  If not - simplify the code.
-        return 'csv'
+        return "csv"
 
     @classmethod
     def _get_path_to_save_permanently_folder(cls) -> Path:
@@ -83,9 +82,9 @@ class SavePermanentlyResponse(BaseModel):
         serializer = FlatDictSerializer()  # TODO (Bohdan): Provide a proper serializer
         serialized_records = [serializer.serialize_data(record) for record in records]
 
-        if file_extension == 'csv':
+        if file_extension == "csv":
             df = pd.DataFrame([serialized_records])
-            df.to_csv(file_path, mode='w', index=False, header=True)
+            df.to_csv(file_path, mode="w", index=False, header=True)
         else:
             raise ValueError(f"File extension {file_extension} is not supported.")
 
@@ -94,7 +93,7 @@ class SavePermanentlyResponse(BaseModel):
         """Save records to the database on the disk."""
 
         for record_type, records in get_type_to_records_map(request).items():
-            filename = f'{record_type.__name__}.{cls._get_extension()}'
+            filename = f"{record_type.__name__}.{cls._get_extension()}"
             FileUtil.check_valid_filename(filename)
             file_path = cls._get_path_to_save_permanently_folder() / filename
             file_path.parent.mkdir(parents=True, exist_ok=True)

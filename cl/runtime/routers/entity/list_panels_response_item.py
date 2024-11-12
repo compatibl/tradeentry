@@ -15,14 +15,12 @@
 from __future__ import annotations
 from typing import List
 from pydantic import BaseModel
-
 from cl.runtime import Context
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.routers.entity.list_panels_request import ListPanelsRequest
 from cl.runtime.schema.handler_declare_block_decl import HandlerDeclareBlockDecl
 from cl.runtime.schema.handler_declare_decl import HandlerDeclareDecl
 from cl.runtime.schema.schema import Schema
-
 from cl.runtime.serialization.string_serializer import StringSerializer
 
 
@@ -63,16 +61,15 @@ class ListPanelsResponseItem(BaseModel):
 
         if handlers_block is not None and handlers_block:
             return [
-                ListPanelsResponseItem(
-                    name=handler.label,
-                    type=cls.get_type(handler)
-                ) for handler in handlers_block if handler.type_ == "Viewer"
+                ListPanelsResponseItem(name=handler.label, type=cls.get_type(handler))
+                for handler in handlers_block
+                if handler.type_ == "Viewer"
             ]
         return []
 
     @classmethod
     def get_type(cls, handler: HandlerDeclareDecl) -> str | None:
         """Get type of the handler."""
-        
-        if handler.type_ == 'Viewer' and handler.name == 'view_self':
-            return 'Primary'
+
+        if handler.type_ == "Viewer" and handler.name == "view_self":
+            return "Primary"

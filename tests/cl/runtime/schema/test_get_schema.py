@@ -15,7 +15,8 @@
 import pytest
 from cl.runtime.schema.for_dataclasses.dataclass_type_decl import DataclassTypeDecl
 from cl.runtime.testing.regression_guard import RegressionGuard
-from stubs.cl.runtime import StubDataclassListFields, StubDataclassComposite
+from stubs.cl.runtime import StubDataclassComposite
+from stubs.cl.runtime import StubDataclassListFields
 from stubs.cl.runtime import StubDataclassNestedFields
 from stubs.cl.runtime import StubDataclassPrimitiveFields
 from stubs.cl.runtime import StubDataclassRecord

@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import pytest
-
 from cl.runtime import Context
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.serialization.dict_serializer import DictSerializer
@@ -34,10 +33,7 @@ def _create_task(queue: TaskQueueKey) -> TaskKey:
     """Create a test task."""
 
     method_callable = StubHandlers.run_static_method_1a
-    task = StaticMethodTask.create(
-        queue=queue,
-        record_type=StubHandlers,
-        method_callable=method_callable)
+    task = StaticMethodTask.create(queue=queue, record_type=StubHandlers, method_callable=method_callable)
     Context.current().save_one(task)
     return task.get_key()
 

@@ -13,14 +13,12 @@
 # limitations under the License.
 
 from __future__ import annotations
-
 import dataclasses
-from pydantic import BaseModel
-from pydantic import Field
 from typing import Any
 from typing import Dict
 from typing import List
-
+from pydantic import BaseModel
+from pydantic import Field
 from cl.runtime import Context
 from cl.runtime.backend.core.ui_app_state import UiAppState
 from cl.runtime.backend.core.ui_app_state_key import UiAppStateKey
@@ -147,8 +145,7 @@ class RecordResponse(BaseModel):
             deserialized_key = UiTypeStateKey(
                 user=UserKey(username=username or "root"),
                 type_=TypeDeclKey(
-                    name=type_state_record_type_name,
-                    module=ModuleDeclKey(module_name=type_state_record_module)
+                    name=type_state_record_type_name, module=ModuleDeclKey(module_name=type_state_record_module)
                 ),
             )
         else:
@@ -174,7 +171,8 @@ class RecordResponse(BaseModel):
 
                 all_handlers.extend(
                     [
-                        handler_name for handler_decl in handlers_block
+                        handler_name
+                        for handler_decl in handlers_block
                         if (handler_name := handler_decl.get("Name")) not in all_handlers
                     ]
                 )

@@ -13,7 +13,8 @@
 # limitations under the License.
 
 import pytest
-from typing import List, Dict
+from typing import Dict
+from typing import List
 from fastapi import FastAPI
 from starlette.testclient import TestClient
 from cl.runtime import Context

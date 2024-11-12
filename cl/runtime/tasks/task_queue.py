@@ -44,4 +44,3 @@ class TaskQueue(TaskQueueKey, ABC):
     @abstractmethod
     def run_stop_queue(self) -> None:
         """Exit after completing all currently executing tasks."""
-

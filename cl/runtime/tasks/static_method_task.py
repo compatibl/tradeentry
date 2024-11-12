@@ -51,11 +51,11 @@ class StaticMethodTask(CallableTask):
 
     @classmethod
     def create(
-            cls,
-            *,
-            queue: TaskQueueKey,
-            record_type: Type,
-            method_callable: Callable,
+        cls,
+        *,
+        queue: TaskQueueKey,
+        record_type: Type,
+        method_callable: Callable,
     ) -> Self:
         """Create from @staticmethod callable and record type."""
 

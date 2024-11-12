@@ -49,4 +49,3 @@ class StubDataclassNestedFields(StubDataclassRecord):
 
     record_as_key_field: StubDataclassRecordKey = field(default_factory=lambda: StubDataclassRecord())
     """Stub field with key type initialized to record type instance."""
-

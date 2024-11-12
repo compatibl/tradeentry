@@ -12,31 +12,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import base64
 import pytest
+import base64
 from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import serialization, hashes
-from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives.asymmetric import rsa
 from cl.runtime.context.context_util import ContextUtil
 from cl.runtime.context.testing_context import TestingContext
 
 
 def _generate_rsa_private_cert() -> str:
     # Generate private key
-    private_key = rsa.generate_private_key(
-        public_exponent=65537,
-        key_size=2048,
-        backend=default_backend()
-    )
+    private_key = rsa.generate_private_key(public_exponent=65537, key_size=2048, backend=default_backend())
 
     # Convert private key to PEM format
     pem = private_key.private_bytes(
         encoding=serialization.Encoding.PEM,
         format=serialization.PrivateFormat.TraditionalOpenSSL,
-        encryption_algorithm=serialization.NoEncryption()
+        encryption_algorithm=serialization.NoEncryption(),
     )
     # Convert PEM bytes to string
-    pem_str = pem.decode('utf-8')
+    pem_str = pem.decode("utf-8")
     return pem_str
 
 
@@ -47,11 +45,7 @@ def _encrypt_value(value: str) -> str:
     public_key = serialization.load_pem_public_key(public_key_pem.encode())
     encrypted = public_key.encrypt(
         value.encode(),
-        padding=padding.OAEP(
-            mgf=padding.MGF1(algorithm=hashes.SHA256()),
-            algorithm=hashes.SHA256(),
-            label=None
-        )
+        padding=padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None),
     )
     return base64.b64encode(encrypted).decode()
 
@@ -62,7 +56,7 @@ def test_decrypt_secret():
 
     with TestingContext() as context:
 
-        key = 'test_key'
+        key = "test_key"
         value = "secret_value"
         encrypted_value = _encrypt_value(value)
         context.secrets[key] = encrypted_value

@@ -14,7 +14,6 @@
 
 from dataclasses import dataclass
 from typing import List
-
 from cl.runtime.settings.settings import Settings
 
 
@@ -113,8 +112,9 @@ class ApiSettings(Settings):
         elif isinstance(self.allow_headers, str) or not hasattr(self.allow_headers, "__iter__"):
             raise RuntimeError(f"{type(self).__name__} field 'allow_headers' must be a list or None.")
 
-        if self.expose_headers is not None and (isinstance(self.expose_headers, str) or
-                                                not hasattr(self.expose_headers, "__iter__")):
+        if self.expose_headers is not None and (
+            isinstance(self.expose_headers, str) or not hasattr(self.expose_headers, "__iter__")
+        ):
             raise RuntimeError(f"{type(self).__name__} field 'expose_headers' must be a list or None.")
 
         if self.max_age is not None and not isinstance(self.max_age, int):

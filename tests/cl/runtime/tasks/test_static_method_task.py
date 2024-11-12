@@ -32,9 +32,7 @@ def test_create():
             record_type = sample_input[0]
             method_callable = sample_input[1]
             task = StaticMethodTask.create(
-                queue=TaskQueueKey(queue_id="Sample Queue"),
-                record_type=record_type,
-                method_callable=method_callable
+                queue=TaskQueueKey(queue_id="Sample Queue"), record_type=record_type, method_callable=method_callable
             )
             task.run_task()
 

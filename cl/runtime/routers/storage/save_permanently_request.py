@@ -29,4 +29,3 @@ class SavePermanentlyRequest(BaseModel):
 
     with_dependencies: bool = False
     """Flag that indicated whether to include nested dependencies for Dag objects."""
-

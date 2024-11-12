@@ -14,7 +14,8 @@
 
 import base64
 from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import serialization, hashes
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import padding
 from cl.runtime import Context
 
@@ -45,19 +46,13 @@ class ContextUtil:
 
         # Load the private key
         private_key = serialization.load_pem_private_key(
-            private_key_pem.encode(),
-            password=None,
-            backend=default_backend()
+            private_key_pem.encode(), password=None, backend=default_backend()
         )
 
         # Decrypt the value
         decrypted_value_bytes = private_key.decrypt(
             encrypted_value_bytes,
-            padding.OAEP(
-                mgf=padding.MGF1(algorithm=hashes.SHA256()),
-                algorithm=hashes.SHA256(),
-                label=None
-            )
+            padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None),
         )
 
-        return decrypted_value_bytes.decode('utf-8')
+        return decrypted_value_bytes.decode("utf-8")

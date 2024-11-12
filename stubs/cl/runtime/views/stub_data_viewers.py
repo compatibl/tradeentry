@@ -15,9 +15,12 @@
 from dataclasses import dataclass
 from typing import List
 from typing_extensions import Self
-
-from stubs.cl.runtime import StubDataclassRecordKey, StubDataclassRecord, StubDataclassNestedFields, \
-    StubDataclassListFields, StubDataclassComposite, StubDataclassCompositeKey
+from stubs.cl.runtime import StubDataclassComposite
+from stubs.cl.runtime import StubDataclassCompositeKey
+from stubs.cl.runtime import StubDataclassListFields
+from stubs.cl.runtime import StubDataclassNestedFields
+from stubs.cl.runtime import StubDataclassRecord
+from stubs.cl.runtime import StubDataclassRecordKey
 from stubs.cl.runtime.views.stub_viewers import StubViewers
 from stubs.cl.runtime.views.stub_viewers_key import StubViewersKey
 

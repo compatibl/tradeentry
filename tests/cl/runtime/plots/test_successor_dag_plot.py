@@ -13,13 +13,15 @@
 # limitations under the License.
 
 import pytest
-from cl.runtime.context.testing_context import TestingContext
 from dataclasses import dataclass
-from typing import List, Optional
-import networkx as nx
+from typing import List
+from typing import Optional
 import matplotlib.pyplot as plt
+import networkx as nx
 from matplotlib.patches import Rectangle
+from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.testing.pytest.pytest_fixtures import local_dir_fixture
+
 
 def test_smoke(local_dir_fixture):
     with TestingContext() as context:
@@ -27,7 +29,7 @@ def test_smoke(local_dir_fixture):
         @dataclass
         class Node:
             title: str
-            successors: Optional[List['Node']] = None
+            successors: Optional[List["Node"]] = None
 
         # Define the nodes with successors
         staff_a = Node(title="Staff A")
@@ -68,8 +70,9 @@ def test_smoke(local_dir_fixture):
                     graph.add_edge(current_id, successor_id)
                     # Position each successor progressively lower
                     y = y - (i + 1) * y_offset  # Adjust vertical spacing between successors
-                    y = add_nodes_recursive(graph, successor, successor_id, x + x_offset, y, pos,
-                                            labels)  # Adjust horizontal spacing
+                    y = add_nodes_recursive(
+                        graph, successor, successor_id, x + x_offset, y, pos, labels
+                    )  # Adjust horizontal spacing
             return y
 
         # Add CEO node and its successors recursively
@@ -93,9 +96,12 @@ def test_smoke(local_dir_fixture):
 
                 # Draw the arrow
                 ax.annotate(
-                    '', xy=(entry_x, end_y), xytext=(exit_x, start_y),
-                    arrowprops=dict(arrowstyle='-|>', lw=1.5, color='black',
-                                    connectionstyle='arc3,rad=0.0')  # Straight arrow
+                    "",
+                    xy=(entry_x, end_y),
+                    xytext=(exit_x, start_y),
+                    arrowprops=dict(
+                        arrowstyle="-|>", lw=1.5, color="black", connectionstyle="arc3,rad=0.0"
+                    ),  # Straight arrow
                 )
 
         # Call the function to draw custom arrows
@@ -110,8 +116,9 @@ def test_smoke(local_dir_fixture):
             width = 3
             height = 1.5
             # Draw a rectangle centered on the node's position
-            rect = Rectangle((x - width / 2, y - height / 2), width, height,
-                             linewidth=1, edgecolor='black', facecolor='lightblue')
+            rect = Rectangle(
+                (x - width / 2, y - height / 2), width, height, linewidth=1, edgecolor="black", facecolor="lightblue"
+            )
             ax.add_patch(rect)
 
         # Dynamically calculate plot limits to ensure all boxes fit
@@ -130,6 +137,7 @@ def test_smoke(local_dir_fixture):
 
         # Add a title and display the plot
         # plt.savefig("test_successor_dag.png")
+
 
 if __name__ == "__main__":
     pytest.main([__file__])

@@ -14,7 +14,8 @@
 
 import pytest
 from cl.runtime.serialization.dict_serializer import DictSerializer
-from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord, StubDataclassComposite
+from stubs.cl.runtime import StubDataclassComposite
+from stubs.cl.runtime import StubDataclassDerivedFromDerivedRecord
 from stubs.cl.runtime import StubDataclassDerivedRecord
 from stubs.cl.runtime import StubDataclassDictFields
 from stubs.cl.runtime import StubDataclassDictListFields

@@ -14,7 +14,6 @@
 
 from dataclasses import dataclass
 from typing import Type
-
 from cl.runtime.primitive.timestamp import Timestamp
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.runtime.records.key_mixin import KeyMixin
@@ -40,11 +39,7 @@ class TaskKey(KeyMixin):
     def init(self) -> None:
         # Check only if inside a key, will be set automatically if inside a record
         if is_key(self):
-            Timestamp.validate(
-                self.task_id,
-                value_name="task_id",
-                data_type="TaskKey"
-            )
+            Timestamp.validate(self.task_id, value_name="task_id", data_type="TaskKey")
 
     @classmethod
     def get_key_type(cls) -> Type:

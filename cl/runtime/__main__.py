@@ -22,7 +22,6 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
 from starlette.staticfiles import StaticFiles
 from cl.runtime import Context
-from cl.runtime.routers.context_middleware import ContextMiddleware
 from cl.runtime.context.process_context import ProcessContext
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.log.log_entry import LogEntry
@@ -30,6 +29,7 @@ from cl.runtime.log.log_entry_level_enum import LogEntryLevelEnum
 from cl.runtime.log.user_log_entry import UserLogEntry
 from cl.runtime.routers.app import app_router
 from cl.runtime.routers.auth import auth_router
+from cl.runtime.routers.context_middleware import ContextMiddleware
 from cl.runtime.routers.entity import entity_router
 from cl.runtime.routers.health import health_router
 from cl.runtime.routers.schema import schema_router

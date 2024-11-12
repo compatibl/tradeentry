@@ -75,11 +75,7 @@ class Task(TaskKey, RecordMixin[TaskKey], ABC):
             self.task_id = Timestamp.create()
         else:
             # Otherwise validate
-            Timestamp.validate(
-                self.task_id,
-                value_name="task_id",
-                data_type="TaskKey"
-            )
+            Timestamp.validate(self.task_id, value_name="task_id", data_type="TaskKey")
 
         # Set status and progress_pct if not yet set
         if self.status is None:

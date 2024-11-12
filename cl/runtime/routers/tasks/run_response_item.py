@@ -16,7 +16,6 @@ from __future__ import annotations
 import traceback
 from typing import List
 from pydantic import BaseModel
-
 from cl.runtime import Context
 from cl.runtime.primitive.case_util import CaseUtil
 from cl.runtime.records.dataclasses_extensions import missing

@@ -85,10 +85,7 @@ def test_method(celery_test_queue_fixture):
 
             request_object = RunRequest(**request)
             response_items = RunResponseItem.run_tasks(request_object)
-            [
-                Task.wait_for_completion(TaskKey(task_id=response_item.task_run_id))
-                for response_item in response_items
-            ]
+            [Task.wait_for_completion(TaskKey(task_id=response_item.task_run_id)) for response_item in response_items]
             actual_records = list(context.load_many(StubDataclassRecord, expected_keys))
             assert actual_records == expected_records
 

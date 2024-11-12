@@ -46,14 +46,10 @@ class ProcessQueue(TaskQueue):
             # TODO: Use DB queries with filter by queue field
             all_tasks = context.load_all(Task)
             awaiting_tasks = [
-                task for task in all_tasks
-                if task.queue.queue_id == queue_id
-                and task.status == TaskStatusEnum.AWAITING
+                task for task in all_tasks if task.queue.queue_id == queue_id and task.status == TaskStatusEnum.AWAITING
             ]
             pending_tasks = [
-                task for task in all_tasks
-                if task.queue.queue_id == queue_id
-                and task.status == TaskStatusEnum.PENDING
+                task for task in all_tasks if task.queue.queue_id == queue_id and task.status == TaskStatusEnum.PENDING
             ]
 
             # Awaiting tasks have priority over pending tasks

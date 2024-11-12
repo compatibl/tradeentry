@@ -161,4 +161,3 @@ class CeleryQueue(TaskQueue):
             retry=False,  # Do not retry in case the task fails
             ignore_result=True,  # TODO: Do not publish to the Celery result backend
         )
-
