@@ -14,14 +14,13 @@
 
 import pytest
 from typing import List
-
-from cl.convince.retrievers.retriever_util import RetrieverUtil
 from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.experiments.experiment import Experiment
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.llm import Llm
+from cl.convince.retrievers.retriever_util import RetrieverUtil
 from stubs.cl.convince.experiments.stub_llms import get_stub_mini_llms
 
 _TEMPLATE = """You will be provided with an input text and a description of a parameter.
@@ -74,12 +73,13 @@ def test_brace_annotation_few_shot():
         plot_group_labels = []
         plot_values = []
 
-        examples = {"Zero-Shot": "",
-                    "Few-Shot": """
+        examples = {
+            "Zero-Shot": "",
+            "Few-Shot": """
 Examples:
 Input: Buy 5y LIBOR swap at 2.25%
 Annotated: {Buy} 5y LIBOR swap at 2.25%""",
-                    "Adverse Few-Shot": """
+            "Adverse Few-Shot": """
 Here are examples of correct annotations and common mistakes:
 
 Correct annotation:
@@ -94,8 +94,8 @@ Correct: Bank {sells} 5y LIBOR swap at 3.55%
 Common mistake 2 - Add field name after the value:
 Input: Buy 7y LIBOR swap at 3.75%
 Incorrect: Buy {Buy or Sell} 7y LIBOR swap at 3.75%
-Correct: {Buy} 7y LIBOR swap at 3.75%"""
-                    }
+Correct: {Buy} 7y LIBOR swap at 3.75%""",
+        }
 
         # Create Llm objects for test
         stub_mini_llms = get_stub_mini_llms()

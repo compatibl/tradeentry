@@ -13,17 +13,18 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-
-from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.runtime import Context
-from cl.convince.retrievers.multiple_choice_retriever import MultipleChoiceRetriever
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.convince.entries.entry import Entry
+from cl.convince.llms.gpt.gpt_llm import GptLlm
+from cl.convince.retrievers.multiple_choice_retriever import MultipleChoiceRetriever
 from cl.tradeentry.trades.pay_receive_key import PayReceiveKey
 
-_SIDE = ("The words Buy or Sell, or the words Pay Fixed (which for this trade type means Buy) "
-         "or Receive Fixed (which for this trade type means Sell).")
+_SIDE = (
+    "The words Buy or Sell, or the words Pay Fixed (which for this trade type means Buy) "
+    "or Receive Fixed (which for this trade type means Sell)."
+)
 
 
 @dataclass(slots=True, kw_only=True)
@@ -35,8 +36,10 @@ class PayReceiveEntry(Entry):
 
     def run_generate(self) -> None:
         if self.verified:
-            raise UserError(f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Propose."
-                            f"This is a safety feature to prevent overwriting verified entries. ")
+            raise UserError(
+                f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Propose."
+                f"This is a safety feature to prevent overwriting verified entries. "
+            )
         # Get retriever
         # TODO: Make configurable
         retriever = MultipleChoiceRetriever(

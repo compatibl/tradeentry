@@ -14,23 +14,23 @@
 
 import re
 from dataclasses import dataclass
-
 from text_to_num import text2num
-
-from cl.convince.llms.gpt.gpt_llm import GptLlm
-from cl.convince.retrievers.multiple_choice_retriever import MultipleChoiceRetriever
 from cl.runtime import Context
 from cl.runtime.exceptions.error_util import ErrorUtil
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.convince.entries.entry import Entry
+from cl.convince.llms.gpt.gpt_llm import GptLlm
+from cl.convince.retrievers.multiple_choice_retriever import MultipleChoiceRetriever
 from cl.tradeentry.trades.currency import Currency
 from cl.tradeentry.trades.currency_key import CurrencyKey
 
 _CURRENCY_ISO_CODE = "Currency code in strict ISO-4217 format of three uppercase letters, no variations allowed."
 """Parameter description for the currency ISO-4217 code."""
 
-_NUMBER_WITH_SUFFIX_RE = re.compile(r"(\d+(\.\d+)?)([kmb]|mm|bb|bn|thousand|thousands|mil|million|millions|billion|billions)?")
+_NUMBER_WITH_SUFFIX_RE = re.compile(
+    r"(\d+(\.\d+)?)([kmb]|mm|bb|bn|thousand|thousands|mil|million|millions|billion|billions)?"
+)
 """Matches a number with decimal point separator and suffixes."""
 
 
@@ -44,8 +44,10 @@ class NumberEntry(Entry):
     def run_generate(self) -> None:
         """Retrieve parameters from this entry and save the resulting entries."""
         if self.verified:
-            raise UserError(f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Propose."
-                            f"This is a safety feature to prevent overwriting verified entries. ")
+            raise UserError(
+                f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Propose."
+                f"This is a safety feature to prevent overwriting verified entries. "
+            )
         # First non-AI text2num library to parse a number with suffix
         if (value := self._parse_number_with_suffix(self.description)) is not None:
             # Use parsed value
@@ -55,7 +57,7 @@ class NumberEntry(Entry):
                 raise ErrorUtil.value_error(
                     self.description,
                     details=f"Numerical description of a number with suffix could not be parsed "
-                            f"using language code {self.lang}.",
+                    f"using language code {self.lang}.",
                     value_name="number",
                     method_name="run_generate",
                     data_type=NumberEntry.__name__,
@@ -111,7 +113,7 @@ class NumberEntry(Entry):
                 # Millions
                 return number * 1_000_000
             elif scale_unit.lower() in ["b", "bb", "bn", "billion", "billions"]:
-                return number * 1_000_000_000     # Billions (single 'b' or 'bn')
+                return number * 1_000_000_000  # Billions (single 'b' or 'bn')
             else:
                 raise ErrorUtil.value_error(
                     self.description,

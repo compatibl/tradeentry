@@ -13,15 +13,14 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-
-from cl.convince.llms.gpt.gpt_llm import GptLlm
-from cl.convince.retrievers.annotating_retriever import AnnotatingRetriever
 from cl.runtime import Context
 from cl.runtime.exceptions.error_util import ErrorUtil
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.primitive.float_util import FloatUtil
 from cl.convince.entries.entry import Entry
 from cl.convince.entries.entry_key import EntryKey
+from cl.convince.llms.gpt.gpt_llm import GptLlm
+from cl.convince.retrievers.annotating_retriever import AnnotatingRetriever
 from cl.tradeentry.entries.currency_entry import CurrencyEntry
 from cl.tradeentry.entries.number_entry import NumberEntry
 from cl.tradeentry.trades.currency import Currency
@@ -65,8 +64,10 @@ class AmountEntry(Entry):
         """Retrieve parameters from this entry and save the resulting entries."""
 
         if self.verified:
-            raise UserError(f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Generate."
-                            f"This is a safety feature to prevent overwriting verified entries. ")
+            raise UserError(
+                f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Generate."
+                f"This is a safety feature to prevent overwriting verified entries. "
+            )
 
         # Get retriever
         context = Context.current()
@@ -106,7 +107,7 @@ class AmountEntry(Entry):
             else:
                 # Otherwise update the verified status
                 verified = verified and loaded.verified
-        
+
         # Extract the currency if present
         amount_description = retriever.retrieve(
             input_text=input_text,

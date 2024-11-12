@@ -14,21 +14,20 @@
 
 import re
 from dataclasses import dataclass
-
-from cl.convince.llms.gpt.gpt_llm import GptLlm
-from cl.convince.retrievers.multiple_choice_retriever import MultipleChoiceRetriever
 from cl.runtime import Context
 from cl.runtime.exceptions.error_util import ErrorUtil
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.runtime.records.dataclasses_extensions import missing
 from cl.convince.entries.entry import Entry
+from cl.convince.llms.gpt.gpt_llm import GptLlm
+from cl.convince.retrievers.multiple_choice_retriever import MultipleChoiceRetriever
 from cl.tradeentry.trades.currency import Currency
 from cl.tradeentry.trades.currency_key import CurrencyKey
 
 _CURRENCY_ISO_CODE = "Currency code in strict ISO-4217 format of three uppercase letters, no variations allowed."
 """Parameter description for the currency ISO-4217 code."""
 
-_ISO_RE = re.compile(r'^[A-Z]{3}$')
+_ISO_RE = re.compile(r"^[A-Z]{3}$")
 """Regex for the ISO-4217 currency code."""
 
 
@@ -42,8 +41,10 @@ class CurrencyEntry(Entry):
     def run_generate(self) -> None:
         """Retrieve parameters from this entry and save the resulting entries."""
         if self.verified:
-            raise UserError(f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Propose."
-                            f"This is a safety feature to prevent overwriting verified entries. ")
+            raise UserError(
+                f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Propose."
+                f"This is a safety feature to prevent overwriting verified entries. "
+            )
         # Get retriever
         # TODO: Make configurable
         retriever = MultipleChoiceRetriever(

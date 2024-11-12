@@ -14,7 +14,6 @@
 
 import pytest
 from typing import List
-
 from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.experiments.experiment import Experiment

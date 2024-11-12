@@ -12,18 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import pandas as pd
 import pytest
 from typing import List
-
-from cl.convince.retrievers.retriever_util import RetrieverUtil
+import pandas as pd
 from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.experiments.experiment import Experiment
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.llm import Llm
+from cl.convince.retrievers.retriever_util import RetrieverUtil
 from stubs.cl.convince.experiments.stub_llms import get_stub_full_llms
-
 
 _TEMPLATE = """Act as a Senior Quantitative Analyst tasked with evaluating the similarity in how the description of
 a specific parameter is placed within the description of two different trades, so your junior colleague can be
@@ -76,8 +74,9 @@ def _test_vanilla_swap_similarity(
     llm: Llm,
 ) -> List[str]:
 
-    prompt = _TEMPLATE.format(BasicTrade=basic_trade, EvaluatedTrade=evaluated_trade,
-                              ParameterDescription=parameter_description)
+    prompt = _TEMPLATE.format(
+        BasicTrade=basic_trade, EvaluatedTrade=evaluated_trade, ParameterDescription=parameter_description
+    )
 
     results = []
     for trial_id in range(run_count):
@@ -96,8 +95,10 @@ def test_vanilla_swap_similarity():
     with TestingContext():
         run_count = 2
         basic_trade = "Sell 10y SOFR swap at 3.45%"
-        parameter_description = ("The words Buy or Sell, or the words Pay Fixed (which for this trade type means Buy) "
-                                 "or Receive Fixed (which for this trade type means Sell).")
+        parameter_description = (
+            "The words Buy or Sell, or the words Pay Fixed (which for this trade type means Buy) "
+            "or Receive Fixed (which for this trade type means Sell)."
+        )
         evaluated_trades = [
             "Sell 5y SOFR swap at 2.90%",
             "Sell 5y ESTR swap at 2.90%",
@@ -110,7 +111,7 @@ def test_vanilla_swap_similarity():
         summary_results = []
         stub_full_llms = get_stub_full_llms()
         for evaluated_trade in evaluated_trades:
-            summary_result_row = {'Basic Trade': basic_trade, 'Evaluated Trade': evaluated_trade}
+            summary_result_row = {"Basic Trade": basic_trade, "Evaluated Trade": evaluated_trade}
             for llm in stub_full_llms:
                 results = _test_vanilla_swap_similarity(
                     basic_trade,

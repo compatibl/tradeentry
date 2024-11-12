@@ -13,12 +13,11 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-
+from cl.runtime import Context
+from cl.runtime.records.dataclasses_extensions import missing
 from cl.convince.entries.entry_key import EntryKey
 from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.retrievers.annotating_retriever import AnnotatingRetriever
-from cl.runtime import Context
-from cl.runtime.records.dataclasses_extensions import missing
 from cl.tradeentry.entries.date_entry import DateEntry
 from cl.tradeentry.entries.date_or_tenor_entry import DateOrTenorEntry
 from cl.tradeentry.entries.fixed_rate_entry import FixedRateEntry
@@ -55,25 +54,25 @@ class FixedSwapLegEntry(RatesSwapLegEntry):
         input_text = self.get_text()
 
         # Pay or receive flag
-        if pay_receive_description := retriever.retrieve(input_text=input_text,
-                                                         param_description=_SIDE,
-                                                         is_required=False):
+        if pay_receive_description := retriever.retrieve(
+            input_text=input_text, param_description=_SIDE, is_required=False
+        ):
             pay_receive = PayReceiveFixedEntry(description=pay_receive_description)
             context.save_one(pay_receive)
             self.pay_receive = pay_receive.get_key()
 
         # Fixed Rate
-        if fixed_rate_description := retriever.retrieve(input_text=input_text,
-                                                        param_description=_FIXED_RATE,
-                                                        is_required=False):
+        if fixed_rate_description := retriever.retrieve(
+            input_text=input_text, param_description=_FIXED_RATE, is_required=False
+        ):
             fixed_rate = FixedRateEntry(description=fixed_rate_description)
             context.save_one(fixed_rate)
             self.fixed_rate = fixed_rate.get_key()
 
         # Payment Frequency
-        if pay_freq_description := retriever.retrieve(input_text=input_text,
-                                                      param_description=_PAY_FREQ,
-                                                      is_required=False):
+        if pay_freq_description := retriever.retrieve(
+            input_text=input_text, param_description=_PAY_FREQ, is_required=False
+        ):
             pay_freq = PayFreqEntry(description=pay_freq_description)
             context.save_one(pay_freq)
             self.pay_freq = pay_freq.get_key()

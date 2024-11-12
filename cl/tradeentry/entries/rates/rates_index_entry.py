@@ -13,12 +13,11 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-
 from cl.runtime import Context
-from cl.convince.llms.gpt.gpt_llm import GptLlm
-from cl.convince.retrievers.multiple_choice_retriever import MultipleChoiceRetriever
 from cl.runtime.log.exceptions.user_error import UserError
 from cl.convince.entries.entry import Entry
+from cl.convince.llms.gpt.gpt_llm import GptLlm
+from cl.convince.retrievers.multiple_choice_retriever import MultipleChoiceRetriever
 from cl.tradeentry.trades.rates.rates_index_key import RatesIndexKey
 
 _FLOAT_INDEX = "Name of the floating interest rate index"
@@ -33,8 +32,10 @@ class RatesIndexEntry(Entry):
 
     def run_generate(self) -> None:
         if self.verified:
-            raise UserError(f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Propose."
-                            f"This is a safety feature to prevent overwriting verified entries. ")
+            raise UserError(
+                f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Propose."
+                f"This is a safety feature to prevent overwriting verified entries. "
+            )
         # Get retriever
         # TODO: Make configurable
         retriever = MultipleChoiceRetriever(
@@ -44,7 +45,27 @@ class RatesIndexEntry(Entry):
         retriever.init_all()
 
         # List of valid options
-        options = ["LIBOR", "EURIBOR", "SOFR", "EONIA", "TONAR", "SARON", "SONIA", "BBSW", "TIBOR", "SHIBOR", "MIBOR", "FIBOR", "HIBOR", "OIS", "WIBOR", "STIBOR", "BHKR", "ESTER", "SIBOR"]
+        options = [
+            "LIBOR",
+            "EURIBOR",
+            "SOFR",
+            "EONIA",
+            "TONAR",
+            "SARON",
+            "SONIA",
+            "BBSW",
+            "TIBOR",
+            "SHIBOR",
+            "MIBOR",
+            "FIBOR",
+            "HIBOR",
+            "OIS",
+            "WIBOR",
+            "STIBOR",
+            "BHKR",
+            "ESTER",
+            "SIBOR",
+        ]
 
         # Retrieve index name
         input_text = self.get_text()
@@ -58,4 +79,3 @@ class RatesIndexEntry(Entry):
 
         # Save self to DB
         Context.current().save_one(self)
-

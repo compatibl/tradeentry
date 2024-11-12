@@ -14,7 +14,6 @@
 
 import re
 from dataclasses import dataclass
-
 from cl.runtime import Context
 from cl.convince.entries.entry import Entry
 from cl.tradeentry.entries.date_entry import DateEntry
@@ -58,10 +57,10 @@ class DateOrTenorEntry(Entry):
             matches_dict = {unit: num for num, unit in matches}
 
             # Set each field based on matches or set to None if not present
-            self.years = int(matches_dict.get('y', 0)) or None
-            self.months = int(matches_dict.get('m', 0)) or None
-            self.weeks = int(matches_dict.get('w', 0)) or None
-            self.days = int(matches_dict.get('d', 0)) or None
+            self.years = int(matches_dict.get("y", 0)) or None
+            self.months = int(matches_dict.get("m", 0)) or None
+            self.weeks = int(matches_dict.get("w", 0)) or None
+            self.days = int(matches_dict.get("d", 0)) or None
         else:
             date_entry = DateEntry(description=self.description)
             date_entry.run_generate()

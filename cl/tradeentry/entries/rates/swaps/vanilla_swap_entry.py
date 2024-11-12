@@ -14,18 +14,20 @@
 
 from dataclasses import dataclass
 from cl.runtime import Context
+from cl.runtime.log.exceptions.user_error import UserError
 from cl.convince.entries.entry_key import EntryKey
 from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.retrievers.annotating_retriever import AnnotatingRetriever
-from cl.runtime.log.exceptions.user_error import UserError
 from cl.tradeentry.entries.date_or_tenor_entry import DateOrTenorEntry
 from cl.tradeentry.entries.fixed_rate_entry import FixedRateEntry
 from cl.tradeentry.entries.pay_receive_fixed_entry import PayReceiveFixedEntry
 from cl.tradeentry.entries.rates.rates_index_entry import RatesIndexEntry
 from cl.tradeentry.entries.trade_entry import TradeEntry
 
-_SIDE = ("The words Buy or Sell, or the words Pay Fixed (which for this trade type means Buy) "
-         "or Receive Fixed (which for this trade type means Sell).")
+_SIDE = (
+    "The words Buy or Sell, or the words Pay Fixed (which for this trade type means Buy) "
+    "or Receive Fixed (which for this trade type means Sell)."
+)
 _MATURITY = "Either maturity date as a date, or tenor (length) as the number of years and/or months"
 _FLOAT_INDEX = "Floating rate index"
 _FIXED_RATE = "Fixed rate"
@@ -56,8 +58,10 @@ class VanillaSwapEntry(TradeEntry):
     def run_generate(self) -> None:
         """Retrieve parameters from this entry and save the resulting entries."""
         if self.verified:
-            raise UserError(f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Propose."
-                            f"This is a safety feature to prevent overwriting verified entries. ")
+            raise UserError(
+                f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Propose."
+                f"This is a safety feature to prevent overwriting verified entries. "
+            )
         # Get retriever
         # TODO: Make configurable
         retriever = AnnotatingRetriever(

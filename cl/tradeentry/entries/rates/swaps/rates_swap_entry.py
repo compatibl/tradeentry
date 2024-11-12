@@ -15,14 +15,13 @@
 import re
 from dataclasses import dataclass
 from typing import List
-
+from cl.runtime import Context
+from cl.runtime.log.exceptions.user_error import UserError
+from cl.runtime.primitive.string_util import StringUtil
 from cl.convince.entries.entry_key import EntryKey
 from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.retrievers import retrieval
 from cl.convince.retrievers.annotating_retriever import AnnotatingRetriever
-from cl.runtime import Context
-from cl.runtime.log.exceptions.user_error import UserError
-from cl.runtime.primitive.string_util import StringUtil
 from cl.tradeentry.entries.rates.swaps.any_leg_entry import AnyLegEntry
 from cl.tradeentry.entries.trade_entry import TradeEntry
 
@@ -115,10 +114,7 @@ class RatesSwapEntry(TradeEntry):
                     pass
 
         # The method should always return from the loop, adding as a backup in case this changes in the future
-        raise UserError(
-            f"Unable to extract legs from the input text.\n"
-            f"Input text: {input_text}\n"
-        )
+        raise UserError(f"Unable to extract legs from the input text.\n" f"Input text: {input_text}\n")
 
     def run_generate(self) -> None:
         """Identify which part of the user input describes each leg and create an AnyLegEntry for each one."""

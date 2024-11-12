@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-
 from cl.convince.entries.entry import Entry
 
 

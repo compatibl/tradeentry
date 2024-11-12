@@ -12,9 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import dateparser
 from dataclasses import dataclass
-
+import dateparser
 from cl.runtime import Context
 from cl.runtime.exceptions.error_util import ErrorUtil
 from cl.runtime.log.exceptions.user_error import UserError
@@ -32,14 +31,16 @@ class DateEntry(Entry):
     def run_generate(self) -> None:
         """Retrieve parameters from this entry and save the resulting entries."""
         if self.verified:
-            raise UserError(f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Propose."
-                            f"This is a safety feature to prevent overwriting verified entries. ")
+            raise UserError(
+                f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Propose."
+                f"This is a safety feature to prevent overwriting verified entries. "
+            )
 
         # TODO: Check if the entry already exists in DB
 
         # Parse date
         if date := dateparser.parse(self.description):
-            self.date = date.strftime('%Y-%m-%d')
+            self.date = date.strftime("%Y-%m-%d")
             Context.current().save_one(self)
         else:
             raise ErrorUtil.value_error(

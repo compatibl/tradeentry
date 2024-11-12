@@ -13,14 +13,13 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-
+from cl.runtime import Context
+from cl.runtime.log.exceptions.user_error import UserError
+from cl.runtime.records.dataclasses_extensions import missing
 from cl.convince.entries.entry import Entry
 from cl.convince.entries.entry_key import EntryKey
 from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.retrievers.retriever_util import RetrieverUtil
-from cl.runtime import Context
-from cl.runtime.log.exceptions.user_error import UserError
-from cl.runtime.records.dataclasses_extensions import missing
 from cl.tradeentry.entries.rates.swaps.fixed_swap_leg_entry import FixedSwapLegEntry
 from cl.tradeentry.entries.rates.swaps.float_swap_leg_entry import FloatSwapLegEntry
 
@@ -64,12 +63,11 @@ class AnyLegEntry(Entry):
                 json_result = RetrieverUtil.extract_json(completion)
                 if json_result is not None:
                     leg_type = json_result.get("LegType", None)
-                    if leg_type != 'Fixed' and leg_type != 'Floating':
+                    if leg_type != "Fixed" and leg_type != "Floating":
                         raise UserError(f"Undefined leg type: {leg_type}")
 
                 else:
-                    raise UserError(f"Could not extract JSON from the LLM response. "
-                                    f"LLM response:\n{completion}\n")
+                    raise UserError(f"Could not extract JSON from the LLM response. " f"LLM response:\n{completion}\n")
 
                 return leg_type
 
@@ -86,19 +84,16 @@ class AnyLegEntry(Entry):
                     pass
 
         # The method should always return from the loop, adding as a backup in case this changes in the future
-        raise UserError(
-            f"Unable to extract parameter from the input text.\n"
-            f"Input text: {input_text}\n"
-        )
+        raise UserError(f"Unable to extract parameter from the input text.\n" f"Input text: {input_text}\n")
 
     def run_generate(self) -> None:
         """Determine the leg type from the input and create an object of the corresponding type."""
 
         leg_type = self.determine_leg_type(_PROMPT_TEMPLATE)
 
-        if leg_type == 'Floating':
+        if leg_type == "Floating":
             leg_obj = FloatSwapLegEntry(description=self.description)
-        elif leg_type == 'Fixed':
+        elif leg_type == "Fixed":
             leg_obj = FixedSwapLegEntry(description=self.description)
         else:
             raise UserError(f"Undefined leg type: {leg_type}")
