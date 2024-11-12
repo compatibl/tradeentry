@@ -13,18 +13,13 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from typing import Type
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.key_mixin import KeyMixin
+from cl.convince.prompts.prompt import Prompt
 
 
 @dataclass(slots=True, kw_only=True)
-class TrialKey(KeyMixin):
-    """Contains results for a single trial of an experiment."""
+class TextPrompt(Prompt):
+    """Text prompt with no parameter substitution."""
 
-    trial_id: str = missing()
-    """Unique identifier of the trial."""
-
-    @classmethod
-    def get_key_type(cls) -> Type:
-        return TrialKey
+    text: str = missing()
+    """Text of the prompt."""

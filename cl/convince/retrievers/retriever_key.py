@@ -23,7 +23,7 @@ class RetrieverKey(KeyMixin):
     """Retrieves the requested data from the text."""
 
     retriever_id: str = missing()
-    """Unique retriever identifier."""
+    """Unique retriever identifier defaults to Timestamp if not specified."""
 
     @classmethod
     def get_key_type(cls) -> Type:

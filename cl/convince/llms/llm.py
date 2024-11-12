@@ -15,7 +15,7 @@
 from abc import ABC
 from abc import abstractmethod
 from dataclasses import dataclass
-from cl.runtime.primitive.ordered_uuid import OrderedUuid
+from cl.runtime.primitive.timestamp import Timestamp
 from cl.runtime.records.record_mixin import RecordMixin
 from cl.convince.llms.completion_cache import CompletionCache
 from cl.convince.llms.llm_key import LlmKey
@@ -43,9 +43,10 @@ class Llm(LlmKey, RecordMixin[LlmKey], ABC):
 
         # Try to find in completion cache by cache_key, make cloud provider call only if not found
         if (result := self._completion_cache.get(query, trial_id=trial_id)) is None:
-            # Generate OrderedUuid and convert to readable ordered string in date-hash format
-            request_uuid = OrderedUuid.create_one()
-            request_id = OrderedUuid.to_readable_str(request_uuid)
+            # Request identifier is UUIDv7 timestamp in time-ordered dash-delimited format
+            # is used to prevent LLM cloud provider caching and to identify LLM API calls
+            # for audit log and error reporting purposes
+            request_id = Timestamp.create()
 
             # Invoke LLM by calling the cloud provider API
             result = self.uncached_completion(request_id, query)

@@ -12,15 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC
-from dataclasses import dataclass
-from cl.runtime.records.record_mixin import RecordMixin
-from cl.convince.experiments.experiment_key import ExperimentKey
+import json
+import re
+from typing import Optional
 
 
-@dataclass(slots=True, kw_only=True)
-class Experiment(ExperimentKey, RecordMixin[ExperimentKey], ABC):
-    """An experiment is performed by running multiple trials and performing statistical analysis of the results."""
+class RetrieverUtil:
+    """Helper methods for retrievers."""
 
-    def get_key(self) -> ExperimentKey:
-        return ExperimentKey(experiment_id=self.experiment_id)
+    @classmethod
+    def extract_json(cls, text: str) -> Optional[dict]:
+        """Extract JSON from model output."""
+        match = re.search(r"({.*})", text, re.DOTALL)
+        if match is None:
+            return None
+        json_string = match.group(1)
+        try:
+            return json.loads(json_string)
+        except json.JSONDecodeError:
+            return None

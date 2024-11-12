@@ -13,18 +13,18 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from cl.runtime.records.dataclasses_extensions import missing
 from cl.convince.entries.entry import Entry
 from cl.convince.llms.llm_key import LlmKey
 from cl.convince.prompts.prompt_key import PromptKey
-from cl.runtime.records.dataclasses_extensions import missing
 
 
 @dataclass(slots=True, kw_only=True)
 class PromptEntry(Entry):
     """Uses an LLM prompt for the implementation."""
 
-    llm: LlmKey = missing()
-    """LLM used to process the entry."""
-
     prompt: PromptKey = missing()
     """Prompt used to process the entry."""
+
+    llm: LlmKey | None = None
+    """LLM used to process the entry."""

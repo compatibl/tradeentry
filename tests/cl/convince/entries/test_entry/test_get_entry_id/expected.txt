@@ -1,4 +1,4 @@
-SampleEntryType: Sample Title
-SampleEntryType: Sample Title (MD5: 923e1e83763c2a3c2cda662feefc8b43)
-SampleEntryType: Sample Title (MD5: 6ff139e49d65392b685b8d777451f966)
-SampleEntryType: Sample Title (MD5: 3fee19bc767b0e78762e41c7b63681cb)
+SampleEntryType: Sample Description
+SampleEntryType: Sample Description (MD5: 923e1e83763c2a3c2cda662feefc8b43)
+SampleEntryType: Sample Description (MD5: 6ff139e49d65392b685b8d777451f966)
+SampleEntryType: Sample Description (MD5: 3fee19bc767b0e78762e41c7b63681cb)

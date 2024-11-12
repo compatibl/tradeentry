@@ -1,5 +1,5 @@
 RequestID,Query,Completion
-2024-09-27T16:45:51.937Z-7bc3b006506c78fcca7f,What is 1 times 1?,1 times 1 equals 1.
-2024-09-27T16:45:52.555Z-7b4093e23b4d9349d8cc,What is 2 times 2?,2 times 2 is 4.
-2024-09-27T16:45:53.300Z-7422913c5afbdaa0e4cf,Reply with the answer for ```1 times 1``. Your reply must include numerical value for the answer (not words) with no other comments or other text.,1
-2024-09-27T16:45:53.780Z-77338395caa72ae8f6be,Reply with the answer for ```2 times 2``. Your reply must include numerical value for the answer (not words) with no other comments or other text.,4
+2024-09-27-16-45-51-937-7bc3b006506c78fcca7f,What is 1 times 1?,1 times 1 equals 1.
+2024-09-27-16-45-52-555-7b4093e23b4d9349d8cc,What is 2 times 2?,2 times 2 is 4.
+2024-09-27-16-45-53-300-7422913c5afbdaa0e4cf,Reply with the answer for ```1 times 1``. Your reply must include numerical value for the answer (not words) with no other comments or other text.,1
+2024-09-27-16-45-53-780-77338395caa72ae8f6be,Reply with the answer for ```2 times 2``. Your reply must include numerical value for the answer (not words) with no other comments or other text.,4

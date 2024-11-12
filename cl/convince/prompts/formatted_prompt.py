@@ -13,8 +13,8 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.convince.prompts.template_prompt import TemplatePrompt
 from cl.runtime.records.protocols import TDataDict
+from cl.convince.prompts.template_prompt import TemplatePrompt
 
 
 @dataclass(slots=True, kw_only=True)
@@ -26,4 +26,3 @@ class FormattedPrompt(TemplatePrompt):
         # Throws KeyError on missing parameter as required by the method specification
         result = self.template.format(**dict_with_pascal_case_keys)
         return result
-

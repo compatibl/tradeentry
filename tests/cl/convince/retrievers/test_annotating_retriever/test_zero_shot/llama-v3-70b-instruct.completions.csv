@@ -1,5 +1,5 @@
 RequestID,Query,Completion
-2024-10-21T05:52:21.742Z-7163a77ac103c708186e,"TrialID: 0
+2024-10-21-05-52-21-742-7163a77ac103c708186e,"TrialID: 0
 You will be provided with an input text and a description of a parameter.
 Your goal is to surround each piece of information about this parameter you find in the input text by curly braces.
 Use multiple non-nested pairs of opening and closing curly braces if you find more than one piece of information.

@@ -21,7 +21,7 @@ class JsonResponseUtil:
     """Helper methods for parsing JSON response from LLMs."""
 
     @classmethod
-    def sanitize_unescaped_quotes_and_load_json_str(cls, s: str, strict: bool = False) -> str:
+    def normalize_unescaped_quotes_and_load_json_str(cls, s: str, strict: bool = False) -> str:
         js_str = s
         max_replaces = s.count('"')
 
@@ -54,7 +54,7 @@ class JsonResponseUtil:
                 # escape it to \"
                 js_str = js_str[:prev_quote_index] + "\\" + js_str[prev_quote_index:]
         if strict:
-            raise ValueError("Unable to sanitize unescaped quotes in the provided string to a valid JSON!")
+            raise ValueError("Unable to normalize unescaped quotes in the provided string to a valid JSON!")
         return "{}"
 
     @classmethod
@@ -133,18 +133,18 @@ class JsonResponseUtil:
     def try_to_load_json_string(cls, json_string: str) -> str:
         """Try to load the provided json string. In case of success, return str, otherwise raise JSONDecodeError."""
         try:
-            # try to load the provided json string firstly
+            # Try to load the provided json string firstly
             json.loads(json_string)
             return json_string
         except json.JSONDecodeError:
-            # in case of exception, try to sanitize quotes and load it once again
+            # In case of exception, try to normalize quotes and load it once again
             try:
-                sanitized_string = cls.sanitize_unescaped_quotes_and_load_json_str(json_string, strict=True)
-                json.loads(sanitized_string)
-                return sanitized_string
+                normalized_string = cls.normalize_unescaped_quotes_and_load_json_str(json_string, strict=True)
+                json.loads(normalized_string)
+                return normalized_string
             except ValueError:
-                # Llm might not fully understand an exception message
-                # that is raised in sanitize_unescaped_quotes_and_load_json_str function
-                # so, we pass this exception and relay on the original one re-raising it
+                # LLM might not fully understand an exception message that is raised in
+                # normalize_unescaped_quotes_and_load_json_str function.
+                # For this reason, we suppress this exception and raise on the original one
                 pass
             raise

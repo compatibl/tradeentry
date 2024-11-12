@@ -14,13 +14,11 @@
 
 import pytest
 from typing import List
-
-from cl.convince.entries.entry import Entry
-from cl.convince.retrievers.annotating_retriever import AnnotatingRetriever
 from cl.runtime.context.testing_context import TestingContext
 from cl.runtime.testing.regression_guard import RegressionGuard
+from cl.convince.entries.entry import Entry
+from cl.convince.retrievers.annotating_retriever import AnnotatingRetriever
 from stubs.cl.convince.experiments.stub_llms import get_stub_full_llms
-
 
 ENTRY_TEXT = "Sell 10y SOFR swap at 3.45%"
 PARAM_DESCRIPTION = "Fixed rate."
@@ -49,7 +47,7 @@ def _test_extract(input_text: str, param_description: str, param_samples: List[s
         )
         retriever.init_all()
         guard = RegressionGuard(channel=llm.llm_id)
-        param_value = retriever.retrieve(retriever.retriever_id, input_text, param_description)
+        param_value = retriever.retrieve(input_text=input_text, param_description=param_description)
         guard.write(f"Input Text: {input_text} Retrieved Value: {param_value}")
     RegressionGuard.verify_all()
 

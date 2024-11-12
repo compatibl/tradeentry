@@ -12,10 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from dataclasses import dataclass
 from typing import List
 from cl.runtime import RecordMixin
+from cl.runtime.primitive.timestamp import Timestamp
 from cl.convince.retrievers.retriever_key import RetrieverKey
 
 
@@ -26,20 +28,7 @@ class Retriever(RetrieverKey, RecordMixin[RetrieverKey], ABC):
     def get_key(self) -> RetrieverKey:
         return RetrieverKey(retriever_id=self.retriever_id)
 
-    # TODO: Use keyword params
-    @abstractmethod
-    def retrieve(self,
-                 entry_id: str,  # TODO: Generate instead
-                 input_text: str,
-                 param_description: str,
-                 param_samples: List[str] | None = None
-                 ) -> str:
-        """
-        Retrieve the specified parameter from the entry and return it as a smaller entry.
-
-        Args:
-            entry_id: The identifier of the entry from which the data is extracted
-            input_text: The text from which the data is extracted
-            param_description: Parameter description
-            param_samples: Optional parameter value samples for a few-shot prompt
-        """
+    def init(self) -> None:
+        """Same as __init__ but can be used when field values are set both during and after construction."""
+        if self.retriever_id is None:
+            self.retriever_id = Timestamp.create()

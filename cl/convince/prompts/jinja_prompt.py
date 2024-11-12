@@ -13,9 +13,9 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.convince.prompts.template_prompt import TemplatePrompt
-from cl.runtime.records.protocols import TDataDict
 from jinja2 import Template
+from cl.runtime.records.protocols import TDataDict
+from cl.convince.prompts.template_prompt import TemplatePrompt
 
 
 @dataclass(slots=True, kw_only=True)

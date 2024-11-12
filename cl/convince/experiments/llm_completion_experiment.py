@@ -12,19 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from abc import ABC
 from dataclasses import dataclass
-from typing import Type
+from cl.runtime.experiments.binary_experiment import BinaryExperiment
 from cl.runtime.records.dataclasses_extensions import missing
-from cl.runtime.records.key_mixin import KeyMixin
+from cl.convince.llms.llm_key import LlmKey
 
 
 @dataclass(slots=True, kw_only=True)
-class ExperimentKey(KeyMixin):
-    """An experiment is performed by running multiple trials and performing statistical analysis of the results."""
+class LlmCompletionExperiment(BinaryExperiment, ABC):
+    """A binary LLM experiment where pass means returning the expected completion."""
 
-    experiment_id: str = missing()
-    """Unique identifier of the experiment."""
+    llm: LlmKey = missing()
+    """LLM used to perform the experiment."""
 
-    @classmethod
-    def get_key_type(cls) -> Type:
-        return ExperimentKey
+    query: str = missing()
+    """Query passed to the LLM."""
+
+    expected_completion: str = missing()
+    """Expected completion (the comparison ignores case and whitespace)."""

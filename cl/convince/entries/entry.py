@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from abc import abstractmethod, ABC
+from abc import ABC
+from abc import abstractmethod
 from dataclasses import dataclass
 from cl.runtime import Context
 from cl.runtime.backend.core.user_key import UserKey
@@ -25,34 +26,34 @@ from cl.convince.entries.entry_key import EntryKey
 
 @dataclass(slots=True, kw_only=True)
 class Entry(EntryKey, RecordMixin[EntryKey], ABC):
-    """Contains title, body and supporting data of user entry along with the entry processing result."""
+    """Contains description, body and supporting data of user entry along with the entry processing result."""
 
-    title: str = missing()
-    """Title of a long entry or complete description of a short one (included in MD5 hash)."""
+    description: str = missing()
+    """Description exactly as provided by the user (included in MD5 hash)."""
 
     body: str | None = None
-    """Optional body of the entry if not completely described by the title (included in MD5 hash)."""
+    """Optional text following the description exactly as provided by the user (included in MD5 hash)."""
 
     data: str | None = None
     """Optional supporting data in YAML format (included in MD5 hash)."""
 
-    approved_by: UserKey | None = None
-    """User who recorded the approval."""
+    lang: str | None = "en"
+    """ISO 639-1 two-letter lowercase language code (defaults to 'en')."""
 
-    few_shot: bool | None = None
-    """If True, use this entry as a few-shot example."""
+    verified: bool | None = None
+    """If True, use this entry as a few-shot sample."""
 
     def get_key(self) -> EntryKey:
         return EntryKey(entry_id=self.entry_id)
 
     def init(self) -> None:
-        """Generate entry_id in 'type: title' format followed by an MD5 hash of body and data if present."""
+        """Generate entry_id in 'type: description' format followed by an MD5 hash of body and data if present."""
         # Convert field types if necessary
-        if self.few_shot is not None and isinstance(self.few_shot, str):
-            self.few_shot = self.parse_optional_bool(self.few_shot, field_name="few_shot")
+        if self.verified is not None and isinstance(self.verified, str):
+            self.verified = self.parse_optional_bool(self.verified, field_name="verified")
         # Record type is part of the key
         record_type = type(self).__name__
-        self.entry_id = self.get_entry_id(record_type, self.title, self.body, self.data)
+        self.entry_id = self.get_entry_id(record_type, self.description, self.body, self.data)
 
     def get_text(self) -> str:
         """Get the complete text of the entry."""
@@ -61,16 +62,44 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
             raise RuntimeError("Entry 'body' field is not yet supported.")
         if self.data is not None:
             raise RuntimeError("Entry 'data' field is not yet supported.")
-        result = self.title
+        result = self.description
         return result
 
     # TODO: Restore abstract when implemented for all entries
-    def run_propose(self) -> None:
+    def run_generate(self) -> None:
         """Generate or regenerate the proposed value."""
         raise UserError(f"Propose handler is not yet implemented for {type(self).__name__}.")
 
+    def run_reset(self) -> None:
+        """Clear all output  fields and verification flag."""
+        if self.verified:
+            raise UserError(
+                f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Reset."
+                f"This is a safety feature to prevent overwriting verified entries. "
+            )
+        record_type = type(self)
+        result = record_type(
+            description=self.description,
+            body=self.body,
+            data=self.data,
+            lang=self.lang,
+        )
+        Context.current().save_one(result)
+
+    def run_mark_verified(self) -> None:
+        """Mark verified."""
+        self.verified = True
+        Context.current().save_one(self)
+
+    def run_unmark_verified(self) -> None:
+        """Unmark verified."""
+        self.verified = False
+        Context.current().save_one(self)
+
     @classmethod
-    def parse_required_bool(cls, field_value: str | None, *, field_name: str | None = None) -> bool:  # TODO: Move to Util class
+    def parse_required_bool(
+        cls, field_value: str | None, *, field_name: str | None = None
+    ) -> bool:  # TODO: Move to Util class
         """Parse an optional boolean value."""
         match field_value:
             case None | "":
@@ -83,11 +112,13 @@ class Entry(EntryKey, RecordMixin[EntryKey], ABC):
                 return False
             case _:
                 field_name = CaseUtil.snake_to_pascal_case(field_name)
-                for_field = f" for field {field_name}" if field_name is not None else  " for a Y/N field"
+                for_field = f" for field {field_name}" if field_name is not None else " for a Y/N field"
                 raise UserError(f"The value {for_field} must be Y, N or an empty string.\nField value: {field_value}")
 
     @classmethod
-    def parse_optional_bool(cls, field_value: str | None, *, field_name: str | None = None) -> bool | None:  # TODO: Move to Util class
+    def parse_optional_bool(
+        cls, field_value: str | None, *, field_name: str | None = None
+    ) -> bool | None:  # TODO: Move to Util class
         """Parse an optional boolean value."""
         match field_value:
             case None | "":

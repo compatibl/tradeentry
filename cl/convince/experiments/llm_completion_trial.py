@@ -13,22 +13,15 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from cl.runtime.settings.settings import Settings
+from cl.runtime.experiments.binary_trial import BinaryTrial
+from cl.runtime.experiments.trial import Trial
+from cl.runtime.experiments.trial_key import TrialKey
+from cl.runtime.records.dataclasses_extensions import missing
 
 
 @dataclass(slots=True, kw_only=True)
-class GeminiSettings(Settings):
-    """Google Gemini settings."""
+class LlmCompletionTrial(BinaryTrial):
+    """Run and analyze the results of a single binary (pass/fail) trial."""
 
-    api_key: str
-    """Gemini API key."""
-
-    def init(self) -> None:
-        """Same as __init__ but can be used when field values are set both during and after construction."""
-
-        if not isinstance(self.api_key, str):
-            raise RuntimeError(f"{type(self).__name__} field 'api_key' must be a string.")
-
-    @classmethod
-    def get_prefix(cls) -> str:
-        return "gemini"
+    binary_result: bool = missing()
+    """True for pass and False for fail."""
