@@ -1,0 +1,8 @@
+                Basic Trade                                                   Evaluated Trade  claude-3-5-sonnet-20240620  llama-v3-70b-instruct  gpt-4o
+Sell 10y SOFR swap at 3.45%                                        Sell 5y SOFR swap at 2.90%                         100                     95      95
+Sell 10y SOFR swap at 3.45%                                        Sell 5y ESTR swap at 2.90%                         100                    100     100
+Sell 10y SOFR swap at 3.45%                         We receive fixed on 5y SOFR swap at 2.90%                          90                     80      65
+Sell 10y SOFR swap at 3.45%                             We pay fixed on 5y SOFR swap at 2.90%                          90                     80      40
+Sell 10y SOFR swap at 3.45%               Client pays fixed on 5y ESTR swap at breakeven rate                          85                     60      35
+Sell 10y SOFR swap at 3.45%                   SOFR swap, we receive fixed at 2.90%, 10y tenor                          30                     60      30
+Sell 10y SOFR swap at 3.45% Vanilla swap on 3m Term SOFR at 2.90%, we pay fixed, 10y maturity                          30                     80      40

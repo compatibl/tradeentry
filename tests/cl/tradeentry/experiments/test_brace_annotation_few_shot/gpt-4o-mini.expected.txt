@@ -1,0 +1,156 @@
+{
+    "success": "Y",
+    "annotated_text": "Sell {10y} SOFR swap at {3.45%}",
+    "justification": "The input text contains the word 'Sell' which is identified as relevant information pertaining to the parameter description."
+}
+{
+    "success": "Y",
+    "annotated_text": "{{Sell}} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the word 'Sell', which matches the specified parameter description."
+}
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the word 'Sell', which is relevant to the parameter description."
+}
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the word 'Sell', which is part of the specified parameter description."
+}
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the word 'Sell', which is one of the specified keywords related to the parameter description."
+}
+{
+    "success": "Y",
+    "annotated_text": "{{Sell}} 10y SOFR swap at 3.45%",
+    "justification": "The word 'Sell' was found in the input text, which corresponds to the parameter description."
+}
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the word 'Sell', which is specified as part of the parameter description."
+}
+{
+    "success": "Y",
+    "annotated_text": "{{Sell}} 10y SOFR swap at 3.45%",
+    "justification": "The word 'Sell' was found in the input text, which corresponds to the parameter description."
+}
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The word 'Sell' was found in the input text, which relates to the parameter description."
+}
+{
+    "success": "Y",
+    "annotated_text": "{{Sell}} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the word 'Sell', which is directly related to the specified parameter."
+}
+```json
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the word 'Sell', which is explicitly mentioned in the parameter description."
+}
+```
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the word 'Sell', which is part of the specified parameter description."
+}
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The word 'Sell' is present in the input text, which qualifies as a piece of information regarding the parameter."
+}
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The word 'Sell' is found in the input text, which matches the described parameter."
+}
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "I found the word 'Sell' in the input text, which matches the specified parameter description."
+}
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the word 'Sell', which is one of the specified keywords in the parameter description."
+}
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the word 'Sell', which is directly related to the specified parameter."
+}
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the word 'Sell', which matches the parameter description, so it has been surrounded by curly braces."
+}
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the word 'Sell', which is relevant to the parameter description."
+}
+{
+    "success": "Y",
+    "annotated_text": "{{Sell}} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the word 'Sell', which is an instance of the specified parameter."
+}
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The term 'Sell' was identified in the input text, which matches the parameter description that looks for the words Buy or Sell."
+}
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the word 'Sell', which is directly related to the parameter description that includes the words Buy or Sell."
+}
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The text contains the word 'Sell', which is relevant to the provided parameter description."
+}
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the word 'Sell', which is directly related to the specified parameter."
+}
+```json
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the word 'Sell,' which is relevant to the provided parameter description."
+}
+```
+```json
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The input text includes the word 'Sell', which matches the parameter description of Buy or Sell."
+}
+```
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the word 'Sell', which directly matches the parameter description."
+}
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The word 'Sell' is directly related to the parameter description, indicating an action taken in the context of the swap."
+}
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the word 'Sell', which is one of the specified keywords related to the parameter description."
+}
+{
+    "success": "Y",
+    "annotated_text": "{Sell} 10y SOFR swap at 3.45%",
+    "justification": "The input text contains the word 'Sell,' which is explicitly mentioned in the parameter description."
+}

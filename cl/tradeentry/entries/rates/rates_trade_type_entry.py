@@ -13,12 +13,10 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-
 from typing_extensions import Self
-
+from cl.runtime import Context
 from cl.convince.entries.entry import Entry
 from cl.convince.entries.entry_status_enum import EntryStatusEnum
-from cl.runtime import Context
 from cl.tradeentry.trades.rates.rates_trade_type_key import RatesTradeTypeKey
 from cl.tradeentry.trades.rates.rates_trade_type_keys import RatesTradeTypeKeys
 

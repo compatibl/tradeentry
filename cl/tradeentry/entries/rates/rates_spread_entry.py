@@ -13,14 +13,12 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-
 from cl.convince.entries.entry import Entry
-from cl.runtime.records.dataclasses_extensions import missing
 
 
 @dataclass(slots=True, kw_only=True)
 class RatesSpreadEntry(Entry):
     """Maps interest rate spread string specified by the user to the numerical value."""
 
-    rates_spread_bp: float = missing()
+    rates_spread_bp: float | None = None
     """Numerical value of the spread in basis points."""

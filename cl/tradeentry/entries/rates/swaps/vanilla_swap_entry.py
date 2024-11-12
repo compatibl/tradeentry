@@ -13,17 +13,21 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from cl.runtime import Context
+from cl.runtime.log.exceptions.user_error import UserError
+from cl.convince.entries.entry_key import EntryKey
 from cl.convince.llms.gpt.gpt_llm import GptLlm
 from cl.convince.retrievers.annotating_retriever import AnnotatingRetriever
-from cl.convince.entries.entry_key import EntryKey
-from cl.runtime import Context
 from cl.tradeentry.entries.date_or_tenor_entry import DateOrTenorEntry
 from cl.tradeentry.entries.fixed_rate_entry import FixedRateEntry
 from cl.tradeentry.entries.pay_receive_fixed_entry import PayReceiveFixedEntry
 from cl.tradeentry.entries.rates.rates_index_entry import RatesIndexEntry
 from cl.tradeentry.entries.trade_entry import TradeEntry
 
-_SIDE = "The words Buy or Sell, or the words Pay Fixed or Receive Fixed"
+_SIDE = (
+    "The words Buy or Sell, or the words Pay Fixed (which for this trade type means Buy) "
+    "or Receive Fixed (which for this trade type means Sell)."
+)
 _MATURITY = "Either maturity date as a date, or tenor (length) as the number of years and/or months"
 _FLOAT_INDEX = "Floating rate index"
 _FIXED_RATE = "Fixed rate"
@@ -51,8 +55,13 @@ class VanillaSwapEntry(TradeEntry):
     fixed_rate: EntryKey | None = None
     """Fixed rate entry or breakeven rate if not specified."""
 
-    def run_propose(self) -> None:
+    def run_generate(self) -> None:
         """Retrieve parameters from this entry and save the resulting entries."""
+        if self.verified:
+            raise UserError(
+                f"Entry {self.entry_id} is marked as verified, run Unmark Verified before running Propose."
+                f"This is a safety feature to prevent overwriting verified entries. "
+            )
         # Get retriever
         # TODO: Make configurable
         retriever = AnnotatingRetriever(
@@ -66,22 +75,46 @@ class VanillaSwapEntry(TradeEntry):
         input_text = self.get_text()
 
         # Pay or receive fixed flag is described side
-        pay_receive_fixed = PayReceiveFixedEntry(title=retriever.retrieve(self.entry_id, input_text, _SIDE))
+        pay_receive_fixed = PayReceiveFixedEntry(
+            description=retriever.retrieve(
+                input_text=input_text,
+                param_description=_SIDE,
+                is_required=False,
+            )
+        )
         context.save_one(pay_receive_fixed)
         self.pay_receive_fixed = pay_receive_fixed.get_key()
 
         # Tenor
-        maturity = DateOrTenorEntry(title=retriever.retrieve(self.entry_id, input_text, _MATURITY))
+        maturity = DateOrTenorEntry(
+            description=retriever.retrieve(
+                input_text=input_text,
+                param_description=_MATURITY,
+                is_required=False,
+            )
+        )
         context.save_one(maturity)
         self.maturity = maturity.get_key()
 
         # Floating rate index
-        float_index = RatesIndexEntry(title=retriever.retrieve(self.entry_id, input_text, _FLOAT_INDEX))
+        float_index = RatesIndexEntry(
+            description=retriever.retrieve(
+                input_text=input_text,
+                param_description=_FLOAT_INDEX,
+                is_required=False,
+            )
+        )
         context.save_one(float_index)
         self.float_index = float_index.get_key()
 
         # Fixed Rate
-        fixed_rate = FixedRateEntry(title=retriever.retrieve(self.entry_id, input_text, _FIXED_RATE))
+        fixed_rate = FixedRateEntry(
+            description=retriever.retrieve(
+                input_text=input_text,
+                param_description=_FIXED_RATE,
+                is_required=False,
+            )
+        )
         context.save_one(fixed_rate)
         self.fixed_rate = fixed_rate.get_key()
 

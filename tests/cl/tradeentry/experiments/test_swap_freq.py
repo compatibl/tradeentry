@@ -14,19 +14,21 @@
 
 import pytest
 from typing import List
+from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.experiments.experiment import Experiment
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.llm import Llm
+from cl.convince.retrievers.retriever_util import RetrieverUtil
 from stubs.cl.convince.experiments.stub_llms import get_stub_full_llms
-from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json
 
 PROMPT_TEMPLATE = """Trade or leg description contains the following text. 
 
 What is the payment frequency of this trade or leg?
 
-Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'ambiguous', '1m', '3m', '6m', '12m'.
-No other values are allowed. Use 'ambiguous' when the text does not allow you to determine the frequency with certainty. "
+Reply with JSON that has a single key 'pay_freq' whose value must be one of the following strings: 'Ambiguous', '1m', '3m', '6m', '12m'.
+No other values are allowed. Use 'Ambiguous' when the text does not allow you to determine the frequency with certainty. "
 
 Text: 
 ```
@@ -75,7 +77,7 @@ def test_swap_freq():
 
                 correct_answers_count = 0
                 for result in results:
-                    extracted_output = extract_json(result)
+                    extracted_output = RetrieverUtil.extract_json(result)
                     if extracted_output is None:
                         extracted_output = {}
 

@@ -1,0 +1,84 @@
+Sell 10y SOFR swap at 3.45%
+Sell 5y SOFR swap at 2.90%
+{
+    "analysis": "The parameter (Buy/Sell indicator) is presented identically in both trade descriptions. In both cases, the word 'Sell' appears at the very beginning of the description, followed by the tenor and swap type. The format and placement of this parameter is exactly the same, showing perfect consistency in how it's represented across the two trades. The only differences are in the tenor and rate, which we're instructed to ignore for this comparison.",
+    "similarity_score": 100
+}
+Sell 10y SOFR swap at 3.45%
+Sell 5y SOFR swap at 2.90%
+{
+    "analysis": "The parameter 'Sell' is placed identically in both trade descriptions, appearing as the first word of each description. The format and structure are exactly the same, with 'Sell' followed by the tenor, then 'SOFR swap', and finally the rate. The only differences are in the tenor and rate values, which we are instructed to ignore for this comparison.",
+    "similarity_score": 100
+}
+Sell 10y SOFR swap at 3.45%
+Sell 5y ESTR swap at 2.90%
+{
+    "analysis": "Both trade descriptions begin with the word 'Sell', which directly corresponds to the parameter being compared. The placement of this parameter is identical in both trades, appearing at the very start of the description. The format and structure are consistent, with 'Sell' immediately followed by the tenor and type of swap. The only differences are in the specific details of the swaps (tenor, reference rate, and rate percentage), which we are instructed to ignore for this comparison.",
+    "similarity_score": 100
+}
+Sell 10y SOFR swap at 3.45%
+Sell 5y ESTR swap at 2.90%
+{
+    "analysis": "Both trade descriptions begin with the word 'Sell', which directly matches the parameter description. The placement of this parameter at the start of each trade description is identical, and it's clearly separated from the rest of the trade details. The format and structure of how this parameter is presented in both trades are exactly the same, showing perfect consistency in its usage and positioning.",
+    "similarity_score": 100
+}
+Sell 10y SOFR swap at 3.45%
+We receive fixed on 5y SOFR swap at 2.90%
+{
+    "analysis": "Both trade descriptions start with the specified parameter, using either 'Sell' or 'Receive Fixed' (which is equivalent to Sell for this trade type). The parameter is placed at the beginning of each description, immediately preceding the rest of the trade details. However, the second trade uses a slightly different wording ('receive fixed' instead of 'sell'), which, while semantically equivalent for this trade type, represents a minor difference in presentation.",
+    "similarity_score": 90
+}
+Sell 10y SOFR swap at 3.45%
+We receive fixed on 5y SOFR swap at 2.90%
+{
+    "analysis": "Both trade descriptions begin with the specified parameter, using a single word to indicate the direction of the trade. In the first trade, 'Sell' is used, which directly matches the parameter description. In the second trade, 'We receive fixed' is used, which according to the parameter description, is equivalent to 'Sell' for this trade type. The placement at the beginning of the description and the use of a concise indicator for trade direction are consistent between the two trades. However, the second trade uses a slightly longer phrase ('We receive fixed') instead of a single word, which introduces a minor difference in format.",
+    "similarity_score": 90
+}
+Sell 10y SOFR swap at 3.45%
+We pay fixed on 5y SOFR swap at 2.90%
+{
+    "analysis": "Both trade descriptions begin with the specified parameter, using a single word to indicate the direction of the trade. The first trade uses 'Sell', while the second uses 'We pay fixed' (which is equivalent to 'Buy' for this trade type). The placement and concise nature of this parameter are similar in both descriptions, appearing at the start and clearly indicating the trade direction. However, the exact wording differs, with one using a direct 'Sell' and the other using the slightly more elaborate 'We pay fixed'.",
+    "similarity_score": 85
+}
+Sell 10y SOFR swap at 3.45%
+We pay fixed on 5y SOFR swap at 2.90%
+{
+    "analysis": "Both trade descriptions begin with the parameter in question, using a single word to indicate the direction of the trade. In the first trade, 'Sell' is used, while in the second trade, 'We pay fixed' is used, which is equivalent to 'Buy' for this trade type. The placement and concise nature of this parameter at the start of each description are very similar, although the exact wording differs slightly. The rest of the trade details follow this initial parameter in both cases, maintaining a consistent structure.",
+    "similarity_score": 90
+}
+Sell 10y SOFR swap at 3.45%
+Client pays fixed on 5y ESTR swap at breakeven rate
+{
+    "analysis": "Both trade descriptions begin with the specified parameter, using either 'Sell' or 'Client pays fixed' (equivalent to 'Buy' for this trade type) at the start of the sentence. The placement and function of this parameter are consistent in both trades, indicating a high degree of similarity in structure. However, the exact wording differs slightly, with one using a direct 'Sell' and the other using the equivalent 'Client pays fixed', which prevents a perfect similarity score.",
+    "similarity_score": 90
+}
+Sell 10y SOFR swap at 3.45%
+Client pays fixed on 5y ESTR swap at breakeven rate
+{
+    "analysis": "Both trade descriptions begin with the specified parameter (Sell in the first trade, Pay Fixed which is equivalent to Buy in the second trade). The parameter is placed at the start of each description, indicating a similar structure. However, the exact wording differs ('Sell' vs 'Client pays fixed'), and the second trade includes the word 'Client' which is not present in the first. Despite these differences, the overall placement and function of the parameter within the trade descriptions are highly similar.",
+    "similarity_score": 85
+}
+Sell 10y SOFR swap at 3.45%
+SOFR swap, we receive fixed at 2.90%, 10y tenor
+{
+    "analysis": "The two trade descriptions differ significantly in how they present the Buy/Sell or Pay/Receive Fixed parameter. The first trade starts with 'Sell' explicitly, placing this key information at the beginning. The second trade uses 'receive fixed' instead, which implies 'Sell' for this trade type, and places this information in the middle of the description. While both convey the same action (selling/receiving fixed), the placement and wording are notably different, impacting the overall structure and readability of the trade descriptions.",
+    "similarity_score": 30
+}
+Sell 10y SOFR swap at 3.45%
+SOFR swap, we receive fixed at 2.90%, 10y tenor
+{
+    "analysis": "The two trade descriptions differ significantly in how they present the Buy/Sell or Pay/Receive Fixed information. The first trade starts with 'Sell' explicitly, while the second uses 'receive fixed' later in the description. The placement and wording are quite different, with the first putting this crucial information at the beginning and the second embedding it within the description. However, both descriptions do include this information, albeit in different forms and locations.",
+    "similarity_score": 30
+}
+Sell 10y SOFR swap at 3.45%
+Vanilla swap on 3m Term SOFR at 2.90%, we pay fixed, 10y maturity
+{
+    "analysis": "The two trade descriptions differ significantly in how they present the Buy/Sell or Pay/Receive Fixed information. The first trade starts with 'Sell' at the beginning of the description, making it clear and prominent. The second trade uses 'we pay fixed' in the middle of the description, which is equivalent to 'Buy' for this trade type but uses different terminology and placement. While both convey the same information, the format, wording, and position within the trade description are notably different.",
+    "similarity_score": 30
+}
+Sell 10y SOFR swap at 3.45%
+Vanilla swap on 3m Term SOFR at 2.90%, we pay fixed, 10y maturity
+{
+    "analysis": "The two trade descriptions differ significantly in how they present the buy/sell parameter. The first trade starts with 'Sell' directly, making it clear and prominent. The second trade uses 'we pay fixed' later in the description, which is equivalent to 'Buy' for this trade type, but it's not as immediately apparent and requires interpretation. The placement and directness of this information vary considerably between the two descriptions.",
+    "similarity_score": 30
+}

@@ -23,4 +23,4 @@ class Currency(CurrencyKey, RecordMixin[CurrencyKey], ABC):
     """Currency recorded using ISO-4217 three-letter currency code."""
 
     def get_key(self) -> CurrencyKey:
-        return CurrencyKey(entry_id=self.entry_id)
+        return CurrencyKey(iso_code=self.iso_code)

@@ -14,13 +14,15 @@
 
 import pytest
 from typing import List
+from cl.runtime.context.env_util import EnvUtil
 from cl.runtime.context.testing_context import TestingContext
+from cl.runtime.experiments.experiment import Experiment
 from cl.runtime.plots.group_bar_plot import GroupBarPlot
 from cl.runtime.testing.regression_guard import RegressionGuard
 from cl.convince.llms.llm import Llm
+from cl.convince.retrievers.retriever_util import RetrieverUtil
 from stubs.cl.convince.experiments.stub_llms import get_stub_full_llms
-from stubs.cl.tradeentry.experiments.stub_json_utils import extract_json
-from stubs.cl.tradeentry.experiments.stub_string_utils import sanitize_string
+from stubs.cl.tradeentry.experiments.stub_string_utils import normalize_string
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_amortizing_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_basis_swap_entry
 from stubs.cl.tradeentry.experiments.stub_trade_entries import stub_fixed_for_floating_swap_entry
@@ -41,13 +43,17 @@ Description of trade entry:
 
 
 def _is_correct_answer(answer: str, correct_answer: str) -> bool:
-    sanitized_answer = sanitize_string(answer)
-    sanitized_correct_answer = sanitize_string(correct_answer)
+    normalized_answer = normalize_string(answer)
+    normalized_correct_answer = normalize_string(correct_answer)
 
-    return sanitized_answer == sanitized_correct_answer
+    return normalized_answer == normalized_correct_answer
 
 
-def _testing_swap_leg_type(trade_description: str, run_count: int, llm: Llm) -> List[str]:
+def _testing_swap_leg_type(
+    trade_description: str,
+    run_count: int,
+    llm: Llm,
+) -> List[str]:
     prompt = PROMPT_TEMPLATE.format(input_text=trade_description)
 
     results = []
@@ -89,7 +95,7 @@ def test_swap_leg_type():
 
                 correct_answers_count = 0
                 for result in results:
-                    extracted_output = extract_json(result)
+                    extracted_output = RetrieverUtil.extract_json(result)
                     correct_answers_count += int(_is_correct_answer(str(extracted_output), correct_answer))
                 plot_bar_labels.append(llm.llm_id)
                 plot_group_labels.append(trade_label)

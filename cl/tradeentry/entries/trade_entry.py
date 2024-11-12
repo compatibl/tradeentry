@@ -20,4 +20,3 @@ from cl.convince.entries.entry import Entry
 @dataclass(slots=True, kw_only=True)
 class TradeEntry(Entry, ABC):
     """Capture trade from user input."""
-
